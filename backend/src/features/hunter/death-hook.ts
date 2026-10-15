@@ -7,9 +7,9 @@
  */
 import { Role, permitsHunterShot } from "../../domain/model";
 import type { DeathHook } from "../../engine/hooks/registry";
-import { getHunterState } from "../death-actions/native-death-gun-resources";
+import { getHunterState } from "../death-actions/native-resource-ports";
 import { openDemonHunterStockFrame } from "../demon-hunter/native-gun-ports";
-import { resolveNativeDeathShots } from "../death-actions/native-death-shot-settlement";
+import { resolveNativeDeathShots } from "../death-actions/settlement-ports";
 
 export const hunterDeathHook: DeathHook = (world, ids, sources, choose, events, context) =>
   resolveNativeDeathShots(

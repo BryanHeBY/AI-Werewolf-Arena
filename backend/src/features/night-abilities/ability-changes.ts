@@ -17,7 +17,7 @@ import { Role } from "../../domain/model";
 import { projectPairState, copyAbilityData, commitPreparedNativeAbility } from "./abilities";
 
 import { DREAMER_STATE_SLOT } from "../dreamer/ports";
-import { SHELTER_STATE_SLOT } from "../radiant-eclipse/shelter-state-slot";
+import { SHELTER_STATE_SLOT } from "../radiant-eclipse/shelter-slot-ports";
 import { SEER_STATE_SLOT } from "../seer/ports";
 import { GUARD_STATE_SLOT } from "../guard/ports";
 import { WITCH_STATE_SLOT } from "../witch/ports";

@@ -174,8 +174,9 @@ for (const locale of ["zh-CN", "en"] as const)
         ]);
         expect(world.getComponent(5, COMPONENT.Role)!).toMatchObject({
           role: Role.Villager,
-          camp: Camp.Good,
         });
+        // Role身份与唯一当前Camp分槽；受赠库存留在同一privateState，不能为旧镜像断言删掉它。
+        expect(world.getComponent(5, COMPONENT.Camp)!.camp).toBe(Camp.Good);
         await runtime.close();
         if (kind === "llm") {
           const visible = messages

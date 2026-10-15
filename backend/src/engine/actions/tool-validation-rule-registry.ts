@@ -7,9 +7,9 @@ import { ToolName } from "../../domain/model";
 import { COMMON_VALIDATION_RULES } from "./common-validation-rules";
 import { RoleCatalog } from "../../rulesets/roles/catalog";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
-import { SHERIFF_VALIDATION_RULES } from "../../features/sheriff/validation-rules";
+import { SHERIFF_VALIDATION_RULES } from "../../features/sheriff/validation-ports";
 import { ToolRuleMap, ValidationRuleContext } from "./validation-contracts";
-import { validateGiftGun } from "../../features/death-actions/death-abilities";
+import { validateGiftGun } from "../../features/death-actions/gift-gun-ports";
 
 function buildDefaultRules(roleProfileRegistry: RoleCatalog): ToolRuleMap {
   const rules: ToolRuleMap = {

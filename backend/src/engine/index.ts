@@ -5,7 +5,7 @@
 export { EventRegistry } from "./events/event-registry";
 export { PhaseManager } from "./phase-manager";
 export { GameActionRequestFactory } from "./actions/action-request-factory";
-export { transferOrDestroySheriffBadge } from "../features/sheriff/badge";
+export { transferOrDestroySheriffBadge } from "../features/sheriff/badge-ports";
 
 export * from "./hooks/on-daybreak";
 export * from "./hooks/on-per-speech-gap";

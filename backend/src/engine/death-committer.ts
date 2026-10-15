@@ -35,8 +35,8 @@ import {
 } from "../features/noble-secret-body/ports";
 import { appendNobleContractClosure } from "../features/noble-secret-body/ports";
 import { recordWildChildDeathCommit } from "../features/wild-child/ports";
-import { firstDeathGuns } from "../features/death-actions/death-abilities";
-import { expireLuckyAbilitiesOnDeath } from "../features/night-abilities/abilities";
+import { firstDeathGuns } from "../features/death-actions/gift-gun-ports";
+import { expireLuckyAbilitiesOnDeath } from "../features/night-abilities/inventory-ports";
 import { refreshHiddenWolfInheritance } from "../features/hidden-wolf/ports";
 import { refreshGargoyleInheritance } from "../features/gargoyle/ports";
 import { refreshMechanicalInheritance } from "../features/mechanical-wolf/ports";

@@ -5,7 +5,7 @@
  */
 export { getGuardState, recordGuardTarget, recordRecipientGuardTarget } from "./state-slot";
 
-import type { NightAbilityReadView } from "../night-abilities/abilities";
+import type { NightAbilityReadView } from "../night-abilities/inventory-ports";
 
 export function guardTargetRepeated(
   ability: NightAbilityReadView<"guard">,

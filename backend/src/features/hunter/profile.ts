@@ -5,15 +5,15 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
-import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/death-action-policy";
+import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/policy-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../domain/model";
 import { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import { getHunterState, setHunterState, createHunterState } from "../death-actions/native-death-gun-resources";
+import { getHunterState, setHunterState, createHunterState } from "../death-actions/native-resource-ports";
 import { hunterDeathHook } from "./death-hook";
 import { HUNTER_TOOL_SPECS } from "./tool-specs";
-import { DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/death-shot";
+import { DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/tool-ports";
 
 /** 猎人角色配置。 */
 export const HUNTER_ROLE_PROFILE: NativeRoleContributions = {

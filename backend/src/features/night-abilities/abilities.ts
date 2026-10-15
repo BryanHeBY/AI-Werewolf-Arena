@@ -17,8 +17,8 @@ import type {
   NightAbilityReadStates,
   NightAbilityReadState,
 } from "@ai-werewolf-arena/game-contract";
-import { readPairSeerState } from "../fragrant-pair-seer/state";
-import { nativePotionSecondTurn } from "../witch/policies";
+import { readPairSeerState } from "../fragrant-pair-seer/pair-data-ports";
+import { nativePotionSecondTurn } from "../witch/potion-policy-ports";
 import { Role } from "../../domain/model";
 import type { RoleComponent } from "../../domain/components/role";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";

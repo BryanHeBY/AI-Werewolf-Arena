@@ -8,7 +8,7 @@ import { COMMON_TOOL_SPECS } from "./common-tool-specs";
 import { StageDirectiveRule, ToolSpec } from "./tool-contracts";
 import { RoleCatalog } from "../../rulesets/roles/catalog";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
-import { SHERIFF_TOOL_SPECS } from "../../features/sheriff/tool-specs";
+import { SHERIFF_TOOL_SPECS } from "../../features/sheriff/tool-ports";
 
 function buildDefaultSpecs(roleProfileRegistry: RoleCatalog): ToolSpec[] {
   const specs: ToolSpec[] = [...COMMON_TOOL_SPECS, ...SHERIFF_TOOL_SPECS];

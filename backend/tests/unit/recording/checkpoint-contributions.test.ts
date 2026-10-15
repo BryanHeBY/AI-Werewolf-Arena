@@ -127,6 +127,7 @@ test("ordinary player contributions retain original repeated component lookups a
     COMPONENT.Badge,
     COMPONENT.VotingRight,
     COMPONENT.WallNote,
+    COMPONENT.Camp,
     COMPONENT.Alive,
     COMPONENT.DebatePenalty,
     COMPONENT.DebatePenalty,
@@ -165,6 +166,7 @@ test("plain custom-state clone exceptions stop before later player fields and re
     COMPONENT.Badge,
     COMPONENT.VotingRight,
     COMPONENT.WallNote,
+    COMPONENT.Camp,
     COMPONENT.Alive,
     "clone-getter",
   ]);

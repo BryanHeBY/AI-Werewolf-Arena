@@ -19,8 +19,8 @@ import type { PlayerMechanicalState } from "@ai-werewolf-arena/game-contract/pla
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "../../domain/identity";
-import { copyAbilityData } from "../night-abilities/abilities";
-import { createLearnedNativeGun, armMechanicalNativeGun } from "../death-actions/native-death-gun-resources";
+import { copyAbilityData } from "../night-abilities/inventory-ports";
+import { createLearnedNativeGun, armMechanicalNativeGun } from "../death-actions/native-resource-ports";
 
 export function freshMechanicalState(): MechanicalState {
   return {

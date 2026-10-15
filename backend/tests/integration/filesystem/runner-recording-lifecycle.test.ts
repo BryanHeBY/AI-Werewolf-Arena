@@ -1,7 +1,7 @@
 /**
  * 负责文件系统集成测试，核对失败 runner 封存部分归档并释放活动录制 scope。
  * 输入为真实 runner、阶段／终结注入失败、原恢复钩子与临时目录；输出由原部分复盘字面内容及首要／持久化错误身份核对。
- * 保留终结顺序，无须成功模型对局；新文件封装只在原读取点解包，不生成预期。
+ * 保留终结顺序，无须成功模型对局；归档读方及故障注入按真实文件封装解码，不生成预期。
  */
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { afterEach, expect, spyOn, test } from "bun:test";
@@ -81,7 +81,8 @@ test("failure to persist the final replay rejects the game result", async () => 
   const failure = new Error("disk full at finalize");
   const strictWrite = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(
     async function (this: ReplayFileStore, file, data) {
-      const reason = (data as { result?: { reason?: string | null } }).result?.reason;
+      // 故障条件读取真实版本封装的payload；仍只在终档replay写点抛原Error。
+      const reason = file === "replay.json" ? readReplayDocument(data).result?.reason : undefined;
       if (file === "replay.json" && reason && reason !== "in_progress") throw failure;
       await write.call(this, file, data);
     },
@@ -101,7 +102,8 @@ test("a finalization failure does not hide the original game error", async () =>
   const write = ReplayFileStore.prototype.writeJsonStrict;
   const strictWrite = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(
     async function (this: ReplayFileStore, file, data) {
-      const reason = (data as { result?: { reason?: string | null } }).result?.reason;
+      // 故障条件读取真实版本封装的payload；仍只在终档replay写点抛原Error。
+      const reason = file === "replay.json" ? readReplayDocument(data).result?.reason : undefined;
       if (file === "replay.json" && reason && reason !== "in_progress") throw secondary;
       await write.call(this, file, data);
     },

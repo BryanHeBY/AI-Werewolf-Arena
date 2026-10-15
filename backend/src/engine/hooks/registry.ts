@@ -15,7 +15,7 @@ import { World } from "../../domain/world";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
 import type { NightLifeScope } from "../../domain/night-effects";
 import type { DeathWaveContribution } from "../death-wave-contribution";
-import { giftGunDeathHook } from "../../features/death-actions/gift-gun-death-hook";
+import { giftGunDeathHook } from "../../features/death-actions/gift-hook-ports";
 import { resolveWildChildDeathWave } from "../../features/wild-child/ports";
 
 /** 已完成本批 Alive 提交后的具名扩展时点；不是可追加死亡或选择枪的晚 deathHook。 */

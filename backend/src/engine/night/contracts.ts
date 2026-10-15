@@ -23,7 +23,7 @@ import { World } from "../../domain/world";
 import { ToolGateway } from "../actions/tool-gateway";
 import type { RoleCatalog } from "../../rulesets/roles/catalog";
 import type { ActionRequestFactoryConstructorPort } from "../../domain/actions";
-import type { NightAbilityActorQuery } from "../../features/night-abilities/night-ability-actors";
+import type { NightAbilityActorQuery } from "../../features/night-abilities/actor-query-ports";
 import type { AliveComponent } from "../../domain/components/alive";
 import type { NativeNightFailurePolicy } from "../../rulesets/native-night-failure-policy";
 import type { NativeNightTargetPolicy } from "../../rulesets/native-night-target-policy";

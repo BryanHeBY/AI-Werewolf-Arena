@@ -1,11 +1,11 @@
 /**
  * 负责分别推导狼队知识、聊天参与和刀权。输入为当前 World 角色及明确运行政策；输出保留队友、狼聊、狼刀名单和事件受众。狼阵营本身不等于拥有全部狼队权限，不据历史知识授予当前刀权。身份安装失败的退休仅关闭狼聊／刀执行，不抹已知队友或改写历史受众。
  */
-import { scholarMentorPackBlocked } from "../scholar-mentor/night-frame";
-import { animalPackKnifeBlocked } from "../animal-dream/authority";
-import { nightmareKnifeBlocked } from "../nightmare/night-frame";
-import { weddingMember, ghostBrideReady, weddingSetup } from "../ghost-bride/authority";
-import { initialIdentitySetupReady } from "../initial-identity/deal";
+import { scholarMentorPackBlocked } from "../scholar-mentor/wolf-team-ports";
+import { animalPackKnifeBlocked } from "../animal-dream/wolf-team-ports";
+import { nightmareKnifeBlocked } from "../nightmare/wolf-team-ports";
+import { weddingMember, ghostBrideReady, weddingSetup } from "../ghost-bride/wedding-ports";
+import { initialIdentitySetupReady } from "../initial-identity/deal-ports";
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import type { CurrentCampSource } from "../../domain/components/camp";

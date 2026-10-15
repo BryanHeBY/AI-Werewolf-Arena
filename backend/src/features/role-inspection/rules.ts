@@ -10,7 +10,7 @@ import type { World } from "../../domain/world";
 import type { ToolRule } from "../../engine/actions/validation-contracts";
 import { isAliveTarget } from "../../engine/actions/validation-contracts";
 import type { RoleProfile } from "../../rulesets/roles/contracts";
-import { activeNightAbility } from "../night-abilities/abilities";
+import { activeNightAbility } from "../night-abilities/inventory-ports";
 import { inspectionRepeats } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 
 export function roleInspectionTargets(

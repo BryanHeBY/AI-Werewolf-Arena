@@ -1,5 +1,8 @@
 /**
- * 负责终端游戏事件、结果与 ACP 增量输出。输入为已投影事件、运行摘要、ACP 更新与输出选项；输出为原文本和着色日志。仅持有文本片段与工具显示状态，不落盘、不推进阶段或提交游戏行动。分段和去重保留原顺序，失败不改游戏事实。
+ * 负责终端游戏事件、结果与 ACP 增量输出。输入为已投影事件、运行摘要、ACP 更新与输出选项；输出为原文本和着色日志。
+ * 副作用为同步调用原 log／console；每个 ACP logger 只保存本玩家的文本片段与工具显示状态，不落盘或提交游戏行动。
+ * 本模块不计算请求期限或发起取消；会话关闭与超时由运行调用方处理，flush 仅输出本地尾段并清空工具显示缓存。
+ * 分段、去重与输出调用保原顺序；渲染、字段读取或日志抛错仍向调用方传播，不在此回滚已输出内容。
  */
 import { formatErrorDiagnostic } from "../../utils/error-diagnostic";
 import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";

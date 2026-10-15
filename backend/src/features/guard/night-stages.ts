@@ -12,11 +12,11 @@ import { Phase, Role, StatusMark } from "../../domain/model";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { NightStageHandler } from "../../engine/night/contracts";
 import { getGuardState } from "./ports";
-import { activeNightAbility } from "../night-abilities/abilities";
-import { recordNightAbilityUse } from "../night-abilities/abilities";
-import { captureNightAbilityScope } from "../night-abilities/ability-scope";
+import { activeNightAbility } from "../night-abilities/inventory-ports";
+import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
+import { captureNightAbilityScope } from "../night-abilities/scope-ports";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
-import { recordOwnNightAction, luckyTargetAllowed } from "../night-abilities/night-action-history";
+import { recordOwnNightAction, luckyTargetAllowed } from "../night-abilities/history-ports";
 
 const guardActionStage: NightStageHandler = {
   id: "guard_action",

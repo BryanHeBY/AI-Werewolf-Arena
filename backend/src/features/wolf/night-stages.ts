@@ -14,7 +14,7 @@ import { bindWolfKnifeTargetQuery } from "./ports";
 import { EntityId, Phase } from "../../domain/model";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { NightStageHandler } from "../../engine/night/contracts";
-import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf-team/permissions";
+import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf-team/action-ports";
 import { COMPONENT } from "../../domain/components/names";
 import { AliveComponent, aliveLifeVersion } from "../../domain/components/alive";
 import type { RoleComponent } from "../../domain/components/role";

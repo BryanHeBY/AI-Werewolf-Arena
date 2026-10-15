@@ -8,8 +8,8 @@ import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { Phase, Role } from "../../domain/identity";
 import type { NightStageHandler } from "../../engine/night/contracts";
-import { recordNightAbilityUse } from "../night-abilities/abilities";
-import { captureNightAbilityScope } from "../night-abilities/ability-scope";
+import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
+import { captureNightAbilityScope } from "../night-abilities/scope-ports";
 import { readShelterState, selectShelter } from "./shelter-state";
 import { SHELTER_STATE_SLOT } from "./shelter-state-slot";
 import {

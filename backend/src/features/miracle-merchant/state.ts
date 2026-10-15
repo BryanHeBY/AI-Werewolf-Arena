@@ -12,7 +12,7 @@ import type {
 
 import type { PlayerMerchantState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { RoleComponent } from "../../domain/components/role";
-import { copyAbilityData } from "../night-abilities/abilities";
+import { copyAbilityData } from "../night-abilities/inventory-ports";
 
 export const freshMerchantState = (): MerchantState => ({
   remaining: 1,

@@ -21,9 +21,9 @@ import {
   type NightImmunityClaim,
   type NightRadiantBacklash,
 } from "../../domain/night-effects";
-import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../night-abilities/abilities";
-import { retireBorrowedNightAbility } from "../night-abilities/abilities";
-import { grantNightAbility } from "../night-abilities/night-ability-grants";
+import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import { retireBorrowedNightAbility } from "../night-abilities/inventory-ports";
+import { grantNightAbility } from "../night-abilities/grant-ports";
 import { openEclipseSuppression } from "./suppression";
 import { snapshotBorrowedState, type BorrowedKind } from "./borrowed-state";
 import type { EclipseState } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";

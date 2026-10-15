@@ -10,8 +10,8 @@
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 
 import type { RoleComponent } from "../../domain/components/role";
-import { recordNightAbilityUse, type NightAbilityReadView } from "../night-abilities/abilities";
-import { installNativeAbility } from "../night-abilities/ability-changes";
+import { recordNightAbilityUse, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import { installNativeAbility } from "../night-abilities/native-installation-ports";
 import { freshPairSeerState, readPairSeerState } from "./state";
 import { assertWritable, plainJson, write } from "./owned-state-data";
 

@@ -1,0 +1,271 @@
+{
+  "kind": "Root-executed-stage-receipts-collected-by-read-only-packet-author",
+  "baseCommit": "7a85ad67ac808aab3e1d6d91078262a64382ca93",
+  "allExecutionOwner": "Root",
+  "packetAuthorProductChecksExecuted": false,
+  "stages": [
+    {
+      "id": "strict-first",
+      "launchCell": "954eab",
+      "session": 87043,
+      "exitCode": 1,
+      "receipt": "first-c47/architecture-strict/receipt.json",
+      "stdout": "first-c47/architecture-strict/stdout.raw",
+      "inputHash": "5e80553582f4765a61c13430bac5d2a664b7c911dfc62cb16861386dfb9dd2d2",
+      "counts": {
+        "files": 3300,
+        "violations": 149,
+        "failures": 149,
+        "remainingDebt": 0,
+        "clearedDebt": 1779
+      },
+      "meaning": "149首红=138 dependency identities +11head diagnostics；不是149独立引用位置"
+    },
+    {
+      "id": "headers-apply",
+      "cell": "1b5d4f",
+      "exitCode": 0,
+      "receipt": "headers/actual-application.json",
+      "scope": "仅6首头说明"
+    },
+    {
+      "id": "headers-proof-and-failed-heads",
+      "cell": "55eb0d",
+      "exitCode": 0,
+      "report": "headers/actual-proof.json",
+      "stdout": "root-execution/awa-c47-six-heads-proof.stdout",
+      "scope": "6完整非首头suffix原字节／12ES-CJS完整输出对／仅6失败根头0"
+    },
+    {
+      "id": "public-apply-first-prewrite-error",
+      "cell": "f8dac0",
+      "stage": "prewrite-failed",
+      "sourceWrites": 0,
+      "actualSource": "public-boundaries/actual-application.json:firstPrewriteFailure",
+      "note": "Root误读复用facet expectedAbsentAtBase；原tool transcript由Root保存，未冒独立raw文件已存在"
+    },
+    {
+      "id": "public-apply",
+      "cell": "192f1b",
+      "exitCode": 0,
+      "receipt": "public-boundaries/actual-application.json",
+      "scope": "72consumer/138module sites/36新facet"
+    },
+    {
+      "id": "public-mechanical-proof-first",
+      "launchCell": "7a1b56",
+      "session": 73870,
+      "terminalCell": "deec82",
+      "exitCode": 0,
+      "report": "public-boundaries/proof-first/proof.json",
+      "reportSHA256": "467a05b0c5c191d1cfd110a2ff216c8b361952643d46f8edcfe9947faf92597f",
+      "stdout": "root-execution/awa-c47-public-boundaries-proof.stdout",
+      "summary": {
+        "completeConsumerPrograms": 72,
+        "exactModuleLiteralEdits": 138,
+        "newPublicFacets": 36,
+        "existingPublicFacetReused": 1,
+        "capturedFixedGitPrograms": 99,
+        "cumulativeTypedNodesBothSides": 141966,
+        "cumulativeNodeArraysBothSides": 19848,
+        "cumulativeLeavesBothSides": 72154,
+        "cumulativeNoncommentTokensBothSides": 150896,
+        "completeInverseOutputs": 144,
+        "completeActualMappedOutputs": 144,
+        "actualFacetOutputs": 74,
+        "actualOriginalConsumerSymbolBindings": 194,
+        "actualNewFacetSymbolBindings": 83
+      },
+      "claim": "只原138位置的完整正逆/144+144输出/194consumerSymbols/83新symbol，原绿未重"
+    },
+    {
+      "id": "strict-after-138",
+      "launchCell": "14449e",
+      "session": 8327,
+      "terminalCell": "5f8d8e",
+      "exitCode": 1,
+      "stdout": "root-execution/awa-c46-public-boundaries-strict.stdout",
+      "inputHash": "00c1e295e08ecc473b1fc6b70de7a1f21f11283634b86092732d9223d148188e",
+      "counts": {
+        "files": 3336,
+        "violations": 1,
+        "failures": 1,
+        "remainingDebt": 0,
+        "clearedDebt": 1779
+      },
+      "meaning": "同诊断ID不含line；Witch另两相同import-type位置未列在首diagnostics，非原138proof已覆盖"
+    },
+    {
+      "id": "duplicate-query-apply",
+      "cell": "09a38b",
+      "exitCode": 0,
+      "receipt": "duplicate-type-query/application.json",
+      "scope": "仅Witch另2个import-type模块literal，140总精确位置≠138首诊断身份"
+    },
+    {
+      "id": "duplicate-query-actual-emit",
+      "cell": "499e26",
+      "exitCode": 0,
+      "report": "duplicate-type-query/proof-first-common-normalization.json",
+      "outputs": [
+        "duplicate-type-query/ESNext-before.js",
+        "duplicate-type-query/ESNext-after.js",
+        "duplicate-type-query/CommonJS-before.js",
+        "duplicate-type-query/CommonJS-after.js"
+      ],
+      "claim": "两完整actual输出原字节相同，类型位置擦除；不重72主proof"
+    },
+    {
+      "id": "duplicate-query-exact-coordinate-bridge",
+      "cell": "d28b4c",
+      "exitCode": 0,
+      "report": "duplicate-type-query/proof.json",
+      "claim": "补真实两个坐标精确正逆，承接已生成输出，不重编译"
+    },
+    {
+      "id": "strict-final-stage",
+      "launchCell": "599f0f",
+      "session": 83577,
+      "terminalCell": "3e0236",
+      "exitCode": 0,
+      "rootReadCell": "1b6444",
+      "stdout": "root-execution/awa-c46-public-boundaries-strict-successor.stdout",
+      "inputHash": "65c48ea1da80ee2578e812566ed6ce03ecaed7f479127fd5fa45543d1e3d0ecd",
+      "counts": {
+        "files": 3336,
+        "violations": 0,
+        "failures": 0,
+        "remainingDebt": 0,
+        "clearedDebt": 1779
+      },
+      "claim": "此阶段current whole architecture strict；不是C47全部42通过"
+    },
+    {
+      "id": "unit-original-first",
+      "receipt": "first-c47/backend-unit/receipt.json",
+      "exitCode": 1,
+      "counts": {
+        "pass": 3992,
+        "fail": 81,
+        "expectTotalIncludingFailures": 35235
+      },
+      "claim": "原C47首全unit，raw保；80可修输入/预期＋1CLI环境问题分类"
+    },
+    {
+      "id": "unit-apply-first-prewrite-error",
+      "cell": "5fa86f",
+      "stage": "prewrite-failed",
+      "sourceWrites": 0,
+      "actualSource": "unit-inputs/actual-apply.json:firstPrewriteFailure",
+      "note": "Root误猜before目录，原tool transcript由Root保存；不制造raw"
+    },
+    {
+      "id": "unit-seven-inputs-apply",
+      "cell": "126999",
+      "exitCode": 0,
+      "receipt": "unit-inputs/actual-apply.json"
+    },
+    {
+      "id": "unit-failed-only",
+      "cell": "e1553a",
+      "exitCode": 0,
+      "receipt": "unit-failed-only/receipt.json",
+      "stdout": "unit-failed-only/stdout.raw",
+      "stderr": "unit-failed-only/stderr.raw",
+      "counts": {
+        "pass": 80,
+        "fail": 0,
+        "filtered": 33,
+        "expects": 512,
+        "files": 7
+      },
+      "claim": "只80选择声明实际执行；33filtered不是通过，原3992绿未重"
+    },
+    {
+      "id": "integration-original-first",
+      "receipt": "first-c47/backend-integration/receipt.json",
+      "exitCode": 1,
+      "counts": {
+        "pass": 342,
+        "fail": 6,
+        "expectTotalIncludingFailures": 4133
+      },
+      "claim": "原C47首全integration；不是本次候选全复测"
+    },
+    {
+      "id": "integration-two-inputs-apply",
+      "cell": "acc3bd",
+      "exitCode": 0,
+      "receipt": "integration-inputs/actual-apply.json"
+    },
+    {
+      "id": "integration-failed-only",
+      "launchCell": "e6d846",
+      "session": 80584,
+      "terminalCell": "890cea",
+      "exitCode": 0,
+      "stdout": "root-execution/awa-c47-integration-failed-only.stdout",
+      "stderr": "root-execution/awa-c47-integration-failed-only.stderr",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "filtered": 5,
+        "expects": 45,
+        "files": 2
+      }
+    },
+    {
+      "id": "cli-sandbox-diagnostic",
+      "cell": "500ed2",
+      "harnessExitCode": 0,
+      "childExitCodes": [1, 1],
+      "stdout": "root-execution/awa-c47-cli-directory-diagnostic.stdout",
+      "meaning": "两个真实cwd子进程EPERM writeFast；没有源修正或假称原CLI测试绿"
+    },
+    {
+      "id": "cli-unsandboxed-equivalent-diagnostic",
+      "cell": "a6ad9a",
+      "harnessExitCode": 0,
+      "childExitCodes": [0, 0],
+      "stdout": "root-execution/awa-c47-cli-directory-unsandboxed.stdout",
+      "meaning": "同public输入两真实cwd查目录正确；单独环境证据，不冒整CLI suite或原81 tests重绿"
+    },
+    {
+      "id": "backend-test-types-after-public-and-test-contracts",
+      "launch": "596b5b",
+      "session": 83926,
+      "terminal": "949cdf",
+      "exitCode": 0,
+      "cwd": "backend",
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "tsconfig.tests.json",
+        "--noEmit"
+      ],
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "boundary": "本123源及并行输入时点的后端测试类型项目；不是14项目重跑或C47同源全绿，包已冻结之后的Root真实后继收据。"
+    }
+  ],
+  "pendingAndLimits": [
+    "C47全部42入口状态另由实际same-input集合对账；本收据不签P9/C48。",
+    "C47首波Root已报22终态：17green＋strict/unit/integration/format四red＋scenario被Root中断；planned20未执行，不补计数。C46局部后继单列，不把C47首波状态覆绿。",
+    "预写错误只有Root实际application元数据和tool调用ID可归档；不存在的独立raw路径不伪造。",
+    "83新导出位置/194consumer符号是原138位置证明量，不含后继2site重查或算作新业务用例。"
+  ],
+  "strictParallelInputs": {
+    "path": "c46-public-contracts.parallel-inputs.json",
+    "meaning": "记录执行时另批格式说明字节；不进入123源scope，不将工作树strict输入倒述为未来提交"
+  }
+}

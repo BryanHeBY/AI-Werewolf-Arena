@@ -12,8 +12,8 @@ import { AliveComponent, aliveLifeVersion } from "../../domain/components/alive"
 import { COMPONENT } from "../../domain/components/names";
 import { Phase, Role } from "../../domain/model";
 import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
-import { type NightAbilityReadView } from "../night-abilities/abilities";
-import { recordNightAbilityUse } from "../night-abilities/abilities";
+import { type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
 import { getGargoyleState } from "../gargoyle/ports";
 import { resolveInspection } from "../../engine/inspection";
 import {
@@ -23,7 +23,7 @@ import {
 } from "./night-scope";
 import { inspectionRequired } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { roleInspectionTargets } from "./rules";
-import { captureNightAbilityScope } from "../night-abilities/ability-scope";
+import { captureNightAbilityScope } from "../night-abilities/scope-ports";
 import { captureAwakenedMirrorScope } from "../awakened-hidden-wolf/mirror-scope-ports";
 
 function finishOptionalInspection(

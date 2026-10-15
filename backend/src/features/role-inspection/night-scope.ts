@@ -14,7 +14,7 @@ import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { Role } from "../../domain/model";
 import type { World } from "../../domain/world";
-import { findNightAbility, type NightAbilityReadView } from "../night-abilities/abilities";
+import { findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { getGargoyleState } from "../gargoyle/ports";
 
 import { ROLE_INSPECTION_STATE_SLOT } from "./state-slot";

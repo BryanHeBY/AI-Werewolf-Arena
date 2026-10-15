@@ -13,7 +13,7 @@ import { captureNightLife } from "../../domain/night-effects";
 import type { NightStageHandler } from "../../engine/night/contracts";
 import { captureEvilKnight } from "./reflection";
 import { hasEvilKnightNightBindings, installEvilKnightNightBindings } from "./night-bindings";
-import type { NightAbilityReadView } from "../night-abilities/abilities";
+import type { NightAbilityReadView } from "../night-abilities/inventory-ports";
 type AbilityAuthority = {
   ability: NightAbilityReadView;
   state: NightAbilityReadView["state"];

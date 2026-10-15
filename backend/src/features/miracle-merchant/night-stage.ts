@@ -15,7 +15,7 @@ import { Camp, Role, Phase, WitchSelfHealRule, type ToolCall } from "../../domai
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import type { World } from "../../domain/world";
 import type { NightStageHandler } from "../../engine/night/contracts";
-import { grantNightAbility } from "../night-abilities/night-ability-grants";
+import { grantNightAbility } from "../night-abilities/grant-ports";
 import { canMerchantTrade, getMerchantState } from "./state";
 
 const committed = new WeakMap<World, Set<number>>();

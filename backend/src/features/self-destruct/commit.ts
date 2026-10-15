@@ -2,14 +2,14 @@
  * 负责提交普通狼／赤月和白狼王的已选自爆。输入为捕获玩家、已校验选择和当前窗口；输出为原资源、事件与死亡提案。退休仅拒演员执行，目标和已付前缀仍保原规则；不执行真实标死或阶段／胜负封盘。
  */
 import { RED_MOON_ROLE } from "../red-moon/ports";
-import { commitDemonRedMoonBlast } from "../demon-hunter/authority";
+import { commitDemonRedMoonBlast } from "../demon-hunter/death-frame-ports";
 import { canRoleSelfDestruct } from "./capability";
 import {
   weddingMember,
   weddingSetup,
   ghostBrideReady,
   swallowWeddingBadges,
-} from "../ghost-bride/authority";
+} from "../ghost-bride/wedding-ports";
 import {
   ActionWindow,
   Phase,

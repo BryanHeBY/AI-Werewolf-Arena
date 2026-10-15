@@ -21,16 +21,16 @@ import {
   StatusMark,
   WitchSelfHealRule,
 } from "../../domain/model";
-import { type NightAbilityReadView } from "../night-abilities/abilities";
+import { type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
 import { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
 import {
   getWitchState,
 } from "./ports";
-import { activeNightAbility, allNightAbilities } from "../night-abilities/abilities";
-import { recordNightAbilityUse } from "../night-abilities/abilities";
-import { recordOwnNightAction, luckyTargetAllowed } from "../night-abilities/night-action-history";
-import { captureNightAbilityScope } from "../night-abilities/ability-scope";
+import { activeNightAbility, allNightAbilities } from "../night-abilities/inventory-ports";
+import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
+import { recordOwnNightAction, luckyTargetAllowed } from "../night-abilities/history-ports";
+import { captureNightAbilityScope } from "../night-abilities/scope-ports";
 
 const resetNightRoleStateStage: NightStageHandler = {
   id: "reset_night_role_state",

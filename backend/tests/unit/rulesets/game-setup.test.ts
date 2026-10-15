@@ -140,7 +140,7 @@ test("a real Wild Child cancellation stops after its own current check and prese
     },
   );
   expect(ready).toBe(false);
-  // 原请求绑定也会复验当前性；取消后的窗口复验只读一次，组合的 OR 不再调用它。
+  // 请求绑定和领域交付按各自观察点复验当前性；取消后的窗口复验只读一次，组合的 OR 不再调用它。
   expect(trace).toEqual([
     "world",
     "world",
@@ -148,6 +148,8 @@ test("a real Wild Child cancellation stops after its own current check and prese
     "gateway",
     "events",
     "config",
+    "current",
+    "current",
     "current",
     "current",
     "current",

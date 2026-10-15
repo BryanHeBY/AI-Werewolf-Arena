@@ -17,7 +17,7 @@ import {
 } from "../../domain/components/alive";
 import { captureNightLife } from "../../domain/night-effects";
 import type { World } from "../../domain/world";
-import type { NightAbilityReadView } from "../night-abilities/abilities";
+import type { NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { RADIANT_ECLIPSE_POLICY } from "./state-data";
 
 export type SuppressibleAbility = NightAbilityReadView;

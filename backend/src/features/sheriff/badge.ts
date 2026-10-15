@@ -5,8 +5,8 @@
  * 不事务回滚或以替换组件自动恢复销毁警徽；未传完成端口的原调用路径保留原写入和返回。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { openDemonBadgeFrame, assertDemonBadgeReadable } from "../demon-hunter/authority";
-import { weddingBadgeSwallowed } from "../ghost-bride/authority";
+import { openDemonBadgeFrame, assertDemonBadgeReadable } from "../demon-hunter/death-frame-ports";
+import { weddingBadgeSwallowed } from "../ghost-bride/wedding-ports";
 /** 文件说明：警徽流转、销毁与授予逻辑。 */
 import { AliveComponent } from "../../domain/components/alive";
 import { BadgeComponent } from "../../domain/components/badge";

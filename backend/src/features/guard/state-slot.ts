@@ -10,8 +10,8 @@ import type { GuardState, GuardReadState } from "@ai-werewolf-arena/game-contrac
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/abilities";
-import { commitPreparedNativeAbility } from "../night-abilities/abilities";
+import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 
 export function setGuardState(roleComp: RoleComponent, state: GuardState): GuardReadState {
   return commitPreparedNativeAbility(roleComp, "guard", GUARD_STATE_SLOT.create(state));
@@ -31,7 +31,7 @@ export function recordGuardTarget(state: GuardReadState, targetId: EntityId | nu
 
 /** 左侧先捕获原 state，再读取 target.id getter；后段失败仍保留原已提交前缀。 */
 export function recordRecipientGuardTarget(
-  ability: import("../night-abilities/abilities").NightAbilityReadView<"guard">,
+  ability: import("../night-abilities/inventory-ports").NightAbilityReadView<"guard">,
   target: { readonly id: EntityId },
 ): void {
   const state = ability.state as { lastTarget: EntityId | null };

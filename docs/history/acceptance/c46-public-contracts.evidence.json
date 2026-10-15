@@ -1,0 +1,1595 @@
+{
+  "kind": "C46-bounded-delivery-evidence",
+  "baseCommit": "7a85ad67ac808aab3e1d6d91078262a64382ca93",
+  "source": [
+    {
+      "path": "backend/src/adapters/console/console-presenter.ts",
+      "mode": "100644",
+      "sha256": "aa9c2fa61fba13f958a3cb29508669545df7b102a508802b2466aba86b4975ff",
+      "bytes": 9442,
+      "responsibility": "header-contract",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "9cb7da5fceb021849ddf0d4290ed11c634818308",
+        "sha256": "e0d7c014e2a15c10aca700a095b7fd0bfeddbd5f85ca96fdfa12ef9f29b5f622",
+        "bytes": 9143
+      }
+    },
+    {
+      "path": "backend/src/adapters/filesystem/session-file-store.ts",
+      "mode": "100644",
+      "sha256": "f0283b466a840c4b4704cb03e36c34c4d966e3ab9e83a03711872a32639af0b0",
+      "bytes": 2998,
+      "responsibility": "header-contract",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "1f5cb837d361140b71288ac959c04d6f5d48882f",
+        "sha256": "c140506a8a0559bcd0b5db92b8789e52d58f3f411c7f95565fc8d0ee8715eb8c",
+        "bytes": 2864
+      }
+    },
+    {
+      "path": "backend/src/app/agent-exports.ts",
+      "mode": "100644",
+      "sha256": "6b786f0af9b594d1ed2dab483fbdbf8436c969640b1beec56a75ba260ab0c53e",
+      "bytes": 594,
+      "responsibility": "header-contract",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "9282cd46731857f8abef8378315bc21df5b1c642",
+        "sha256": "562b3bc761f1c81a2ea8b904b52fe1852e0032110ce8ce355358b08306cd64c5",
+        "bytes": 530
+      }
+    },
+    {
+      "path": "backend/src/app/audit-agent-exports.ts",
+      "mode": "100644",
+      "sha256": "857665a025793bc4f4f73c95b8dbcfae450739569e5aafbc0c0121458ebecd31",
+      "bytes": 678,
+      "responsibility": "header-contract",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "df50ce3a7fd75ed9ff2216c06f0d3b5798df6825",
+        "sha256": "29f7cbc090fc9e7e9e728b647f484fcfe2d46b3f5ca300bb3ac6fe645f3fbc0c",
+        "bytes": 560
+      }
+    },
+    {
+      "path": "backend/src/engine/game-api.ts",
+      "mode": "100644",
+      "sha256": "220d9b573b3166b4bbe72dd40c81a1ff5847a6c07d87f47e5305b9c930eb8977",
+      "bytes": 473,
+      "responsibility": "header-contract",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b763dc96ee6cc25d16c425365d8717d9293715a4",
+        "sha256": "6036b05c44e35f1a47320deadb4605dc98a77b14d1bd90a83e0fbab3b48b70e4",
+        "bytes": 291
+      }
+    },
+    {
+      "path": "backend/src/recording/session/lifecycle.ts",
+      "mode": "100644",
+      "sha256": "55e43b75c2d3a7615b6f5bffaae5762e4afb8954d6c7286525c8e9167f66667e",
+      "bytes": 3073,
+      "responsibility": "header-contract",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "c2a14b312a39410f0c915adef322eb04049eda3f",
+        "sha256": "0fb9627ac901e98e6a0b732f9df4fc02462a00acaf16309d0112bd1024afde66",
+        "bytes": 2940
+      }
+    },
+    {
+      "path": "backend/src/engine/actions/common-validation-rules.ts",
+      "mode": "100644",
+      "sha256": "f4ce2fd36276932126b078c8c02974e48ab679b10199e8ef20eb27ac73390ab2",
+      "bytes": 3847,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "a88c5797be22ce2f715d9f73da1bea907e2d3f4c",
+        "sha256": "951a4716f349dae3d4fcf0676d4c7a87f914dc007539306d6fa3de03a4059758",
+        "bytes": 3841
+      }
+    },
+    {
+      "path": "backend/src/engine/actions/tool-spec-registry.ts",
+      "mode": "100644",
+      "sha256": "412e74eaafb76a343bdf903f1a93bf3bd3ba1d63e4320d3f1ed1950fbb79cd61",
+      "bytes": 3709,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "f23f7a0fac47566925818c3d93048f47b3c7b27f",
+        "sha256": "71101cb93cc0a3a4d214c609ab4f83fb351eef6f5a0adb6d350f5dd946528063",
+        "bytes": 3709
+      }
+    },
+    {
+      "path": "backend/src/engine/actions/tool-validation-rule-registry.ts",
+      "mode": "100644",
+      "sha256": "7c5fc4705dfcd6fc8c750f75e380c26be752e292d1c4a7c608edf86f9e3cd22c",
+      "bytes": 2857,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "3f20e504f2126dc1fa8db847e376968793ccc4b1",
+        "sha256": "083250be376c00ccc45d55685daa6204d2a2a666794320ad261ff148e6cb715a",
+        "bytes": 2858
+      }
+    },
+    {
+      "path": "backend/src/engine/death-committer.ts",
+      "mode": "100644",
+      "sha256": "bd93125a55e67728f7dd7bc5bd4fa3fc61f11e2152a2df7f008ba7592e6f4105",
+      "bytes": 8314,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "92472ebcab2480fc924f3dece2f520debb39198d",
+        "sha256": "83744cb38502668567fe42c4e918a8e9de1e3149ad08fef34487637ba6e231a5",
+        "bytes": 8309
+      }
+    },
+    {
+      "path": "backend/src/engine/death-resolution.ts",
+      "mode": "100644",
+      "sha256": "1de0bb10365144d2acc39ba1f49547f7dbd752874a8df5288aed9fde5a2dc92e",
+      "bytes": 30644,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "3efb218e6bfd48a70b25aac8b60b11a1fae14c0b",
+        "sha256": "5ba67fbd9674cc6a02451bc153fc10983d568caf48d23303e247b16b684a0b2c",
+        "bytes": 30657
+      }
+    },
+    {
+      "path": "backend/src/engine/hooks/registry.ts",
+      "mode": "100644",
+      "sha256": "f2c188348fda8e6de1dd622b35c55aae68f46e485af43ab2781eb1ebf2e4988f",
+      "bytes": 5650,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b47116a4f11c5d0e2d552b977a48939f78cf55f8",
+        "sha256": "c9c01da16c7531ef10441c31368c159b8399eff7e7fcb1489e2d7ffea79a2c6c",
+        "bytes": 5654
+      }
+    },
+    {
+      "path": "backend/src/engine/index.ts",
+      "mode": "100644",
+      "sha256": "db98a0ab68b045c1fdf9899f7d1fc85bda305bbdfd1d75da85623df7d5607356",
+      "bytes": 762,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "0dc2a2b2d5913b075ab4049c5400e02aa7284f85",
+        "sha256": "f03a99278766c8f8420f84227448cd857101daf1aaa022bb0922a1d6c035b4b4",
+        "bytes": 756
+      }
+    },
+    {
+      "path": "backend/src/engine/night/contracts.ts",
+      "mode": "100644",
+      "sha256": "d11be1725d231970d994f70397a6548f46d34670d85d6fa4b04a2e62daac7635",
+      "bytes": 6344,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "201d0027aa057d4af1b5105cb8e3aa3e2515eb11",
+        "sha256": "e3b9a974c2985b4b2e53dd4b46c999a46452731c43817ac4a17a668c8e2d62ba",
+        "bytes": 6347
+      }
+    },
+    {
+      "path": "backend/src/engine/participation.ts",
+      "mode": "100644",
+      "sha256": "87b45bc12ec30c96560637a30aeb9261a9ba0ee7292c69b1205d6f72ef56dbcd",
+      "bytes": 1892,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "3a892376ec9d1a265af3a659370928e6a0cbaa91",
+        "sha256": "7c95d7c93eefd9a1fb9821f94cf6f69ec45dfaa91c75d89097d441d8bd7a033d",
+        "bytes": 1891
+      }
+    },
+    {
+      "path": "backend/src/engine/phase-manager.ts",
+      "mode": "100644",
+      "sha256": "aad5ef06b5bbf9b5aa47df2dac0f98b1728ed42953cf06f481aacf122436f5b2",
+      "bytes": 37779,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "f4af129ecb174275b8fe5bd6f55d6f80f346f14e",
+        "sha256": "209b775e62ccc7e7cde0c43fb07d77b02dc6b74882554c1a505c0c4a54102ca4",
+        "bytes": 37758
+      }
+    },
+    {
+      "path": "backend/src/engine/phases/day-pipeline.ts",
+      "mode": "100644",
+      "sha256": "b1fff777be1b449d757b3fc6e8474812de744d585b92b888d2748cff67fcc8e9",
+      "bytes": 10757,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "4d0ad9d2994ec30dd9e055e1fc02bad782b409ee",
+        "sha256": "68744bb25de1a1f947a93f7638e074a405f1a2db9797df63314f36536fdda241",
+        "bytes": 10739
+      }
+    },
+    {
+      "path": "backend/src/engine/phases/night-pipeline.ts",
+      "mode": "100644",
+      "sha256": "a41fc57da4c958d6b5b570ea7968f24167a49b8af49efeb0852fd9be30f173e9",
+      "bytes": 20473,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "2e116ccd2cf8565233327869e842792fe88042f3",
+        "sha256": "dcd4f6664ad876e9573a2d69b79e8c8b47c224b31af94cb2ce3b3b3cd0e69b17",
+        "bytes": 20476
+      }
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/death-hook.ts",
+      "mode": "100644",
+      "sha256": "ebc8a1203a92e29969982291a4068eb797b503fb0a7e7c5b0a95516a945e758a",
+      "bytes": 1447,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "e59c9f9d3c3bbb235d78d0c714e841a832bcf311",
+        "sha256": "ebe37069de2645edc9f9a72f22218bbf947a7ad27e96202af4f4630cf0ecedbf",
+        "bytes": 1464
+      }
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/night-scope.ts",
+      "mode": "100644",
+      "sha256": "e42f504ff3b2a1bb76d079ca5e13a4706e02dc61f397209876770a3ef9437445",
+      "bytes": 7123,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "7e0c75737b45b4ff19dbbe8d3b43c1378d259abb",
+        "sha256": "17eadc97a59eeb29b8908c54fdf491a5494afb9c9e4f0f192350b44faee2681d",
+        "bytes": 7117
+      }
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/night-stages.ts",
+      "mode": "100644",
+      "sha256": "14f92fc34a1903f2d1cae2914ddbf39836e3334f0700783e7a9100b598e1a26e",
+      "bytes": 16108,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "46636e9cff117690be860b94232d04f24db8f021",
+        "sha256": "6c46dee2d00a5cfe6825f4982a2b9207fb27711604c53d3e0bb9e43040d3b60b",
+        "bytes": 16086
+      }
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/profile.ts",
+      "mode": "100644",
+      "sha256": "ee5b3598a4b6e05367346244acbc32fa1b369594dc6d692806b0b4d6c03373ca",
+      "bytes": 6299,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "80f199ae11bce23549cf4988c4b61ec1b430ed94",
+        "sha256": "3c84a4368e925b55b7167d4e26a24126763322bd7a24fdd6f47e6d611442a57c",
+        "bytes": 6293
+      }
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/state.ts",
+      "mode": "100644",
+      "sha256": "720e5885c901c92866d8561b6bdcc91aa54ef3eb4d50a8a6a0efabba5e9c519a",
+      "bytes": 12298,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "bef4eb7f9b4456f1dee1de01c30bbb9686b8cf02",
+        "sha256": "0e621eeeca4951cc0c050bc84c3bfd0d6531de906f61a01490408dd56a3f81bf",
+        "bytes": 12297
+      }
+    },
+    {
+      "path": "backend/src/features/black-market-merchant/night-stage.ts",
+      "mode": "100644",
+      "sha256": "c25a8070b55510eb6e546117a3a0918a30e6b2ef60813e17ea15301ed7bc571b",
+      "bytes": 11732,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "1c77cb077e7e7861bb9f17d02e4b880e3b80cd0c",
+        "sha256": "4c4b3a1fa6bbce458b1ebec471bd8c600ce682396587f77162fa150e1d3eecdd",
+        "bytes": 11744
+      }
+    },
+    {
+      "path": "backend/src/features/black-market-merchant/state.ts",
+      "mode": "100644",
+      "sha256": "84c3660bfa6489848adb2202ec277ee91b28e5fc2d93dba19f99d31555824c93",
+      "bytes": 2782,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "8c38d3dafadba98889d644c66728aa9434e945b3",
+        "sha256": "7f46e37ab39d76e4f4418a5df142cda354e92670d184dded94754a294ccc918c",
+        "bytes": 2776
+      }
+    },
+    {
+      "path": "backend/src/features/debater/window.ts",
+      "mode": "100644",
+      "sha256": "71114e89162e71a5e2f02bae80ed734d584e2d15df76579ce1ba316ed5cb551b",
+      "bytes": 11492,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "ed9d6683ff5d022704f409564ba89021caabf14c",
+        "sha256": "c3e57bc1107dad1264fdbb3d385bb49f1cd235782f61ca9a2afe269161f4f016",
+        "bytes": 11486
+      }
+    },
+    {
+      "path": "backend/src/features/demon-hunter/native-night-controller.ts",
+      "mode": "100644",
+      "sha256": "25244aa44ec0621ce20e5485e16aeeab643d3f772897665d4a0390f6bb3b2f32",
+      "bytes": 6583,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "2c48c9dd9384ed7b9ee5627c92a5574e54d40c26",
+        "sha256": "8f105990d79bebd56d04aa61ff9664916cb4ddab8a50c5ff75c82a6c33649aba",
+        "bytes": 6590
+      }
+    },
+    {
+      "path": "backend/src/features/demon-hunter/native-potion-controller.ts",
+      "mode": "100644",
+      "sha256": "a019595ee13fda209a5920159786638b201cf919e9c1cdc812793cdd7c46fb68",
+      "bytes": 15934,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "2ca62d0ed6caca84540c8b089c658bf209e24538",
+        "sha256": "110dfaf041800e91e1669c140c055ee1d2580f67835a278aad7dd52e71ea090f",
+        "bytes": 15928
+      }
+    },
+    {
+      "path": "backend/src/features/dreamer/night-stages.ts",
+      "mode": "100644",
+      "sha256": "465cc7dcb1aa6237a2506739a31a06b18c9055c10522de3b4badd221b98f7964",
+      "bytes": 5839,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "580de9ed355a17455a787e602eb41ba4ee6de919",
+        "sha256": "129fef6f8ab6fb8c1231e8d56657bce9440775ec92a63f638a8879808511f110",
+        "bytes": 5835
+      }
+    },
+    {
+      "path": "backend/src/features/dreamer/profile.ts",
+      "mode": "100644",
+      "sha256": "10223dcc8951fc44f589d25bf07548ff24d51fb6ed5a92e262ce997265a03cdd",
+      "bytes": 4016,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "35af1f42eca61bc812f8fb99b55e65bf166b6d94",
+        "sha256": "d806c11e77b713a892129a02d9c53aa29419d90c4a3192e7977d77c3a5f4c516",
+        "bytes": 4010
+      }
+    },
+    {
+      "path": "backend/src/features/dreamer/state-slot.ts",
+      "mode": "100644",
+      "sha256": "24443eae95a3177a89b8ae5bd565b8a457cbadf76a2457c480ad7047690a7574",
+      "bytes": 2567,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b07b9248c320c1fa72546112551948b65b9af729",
+        "sha256": "9452ddd3983cb4df7c8abebf33f0635416ed6a48c56faa720a81428db0225abb",
+        "bytes": 2555
+      }
+    },
+    {
+      "path": "backend/src/features/evil-knight/night-frame.ts",
+      "mode": "100644",
+      "sha256": "dccf77a062a94d8d02ab5a9ec62cd0ac3fcaaf3147d9a0e9eb51f10999355f4c",
+      "bytes": 5730,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "dd0d73b268f62de385a98c6467b7c36c495af4f3",
+        "sha256": "e185fa5044a7f5653bb756a3f99eca2acb34d590ea03d37146bc8da306d18e33",
+        "bytes": 5724
+      }
+    },
+    {
+      "path": "backend/src/features/fragrant-pair-seer/authority.ts",
+      "mode": "100644",
+      "sha256": "9d6efa64e324d30864eb5344bdad4ee4c2cf49ca62bd5eaa2f366c7c2598d45b",
+      "bytes": 30535,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "339c31bfb24ed7a5a90850602b284cd2e9f187a1",
+        "sha256": "55b88ff29d437c20909cfca485dbdce686e04e4be0a5beb63c2ba793a3bb0f25",
+        "bytes": 30529
+      }
+    },
+    {
+      "path": "backend/src/features/fragrant-pair-seer/pair-state-slot.ts",
+      "mode": "100644",
+      "sha256": "c463cf675945ad77cc17e77f727949692f99f272a82c7e5515b931d4475dd9eb",
+      "bytes": 4357,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "946638b8d4c2bfe2529b884fce1b1799cb89d3aa",
+        "sha256": "1f769ccab45f9509fbf7572cb812f0805a3febb9eff8ff3cc9e0b4037572ae00",
+        "bytes": 4341
+      }
+    },
+    {
+      "path": "backend/src/features/guard/night-stages.ts",
+      "mode": "100644",
+      "sha256": "e73bb802c09428d6c505a93949c81c3fbf76b19a06805bf66be20bca2ae8530e",
+      "bytes": 6225,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b5b9f9fd60bb9b88e1128cc6f8e7c67054cb353d",
+        "sha256": "50d053052a00037f8ed7523a37944859647622681ed28fab2911cedf53a630ba",
+        "bytes": 6222
+      }
+    },
+    {
+      "path": "backend/src/features/guard/ports.ts",
+      "mode": "100644",
+      "sha256": "55aca6809fb1c846fcd4cf493e07a3f864d7895a9a64df10e0b2ff7b16f4e6b1",
+      "bytes": 951,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b805f4ac4d4cc3930d1f61c520db57b0b1ec5201",
+        "sha256": "cd96d595dde134d6a7dc5e761bb43dc15858199a5c0afcfdc7f3240b2c9be9b6",
+        "bytes": 945
+      }
+    },
+    {
+      "path": "backend/src/features/guard/profile.ts",
+      "mode": "100644",
+      "sha256": "6b6584651ee557763e6b9d00006b3ea9b5ff10053655903814fc944cad1af8db",
+      "bytes": 4143,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "3c17dec504750020574d78476dbe8ee346130ffa",
+        "sha256": "7a20fea07686b5277c95cb3ddf7083ca8bfb81e9040d235cbc70a1741d91752f",
+        "bytes": 4144
+      }
+    },
+    {
+      "path": "backend/src/features/guard/state-slot.ts",
+      "mode": "100644",
+      "sha256": "e035ea6407029467af0b17cdbc03291eb4e85f983eade2445c66dddff835585b",
+      "bytes": 3061,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "6b1b8bd733e3204d39c8c978fcf67d33e169a698",
+        "sha256": "bcec7194034bb8ccd2c496cf93033e7efbdadac8ee6cd723bf8c424999631687",
+        "bytes": 3043
+      }
+    },
+    {
+      "path": "backend/src/features/hunter/death-hook.ts",
+      "mode": "100644",
+      "sha256": "17e81f3426e9ff54f0f8356b76f82a8e95f6a2dd9d915c9437aa8e4becafd84a",
+      "bytes": 1795,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b59b558ebdb8ba2e84edcd593dcbe991af535837",
+        "sha256": "0b5caf1ed48a755df25598d71062052a2c766ed4ef1ac4a9e9edff529bebf68e",
+        "bytes": 1812
+      }
+    },
+    {
+      "path": "backend/src/features/hunter/ports.ts",
+      "mode": "100644",
+      "sha256": "f6072635c1ea371e4ba483266911c830146fa423ba8ab0c50d8d149b1a9a5155",
+      "bytes": 487,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "a87e0c6a64d35d952d22ec4f47ff9a413ab3435f",
+        "sha256": "3baa8f8532a7f27fabda56c80e85d362b0efbb358167f39ecf0debc6aecadaa0",
+        "bytes": 492
+      }
+    },
+    {
+      "path": "backend/src/features/hunter/profile.ts",
+      "mode": "100644",
+      "sha256": "e3aac866ee12e93c524cea61b421256bc27faa58cadfdc129d6a263ff649b251",
+      "bytes": 2420,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "7c48dcdbc39169949d7475de9a641b4a341b691e",
+        "sha256": "7b85a34ec337c948e465f2c102d4f743e40bdf6e12804633d3cb54c4db8c449a",
+        "bytes": 2432
+      }
+    },
+    {
+      "path": "backend/src/features/hunter/tool-specs.ts",
+      "mode": "100644",
+      "sha256": "186e2febbb3bd47300088b12393551b76677ba6c85dec81a84c46ab7bae6e6df",
+      "bytes": 334,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "76509b0fa0db882b6d211149a6cf812dbb0b9c39",
+        "sha256": "5d29beb2008714f7f287d5f13597458ba1da290077b4adb47a71522980d3b95c",
+        "bytes": 334
+      }
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/death-hook.ts",
+      "mode": "100644",
+      "sha256": "dc67a484b8ccf8e34df3e7f144fd0f3ed50da454d4d8bfd2ec818b96f9cacb05",
+      "bytes": 1446,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "55810ed966e9e4e6a17464435102819746cf4cb2",
+        "sha256": "9329d4cf235c8f4c4833babb97c93ac3d8b65209b5292770e2e80ac9f137bef4",
+        "bytes": 1463
+      }
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/profile.ts",
+      "mode": "100644",
+      "sha256": "1b5080bd8620c36eaaf54d9fb7a2f2c98972ed77357779c01d9d2ae156396b1e",
+      "bytes": 5969,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "03d564c8084d3d7d343c4693b42669f22ebd0c0a",
+        "sha256": "8f48909b1125ee0bd3f81511715b25b0242803eece2bb3a14fbcd92f14041a32",
+        "bytes": 5969
+      }
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/state.ts",
+      "mode": "100644",
+      "sha256": "c421074b7d1c0d72bd7ead629c436cebf13e11c94f296b6793f07859cd59300a",
+      "bytes": 13118,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "76c801b2cc5ca333be03ca499903ea4f5086da03",
+        "sha256": "a13db230ba5ab6c9fb2079aa178c7db081fa9d6fd75e687e05373b2ca11b2f54",
+        "bytes": 13117
+      }
+    },
+    {
+      "path": "backend/src/features/miracle-merchant/lucky-stage.ts",
+      "mode": "100644",
+      "sha256": "eee25e042274a89d659cba86a875a067f169efe67196de1c39939fe0ec7910c1",
+      "bytes": 796,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "97fa0b068488052dd5eb9da484bd64b60556536d",
+        "sha256": "5beac76c783e001472707a7a3c3ae0478091f2fc77dd842efe11e0ede33d5c71",
+        "bytes": 798
+      }
+    },
+    {
+      "path": "backend/src/features/miracle-merchant/night-stage.ts",
+      "mode": "100644",
+      "sha256": "9999fcfa8b45ec40ffa39c94278428b0565fa452a9249cbc0a17b16c563cb91d",
+      "bytes": 10484,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "01b8df8f76f59aed2354a329a106f472e7037e83",
+        "sha256": "ce484347e82a06bc17d787a78bf1feac1c3de066563036452d67557e5bb029ae",
+        "bytes": 10493
+      }
+    },
+    {
+      "path": "backend/src/features/miracle-merchant/state.ts",
+      "mode": "100644",
+      "sha256": "32a57406c89ec76afd038cfa549dc2b9e5aef52ec74db79c9fa21e2e764c9e22",
+      "bytes": 2641,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "0a0984626ee7819b7b41406411e8ee722d7d49fd",
+        "sha256": "5b98476cb82413ba70ad3eafd321ed3139e8a9934e6644a3cb38b8ac0ac9aceb",
+        "bytes": 2635
+      }
+    },
+    {
+      "path": "backend/src/features/mirror-girl/native-inspection.ts",
+      "mode": "100644",
+      "sha256": "8379608b7e1fcf0d9975a0803fd607bb59541bfad666e96fac985ff88ce560e7",
+      "bytes": 1040,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "d947bb6eb12e78407ebe1c2e861369fd364532b8",
+        "sha256": "c356042fdd889a7d699313c0565d199428197dc3747328cf517521dd59f83829",
+        "bytes": 1034
+      }
+    },
+    {
+      "path": "backend/src/features/mirror-girl/profile.ts",
+      "mode": "100644",
+      "sha256": "cf58aa91962224616c0d3707e22e9fddb1cd7d1f21a9e15e6cfbde8be20e0776",
+      "bytes": 4398,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "58b2e30d33bd835f0bf2e1e002928c988e2b77c8",
+        "sha256": "532a8cc0874d7c7474943350a6a98df1988089e1098d73c120c56ce0ddbabae6",
+        "bytes": 4392
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/abilities.ts",
+      "mode": "100644",
+      "sha256": "9e1d0eb28b89c08c2b5efc70a4e51a49e888ca1ff75add7d63106afa14e1644b",
+      "bytes": 19846,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "ed87aa386b70e4e9d60ac5c47a2e6163eb949a2d",
+        "sha256": "263d231a7decfec0f89f467cb07dfdce6427d63bb7876760ac11c689b7621002",
+        "bytes": 19825
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/ability-changes.ts",
+      "mode": "100644",
+      "sha256": "0b6d93966d52eb8e9fef90e3bccac824104a863f81eabe26ebfe7563dc3b59f3",
+      "bytes": 3193,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b0a8eb3bb654aac206ef91468c2fb07d994e05c0",
+        "sha256": "b77c273bb233a8b57f845dd728296f21a7cabe35a890f4ae6cb41df0379dac2d",
+        "bytes": 3193
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/ability-scope.ts",
+      "mode": "100644",
+      "sha256": "be40dfd29450eb22ff8dea808bf83c6504279c19907f2ffb94e387b6e3c29c06",
+      "bytes": 5286,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "a2e9c1f12ec4ccb7dcb02a1bd43de25a01528360",
+        "sha256": "b82e674ccb7247c7f0e8f9e85e85622ed808fc13a9ad980c67253a482bb97af0",
+        "bytes": 5287
+      }
+    },
+    {
+      "path": "backend/src/features/nightmare/night-frame.ts",
+      "mode": "100644",
+      "sha256": "bae208418f64e3f4ff9991adeed8895d5f9171ced10ee4f6134a5a1bcfbd9adf",
+      "bytes": 9360,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "6bd2ff87138a9db65657eaf241d67fea09909052",
+        "sha256": "12d3b5b7009b0613c7e756a7696f72ab0a4655e28ead66801f3d2fa23811333b",
+        "bytes": 9354
+      }
+    },
+    {
+      "path": "backend/src/features/pure-white/night-stages.ts",
+      "mode": "100644",
+      "sha256": "f37b7a54690075d4a812214bbf32893c7aafc992d6ba13ac8dd0c46e16b89cab",
+      "bytes": 6387,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "331e689db1ce738939fdcb9de71d6a94441371b9",
+        "sha256": "10ce0089961995ea5585f0dc1974649c0e431e248f729e1774183fd1eefbde5b",
+        "bytes": 6383
+      }
+    },
+    {
+      "path": "backend/src/features/pure-white/rules.ts",
+      "mode": "100644",
+      "sha256": "a3e7352ddd4d2df0c4d685f1799f7dcd240af46e131941447951d176fe782c29",
+      "bytes": 3143,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "a7816aca679580c42dab2c04c63cbd842acb0c93",
+        "sha256": "be493b5fe072bbe1cb3e0078d8b59008735f01568d8912532f374acc2c57bd35",
+        "bytes": 3137
+      }
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/night-frame.ts",
+      "mode": "100644",
+      "sha256": "9b20165671a4d39134bd097375b0cd57743cdba4f5a09ded8cb15b570e7f196b",
+      "bytes": 23396,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "93f253e4266a5d70c9dc6be9ca1374dbf550b578",
+        "sha256": "51a326e563f823d04f36aae8d4448d0e3078bd0bae551cddd0b3cea9bdba59a5",
+        "bytes": 23393
+      }
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/night-stages.ts",
+      "mode": "100644",
+      "sha256": "eca23e3d364ba74537d9f2c1b2b6dac302a4ea500e1387c22e0a3c7474121768",
+      "bytes": 4299,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "6ed7238a2fd3caafac70b24319fc36302510cadd",
+        "sha256": "532d994b519df66b06af6512d5007d0469b72fb8d6ac232194e6f235f6ced9a4",
+        "bytes": 4295
+      }
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/profile.ts",
+      "mode": "100644",
+      "sha256": "aa44f7ffe7e19ea3f2ef149703167ead49072b40cfa2b2d9c8476894d72ee083",
+      "bytes": 7461,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "205fd6cc1f49de512085e243493d201ef9aa70f2",
+        "sha256": "0b1b829c08b1eeae802e5bb0bd44bfee12aef516fe6fa5de2faf43b99e6085dc",
+        "bytes": 7439
+      }
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/shelter-state-slot.ts",
+      "mode": "100644",
+      "sha256": "3bce5a3686f759906b00474361e99b85c0226f51b5692d779dee058e064091c3",
+      "bytes": 2387,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "f8ad97f3769e0e7dae7c219a3e9aba0ec0c8e6f0",
+        "sha256": "7e46ee1cad1b196a8a7aabb9ff7cdc0542d4355886f26e75f7a936d028f04be6",
+        "bytes": 2375
+      }
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/suppression.ts",
+      "mode": "100644",
+      "sha256": "b30479e6ff49d45811358dd612fd1a2dbc9a2218964eb731de98f6beea1115dd",
+      "bytes": 7097,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "6b6e2ee9199b1313e0635db12a524eccc730c39b",
+        "sha256": "bfbe991d8240db7f20d9842eeedbbe183fda75a07ca37e677bd06aeea0f7ee61",
+        "bytes": 7091
+      }
+    },
+    {
+      "path": "backend/src/features/role-inspection/night-scope.ts",
+      "mode": "100644",
+      "sha256": "5feab43c40fbd51ad80f7054bfbad344ef33a1fa5bebb1fe40bf0a529e645833",
+      "bytes": 4415,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "845092084af08007cab51bd1f320d47c2ce417d9",
+        "sha256": "244467c6c9f94015fe10c4a1d8b46364435c32278f42638b50ec0f709417c4ff",
+        "bytes": 4409
+      }
+    },
+    {
+      "path": "backend/src/features/role-inspection/night-stages.ts",
+      "mode": "100644",
+      "sha256": "8d056f508765b95261c3ae2b469e631fbe0c26d3b2eeb3c3f1a2b617d31fee1b",
+      "bytes": 8695,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "08171100dac231ea1d32000513409fdb62f63d42",
+        "sha256": "c0d02b7387ffbd6346c9e3a6d9a88a90a9921fc6d0fc356c6e2603b1e430fcc9",
+        "bytes": 8685
+      }
+    },
+    {
+      "path": "backend/src/features/role-inspection/rules.ts",
+      "mode": "100644",
+      "sha256": "48225b42323a9caa7174d0dfd394e0b4e2a7f849dd09a6ebf944b75d64783f5f",
+      "bytes": 2405,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "9b3cf28281c2b34ad7acf7f5d0b487fa5755b24d",
+        "sha256": "ec4db973d50096be4e497614b2f3993f6646034fc224fa6aa298e79d63138d4c",
+        "bytes": 2399
+      }
+    },
+    {
+      "path": "backend/src/features/role-inspection/state-slot.ts",
+      "mode": "100644",
+      "sha256": "b1841b5318684a1ddd71adcfc3fc12edda651fa08193baf1023776e0b7f3b0a5",
+      "bytes": 4934,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "eea35f7da58a3f95a8c9093f9d631997172a0c31",
+        "sha256": "04065120c22cb3fdc6c86c2779e00d7cc422c54223f22cc4f8b310c78e82e18b",
+        "bytes": 4916
+      }
+    },
+    {
+      "path": "backend/src/features/seer/night-stages.ts",
+      "mode": "100644",
+      "sha256": "e4c29cad27223aae30dc360293c57401f1119133aa20582c97704cdf6cd6a828",
+      "bytes": 10487,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "5650a5aed8813d734a72cd919b3138e8a3e28bc5",
+        "sha256": "a045b657be7cf2215130201f76b08eec20cac9683547a1127c0057fde9578f34",
+        "bytes": 10484
+      }
+    },
+    {
+      "path": "backend/src/features/seer/profile.ts",
+      "mode": "100644",
+      "sha256": "878dee92a018264f4ef93eb354f4b04c0a431406149b7c8125a810f970baba21",
+      "bytes": 4215,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "c344dcebca6331d54d64909efecdcc4c43c240a1",
+        "sha256": "b3eef80f8783c4f10fc82a0ab3e40c720b96a15a6a5486855c0279f9ea145397",
+        "bytes": 4216
+      }
+    },
+    {
+      "path": "backend/src/features/seer/state-slot.ts",
+      "mode": "100644",
+      "sha256": "77dc519a7bede9f548a1e6af65487fd57aa99389437b798db17bd5b3bf92852f",
+      "bytes": 3772,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "8d89fa82c565d7a5e0b2577111425845dd123327",
+        "sha256": "f52c66c3f530fbb58af65923e50a78bae4bd31c8945a8014b5412b260f9b80b3",
+        "bytes": 3760
+      }
+    },
+    {
+      "path": "backend/src/features/self-destruct/commit.ts",
+      "mode": "100644",
+      "sha256": "8eae905e00c041a9faa90bba241e730a7df1ab0dbca3b77aa033cbea2cea9136",
+      "bytes": 4223,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "b3424e9321e484637f30b315848183eb2b8b7d7a",
+        "sha256": "46486dfd715a709733831c5a98809bfb4a853e98ae466338502a38e0f28d5465",
+        "bytes": 4211
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/badge.ts",
+      "mode": "100644",
+      "sha256": "cbffe86731f84712a964d2ed4a1322fd92bcedfc061159d5e67947045accf29d",
+      "bytes": 7914,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "7686d6ce5a5c608e13d1f0b92a443e1bce68aa8f",
+        "sha256": "86521b5fb0350e241afe849088d3dc699b30135fa4b3affccc4ac4b81eb3c329",
+        "bytes": 7902
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/election.ts",
+      "mode": "100644",
+      "sha256": "3eed286c8133070b6ab4877fa788cabedf69127ca028ea78ff8c601827e0bf45",
+      "bytes": 17224,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "388311e50fe4f33f26bc1c42d57ca8c0f655e92b",
+        "sha256": "05962e9ae2c1e25b82b6345c09f46b7d38198b60a2c1a810d560719fd5a131e3",
+        "bytes": 17220
+      }
+    },
+    {
+      "path": "backend/src/features/witch/night-stages.ts",
+      "mode": "100644",
+      "sha256": "360d90ab3e88505839abe144017c8c6f80dbdfa6eac43f411f03958761040ad1",
+      "bytes": 10760,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "2862fc5f132fa925ce906a4f98cd8dfc62d598e6",
+        "sha256": "a44922ac47bf9c124f0e84dac127ccba527f4797ee9513c528552f0300446eb9",
+        "bytes": 10751
+      }
+    },
+    {
+      "path": "backend/src/features/witch/policies.ts",
+      "mode": "100644",
+      "sha256": "3c60af52e7045870ca2eca6760d01666454ee8e08e6166bbc754f30cd22110bf",
+      "bytes": 1665,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "53b3ec1d7bbabf2705791ddd2ac43175dcfb0cc7",
+        "sha256": "06394fb5dc2f3115707062709dd929f896995f88e82012cc088992b6afe2d7aa",
+        "bytes": 1659
+      }
+    },
+    {
+      "path": "backend/src/features/witch/state-slot.ts",
+      "mode": "100644",
+      "sha256": "c52d753fd468f1eba2f995e8aa081249121b1ea89fa91bfce66e219c70f80d2a",
+      "bytes": 4621,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "957bd0aa660adaacce7d97326c1a47e0854a51ab",
+        "sha256": "6b62f0a61a541a2023ab06722ff6b1b5240b710d98e1358e71062bf384f17c37",
+        "bytes": 4591
+      },
+      "successor": {
+        "kind": "two-additional-import-type-sites",
+        "original138AfterSHA256": "d0cf230b53e4ed87050c7459d86122ff91ab9aa7d28d6838d6bb53745e30be48",
+        "finalAfterSHA256": "c52d753fd468f1eba2f995e8aa081249121b1ea89fa91bfce66e219c70f80d2a",
+        "originalProofNotRerun": true
+      }
+    },
+    {
+      "path": "backend/src/features/wolf-king/ports.ts",
+      "mode": "100644",
+      "sha256": "e181c8eb37e0afe3bd7b71f79858f842c2520e69dba36b6705132cfe1defa20a",
+      "bytes": 439,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "79ce7cbec5672faaf429845d2714364c469f4beb",
+        "sha256": "6cfcd9448a30fce86bf0797552ac62d81d9df976d5e2c78231af30a9543e6fd6",
+        "bytes": 444
+      }
+    },
+    {
+      "path": "backend/src/features/wolf-king/profile.ts",
+      "mode": "100644",
+      "sha256": "f0367d12121fb78ce97ec084ce8d3db26ad6e52716cff91cdadf489d387b5840",
+      "bytes": 3627,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "8abfa89130ea680aab71fc6410706b27260d14f1",
+        "sha256": "262eb9c83c0e5500d2872d578d5f86ed35d960dda48e0eb7b395d0c2eff5281f",
+        "bytes": 3651
+      }
+    },
+    {
+      "path": "backend/src/features/wolf-team/permissions.ts",
+      "mode": "100644",
+      "sha256": "d7b75fc70211978d146053c027df6bc459db00afa27062754a0ef17d6037fc50",
+      "bytes": 5511,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "f2c7f61b2ba97b39b93afca93a3a30e778563d20",
+        "sha256": "2345e4474964c00e9016e809de0b689d7d60d663000ce828cb0637e716ac4904",
+        "bytes": 5487
+      }
+    },
+    {
+      "path": "backend/src/features/wolf/night-stages.ts",
+      "mode": "100644",
+      "sha256": "1b19391711ddd1c9fd098596873ef0da075c1b9a1b5c2b511679860cd8130b8b",
+      "bytes": 14689,
+      "responsibility": "module-reference-only",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "aacde2b0bc1a0113fab2db4183f0a21c851ed2aa",
+        "sha256": "b6f929c26076f243e0d315321fa5e6d6b18ecb77d7b3823b2b53c9782a162532",
+        "bytes": 14688
+      }
+    },
+    {
+      "path": "backend/src/features/animal-dream/wolf-team-ports.ts",
+      "mode": "100644",
+      "sha256": "4720f1542f6ab6f33839f8c80488acd92e53b41cb6f7f2f29c14f11ab1dd4ef4",
+      "bytes": 565,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/cupid/vote-ports.ts",
+      "mode": "100644",
+      "sha256": "b4bd05a9228f2766e5695e5e3a8aa1a3e1b223379a423a212800122b3976a179",
+      "bytes": 579,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/death-actions/gift-gun-ports.ts",
+      "mode": "100644",
+      "sha256": "9506529be695694e08bbe1dee9370a36e673637bdb71229ebf0f7f15e3dce7bf",
+      "bytes": 718,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/death-actions/policy-ports.ts",
+      "mode": "100644",
+      "sha256": "06df36b59fbda15ed0dcc48d27ced05103c27431b3bfc7987fd0ce4c9e0f6438",
+      "bytes": 637,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/death-actions/tool-ports.ts",
+      "mode": "100644",
+      "sha256": "dfccd3a8942e922f5aad3093308b388bad2b06eda008f73134fc67561c2704c7",
+      "bytes": 659,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/death-actions/gift-hook-ports.ts",
+      "mode": "100644",
+      "sha256": "5529be645cdf4821c852f1779227c2d80dfaeb274c46c6cc6a5a02b3e193c691",
+      "bytes": 605,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/death-actions/native-resource-ports.ts",
+      "mode": "100644",
+      "sha256": "db09589863db326465b7284e2802ca9aac40919804dac9fcd506f7882b6eff88",
+      "bytes": 926,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/death-actions/settlement-ports.ts",
+      "mode": "100644",
+      "sha256": "f43dcd22e9ef299817ac4ecae12a8f13fba8ee9ff0abd94dc60a16220563681e",
+      "bytes": 639,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/debater/vote-ports.ts",
+      "mode": "100644",
+      "sha256": "4e334adaf048e7371cac49658bfa3884ad35cf82986796fe5ecedbc84d0bd1d2",
+      "bytes": 643,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/demon-hunter/death-frame-ports.ts",
+      "mode": "100644",
+      "sha256": "f851d76cdae62c89e888a4b76986d5b49dbd14ee2be4876035cdb7ec4fa2b87e",
+      "bytes": 736,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/fragrant-pair-seer/pair-data-ports.ts",
+      "mode": "100644",
+      "sha256": "2802f6cc81441a75429b394459c9c66fafe90ff8d7d22f3cbaa7bd74a4c45e56",
+      "bytes": 619,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/ghost-bride/wedding-ports.ts",
+      "mode": "100644",
+      "sha256": "521bd10b54fe5809b4105de8b59ae34b06da5ec4f847c72064505195b8dc8eab",
+      "bytes": 751,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/last-words/grant-ports.ts",
+      "mode": "100644",
+      "sha256": "a61058dbddca197cc27cae5a4fe86b3f06b8a9ebb14ab972e698ece8b0f4e4c0",
+      "bytes": 780,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/last-words/window-ports.ts",
+      "mode": "100644",
+      "sha256": "7540c99a75896079baa5da01f463d0ac0217a69f2c24b68e0a4d75e38fbd3ca2",
+      "bytes": 626,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/inventory-ports.ts",
+      "mode": "100644",
+      "sha256": "2e1b69b817f8c029260a358e0d218702736a2939d072fd28c25a68feb4c52aa6",
+      "bytes": 1125,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/native-installation-ports.ts",
+      "mode": "100644",
+      "sha256": "a520c3ea5024445beab78b05ea1c3d2c6cc2b41835cbbee3fa48528a33f0c963",
+      "bytes": 669,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/scope-ports.ts",
+      "mode": "100644",
+      "sha256": "b0c878e1794b2c340a02ebf212d0156fabf80adeb88bc4adc1b10a7683ed5d7b",
+      "bytes": 655,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/actor-query-ports.ts",
+      "mode": "100644",
+      "sha256": "c9e46336246c35a5a524959b5e520a78d2efb172c7a1c189c337d9cdd022e335",
+      "bytes": 794,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/grant-ports.ts",
+      "mode": "100644",
+      "sha256": "ac9c87bc8eca14243d31a2445d725f9442aa3d7f0bde9127c79af90e60170b43",
+      "bytes": 643,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/history-ports.ts",
+      "mode": "100644",
+      "sha256": "313774281dd8492f09b30c5bf6c219b62bd54c766882ce4bc067b3ac531ef467",
+      "bytes": 744,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/night-abilities/recipient-stage-ports.ts",
+      "mode": "100644",
+      "sha256": "26450b66da89aea01ac41fcb3e8f46a014e652cbaf4863c9f8c5fe0874443488",
+      "bytes": 720,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/nightmare/wolf-team-ports.ts",
+      "mode": "100644",
+      "sha256": "d68d821c594e13d6e6296cb36051dc33ae45c5de8e995bfc6742caf08a49ca96",
+      "bytes": 604,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/turn-ports.ts",
+      "mode": "100644",
+      "sha256": "8e4360f4fb948e1f581b290490563dbb35a92f7751faaf3b020d86dcae0f6126",
+      "bytes": 641,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/shelter-slot-ports.ts",
+      "mode": "100644",
+      "sha256": "686c983436fe269ac50df8737ba98f68fdf72b9d5b1c8f8f18a343ea68517b5c",
+      "bytes": 727,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/scholar-mentor/wolf-team-ports.ts",
+      "mode": "100644",
+      "sha256": "62c00a299e86720558ce262c8050ac15f6ff286b1faa7e417f0ce0f1c8f5d099",
+      "bytes": 615,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/self-destruct/selection-ports.ts",
+      "mode": "100644",
+      "sha256": "70eae30f601040aa2071aa485d6e30320c70349fb13d3943d34cdbe3f0f361ac",
+      "bytes": 690,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/choice-ports.ts",
+      "mode": "100644",
+      "sha256": "6d653fbc19c33f1aea96c35d993807f3214b4057834017e6f4dfd71c623b2790",
+      "bytes": 647,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/badge-ports.ts",
+      "mode": "100644",
+      "sha256": "03cf258e50e99c8e699517679bfb7d633e19765445adcb138d7001ac13c85cf2",
+      "bytes": 712,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/election-ports.ts",
+      "mode": "100644",
+      "sha256": "ed498165806daeabd1fe1dedd5d95f4aa7a99ec56edbb76e4d6e179dc90667fb",
+      "bytes": 596,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/speaking-order-ports.ts",
+      "mode": "100644",
+      "sha256": "734eb958da0979e7c80546b9c4c2ef2f94eaf0253f6bf1a747e38270a961b191",
+      "bytes": 651,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/tool-ports.ts",
+      "mode": "100644",
+      "sha256": "5f6331110e39a2d6c7e7c66347b1cdf8bb1692bf8dcdc68ab10f28a9b6b9b9b5",
+      "bytes": 604,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/sheriff/validation-ports.ts",
+      "mode": "100644",
+      "sha256": "bd6b7196981d80d1054229a9c7443f32fa0ae4529f10a0542b13d4130ce1f976",
+      "bytes": 598,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/wall-notes/author-ports.ts",
+      "mode": "100644",
+      "sha256": "b1cafb842f848766f43dee75afd25d3d0d9355458bde817aff08c67308e7d2eb",
+      "bytes": 632,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/wall-notes/window-ports.ts",
+      "mode": "100644",
+      "sha256": "af22147cee994059bf8cc5a70ef0e36aaae7d42091f01bbdf01bd9ff0f9224e5",
+      "bytes": 632,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/witch/potion-policy-ports.ts",
+      "mode": "100644",
+      "sha256": "d6f92ccaef0d5a2b29a64c0ec2de7ca2ea39972b6f0465ca97c43cd879c938e2",
+      "bytes": 638,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/src/features/wolf-team/action-ports.ts",
+      "mode": "100644",
+      "sha256": "544793ec82f04b9e40abe6c0b9af15cedfd4b3b799855009f815cc080574a4a6",
+      "bytes": 722,
+      "responsibility": "bounded-public-interface",
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "mode": "100644",
+      "sha256": "f02ad1ffa4c2ee006894b1445c8c2fea7eb75b23d075437a1cc779e1beb4a1c4",
+      "bytes": 5748,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "a97f688c162463994030d0fb7a483d83d2cb7283",
+        "sha256": "ad9b8625121f553085f845fc7c5a1de511cc22cb323dd40272610b73d2c062bd",
+        "bytes": 5665
+      }
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "mode": "100644",
+      "sha256": "3f7bf3250d425005b03b72f7d0de450ade0749f78407f3af79e829aedfea5bf9",
+      "bytes": 11183,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "1be770a31914b0b53dfe96ad2945c3f8e5be325c",
+        "sha256": "3bfa01d90ff2d4e45c4d0f06b21e862285023ade71b390ed0c37a74e22de9387",
+        "bytes": 11129
+      }
+    },
+    {
+      "path": "backend/tests/unit/recording/request-delivery.test.ts",
+      "mode": "100644",
+      "sha256": "424335ce3b96c8bec5de1520c9fda6936fcc05cd59d69fc94478b94d2a4830cb",
+      "bytes": 7142,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "a941271993d56d5a266441df15ca835ab870061b",
+        "sha256": "d5185629e6645af7036d61fc96034b7464f46710b812368da91f8e16d295ea95",
+        "bytes": 6980
+      }
+    },
+    {
+      "path": "backend/tests/unit/recording/checkpoint-contributions.test.ts",
+      "mode": "100644",
+      "sha256": "018ec602f55367731135ad3c19a8f9e7f051d6c5b8ff3c5342760087d308eba6",
+      "bytes": 6680,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "19f026b98b412e3208a16068ba5f69eee776c0d2",
+        "sha256": "d0d201a661f47a4f337b16431ffcd29c8f054c981a1e676f9a0a5e9b5ad6511d",
+        "bytes": 6640
+      }
+    },
+    {
+      "path": "backend/tests/unit/engine/noble-night-handoff.test.ts",
+      "mode": "100644",
+      "sha256": "4363103ed264c0194ecbaecc50158f81222c26082f72cf4485fa13586cac2af4",
+      "bytes": 5146,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "d20c70d1035746beec12f0ac4a3c12118c95a070",
+        "sha256": "156576c1a77402a4866cefe66fcc0216f00dcb82914a7e740347771dcfde8096",
+        "bytes": 5136
+      }
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "mode": "100644",
+      "sha256": "e52a38e5591d2793bdf8d338ec2e6257ba49d49d08d50ec465055cdef127fca9",
+      "bytes": 12637,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "d8a3a76a06a8cd63da9d8f3ce9a5ab72675eb788",
+        "sha256": "74f74719a439be86df11a641531ee03ef66f7a797cca39dc843df2b7c1de25b5",
+        "bytes": 10478
+      }
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "mode": "100644",
+      "sha256": "22c26dcc039798bbf02fe0d2634a96f9996b53969b484de108c212917e440d2e",
+      "bytes": 28154,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "07e689dfefb87e78777dbeecd94050a68018dfc2",
+        "sha256": "d52ca6fd9129a8fefe95db5cc2d2af903e53f153f84068696a822e0d826ef812",
+        "bytes": 25515
+      }
+    },
+    {
+      "path": "backend/tests/integration/filesystem/runner-recording-lifecycle.test.ts",
+      "mode": "100644",
+      "sha256": "76e2c9214d9247a82269d0eadbe7bb30e1e83f4d0ef4492fecc4b37b31c8f83e",
+      "bytes": 5350,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "191d79687731331652216f600e554f15583e2db2",
+        "sha256": "e6b5d09194720471d24bce0fd4ff8c496643e3c586b3a3fe1410968c905f3f93",
+        "bytes": 5111
+      }
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "mode": "100644",
+      "sha256": "3a936a0e1743c64f98733c23269974e0e9d250509ffad0445c8b98ab98e62837",
+      "bytes": 15017,
+      "responsibility": "test-input-and-oracle-adaptation",
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "ee5185ec71e4a24cdb0dcafb689261d48bd41cd6",
+        "sha256": "7cd693158a1848404eab3f5c05599d8be06ebd2bd9a3a87383e9e843a5377963",
+        "bytes": 14842
+      }
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/domain/world.ts",
+      "mode": "100644",
+      "blob": "35ead18d1d431599d1ddab53e16925e73faf853a",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1",
+      "bytes": 7409
+    },
+    {
+      "path": "backend/src/domain/request-lease.ts",
+      "mode": "100644",
+      "blob": "bb07e981175394c7b8ffba3a53742e4c23f9e792",
+      "sha256": "ac7550bea1ab2266d05f0bd1cfe756c99f50487c6ced6c5a13d26f963671a76e",
+      "bytes": 21651
+    },
+    {
+      "path": "backend/src/rulesets/roles/builtin-contributions.ts",
+      "mode": "100644",
+      "blob": "b1d4b59b32f300892ad8e39766e11cce67b34c83",
+      "sha256": "d84c99cb960925b6c2cba8480c80b4208ad2cf363d24b65dbb1c06670b439a96",
+      "bytes": 5843
+    },
+    {
+      "path": "backend/src/recording/verification/assembly.ts",
+      "mode": "100644",
+      "blob": "d3f1adbea77d8337bf3058c8e542c585fb911871",
+      "sha256": "6562db957983918b09b40ea3a0cea587542a2a5062fdbf36b443b1456eb3a507",
+      "bytes": 3306
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "mode": "100644",
+      "blob": "1db3708bdf5e34aaf5d393060424791653fc908a",
+      "sha256": "10ba7cf9cd731870188c012d25f57264535cbf77655370e8da24a785afb65476",
+      "bytes": 27726
+    }
+  ],
+  "scope": {
+    "path": "docs/history/acceptance/c46-public-contracts.scope.json",
+    "sha256": "7f67f7a79482cf09ff193d0ce05e7a21e22162f37a6b00d221bdc1fa23846fa9",
+    "bytes": 56158
+  },
+  "document": {
+    "path": "docs/history/acceptance/c46-public-contracts.md",
+    "sha256": "e6e74f85b24b660ee123d0a50cb598fdd315543a659f7cc8554a1de6b1b56a14",
+    "bytes": 8275
+  },
+  "receipts": {
+    "path": "docs/history/acceptance/c46-public-contracts.receipts.json",
+    "sha256": "c3205c656f369b74511f850cd159916dbe24ddc6a48282e155cd948e88bbac55",
+    "bytes": 9643
+  },
+  "archive": {
+    "path": "docs/history/acceptance/c46-public-contracts.tar.gz",
+    "sha256": "58b412df982c91669a66ddc6bc095aab915af32af00b6bd1bb7fd2ffe58f82d3",
+    "bytes": 1902527,
+    "members": 654,
+    "uncompressedBytes": 11410822
+  },
+  "archiveManifest": {
+    "archiveMember": "manifest.json",
+    "candidatePath": "/tmp/awa-c46-public-contracts-packet/archive-manifest.json",
+    "sha256": "4e56e3d9efcae4c5d43712e6299ec9ad64914be31747342280c346e11973ee52",
+    "manifestSelfExcludedFromItsPayloadList": true
+  },
+  "sourceIdentityDigest": "531e6403f22756175cdfee19ff59d362149a69bad137c4fac284d6e65723ac7d",
+  "actualProofSHA256": "467a05b0c5c191d1cfd110a2ff216c8b361952643d46f8edcfe9947faf92597f",
+  "finalStrictStage": {
+    "rootActualTerminal": "3e0236",
+    "exitCode": 0,
+    "counts": {
+      "files": 3336,
+      "violations": 0,
+      "failures": 0,
+      "remainingDebt": 0,
+      "clearedDebt": 1779
+    },
+    "inputHash": "65c48ea1da80ee2578e812566ed6ce03ecaed7f479127fd5fa45543d1e3d0ecd"
+  },
+  "reviewBoundary": "封包作者参与公共面与证明工具准备；不称非作者全算法独审。包内两份prepared peer原样保留，发布材料经Root读取与末审另绑；追加类型真实收据和并行输入有独立阶段，不改原封包。",
+  "notCompleted": [
+    "C47 all42 same-input acceptance",
+    "P9/C48 matrix publication",
+    "unrelated A-heavy/1622format results"
+  ],
+  "strictParallelInputs": {
+    "path": "docs/history/acceptance/c46-public-contracts.parallel-inputs.json",
+    "sha256": "ffd4937fd57401ca65836dd7fc9f466741c9da5b92b289dee45d3e60c7f15d38",
+    "bytes": 10450,
+    "meaning": "另批格式说明的执行时点输入，不列入123源或本提交源改动。"
+  }
+}

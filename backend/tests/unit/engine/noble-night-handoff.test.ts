@@ -87,7 +87,7 @@ for (const interrupt of ["before-stage", "after-stage"] as const)
     expect(executed).toBe(interrupt === "after-stage");
     expect(checkpointNobleBodyAuthority(game.world, false).nights[0]?.status).toBe("aborted");
     const receiver = nobleNightReceiver(result);
-    expect(Object.keys(receiver)).toEqual(["closeNormally", "abort"]);
+    expect(Object.keys(receiver)).toEqual(["closeNormally", "abort", "expire"]);
     expect(() => receiver.abort(game.world, 1)).not.toThrow();
     expect(JSON.stringify(result)).toBe('{"interrupted":true}');
   });

@@ -13,8 +13,8 @@ import { DeathCause } from "../../domain/deaths";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
 
-import { recordNightAbilityUse } from "../night-abilities/abilities";
-import { captureNightAbilityScope } from "../night-abilities/ability-scope";
+import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
+import { captureNightAbilityScope } from "../night-abilities/scope-ports";
 import { resolveInspection } from "../../engine/inspection";
 import { ROLE_INSPECTION_STATE_SLOT } from "../role-inspection/ports";
 import { recordRoleInspectionNightCommit } from "../role-inspection/night-commit-ports";

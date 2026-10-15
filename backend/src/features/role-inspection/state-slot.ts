@@ -13,9 +13,9 @@ import type {
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 import type { InspectionResult } from "@ai-werewolf-arena/game-contract";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/abilities";
+import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
-import { commitPreparedNativeAbility } from "../night-abilities/abilities";
+import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 
 export function setRoleInspectionState(
   role: RoleComponent,
@@ -45,7 +45,7 @@ export function recordRoleInspection(
 
 /** 纯白／狼巫仍逐次读取 ability.state 三次，并只追加一次结果历史。 */
 export function recordAbilityRoleInspection(
-  ability: import("../night-abilities/abilities").NightAbilityReadView<"role_check">,
+  ability: import("../night-abilities/inventory-ports").NightAbilityReadView<"role_check">,
   targetId: EntityId,
   day: number,
   result: Extract<InspectionResult, { kind: "role" }>,

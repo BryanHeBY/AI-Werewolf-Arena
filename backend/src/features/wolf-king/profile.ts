@@ -5,17 +5,17 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
-import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/death-action-policy";
+import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/policy-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, permitsDeathShot } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import { getWolfKingState, setWolfKingState, createWolfKingState } from "../death-actions/native-death-gun-resources";
+import { getWolfKingState, setWolfKingState, createWolfKingState } from "../death-actions/native-resource-ports";
 import {
   DEATH_SHOT_TOOL_SPECS,
   DEATH_SHOT_REPAIR,
   validateDeathShot,
-} from "../death-actions/death-shot";
-import { resolveNativeDeathShots } from "../death-actions/native-death-shot-settlement";
+} from "../death-actions/tool-ports";
+import { resolveNativeDeathShots } from "../death-actions/settlement-ports";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 
 /** AWA 狼王 1.0：普通狼队权限，加一次满足死亡来源条件的开枪机会。 */

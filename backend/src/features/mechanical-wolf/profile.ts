@@ -10,7 +10,7 @@ import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/death-shot";
+import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/tool-ports";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
 import { canMechanicalKnife } from "./inheritance";
 import { mechanicalDeathHook } from "./death-hook";

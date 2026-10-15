@@ -20,7 +20,7 @@ import {
 import type { World } from "../../domain/world";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { awakenedSkillForNight, getAwakenedState } from "./state";
-import { findNightAbility, type NightAbilityReadView } from "../night-abilities/abilities";
+import { findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
 
 export interface AwakenedOwnerScope {
   readonly world: World;

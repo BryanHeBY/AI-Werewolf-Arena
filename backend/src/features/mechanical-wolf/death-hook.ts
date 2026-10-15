@@ -6,9 +6,9 @@
  */
 import { Role, permitsDeathShot } from "../../domain/model";
 import type { DeathHook } from "../../engine/hooks/registry";
-import { resolveNativeDeathShots } from "../death-actions/native-death-shot-settlement";
+import { resolveNativeDeathShots } from "../death-actions/settlement-ports";
 import { getMechanicalState } from "./state";
-import { createMechanicalGunReader } from "../death-actions/native-death-gun-resources";
+import { createMechanicalGunReader } from "../death-actions/native-resource-ports";
 
 export const mechanicalDeathHook: DeathHook = (world, ids, sources, choose, events, context) => {
   const readGun = createMechanicalGunReader({ get getMechanicalState() { return getMechanicalState; } });

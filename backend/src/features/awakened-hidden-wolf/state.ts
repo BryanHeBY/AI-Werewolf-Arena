@@ -21,8 +21,8 @@ import type { PlayerAwakenedState } from "@ai-werewolf-arena/game-contract/playe
 import type { RoleId } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "../../domain/identity";
-import { copyAbilityData } from "../night-abilities/abilities";
-import { createLearnedNativeGun, armAwakenedNativeGun } from "../death-actions/native-death-gun-resources";
+import { copyAbilityData } from "../night-abilities/inventory-ports";
+import { createLearnedNativeGun, armAwakenedNativeGun } from "../death-actions/native-resource-ports";
 
 const validDay = (day: number) =>
   Number.isSafeInteger(day) && day >= 1 && day < Number.MAX_SAFE_INTEGER;

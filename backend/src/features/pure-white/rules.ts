@@ -10,7 +10,7 @@ import type { RoleComponent } from "../../domain/components/role";
 import type { World } from "../../domain/world";
 import type { ToolRule } from "../../engine/actions/validation-contracts";
 import type { RoleProfile } from "../../rulesets/roles/contracts";
-import { activeNightAbility } from "../night-abilities/abilities";
+import { activeNightAbility } from "../night-abilities/inventory-ports";
 
 export function pureWhiteInspectionTargets(
   world: World,

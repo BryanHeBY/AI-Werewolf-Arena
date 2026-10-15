@@ -14,9 +14,9 @@ import {
   originalPoisonIntent,
 } from "../../domain/night-effects";
 import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
-import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../night-abilities/abilities";
-import { installNativeAbility } from "../night-abilities/ability-changes";
-import { setNightAbilityStartDay } from "../night-abilities/abilities";
+import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../night-abilities/inventory-ports";
+import { installNativeAbility } from "../night-abilities/native-installation-ports";
+import { setNightAbilityStartDay } from "../night-abilities/inventory-ports";
 import { canAwakenedKnife } from "./inheritance";
 import {
   beginAwakenedNight,

@@ -18,7 +18,7 @@ import {
 } from "../../domain";
 import { ToolGateway } from "../../engine/actions/tool-gateway";
 import type { ActionRequestConstructionPort } from "../../domain/actions";
-import { commitSheriffBadgeChoice, badgeSuccessorEligible } from "../sheriff/badge";
+import { commitSheriffBadgeChoice, badgeSuccessorEligible } from "../sheriff/badge-ports";
 import { getDebaterState, consumeDebaterChallenge, recordDebaterChoice } from "./state";
 import {
   openDebate,

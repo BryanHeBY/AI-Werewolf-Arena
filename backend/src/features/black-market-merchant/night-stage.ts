@@ -14,9 +14,9 @@ import { aliveLifeVersion } from "../../domain/components/alive";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import type { World } from "../../domain/world";
 import type { NightStageHandler } from "../../engine/night/contracts";
-import { grantNightAbility } from "../night-abilities/night-ability-grants";
-import { grantDeathGun } from "../death-actions/death-abilities";
-import { recipientAbilityStage } from "../night-abilities/recipient-ability-stage";
+import { grantNightAbility } from "../night-abilities/grant-ports";
+import { grantDeathGun } from "../death-actions/gift-gun-ports";
+import { recipientAbilityStage } from "../night-abilities/recipient-stage-ports";
 import { canBlackMarketTrade, getBlackMarketState } from "./state";
 const committed = new WeakMap<World, Set<number>>();
 export function hasBlackMarketNightCommit(world: World, day: number): boolean {

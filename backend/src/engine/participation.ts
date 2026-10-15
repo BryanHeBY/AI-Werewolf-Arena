@@ -6,7 +6,7 @@ import { COMPONENT, type RoleComponent, type World, type EntityId } from "../dom
 import { type RoleCatalog } from "../rulesets/roles/catalog";
 import { getDefaultRoleCatalog } from "../rulesets/roles/role-catalog-assembly";
 
-import { debateVoteBlocked } from "../features/debater/authority";
+import { debateVoteBlocked } from "../features/debater/vote-ports";
 
 export function canVoteExile(
   world: World,

@@ -6,8 +6,8 @@
  * 先于 ability.state getter，写失败保留已提交前缀。借用、过期已支付效果与首死归 frame。
  */
 import type { ShelterState } from "@ai-werewolf-arena/game-contract";
-import { copyAbilityData, type NightAbilityReadView } from "../night-abilities/abilities";
-import { commitPreparedNativeAbility } from "../night-abilities/abilities";
+import { copyAbilityData, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 import type { RoleComponent } from "../../domain/components/role";
 import { createShelterState, readShelterState, selectShelter, projectShelterState } from "./shelter-state";
 

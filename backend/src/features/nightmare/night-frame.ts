@@ -22,7 +22,7 @@ import {
   livingNightLife,
   type NightLifeScope,
 } from "../../domain/night-effects";
-import type { NightAbilityReadView } from "../night-abilities/abilities";
+import type { NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { getNightmareShadowState, NIGHTMARE_SHADOW_STATE_SLOT } from "./state-slot";
 import { nightmareFearTargets } from "./targets";
 

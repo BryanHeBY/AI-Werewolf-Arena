@@ -7,7 +7,7 @@ import {
   hasRecipientNightCommit,
   recordRecipientNightCommit,
   recipientAbilityStage,
-} from "../night-abilities/recipient-ability-stage";
+} from "../night-abilities/recipient-stage-ports";
 export const hasLuckyNightCommit = (world: World, day: number) =>
   hasRecipientNightCommit(world, day, "lucky");
 export const recordLuckyNightCommit = (world: World, day: number) =>

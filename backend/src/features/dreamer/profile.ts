@@ -11,7 +11,7 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, Phase } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import { activeNightAbility } from "../night-abilities/abilities";
+import { activeNightAbility } from "../night-abilities/inventory-ports";
 import { getDreamerState, setDreamerState } from "./ports";
 import { isAliveTarget } from "../../engine/actions/validation-contracts";
 import { numberOrNull } from "../../agents/tool-repair/helpers";

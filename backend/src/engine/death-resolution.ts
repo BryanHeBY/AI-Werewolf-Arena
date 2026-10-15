@@ -54,17 +54,17 @@ import {
 import type { RoleComponent } from "../domain/components/role";
 import { World } from "../domain/world";
 import { ToolGateway } from "./actions/tool-gateway";
-import { getDefaultLastWordsMechanism } from "../features/last-words/last-words-mechanism";
-import type { LastWordsGrantContext } from "../features/last-words/last-words-mechanism";
-import { LastWordsWindow } from "../features/last-words/window";
-import { resolveSheriffBadge } from "../features/sheriff/badge-choice";
+import { getDefaultLastWordsMechanism } from "../features/last-words/grant-ports";
+import type { LastWordsGrantContext } from "../features/last-words/grant-ports";
+import { LastWordsWindow } from "../features/last-words/window-ports";
+import { resolveSheriffBadge } from "../features/sheriff/choice-ports";
 import { GameActionRequestFactory } from "./actions/action-request-factory";
 import { EventRegistry } from "./events/event-registry";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
 import {
   firstDeathGuns,
   finishDeathGuns,
-} from "../features/death-actions/death-abilities";
+} from "../features/death-actions/gift-gun-ports";
 
 /** 连续结算死亡波，动作阶段仍由 PhaseManager 推进。 */
 export class DeathResolution {

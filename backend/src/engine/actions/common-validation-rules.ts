@@ -2,12 +2,12 @@
  * 提供通用工具的原校验集合：匿名墙检查作者／窗口，辩论检查参与者／阶段，放逐票检查票权与候选。输入为网关上下文和工具参数；返回既有 RuleError 或 null，不在校验中提交资源或阶段。
  */
 import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import { authorizedWallAuthor } from "../../features/wall-notes/authority";
-import { prohibitsLoversVote } from "../../features/cupid/relation";
+import { authorizedWallAuthor } from "../../features/wall-notes/author-ports";
+import { prohibitsLoversVote } from "../../features/cupid/vote-ports";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：定义通用工具的校验规则。 */
 import { ToolRuleMap } from "./validation-contracts";
-import { debateAuthority } from "../../features/debater/authority";
+import { debateAuthority } from "../../features/debater/vote-ports";
 import { sameOriginalParticipant as sameDebateParticipant } from "../../domain/original-participant";
 import { Phase } from "../../domain";
 import { canBeExiled, canVoteExile } from "../participation";

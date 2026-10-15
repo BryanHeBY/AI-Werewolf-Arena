@@ -22,8 +22,8 @@ import { getSeerState, setSeerState } from "./ports";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
 import { SEER_NIGHT_STAGES } from "./night-stages";
 import { SEER_TOOL_SPECS } from "./tool-specs";
-import { activeNightAbility } from "../night-abilities/abilities";
-import { luckyTargetAllowed } from "../night-abilities/night-action-history";
+import { activeNightAbility } from "../night-abilities/inventory-ports";
+import { luckyTargetAllowed } from "../night-abilities/history-ports";
 
 const parameters = z.strictObject({
   targetPolicy: z.enum(SEER_TARGET_POLICIES).default("awa_alive_v1"),

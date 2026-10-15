@@ -18,8 +18,8 @@ import { getGuardState, setGuardState } from "./ports";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
 import { GUARD_NIGHT_STAGES } from "./night-stages";
 import { GUARD_TOOL_SPECS } from "./tool-specs";
-import { activeNightAbility } from "../night-abilities/abilities";
-import { luckyTargetAllowed } from "../night-abilities/night-action-history";
+import { activeNightAbility } from "../night-abilities/inventory-ports";
+import { luckyTargetAllowed } from "../night-abilities/history-ports";
 
 const parameters = z.strictObject({
   repeatPolicy: z.enum(GUARD_REPEAT_POLICIES).default("awa_last_action_v1"),

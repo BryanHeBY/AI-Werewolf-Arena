@@ -17,7 +17,7 @@ import { safeRecordLogicOp } from "../../recording/session/recorder";
 import type { ActionRequestFactoryConstructorPort } from "../../domain/actions";
 import type { NightStageContext } from "../../engine/night/contracts";
 import { resolveInspection } from "../../engine/inspection";
-import { recordOwnNightAction } from "../night-abilities/night-action-history";
+import { recordOwnNightAction } from "../night-abilities/history-ports";
 import { demonNativeNightActor, openDemonNativeNightFrame } from "./authority";
 import {
   bindDemonNativeNightRequest,

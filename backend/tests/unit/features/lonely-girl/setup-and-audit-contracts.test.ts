@@ -201,7 +201,7 @@ for (const target of [2, 4, 6])
       original = role(g),
       originalLife = g.world.getComponent(1, COMPONENT.Alive);
     expect(victory(g).affiliations).toEqual([]);
-    await setup(g, async (r) => {
+    await setup({ ...g, config: g.boardConfig }, async (r) => {
       expect(r.allowedTools).toEqual(["choose_admired_player"]);
       expect(r.context.turn_constraints.min_valid_actions).toBe(1);
       expect(r.context.turn_constraints.max_valid_actions).toBe(1);
@@ -248,35 +248,72 @@ for (const raw of [
 ])
   test(`mandatory invalid choice ${JSON.stringify(raw)} closes no membership/fallback`, async () => {
     const g = fixture();
-    await expect(setup(g, async () => raw as ToolCall | null)).rejects.toThrow();
+    await expect(setup({ ...g, config: g.boardConfig }, async () => raw as ToolCall | null)).rejects.toThrow();
     expect(projectLonelyGirlSetup(g.world)?.status).toBe("failed");
     expect(getLonelyGirlState(role(g))?.remaining).toBe(0);
     expect(victory(g).affiliations).toEqual([]);
     expect(g.events).toEqual([]);
     expect(hasActiveLonelyGirl(g.world)).toBe(false);
     expect(lonelyGirlReady(g.world)).toBe(false);
-    await expect(setup(g)).rejects.toThrow();
+    await expect(setup({ ...g, config: g.boardConfig })).rejects.toThrow();
   });
 
 for (const change of changes)
-  test(`late ${change.name}: cancel with no fact or new state consumption`, async () => {
-    const g = fixture(),
-      old = getLonelyGirlState(role(g))!;
-    expect(
-      await setup(g, async () => {
+  test(
+    change.name === "config changed"
+      ? "late raw config mutation leaves the frozen original board and admired choice valid"
+      : `late ${change.name}: cancel with no fact or new state consumption`,
+    async () => {
+      const g = fixture(),
+        old = getLonelyGirlState(role(g))!,
+        canonical = g.boardConfig,
+        originalBoard = structuredClone(canonical);
+      if (change.name === "config changed") {
+        // 错误身份仍用独立原raw对象明确拒绝；正常调用必须自己提供已绑定的canonical。
+        const foreign = fixture();
+        let providerCalls = 0;
+        await expect(setup(foreign, async () => {
+          providerCalls++;
+          return choose();
+        })).rejects.toThrow("lonely_girl_setup_unavailable");
+        expect(providerCalls).toBe(0);
+        expect(foreign.events).toEqual([]);
+        expect(getLonelyGirlState(role(foreign))?.remaining).toBe(1);
+        expect(projectLonelyGirlSetup(foreign.world)?.status).toBe("pending");
+      }
+      const selected = await setup({ ...g, config: canonical }, async () => {
         change.apply(g);
         return choose();
-      }),
-    ).toBe(false);
-    expect(projectLonelyGirlSetup(g.world)?.status).toBe("cancelled");
-    expect(g.events).toEqual([]);
-    expect(old.remaining).toBe(0);
-    expect(old.choice).toBeNull();
-    expect(lonelyGirlBinding(g.world)?.membership).toBeNull();
-    expect(hasActiveLonelyGirl(g.world)).toBe(false);
-    if (change.name === "actor replacement state")
-      expect(getLonelyGirlState(role(g))?.remaining).toBe(1);
-  });
+      });
+      if (change.name === "config changed") {
+        // 原调用方boardSize变化不进入冻结执行视图；手写库存、选择、关系归属和事实预期独立保留。
+        expect(g.config).not.toBe(canonical);
+        expect(g.config.boardSize).toBe(7);
+        expect(g.boardConfig).toBe(canonical);
+        expect(g.boardConfig).toEqual(originalBoard);
+        expect(Object.isFrozen(canonical)).toBe(true);
+        expect(selected).toBe(true);
+        expect(projectLonelyGirlSetup(g.world)?.status).toBe("complete");
+        expect(old).toEqual({ policy: LONELY_GIRL_POLICY, remaining: 0, choice: { day: 1, targetId: 2 } });
+        expect(lonelyGirlBinding(g.world)?.membership).toBe(Camp.Wolf);
+        expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
+        expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
+        expect(g.events.map(({ type, payload }) => ({ type, payload }))).toEqual([
+          { type: "lonely_girl_admired_chosen", payload: { policy: LONELY_GIRL_POLICY, actorId: 1, day: 1, targetId: 2, camp: Camp.Wolf } },
+        ]);
+      } else {
+        expect(selected).toBe(false);
+        expect(projectLonelyGirlSetup(g.world)?.status).toBe("cancelled");
+        expect(g.events).toEqual([]);
+        expect(old.remaining).toBe(0);
+        expect(old.choice).toBeNull();
+        expect(lonelyGirlBinding(g.world)?.membership).toBeNull();
+      }
+      expect(hasActiveLonelyGirl(g.world)).toBe(false);
+      if (change.name === "actor replacement state")
+        expect(getLonelyGirlState(role(g))?.remaining).toBe(1);
+    },
+  );
 
 for (const [id, field] of [
   [1, "role"],
@@ -289,7 +326,7 @@ for (const [id, field] of [
     const g = fixture();
     let reads = 0;
     expect(
-      await setup(g, async () => {
+      await setup({ ...g, config: g.boardConfig }, async () => {
         Object.defineProperty(field === "camp" ? g.world.getComponent(id, COMPONENT.Camp)! : role(g, id), field, {
           get() {
             reads++;
@@ -309,7 +346,7 @@ for (const field of ["policy", "remaining", "choice"] as const)
     const g = fixture();
     let reads = 0;
     expect(
-      await setup(g, async () => {
+      await setup({ ...g, config: g.boardConfig }, async () => {
         Object.defineProperty(getLonelyGirlState(role(g))!, field, {
           get() {
             reads++;
@@ -346,7 +383,7 @@ test("original target Camp replacement before setup cancels before factory/provi
   g.world.addComponent(2, COMPONENT.Camp, createCampComponent(Camp.Wolf));
   let calls = 0;
   expect(
-    await setup(g, async () => {
+    await setup({ ...g, config: g.boardConfig }, async () => {
       calls++;
       return choose();
     }),
@@ -367,7 +404,7 @@ test("post-gateway cancellation cannot install affiliation", async () => {
   try {
     expect(
       await setup(
-        g,
+        { ...g, config: g.boardConfig },
         async () => choose(),
         () => true,
         gateway,
@@ -394,7 +431,7 @@ test("factory-side revocation is checked before provider", async () => {
   });
   try {
     expect(
-      await setup(g, async () => {
+      await setup({ ...g, config: g.boardConfig }, async () => {
         calls++;
         return choose();
       }),
@@ -432,12 +469,12 @@ test("cross World request does not gain authority", async () => {
   const wait = new Promise<void>((resolve) => {
     release = resolve;
   });
-  const running = setup(a, async (r) => {
+  const running = setup({ ...a, config: a.boardConfig }, async (r) => {
     original = r;
     await wait;
     return choose();
   });
-  await setup(b, async (r) => {
+  await setup({ ...b, config: b.boardConfig }, async (r) => {
     expect(
       new ActionReception(b.world).validate(original!, "choose_admired_player", { target_id: 2 })
         .ok,
@@ -453,7 +490,7 @@ test("cross World request does not gain authority", async () => {
 
 test("Girl state/fact never reveals target camp to actor or other seats", async () => {
   const g = fixture();
-  await setup(g);
+  await setup({ ...g, config: g.boardConfig });
   for (const id of g.world.entityIds()) {
     const feed = buildAgentVisibleEventFeed(g.world, g.events, id);
     expect(feed).toHaveLength(id === 1 ? 1 : 0);
@@ -475,7 +512,7 @@ test("Girl state/fact never reveals target camp to actor or other seats", async 
 
 test("Girl membership survives both deaths and target future change; City still counts real Good Girl", async () => {
   const g = fixture();
-  await setup(g);
+  await setup({ ...g, config: g.boardConfig });
   g.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
   g.world.addComponent(2, COMPONENT.Camp, createCampComponent(Camp.Good));
   g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
@@ -511,7 +548,7 @@ test("pending/active/closed setup and ordinary Night cannot be bypassed; reentry
     ),
   ).rejects.toThrow("lonely_girl_setup_before_night_required");
   expect(() => g.phaseManager.jumpTo(Phase.Day)).toThrow();
-  await setup(g, async () => {
+  await setup({ ...g, config: g.boardConfig }, async () => {
     const before = g.phaseManager.getSnapshot(),
       count = g.phaseManager.getEvents().length;
     await expect(
@@ -524,7 +561,7 @@ test("pending/active/closed setup and ordinary Night cannot be bypassed; reentry
     expect(() => g.phaseManager.jumpTo(Phase.Voting)).toThrow();
     expect(g.phaseManager.getSnapshot()).toEqual(before);
     expect(g.phaseManager.getEvents()).toHaveLength(count);
-    await expect(setup(g)).rejects.toThrow();
+    await expect(setup({ ...g, config: g.boardConfig })).rejects.toThrow();
     return choose();
   });
   openLonelyGirlNight(g.world, 1)();
@@ -612,7 +649,7 @@ test("shared strict full/lean readers reject extra fields/getters and never need
 for (const change of ["mutation", "getter"] as const)
   test(`completed original nested choice ${change} cannot pollute authority, DTO or checkpoint`, async () => {
     const g = fixture();
-    await setup(g);
+    await setup({ ...g, config: g.boardConfig });
     const original = getLonelyGirlState(role(g))!.choice!;
     let reads = 0;
     if (change === "mutation") (original as { targetId: number }).targetId = 6;
@@ -698,19 +735,19 @@ for (const status of ["cancelled", "failed"] as const)
     if (status === "cancelled")
       expect(
         await setup(
-          g,
+          { ...g, config: g.boardConfig },
           async () => choose(),
           () => false,
         ),
       ).toBe(false);
     else
       await expect(
-        setup(g, async () => {
+        setup({ ...g, config: g.boardConfig }, async () => {
           throw new Error("strict_failure");
         }),
       ).rejects.toThrow("strict_failure");
     const before = captureCheckpoint(g.world, g.phaseManager.getSnapshot(), 0, false, 0);
-    await expect(setup(g)).rejects.toThrow("lonely_girl_setup_unavailable");
+    await expect(setup({ ...g, config: g.boardConfig })).rejects.toThrow("lonely_girl_setup_unavailable");
     expect(projectLonelyGirlSetup(g.world)?.status).toBe(status);
     expect(captureCheckpoint(g.world, g.phaseManager.getSnapshot(), 0, false, 0)).toEqual(before);
     expect(g.events).toEqual([]);

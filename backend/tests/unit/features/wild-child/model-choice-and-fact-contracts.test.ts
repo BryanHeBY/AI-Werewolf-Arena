@@ -117,7 +117,7 @@ test("finite public schema/default/roundtrip and internal policy agree; unsuppor
     fixture([Role.WildChild, Role.Wolf, Role.Cupid, Role.Villager, Role.Villager, Role.Villager]),
   ).toThrow("role_combination_not_supported");
   expect(() => fixture(deck, { wildChild: { policy: "invented" as never } })).toThrow(
-    "wild_child_policy_invalid",
+    "rule_parameters_invalid",
   );
   expect(() =>
     fixture([
@@ -138,7 +138,7 @@ for (const target of [2, 4])
   test(`model ${target}: mandatory one-time choice learns neither role nor faction`, async () => {
     const g = fixture();
     expect(
-      await setup(g, async (r) => {
+      await setup({ ...g, config: g.boardConfig }, async (r) => {
         expect(r.context.stage).toBe("wild_child");
         expect(r.context.turn_constraints.min_valid_actions).toBe(1);
         expect(r.context.allow_fallback).toBe(false);
@@ -155,7 +155,7 @@ for (const target of [2, 4])
       activeFromNight: null,
     });
     expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
-    expect(await setup(g)).toBe(true);
+    expect(await setup({ ...g, config: g.boardConfig })).toBe(true);
     expect(g.events).toHaveLength(1);
     expect(buildAgentVisibleEventFeed(g.world, g.events, 1)).toHaveLength(1);
     expect(buildAgentVisibleEventFeed(g.world, g.events, target)).toEqual([]);
@@ -164,7 +164,7 @@ for (const target of [2, 4])
 for (const target of [1, 0, 7])
   test(`invalid model ${target} closes the required window without fallback`, async () => {
     const g = fixture();
-    await expect(setup(g, async () => choose(target))).rejects.toThrow();
+    await expect(setup({ ...g, config: g.boardConfig }, async () => choose(target))).rejects.toThrow();
     expect(wildChildReady(g.world)).toBe(false);
     expect(hasActiveWildChild(g.world)).toBe(false);
     expect(g.events).toEqual([]);
@@ -173,13 +173,13 @@ for (const target of [1, 0, 7])
 
 test("null required action and original provider error both release authority and preserve the original failure", async () => {
   const g = fixture();
-  await expect(setup(g, async () => null)).rejects.toThrow("wild_child_required_choice_missing");
+  await expect(setup({ ...g, config: g.boardConfig }, async () => null)).rejects.toThrow("wild_child_required_choice_missing");
   const h = fixture(),
     err = new TypeError("original");
   Object.freeze(getWildChildState(role(h)));
   let caught: unknown;
   try {
-    await setup(h, async () => {
+    await setup({ ...h, config: h.boardConfig }, async () => {
       throw err;
     });
   } catch (e) {
@@ -191,18 +191,60 @@ test("null required action and original provider error both release authority an
 });
 
 for (const [name, mutate] of Object.entries(changes))
-  test(`late ${name} withdrawal performs no choice or faction change`, async () => {
-    const g = fixture();
-    expect(
-      await setup(g, async () => {
+  test(
+    name === "config"
+      ? "late raw config mutation leaves the frozen original board and model choice valid"
+      : `late ${name} withdrawal performs no choice or faction change`,
+    async () => {
+      const g = fixture(),
+        canonical = g.boardConfig,
+        originalBoard = structuredClone(canonical);
+      if (name === "config") {
+        // 独立新 World 明确检验错误配置身份；不能把helper改为默认忽略调用方的config。
+        const foreign = fixture();
+        let providerCalls = 0;
+        await expect(setup(foreign, async () => {
+          providerCalls++;
+          return choose(2);
+        })).rejects.toThrow("wild_child_setup_unavailable");
+        expect(providerCalls).toBe(0);
+        expect(foreign.events).toEqual([]);
+        expect(getWildChildState(role(foreign))?.remaining).toBe(1);
+        expect(getWildChildState(role(foreign))?.status).toBe("pending");
+      }
+      const selected = await setup({ ...g, config: canonical }, async () => {
         mutate(g);
         return choose(2);
-      }),
-    ).toBe(false);
-    expect(g.events).toEqual([]);
-    expect(wildChildReady(g.world)).toBe(false);
-    expect(hasActiveWildChild(g.world)).toBe(false);
-  });
+      });
+      if (name === "config") {
+        // 原raw输入仍可改；不可变计划只使用已复制并冻结的同一板子，原选择因此仍合法。
+        expect(g.config).not.toBe(canonical);
+        expect(g.config.hooks.onDaybreak).toBe(!originalBoard.hooks.onDaybreak);
+        expect(g.boardConfig).toBe(canonical);
+        expect(g.boardConfig).toEqual(originalBoard);
+        expect(Object.isFrozen(canonical)).toBe(true);
+        expect(selected).toBe(true);
+        expect(getWildChildState(role(g))).toEqual({
+          policy: "awa_lui_meme_wild_child_v1",
+          remaining: 0,
+          status: "chosen",
+          choice: { day: 1, targetId: 2 },
+          eligibleNight: null,
+          activeFromNight: null,
+        });
+        expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
+        expect(g.events.map(({ type, payload }) => ({ type, payload }))).toEqual([
+          { type: "wild_child_model_chosen", payload: { actorId: 1, day: 1, targetId: 2 } },
+        ]);
+        expect(wildChildReady(g.world)).toBe(true);
+      } else {
+        expect(selected).toBe(false);
+        expect(g.events).toEqual([]);
+        expect(wildChildReady(g.world)).toBe(false);
+      }
+      expect(hasActiveWildChild(g.world)).toBe(false);
+    },
+  );
 
 test("opaque factory request is World-bound and only deadline copies inherit it", async () => {
   const g = fixture(),
@@ -255,7 +297,7 @@ for (const field of ["role", "camp", "privateState"] as const)
     const g = fixture();
     let reads = 0;
     expect(
-      await setup(g, async () => {
+      await setup({ ...g, config: g.boardConfig }, async () => {
         const value = field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)!.camp : role(g, 2)[field];
         Object.defineProperty(field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)! : role(g, 2), field, {
           get() {

@@ -169,6 +169,8 @@ test("death-action candidate IDs survive strict request serialization", async ()
   const { trace, request } = fixture();
   request.allowedTools = ["shoot"];
   request.context.stage = "hunter_shot";
+  // 严格归档需要字面死亡尝试关联编号；本例只验证候选序列化，不模拟运行时开枪许可。
+  request.context.death_action_id = 1;
   request.context.turn_constraints.required_any_tools = ["shoot"];
   request.context.shoot_candidates = [2, 3];
   await trace.decide(request, {

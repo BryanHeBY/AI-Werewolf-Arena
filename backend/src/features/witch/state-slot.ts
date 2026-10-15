@@ -10,8 +10,8 @@ import type { WitchState, WitchReadState } from "@ai-werewolf-arena/game-contrac
 
 import type { RoleComponent } from "../../domain/components/role";
 import { WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/abilities";
-import { commitPreparedNativeAbility } from "../night-abilities/abilities";
+import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 
 export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchReadState {
   return commitPreparedNativeAbility(roleComp, "potion", WITCH_STATE_SLOT.create(state));
@@ -35,7 +35,7 @@ export function resetWitchNightState(state: WitchReadState, currentDay: () => nu
 
 /** 保留左侧 state 捕获及右侧重复 state 读取；规则短路与写入时点不合并。 */
 export function refreshWitchSelfHeal(
-  ability: import("../night-abilities/abilities").NightAbilityReadView<"potion">,
+  ability: import("../night-abilities/inventory-ports").NightAbilityReadView<"potion">,
   day: number,
 ): void {
   const state = ability.state;
@@ -46,7 +46,7 @@ export function refreshWitchSelfHeal(
 
 /** caller 在此写入前保持原 owner 当前性／来源检查；状态合法不替代该许可。 */
 export function closeWitchPotionTurn(
-  ability: import("../night-abilities/abilities").NightAbilityReadView<"potion">,
+  ability: import("../night-abilities/inventory-ports").NightAbilityReadView<"potion">,
   day: number,
 ): void {
   (ability.state as WitchState).potionTurnClosedDay = day;
@@ -64,7 +64,7 @@ export function consumeWitchPoison(state: WitchReadState): void {
 
 /** 受赠毒药保持 postfix 减量与第二次 state 读取，不能与原生药瓶付款合并。 */
 export function consumeRecipientPoison(
-  ability: import("../night-abilities/abilities").NightAbilityReadView<"potion">,
+  ability: import("../night-abilities/inventory-ports").NightAbilityReadView<"potion">,
 ): void {
   (ability.state as WitchState).poison--;
   (ability.state as WitchState).poisonUsedThisNight = true;

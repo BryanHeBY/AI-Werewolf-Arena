@@ -5,7 +5,7 @@
  * 构造、玩家、校验或事件异常原样传播；已发事实不回滚，警徽赋权仍由警徽所有者提交，不以端口授予候选资格。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { weddingBadgeSwallowed } from "../ghost-bride/authority";
+import { weddingBadgeSwallowed } from "../ghost-bride/wedding-ports";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import { COMPONENT } from "../../domain/components/names";
 import { IdentityComponent } from "../../domain/entities/player";

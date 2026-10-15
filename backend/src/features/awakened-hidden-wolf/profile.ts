@@ -11,14 +11,14 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/death-shot";
+import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/tool-ports";
 import {
   ROLE_INSPECTION_TOOL,
   roleInspectionTargets,
   validateRoleInspection,
 } from "../role-inspection/contribution-ports";
 // 共用查验贡献仅提供原工具与目标／校验函数；觉醒技能的原实例、学习与夜资格仍由本族 owner 决定。
-import { findNightAbility } from "../night-abilities/abilities";
+import { findNightAbility } from "../night-abilities/inventory-ports";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
 import { canAwakenedKnife } from "./inheritance";
 import { awakenedDeathHook } from "./death-hook";

@@ -15,7 +15,7 @@ import type { RandomDraws } from "../../domain/random";
 import { COMPONENT } from "../../domain/components/names";
 import { Camp, Role, Phase } from "../../domain/identity";
 import { snapshotPlainData } from "../../domain/plain-data";
-import { abilityStatus, type NightAbilityReadView } from "../night-abilities/abilities";
+import { abilityStatus, type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { plainJson } from "./owned-state-data";
 import { PAIR_STATE_SLOT_CONTRACT, type PairStateSlot } from "./pair-state-slot";
 import {

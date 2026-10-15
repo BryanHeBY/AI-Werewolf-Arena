@@ -27,7 +27,7 @@ import {
 import type { ActionRequestFactoryConstructorPort } from "../../domain/actions";
 import type { ToolGateway } from "../../engine/actions/tool-gateway";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
-import { recordNightAbilityUse, type NightAbility } from "../night-abilities/abilities";
+import { recordNightAbilityUse, type NightAbility } from "../night-abilities/inventory-ports";
 import {
   openDemonWitchTurnFrame,
   demonHunterFreezeDay,

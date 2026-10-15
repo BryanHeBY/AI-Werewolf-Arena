@@ -44,7 +44,7 @@ import {
   weddingSetup,
 } from "../features/ghost-bride/ports";
 import { publishInitialIdentityDeal } from "../features/initial-identity/ports";
-import { WallNotesWindow } from "../features/wall-notes/window";
+import { WallNotesWindow } from "../features/wall-notes/window-ports";
 import { GameActionRequestFactory } from "./actions/action-request-factory";
 import { TERMINAL_VICTORY_POLICY } from "../rulesets/terminal-victory-policy";
 import { settleRedMoonExpiry } from "../rulesets/red-moon-expiry-settlement";
@@ -74,7 +74,7 @@ import { ConditionRegistry } from "../domain/registries/condition-registry";
 import { DamageResolutionSystem } from "../domain/systems/damage-resolution-system";
 import { World } from "../domain/world";
 import { ToolGateway } from "./actions/tool-gateway";
-import { findSheriffId } from "../features/sheriff/badge";
+import { findSheriffId } from "../features/sheriff/badge-ports";
 import { DeathResolution } from "./death-resolution";
 import { EventRegistry } from "./events/event-registry";
 import { DayPipeline } from "./phases/day-pipeline";
@@ -82,7 +82,7 @@ import { NightPipeline } from "./phases/night-pipeline";
 import { VotingPipeline } from "./phases/voting-pipeline";
 import { RoleRegistry } from "../domain/registries/role-registry";
 import { COMPONENT } from "../domain/components/names";
-import { commitSelfDestructSelection } from "../features/self-destruct/commit";
+import { commitSelfDestructSelection } from "../features/self-destruct/selection-ports";
 import { settleKnightDay } from "../rulesets/knight-day-settlement";
 import { prepareAnimalExileDeaths, captureAnimalExileFeedback, captureOrdinaryExileFeedback, prepareOrdinaryExileDeaths } from "../rulesets/exile-death-preparation";
 import {

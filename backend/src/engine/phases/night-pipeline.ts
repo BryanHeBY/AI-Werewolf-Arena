@@ -19,7 +19,7 @@ import { prepareNightPipelineLifecycle, type NightLifecycleHandoff } from "../..
 
 import { assertNightSetupReady, assertNightReadable } from "../../rulesets/night-readability";
 import { RulePlan } from "../../rulesets/rule-plan";
-import { bindNightAbilityActorQuery } from "../../features/night-abilities/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../features/night-abilities/actor-query-ports";
 import { isFragrantPairBoard, fragrantAuthoritySnapshot } from "../../features/fragrant-pair-seer/ports";
 import { createNobleNightAbortReceiver, attachNobleNightReceiver, checkpointNobleBodyAuthority, isNobleBodyBoard } from "../../features/noble-secret-body/ports";
 import { animalAuthoritySnapshot } from "../../features/animal-dream/ports";

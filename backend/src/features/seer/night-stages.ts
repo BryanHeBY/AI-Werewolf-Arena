@@ -16,11 +16,11 @@ import { Camp, Phase, Role } from "../../domain/model";
 import { NightStageHandler } from "../../engine/night/contracts";
 import { getSeerState } from "./ports";
 import { resolveInspection } from "../../engine/inspection";
-import { activeNightAbility } from "../night-abilities/abilities";
-import { recordNightAbilityUse } from "../night-abilities/abilities";
-import { captureNightAbilityScope } from "../night-abilities/ability-scope";
+import { activeNightAbility } from "../night-abilities/inventory-ports";
+import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
+import { captureNightAbilityScope } from "../night-abilities/scope-ports";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
-import { recordOwnNightAction, luckyTargetAllowed } from "../night-abilities/night-action-history";
+import { recordOwnNightAction, luckyTargetAllowed } from "../night-abilities/history-ports";
 
 import { captureInspectionIdentity, commitFoxInspection } from "../cursed-fox/inspection-ports";
 

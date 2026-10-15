@@ -19,9 +19,9 @@ import {
 } from "../../domain/model";
 import { RoleRegistry } from "../../domain/registries/role-registry";
 import { ToolGateway } from "../actions/tool-gateway";
-import { electSheriffIfNeeded } from "../../features/sheriff/election";
-import { buildSpeakerOrder, chooseSpeakerDirection } from "../../features/sheriff/speaking-order";
-import { findSheriffId } from "../../features/sheriff/badge";
+import { electSheriffIfNeeded } from "../../features/sheriff/election-ports";
+import { buildSpeakerOrder, chooseSpeakerDirection } from "../../features/sheriff/speaking-order-ports";
+import { findSheriffId } from "../../features/sheriff/badge-ports";
 import { World } from "../../domain/world";
 import { GameActionRequestFactory } from "../actions/action-request-factory";
 import { isSelfDestructWindowEnabled } from "../../rulesets/self-destruct-window";
