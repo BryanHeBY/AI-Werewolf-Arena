@@ -17,9 +17,11 @@
 
 ## 写下必要边界
 
-接口就地说明原引用、可写字段、getter／Proxy接受、短路与callee／参数顺序；说明首语义写／付款、后续失败prefix、paid与未付、关闭／幂等／取消。维护头和重要逻辑用有效中文，稳定机器ID／许可证／指令／类型tag不翻。
+接口就地说明原引用、可写字段、getter／Proxy接受、短路与callee／参数顺序；说明首语义写／付款、后续失败prefix、paid与未付、关闭／幂等／取消。
 
-新增请求复用实际RequestLease／RequestDelivery。选择context pins与动态day时明确新读点和错误政策。非法alias／wrong-owner不毒有效original；不能把某族共同关闭政策照搬给所有协议。真正全部领域付款完才true，事实晚抛保true，partial false保前缀，原cleanup优先。跨await和最后getter后的首写前检查都要有真实消费者。
+维护文件头、接口和重要逻辑时使用中文注释。文件头交代职责、输入输出与资源归属；数据结构说明字段约束、原引用或副本、可写范围和生命周期；关键逻辑解释执行顺序、异常前缀及容易误改的不变量。注释与实现一同维护，避免逐行复述代码。稳定机器 ID、许可证、指令和类型 tag 保持原文。
+
+新增请求复用实际RequestLease／RequestDelivery。选择context pins与动态day时明确新读点和错误政策。非法alias／wrong-owner不毒有效original；不能把某族共同关闭政策照搬给所有协议。完成标志由具体窗口定义：合法空选择、无库存窗口或已处理拒绝也可能完成，不能统一解释为全部资源已付款。已设为 true 后的晚事实异常保留 true；部分完成时保留 false 和已有前缀，原 cleanup 优先。跨await和最后getter后的首写前检查都要有真实消费者。
 
 ## 闭环而不是登记即支持
 
