@@ -53,3 +53,41 @@ test("translation owner exemption covers direct zhCN values and no adjacent code
       { file, text: "冒充词典", line: 1 },
     ]);
 });
+
+test("role name dictionary admission is restricted to the canonical table Chinese values", () => {
+  // 字面正例覆盖当前私有表的 const／satisfies 形状；手写拒绝清单保同文件业务与其它字段可见。
+  const source = [
+    'const roleNames = [{ id: "wolf", names: { "zh-CN": "狼人", en: "Werewolf" } }, { id: "身份字段硬编码", names: { "zh-CN": `规划名称`, en: "英文中夹中文", nested: { "zh-CN": "嵌套硬编码" } }, label: "表内业务硬编码" }] as const satisfies readonly Entry[];',
+    'const label = "词典邻近业务";',
+    'function helper() { const roleNames = [{ names: { "zh-CN": "局部冒名" } }]; return "函数业务硬编码"; }',
+  ].join("\n");
+  expect(
+    collectChineseLiterals("packages/game-text/src/role-names.ts", source).map(
+      (entry) => entry.text,
+    ),
+  ).toEqual([
+    "身份字段硬编码",
+    "英文中夹中文",
+    "嵌套硬编码",
+    "表内业务硬编码",
+    "词典邻近业务",
+    "局部冒名",
+    "函数业务硬编码",
+  ]);
+  for (const file of [
+    "packages/game-text/src/unregistered.ts",
+    "packages/game-catalog/src/role-names.ts",
+  ])
+    expect(
+      collectChineseLiterals(
+        file,
+        'const roleNames = [{ names: { "zh-CN": "非所有者冒名" } }];',
+      ).map((entry) => entry.text),
+    ).toEqual(["非所有者冒名"]);
+  expect(
+    collectChineseLiterals(
+      "packages/game-text/src/role-names.ts",
+      'let roleNames = [{ names: { "zh-CN": "可变表冒名" } }];',
+    ).map((entry) => entry.text),
+  ).toEqual(["可变表冒名"]);
+});

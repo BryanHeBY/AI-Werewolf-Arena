@@ -2,7 +2,8 @@
  * 负责应用与共享展示源码的 AST 中文字面扫描。输入为固定公开源码根及已审查的文件／文本／次数例外；
  * 输出为未获准中文字面和过期例外诊断，CLI 只报告失败，不改源码、词典或例外清单。
  * 仓库入口逐段拒绝符号链接根，遍历时跳过链接项；私有配置与认证不作为扫描输入。
- * 唯一翻译所有者清单只豁免其 exported const zhCN 对象的直接中文值，不豁免相邻代码或整个目录。
+ * 消息词典只放行登记文件中 exported const zhCN 的直接值；角色名称只放行唯一 roleNames 表中 names["zh-CN"] 的直接值。
+ * 两种许可均按 AST 数据位置识别，相邻业务、键名、其他字段和目录仍接受普通扫描。
  */
 import ts from "typescript";
 import path from "node:path";
@@ -57,6 +58,38 @@ export function collectChineseLiterals(file, source) {
       }
     }
   }
+  /** @type {Set<import("typescript").ObjectLiteralExpression>} */
+  const roleNameObjects = new Set();
+  // 名称唯一归 game-text：只识别该文件顶层 const roleNames 数组的直接条目及 names 对象。
+  // 不把整个名称模块当词典，不放行 id、en、额外字段、局部同名变量或返回文案。
+  if (file === "packages/game-text/src/role-names.ts") {
+    for (const statement of parsed.statements) {
+      if (
+        !ts.isVariableStatement(statement) ||
+        !(statement.declarationList.flags & ts.NodeFlags.Const)
+      )
+        continue;
+      for (const declaration of statement.declarationList.declarations) {
+        if (!ts.isIdentifier(declaration.name) || declaration.name.text !== "roleNames") continue;
+        let value = declaration.initializer;
+        while (value && (ts.isAsExpression(value) || ts.isSatisfiesExpression(value)))
+          value = value.expression;
+        if (!value || !ts.isArrayLiteralExpression(value)) continue;
+        for (const entry of value.elements) {
+          if (!ts.isObjectLiteralExpression(entry)) continue;
+          for (const property of entry.properties) {
+            if (
+              ts.isPropertyAssignment(property) &&
+              ts.isIdentifier(property.name) &&
+              property.name.text === "names" &&
+              ts.isObjectLiteralExpression(property.initializer)
+            )
+              roleNameObjects.add(property.initializer);
+          }
+        }
+      }
+    }
+  }
   /** @type {ChineseLiteral[]} */
   const found = [];
   /** @param {import("typescript").Node} node */
@@ -70,13 +103,17 @@ export function collectChineseLiterals(file, source) {
       ts.isJsxText(node)
     ) {
       const property = node.parent;
-      // 只放行登记 owner 中 zhCN 对象的直接 property 值；键名和相邻表达式仍走普通扫描。
+      // 只放行登记消息对象的直接值，或唯一名称表 names 对象中静态 "zh-CN" 属性的直接值。
+      // 字面必须仍是 initializer；键名、en 和相邻表达式均不继承词典许可。
       const translationValue =
         (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) &&
         ts.isPropertyAssignment(property) &&
         property.initializer === node &&
         ts.isObjectLiteralExpression(property.parent) &&
-        translationObjects.has(property.parent);
+        (translationObjects.has(property.parent) ||
+          (roleNameObjects.has(property.parent) &&
+            ts.isStringLiteral(property.name) &&
+            property.name.text === "zh-CN"));
       if (han.test(node.text) && !translationValue)
         found.push({
           file,
