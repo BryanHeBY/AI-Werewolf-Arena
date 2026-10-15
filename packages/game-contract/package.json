@@ -41,7 +41,8 @@
     "./facts/black-market": "./src/facts/black-market.ts",
     "./player-state-views": "./src/player-state-views.ts",
     "./role-inspection-policy": "./src/role-inspection-policy.ts",
-    "./night-ability-views": "./src/night-ability-views.ts"
+    "./night-ability-views": "./src/night-ability-views.ts",
+    "./facts/silence-elder": "./src/facts/silence-elder.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -163,6 +164,9 @@
       ],
       "night-ability-views": [
         "src/night-ability-views.ts"
+      ],
+      "facts/silence-elder": [
+        "src/facts/silence-elder.ts"
       ]
     }
   }
