@@ -613,3 +613,75 @@ test("failed sheriff assignment skips known dead seats and keeps bounded write o
   reverse.checkpoints.at(-1)!.players[2]!.badge.voteWeight = 2.25;
   rejects(reverse);
 });
+
+// 无操作日志的初批夜报只证明死亡成员，不提供完整原因；晚关系原因不能取消先前已完成的遗言。
+test("incomplete initial-night sources keep earlier same-wave last words after a later Charm addition", () => {
+  const record = words(Phase.Night, [DeathCause.WolfKill]);
+  record.operations = [];
+  // Hunter 1 与 Beauty 2 都在初批名单，双方遗言先于本族 hook 的 Charm 补因。
+  record.metadata.players[1]!.role = Role.WolfBeauty;
+  record.metadata.normalizedBoard.roleSetups = [
+    { role: Role.Hunter, count: 1 },
+    { role: Role.WolfBeauty, count: 1 },
+    { role: Role.Wolf, count: 1 },
+    { role: Role.Villager, count: 3 },
+  ];
+  for (const cp of record.checkpoints) cp.players[1]!.role = Role.WolfBeauty;
+  record.events[1]!.payload.deaths = [1, 2];
+  record.events.splice(3, 0, {
+    timestamp: 3,
+    type: "last_words_granted",
+    payload: { playerId: 2, phase: Phase.Day, day: 1 },
+  });
+  const second = request(
+    2,
+    "last_words",
+    { name: "speak", args: { text: "literal beauty words" } },
+    2,
+  );
+  second.openedAfterSettlement = 1;
+  second.settleOrder = 2;
+  record.decisions.push(second);
+  event(record, "last_words_spoken", {
+    playerId: 2,
+    phase: Phase.Day,
+    day: 1,
+    text: "literal beauty words",
+  });
+  event(record, "charm_death", { actorId: 2, targetId: 1 });
+  record.checkpoints[1]!.eventCount = record.events.length;
+  record.checkpoints[1]!.players[1]!.alive = false;
+  accepts(record);
+});
+
+// 完整原因和请求明示原因都不能借“不完整初批”旁路；没有正因的完整 Charm-only 仍非法。
+test("complete or declared Charm-only last-words sources remain rejected", () => {
+  rejects(words(Phase.Night, [DeathCause.Charm]));
+  const declared = words(Phase.Night, [DeathCause.WolfKill]);
+  declared.operations = [];
+  declared.decisions[0]!.request.context.death_sources = [DeathCause.Charm];
+  rejects(declared);
+});
+
+// 目标不在原夜死亡名单，直到 Charm 事实才新增 episode，不享有缺失初始原因的未知性。
+test("a newly derived Charm-only death cannot borrow the incomplete initial-night exception", () => {
+  const record = words(Phase.Night, [DeathCause.Charm]);
+  record.operations = [];
+  record.metadata.players[1]!.role = Role.WolfBeauty;
+  record.metadata.normalizedBoard.roleSetups = [
+    { role: Role.Hunter, count: 1 },
+    { role: Role.WolfBeauty, count: 1 },
+    { role: Role.Wolf, count: 1 },
+    { role: Role.Villager, count: 3 },
+  ];
+  for (const cp of record.checkpoints) cp.players[1]!.role = Role.WolfBeauty;
+  record.events[1]!.payload.deaths = [2];
+  record.events.splice(2, 0, {
+    timestamp: 3,
+    type: "charm_death",
+    payload: { actorId: 2, targetId: 1 },
+  });
+  record.checkpoints[1]!.eventCount = record.events.length;
+  record.checkpoints[1]!.players[1]!.alive = false;
+  rejects(record);
+});

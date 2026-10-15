@@ -400,6 +400,7 @@ function wordsAllowed(
   wave: number | undefined,
   policy: string,
   fragrantInitial: boolean,
+  mayHaveUnrecordedInitialNightSources = false,
 ): boolean | undefined {
   if (!["awa_initial_wave_v1", "netease_2017_day_and_first_night_v1"].includes(policy))
     return false;
@@ -415,7 +416,7 @@ function wordsAllowed(
   if (origin === Phase.Day && source.every((c) => c === DeathCause.DuelFailure)) return true;
   if (origin === Phase.Voting) return source.includes(DeathCause.Exile);
   if (origin !== Phase.Night || day !== 1) return false;
-  return source.some(
+  const hasPositiveNightCause = source.some(
     (c) =>
       [
         DeathCause.WolfKill,
@@ -428,6 +429,9 @@ function wordsAllowed(
       ].includes(c as DeathCause) ||
       (c === DeathCause.FragrantLink && fragrantInitial),
   );
+  // 未终档的原夜死亡名单可能尚无完整来源操作；后补 Charm 只是已知原因下界，
+  // 缺少正因不能倒推较早初批遗言非法。新派生目标、declared 完整来源与所有早期禁源仍按原规则拒绝。
+  return hasPositiveNightCause ? true : mayHaveUnrecordedInitialNightSources ? undefined : false;
 }
 function auditLastWords(e: Evidence): void {
   const policy = e.record.metadata.normalizedBoard.lastWords?.policy ?? "awa_initial_wave_v1";
@@ -485,6 +489,9 @@ function auditLastWords(e: Evidence): void {
               policy,
               !!e.record.metadata.normalizedBoard.fragrantPairSeer &&
                 (episode.wave === undefined || episode.wave === 0),
+              declared === undefined &&
+                !episode.completeSources &&
+                e.points[episode.start]?.event.type === "night_resolved",
             ) !== false
           );
         }),
@@ -512,6 +519,7 @@ function auditLastWords(e: Evidence): void {
             policy,
             !!e.record.metadata.normalizedBoard.fragrantPairSeer &&
               (episode.wave === undefined || episode.wave === 0),
+            !episode.completeSources && e.points[episode.start]?.event.type === "night_resolved",
           ) !== false,
         );
       const bucket = grants.get(key) ?? [];
