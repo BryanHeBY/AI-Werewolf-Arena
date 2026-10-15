@@ -1,0 +1,130 @@
+{
+  "sourceReadySHA256": "1cfe9eafba78ced23395aebcb8909784af5650375ed8b23c4593ac52fdc60099",
+  "firstExecutedSnapshotSHA256": "2b0c1271182899f94a3052c1dbe693d3ba8b8fe1f24a4adf8d4d386f612ed301",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+      "sha256": "b5d4607dcecac463047ed7a9ed5c2abdaa52ecf4efc03684e63eb599c4d03674",
+      "bytes": 2000
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "b897ff8e3e3d3c62da4dc64760922fa649afb3dbc24f559d57a2c5ec57898fe2",
+      "bytes": 10440
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "8276b3b1539f0d3211330763f247fb85511b40d47ef848cfe5be1b424e19281c",
+      "bytes": 7856
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "sha256": "8ef03f77f43b711f39becd86815e255fdcbf08280047b376c51fe7b6017dbca6",
+      "bytes": 7920
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts",
+      "sha256": "a146149c490556c4a61b6d0402fe9934ee7a7e49c7470a0a2e3b6c96413fcf28",
+      "bytes": 28717
+    }
+  ],
+  "changed": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+      "edits": 1,
+      "before": {
+        "typedNodes": 151,
+        "nodeArrays": 29,
+        "nonCommentLeaves": 191
+      },
+      "current": {
+        "typedNodes": 151,
+        "nodeArrays": 29,
+        "nonCommentLeaves": 191
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "actualRouteOutputDifferent": true,
+          "beforeSHA256": "d51911c4983056099567ed66117299cac60c4a820a641f799336244392bf920d",
+          "afterSHA256": "cd66c112c20501747ebfc150d946947e5f7e2ae4eb746d9a851302e2da3ac7cb",
+          "inverseSHA256": "d51911c4983056099567ed66117299cac60c4a820a641f799336244392bf920d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "actualRouteOutputDifferent": true,
+          "beforeSHA256": "3df5f1c750cbc06c02c92f1c5f3f42e7b3c82f77732ba0d4dbcaa5e2f26272fc",
+          "afterSHA256": "66a37e67f996bb797f88fcab48a76d6268070f935e0300c836cbf9803b1d1cd2",
+          "inverseSHA256": "3df5f1c750cbc06c02c92f1c5f3f42e7b3c82f77732ba0d4dbcaa5e2f26272fc"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts",
+      "edits": 2,
+      "before": {
+        "typedNodes": 5080,
+        "nodeArrays": 964,
+        "nonCommentLeaves": 6299
+      },
+      "current": {
+        "typedNodes": 5085,
+        "nodeArrays": 964,
+        "nonCommentLeaves": 6304
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "actualUnitTypeErasureSame": true,
+          "beforeSHA256": "b7b8bd54452d3112792673b80b4991a0e9061c36dccfefad7cc710bdb036954e",
+          "afterSHA256": "b7b8bd54452d3112792673b80b4991a0e9061c36dccfefad7cc710bdb036954e",
+          "inverseSHA256": "b7b8bd54452d3112792673b80b4991a0e9061c36dccfefad7cc710bdb036954e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "actualUnitTypeErasureSame": true,
+          "beforeSHA256": "189b15f2c03c3d183ea4841695d22647612ba6a037877ae64823d431807f463d",
+          "afterSHA256": "189b15f2c03c3d183ea4841695d22647612ba6a037877ae64823d431807f463d",
+          "inverseSHA256": "189b15f2c03c3d183ea4841695d22647612ba6a037877ae64823d431807f463d"
+        }
+      ]
+    }
+  ],
+  "unchanged": [
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "b897ff8e3e3d3c62da4dc64760922fa649afb3dbc24f559d57a2c5ec57898fe2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "8276b3b1539f0d3211330763f247fb85511b40d47ef848cfe5be1b424e19281c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "sha256": "8ef03f77f43b711f39becd86815e255fdcbf08280047b376c51fe7b6017dbca6"
+    }
+  ],
+  "unitDeclarations": 9,
+  "publicRoute": {
+    "package": {
+      "path": "packages/game-contract/package.json",
+      "sha256": "b2112b4b8493b3e2ed18a4b4a22c6876213bb87eb35b51b26471d789e29f6857"
+    },
+    "root": "packages/game-contract/src/index.ts",
+    "rootSHA256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce",
+    "rootNamedPhaseExport": "export {\n  Camp,\n  Role,\n  Phase,\n  ActionWindow,\n  KnightDuelWindow,\n  StatusMark,\n  WinCondition,\n  PotionType,\n  WitchSelfHealRule,\n} from \"./identity\";",
+    "physicalPhaseOwner": "packages/game-contract/src/identity.ts",
+    "ownerSHA256": "ba82896135a69f52555682e972cd6901097abb9c76a2943819a3328bd09ebd80",
+    "completeEnumSHA256": "bf46aeac62b12ffb53400e25fd913a6011773982336bf8fff42a3ca00cb68dd5",
+    "oldSubpathNotExported": true
+  },
+  "limits": [
+    "公共Phase路由修复会改变模块入口／加载，不声称 helper 整体旧新 raw 同；仅单元两纯type增量的两raw实际同。",
+    "首9失败全为模块加载，原测试正文未执行；后继Root才重执行9，头／主proof绿不重。",
+    "这里只执行纯文本／AST／输出，不加载产品、业务、类型或职责头。"
+  ]
+}

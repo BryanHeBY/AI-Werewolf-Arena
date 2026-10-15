@@ -1,7 +1,8 @@
 /**
  * 负责警徽授予、转移／销毁与票重提交。输入为原 World、警徽持有者、合格接任者及配置；
  * 输出为原警徽／VotingRight 写入和事件。先校验特殊板可读性，转移先销旧徽、重置旧票重，再安装接任状态、
- * 提交特殊 frame 和发表事实；晚失败保留此前前缀，不事务回滚或以替换组件自动恢复销毁警徽。
+ * 提交特殊 frame 后才通知可选的领域完成端口，再发表事实；晚失败保留此前前缀，通知不等于事实已发表。
+ * 不事务回滚或以替换组件自动恢复销毁警徽；未传完成端口的原调用路径保留原写入和返回。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { openDemonBadgeFrame, assertDemonBadgeReadable } from "../roles/demon_hunter/authority";
@@ -80,7 +81,12 @@ export function transferOrDestroySheriffBadge(
   );
 }
 
-/** 只把警徽交给当前合格目标；null／拒绝目标走销毁，旧徽与票重先写，晚错误不撤回。 */
+/**
+ * 只把警徽交给当前合格目标；null／拒绝目标走销毁，旧徽与票重先写，晚错误不撤回。
+ * onDomainCommitted 只在本分支全部组件／票重和特殊 frame 提交成功后调用；提前返回或部分失败不通知。
+ * 可选 beforeDomainCommit 只在原内部预检之后、首徽写之前核未付交付；默认旧 caller 不新增查询。
+ * 回调及事实错误继续向外传播，caller 自行保持许可关闭错误的原优先级；首写之后不重查已付款的资格。
+ */
 export function commitSheriffBadgeChoice(
   world: World,
   fromId: EntityId,
@@ -88,6 +94,8 @@ export function commitSheriffBadgeChoice(
   events: GameEvent[],
   targetId: EntityId | null,
   catalog?: RoleCatalog,
+  onDomainCommitted?: () => void,
+  beforeDomainCommit?: () => boolean,
 ): SheriffBadgeTransferResult | null {
   assertDemonBadgeReadable(world);
   const badge = world.getComponent(fromId, COMPONENT.Badge);
@@ -97,12 +105,15 @@ export function commitSheriffBadgeChoice(
   const policy = badge.handoffPolicy;
   const nextSheriffId =
     targetId !== null && badgeSuccessorEligible(world, fromId, targetId, catalog) ? targetId : null;
+  // 原 World／weight／policy／目标资格 getter 都已执行；仅新窗口在首写前核交付，非 true 不开始写徽。
+  if (beforeDomainCommit !== undefined && beforeDomainCommit() !== true) return null;
   // 旧徽先销毁并复位票重；接任安装、特殊frame提交或事件失败都保留此前前缀。
   badge.isSheriff = false;
   badge.destroyed = true;
   resetVotingWeight(world, fromId);
   if (nextSheriffId === null) {
     frame?.commit({ kind: "handoff", fromId, toId: null, weight, policy });
+    onDomainCommitted?.();
     events.push({
       timestamp: Date.now(),
       type: "sheriff_badge_destroyed",
@@ -121,6 +132,7 @@ export function commitSheriffBadgeChoice(
   const nextVoting = world.getComponent(nextSheriffId, COMPONENT.VotingRight);
   if (nextVoting) nextVoting.weight = weight;
   frame?.commit({ kind: "handoff", fromId, toId: nextSheriffId, weight, policy });
+  onDomainCommitted?.();
   events.push({
     timestamp: Date.now(),
     type: "sheriff_badge_transferred",

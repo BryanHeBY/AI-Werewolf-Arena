@@ -1,0 +1,62 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "1d42f118f80f3ffadcd35f367d8569ed20928bd7",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+      "sha256": "9bfb27511a71ae994416b70f5156eca94995cff6602cacb5775f2bc000061688"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "b897ff8e3e3d3c62da4dc64760922fa649afb3dbc24f559d57a2c5ec57898fe2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "8276b3b1539f0d3211330763f247fb85511b40d47ef848cfe5be1b424e19281c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "sha256": "8ef03f77f43b711f39becd86815e255fdcbf08280047b376c51fe7b6017dbca6"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts",
+      "sha256": "f2d0c5d4d49d9c496ec3e2fc8d02df30604f7a2e56a5f345bdb4263f70df2d18"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/ordinary-native-badge-request-completion-scope-final.json",
+    "sha256": "36fa57383ebd3b9fa9c8c65f1eafbfd57ee0a5580f7fae673afb513b243272ba"
+  },
+  "document": {
+    "path": "docs/refactor/ordinary-native-badge-request-completion.md",
+    "sha256": "d40683f7d8f8364c714911c27bb18331beee0f1fbb242a1e89c91b4d74ed2e0c"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ordinary-native-badge-request-completion-evidence.json",
+    "sha256": "e79e5612ba43ea507cf28ce556dc130a61c310a99ee640c387999bf1ef1fb942"
+  },
+  "integrity": {
+    "freshSources": 5,
+    "actualGitBefore": 3,
+    "controls": 6,
+    "artifactHashes": 51,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "role": "non-author",
+    "sourceReview": "Root完整普通夜lease、三生产正文delta与9真实新声明及RequestLease/Trace/能力scope已读；原3Git与6controls和2newabsence实核",
+    "ownership": "lease仅保存请求绑定；原World死亡permit/角色payload仍唯一owner，原体/alias/最早预算/域状态永久撤权政策不复制",
+    "transaction": "Seer反射→知识→Fox→checks/use→modifier/reflection→自身历史完成后true；Badge内部预检后首写guard与完整frame后true分离，paid后不查资格",
+    "errors": "原正文及Badge permit.close优先级保持，新增false不遮旧错误含throw undefined，true晚错不退款、不二次settle",
+    "actualChecks": "首load0pass9fail与type2保真；修load首次6pass3fail457；只3错误oracle修后3pass155；2failedroots类型0，head/mainproof/route/type/oracle/comment桥实际0且无复全套",
+    "commentPrecision": "一JSDoc明确初次id关联不另查而开窗仍委托scope.current；636283验证两实际输出相同、其余4源同，末51arts绑定",
+    "limits": "只该普通Seer与徽选择窗口的新F02事务；不冒所有55窗口统一结算或C47全量门禁完成"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

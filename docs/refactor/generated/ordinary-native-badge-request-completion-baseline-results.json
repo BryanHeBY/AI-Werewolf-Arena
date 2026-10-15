@@ -1,0 +1,1063 @@
+{
+  "policy": "Current behavior only; action outcome alone is not classified as a bug.",
+  "fixtures": [
+    {
+      "kind": "seer",
+      "mode": "envelope",
+      "reachedWindow": true,
+      "thrown": false,
+      "sameInjectedError": false,
+      "error": null,
+      "writeAttempts": 0,
+      "sinkAttempts": 0,
+      "envelope": [
+        {
+          "label": "original-before",
+          "returned": true
+        },
+        {
+          "label": "bounded-alias-produced",
+          "sameObject": false,
+          "sameContext": true
+        },
+        {
+          "label": "original-context-replaced",
+          "returned": true
+        },
+        {
+          "label": "original-context-restored",
+          "returned": true
+        },
+        {
+          "label": "bounded-alias-after-original-restore",
+          "returned": true
+        }
+      ],
+      "chronology": [
+        {
+          "point": "trace-onChange",
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "point": "actual-window-provider",
+          "actorId": 3,
+          "day": 1,
+          "stage": "seer",
+          "permitCount": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "point": "provider-candidate-return",
+          "settlements": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "notifications": [
+        {
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "decisionCount": 1,
+      "settlementCount": 1,
+      "events": [
+        {
+          "type": "wolf_tactical_order",
+          "payload": {
+            "order": [
+              1,
+              2
+            ]
+          },
+          "audience": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "wolf_kill_vote_cast",
+          "payload": {
+            "actorId": 1,
+            "abstain": true,
+            "targetId": null,
+            "fallback": true
+          },
+          "audience": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "wolf_kill_vote_cast",
+          "payload": {
+            "actorId": 2,
+            "abstain": true,
+            "targetId": null,
+            "fallback": true
+          },
+          "audience": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "seer_checked",
+          "payload": {
+            "actorId": 3,
+            "targetId": 1,
+            "isWerewolf": true,
+            "result": {
+              "kind": "camp",
+              "camp": "wolf"
+            }
+          }
+        }
+      ],
+      "afterWindowDelivery": {
+        "label": "original-after-window",
+        "returned": true
+      },
+      "activeDeathActionCountAfterFinally": 0,
+      "seer": {
+        "abilityId": "native:seer_check",
+        "lastUsedDay": 1,
+        "uses": 1,
+        "disabled": false,
+        "state": {
+          "lastTarget": 1,
+          "lastIsWerewolf": true,
+          "lastResult": {
+            "kind": "camp",
+            "camp": "wolf"
+          },
+          "history": [
+            {
+              "targetId": 1,
+              "isWerewolf": true,
+              "result": {
+                "kind": "camp",
+                "camp": "wolf"
+              }
+            }
+          ]
+        }
+      },
+      "recordedDecisions": [
+        {
+          "actorId": 3,
+          "day": 1,
+          "stage": "seer",
+          "turn": 1,
+          "request": {
+            "actorId": 3,
+            "phase": "night",
+            "allowedTools": [
+              "check_identity"
+            ],
+            "context": {
+              "day": 1,
+              "stage": "seer",
+              "visible_events": [],
+              "turn_constraints": {
+                "min_valid_actions": 1,
+                "max_valid_actions": 1,
+                "required_any_tools": [
+                  "check_identity"
+                ],
+                "summary_message": {
+                  "key": "request.summary.night_action"
+                }
+              },
+              "ability_id": "native:seer_check"
+            }
+          },
+          "settleOrder": 1,
+          "openedAfterSettlement": 0,
+          "outcome": {
+            "kind": "action",
+            "action": {
+              "name": "check_identity",
+              "args": {
+                "target_id": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "seer",
+      "mode": "first-data-write",
+      "reachedWindow": true,
+      "thrown": true,
+      "sameInjectedError": true,
+      "error": {
+        "name": "Error",
+        "message": "literal-q2-seer-first-data-write"
+      },
+      "writeAttempts": 1,
+      "sinkAttempts": 0,
+      "envelope": [],
+      "chronology": [
+        {
+          "point": "trace-onChange",
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "point": "actual-window-provider",
+          "actorId": 3,
+          "day": 1,
+          "stage": "seer",
+          "permitCount": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "point": "provider-candidate-return",
+          "settlements": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 1
+        },
+        {
+          "point": "first-owned-data-write",
+          "key": "lastTarget",
+          "attemptedValue": 1,
+          "settlements": 1
+        }
+      ],
+      "notifications": [
+        {
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "decisionCount": 1,
+      "settlementCount": 1,
+      "events": [
+        {
+          "type": "wolf_tactical_order",
+          "payload": {
+            "order": [
+              1,
+              2
+            ]
+          },
+          "audience": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "wolf_kill_vote_cast",
+          "payload": {
+            "actorId": 1,
+            "abstain": true,
+            "targetId": null,
+            "fallback": true
+          },
+          "audience": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "wolf_kill_vote_cast",
+          "payload": {
+            "actorId": 2,
+            "abstain": true,
+            "targetId": null,
+            "fallback": true
+          },
+          "audience": [
+            1,
+            2
+          ]
+        }
+      ],
+      "afterWindowDelivery": {
+        "label": "original-after-window",
+        "returned": true
+      },
+      "activeDeathActionCountAfterFinally": 0,
+      "seer": {
+        "abilityId": "native:seer_check",
+        "lastUsedDay": null,
+        "uses": 0,
+        "disabled": false,
+        "state": {
+          "lastTarget": null,
+          "lastIsWerewolf": null,
+          "lastResult": null,
+          "history": []
+        }
+      },
+      "recordedDecisions": [
+        {
+          "actorId": 3,
+          "day": 1,
+          "stage": "seer",
+          "turn": 1,
+          "request": {
+            "actorId": 3,
+            "phase": "night",
+            "allowedTools": [
+              "check_identity"
+            ],
+            "context": {
+              "day": 1,
+              "stage": "seer",
+              "visible_events": [],
+              "turn_constraints": {
+                "min_valid_actions": 1,
+                "max_valid_actions": 1,
+                "required_any_tools": [
+                  "check_identity"
+                ],
+                "summary_message": {
+                  "key": "request.summary.night_action"
+                }
+              },
+              "ability_id": "native:seer_check"
+            }
+          },
+          "settleOrder": 1,
+          "openedAfterSettlement": 0,
+          "outcome": {
+            "kind": "action",
+            "action": {
+              "name": "check_identity",
+              "args": {
+                "target_id": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "seer",
+      "mode": "fact-sink",
+      "reachedWindow": true,
+      "thrown": true,
+      "sameInjectedError": true,
+      "error": {
+        "name": "Error",
+        "message": "literal-q2-seer-fact-sink"
+      },
+      "writeAttempts": 0,
+      "sinkAttempts": 1,
+      "envelope": [],
+      "chronology": [
+        {
+          "point": "trace-onChange",
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "point": "actual-window-provider",
+          "actorId": 3,
+          "day": 1,
+          "stage": "seer",
+          "permitCount": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "point": "provider-candidate-return",
+          "settlements": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 1
+        },
+        {
+          "point": "fact-sink-before-append",
+          "settlements": 1,
+          "existingEvents": 3
+        }
+      ],
+      "notifications": [
+        {
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "decisionCount": 1,
+      "settlementCount": 1,
+      "events": [
+        {
+          "type": "wolf_tactical_order",
+          "payload": {
+            "order": [
+              2,
+              1
+            ]
+          },
+          "audience": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "wolf_kill_vote_cast",
+          "payload": {
+            "actorId": 2,
+            "abstain": true,
+            "targetId": null,
+            "fallback": true
+          },
+          "audience": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "wolf_kill_vote_cast",
+          "payload": {
+            "actorId": 1,
+            "abstain": true,
+            "targetId": null,
+            "fallback": true
+          },
+          "audience": [
+            1,
+            2
+          ]
+        }
+      ],
+      "afterWindowDelivery": {
+        "label": "original-after-window",
+        "returned": true
+      },
+      "activeDeathActionCountAfterFinally": 0,
+      "seer": {
+        "abilityId": "native:seer_check",
+        "lastUsedDay": 1,
+        "uses": 1,
+        "disabled": false,
+        "state": {
+          "lastTarget": 1,
+          "lastIsWerewolf": true,
+          "lastResult": {
+            "kind": "camp",
+            "camp": "wolf"
+          },
+          "history": [
+            {
+              "targetId": 1,
+              "isWerewolf": true,
+              "result": {
+                "kind": "camp",
+                "camp": "wolf"
+              }
+            }
+          ]
+        }
+      },
+      "recordedDecisions": [
+        {
+          "actorId": 3,
+          "day": 1,
+          "stage": "seer",
+          "turn": 1,
+          "request": {
+            "actorId": 3,
+            "phase": "night",
+            "allowedTools": [
+              "check_identity"
+            ],
+            "context": {
+              "day": 1,
+              "stage": "seer",
+              "visible_events": [],
+              "turn_constraints": {
+                "min_valid_actions": 1,
+                "max_valid_actions": 1,
+                "required_any_tools": [
+                  "check_identity"
+                ],
+                "summary_message": {
+                  "key": "request.summary.night_action"
+                }
+              },
+              "ability_id": "native:seer_check"
+            }
+          },
+          "settleOrder": 1,
+          "openedAfterSettlement": 0,
+          "outcome": {
+            "kind": "action",
+            "action": {
+              "name": "check_identity",
+              "args": {
+                "target_id": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "badge",
+      "mode": "envelope",
+      "reachedWindow": true,
+      "thrown": false,
+      "sameInjectedError": false,
+      "error": null,
+      "writeAttempts": 0,
+      "sinkAttempts": 0,
+      "envelope": [
+        {
+          "label": "original-before",
+          "returned": true
+        },
+        {
+          "label": "bounded-alias-produced",
+          "sameObject": false,
+          "sameContext": true
+        },
+        {
+          "label": "original-context-replaced",
+          "returned": true
+        },
+        {
+          "label": "original-context-restored",
+          "returned": true
+        },
+        {
+          "label": "bounded-alias-after-original-restore",
+          "returned": true
+        }
+      ],
+      "chronology": [
+        {
+          "point": "trace-onChange",
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "point": "actual-window-provider",
+          "actorId": 5,
+          "day": 2,
+          "stage": "sheriff_badge_choice",
+          "permitCount": 1
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "point": "provider-candidate-return",
+          "settlements": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "notifications": [
+        {
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "decisionCount": 1,
+      "settlementCount": 1,
+      "events": [
+        {
+          "type": "last_words_granted",
+          "payload": {
+            "playerId": 5,
+            "phase": "voting",
+            "day": 2
+          }
+        },
+        {
+          "type": "sheriff_badge_transferred",
+          "payload": {
+            "fromId": 5,
+            "toId": 6,
+            "reason": "voted_out"
+          }
+        }
+      ],
+      "afterWindowDelivery": {
+        "label": "original-after-window",
+        "returned": true
+      },
+      "activeDeathActionCountAfterFinally": 0,
+      "badge": {
+        "fromAlive": false,
+        "from": {
+          "isSheriff": false,
+          "destroyed": true,
+          "voteWeight": 2.25,
+          "handoffPolicy": "awa_holder_choice_v1"
+        },
+        "to": {
+          "isSheriff": true,
+          "destroyed": false,
+          "voteWeight": 2.25,
+          "handoffPolicy": "awa_holder_choice_v1"
+        },
+        "fromVoting": {
+          "weight": 1,
+          "canVote": true
+        },
+        "toVoting": {
+          "weight": 2.25,
+          "canVote": true
+        },
+        "oldPermitCurrentAfterFinally": false
+      },
+      "recordedDecisions": [
+        {
+          "actorId": 5,
+          "day": 2,
+          "stage": "sheriff_badge_choice",
+          "turn": 1,
+          "request": {
+            "actorId": 5,
+            "phase": "voting",
+            "allowedTools": [
+              "choose_badge_successor"
+            ],
+            "context": {
+              "allow_fallback": false,
+              "day": 2,
+              "stage": "sheriff_badge_choice",
+              "visible_events": [
+                {
+                  "seq": 1,
+                  "type": "last_words_granted",
+                  "payload": {
+                    "playerId": 5,
+                    "phase": "voting",
+                    "day": 2
+                  }
+                }
+              ],
+              "turn_constraints": {
+                "min_valid_actions": 1,
+                "max_valid_actions": 1,
+                "required_any_tools": [
+                  "choose_badge_successor"
+                ],
+                "summary_message": {
+                  "key": "request.summary.badge_choice"
+                }
+              },
+              "trigger": "badge_handoff",
+              "death_action_id": 2,
+              "badge_candidates": [
+                1,
+                2,
+                3,
+                4,
+                6
+              ]
+            }
+          },
+          "settleOrder": 1,
+          "openedAfterSettlement": 0,
+          "outcome": {
+            "kind": "action",
+            "action": {
+              "name": "choose_badge_successor",
+              "args": {
+                "target_id": 6
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "badge",
+      "mode": "first-data-write",
+      "reachedWindow": true,
+      "thrown": true,
+      "sameInjectedError": true,
+      "error": {
+        "name": "Error",
+        "message": "literal-q2-badge-first-data-write"
+      },
+      "writeAttempts": 1,
+      "sinkAttempts": 0,
+      "envelope": [],
+      "chronology": [
+        {
+          "point": "trace-onChange",
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "point": "actual-window-provider",
+          "actorId": 5,
+          "day": 2,
+          "stage": "sheriff_badge_choice",
+          "permitCount": 1
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "point": "provider-candidate-return",
+          "settlements": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 1
+        },
+        {
+          "point": "first-owned-data-write",
+          "key": "isSheriff",
+          "attemptedValue": false,
+          "settlements": 1
+        }
+      ],
+      "notifications": [
+        {
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "decisionCount": 1,
+      "settlementCount": 1,
+      "events": [
+        {
+          "type": "last_words_granted",
+          "payload": {
+            "playerId": 5,
+            "phase": "voting",
+            "day": 2
+          }
+        }
+      ],
+      "afterWindowDelivery": {
+        "label": "original-after-window",
+        "returned": true
+      },
+      "activeDeathActionCountAfterFinally": 0,
+      "badge": {
+        "fromAlive": false,
+        "from": {
+          "isSheriff": true,
+          "destroyed": false,
+          "voteWeight": 2.25,
+          "handoffPolicy": "awa_holder_choice_v1"
+        },
+        "to": {
+          "isSheriff": false,
+          "destroyed": false,
+          "voteWeight": 2.25,
+          "handoffPolicy": "awa_holder_choice_v1"
+        },
+        "fromVoting": {
+          "weight": 2.25,
+          "canVote": true
+        },
+        "toVoting": {
+          "weight": 1,
+          "canVote": true
+        },
+        "oldPermitCurrentAfterFinally": false
+      },
+      "recordedDecisions": [
+        {
+          "actorId": 5,
+          "day": 2,
+          "stage": "sheriff_badge_choice",
+          "turn": 1,
+          "request": {
+            "actorId": 5,
+            "phase": "voting",
+            "allowedTools": [
+              "choose_badge_successor"
+            ],
+            "context": {
+              "allow_fallback": false,
+              "day": 2,
+              "stage": "sheriff_badge_choice",
+              "visible_events": [
+                {
+                  "seq": 1,
+                  "type": "last_words_granted",
+                  "payload": {
+                    "playerId": 5,
+                    "phase": "voting",
+                    "day": 2
+                  }
+                }
+              ],
+              "turn_constraints": {
+                "min_valid_actions": 1,
+                "max_valid_actions": 1,
+                "required_any_tools": [
+                  "choose_badge_successor"
+                ],
+                "summary_message": {
+                  "key": "request.summary.badge_choice"
+                }
+              },
+              "trigger": "badge_handoff",
+              "death_action_id": 2,
+              "badge_candidates": [
+                1,
+                2,
+                3,
+                4,
+                6
+              ]
+            }
+          },
+          "settleOrder": 1,
+          "openedAfterSettlement": 0,
+          "outcome": {
+            "kind": "action",
+            "action": {
+              "name": "choose_badge_successor",
+              "args": {
+                "target_id": 6
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "badge",
+      "mode": "fact-sink",
+      "reachedWindow": true,
+      "thrown": true,
+      "sameInjectedError": true,
+      "error": {
+        "name": "Error",
+        "message": "literal-q2-badge-fact-sink"
+      },
+      "writeAttempts": 0,
+      "sinkAttempts": 1,
+      "envelope": [],
+      "chronology": [
+        {
+          "point": "trace-onChange",
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "point": "actual-window-provider",
+          "actorId": 5,
+          "day": 2,
+          "stage": "sheriff_badge_choice",
+          "permitCount": 1
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "point": "provider-candidate-return",
+          "settlements": 0
+        },
+        {
+          "point": "trace-onChange",
+          "decisions": 1,
+          "settlements": 1
+        },
+        {
+          "point": "fact-sink-before-append",
+          "settlements": 1,
+          "existingEvents": 1
+        }
+      ],
+      "notifications": [
+        {
+          "decisions": 0,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 0
+        },
+        {
+          "decisions": 1,
+          "settlements": 1
+        }
+      ],
+      "decisionCount": 1,
+      "settlementCount": 1,
+      "events": [
+        {
+          "type": "last_words_granted",
+          "payload": {
+            "playerId": 5,
+            "phase": "voting",
+            "day": 2
+          }
+        }
+      ],
+      "afterWindowDelivery": {
+        "label": "original-after-window",
+        "returned": true
+      },
+      "activeDeathActionCountAfterFinally": 0,
+      "badge": {
+        "fromAlive": false,
+        "from": {
+          "isSheriff": false,
+          "destroyed": true,
+          "voteWeight": 2.25,
+          "handoffPolicy": "awa_holder_choice_v1"
+        },
+        "to": {
+          "isSheriff": true,
+          "destroyed": false,
+          "voteWeight": 2.25,
+          "handoffPolicy": "awa_holder_choice_v1"
+        },
+        "fromVoting": {
+          "weight": 1,
+          "canVote": true
+        },
+        "toVoting": {
+          "weight": 2.25,
+          "canVote": true
+        },
+        "oldPermitCurrentAfterFinally": false
+      },
+      "recordedDecisions": [
+        {
+          "actorId": 5,
+          "day": 2,
+          "stage": "sheriff_badge_choice",
+          "turn": 1,
+          "request": {
+            "actorId": 5,
+            "phase": "voting",
+            "allowedTools": [
+              "choose_badge_successor"
+            ],
+            "context": {
+              "allow_fallback": false,
+              "day": 2,
+              "stage": "sheriff_badge_choice",
+              "visible_events": [
+                {
+                  "seq": 1,
+                  "type": "last_words_granted",
+                  "payload": {
+                    "playerId": 5,
+                    "phase": "voting",
+                    "day": 2
+                  }
+                }
+              ],
+              "turn_constraints": {
+                "min_valid_actions": 1,
+                "max_valid_actions": 1,
+                "required_any_tools": [
+                  "choose_badge_successor"
+                ],
+                "summary_message": {
+                  "key": "request.summary.badge_choice"
+                }
+              },
+              "trigger": "badge_handoff",
+              "death_action_id": 2,
+              "badge_candidates": [
+                1,
+                2,
+                3,
+                4,
+                6
+              ]
+            }
+          },
+          "settleOrder": 1,
+          "openedAfterSettlement": 0,
+          "outcome": {
+            "kind": "action",
+            "action": {
+              "name": "choose_badge_successor",
+              "args": {
+                "target_id": 6
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Two declarations / six fresh fixtures, not six independent test declarations.",
+    "Actual NightPipeline and DeathResolution use real factory/gateway/domain owners; no manual delivery guard/completion is installed.",
+    "Trace fixture engine hashes are explicit schema-only placeholders; this is not a strict replay/archive build identity check.",
+    "Source provenance is frozen separately; transitive modules are the Root execution workspace, not an asserted complete fixed Git closure."
+  ]
+}

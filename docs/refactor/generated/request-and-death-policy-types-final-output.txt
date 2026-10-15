@@ -1,0 +1,5 @@
+backend/src/game/mechanisms/stages/night/native-request-lease.ts(9,23): error TS2307: Cannot find module '@ai-werewolf-arena/game-contract/identity' or its corresponding type declarations.
+backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts(72,5): error TS2322: Type '{ readonly animalDream?: { readonly policy: "awa_animal_dream_v1"; readonly eliminationPriority: "awa_wolf_priority_v1"; } | undefined; readonly whiteCat?: { readonly skippedVotePolicy: "awa_wait_for_actual_exile_v1" | "awa_expire_on_skipped_day_v1"; } | undefined; ... 52 more ...; readonly roleSetups: readonly { .....' is not assignable to type 'BoardConfig'.
+  Types of property 'winConditions' are incompatible.
+    Type 'readonly WinCondition[] | undefined' is not assignable to type 'WinCondition[] | undefined'.
+      The type 'readonly WinCondition[]' is 'readonly' and cannot be assigned to the mutable type 'WinCondition[]'.

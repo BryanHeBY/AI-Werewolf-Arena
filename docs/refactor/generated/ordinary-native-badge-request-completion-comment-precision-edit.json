@@ -1,0 +1,8 @@
+{
+  "path": "backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+  "beforeSHA256": "b5d4607dcecac463047ed7a9ed5c2abdaa52ecf4efc03684e63eb599c4d03674",
+  "afterSHA256": "9bfb27511a71ae994416b70f5156eca94995cff6602cacb5775f2bc000061688",
+  "before": "/** 接纳本次实际能力标识后，复用唯一 lease owner 开窗；不新增 World／Camp 查询或第二许可。 */",
+  "after": "/** 编号初次关联不另查 World／Camp；开窗当前性仍委托原 scope，不建第二许可。 */",
+  "count": 1
+}

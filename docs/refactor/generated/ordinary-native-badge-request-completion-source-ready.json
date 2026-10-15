@@ -1,0 +1,82 @@
+{
+  "baseCommit": "1d42f118f80f3ffadcd35f367d8569ed20928bd7",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+      "sha256": "9bfb27511a71ae994416b70f5156eca94995cff6602cacb5775f2bc000061688",
+      "bytes": 1983
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "b897ff8e3e3d3c62da4dc64760922fa649afb3dbc24f559d57a2c5ec57898fe2",
+      "bytes": 10440
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "8276b3b1539f0d3211330763f247fb85511b40d47ef848cfe5be1b424e19281c",
+      "bytes": 7856
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "sha256": "8ef03f77f43b711f39becd86815e255fdcbf08280047b376c51fe7b6017dbca6",
+      "bytes": 7920
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts",
+      "sha256": "f2d0c5d4d49d9c496ec3e2fc8d02df30604f7a2e56a5f345bdb4263f70df2d18",
+      "bytes": 28707
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/domain/request-lease.ts",
+      "sha256": "6f5a9e35175806273fa6e82d7b34e137b3c9e0aaaa064611bff3508b5f15fcd9"
+    },
+    {
+      "path": "backend/src/domain/request-delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748"
+    },
+    {
+      "path": "backend/src/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1"
+    },
+    {
+      "path": "backend/src/recording/reproduction-trace.ts",
+      "sha256": "cdb131cc90ce920223c85a055cb5e962f13149f865ec6f6e78045db85a6648dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "sha256": "35ed6803aae7f1406f68d9b1aff2f8c1cd92ef3f76c77b2349ac9e810872ba78"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "118f5d0982ffe9d99f1b3c0096a1d5f5edc4a68c617d1829aaf44216c637d2e8"
+    }
+  ],
+  "policy": "Q2 explicit F02 envelope/ability pins and domain completion, not candidate acceptance.",
+  "checksRun": false,
+  "testDeclarationsPlanned": 9,
+  "limits": [
+    "No runtime/unit, type, head checker or proof executed by this author.",
+    "First original characterization450f8d2declarations6fresh37expect remains unchanged and is not rerun.",
+    "Sealed Demon controller and other ordinary roles not converted; no all55 closure claim.",
+    "Only the three originals plus new lease and new unit are authored here; Root owns joint execution/fence and Git."
+  ],
+  "precheckCommentPrecision": "precheck-head-precision.json holds complete first ready and two initial new-file texts; only head words corrected before any check.",
+  "internalUnpaidGuard": "Root-approved optional beforeDomainCommit after original committer checks and before first badge write; default callers unchanged; no post-payment current.",
+  "priorPreparedStage": "internal-guard-first-snapshot.json preserves previous ready/proof/commands/edits and three changed originals.",
+  "priorRootChecks": {
+    "firstExecutedSnapshot": "first-executed-snapshot.json",
+    "unit": "0pass9fail module load, not executed test bodies",
+    "types": "2failed roots only",
+    "heads": "first5green not rerun",
+    "proof": "first141 edits green not rerun",
+    "loadRepairedBody": "1ed281 exit1:6pass3fail457expect, three fail solely new oracle; six green not rerun.",
+    "failed2Types": "f55d82/session44253→5ad92b exit0, no repeated type for two matcher changes."
+  },
+  "currentInputChecksRun": false,
+  "repair": "Only new lease runtime public route and new unit erased BoardConfig type changes; same three preexisting production sources.",
+  "oracleRepair": "Only two lastUsedDay new-test assertions change from undefined to original native null; first body6pass3fail457 saved; retry only3failed.",
+  "commentPrecision": "One helper JSDoc only after first approval; first full source/formals/peer preserved in comment-precision-before.json and independent-first-approved-snapshot.json. Narrow bridge pending; business checks not repeated."
+}

@@ -1,0 +1,17 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts:
+error: Cannot find module '@ai-werewolf-arena/game-contract/identity' from '/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/stages/night/native-request-lease.ts'
+(fail) Seer binds its captured ability and makes observed original envelope failures terminal while isolating aliases [26.47ms]
+(fail) Seer shares the earliest alias budget without clock rollback revival and guards the prepared provider [0.81ms]
+(fail) Seer keeps literal partial state prefixes and settles failure only after an actual writer error [0.48ms]
+(fail) Seer completes after every domain write before fact publication and retains true when publication or notification fails [0.30ms]
+(fail) Badge preserves its real death permit while isolating bad aliases and permanently closing corrupted original sources [0.82ms]
+(fail) Badge treats null and invalid choices as completed destruction after the old badge and vote weight writes [0.51ms]
+(fail) Badge leaves its exact partial component prefix when an original badge or successor vote writer fails [0.46ms]
+(fail) Badge retains completed transfers across late fact failures and preserves permit close before false notification error priority [0.40ms]
+(fail) Badge checks the same captured delivery after internal target getters before its first domain write [0.35ms]
+
+ 0 pass
+ 9 fail
+Ran 9 tests across 1 file. [195.00ms]

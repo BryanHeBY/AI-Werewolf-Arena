@@ -1,0 +1,26 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "typeRoots": [
+      "../../../backend/node_modules",
+      "../../../backend/node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "bun-types",
+      "bun-types/test-globals"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+    "../../../backend/src/game/mechanisms/roles/seer/night_stages.ts",
+    "../../../backend/src/game/mechanisms/sheriff/badge_choice.ts",
+    "../../../backend/src/game/mechanisms/sheriff/badge.ts",
+    "../../../backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts",
+    "../../../backend/src/verification/reproduction/death-history.ts",
+    "../../../backend/src/verification/reproduction/assembly.ts",
+    "../../../backend/tests/unit/recording/death-history.test.ts"
+  ],
+  "include": []
+}

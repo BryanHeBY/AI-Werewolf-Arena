@@ -1,0 +1,75 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "role": "independent non-author source, contract and evidence review",
+  "baseCommit": "1d42f118f80f3ffadcd35f367d8569ed20928bd7",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+      "sha256": "b5d4607dcecac463047ed7a9ed5c2abdaa52ecf4efc03684e63eb599c4d03674"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "b897ff8e3e3d3c62da4dc64760922fa649afb3dbc24f559d57a2c5ec57898fe2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "8276b3b1539f0d3211330763f247fb85511b40d47ef848cfe5be1b424e19281c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "sha256": "8ef03f77f43b711f39becd86815e255fdcbf08280047b376c51fe7b6017dbca6"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts",
+      "sha256": "f2d0c5d4d49d9c496ec3e2fc8d02df30604f7a2e56a5f345bdb4263f70df2d18"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/ordinary-native-badge-request-completion-scope-final.json",
+    "sha256": "b9c0cd99708d71152a34543e7bb64c4c534a4ba917e13a335bdb98f41cb4be8f"
+  },
+  "document": {
+    "path": "docs/refactor/ordinary-native-badge-request-completion.md",
+    "sha256": "dc10273585dd96829292e342380414afb115c95505395ede7c32c75ec2486662"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ordinary-native-badge-request-completion-evidence.json",
+    "sha256": "5fd35106b79b72213b30a8e8d59c52e1f2128b2c41dd2afd2252ea1ae05930fc"
+  },
+  "integrity": {
+    "freshOrderedSource": 5,
+    "actualGitWholeOldSource": 3,
+    "actualGitNewAbsence": 2,
+    "wholeControls": 6,
+    "authorArtifacts": 44,
+    "wholeExactOriginalForwardInverse": 3,
+    "exactTextEdits": 141,
+    "mismatches": 0
+  },
+  "reviewed": [
+    "五完整源与实际 RequestLease.window/current/finish、request-delivery 与 Trace.decide 的交互",
+    "实际 Seer 反射→状态→Fox→checks→use→modifier→native反射→自身历史→complete→事实顺序及 paid 不重查资格",
+    "Badge 原死亡permit、target 原生命、原null销毁与完整组件/frame→complete→事实前缀",
+    "Reflect准备先于末守卫、原callee/receiver与非callable真实调用时点、默认无callback旧caller路径",
+    "正文/permit.close/newfalse错误优先及 throw undefined、late true/事实不退款不二次结算",
+    "新9声明全部真实bootstrap/factory/gateway/Trace与手写字面资源、同Error和期限/alias轨迹",
+    "源来源、两真实首失败、onlyfailed修复、桥与各收据实际阶段及中文边界"
+  ],
+  "closedFindings": [
+    {
+      "kind": "static precheck finding",
+      "description": "Badge committer 内部原getter可在外部delivery guard之后、首写之前观察共同失效。",
+      "closure": "第8可选beforeDomainCommit只在原内部预检之后/首写前核同turn，默认无尾不新增查询；首写后只完成不再current。第9两fresh目标getter独立输入覆盖。"
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "Reviewer ran no product, runtime/type/head/mainproof/bridge/gate and did not edit author source or artifacts. Integrity reading here only hashes, Git originals and exact text reconstruction.",
+    "Nine distinct declarations pass across actual6 first-body greens and only3 repaired failures; 612 is cumulative expect calls including the first failing run, not unique final assertion coverage.",
+    "First joint8 type exit2 remains true; only2 failed roots later0, final two matcher edits explicitly not retyped. No full8/standard whole-project final green is claimed.",
+    "Module public route is a true runtime import change; unit type bridge is erased, while lastUsedDay toBeNull is a true new-oracle repair.",
+    "No all55 transaction/permission closure, arbitrary JS setter isolation, private frame runtime matrix, exact build replay or public schema strengthening is approved."
+  ]
+}

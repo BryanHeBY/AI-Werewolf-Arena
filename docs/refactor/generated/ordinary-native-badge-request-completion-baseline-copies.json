@@ -1,0 +1,58 @@
+{
+  "executorOfOriginalRun": "/root",
+  "originalRun": "450f8d",
+  "exitCode": 0,
+  "declarations": 2,
+  "freshFixtures": 6,
+  "expectCalls": 37,
+  "copiedOnlyNotExecuted": true,
+  "mapping": [
+    {
+      "original": "/tmp/awa-q2-ordinary-delivery/characterization.test.ts",
+      "copy": "docs/refactor/generated/ordinary-native-badge-request-completion-baseline-characterization.test.ts.txt",
+      "bytes": 12802,
+      "sha256": "a630528dc695921cbae5d76a8ed34af7bfdc4731faab5000b5fb699d1ccc56bd",
+      "sameBytes": true
+    },
+    {
+      "original": "/tmp/awa-q2-ordinary-delivery/before.json",
+      "copy": "docs/refactor/generated/ordinary-native-badge-request-completion-baseline-before.json",
+      "bytes": 215235,
+      "sha256": "383e85bed3c0ef9302dbf0dd4a27287f4f8143fde4640cfb6165cd8650145c09",
+      "sameBytes": true
+    },
+    {
+      "original": "/tmp/awa-q2-ordinary-delivery/source-ready.json",
+      "copy": "docs/refactor/generated/ordinary-native-badge-request-completion-baseline-source-ready.json",
+      "bytes": 1229,
+      "sha256": "4f3217c4cc6b9cd84f7fc6a47cf9f50852fd84135f4a04836a6f1ee9debb34bb",
+      "sameBytes": true
+    },
+    {
+      "original": "/tmp/awa-q2-ordinary-delivery/plan.md",
+      "copy": "docs/refactor/generated/ordinary-native-badge-request-completion-baseline-plan.md",
+      "bytes": 5963,
+      "sha256": "1416774e613fe50f874d17a3e852813b3a693302cea7bb08a0a66f59e921c98f",
+      "sameBytes": true
+    },
+    {
+      "original": "/tmp/awa-q2-ordinary-delivery/results.json",
+      "copy": "docs/refactor/generated/ordinary-native-badge-request-completion-baseline-results.json",
+      "bytes": 25616,
+      "sha256": "60d276f47424817842bc38ea3b0e21a0a16bb2a937838800acc910c682a29177",
+      "sameBytes": true
+    },
+    {
+      "original": "/tmp/awa-q2-ordinary-delivery/first-output.txt",
+      "copy": "docs/refactor/generated/ordinary-native-badge-request-completion-baseline-output.txt",
+      "bytes": 331,
+      "sha256": "e68c78e361f4309bd93a03be0144af59ac80b6fc39f7daef907af0fe9aa02716",
+      "sameBytes": true
+    }
+  ],
+  "limits": [
+    "Historical source base9299803, not this Q2actual1d42 before/control.",
+    "Code copy uses.ts.txt intentionally; no new product/test discovery or old experiment rerun.",
+    "Raw Bun terminal does not contain the literal console JSON; original results.json is separately preserved."
+  ]
+}

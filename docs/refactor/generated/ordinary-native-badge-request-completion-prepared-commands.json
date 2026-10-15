@@ -1,0 +1,30 @@
+{
+  "sourceReady": {
+    "path": "docs/refactor/generated/ordinary-native-badge-request-completion-source-ready.json",
+    "sha256": "858a34353e34baa9e072a58023575e0f88baa082b36cc88d5270fc3ac40c93fd"
+  },
+  "executor": "Root only; author prepared these commands without execution.",
+  "commands": {
+    "newUnit": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/mechanisms/ordinary-native-badge-request-completion.test.ts > docs/refactor/generated/ordinary-native-badge-request-completion-unit-output.txt 2>&1",
+    "heads": "bun --no-env-file docs/refactor/generated/ordinary-native-badge-request-completion-heads.ts > docs/refactor/generated/ordinary-native-badge-request-completion-heads-output.txt 2>&1",
+    "proof": "bun --no-env-file docs/refactor/generated/ordinary-native-badge-request-completion-proof.cjs > docs/refactor/generated/ordinary-native-badge-request-completion-proof-output.txt 2>&1",
+    "types": "Root prepares the joint finite roots; this author has no duplicate type command."
+  },
+  "preparedTools": [
+    {
+      "path": "docs/refactor/generated/ordinary-native-badge-request-completion-heads.ts",
+      "sha256": "ea77851cb8bd6a63ae455deadb730aff8b2ee98bf7812783621e311afa979299"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-native-badge-request-completion-proof.cjs",
+      "sha256": "a4d493dbb7701eaeb591f8135d9c7010a7ccf289a01c2d68658bcdb00fdc199d"
+    }
+  ],
+  "checksRun": false,
+  "limits": [
+    "No production import, runtime/unit, compiler, responsibility checker or proof execution by this author.",
+    "The first ready62a and two new initial comment texts remain in precheck-head-precision.json; only two heads changed before any Root check.",
+    "Actual initial before remains1d42; subsequent Root doc/cohort commit is not asserted identical worktree.",
+    "Root-approved pre-execution internal Badge guard adds a ninth declaration with two real internal target getter fixtures; previous eight-declaration prepared stage preserved, never executed."
+  ]
+}

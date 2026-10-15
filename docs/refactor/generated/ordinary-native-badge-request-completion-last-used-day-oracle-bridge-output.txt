@@ -1,0 +1,1 @@
+{"changed":1,"oracleChanges":2,"program":{"typedNodes":5085,"nodeArrays":964,"nonCommentLeaves":6304},"wholeInverseRawOutputs":2,"unchanged":4,"testDeclarations":9}
