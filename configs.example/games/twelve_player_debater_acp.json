@@ -1,0 +1,16 @@
+{
+  "board": "awa_melbourne_debater_12_v1",
+  "agent": "acp_default",
+  "maxDays": 30,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "trace": false,
+  "printAllEvents": false,
+  "printChat": false,
+  "streamEvents": true,
+  "color": true,
+  "printLlmIo": false,
+  "printThinking": false,
+  "printPrivateEvents": true,
+  "locale": "zh-CN"
+}
