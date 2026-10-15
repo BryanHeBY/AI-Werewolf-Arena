@@ -11,6 +11,8 @@ import {
   planDeathWave,
   type DeathCommitEntry,
   type DeathWavePlan,
+  hasDeathWaveOriginalLives,
+  assertDeathWaveOriginalLife,
 } from "./death-wave";
 import { getSessionRecorder } from "../recording/session/context";
 import { isRoleId } from "@ai-werewolf-arena/game-contract";
@@ -88,6 +90,9 @@ export class DeathCommitter {
       // 先记野孩子的活跃生命死亡，再改 Alive；不能把首次判断移到修改之后。
       const firstSettlement = !this.isSettledLife(id);
       if (firstSettlement) recordWildChildDeathCommit(this.context.world, id);
+      // 新prepare的原体约束在全部旧查询之后核；没有绑定的旧plan不额外读取World或访问器。
+      if (hasDeathWaveOriginalLives(committedWave))
+        assertDeathWaveOriginalLife(committedWave, this.context.world, id, alive);
       alive.alive = false;
       if (firstSettlement && isAnimalDreamBoard(this.context.world)) {
         if (

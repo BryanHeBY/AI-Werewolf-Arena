@@ -7,7 +7,13 @@
 import { isNightUnit, type NightUnit } from "../domain/night-unit";
 import { isExileUnit, type ExileUnit } from "../domain/exile-unit";
 import { types } from "node:util";
-import type { AliveComponent } from "../domain/components/alive";
+import {
+  aliveLifeDescriptor,
+  aliveLifeVersion,
+  type AliveComponent,
+} from "../domain/components/alive";
+import { readWorldComponentAtCommit, type World } from "../domain/world";
+import { COMPONENT } from "../domain/components/names";
 import {
   DeathCause,
   Phase,
@@ -57,6 +63,85 @@ export interface DeathWavePlan {
   readonly originPhases?: ReadonlyMap<EntityId, Phase>;
   readonly originalLives?: ReadonlyMap<EntityId, DeathOriginalLife>;
   readonly poisonRoutes: readonly NightPoisonRoute[];
+}
+// 仅真实plan可显式安装末端原生命检查；旧plan不读取任何新字段或新增World查询。
+const plans = new WeakSet<DeathWavePlan>();
+const ownedLives = new WeakMap<
+  DeathWavePlan,
+  {
+    readonly world: World;
+    readonly scopes: ReadonlyMap<EntityId, DeathOriginalLife>;
+  }
+>();
+
+/**
+ * 新具名prepare在任何标死前绑定原生命范围。绑定仅增加身份拒绝条件，不授予死亡写权；
+ * Map只在本模块保存脱离条目，不通过plan／公共hook／JSON返回，也不接受任意检查回调。
+ */
+export function bindDeathWaveOriginalLives(
+  plan: DeathWavePlan,
+  world: World,
+  scopes: ReadonlyMap<EntityId, DeathOriginalLife>,
+): void {
+  if (!plans.has(plan) || ownedLives.has(plan) || types.isProxy(scopes) || !types.isMap(scopes))
+    throw new Error("death_wave_original_lives_invalid");
+  const ids = dataValues(plan.ids, true),
+    captured = new Map<EntityId, DeathOriginalLife>();
+  if (ids === null || ids === opaque) throw new Error("death_wave_original_lives_invalid");
+  for (const id of ids) {
+    if (typeof id !== "number" || !Number.isSafeInteger(id) || id < 1)
+      throw new Error("death_wave_original_lives_invalid");
+    const scope = mapMetadataValue(scopes, id),
+      life = ownMetadataValue(scope, "life"),
+      version = ownMetadataValue(scope, "version");
+    if (
+      !life ||
+      typeof life !== "object" ||
+      types.isProxy(life) ||
+      typeof version !== "number" ||
+      !Number.isSafeInteger(version) ||
+      version < 0 ||
+      aliveLifeVersion(life as AliveComponent) === undefined
+    )
+      throw new Error("death_wave_original_lives_invalid");
+    captured.set(id, Object.freeze({ life: life as AliveComponent, version }));
+  }
+  ownedLives.set(plan, { world, scopes: captured });
+}
+export function hasDeathWaveOriginalLives(plan: DeathWavePlan): boolean {
+  return ownedLives.has(plan);
+}
+/** 所有原查询之后、首Alive写入之前仅核真实ECS／工厂描述符／原版本；不调用可重入World方法。 */
+export function assertDeathWaveOriginalLife(
+  plan: DeathWavePlan,
+  world: World,
+  id: EntityId,
+  actual: AliveComponent,
+): void {
+  const owned = ownedLives.get(plan),
+    expected = owned?.scopes.get(id);
+  if (
+    !owned ||
+    owned.world !== world ||
+    !expected ||
+    expected.life !== actual ||
+    types.isProxy(actual) ||
+    readWorldComponentAtCommit(world, id, COMPONENT.Alive) !== actual
+  )
+    throw new Error("death_wave_original_life_revoked");
+  const original = aliveLifeDescriptor(actual),
+    descriptor = Object.getOwnPropertyDescriptor(actual, "alive"),
+    version = aliveLifeVersion(actual);
+  if (
+    !original ||
+    !descriptor ||
+    original.get !== descriptor.get ||
+    original.set !== descriptor.set ||
+    (plan.kind === "revisit"
+      ? actual.alive !== false || version !== expected.version! + 1
+      : actual.alive !== true || version !== expected.version)
+  )
+    throw new Error("death_wave_original_life_revoked");
 }
 
 const nativeMapGet = Map.prototype.get;
@@ -187,7 +272,7 @@ export function planDeathWave(
   units: readonly DeathWaveUnit[] = [openDeathWave("legacy")],
   previousCommits: readonly DeathCommitReceipt[] = [],
 ): DeathWavePlan {
-  return Object.freeze({
+  const plan: DeathWavePlan = Object.freeze({
     units: Object.freeze([...units]),
     previousCommits: Object.freeze([...previousCommits]),
     kind,
@@ -197,6 +282,8 @@ export function planDeathWave(
     originalLives,
     poisonRoutes,
   });
+  plans.add(plan);
+  return plan;
 }
 
 /**
