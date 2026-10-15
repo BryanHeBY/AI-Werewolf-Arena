@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Miracle Merchant and Lucky complete recorded games retain actor-local gifted resources and private effects.
- * Input: Original skill, hold, late, backlash and compound scenario matrices with handwritten targets, survivors and last words.
- * Output and oracle: Literal gift, use/consumption, privacy and terminal assertions remain tied to actual replay; existing archived fixture bytes remain unchanged.
+ * 复现场景验证奇迹商人及幸运儿完整录制对局保留逐行动者赠予资源和私有效果。
+ * 输入为原技能、保留、迟到、反噬及复合场景矩阵，并带手写目标、存活者和遗言。
+ * 输出与预期为字面赠予、使用／消耗、隐私及终局断言，并绑定实际重放；既有归档 fixture 字节不变。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

@@ -67,7 +67,7 @@ test("same original reference shares without observing parameter accessors", () 
 });
 
 test("different data schema now rejects while preserving the already registered prefix", () => {
-  // Before fixed Git's legacy last-wins selected this exact incompatible second schema.
+  // 变更前固定 Git 的旧 last-wins 行为会选中这个确切的不兼容第二 schema。
   const first = spec(),
     incompatible = spec({ ...parameters(), required: [] }, "last");
   const registered = new Map<ToolName, ToolSpec>();

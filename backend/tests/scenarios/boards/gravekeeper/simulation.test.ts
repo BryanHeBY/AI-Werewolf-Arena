@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Gravekeeper real passive exile feedback.
- * Input: Declared boards, limited player observations and recorded fixed-seed games.
- * Output and independent oracle: Feedback skill coverage, natural outcomes and exact complete checkpoint replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证守墓人真实的被动放逐反馈。
+ * 输入为声明的板子、有限玩家观察及固定种子录制对局。
+ * 字面预期为反馈分支出现、自然完成及无拒绝／回退；完整对局重放结果另与原录制作一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";

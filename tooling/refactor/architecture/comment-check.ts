@@ -33,7 +33,7 @@ export function commentCategory(file: string): Category {
 }
 const concepts = {
   responsibility:
-    /responsib|own|provid|manag|implement|compar|freez|inventor|check|validat|verif|\btests?\b|define|describ|expos|derive|record|project|adapt|collect|build|generat|load|read|orchestrat|render|parse|负责|提供|实现|管理|校验|验证|盘点|整理|建立|解析|渲染/i,
+    /responsib|own|provid|manag|implement|compar|freez|inventor|check|validat|verif|\btests?\b|define|describ|expos|derive|record|project|adapt|collect|build|generat|load|read|orchestrat|render|parse|负责|提供|实现|管理|校验|验证|盘点|整理|建立|解析|渲染|测试/i,
   input: /\binputs?\b|\bfrom\b|receiv|accept|输入|接收|来源|从|消费/i,
   output:
     /\boutputs?\b|\breturn|\bresult|\bproduc|\bemit|\bwrite|\bexport|输出|返回|产生|发布|生成|导出|写入/i,

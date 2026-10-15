@@ -1,7 +1,5 @@
 /**
- * Filesystem integration tests verify ACP/mixed player factory workspace initialization, routing, binding snapshots and cleanup failures.
- * Input: Original actual temporary roots, literal profiles and callback-scoped prototype spies or held SDK responses.
- * Output and oracle: Workspace stat/write results, scheduler states and exact original cleanup error identities retain ownership; no billed model or game cycle is run.
+ * 文件系统集成测试以原真实临时根、字面 profile、回调范围内 prototype spy 或保留的 SDK 回复为输入，验证 ACP／混合玩家工厂工作区初始化、路由、绑定快照及清理失败。工作区 stat／write、调度器状态及原清理错误对象为预期；不运行计费模型或游戏循环。
  */
 import { describe, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";

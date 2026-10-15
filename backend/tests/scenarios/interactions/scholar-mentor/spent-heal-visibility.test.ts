@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify spent Scholar Mentor heal suppresses later knife-target disclosure throughout a recorded game and replay checks.
- * Input: The original early-heal transport plan, declared winner/alive expectations and copied later-target context forgery.
- * Output and oracle: Explicit day-two/day-three privacy fields, original planned result and forgery rejection retain the causal history; expected alive is declared by the plan rather than produced by a second World.
+ * 交互场景验证学者／导师治疗已消耗后，后续刀口目标在整局录制及重放检查中不再公开。
+ * 输入为原提前治疗传输计划、声明的胜方／存活预期及后续目标 context 副本伪造。
+ * 输出与预期为明确第二／三日隐私字段、原计划结果及伪造拒绝，保留因果历史；存活预期由计划声明，不由第二个 World 计算。
  */
 import { expect, test } from "bun:test";
 import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";

@@ -229,7 +229,7 @@ test("owned state is independent and JSON only; storage and projection never sha
   const template = freshAwakenedState();
   learnAwakenedRole(template, 5, "witch", 1);
   activateAwakenedLearning(template, 1);
-  // Generic state carriers do not register an unimplemented role or open an Aw board.
+  // 通用状态容器不注册尚未实现的身份，也不开启 Aw 板子。
   const first = createRoleComponent(Role.Wolf),
     second = createRoleComponent(Role.Wolf);
   const a = setAwakenedState(first, template),

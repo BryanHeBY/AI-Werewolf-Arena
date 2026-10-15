@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Evil Knight shot/self-heal policy branches.
- * Input: Public policy variants, limited observations and fixed seed recordings.
- * Output and independent oracle: Declared immunity/bypass outcomes, natural finish and exact per-game Tape.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行恶夜骑士枪击策略与女巫自疗策略的组合。
+ * 输入为公开策略变体、有限观察及固定种子录制。
+ * 字面预期为二十局自然结束、无拒绝／回退及查验分支出现；逐局 Tape 结果与原录制对照，不冒充独立免疫／绕过规则预期。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

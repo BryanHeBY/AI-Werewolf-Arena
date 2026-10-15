@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public six- and twelve-player Gravekeeper examples resolve a registered passive profile.
- * Input: The existing public board/game JSON files and literal invented variants or unregistered roles.
- * Output and oracle: Explicit profile/default values and strict rejection are asserted; synthetic provider metadata is parsed without a model request.
+ * 配置文件系统集成测试读取既有公开六／十二人守墓人板子与游戏 JSON，并提供字面虚构变体或未注册身份，核对其解析为已注册被动 profile。明确的 profile／默认值及严格拒绝为预期；解析合成 provider 元数据但不请求模型。
  */
 import { Role } from "../../../../src/domain";
 import { expect, test } from "bun:test";

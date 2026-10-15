@@ -1,9 +1,5 @@
 /**
- * Unit tests check Trickster's shared cleanup gate and finished Day-exile window.
- * Fixed public paired-board data, native choices and delegated World failures
- * supply inputs; literal mappings, getter traces and original native errors are
- * independent expectations. Finish must not close the day mapping or add outer
- * cleanup. No complete night, voting cycle, model or recording runs here.
+ * 单元测试以固定公开配对板子、原生选择及委托 World 故障为输入，核对诡术师共享清理门及已完成 Day 放逐窗口。字面映射、getter 轨迹及原生错误为独立预期；finish 不得关闭日间映射或增加外层清理。不运行完整夜、投票循环、模型或录制。
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";

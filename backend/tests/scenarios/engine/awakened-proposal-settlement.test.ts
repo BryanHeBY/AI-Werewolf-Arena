@@ -1,7 +1,7 @@
 /**
- * Controlled Night scenario verifies typed Awakened proposals reach actual damage settlement without runtime scopes entering summaries.
- * Input: Original local role world and controlled stage registry through the complete NightPipeline.
- * Output and oracle: Exact public summary/source results remain unchanged; the stage mocks are explicit, no new expectation or model is generated.
+ * 受控夜间场景验证具名类型的觉醒提案进入实际伤害结算，且运行 scope 不进入摘要。
+ * 输入为原本地角色 World 及通过完整 NightPipeline 的受控阶段注册表。
+ * 输出与预期为原精确公开摘要／来源结果；阶段 mock 明确保留，不生成新预期或模型结果。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

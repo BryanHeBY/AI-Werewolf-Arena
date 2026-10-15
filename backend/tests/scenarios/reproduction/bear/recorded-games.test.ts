@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Bear complete recorded games retain anonymous night-start signals and original neighboring lives.
- * Input: Original scenario/transport/locale matrices with handwritten roar, survivor, shot and last-word tables.
- * Output and oracle: Literal signal timing, death-chain and terminal assertions remain tied to the actual recorded prefix and replay; expected survivors come from the declared table.
+ * 复现场景验证熊的完整录制对局保留匿名开夜信号及相邻目标原生命。
+ * 输入为原场景／传输／语言矩阵，以及手写吼叫、存活者、枪击和遗言表。
+ * 输出与预期为字面信号时点、死亡链及终局断言，并绑定真实录制前缀和重放；存活预期来自声明表。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

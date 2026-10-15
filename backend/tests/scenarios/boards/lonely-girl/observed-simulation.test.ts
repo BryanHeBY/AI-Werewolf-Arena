@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Lonely Girl original admired relation and knowledge.
- * Input: Twenty seeds per declared board/locale with restricted robot requests.
- * Output and independent oracle: Literal relation/action coverage, natural recorded finish and strict Tape equality.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行孤独少女原倾慕关系的受限请求。
+ * 输入为每个声明板子／语言下二十个种子，机器人请求保持受限。
+ * 字面预期为自然完成、无拒绝／回退、起始决定至多一次及开局完成；严格 Tape 与原末 checkpoint 做一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

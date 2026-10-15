@@ -1,8 +1,5 @@
 /**
- * Unit tests: Configuration rendering uses explicit win, role and mechanism toggles; exact
- * rule summaries and disabled-election omissions check the public prompt registry. Inputs
- * and expected outcomes remain the original literal or immutable-fixture oracle; these
- * module assertions invoke no model or complete-game driver.
+ * 单元测试以显式胜利、身份及机制开关为输入，用精确规则摘要和关闭选举时不显示相应说明的断言核对公开提示 registry。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { DefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";
 import { ActionWindow, BoardConfig, WinCondition } from "../../../src/domain/model";

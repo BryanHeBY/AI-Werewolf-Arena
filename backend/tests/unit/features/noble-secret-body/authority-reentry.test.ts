@@ -18,7 +18,7 @@ import {
   consumeSecretBodyExile,
   closeServantForDeath,
 } from "../../../../src/features/noble-secret-body/authority";
-// Independent A/R counterexamples, preserved after the owner boundary repairs.
+// 保留 owner 边界修复前后独立的 A／R 反例。
 test("controller validation cannot recursively seize begin ownership", () => {
   const f = nobleBodyAuthorityFixture();
   let once = false,

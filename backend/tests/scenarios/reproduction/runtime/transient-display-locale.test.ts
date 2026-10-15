@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify transient display locale is passed to recording without replacing game metadata locale.
- * Input: The original recorder-creation spy, actual simulation and subsequent offline reproduction.
- * Output and oracle: Explicit display-versus-game locale assertions cover both executions; dictionary contents and archived metadata are not changed.
+ * 复现场景验证临时展示语言传给录制层，但不替换对局元数据语言。
+ * 输入为原录制器创建 spy、真实模拟及后续离线复现。
+ * 输出与预期为两次执行中的明确展示语言／对局语言断言；词典内容和归档元数据不变。
  */
 import { expect, spyOn, test } from "bun:test";
 import { SessionRecordManager } from "../../../../src/recording/session/recorder";

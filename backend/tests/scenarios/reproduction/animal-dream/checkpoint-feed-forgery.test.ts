@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Animal Dream checkpoint and feed forgeries cannot contradict an actually finalized recorded game.
- * Input: The original beforeAll game-produced archive and independent copied audience, terminal checkpoint or badge mutations.
- * Output and oracle: Literal baseline acceptance and forgery rejection preserve the shared causal setup; its generated record is test input rather than independently computed expected state.
+ * 复现场景验证动物梦境 checkpoint 与信息流伪造不能违背真实已终结录制对局。
+ * 输入为原 beforeAll 对局生成归档，以及独立受众、终局 checkpoint 或警徽副本篡改。
+ * 输出与预期为字面原记录接收和伪造拒绝，保留共享因果设置；生成记录是测试输入，不是独立计算的预期状态。
  */
 import { beforeAll, expect, test } from "bun:test";
 import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";
@@ -33,7 +33,7 @@ test("A full feed cannot authorize villager wolf-team order through co-tampered 
     if (d.actorId === 5 && d.openedAtEventCount > i) {
       const feed = d.request.context.visible_events;
       expect(feed[0]).toMatchObject({ type: "phase_changed", payload: { phase: "night", day: 1 } });
-      // At this first N1 tactical order, the only earlier public fact is initial Night1.
+      // 在首夜首次战术顺序处，此前唯一公开事实是初始 Night1。
       feed.splice(1, 0, { seq: 2, type: event.type, payload: structuredClone(event.payload) });
       feed.forEach((e: any, n: number) => (e.seq = n + 1));
       copies++;

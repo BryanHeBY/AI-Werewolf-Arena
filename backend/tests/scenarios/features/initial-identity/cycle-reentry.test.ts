@@ -1,7 +1,7 @@
 /**
- * Initial identity scenarios verify real PM/setup/night reentry rejects before changing phase or event prefixes.
- * Input: Original two fresh foundation worlds, controlled null actions and explicit setup/night openings.
- * Output and oracle: Exact completion/reentry codes and unchanged snapshots/event counts preserve causal assertions; original production gates remain the driver.
+ * 初始身份场景验证真实 PM／setup／夜间重入在改变阶段或事件前缀之前被拒绝。
+ * 输入为原两个新基础 World、受控 null 行动及明确 setup／夜间开放。
+ * 输出与预期为精确完成／重入错误码和不变快照／事件数；仍由原生产门禁驱动。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -24,7 +24,7 @@ function foundation() {
 
 test("shared night and PM gates reject actual recursive cycles before changing phase or events", async () => {
   const g = foundation();
-  // The registered handler completes an absent actor without a choice.
+  // 注册的 handler 在没有对应行动者时直接完成，不产生选择。
   const h = foundation();
   await h.phaseManager.runSingleCycle({ getAction: async () => null });
   expect(shared.initialIdentitySetupStatus(h.world)).toBe("complete");

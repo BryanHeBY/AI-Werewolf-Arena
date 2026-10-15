@@ -1,8 +1,5 @@
 /**
- * Builds original shared test test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 构造录制测试的字面 GameResult；输入只有 winner 和 reason。null 胜方得到 no_winner，非 null 得到含玩家 1 的阵营胜利；判定日固定为 1，阶段和 checkpoint 随 null 分支选择。此 helper 只构造预期数据，不读取 World、运行结算或生成板子／库存。
  */
 import { Camp } from "../../../../src/domain/identity";
 import { Phase } from "../../../../src/domain/identity";

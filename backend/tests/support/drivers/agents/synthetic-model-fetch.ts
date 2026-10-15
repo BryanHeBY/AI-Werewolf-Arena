@@ -1,12 +1,9 @@
 /**
- * Owns test driver support: Test-owned synthetic model token and authenticated fetch handler with original authentication-before-payload order.
- * Inputs are supplied script steps, callbacks or fixture resource requests;
- * outputs are the original controlled traces, handles and boundary responses.
- * Unit and scenario tests keep their supplied literal actions and failure
- * expectations as the oracle. Driver ownership, cleanup and error policy never
- * change during this relocation; no billed model is introduced.
+ * 持有测试专用合成模型令牌和认证 fetch handler，保留先认证后解析载荷的顺序。输入为脚本步骤、回调或夹具资源请求，输出为原受控轨迹、句柄和边界响应。单元／场景测试以调用方字面行动和失败预期为依据；迁移不改变驱动所有权、清理或错误政策，不引入计费模型。
  */
-/** Each game owns its fixture token independently of released loopback ports. */
+/**
+ * 每局独立拥有夹具令牌，不依赖已释放的本地回环端口。
+ */
 export function syntheticModelToken(): string {
   return `synthetic-${crypto.randomUUID()}`;
 }
@@ -16,8 +13,8 @@ export function authenticatedSyntheticModelFetch(
   handler: (request: Request) => Response | Promise<Response>,
 ): (request: Request) => Promise<Response> {
   return async (request) => {
-    // Authentication precedes URL and JSON parsing: an old control-owner probe may
-    // reach this port after its original server has closed.
+    // 先认证，再解析 URL 与 JSON；旧 control owner 的探测
+    // 可能在原服务器关闭后抵达已复用端口。
     if (request.headers.get("authorization") !== `Bearer ${token}`)
       return Response.json({ ok: false, error: "unauthorized" }, { status: 401 });
     return handler(request);

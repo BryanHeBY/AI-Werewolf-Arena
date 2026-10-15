@@ -1,5 +1,5 @@
 /**
- * Unit test checks local Ghost Bride stage priority and win-condition contributions. Inputs are literal role sets with and without Bride; fixed priorities, unchanged ordinary descriptors and explicit goal registration are the oracle. No setup window, phase, death chain, file or model executes.
+ * 单元测试以有／无 Bride 的字面身份集合为输入，核对 Ghost Bride 局部阶段优先级及胜利条件贡献。固定优先级、普通 descriptor 不变及明确目标注册为预期；不运行 setup 窗口、阶段、死亡链、文件或模型。
  */
 import { expect, test } from "bun:test";
 import { Role } from "../../../src/domain";

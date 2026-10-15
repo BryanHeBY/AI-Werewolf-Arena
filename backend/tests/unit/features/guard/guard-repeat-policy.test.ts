@@ -110,7 +110,7 @@ for (const policy of ["awa_last_action_v1", "netease_consecutive_nights_v1"] as 
     });
   test(`${policy}: adjacent repeat is rejected and explicit empty guard breaks the chain`, async () => {
     const game = setup(policy);
-    await game.act(1, choose(2)); // Official self-guard is legal.
+    await game.act(1, choose(2)); // 官方政策允许自守。
     await game.act(2, choose(2));
     expect(game.ability.uses).toBe(1);
     expect(game.ability.lastUsedDay).toBe(1);

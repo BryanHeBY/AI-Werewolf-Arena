@@ -1,10 +1,5 @@
 /**
- * Owns the bounded HTTP closure-probe driver used by transport integration tests.
- * Inputs are the original localhost endpoint, private control token and timeout;
- * outputs are the original closed/reused classification or probe errors. Status
- * and request-error observations go to the handwritten transport oracle. This
- * driver retains body limits, timer cancellation, request destruction and awaited
- * close cleanup; it never logs the token or advances a game phase.
+ * 持有传输集成测试的有界 HTTP 关闭探测驱动；输入为原 localhost 端点、私有 control 令牌及超时，输出为原关闭／端口复用分类或探测错误。状态和请求错误交给手写传输预期检查器；保留正文限制、定时器取消、请求销毁及等待关闭清理，不记录令牌或推进游戏阶段。
  */
 import { classifyControlResponse, classifyControlRequestError } from "../../oracles/transport/control-owner";
 import { request } from "node:http";

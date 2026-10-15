@@ -1,9 +1,5 @@
 /**
- * Unit tests check Scholar/Mentor's cleanup transfer and distinct normal/abort fate.
- * Fixed public board data and the native empty first-night resolution supply
- * inputs; literal getter traces, original scope errors and next-night eligibility
- * independently check authority behavior. No complete game or bonus action driver
- * runs here; stage-owned opening is deliberately separate from the pipeline unit.
+ * 单元测试以固定公开板子及原生空首夜解析为输入，核对 Scholar／Mentor 清理转移和正常／中止的不同结果。字面 getter 轨迹、原 scope 错误及次夜资格为独立预期；不运行完整游戏或 bonus 行动驱动。stage 持有的开窗特意与管线单元分开。
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";

@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises real localhost control-owner probes, same-port replacements
- * and response failures. Connection/refusal and owner-token expectations check closure
- * independently of a resource owners self-reported state. Existing literal expectations
- * and independently supplied fixture plans remain the oracle; transport/recording setup is
- * local and no billed model session is started.
+ * 集成测试驱动真实 localhost control-owner 探测、同端口替换及响应失败，以连接／拒绝及 owner 令牌预期核对关闭，不只信任资源 owner 自报状态。预期来自既有字面值与独立夹具；仅本地传输／录制，不启动计费模型。
  */
 import { expect, test } from "bun:test";
 import { createServer, type Server } from "node:http";
@@ -54,7 +50,7 @@ test("same-port replacement is distinguished from a still reachable original own
       "unknown_200",
     );
     await original.close({ force: true });
-    // Keep production's ephemeral-port API unchanged; force reuse only in this controlled test.
+    // 生产仍使用原临时端口 API；仅在本受控测试中强制复用端口。
     const listener = (replacement as unknown as { server: Server }).server;
     const listen = listener.listen.bind(listener);
     listener.listen = ((_port: number, host: string, ready: () => void) =>

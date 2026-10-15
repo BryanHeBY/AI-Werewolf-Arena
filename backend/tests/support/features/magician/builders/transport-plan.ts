@@ -1,8 +1,5 @@
 /**
- * Builds original magician test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按原生／交换枪选择及 dayOnly、kingDeath、pass 选项构造魔术师场景。输出原板子、内部固定种子、角色编号及字面交换／枪／后续回合；不运行交换或死亡结算计算预期。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

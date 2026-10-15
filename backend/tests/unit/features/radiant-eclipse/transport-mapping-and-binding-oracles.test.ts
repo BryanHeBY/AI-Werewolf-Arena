@@ -1,5 +1,5 @@
 /**
- * Oracle unit tests check Radiant transport mapping and current borrowed inventory binding. Inputs include the original public board file read by the plan builder, an independent literal mapping golden and mutated prompt strings; exact maps and rejection messages are the oracle. Original input URL/bytes remain unchanged; no recorded game or model executes.
+ * 预期检查器单元测试以计划 builder 读取的原公开板子、独立字面映射 golden 及被修改的提示串为输入，核对 Radiant 传输映射和当前借用库存绑定。精确映射及拒绝消息为预期；原 URL／字节不变，不执行已录游戏或模型。
  */
 import { expect, test } from "bun:test";
 import { radiantTransportScenario } from "../../../support/features/radiant-eclipse/builders/transport-plan";

@@ -1,7 +1,7 @@
 /**
- * Scenario tests execute Magician, Evil Knight, Time Consort and Nightmare games while checking the actual first-day player prompts.
- * Inputs are the original SDK/ACP plans and bilingual required-marker literals; independent timing, public-rule text and final scenario assertions are the oracle.
- * The transport driver owns local process and recording resources. The prompt checks do not add player knowledge, execute a live model or generate expected rule outcomes.
+ * 场景测试执行魔术师、恶夜骑士、蚀时狼妃和噩梦之影对局，并检查实际首日玩家提示。
+ * 输入为原 SDK／ACP 计划及双语必需标记字面值；独立时序、公开规则文案及最终场景断言构成预期。
+ * 传输驱动拥有本地进程和录制资源；提示检查不增加玩家知识、不执行线上模型，也不生成预期规则结果。
  */
 import { expect, test } from "bun:test";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";

@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public Mirror Girl examples retain the finite inspection policy.
- * Input: Original six/twelve-player board/game JSON and four literal invented policy parameter objects.
- * Output and oracle: Exact machine policy identity and strict parameter refusals preserve loader behavior; archive/example bytes and role rules are unchanged.
+ * 配置文件系统集成测试读取原公开六／十二人魔镜少女板子与游戏 JSON，并提供四个手写虚构政策参数对象，核对有限查验政策。精确机器政策身份及严格参数拒绝为预期；不改档案／示例字节或身份规则。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

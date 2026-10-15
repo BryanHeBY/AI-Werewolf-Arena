@@ -1,9 +1,5 @@
 /**
- * Unit tests: Mist Raven eligibility uses literal finite boards and hostile descriptors;
- * explicit allowed/rejected variants check exact composition, order independence and zero
- * accessor execution. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面有限板子及恶意 descriptor 为输入，用明确允许／拒绝变体核对 Mist Raven 精确组合、顺序无关及零 accessor 执行。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { isMistRavenPreset } from "../../../src/rulesets";

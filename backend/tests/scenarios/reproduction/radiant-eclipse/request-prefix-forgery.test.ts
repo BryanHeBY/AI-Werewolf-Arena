@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Radiant Eclipse full and pending request prefixes preserve private knowledge and predecessor settlement authority.
- * Input: The original top-level awaited full recording, copied pending prefix and named raw/action/source-history forgeries.
- * Output and oracle: Explicit baseline acceptance and exact rejection code retain the shared game setup and original request sequence; generated records remain inputs, not new expected-rule goldens.
+ * 复现场景验证流光／蚀日完整及 pending 请求前缀保留私有知识和此前结算许可。
+ * 输入为原顶层 await 创建的完整录制、pending 前缀副本及具名原始／行动／来源历史伪造。
+ * 输出与预期为明确基线接收和精确拒绝码，保留共享对局设置及原请求顺序；生成记录仍是输入，不是新的规则固定预期。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

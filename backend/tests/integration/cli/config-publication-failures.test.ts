@@ -1,7 +1,5 @@
 /**
- * CLI and filesystem integration tests verify exclusive configuration publication, rollback and child-process failures.
- * Input: Temporary board files, injected publication/restore races and the real public config-check entry point.
- * Output and oracle: Original competing file bytes, backup contents and exact primary/rollback errors remain intact; user configuration is never changed.
+ * CLI／文件系统集成测试以临时板子、注入的发布／恢复竞争及真实公开 config-check 入口为输入，验证配置独占发布、回滚及子进程失败。原竞争文件字节、备份内容和精确主错／回滚错为预期；不改变用户配置。
  */
 import { expect, test, spyOn } from "bun:test";
 import * as fs from "node:fs/promises";

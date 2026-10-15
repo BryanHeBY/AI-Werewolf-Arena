@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Pure White and Wolf Witch complete recorded games preserve private inspections and chain-final settlement.
- * Input: Original good/wolf scenario, transport and locale matrices with declared dead/alive/winner facts.
- * Output and oracle: Explicit private-result counts, winning members and final checkpoint assertions retain exact replay; original diagnostic temporary file names and contents are unchanged.
+ * 复现场景验证纯白之女与狼巫完整录制对局保留私有查验及链末结算。
+ * 输入为原好人／狼人场景、传输和语言矩阵，以及声明的死亡／存活／胜方事实。
+ * 输出与预期为明确私有结果次数、获胜成员及最终 checkpoint 断言，保留精确重放；原临时诊断文件名和内容不变。
  */
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";

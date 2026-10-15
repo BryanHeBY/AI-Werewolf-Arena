@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Mirror Girl count and unsupported-role composition diagnostics before installation.
- * Input: Original nine unsupported role values and duplicate native count through public normalization and direct bootstrap.
- * Output and oracle: Exact count/combination error codes and paths preserve the original assertions; no public JSON file or played game is required.
+ * 单元测试将原九种不支持身份及重复原生数量送入公开归一化和直接 bootstrap，核对魔镜少女数量／组合在安装前的诊断。精确数量／组合错误码及路径为预期；不需要公开 JSON 文件或完整对局。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

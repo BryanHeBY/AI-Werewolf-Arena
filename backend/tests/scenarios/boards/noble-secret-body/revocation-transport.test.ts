@@ -25,8 +25,8 @@ const rank: Partial<Record<ActionStage, number>> = {
   wolf_vote: 400,
   night_noble: 450,
 };
-// Test-only supervisor: the real transport reply has returned but domain commit has not run.
-// Lock to the runner's first manager so the subsequent strict Tape replay is untouched.
+// 仅测试使用的监督点：真实传输回复已返回，但领域提交尚未执行。
+// 只锁定 runner 的首个管理器，避免影响后续严格 Tape 重放。
 for (const [stage, old, changed] of [
   ["secret_body", 5, "actor"],
   ["secret_body", 5, "target"],

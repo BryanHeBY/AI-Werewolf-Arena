@@ -1,8 +1,8 @@
 /**
- * Complete public-death policy Tape scenarios verify role disclosure, last words and death-chain publication.
- * Input: Declared public policies, fixed scripts, both locales and actual phase-manager records.
- * Output and independent oracle: Literal disclosure/word/death order plus exact strict replay, without fabricated archived role knowledge.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整公开死亡策略 Tape 场景验证身份公开、遗言及死亡链发表。
+ * 输入为声明的公开策略、固定脚本、两种语言及实际阶段管理器记录。
+ * 字面公开／遗言／死亡顺序构成独立预期；精确严格重放另核对本局录制一致性，不伪造归档中的身份知识。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

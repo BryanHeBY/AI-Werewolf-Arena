@@ -1,9 +1,5 @@
 /**
- * Unit tests check Time Consort's configured cleanup and original manager terminals.
- * A fixed public board and native first-night choice supply inputs; literal World
- * getter traces and original unsettled errors are independent expectations.
- * Priority-50 opening stays outside the pipeline unit. No complete game, effect
- * reflection driver or billed transport runs in this responsibility test.
+ * 单元测试以固定公开板子及原生首夜选择为输入，核对 Time Consort 配置清理及原 manager 终态。字面 World getter 轨迹和原未结算错误为独立预期；优先级 50 的开窗留在管线单元之外。不运行整局、效果反射驱动或计费传输。
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";

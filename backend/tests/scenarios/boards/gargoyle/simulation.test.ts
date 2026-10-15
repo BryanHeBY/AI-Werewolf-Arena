@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Gargoyle copied skills and late knife without pack knowledge.
- * Input: Fixed restricted-observation seeds and declared Gargoyle boards.
- * Output and independent oracle: Independent identity/chat/knife checkpoints, natural outcomes and exact whole-game replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证石像鬼在没有狼队知识时复制技能及后续继承狼刀。
+ * 输入为固定受限观察种子及声明的石像鬼板。
+ * 字面约束为未继承初态、开局计数、实际继承狼刀及狼聊排除；完整对局重放结果另与原录制作一致性对照，不把记录中的 checkpoint 当独立来源。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
@@ -15,7 +15,7 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 import path from "node:path";
 for (const id of ["six_player_gargoyle", "twelve_player_gargoyle"] as const)
   test(`${id}: restricted-observation seeds inherit real knives without pack chat and every complete game strictly replays`, async () => {
-    // The controller checks real branch coverage; decisions only receive their own observation.
+    // 控制器检查真实分支覆盖；决定仅接收玩家自己的观察。
     const board = await loadBoardDefinition(
         path.resolve(import.meta.dir, "../../../../../configs.example"),
         id,

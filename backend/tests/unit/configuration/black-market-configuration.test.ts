@@ -1,8 +1,5 @@
 /**
- * Unit tests: Black Market configuration uses immutable public examples and explicit
- * extra-role mutations; literal parser/bootstrap rejection checks the supported joint
- * roster. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试以不可变公开示例和显式额外身份变体为输入，用字面 parser／bootstrap 拒绝核对 Black Market 支持的联合名单。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

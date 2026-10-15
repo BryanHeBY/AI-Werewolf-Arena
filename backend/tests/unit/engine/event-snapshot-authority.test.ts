@@ -1,9 +1,5 @@
 /**
- * Unit tests: Event snapshot authority uses mutable/replaced payloads and detached facts;
- * literal single-source projection assertions check that visibility never rereads foreign
- * payload state. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以可变／被替换载荷和脱离来源的事实为输入，用字面单来源投影断言核对可见性不重新读取外来载荷状态。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { test, expect } from "bun:test";
 import { World, type GameEvent } from "../../../src/domain";

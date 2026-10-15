@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Wild Child complete recorded games retain original admiration, committed model death and next-night pack affiliation.
- * Input: Original board-size, model/death-chain, transport and locale matrices with copied original-record mutations.
- * Output and oracle: Explicit original identity, later affiliation and terminal-membership assertions remain attached to actual replay; source role/record fixtures are not rewritten.
+ * 复现场景验证野孩子完整录制对局保留原倾慕、已提交榜样死亡及下一夜狼队归属。
+ * 输入为原人数、榜样／死亡链、传输和语言矩阵，以及原记录副本篡改。
+ * 输出与预期为明确原身份、后续归属及终局成员断言，并绑定实际重放；不重写源角色／记录 fixture。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

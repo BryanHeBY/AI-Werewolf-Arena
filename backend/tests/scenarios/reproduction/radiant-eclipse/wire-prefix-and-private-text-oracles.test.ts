@@ -1,5 +1,6 @@
 /**
- * Recorded-game scenarios check current wire prefixes and donor-text privacy against an independent oracle. Inputs are original handwritten Radiant recording plans and mutated event tuples/SDK/ACP prompt data; literal prefix and privacy rejection assertions are the oracle. Actual phase/Tape recording and original filesystem cleanup remain; no model is called.
+ * 录制对局场景以独立预期检查当前协议前缀和提供者文本隐私。输入为原手写流光板录制计划，以及事件 tuple／SDK／ACP 提示数据篡改；字面前缀和隐私拒绝断言构成预期。
+ * 真实阶段／Tape 录制及原文件系统清理保留，不调用模型。
  */
 import { expect, test } from "bun:test";
 import {

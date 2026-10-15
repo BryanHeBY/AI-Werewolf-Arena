@@ -290,7 +290,7 @@ for (const locale of ["zh-CN", "en"] as const)
       if (transition === "revive") {
         const alive = world.getComponent(7, COMPONENT.Alive)!;
         alive.alive = true;
-        alive.alive = false; // No intermediate permission query may be required.
+        alive.alive = false; // 不能要求中途必须有人查询权限。
       } else world.addComponent(7, COMPONENT.Alive, createAliveComponent(false, locale));
       expect(receive.validate(gunRequest(old.id), "shoot", { target_id: 1 })).toMatchObject({
         ok: false,
@@ -325,8 +325,8 @@ for (const locale of ["zh-CN", "en"] as const)
           { 7: [DeathCause.WolfKill] },
           {
             async getAction() {
-              // The first microtask lets the async provider resume; the second runs after
-              // the resolver's gateway but before the awaiting Hunter hook resumes.
+              // 首个微任务让异步 provider 恢复；第二个微任务发生在
+              // resolver 的 gateway 之后、等待中的 Hunter hook 恢复之前。
               queueMicrotask(() =>
                 queueMicrotask(() => {
                   revoked = true;
@@ -389,7 +389,7 @@ for (const locale of ["zh-CN", "en"] as const)
       observations.push(observation);
       engineIds.push(own.id);
       expect(observation.request.context).not.toHaveProperty("death_action_id");
-      expect(request.context.death_action_id).toBe(own.id); // Engine/reproduction input unchanged.
+      expect(request.context.death_action_id).toBe(own.id); // 引擎／复现输入保持不变。
       expect(new ActionReception(world).validate(request, "speak", { text: "authorized" }).ok).toBe(
         true,
       );

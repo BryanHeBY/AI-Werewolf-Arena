@@ -1,8 +1,8 @@
 /**
- * Red Moon edge recording/verifier scenarios verify last-side death, delayed expiry and seal edge cases.
- * Input: Fixed native scripts, both last-wolf policies/locales and independently mutated checkpoints.
- * Output and independent oracle: Manual terminal/death/resource prefix and exact replay, with forged causal state rejected.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 赤月边界录制／verifier 场景验证末方死亡、延后到期及封印边界。
+ * 输入为固定原生脚本、两种末狼策略／语言及独立篡改的 checkpoint。
+ * 手写终局／死亡／资源前缀及伪造因果状态拒绝构成独立预期；精确重放另核对本局录制一致性。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

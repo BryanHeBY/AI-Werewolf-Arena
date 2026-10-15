@@ -1,5 +1,6 @@
 /**
- * Scenario tests drive complete controlled NightPipeline and PhaseManager cycles across borrowed/native stock. Inputs are original literal bottle/shelter/dream matrices from a public board fixture; handwritten unchanged native histories, expiry and resource outcomes are the oracle. The supporting board file/URL and test-only original stock mutations are retained; no model or generated expected result runs.
+ * 场景测试以完整受控 NightPipeline 和 PhaseManager 周期驱动借用／原生库存。输入为公开板子 fixture 的原字面药剂／庇护／梦矩阵；手写原生历史不变、到期及资源结果构成预期。
+ * 支持板子文件／URL 和测试专用原库存改动保留，不运行模型，也不生成预期结果。
  */
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";

@@ -1,8 +1,5 @@
 /**
- * Unit tests own audit turn/session/mode/evidence authorization and synthetic SDK
- * tool-loop semantics. Literal payloads and callback submissions check exact source
- * attribution, context visibility and public tool names; the original describe prefixes
- * and expected messages remain the oracle. No MCP listener or subprocess is started.
+ * 单元测试持有 audit 回合／会话／模式／证据授权与合成 SDK 工具循环的核对。字面载荷和回调提交验证精确来源归属、context 可见性及公开工具名；预期仍为原 describe 范围及原消息，不启动 MCP listener 或子进程。
  */
 import { describe, expect, test } from "bun:test";
 import {

@@ -77,7 +77,7 @@ test("pure radiant backlash enters resolution even without a StatusMarks compone
     radiantBacklashes: [f.backlash(4)],
   });
   expect(damage).toEqual({ deaths: [4], deathSources: { 4: [DeathCause.RadiantBacklash] } });
-  expect(f.life(4).alive).toBe(true); // Actual deaths remain owned by DeathResolution.
+  expect(f.life(4).alive).toBe(true); // 实际死亡仍由 DeathResolution 持有。
   expect(text("zh-CN", "death.radiant_backlash")).toBe("流光反噬");
   expect(text("en", "death.radiant_backlash")).toBe("Radiant backlash");
 });

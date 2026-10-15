@@ -103,7 +103,7 @@ test("reverse writing and Tape reject the same unknown nested configuration fiel
   };
   expect(boardConfigSchema.safeParse(config).success).toBe(false);
   expect(() => boardDefinitionFromConfig("closure_test", config)).toThrow("config.witch.unused");
-  // Same original bad field now fails at owned runtime-parameter compilation before Tape creation.
+  // 同一个原坏字段现在在 Tape 创建前，于所属运行参数编译处失败。
   expect(() => trace(config)).toThrow("rule_parameters_invalid");
 });
 

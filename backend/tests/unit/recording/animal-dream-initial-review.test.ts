@@ -1,8 +1,5 @@
 /**
- * Unit tests: Animal archive initial-state validation uses bootstrap checkpoint zero and
- * forged future Fox state; explicit accepted/rejected prefixes check recorded first-night
- * authority. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试以 bootstrap 检查点零及伪造的未来 Fox 状态为输入，用明确接受／拒绝前缀核对 Animal 首夜归档授权。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

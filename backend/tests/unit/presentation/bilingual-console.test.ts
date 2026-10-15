@@ -1,9 +1,5 @@
 /**
- * Unit tests: Console rendering uses literal Hidden Wolf, Bear and public/private facts;
- * explicit bilingual lines and scalar-field assertions check privacy flags and neutral
- * announcements. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面 Hidden Wolf、Bear 及公开／私密事实为输入，用明确双语行及标量字段断言核对私密标志和中立播报。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { fixtureResult } from "../../support/builders/recording/result";
 import { TextLocalizationRegistry } from "../../../src/agents/presentation/text-localization-registry";
@@ -255,7 +251,7 @@ test("all existing console branches render English without changing event facts,
     registry.toReplayStage(
       event("wolf_kill_vote_cast", { actorId: 1, targetId: 2, abstain: false }),
     ),
-  ).toBe("wolf_discussion"); // Existing recording mapping; I03 handles versioned IDs.
+  ).toBe("wolf_discussion"); // 现有录制映射；I03 另行处理带版本的 ID。
   expect(
     registry.toJudgeLine(
       events.find((item) => item.type === "vote_summary")!,

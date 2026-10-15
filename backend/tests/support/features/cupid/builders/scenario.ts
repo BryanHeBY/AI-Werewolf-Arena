@@ -1,8 +1,5 @@
 /**
- * Builds original cupid test input plans, fixed boards and explicit player/marker data. Inputs are supplied
- * variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured identities.
- * Existing dealing may construct input identities, while handwritten expected outcomes remain supplied
- * data. It runs no game or model and changes no oracle algorithm.
+ * 持有丘比特有限场景及板子 builder：cupidBoard 接收身份表和 CupidPolicy，cupidScenario 只接收 kind。输出为原板子、内部固定种子、身份及手写行动计划；不执行关系结算或从实际胜方生成预期。
  */
 import { Role } from "../../../../../src/domain";
 import type { BoardConfig } from "../../../../../src/domain";

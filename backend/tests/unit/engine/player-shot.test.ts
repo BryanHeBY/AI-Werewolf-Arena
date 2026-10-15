@@ -1,8 +1,5 @@
 /**
- * Unit tests: Player gun projection uses native and copied origins plus unknown fields;
- * exact neutral viewer facts and detached payload assertions check identical public shot
- * semantics. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试以原生／复制枪源和未知字段为输入，用精确中立 viewer 事实及脱离来源载荷断言核对相同公开枪语义。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

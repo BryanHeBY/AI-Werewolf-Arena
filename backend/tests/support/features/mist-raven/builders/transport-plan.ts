@@ -1,8 +1,5 @@
 /**
- * Builds original mist-raven test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 linked、saved-dreamer、protected-heal 或 draw 变体构造迷雾组合板传输场景；读取原公开板子并使用内部固定种子与映射。输出原行动、提示标记和字面场景预期；不启动传输或游戏循环。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";
@@ -38,7 +35,7 @@ export async function mistTransportScenario(
   const protectedHeal = variant === "protected-heal",
     saved = variant === "saved-dreamer",
     draw = variant === "draw";
-  // Independent FNV/Mulberry golden for this seed has index 2; this literal order draws w1.
+  // 本种子独立手算的 FNV／Mulberry 固定结果为 index 2；该字面顺序选中 w1。
   const circle = draw ? [w0, w2, w1] : [v0, v1, w1],
     unsealDay = protectedHeal ? 3 : 2,
     known = protectedHeal ? [] : [w0];

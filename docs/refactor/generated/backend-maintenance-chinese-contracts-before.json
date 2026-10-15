@@ -1,0 +1,2701 @@
+{
+  "baseCommit": "d7b5f51b770d1b5713ffe8b62fd671cac36e92eb",
+  "source": [
+    {
+      "path": "backend/src/adapters/acp/acp-turn-registry.ts",
+      "mode": "100644",
+      "gitBlob": "1ec90344135c798202b99a0aee6942b52ab1d286",
+      "sha256": "3418dd4c5f557e97fecaa8afae131cf8860f9a1a6e439164146a5af233074f70"
+    },
+    {
+      "path": "backend/src/agents/llm/sdk-game-tool-loop.ts",
+      "mode": "100644",
+      "gitBlob": "56adcb22c728d87ceede6f981df66328ebb1e590",
+      "sha256": "e4c9ed8e2131414db8dfdd2c7e47c853a73b7a11c56540b7a93d6c940c507c0c"
+    },
+    {
+      "path": "backend/src/app/checkpoint/identity-setups.ts",
+      "mode": "100644",
+      "gitBlob": "77d2ed7562c9b34e7ed1f6b1c7860f073b31875c",
+      "sha256": "38c1191bd00f5a09e3d178191dc9407192a71b90c89c0d7341affe35f2e8981d"
+    },
+    {
+      "path": "backend/src/app/player-agent-factory.ts",
+      "mode": "100644",
+      "gitBlob": "2c48ce5ce33b09c99ba2c69355be9722b72b5698",
+      "sha256": "c1e02e3eb604af03292829f31c0d7e4786c8c48eba0ebe906765abaa2c952d3b"
+    },
+    {
+      "path": "backend/src/audit/payload-builder.ts",
+      "mode": "100644",
+      "gitBlob": "de7845e26191d687bbb5f549cceef0fcf952ac32",
+      "sha256": "e6c875223188c875beb7eaee93d0ced83a7e1b914785c0515e3df422654eb95d"
+    },
+    {
+      "path": "backend/src/domain/request-lease.ts",
+      "mode": "100644",
+      "gitBlob": "aa4003f2bf1f42e48cb5e6760e6bb0cd3c7fba4c",
+      "sha256": "6f5a9e35175806273fa6e82d7b34e137b3c9e0aaaa064611bff3508b5f15fcd9"
+    },
+    {
+      "path": "backend/src/recording/verification/initial-identity/validate.ts",
+      "mode": "100644",
+      "gitBlob": "ec4f78f548ed7d9ad2bed4900d47e2600eb40ce0",
+      "sha256": "afab2d84f3ff44ef479c1a082bc2764961dfa074d011731b527360cff6ba947d"
+    },
+    {
+      "path": "backend/src/recording/verification/wild-child/validate.ts",
+      "mode": "100644",
+      "gitBlob": "d0290dc7249dc9765164abb631dd36ab6cfdf4e2",
+      "sha256": "ea188559da16017e5c8ddaf438a28508eee3620356c01f59f4d5732e97ec2437"
+    },
+    {
+      "path": "backend/tests/architecture/core-contract-identity.test.ts",
+      "mode": "100644",
+      "gitBlob": "a3d3cc260b1ded5c2d47f204964a896862e497b4",
+      "sha256": "14538b21ba0f428c3f3d58c41d21c2368d3f7be294fd4094ef04fda009603f48"
+    },
+    {
+      "path": "backend/tests/architecture/engine-fingerprint.test.ts",
+      "mode": "100644",
+      "gitBlob": "0bdcf37e7f6e9b24a27ffbfd71c66e5def5006ad",
+      "sha256": "6b42c553285b43ba5a28f6174053577b2117e434b2ae780a7fc5a10cc993c79b"
+    },
+    {
+      "path": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "mode": "100644",
+      "gitBlob": "b5ac36b446a1634796f6d88a0f4bc8ae03386620",
+      "sha256": "521000886e91954ec534fe61d3c18898adf78b55f2f216292b2ec4961e467fa4"
+    },
+    {
+      "path": "backend/tests/architecture/identity-import-initialization.test.ts",
+      "mode": "100644",
+      "gitBlob": "c0d5823dc212e99063d2df5f51b8e0df0f43c705",
+      "sha256": "08a21c763c6a645da79eb3dbfc3092b1a3145f672f05619c6a461cfb0e2f36f1"
+    },
+    {
+      "path": "backend/tests/architecture/refactor-characterization.test.ts",
+      "mode": "100644",
+      "gitBlob": "173eeded602d78c944a3d6d2bb475d2bb2c94829",
+      "sha256": "4641e8aabee94d76cde88b288b1e5f5e48df94c542d01ed7f5ba1bcc002afe34"
+    },
+    {
+      "path": "backend/tests/integration/agents/acp-process-client.test.ts",
+      "mode": "100644",
+      "gitBlob": "01ff30683434a2f661e88e7afbb1121ff3b52e2d",
+      "sha256": "d3f35c7bd9839ba0212ab257517e1fe8e3b9c0e5fa56d868962ad9de839666ef"
+    },
+    {
+      "path": "backend/tests/integration/agents/acp/audit-session-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "700097ecc9a8de66db4266be5e5264988b39dfea",
+      "sha256": "352357e72f4d3c3f5f9136b5bd2489d52e33dfb36cb5a5bc226b3c5207446533"
+    },
+    {
+      "path": "backend/tests/integration/agents/acp/game-control-mcp.test.ts",
+      "mode": "100644",
+      "gitBlob": "24473f062806b896e126b70e9c35a783a29664ad",
+      "sha256": "91b36999c1efc2c7f094557b39f3bbe51ff36a364710ce7e429a677274deb804"
+    },
+    {
+      "path": "backend/tests/integration/agents/acp/loopback-control-ownership.test.ts",
+      "mode": "100644",
+      "gitBlob": "093a0a378a22378b614904a9d8f8e650319bb827",
+      "sha256": "f1eddcf00b6a1952fa374718470b9b0024ef082a97729c29b28a6707174de522"
+    },
+    {
+      "path": "backend/tests/integration/agents/animal-dream/late-submission-mcp.test.ts",
+      "mode": "100644",
+      "gitBlob": "41d98a700efd3764857c84f482402c2919f59c11",
+      "sha256": "13cb166739b944eec163d39d1a543f53326b1ec5b4c41d916416e85d525859ce"
+    },
+    {
+      "path": "backend/tests/integration/agents/audit/bilingual-task-processes.test.ts",
+      "mode": "100644",
+      "gitBlob": "db6901b2a465af87cb69d3eecba893879f3d225e",
+      "sha256": "58982d22d60897ec7636dd1b9a58dedb863979d908711acbda8df7fc555dcb0d"
+    },
+    {
+      "path": "backend/tests/integration/agents/audit/tool-mcp-contract.test.ts",
+      "mode": "100644",
+      "gitBlob": "513fea960f2c5ae15d7a7fd321824e04add67caa",
+      "sha256": "34d5cb2a03cd623445baa27a06f618a757a442fe9c66d525f40f4adf3fdf63ba"
+    },
+    {
+      "path": "backend/tests/integration/agents/control-owner.test.ts",
+      "mode": "100644",
+      "gitBlob": "498e7442ccc487eaa119610e33cf628015f95496",
+      "sha256": "37ac8fedd3e77cf4d2cc318dda451196fb3d63a84448ab0d92440abcb9bea5ca"
+    },
+    {
+      "path": "backend/tests/integration/agents/fragrant-pair-seer/late-submission-mcp.test.ts",
+      "mode": "100644",
+      "gitBlob": "eae93d13a3b1142358dd3382d75c1d9f765af6fd",
+      "sha256": "651645fb24003ec3f566764254970f9bf2df2cd77ce89b42950977db22dee2d0"
+    },
+    {
+      "path": "backend/tests/integration/agents/fragrant-pair-seer/wire-oracle-calibration.test.ts",
+      "mode": "100644",
+      "gitBlob": "122796cb6f95be595388e596bd257c202786185d",
+      "sha256": "f17e1ef80ba51d78ef18c835efb2b65970eaea97193cf8214b91d56c06c039db"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/gun-runtime.test.ts",
+      "mode": "100644",
+      "gitBlob": "8426c2eadaf2690d6a00a087c10f8987334be817",
+      "sha256": "47ce7723abf6d2e238c68d3a1d46587d1ee231b24d232326e06635a3dbe718a5"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/private-http-failure.test.ts",
+      "mode": "100644",
+      "gitBlob": "38e1095048c825a17b7b992e1d74c4ec5da54809",
+      "sha256": "99ca6002a04cdff4eee7c4c0255decec6071dbb9db5e45b9ce18b960154e3da3"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/sdk-client.test.ts",
+      "mode": "100644",
+      "gitBlob": "ab158a5629766ea872690435cd8cdb8eb8465a5c",
+      "sha256": "386f3797b836b42c973803215c90885ee9ff11c1c72609ce5b12cb7b79216d3b"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/synthetic-http-ownership.test.ts",
+      "mode": "100644",
+      "gitBlob": "73822653f2a1612644c4d8850d3e0165896263f1",
+      "sha256": "8f4c4449a31e8d30b0da8da57e2a20b362938ac5bc6f5b1400992057af006161"
+    },
+    {
+      "path": "backend/tests/integration/agents/mist-raven/late-submission-mcp.test.ts",
+      "mode": "100644",
+      "gitBlob": "da7567dc1088a8e2603d78a466480cf172a0a750",
+      "sha256": "35eafb13313edfce4e173635b0183bf9e72585e068d574b1ee37a6c6a8b8ab0f"
+    },
+    {
+      "path": "backend/tests/integration/agents/protocol/action-reception-sdk-mcp-parity.test.ts",
+      "mode": "100644",
+      "gitBlob": "1e5b600be5228371e36a3c7e993fea2896b13bd2",
+      "sha256": "4c48c8a4563e9b158a4def97cbedc83ce2fd24ac4dae6733733dcc58a2470753"
+    },
+    {
+      "path": "backend/tests/integration/agents/protocol/bilingual-sdk-mcp.test.ts",
+      "mode": "100644",
+      "gitBlob": "23311ad5d1657ef222c7adbc90765c1e08970946",
+      "sha256": "05f1137d6dd0a3e20b232ff2f145d98be653d55fa33bbf33f9c54409c5b7e390"
+    },
+    {
+      "path": "backend/tests/integration/agents/radiant-eclipse/late-submission-mcp.test.ts",
+      "mode": "100644",
+      "gitBlob": "5b5efcbc6f11a363a7a9e609d2867ea22cb70f31",
+      "sha256": "b16ec8a1bdd708e3e635f17a49351e1708041b2fbf12da652c3531205cc7c17a"
+    },
+    {
+      "path": "backend/tests/integration/agents/runtime/runner-dependency-closure.test.ts",
+      "mode": "100644",
+      "gitBlob": "e5da7a5225de71833ae68b406075953e48eafc74",
+      "sha256": "8095a0490bd6fbedac2477f3e9eb304d3cf00a50152419dd17375d07062752b9"
+    },
+    {
+      "path": "backend/tests/integration/agents/strict-retry-recording.test.ts",
+      "mode": "100644",
+      "gitBlob": "a45734234daed791b319e08b4593890b8110020b",
+      "sha256": "c2f828e5b3dcd941e2e4eb2105dc143e105dcde1763f211c4c235bbc5e113ac9"
+    },
+    {
+      "path": "backend/tests/integration/cli/bilingual-commands.test.ts",
+      "mode": "100644",
+      "gitBlob": "7ab45cf311e956adf95b4b66a235658782c60b5a",
+      "sha256": "e48fef64f01a9bd70b692400780fd273145dcf23ddc75657f2ee61b670b079ce"
+    },
+    {
+      "path": "backend/tests/integration/cli/config-publication-failures.test.ts",
+      "mode": "100644",
+      "gitBlob": "81856dd51a3141eb7b9373c6a4dc04f6f20175b3",
+      "sha256": "10f8a00f62b107a0080e9e31746a2c1c4c027b90d79ad7f57a24b5b1368edfa6"
+    },
+    {
+      "path": "backend/tests/integration/cli/finite-preset-validation.test.ts",
+      "mode": "100644",
+      "gitBlob": "8b2e5ca3dcd4e8c2e4a76caeea70ad776e4e1ec9",
+      "sha256": "b1a7aaff8f725b9a5cdd358e4cbd6a3179ff7368c7282a78fce518af461f58ea"
+    },
+    {
+      "path": "backend/tests/integration/cli/noble-secret-body-validation.test.ts",
+      "mode": "100644",
+      "gitBlob": "96412ef833bd4533cbd619f8b5d69e51d8a30f49",
+      "sha256": "3e1acd90fbf8e400c0db3603a02f392ff5ab1338661bf5c40d52243d309d4679"
+    },
+    {
+      "path": "backend/tests/integration/cli/provider-load-errors.test.ts",
+      "mode": "100644",
+      "gitBlob": "db0a8021817c6c50217d594701d1f4b9573adb16",
+      "sha256": "7c5a2271b4d934681cc39469e0734202b0ed7a5201f64ff0892d23720f22d348"
+    },
+    {
+      "path": "backend/tests/integration/configuration/shapeshifter-public-examples.test.ts",
+      "mode": "100644",
+      "gitBlob": "2c14e093e0ef18f5167e2006a436eadf806b9e87",
+      "sha256": "762b63028869e5d4ba32d303fdbaee6ee3b21cf289b6d9a6bf0804cc28ec1f50"
+    },
+    {
+      "path": "backend/tests/integration/configuration/thief-public-examples.test.ts",
+      "mode": "100644",
+      "gitBlob": "68155250f62256f2a7c0b434a84ade1f7cc39da3",
+      "sha256": "ae1d43e4f209697cfe97608d0003436148d905867af50d0fb233e45db4e4b5cf"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/agents/player-factory-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "d6df0ce9e845c61587be0d62a66097a635de8633",
+      "sha256": "bed9854d6bd125d2d84f603dc20eaddc6d2e90215421e9627d08046de48f2294"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/awakened-examples.test.ts",
+      "mode": "100644",
+      "gitBlob": "260144d149aebece8e2e524bdfa1c3fae2bbf11b",
+      "sha256": "06126b73fbf7393f78e8039076a43a7251f41c106e64029511498d76247b1384"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/bilingual-config-migration.test.ts",
+      "mode": "100644",
+      "gitBlob": "be0446ddf05590e60ca8411bbc2e32ac05e58497",
+      "sha256": "bd8219cdc59cf4d46b2f0297dabbd7f1ceb6b52b4a3f81a388392ad280987bbd"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/board-definition-and-migration.test.ts",
+      "mode": "100644",
+      "gitBlob": "2cc2c3a9a615938d5547c0da53c3e8a536f75e3f",
+      "sha256": "f7df1dc9739f44b2e9e194c675e9616778d6aa30aa4bafbf539b85ae56b04897"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/explicit-runtime-files.test.ts",
+      "mode": "100644",
+      "gitBlob": "9d7020b22ae83fe189dad78b74391aa594e04b01",
+      "sha256": "95ffe087e7ce9e637a562165362a3c2d75faf9204cd89808d8982cc446cd3bfb"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/gravekeeper-loading.test.ts",
+      "mode": "100644",
+      "gitBlob": "2f5c0363eb0ead6df6317308962095942dcf946e",
+      "sha256": "bf633b77cc57991b4be644fe078d1cb450dcd6ad577a5f8d4bbf2b6e110f279a"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/hybrid-examples.test.ts",
+      "mode": "100644",
+      "gitBlob": "fb67b1706d17c6277fbe0a5daee4e3d844ec2f02",
+      "sha256": "be322c3e64ec5673e80bd4d8c1609b391f196eea0ee007ec8cc1469d3233e8e1"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/knight-loading.test.ts",
+      "mode": "100644",
+      "gitBlob": "e1a9a754e0fbf6905816a902c844b3d13c3cb18f",
+      "sha256": "dc405379e2af4af64483baa2b171c67ca4b48ae285b453b9c2554925236d4c30"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/mechanical-examples.test.ts",
+      "mode": "100644",
+      "gitBlob": "5479989554dc4ebf7cc116b2dba5b1f2ad8cd07f",
+      "sha256": "e4f1715e879aa2a406c663fb721f6ff4578047f1541a374886315d5af9b37194"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/miracle-merchant-examples.test.ts",
+      "mode": "100644",
+      "gitBlob": "aded7e6b116e9b58679e3926d930e9495d9d686f",
+      "sha256": "0a4179a41364a2fda5d2f2e1e35c3d42c5ae06b2fbd806bed0d0493c4c62fcc0"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/mirror-girl-examples.test.ts",
+      "mode": "100644",
+      "gitBlob": "ff2469302fedf21bf22bc8b2afd4f80e61dcd30a",
+      "sha256": "b2ec3f3423bd37903c053819540a2691959d688c6dfa1e2ef5fbc35290f4d80a"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/public-death-example.test.ts",
+      "mode": "100644",
+      "gitBlob": "8baec79f5e076e62811bbf744b8fe85417954cbf",
+      "sha256": "2c0b920e1919e866b22fe116cd85c49506b760e717963df221175100d8000a95"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/wolf-king-loading.test.ts",
+      "mode": "100644",
+      "gitBlob": "0264eba1fb3ab11936276717c53e39c9dfc6fa5e",
+      "sha256": "1483d9de2a22639ea22dab10ba3e709d369a37550a7ff28fa43bc9cbff8fdeb0"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/event-recording-cursors.test.ts",
+      "mode": "100644",
+      "gitBlob": "f11377a4b04c26e094c9b09edac3ffd67263e622",
+      "sha256": "a4cafceaabbf6a7da000027d1ff3e8e1f36b12075fb37efabfbdea9a8d902263"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/replay-bundle-export.test.ts",
+      "mode": "100644",
+      "gitBlob": "d838ae723ad1c4fc73fe837c19708f9f756babe7",
+      "sha256": "337cb249126d8a83dce660f4d4ec847dba33f49b3b49b12f36bee66f9364222f"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/replay-version-migration.test.ts",
+      "mode": "100644",
+      "gitBlob": "a24c21de9bd4ba15b26c75f9210744f727a77547",
+      "sha256": "ec1a62a424e41887f92888adc09251972ce7b36d6b93eecf0f3113e264cbe1dc"
+    },
+    {
+      "path": "backend/tests/integration/recording/sealed-victory-publication.test.ts",
+      "mode": "100644",
+      "gitBlob": "07e224c3ebbf33e4ce9523241f3ae6166c7fe840",
+      "sha256": "fdb13993d811121940047c5e5fcaae84fcba9080c0d0f5cc0f6b624a8cdb072a"
+    },
+    {
+      "path": "backend/tests/integration/recording/wolf-team-event-audience-provenance.test.ts",
+      "mode": "100644",
+      "gitBlob": "0cd59877e03129dd7f98087e12d7584075c7cc53",
+      "sha256": "8411ddeb5e823d6f74c259f3ac7fd0132c375e415a3c5d81d3e5d7629f02008a"
+    },
+    {
+      "path": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "mode": "100644",
+      "gitBlob": "23ce7e8c81ee67272ec57bc48562d15a4f88b4b1",
+      "sha256": "9c6a22a48b9abb672d5715ab76d397b67b139da87bd3da21a4d46fbbb95fcfd4"
+    },
+    {
+      "path": "backend/tests/integration/tooling/role-rule-card-references.test.ts",
+      "mode": "100644",
+      "gitBlob": "5588219d7d1de31e0a914234eee23c65188a4670",
+      "sha256": "cf8eb761a8663cdf10053a8faf7faec89a57e4a9c717c411ccd3187c7ec23791"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/animal-dream/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "c16765b7132bb20b4a9bc202d3e19a172ca7f171",
+      "sha256": "03e8bb6de6b0a7b08950327826301fbcfa1f685d8ee5c681db664b3c559cde0b"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/animal-dream/transport-correction.test.ts",
+      "mode": "100644",
+      "gitBlob": "f2dd4cc930c6d5e553a4a8baa38ddd15d246f30a",
+      "sha256": "227cb1cba52baab1db59897456e3baafdb13ace4ccf98f847fe3ac7b2d50a5ff"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/animal-dream/transport-failure.test.ts",
+      "mode": "100644",
+      "gitBlob": "4efc758a6d7b5b0923053c603246bd353860baa0",
+      "sha256": "10964c1d85ab907ced6d97289594040c70f10eee7aa803576b3f9ad94fdc991e"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/animal-dream/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "6d3439985ab9546a297e38e03d20d67030d00d39",
+      "sha256": "6ea00738dc0527568dbdb5a515b9c666bb9ee03967853b9a20bf9aade1d5cbd7"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/awa-standard/preset-tape.test.ts",
+      "mode": "100644",
+      "gitBlob": "0fed288625f9918bf78de349d34153e9e9a983a8",
+      "sha256": "ce0a7a292afd2ce96ac588c460af15d4e01c03418e105cf1377ed12f4ffbd432"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/awakened-hidden-wolf/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "fa11d3ba83b56f6ffc1bdb9ea527fab04048cb1a",
+      "sha256": "94b298864e60cdd47486b7b07eeabf308554ffeeaf12cd7ad1366dc88318e781"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/bear/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "0a65474797f6d1971b34f0c26ec4c5b0058a3002",
+      "sha256": "0e7bf2ed6525ccad373aff69c5505f5cf8e6e3f4919e93cb6390e66bb2444c72"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/black-market/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "803506f0ff501d21a55cba69a2b5085bd8299be4",
+      "sha256": "9383d1249e34402cd733279ec5256052f3d0b22d027dcfbea1e81952483a6e34"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/common/badge-policy-tape.test.ts",
+      "mode": "100644",
+      "gitBlob": "b77f3e9ca432dfb1b54027edb083fca5f96218f4",
+      "sha256": "f3a72d9597fd3465befe496923cc38f335cff3f174d235bc8bcd81fe1fd94d5c"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/common/pk-policy-tape.test.ts",
+      "mode": "100644",
+      "gitBlob": "1760a53a3059d74b9d0e9caa339f2fe2fe8fb1a0",
+      "sha256": "ae7eee6695cf1c31fe68db5af8d416af1d2e1ddc7e49fb964aa39ca08615ba3d"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/common/public-death-policy-tape.test.ts",
+      "mode": "100644",
+      "gitBlob": "54a6c588f271276ad1cb229a290d2cd49c220806",
+      "sha256": "686ed4ad9d4dcfb6fcbbbcde476fbc410c1772a7477051337f80056f69feea27"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cupid/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "0aa4a7720e28c94d9fd9c37971e9ae85c8318ca5",
+      "sha256": "154cd4a30b49f0170fb9703b9affa126968104f942793b0eb668093962771a02"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/debater/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "6bff56183a6b0ee714f0f59374918f973827076b",
+      "sha256": "731af848231a9f56590c60a2bb999d4503000438b79c4f257192f56dbf52d84c"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/demon-hunter/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "8972cd030249b4803f60d3ff21752875002b3581",
+      "sha256": "9be3b341c5aa0eefb5700e50244d60e6c82646ee274959e9bfba2135c1f958c1"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/demon-hunter/reproduction.test.ts",
+      "mode": "100644",
+      "gitBlob": "560abbab89eeb8409b7c40a689238af528cc8315",
+      "sha256": "4e3475698b19d1f0287dc6577d00e1e217bd7087a3961e785592bf327990bdc5"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/dreamer/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "8b573990dc7bd6c2a6b3867029069809aa59dd30",
+      "sha256": "e73ff6c95844ebcdedc05239926a5fc7ede5b2230576a7e1d7b2ac3c14e825b5"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/evil-knight/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "2ca2636c7279b12f2e9e169408f5401817fc93d2",
+      "sha256": "6d89db608d1026d652d978ddb9ffadef71d4f46f6b6abcdacfa2b384294373e1"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/evil-knight/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "ed6a672e0a0f127a8094bf11b0618156690fbebe",
+      "sha256": "e8ebe95e8cf32abf399e4d4bfb0f4b7f4cda2c05bea26a5381b59e962c0ddb89"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/foundation/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "be683d373ebfdf1b26fa3297d9fcb6f75fc48d51",
+      "sha256": "92f7ec1e889b7fa46f743ccc7b191f8f5f6b2267ec189bb4370c089a9687475d"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/fragrant-pair-seer/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "2d0b3daaac9b940d13df5d23020a30ab697c054b",
+      "sha256": "7c9cfa19e48ed7f7013ea206f04cbe578bc63eb0a248147073868e225d4baf04"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/fragrant-pair-seer/transport-correction.test.ts",
+      "mode": "100644",
+      "gitBlob": "ddf59211694ff2525450e2a692aca6bdbb87bf6e",
+      "sha256": "49323a6fb726fe5e16fe873c1699eaaff13e57c161bc1dc0825b90537d367a38"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/fragrant-pair-seer/transport-failure.test.ts",
+      "mode": "100644",
+      "gitBlob": "f2ab6019acd798be34588d2d96b5ce5ea61f3dd2",
+      "sha256": "65db7d2692e91e7b96bc5519f6c69a808f919b56c90cbf45126670695afb5207"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/fragrant-pair-seer/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "bf69f37795b47df40a306cab1a277580ceecfe9d",
+      "sha256": "e75f8915d133a70609621e0cb617bc8bb89f1dd09a3586bec9835bd90bb675e5"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/gargoyle/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "40130da7e06d1ce8f7f8cf37eea89267515c1fa1",
+      "sha256": "325fb090a6cae2763b7c34ee8d8dcff3326c50f226b31a8c13b9a47409c53f56"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "3de8043fe310e3d3e9658a557789c1de667cac2a",
+      "sha256": "58d22b09178b736b061902efe785ab4c454de5f41fdf996bbcb44cc6dfd982fd"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/gravekeeper/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "b7fadb31b446728a588506095dc82073ca17061c",
+      "sha256": "69ae4a255ac1d475d1cddd1b93f350ce03bbc2e7344a03d596a821d92976c9bc"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/guard/repeat-policy-tape.test.ts",
+      "mode": "100644",
+      "gitBlob": "4a7b1f4cffa0829360cb2ec03b6311947500861e",
+      "sha256": "77e7d54a72632300a39017b924cb391872badad39494a58867be37592e3bd5cf"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/hidden-wolf/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "18fa924357b3554e2d39a1079647e875fb9baeda",
+      "sha256": "86fc162d42440c17eb3f76801e98562dee03752ee0daa17f1caf8013b9576a51"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/hybrid/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "4e29a9ccdd2b150bf779e2c212ad34c6f1fd5364",
+      "sha256": "51e6fdf46ca0cf4dfc07a4eb572b85ddec88475d3488d350106b1ee90bdf5f70"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/knight/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "c0e7cc5fee19b3561fac89c41a714a81106c8a5b",
+      "sha256": "6d82e8c9d4df0877f33035d0559a0dcca714bf72bc3ec83c23d2c41e6c3d8d8e"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/lonely-girl/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "3c65a950f3c8be91e9a64b6f37a66793cdaf779a",
+      "sha256": "fdc2291309188946f799cae65882bab336878167206211b9e092164777c0d128"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "mode": "100644",
+      "gitBlob": "4838a6c48d86cce9fae040f7cbb26f5d169c4674",
+      "sha256": "ad297c3a2f59b021be4633e694f781d96539ab94af9b90fffb6735c7b62b78c9"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "2d17b79a609bbbc8e745a277ab7dd380ae723a0f",
+      "sha256": "449e6b9683b4ca21466adf02bc7fa92cdb21299f2f412952976ec7e35436045d"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mechanical-wolf/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "352432e53a960bd9ccf5fb2d14074ef4ceb4eabe",
+      "sha256": "3ea88341b12e922b51ef76b5a5268844b7a8ed33093af39fe6e3d1969ada5b26"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/miracle-merchant/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "b917f6b00a3d2de64575a62e14de1b41c03c1e8c",
+      "sha256": "727698f39324fe80bf8cc71e72de3cf6b935f07c66029109f4a0636e16db3fa5"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mirror-girl/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "d6a7006a3f063de2e50da91402d9139651e65d19",
+      "sha256": "7347d4380871efd752e5ffe607c6c9d82cd8bdb665d935fa50538dc7b2e221e6"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "04ef949ca4c8b643669fca927f2ed4b210ad3887",
+      "sha256": "6d6dc98c83e730aad66fbde53f8a60a6e8ea0885087acd832fe05bdab0f72730"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/nightmare/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "89a4d7e88a40d85dcc68ba0136482eee929c6c51",
+      "sha256": "867ae8e0d53d5326a48328b3d01f40896729c551d1532f64fb8fc08c1c13af41"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/nightmare/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "1934516ecfcb3a6e2993683ac0a4a6a04bcc2679",
+      "sha256": "54d089da24c392cd7a1817d6747b45f85d76ca1dad3466b5fd33b6d6762b93ad"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/badge-transport.test.ts",
+      "mode": "100644",
+      "gitBlob": "c82c338068e22b553fe57e815c343459e0890777",
+      "sha256": "7f80784ae1f6c170be5ed4a2b35dd35da79e7fcc674a5a468934d4b472526a90"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/pass-repeat-transport.test.ts",
+      "mode": "100644",
+      "gitBlob": "9c8b36c5e7d1a0f134f10bca0ed2ee9c3672df3b",
+      "sha256": "5e2fdb1664f29bea2af8b4c3bd4a96cd9259f169a0d2e3d9508d1c9ec5178b70"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/policy-transport.test.ts",
+      "mode": "100644",
+      "gitBlob": "14423a92dccf9a7441910d9111890f0a8c785226",
+      "sha256": "5de68dc482478a2964795327fdd0c3c270e879e440ab6715ca01499da00d92fe"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/revocation-transport.test.ts",
+      "mode": "100644",
+      "gitBlob": "c83cc527dbc072be492a1293e2684fb5f859e08f",
+      "sha256": "ec33a4e7401a042fd92c83633b543e2f61b88a93d467b6ddda24593783e1c28c"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/transport-failure.test.ts",
+      "mode": "100644",
+      "gitBlob": "003d8fa478e50c0cfc29e975ef08b3e9d37d290c",
+      "sha256": "bec2fef46fa0b677bb10acd64b2f6e0880d386d0fb0c0636fcdf7edfb7867291"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "3aff85949de6bc8321fedb7fa71847b8338c58ab",
+      "sha256": "1367c184d5c7ddce7a60706e99b19d9db7fd7d0d1bb6edb3ed7d9be3241a1f1d"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/window-transport.test.ts",
+      "mode": "100644",
+      "gitBlob": "c4be89bb27de644ed63d40300d121544d3dda42a",
+      "sha256": "e5b5a854289c5d17583a87176e8586c2dc389f0d96e09b7d855a51e9f11fb43c"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "baa7da969cbad100e19ddfe2aa82517d1616f422",
+      "sha256": "5bd93155261282f66334b32da0444f16cd71d2db73df6698f6f3d63312e5f8b8"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/transport-pk.test.ts",
+      "mode": "100644",
+      "gitBlob": "880e3357246f1baf4b122c894787bfb5c3b620fb",
+      "sha256": "d9ccc9b03efe98c7c4ce4326927a6faf0b274f798b87c63646cd10573925e07c"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/psychic/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "2df42cdc508dcabe8294209ead4015a6c2d1d447",
+      "sha256": "49823befead88b260d798975faaa3824c7335131bb68f20aa16c60bdc481fdfd"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/public-policies/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "568e51b97012eeb3e04530ed4be406928aa5a229",
+      "sha256": "fac2386b3161b6533f0426b7067e48e43c2c0587bd4430e6c7e9904c22730d2d"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/pure-white/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "5580fa68126c4bf29ef081633412130fd9ab3c55",
+      "sha256": "83d3179f1eab4bc1e3a8729ddd7bb2a6d0f666b114661956fda6e5692be676fe"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/radiant-eclipse/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "853c795a41085116d62d8258b77f595e0311f7c6",
+      "sha256": "f6be660085d37885c83d8883f1950566e041dae2deecf9b8c7345283a371874d"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/edge-reproduction.test.ts",
+      "mode": "100644",
+      "gitBlob": "8890b6cc878e77b15aa23fed0f6dffa1da37fb9a",
+      "sha256": "d0f96fac9d299b6af081d43cbbaa9d1faa13e9c7bb0eeeb37fc225e83b40b02a"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/reproduction.test.ts",
+      "mode": "100644",
+      "gitBlob": "6deacd51c022d903147f453786211bfc42108922",
+      "sha256": "5ab5c71e7c90c2efd5b939f30fcb4b6e2b40be6dcb874ed88e6fe20092f8ea8b"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "fa670c876cbaac3986a623e7c01d35997fadd248",
+      "sha256": "a6001628c20dbfd24d079f7243c6132cbce9556aaf4bef04120d093f08e2cf11"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "cf2c5e79688b6b2615af7925355251cd5b41ca96",
+      "sha256": "603908209b3f7cee8ba6c0fe182fba34fbb048ac1409befccf0ccfd0bca92e89"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/shapeshifter/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "623b6177215dbc2f58ba898b66aef34b20fc48ca",
+      "sha256": "52dbb1dc95d6fbcc6f0a6ead61883939f3304247a176328f435470d7c94e71bf"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/thief/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "b9b3d7dcb352667d57a679077ecaa27baa4ad827",
+      "sha256": "1b82146144c9061251fa42b8bf0075f87b4e5d8e74ce6b0963426da1f3b5f3a6"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-wolf-consort/reproduction.test.ts",
+      "mode": "100644",
+      "gitBlob": "a7c9d8fcc16ddd215b21f8661d69ec8c10c0e6a7",
+      "sha256": "3c1df120e3846df37b2cc2e4b3b7f5398d9685bffb328af0a802a9d620a6a567"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-wolf-consort/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "c09d824615c6eb2586264cda26526637ab4bbaf5",
+      "sha256": "65219e35b62642213cd7b1539b99d149de8f2fddfbf4cf2669e9ab46d9315ef0"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/trickster/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "22cf12ac86c2d1e4950796773c80c3e1ba33c8a2",
+      "sha256": "c57f4a40778b42c3f4365ab35b0db71c57a28ac60868f82c21c867b1964c4211"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wall-notes/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "c86b2c94dd03728df3d97202b5010740f3a2eb31",
+      "sha256": "596b6a5320df54807903ef08184bc33d5a85b33ab3fd4d2d52d802c7d3e4ead0"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/white-wolf-king/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "b3db03ab342dde982e985edb91b0b1a190e9d3d5",
+      "sha256": "24d075b021ad741b843e757ea6e2ba677129d2ea2a236100575ecff57cca30e1"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wild-child/observed-simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "3d8ee22a6a79fdc9d1cc587f58bf32100e83edbd",
+      "sha256": "15059bd3ec7df9f5de91dd8807ffee1becb136f020a6eeaa089bbd53d6a0c679"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-beauty/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "2f10bef2480d5946d140bb49e0f61ada8d00e9b9",
+      "sha256": "6644cf153489814b2c21edaf51352eb9823d934def29c58fd10bd6c3829b3649"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/simulation.test.ts",
+      "mode": "100644",
+      "gitBlob": "3a178ee0142d7a88b3d23b294749ab1eb90ef21b",
+      "sha256": "ad770626a5fe13fb13f573d24f914d16b1157c4251adf7f459bb1d9eccf9ce0e"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "mode": "100644",
+      "gitBlob": "fa7c32cfd339302f0aa119ea66fdf5e56309e2cb",
+      "sha256": "281fa0f93560cfb668f4a27e1f41db97cda02a638dd1e3b754d3d791fe7dfa10"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/transport-game.test.ts",
+      "mode": "100644",
+      "gitBlob": "066fe37bfb2c88a3867b8e2dae3d3c36fd63972a",
+      "sha256": "f0193fe2d6d92892762f205057eccafda216e28956dc4c852468789b3c18dcf9"
+    },
+    {
+      "path": "backend/tests/scenarios/engine/awakened-proposal-settlement.test.ts",
+      "mode": "100644",
+      "gitBlob": "11c4fbbd002b90b0b72c71cc76f36681614be8ba",
+      "sha256": "d671b15114f6adde5b5e634994165cfc58b46a146a4c3fbfc220cb1dbddadfd1"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts",
+      "mode": "100644",
+      "gitBlob": "1961334564f8f2585fa1b4b65417237e81720e67",
+      "sha256": "c74796e2ca90ec8137c34884753d08db44b5bc35ea527727666ada3802a9ef1e"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/demon-hunter/committed-fault-boundaries.test.ts",
+      "mode": "100644",
+      "gitBlob": "eb216e08ebda8230502d6adac0307c3bc63bd68e",
+      "sha256": "367300c3030cd1ec31ec417d34202d24146d5b3614822a7b3bf37a9435b259fa"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/evil-knight/required-response-prefix.test.ts",
+      "mode": "100644",
+      "gitBlob": "6cee8fec0c29d6f6e3977a16602cfb2614d38655",
+      "sha256": "4259e77f04e0bf92b6cc5ee540a8bdd033334a07f88124e72789da4a9525bb0b"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/magician/late-committed-prefix.test.ts",
+      "mode": "100644",
+      "gitBlob": "ea331a4e884484bd0d495292dd91ed2bf93c4871",
+      "sha256": "ffa2d4ad34bf907088561dbae9c7667e72cc00f4792608175eb2b9da621d192c"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/magician/required-swap-response.test.ts",
+      "mode": "100644",
+      "gitBlob": "528753b5283a0a5af4aa8939e13eb45cc9109322",
+      "sha256": "f575652fbf72b8da51f43cac4924c3e3ef4cd0812ab2469cc56506445976b821"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/nightmare/required-fear-response.test.ts",
+      "mode": "100644",
+      "gitBlob": "fdedab196e270d5cb85fef2b4e800e1127b23af3",
+      "sha256": "ab8dc2b7eea10b58ccfd909cb583f134fc782a8755d83f1f231c4f8716598b6a"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/noble-secret-body/hunt-clear-publication.test.ts",
+      "mode": "100644",
+      "gitBlob": "2718a226f8ada80752af0f0eb1c00027f8501f4b",
+      "sha256": "023063d4c5b1982a91b07c1b64c3568ea1eb68f258c80b837ff04ccae926a5c7"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/order-prince/late-committed-prefix.test.ts",
+      "mode": "100644",
+      "gitBlob": "97a3fc0bb6c57047cd951078c61fe713502dc8cc",
+      "sha256": "a39abe3d2b9ac0899fe85110a4ba54035c87e9ce9988fa2aa75d0390e72b791f"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/illegal-domain-arguments.test.ts",
+      "mode": "100644",
+      "gitBlob": "312c4ebb51f74350b051e9048d1d0b3683ddfd68",
+      "sha256": "6c33dd05a41d234bd4307aa9ac01ff1812faf58465b86d4561fdd4612bd5e3d2"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/incremental-cleanup-checkpoint.test.ts",
+      "mode": "100644",
+      "gitBlob": "481a764be8f7ca03f8e0059b47b5bcc1d41e5f63",
+      "sha256": "0a8f3043801a6908152cb6c0963ac1fd3bbde6583160d3e92576bbae5bad8825"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/lease-finalization.test.ts",
+      "mode": "100644",
+      "gitBlob": "8ba13d5bae48250e82fe0a5d197d09bee0f052b5",
+      "sha256": "6de5cddfb5c83879c9db38df81b7143cefc8d291b3d8a4efbc3d34aa0e522e31"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/paid-potion-archive.test.ts",
+      "mode": "100644",
+      "gitBlob": "7d63f8ea863be89be88ac628177b9bb5908d1fa4",
+      "sha256": "112a00bc30cf40505cbae9a797fd177b3021d91b9ade5c026d141895f9760f84"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "mode": "100644",
+      "gitBlob": "58943e99974f54f685fe63124fe1d2951520b093",
+      "sha256": "4e31cb576a95de6fa799a599780cad3a9d2ede122737b0fa76686054d424c14b"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/strict-action-prefix-and-interruption.test.ts",
+      "mode": "100644",
+      "gitBlob": "61bce0e42aab7debdb4449a219253c950a1ea414",
+      "sha256": "dd3914f43d5708eb8cbb9b816692b7f516703ea51c5f730d03f486b0659b8f9d"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+      "mode": "100644",
+      "gitBlob": "76ac784141027e6350b64e24e2f24d01bf808e55",
+      "sha256": "ce2f70c99c8883cb4b38cf164e5e0af610f180dcf3f17a6e5b625c7040b6675b"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/scholar-mentor/required-turn-prefix.test.ts",
+      "mode": "100644",
+      "gitBlob": "5a79a19d0dc823bc51960924f2d283469334795e",
+      "sha256": "dcf2727f58110c49457a93b9301f3d4d7a5c75396f7d77c2b07650e6a7c2d579"
+    },
+    {
+      "path": "backend/tests/scenarios/features/fragrant-pair-seer/native-runtime.test.ts",
+      "mode": "100644",
+      "gitBlob": "f3134b18d11327266e2885afb46d9e8e23283b4c",
+      "sha256": "69aed06f871a82fda89772c23774b954eceed156de1dc1c39f58605adbd71f42"
+    },
+    {
+      "path": "backend/tests/scenarios/features/fragrant-pair-seer/reentry-and-failure.test.ts",
+      "mode": "100644",
+      "gitBlob": "1199e54497e0682755261579c4e514073f2619c4",
+      "sha256": "aa511722b8a32230f74aa6b0a76976bebe93fbc85ef8e13e692f18b1a1124d6b"
+    },
+    {
+      "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+      "mode": "100644",
+      "gitBlob": "a64a257fae5b7cead1519cbc9a5cc4da29b361d8",
+      "sha256": "5f8d059738d70f47ccbce5c88c41c5dea804b01c5fa1f0f23d29f889a48a2257"
+    },
+    {
+      "path": "backend/tests/scenarios/features/initial-identity/cycle-reentry.test.ts",
+      "mode": "100644",
+      "gitBlob": "45dd59b46011daed91a20e186598e50cf2fa9899",
+      "sha256": "12aab4e23867a52b823c4e056bf0a718f63b330d67d57f551e9742e322972123"
+    },
+    {
+      "path": "backend/tests/scenarios/features/lonely-girl/setup-reentry-and-night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "c1cbc7e65897f0abf6374aea43dbc32cfd366b8c",
+      "sha256": "09aadb6470188855f6394cdc36bc219e0847e30428cc8084a279687b31abec1d"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/borrowed-stock-across-native-nights.test.ts",
+      "mode": "100644",
+      "gitBlob": "1f64545f3088ae33ab8de72d877c148d2878b083",
+      "sha256": "f8b23e3a12f8842627b020da976f32679805bcc45059929e0583d04d5a59a08e"
+    },
+    {
+      "path": "backend/tests/scenarios/features/sheriff/badge-death-handoff-and-revocation.test.ts",
+      "mode": "100644",
+      "gitBlob": "0bdec3a6b5dfca9cc9cb431708bda4236956d47a",
+      "sha256": "217397741efebe41d006afb37c9611f33334c63a86b495daee41e8148670c580"
+    },
+    {
+      "path": "backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+      "mode": "100644",
+      "gitBlob": "06c89d8d13b8e9546a3240571fbb2543daff5036",
+      "sha256": "746518c7729591b7c7397b270b0015f7cb819d2c90248b43150695dcaeaf7c2f"
+    },
+    {
+      "path": "backend/tests/scenarios/features/wolf-king/copied-gun-and-mixed-origin.test.ts",
+      "mode": "100644",
+      "gitBlob": "28f924d2cf5beb96670c8a9aee7df4d039918a06",
+      "sha256": "1678ea3e6b04f1918b6da7ee66346a1b38a4a136b357339a75fdd8f3f91a36f2"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/chain-final-victory.test.ts",
+      "mode": "100644",
+      "gitBlob": "11dbc9185467106585d84169bca6cc0d3d4a135f",
+      "sha256": "d5f5a38479190010fc383f0492787f767f607f938eccbaaa5251ad4c3350fed4"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/complete-mechanism-interactions.test.ts",
+      "mode": "100644",
+      "gitBlob": "05c602ede5e6a4f0ca0b2cb7b20911d89580f3b8",
+      "sha256": "a899fff9454acc1de99348bf605bd4c3292c089e1987241b1f4fb99326e81f9b"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/native-night-settlement.test.ts",
+      "mode": "100644",
+      "gitBlob": "1b1f27e372dc31ec61779d6bdc9b62886eb0deeb",
+      "sha256": "0c562ba6f539938e8b7833160c6866740422040b73c5c1172bb6995a427df696"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/parallel-response-recording.test.ts",
+      "mode": "100644",
+      "gitBlob": "ce13c6137671aa8d440b585929d4ce9fa5273ad4",
+      "sha256": "69d52696b8fb433db5d573bff674d9dc11580b8081947d4a0d896a0030ebf9e9"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/self-destruct-chain-recording.test.ts",
+      "mode": "100644",
+      "gitBlob": "f04db43a40d7caac7f31ad7210d70f585e07b905",
+      "sha256": "4fc5dab50e3d6cfb749174901db0e3e8292f55e8a55c57f7f04c9688e3ff9d9f"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/ordinary-rule-branches.test.ts",
+      "mode": "100644",
+      "gitBlob": "610dd7ae5f08513abe3973eebf0dfeb61fe93aea",
+      "sha256": "663cde9b754c6e70db7e8ff9e07ac861a6c8303a25a0634fee5dd4f69d27947d"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/pending-recording-flush.test.ts",
+      "mode": "100644",
+      "gitBlob": "aa4934d91672a7ff8871846a7f6d014592a849b1",
+      "sha256": "d71e8c4ea1cfb3b5e33441e84ddbc4313fcfff1ebe77090ef1255f46429ee077"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/phase-manager-reentry.test.ts",
+      "mode": "100644",
+      "gitBlob": "e5dc46eb1ba288c9356360674ca59dcd11f545f6",
+      "sha256": "4a0ede254bd53bea10e132d7b14bca0059faa07391657757cdbc2ccd7e643c45"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/sheriff-pk-summary.test.ts",
+      "mode": "100644",
+      "gitBlob": "db177ca23d16130a13249551b75d7de3c8460892",
+      "sha256": "ded0d1039bc0e974a068c29b4bd75964b8d2639c202cc4abdb05c87efa30819d"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/scholar-mentor/spent-heal-visibility.test.ts",
+      "mode": "100644",
+      "gitBlob": "6d06552e369ca4504c7669283e2b0f9d3e361350",
+      "sha256": "005643e06d4cf24347f38844e7f922e9ab27b999b8ec4c517568b5342258a9f4"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/day-one-sheriff-pipeline.test.ts",
+      "mode": "100644",
+      "gitBlob": "d4f48a22b4b1c8913022860c986382760e5caa86",
+      "sha256": "a17265589213c200a8f17d10deab6e6d1a8bbaeb5e9d2bf118817f79e5b63f7d"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "mode": "100644",
+      "gitBlob": "74ddf063420a03c1bb28f91b74cd20bf5de48958",
+      "sha256": "ab08b82930b982cc2e710572d3a5bd04b22eb19b9a3e08edea3bd7c420ba809c"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/hunter-last-god.test.ts",
+      "mode": "100644",
+      "gitBlob": "ad9ec9dd7022ad0beb894b938b81c41112155b2c",
+      "sha256": "5dfb3a0610faad6ab5e529a3445cc77a5049aac6da76bb77e73180d8dc7bed5c"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/ballot-knowledge-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "229cf28481b2f1a0abdc8feaeae3d26e192a7639",
+      "sha256": "b837fd64cd73ea2f0158ebfc7b0b51b7c2ec91cd0d4bf9a0224ccc7c231080a8"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/checkpoint-feed-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "c2f2a0f0c03c32a0cb959a7805f2a82d2369cffd",
+      "sha256": "d050f4d14a73a7239f145f5e298aae705c92b4832f008921483a399cdcc9b28d"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/raw-source-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "6c926bad91ebf92951a58a9346fb4f388d4514f8",
+      "sha256": "c6fd6ed086371cf83dd970f2588b7f29241ab0d66f9b3d2fa99430029f0b0be3"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/recorded-outcomes.test.ts",
+      "mode": "100644",
+      "gitBlob": "23b1851d0c29c37e431a1ffadd9f1059185a8e8a",
+      "sha256": "4efb829b3629c4caf89f6d25330975fec2ab3c86a3f8d347b18c6d09001d4e6d"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/awakened-hidden-wolf/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "7a1a71bb4b8dd9ee25ff8399a67ba2ced4a2b7a2",
+      "sha256": "eafbcea2e844bcc08be368d6c520a5729caa437ce52c25078adbbe7b0304e7d5"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/bear/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "5770b8a9e9d54147b928a8bef4edc518766955fc",
+      "sha256": "05e7abe453e0abfcde7761d5f84a2b345086220f6f79b8ee72e0ae9631ed0897"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/black-market-merchant/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "fee35b16db2b6cb716397f832cc8df108f7661bc",
+      "sha256": "ce8fec35473678abd024bba8401bceadc202128613d69be66ea19f9b5a3a6c43"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/cupid/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "1f92c3e2c4c24bcc36d6d59cf262e72adc0c72bb",
+      "sha256": "651c647ad4f0cc6c520140bda698d8f370419ac63f0b719aa008750287793a3e"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/cursed-fox/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "dc857198f2ebe13d3c4b7471dda24334eac38f7e",
+      "sha256": "f2977f7d8a8a8a33988b95d58af2c17aae933d2a1644d73bce576ddc6c4fc7b1"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/debater/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "f3f466a147d2e151fbeb25d5a8b2335431ee1674",
+      "sha256": "33223432d1a8b716fd14cc595a1d9476ce69d03f8a074cd27063f37b85618908"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/demon-hunter/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "9f7d88a10ef56b68c226a21adce24e935fcd1599",
+      "sha256": "419bb6f677f477733e0d84af0aed17ebfa069f8eb5e0f0e9a9962fc6618a31d6"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/dreamer/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "7fee7014f417552d02a75ee7ac213526ac8995f9",
+      "sha256": "35f281259399956bfb452eea8a699d5dcc45261641c466f436c1b65faa5a24d4"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/fragrant-pair-seer/recorded-evidence-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "73cab964a7cdf8b0aefa00f73e81f937e94d991c",
+      "sha256": "23843902d16a916035fd87043ef15575a1a8c455ea3270e36983cf32029c92ad"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/gargoyle/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "18f773bdff305dc6a416eb6976d15b18828216e6",
+      "sha256": "bfe897cdb08a0c8ea36f52ec0f89b31903b11ce5dbdf31b5c3d5f38721834d4e"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/ghost-bride/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "f4fa4689e86f9736053c8c06c55de8879b35b403",
+      "sha256": "d0476f2e032f298c053e3157e4ce3e1c9e0a04bd03e60effc68afa54c3bff492"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/gravekeeper/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "f21e92f7351987ba0ed6d11401b7a754f997dcd8",
+      "sha256": "d06d056fa9ddf36924a299b885587e41383ac58da7ddd395b9b692ee3f0e1378"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/hidden-wolf/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "118e8ee1a40437eb89684d4a9372f24f3eb8290c",
+      "sha256": "ea3ecce5f81134fc7d24ed56a35927f3a52c161560cdcc5af2db1a68f76943dd"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/historical-beauty-and-dream-policy-chains.test.ts",
+      "mode": "100644",
+      "gitBlob": "e788bd10b06677baf73715a95a188e8e76e801f6",
+      "sha256": "27ab1710069e4063c046ec90649eac2729b963d3948043ae7de1c9a9161cddce"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/hybrid/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "b2e2d01be2522de141a51748800d93d7f954dabb",
+      "sha256": "f46703f1c5e8bde716fa6fef01f914cb927d0b0b4c04b5fd16120f684fde28dd"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mechanical-wolf/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "cfbe4ef8e6cdd80c1308533a3ee4e63eaecb4297",
+      "sha256": "03ec5f42d1575d4b2832bdfd1e398e12bed6fc8773131078bda7d789e3be6f68"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/miracle-merchant/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "e58e5e3cdd226cb94930c365aad59b9ec901067c",
+      "sha256": "c3dc17b3924d197e3216f9ebfafa6d69ebe245816f2988254bdd80c80739b61d"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mirror-girl/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "38c34bc39ffb9d5bb8248264747f065c910a8e9d",
+      "sha256": "2b48f0ffabf9a6bf8341eaeb6460dcb348a9167f560203ed53ee9561319c8213"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/frontend-fixture-publication.test.ts",
+      "mode": "100644",
+      "gitBlob": "a69bf336c994bb6bec5412341ec256f5f9e8c509",
+      "sha256": "c5641793c8964f4a1e0075be4a9d5ccd5de15061a32c63ae596f5f4d7e21f6c1"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/knowledge-feed-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "48ceacb5ea85b59e83cf6e948246ecf009c2bb49",
+      "sha256": "5014501773dac6be7db4daa02d55d20e7aa38a71979719e4a9a1e620fa34dfcd"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/pending-autosave.test.ts",
+      "mode": "100644",
+      "gitBlob": "ea003693c863fc33b08f239fc6549b5c8461b798",
+      "sha256": "14c8f889609189f0a274de722b77ea8c05552f8c2be6516c38068093409e0a95"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/recorded-evidence-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "c47ec08d94cfc80ff0508dea96ab51b10bffe272",
+      "sha256": "3d6995060f26cfc9015b388f891f94110fde20511f723349578bc181a77ffb24"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/restart-cursor-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "6ac2e764777c257bd3e10b64d8a6b6ffdc4f5f46",
+      "sha256": "6e05cbdb0fc2a3b8f142c3072ffe5e1ae74b9501ec2fc82b5847280d860f6c18"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/self-destruct-checkpoint.test.ts",
+      "mode": "100644",
+      "gitBlob": "c2d3451347fd4e97edbcb14f2674f6673fdfdada",
+      "sha256": "64e9b9ff3aea22867f0677425ea5482fd450a828dcfaa98030743db1e6d22b89"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/terminal-request-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "3284490fbe407b487bd0426c615ea00dd6850faa",
+      "sha256": "6d5e4140da8af5d05db6d8d05a42d0f25eb88c271aeb51b400226455eb5f7d24"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/psychic/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "cb3e9a0d5b5632cc7a1e6ea22e63ce9d90e1bdb8",
+      "sha256": "21b5ba0c3aadd8daf5f7a900404d3d607d4bc7036d58ce80b48c6090b6651176"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/pure-white/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "17c9cefca6ad380eeab07c7baac0e2b4373c60f2",
+      "sha256": "7ae9eec0d21a49ac2397578a313388bf49d0e0b8c4d5df0de397e3e15b7991e3"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/incremental-live-prefix.test.ts",
+      "mode": "100644",
+      "gitBlob": "dc3d6b340528c49d5ee0094c21b36fb456242c01",
+      "sha256": "af140737984651a483bc383b6cf8e99f7103f7b01e892dfb37b7dbe0e4ee6d08"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/raw-domain-failure.test.ts",
+      "mode": "100644",
+      "gitBlob": "5cf555c2d1f00b7cf494b16d78a5a216ffda960e",
+      "sha256": "8263628f0201a335784474948ef47c983c58a3707716abd429e3f65c046305c4"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/recorded-prefixes.test.ts",
+      "mode": "100644",
+      "gitBlob": "20d4cec16823d6efec8899aeef1c814e166d9b68",
+      "sha256": "39a6f24a17439bef0f71236741c9cfb6332c27ae10cf4fed2ec1d9e65cc0cf0e"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/request-prefix-forgery.test.ts",
+      "mode": "100644",
+      "gitBlob": "a1dc86ca37e0eef273eec50d65062027822afb7a",
+      "sha256": "be939cf90a9a3c0d1ab9df4743e8ff13a1ab275ecae67cc0eaa580777dee1108"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/wire-prefix-and-private-text-oracles.test.ts",
+      "mode": "100644",
+      "gitBlob": "8485a58adf07b3371d37ff6f654a53aea37c0561",
+      "sha256": "38fda78a6ce1dbfd3af83372bca2f762d645c616b68cb4bf476d37d86d704891"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/runtime/transient-display-locale.test.ts",
+      "mode": "100644",
+      "gitBlob": "e124fd9105865e26c06153ecaa1d87775f42e033",
+      "sha256": "63560b3bbdf4947e837dd3daaf3c8e693909e41ee72a9b0cb9b2caa4c3eeceae"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/shapeshifter/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "54c196c9781141a9cdec62cf5950e085e344c24f",
+      "sha256": "13b97e8115b1d4984a4e738d49957b9c2b4c3d4ade2d2784d326a72cb6a917af"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/thief/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "b3481877dd8a99507f69ac5f8ffd63e2b122f1d9",
+      "sha256": "e8a1d841dc8eef2823d563a60cee02e6aed8481ed060e3727a7fc224c4e66303"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wall-notes/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "55796c7b42c2cc580a503332344924dfb0256eac",
+      "sha256": "45f4a25a362a4114c5bbea061e0c0ecb67f17b730d1dde9dfcbb3830e63cec45"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wild-child/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "8e8f7ae7e099fa3d5f073cd6d989d66a277b4381",
+      "sha256": "8d5247fa85987bf4734892930573df0ca52650b3492adce662b4f2d9995b1571"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wolf-beauty/recorded-games.test.ts",
+      "mode": "100644",
+      "gitBlob": "b2250b079d047c5a8d30373a037a0a94a8ed96cf",
+      "sha256": "1726ab5b73bbb9811ba6abc579ad3c94c04516fbbabd120ab7607d6fe26f6e15"
+    },
+    {
+      "path": "backend/tests/scenarios/runtime/request-delivery-failure-replay.test.ts",
+      "mode": "100644",
+      "gitBlob": "13d13dfac0c95e15df2e77ac1afbcc1dbe40c9f8",
+      "sha256": "66aeeb0ec6e08159ab6d4cdf7f8e1a692732f106fbbfc0b6840d160ccbdeb366"
+    },
+    {
+      "path": "backend/tests/setup.ts",
+      "mode": "100644",
+      "gitBlob": "167dc88f7688922cad5386fa7592a8ad7d1ea7ee",
+      "sha256": "8b1c05be86a1bf8756ef9e3b234443e8ddd5c6566986981fd811202f3143abbf"
+    },
+    {
+      "path": "backend/tests/support/builders/agents/acp-requests.ts",
+      "mode": "100644",
+      "gitBlob": "06057ace214e081da9c8cf395169016200d1ae0d",
+      "sha256": "7995f8daccce2c33fbeea00024eaf81570806a805852e80e1b37e91a130425e3"
+    },
+    {
+      "path": "backend/tests/support/builders/recording/result.ts",
+      "mode": "100644",
+      "gitBlob": "d66313930ab85861928207e0b090b6afcac64514",
+      "sha256": "ee3aaaa76fcd0f24336d38d06399b0ef8d934271c766b36e214e0270a49ebe1e"
+    },
+    {
+      "path": "backend/tests/support/builders/transport/foundation-plan.ts",
+      "mode": "100644",
+      "gitBlob": "00fe9f1551bb35a879a638a0d061ac582a17d014",
+      "sha256": "b751992e813b2a36a1babda405b20017a0121e7b8b4cbf8c2354e551bdc728be"
+    },
+    {
+      "path": "backend/tests/support/builders/transport/self-destruct-plan.ts",
+      "mode": "100644",
+      "gitBlob": "dc764031b35e6f4d624945f381de793de2209b6d",
+      "sha256": "bc0ebce65daa0bddf30c7ab59edc1be030e628b9b24ba9897c7c923468f048f6"
+    },
+    {
+      "path": "backend/tests/support/drivers/agents/llm-clients.ts",
+      "mode": "100644",
+      "gitBlob": "ce32e1e932e66873d3e9ce156c4bc018dd2abc8d",
+      "sha256": "a4ce998377b6927cd2c3b81a707b407bf97d9ef2016ff4635c3f682a9c193936"
+    },
+    {
+      "path": "backend/tests/support/drivers/agents/synthetic-model-fetch.ts",
+      "mode": "100644",
+      "gitBlob": "7d0f79458335fb7123b5f7395300365d05045fc7",
+      "sha256": "d2c121c36e24a5f6b1c2985dc11929b6ac769ae0a03c2713f1433d88f2fbe20d"
+    },
+    {
+      "path": "backend/tests/support/drivers/scripted-players.ts",
+      "mode": "100644",
+      "gitBlob": "bcc350b3b9e38d6cc337af0d49d157d0897bae05",
+      "sha256": "f22c0de7283ed73155605d50f1f2686aaede8ec491390e185f2b3e78ba9fd2e3"
+    },
+    {
+      "path": "backend/tests/support/drivers/temp-directories.ts",
+      "mode": "100644",
+      "gitBlob": "f68a92f5b0b5cadb4a3caee4640c53286b624a87",
+      "sha256": "fd42eefec9ee60e77a94aad0e2af6c2720dd48402684ce7673c028a824eb8356"
+    },
+    {
+      "path": "backend/tests/support/drivers/transport/control-owner.ts",
+      "mode": "100644",
+      "gitBlob": "685c74e6fc11ea801983ea0ec042aca0da92adb4",
+      "sha256": "f86f33f7b8ba6705409f0e48b95d6f721fd054d068aeccb4aa7d0539808bc2c1"
+    },
+    {
+      "path": "backend/tests/support/drivers/transport/run-game.ts",
+      "mode": "100644",
+      "gitBlob": "ba6b657cea0c2b1c54d3a8d55cadc542912cc656",
+      "sha256": "474bf31348bd772eb93fd7bc612dac5526610b13f9d517037d72fa922dcaabed"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/runtime-game.ts",
+      "mode": "100644",
+      "gitBlob": "451b37469cf761797cbe594ac9370d8fae27de47",
+      "sha256": "36de3ea97c762b011f2e7764b7043a53702393f6a9359a70351e8e54ac191000"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "1aa0e7ec3b3601049feca72cc528747be4eed701",
+      "sha256": "4325a6d6d1b073cf71beab68817b21d4f775012e3fd8f940c5537f1829188beb"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/contracts.ts",
+      "mode": "100644",
+      "gitBlob": "81092e836e28ff51a46dcb4b923b7738b7fe3697",
+      "sha256": "54f0128f776b6d690be6e39e3f6e7a7a14b6306e75db590fea1f4d10f138f2a5"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/drivers/actions.ts",
+      "mode": "100644",
+      "gitBlob": "3a5e7621709a475905bcb5338efc17688812f91b",
+      "sha256": "f16ec12479a21b5a9793c466cb8e3a47641fa623d6b9955a77246cc7fdc35654"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/drivers/recording.ts",
+      "mode": "100644",
+      "gitBlob": "250cb13af04c09f46100c8b91d4307798b5a5701",
+      "sha256": "455801fa67cb127847a8077b9177392c9215a6e46d3ea971503eb16ce4121e79"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/oracles/golden.ts",
+      "mode": "100644",
+      "gitBlob": "d827e24734b89d0312d7e0dac43371f6e0a87caa",
+      "sha256": "1215207044d81ad98793ff1b097068d4b96947f4f6bb433dde38fed6ab26ccb9"
+    },
+    {
+      "path": "backend/tests/support/features/awakened-hidden-wolf/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "3a56cedbe1794e8c30fcf82581c16690f129b229",
+      "sha256": "3d96092a9d169b88c08a26023e73414ec1e5297de45881efbc5688c08a954f56"
+    },
+    {
+      "path": "backend/tests/support/features/bear/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "0330fbf828821f91af0cbfd18f0a0dfc85e1de29",
+      "sha256": "002ef1c8750f1e1b23996198c5ea8466fe4644741375817a8aeb362cd1bf9164"
+    },
+    {
+      "path": "backend/tests/support/features/black-market-merchant/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "e97197a221b62ea89911d0bba334636f4b53c17f",
+      "sha256": "ba22e73e2afa238a23766a226a4c1677ecec85387c434bd5c16cd3dce0450d0e"
+    },
+    {
+      "path": "backend/tests/support/features/cupid/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "fc06fc4c8b8e1b2794c004f45cadf849c77b4580",
+      "sha256": "5e5711abe2c8028ef7420c2da1a693e99f8923b414ebda2057cbce7645f6a2fc"
+    },
+    {
+      "path": "backend/tests/support/features/cursed-fox/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "dbcac769f96909642b7caf86f59e2e43da206c6b",
+      "sha256": "cf5574801f314102d7d77fc0fc1f58aaa7372d4cb9c83d3e264d171152197e16"
+    },
+    {
+      "path": "backend/tests/support/features/debater/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "5ee4ea9c9520d279f2bebaefd1eb337f466e5983",
+      "sha256": "275dad67c0c55153cad30d91fde698ee87b49b987c4964ff6869941812fb4222"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "187baa811324f12fc930dbe8d7db3e625f97f523",
+      "sha256": "296f8fd4cbeb701016b0f772a9b38a2f9cb4a0ce39160c5a285df3fc9639e175"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/contracts.ts",
+      "mode": "100644",
+      "gitBlob": "2b089dc957be0761eca75b0e640ff22ce88e858e",
+      "sha256": "951cebda0f82722a2ba3e3e294055393d8b1a21f2d3b362fe77864494dde5d68"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/drivers/actions.ts",
+      "mode": "100644",
+      "gitBlob": "bf1c374af7b7692458465e09820c18680f3f7fd7",
+      "sha256": "2e832807bb65bb5275241bd27466fb45a4aff344a7ffdc39a360f0a41a3f9d24"
+    },
+    {
+      "path": "backend/tests/support/features/dreamer/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "a6208af6cbbaac595057dc04a7490e8701187c7f",
+      "sha256": "c57df58a1d4b3736993a56162334a55d1702e5919d3c5d912285978c2f4eb54e"
+    },
+    {
+      "path": "backend/tests/support/features/evil-knight/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "0b75f5e651579c8a1164aefbf1cc928b7fb5d392",
+      "sha256": "77612467108d6c12c7a6c49e77b38f522f6a873429483bb2c1c44ea196a7ba1c"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/literal-plans.ts",
+      "mode": "100644",
+      "gitBlob": "8b31f74f565aee6bf5f3f75d56768f1b4577f331",
+      "sha256": "5dc0b919e84e3731890875a84427417a2758afd029fe179e615a8b27cf87c5f7"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/runtime-game.ts",
+      "mode": "100644",
+      "gitBlob": "6fd1f9d595ca1130c2dca01bade1bc9c6fa95ca8",
+      "sha256": "efdfb746f66d5de766397ff5f0d64480016afb32b40f7e819e400ba264e0b16a"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "0cd655c67f9b0367172c9acc04d80e17bbb05454",
+      "sha256": "856a531f512eceb87a948e72039be65fcc50b63430df56315b72b273eccb654b"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/contracts.ts",
+      "mode": "100644",
+      "gitBlob": "3fa4cf4ffa6bfa9d48f3ed69317c584021659051",
+      "sha256": "bcd5f7e58de472159756540ba1b89830d904e06d5bf4a6c40e7d8ef22746ba53"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/drivers/actions.ts",
+      "mode": "100644",
+      "gitBlob": "4a5874d6f932bc40be9c1c15e28a1477540afd66",
+      "sha256": "48ba3c8f0ee824efe21716bd99475da591f063cfcac36a35c4436be724f5a62d"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/drivers/recording.ts",
+      "mode": "100644",
+      "gitBlob": "c703878730a6921c610cb6c6682e9989489288c2",
+      "sha256": "d8426f0fea97d5716ebe0788d2db8184330740409e9031c19d95f6a6d9139151"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts",
+      "mode": "100644",
+      "gitBlob": "ae4f5da92c55050a4723e590c1d08b064341c1a6",
+      "sha256": "e1d2253fd92b5a95e33150e0c64d050ce37a3d8eb1b0d66b61a42f66c62b5a7e"
+    },
+    {
+      "path": "backend/tests/support/features/gargoyle/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "042ad9bd453f53d6c6bc04182074d7b7d6aeac0a",
+      "sha256": "772a78c4212a76fcf9affa949ee0a29f20138e620d34dd0a222bf3e7eef50af1"
+    },
+    {
+      "path": "backend/tests/support/features/gravekeeper/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "b4396fd1c2a22c8737a35ce8917f58823b062704",
+      "sha256": "dc1364725768fb748bb781ebcd4c3aaddc23274d8911ffd95d299d97e339f553"
+    },
+    {
+      "path": "backend/tests/support/features/hidden-wolf/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "13e5d7764b3f9c00be6151e2f5180f80dbeb5b1b",
+      "sha256": "ff37815c9df621e8f78d7a2be7711ca0048e421465b3697c70c24ed77d310ee3"
+    },
+    {
+      "path": "backend/tests/support/features/hybrid/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "382c94ce657aec49e98644ac01cd2e9c26a2c374",
+      "sha256": "3af0720824dfc7eaf598c28a4ca042603bb45f9003b58ada90860146d044b6b5"
+    },
+    {
+      "path": "backend/tests/support/features/knight/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "5e78ee60ee4f64f803ff2bf4d4eff32750a173af",
+      "sha256": "87c871ec77eb1911b4793332a02810d84dabe8376c9d7ac39c8fa8d78babb1fe"
+    },
+    {
+      "path": "backend/tests/support/features/knight/oracles/prompt-plan.ts",
+      "mode": "100644",
+      "gitBlob": "d673826c32885075bec24c74e078c9759402c676",
+      "sha256": "c3efbdec87f07dd5d106db7d94d96261fda27a61ffded2791884dcc095119fdd"
+    },
+    {
+      "path": "backend/tests/support/features/lonely-girl/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "a7987bce8958a1e125d8b292aa1e23fb3dd92648",
+      "sha256": "028881ad7df6aaa798b702dd427ffaa86ab5dc6f4241166ad85a8080ee8124c0"
+    },
+    {
+      "path": "backend/tests/support/features/magician/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "2e94b3f77c7ddb81e9b3468a028dd197bc8e1329",
+      "sha256": "c07039fe623b31bd903de54fea1a7e39130c9dbbb1a36e676fc470a062849691"
+    },
+    {
+      "path": "backend/tests/support/features/mechanical-wolf/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "3c6267290b7c28904bd391f6d98ca44ccf9508b7",
+      "sha256": "31e71e271fa80a41046edc39cc9d506d14b6e6b2d15486d8576771d4ca90a4fb"
+    },
+    {
+      "path": "backend/tests/support/features/miracle-merchant/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "dca65413a69e0e097dd1ca0719ce6fddc3185075",
+      "sha256": "6c20de6c5686c8373244a9a9fe75e232df618d3342f7ff1bccb17227c19649f7"
+    },
+    {
+      "path": "backend/tests/support/features/mirror-girl/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "ab3c6eddbaa16e81aaa215a04c95a88984f22d47",
+      "sha256": "78cba6619c11fedb01e91474519134bb3bcd804b8139cea5845a65ab63c76a31"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/builders/board.ts",
+      "mode": "100644",
+      "gitBlob": "64e9fdee80080e5ebde657d5dd74dfdfd8b723c0",
+      "sha256": "f3f5eec4d33a8f40bf4f132ad21f6d6224afc1b997ae6d8b71ff3f10ba6a022d"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/builders/literal-plans.ts",
+      "mode": "100644",
+      "gitBlob": "108701d390cd31e69cb5adaaa317d12842e04eaf",
+      "sha256": "4b2a6a4f53f3c32844ee53e1ca98ae5c398aad6b9787743ebc5490f734f43366"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "4e93fd94280a7ac3fd654889950e4a01901e88e4",
+      "sha256": "bfa643fd18e2ad37feb8cbc847a78ebe4b7a7403e3f73b4fe885ef7fa9234c96"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/actions.ts",
+      "mode": "100644",
+      "gitBlob": "56317befdb19be172a6fcb61a80c9e7e5aa80046",
+      "sha256": "5d1d7868dd0c301d0d6ccad943836aa61a6ab75d32067ac3cad366c61f3afc6c"
+    },
+    {
+      "path": "backend/tests/support/features/nightmare-shadow/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "cf19e5803d8f46f967d3576eb205f8ddb1d8f516",
+      "sha256": "87882e4696d69029d2620f7f44a99b538230da600a414af949f8d54415ff89ff"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/builders/literal-plans.ts",
+      "mode": "100644",
+      "gitBlob": "77a10ae17698aaec235869e467710bc7acec3c52",
+      "sha256": "7a69bea185a652daf05f0e0124c0efc86f2399f980ef6922544ae1f77e088744"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "7e79d3b37527dbbe2778e2d5eaa95ea045093ef5",
+      "sha256": "b24a0994bec2c4945a63db25719dc587f204db97dbc53db09ccd621c3d76e462"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/badge-prompt.ts",
+      "mode": "100644",
+      "gitBlob": "ea3c6542256870903e7a9282639a0a1e2347fcc8",
+      "sha256": "9dc184a2e72aa42a6ad6a7acbcaf58c2d1612aa253d6d8f1f079ebc654dd5096"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/known-anchors.ts",
+      "mode": "100644",
+      "gitBlob": "e8f5ae8c136fc630bbb087f77c382680ed3b667a",
+      "sha256": "f00923d46c51517e1abd72edf0ad535cb8d5cce3a020e94a68fc222febcfcec4"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts",
+      "mode": "100644",
+      "gitBlob": "c8e8531ec45c17095511dd44994bdc780a3224a3",
+      "sha256": "9c2406dc87f166430e7a6cf4a78365b0ccbdf35e8dca012716e275601b3f72ae"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/wire.ts",
+      "mode": "100644",
+      "gitBlob": "af506aefb281f5e104d596c24be52e0cbf811b59",
+      "sha256": "e1c281697accdff0d7b144ae8c95c8dddf75d442de08aeb78baadacf39eaf4ad"
+    },
+    {
+      "path": "backend/tests/support/features/order-prince/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "77ca61c05d2a42aa7299598f67dc5a8fb8a376e1",
+      "sha256": "8dc18c6f506eb22e2c706c1ad9c6de77d8d7b9d7bbf7d5ae4afd67acf80ddc14"
+    },
+    {
+      "path": "backend/tests/support/features/psychic/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "fc184f008be12d5f906c03f9ca0a8f7b76cbb767",
+      "sha256": "8d45ead2643f0e7a67e54d98706311d4c85f5b15fdafab4c7fed1e082c07cd81"
+    },
+    {
+      "path": "backend/tests/support/features/pure-white-girl/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "b32cb4d977063af1bf97b8715e446a106558b803",
+      "sha256": "d3e939a6ef361481847fee4841ea93c256d9093339b32b3a601c883b33ed266c"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "5ff467b088a01e22e6b733607c8ebd29691e4cd4",
+      "sha256": "67a328e4bb856ad9dbf6b9603aa26a2b28f805b1360d559c873ca0189d55f13e"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/actions.ts",
+      "mode": "100644",
+      "gitBlob": "437252ba57a5166748e5e4b7dec37a045a1e2024",
+      "sha256": "0e502ea19269c85453511f73ab30f92b0ee783613a2ff065e1e5b7f7dbff5aa0"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/manual-actions.ts",
+      "mode": "100644",
+      "gitBlob": "a9afc62f824915a5f9b5b12b60009e45409b8663",
+      "sha256": "536ef01ef2c8575942459f0ebfd4bad79225eeffd48d7db854dc43e567868c98"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/recording.ts",
+      "mode": "100644",
+      "gitBlob": "86dc9e590f31deccc1e40ef40abae60e6a225b5a",
+      "sha256": "a29a21a6fd96616abf469a619df8b0ada368b3d850e996e8075d3037bbf44c92"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/oracles/literal-plans.ts",
+      "mode": "100644",
+      "gitBlob": "4c25d5a6fc5002f2546ea2605afe9eb4b3565460",
+      "sha256": "74a1161255c79a6035625bc7d73954bc8cd2ed44eeb63857308a5cde1375a93a"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/oracles/transport-golden.ts",
+      "mode": "100644",
+      "gitBlob": "d770488fc8716fb894c2418c73580f82d30367c3",
+      "sha256": "a608f95ad999ccf68fe1946cfa58285d26f614f73e38e6e34b8e72bdad34e993"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts",
+      "mode": "100644",
+      "gitBlob": "acaf981a27f2f778d539dbd9c004c53c8593eb43",
+      "sha256": "e95b5eb6305e6b5f007164a00016f68944b8bfcb630c589afc9d574c00a6d8f5"
+    },
+    {
+      "path": "backend/tests/support/features/scholar-mentor/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "5e810bb9c3bccdbf7b0fc6fb249d066d98dfa5ba",
+      "sha256": "7e0d0f84a4900ee254e45c438542d82108c541e8c74e630472ac08131d4593b3"
+    },
+    {
+      "path": "backend/tests/support/features/shapeshifter/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "06bdb55c39641f583dfa32765e8b9df48eac078d",
+      "sha256": "68601813e4bd9939f833ef701454438b59a590bd4fbf02d0b33962e50e74369f"
+    },
+    {
+      "path": "backend/tests/support/features/thief/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "d6f951d9dc7e873b45b570ce2866218e286ba18a",
+      "sha256": "1a4ea7a971110add65eb10258e6f7edadede885fced6ddd3d73ea9459e2bc2ad"
+    },
+    {
+      "path": "backend/tests/support/features/time-wolf-consort/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "28d83bf6db9095d4f59343b1d9caf43764b93c39",
+      "sha256": "6605c5b6e84464ecf969b4d498becdb24f1b63e3459373e9c060a5083cb75cf5"
+    },
+    {
+      "path": "backend/tests/support/features/trickster/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "40fc6f89c819e36512ceba47fa967d294ab9544c",
+      "sha256": "50ebb08a1e6c77fe99244a63453616840ab5cf9912c87f43fc4b188d141ef988"
+    },
+    {
+      "path": "backend/tests/support/features/wall-notes/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "6f48bec0095ca54f16248890a558167255f3a7f1",
+      "sha256": "3d8dbd295d0f68265a3230dfc2230b5e06bc4283ea520434f49b43c3e914b3bd"
+    },
+    {
+      "path": "backend/tests/support/features/white-wolf-king/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "f90526215e59c6b9ddbb8f93cafd5e3a713b9e6e",
+      "sha256": "8037dcb17a9181f019950b00f22193386f7682f5ef90cea641b974ac4e5b8aff"
+    },
+    {
+      "path": "backend/tests/support/features/white-wolf-king/oracles/prompt-plan.ts",
+      "mode": "100644",
+      "gitBlob": "8c70991c4159fc236588731e062415503cf9be6c",
+      "sha256": "a0e6a105e8306d94ae22aeca5b8ab43992893e15b0a5208dd51bd61b9d6d0755"
+    },
+    {
+      "path": "backend/tests/support/features/wild-child/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "c82c11314bf60109143e3631f1b89c60e5131f90",
+      "sha256": "0835ae0235b2b7834512a690f0154436d27039fe18f4d94d2b5d58e81c02d749"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-beauty/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "6eb0e553f258e45102a0ee68938ee56741b06ddc",
+      "sha256": "a9881015c845c981b9bd16f7b71612830f1f2a145edad8398e5709e416d42a09"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-king/builders/scenario.ts",
+      "mode": "100644",
+      "gitBlob": "f2b7050788d29d4a711af5bcc0f3ff3c12842e0a",
+      "sha256": "7de4e4d8a6ab544f98e012e2b73e310ed419816d87affe039a57c9a021a434ce"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-king/oracles/prompt-plan.ts",
+      "mode": "100644",
+      "gitBlob": "d1404abd2e8da2f7f04d1e8cf3c0ebf54b186db9",
+      "sha256": "839a03b79aaa49cf60f71904a54c45d6297a46f3e2ac078f49e0313be72c5093"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-sorcerer/builders/transport-plan.ts",
+      "mode": "100644",
+      "gitBlob": "72875cab41dee84dc6586f0917a2f5e7515fcb3e",
+      "sha256": "a1c930a30defee8cc7bdf7e8cc2c048c3011727913e4fea55e4dedf6c1910e20"
+    },
+    {
+      "path": "backend/tests/support/oracles/fixture-values.ts",
+      "mode": "100644",
+      "gitBlob": "3faa5c19adbee419224f095b50bdfbdf59f3c86b",
+      "sha256": "79a3fbd32e953337cb82a68acfa56a87ac683ffe17fb4b814b59a6b682b20358"
+    },
+    {
+      "path": "backend/tests/support/oracles/transport/control-owner.ts",
+      "mode": "100644",
+      "gitBlob": "6ff9525f9146f56c21c17483374681f73c2bfb6a",
+      "sha256": "f8dbea8ec777a8aefa2a9a439a3f5951a7d68282b7fce5fe3446b72a00752f11"
+    },
+    {
+      "path": "backend/tests/support/oracles/transport/outcomes.ts",
+      "mode": "100644",
+      "gitBlob": "66fe10c4e2c8cf2917bec8e2faecd3a85c0114ae",
+      "sha256": "742b64ab279704bb96539bae1dbb05cc588f2afdeab0e8ca59870d9b7c1622fb"
+    },
+    {
+      "path": "backend/tests/support/transport/contracts.ts",
+      "mode": "100644",
+      "gitBlob": "b12754cdb71a7aab0a52e690c08ca803e35cb1f1",
+      "sha256": "d5d730321711bc05f4ab80a64cb0a5d3f862ae4347c5233b7ae361323a520b29"
+    },
+    {
+      "path": "backend/tests/unit/agents/acp-session-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "c44ed55099793618e5907bb4f7ecd97388a840cf",
+      "sha256": "ef39ba6c25f4ddc0398174ea8f6807fd92bc5e4f4a941e705dee22af845d16e4"
+    },
+    {
+      "path": "backend/tests/unit/agents/acp-turn-registry.test.ts",
+      "mode": "100644",
+      "gitBlob": "9918440ca4d374fcb5f0e566d6b0a2994838b0c5",
+      "sha256": "5497225f18315ba293a03b4924dc4ba8401855442f96ca1a88d0e47c65771f76"
+    },
+    {
+      "path": "backend/tests/unit/agents/action-reception.test.ts",
+      "mode": "100644",
+      "gitBlob": "6d2024cdac156ece97977121c812311dbbd47538",
+      "sha256": "910dcd4b3faa2cb6e16537442c5cce132058fb91bb0cc0cb455d5f71d5f41be8"
+    },
+    {
+      "path": "backend/tests/unit/agents/audit/tool-turn-contract.test.ts",
+      "mode": "100644",
+      "gitBlob": "72cdc5c593e8c0d047874231f12dd3f549c46267",
+      "sha256": "ed61885d6df1e0952f3da108ebb824608e0c868689d8caff124fe0bd39d62585"
+    },
+    {
+      "path": "backend/tests/unit/agents/bug-report-service.test.ts",
+      "mode": "100644",
+      "gitBlob": "96704b69eacc5375a914c868d06f4f13a53fab6f",
+      "sha256": "c6bfd0fb4d29d65e0d89d96b6ab34a02480568ea1ccc8e2d5288c0452737a6c6"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm-context-window-stability.test.ts",
+      "mode": "100644",
+      "gitBlob": "fb40b98132ac504ca3038b4ce6cb8ef01fa79e67",
+      "sha256": "507260257aef87e78acad6350ff7d14d21fed78bfbd591142de99521f661adf7"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm-request-scheduler.test.ts",
+      "mode": "100644",
+      "gitBlob": "959174e4d1ed83206e840507548d8dfdae457fd2",
+      "sha256": "9e4c5f2ba630c10d94b8833df297ad82dec9900e6bd97aff0701ea3caca72f35"
+    },
+    {
+      "path": "backend/tests/unit/agents/player-factory-selection.test.ts",
+      "mode": "100644",
+      "gitBlob": "2d89de3bbec6f61fe48b6d4a980b9b72f9c83cf0",
+      "sha256": "3f49142c4eb13fcd5f1c74787912791cc9b65f5594e750ec742568ce6b80e9aa"
+    },
+    {
+      "path": "backend/tests/unit/agents/player-prompt-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "b8aaf3d4d8594660cedd7c28fb1f5b2b683afe6c",
+      "sha256": "1c0423e2741412aa9b39cd5b76c425c82ecff6702bc6705e888885e8d8e2acc8"
+    },
+    {
+      "path": "backend/tests/unit/agents/protocol/tool-descriptions.test.ts",
+      "mode": "100644",
+      "gitBlob": "63f124d1ee0bdb57c1a253342344b106efe554ba",
+      "sha256": "c4612da99d5adeb1192e7818fbed93dcb8ad8a0ead68a8c9cbbe68c156130fbc"
+    },
+    {
+      "path": "backend/tests/unit/agents/strict-scripted-turns.test.ts",
+      "mode": "100644",
+      "gitBlob": "51e2194afad9930605b1d66623a982de84b4bb7d",
+      "sha256": "627b624faa4be750148407d6232f39ee70c2d11340115c74c992a4c085acb15f"
+    },
+    {
+      "path": "backend/tests/unit/audit/debug-summary-generator.test.ts",
+      "mode": "100644",
+      "gitBlob": "344094ed6778b89469141dc1cd8ff1f2ddd12ddb",
+      "sha256": "73f4c58ce6e6b56fb3267c8045219b5061d4c96dff25011fa485974377541e44"
+    },
+    {
+      "path": "backend/tests/unit/audit/evidence-policy.test.ts",
+      "mode": "100644",
+      "gitBlob": "f8dc466a07c6fe935262042467650af89a21f98d",
+      "sha256": "67ce2ef34afbc10457d1769627e7bcb84e342924e11d23b106d8828afda41865"
+    },
+    {
+      "path": "backend/tests/unit/audit/player-shot.test.ts",
+      "mode": "100644",
+      "gitBlob": "8b8673eca5c0b15b62f66239a6cb921c8c2b2101",
+      "sha256": "3295494f0b7cf97ae295058abd20b4af00c1b1c42db811a227f2e2798de95a97"
+    },
+    {
+      "path": "backend/tests/unit/audit/task-locale-and-evidence.test.ts",
+      "mode": "100644",
+      "gitBlob": "bd3771c0ccfbe03aa47c33e7182eecfa8a60a4f2",
+      "sha256": "4e21b0a14a17a9557249e085dd4893572827dddbb737926c32801c83b853ce3c"
+    },
+    {
+      "path": "backend/tests/unit/configuration/animal-dream-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "515e54899a4ca970a3e9382d486f45c08958872c",
+      "sha256": "fb4ca69a1f6010be527f713ab5a07ae0d4a55c749004d4d7f4256779b63079e0"
+    },
+    {
+      "path": "backend/tests/unit/configuration/animal-dream-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "bdfd32daa931671ddec8dc3c60f9120696b49684",
+      "sha256": "eb8b22ac5ef5691daf1a705d775a4dadf2af56b446ee75d9fd358a739106ade4"
+    },
+    {
+      "path": "backend/tests/unit/configuration/animal-dream-public-presets.test.ts",
+      "mode": "100644",
+      "gitBlob": "2f9fc15adbc5406f1f369801140fc6cd7bf99698",
+      "sha256": "fca1fe82fd4735a4d5f1c6e22a69bf2bed94a0453ba27622df36abbd1545079a"
+    },
+    {
+      "path": "backend/tests/unit/configuration/awakened-composition.test.ts",
+      "mode": "100644",
+      "gitBlob": "7fe01eb7e3cd38c33656f05ad8f0df4ee8ff6d5f",
+      "sha256": "1d7d2ef79d09b49568d0393ce55d8696c4bd49b78c1b9365c92c0fdf5621d2d8"
+    },
+    {
+      "path": "backend/tests/unit/configuration/bear-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "fca24c639de1f175ce2c9fada4e0db53e8181404",
+      "sha256": "4299f7383f665d8e80612d91a2834aa42b771c3410d317dc32357d24c2963f9c"
+    },
+    {
+      "path": "backend/tests/unit/configuration/black-market-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "0a405f05b602cac91f563f4969d464d2df555855",
+      "sha256": "b0e4a3536828e73dc4bc2a5b925d88ea5b1d80b2d9bfe7e0c286226d42322155"
+    },
+    {
+      "path": "backend/tests/unit/configuration/cli-config-directory.test.ts",
+      "mode": "100644",
+      "gitBlob": "40b88c637e834b7343c79be1597685a8682d4e9f",
+      "sha256": "00c20f2bce30f25ebdafaa392ef52244b44c2069bd58774ac1fa5897aa9302cb"
+    },
+    {
+      "path": "backend/tests/unit/configuration/dreamer-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "bc60aa381d2104339a8fd41b3d48781ed53d07ac",
+      "sha256": "ce450e1400ea7ca8bd9075c4dfbe0a0eec3dc77512a145f7789b3c9447735890"
+    },
+    {
+      "path": "backend/tests/unit/configuration/finite-preset-diagnostics.test.ts",
+      "mode": "100644",
+      "gitBlob": "892f453fc37262fe0cdb0a47d4729ba28ad60c19",
+      "sha256": "ac78893a051346f7675c45dc176a8274ee46911565f551f299fef253a1132f41"
+    },
+    {
+      "path": "backend/tests/unit/configuration/fragrant-default-hunter.test.ts",
+      "mode": "100644",
+      "gitBlob": "53c5a50d6a48c877bd8e957552496fc5cf70e433",
+      "sha256": "125416c5257792e4533711f8e14f3033d3470191ad101e7ad96163c22792f87d"
+    },
+    {
+      "path": "backend/tests/unit/configuration/gargoyle-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "26635d3b01579e92917e429c79b2279cf373f5b9",
+      "sha256": "7ec3415adc090c783313d14d61e7c877df3e5a89bfd768a1f344ba7b62e239a5"
+    },
+    {
+      "path": "backend/tests/unit/configuration/ghost-bride-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "2479d3586c7da6c3ac708b16f8e4485c167ea399",
+      "sha256": "e66e636fc7423ff719802f1210d75da841bfd78b9fa65a2a2df98a393804ba55"
+    },
+    {
+      "path": "backend/tests/unit/configuration/hidden-wolf-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "afffcd5a18f84838ecd4c342c775a84476712357",
+      "sha256": "63e8e861b943765d7aa0ab00edebba841a43690fb54cc157916225a1e2c18b60"
+    },
+    {
+      "path": "backend/tests/unit/configuration/hybrid-composition.test.ts",
+      "mode": "100644",
+      "gitBlob": "70b2206f73a3cb39de94257bb4aabdd1b4369ec1",
+      "sha256": "d6665c7ddf88b9740a8e4f2aae2340fc4191d4a6929da49655c24794d6144c8c"
+    },
+    {
+      "path": "backend/tests/unit/configuration/legacy-win-array.test.ts",
+      "mode": "100644",
+      "gitBlob": "6011ca48f4d30399e5fa27b194f32191a97792bf",
+      "sha256": "81a916b4e420beeecec95ab482099886e11700784021f45d3d134d43f9476ba7"
+    },
+    {
+      "path": "backend/tests/unit/configuration/magician-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "7383ea55010ecc2c85368851e079bd3a058d7ac1",
+      "sha256": "bdbf5b6e783fd5b41c08ca2b0869dcb5479e472f699358fbe123573e2736f100"
+    },
+    {
+      "path": "backend/tests/unit/configuration/mechanical-composition.test.ts",
+      "mode": "100644",
+      "gitBlob": "06d1352c56d62e476928dd92f3983427dd08966c",
+      "sha256": "aa4746ff8e03702aba94c227eef0b25a19cedf87debb2a186d73ff0ebf7d0f5c"
+    },
+    {
+      "path": "backend/tests/unit/configuration/miracle-merchant-composition.test.ts",
+      "mode": "100644",
+      "gitBlob": "2b5d630c8e808233d5fa204d2270d38b7752d16e",
+      "sha256": "7c1df5ad3bea279043b4c7dd6b0977ad929d1d2175903288430cf0cf8097a389"
+    },
+    {
+      "path": "backend/tests/unit/configuration/mirror-girl-composition.test.ts",
+      "mode": "100644",
+      "gitBlob": "1beebdf82ad75215a9cc6f6e79e094738c1bf1ae",
+      "sha256": "dff7b7efa766c81286eec5139b89979021db015e8161e0deecdbbbe46e0479b9"
+    },
+    {
+      "path": "backend/tests/unit/configuration/mist-raven-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "4bac21807a3d53d9c452050b733d78ace7ae9d92",
+      "sha256": "98b8e12d3a65aa0fdf41333dea0692e58b3257a15c0d94fc8a224e991e4e87dd"
+    },
+    {
+      "path": "backend/tests/unit/configuration/nightmare-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "274618bc461a3ebd43580c62df91ae68b625c551",
+      "sha256": "e8dcb55fb335967b2c1b5c049beeafa50c8e253512475fd8268fbab1c5157765"
+    },
+    {
+      "path": "backend/tests/unit/configuration/noble-secret-body-policy-keys.test.ts",
+      "mode": "100644",
+      "gitBlob": "644b0eeb93dc92736f57ac4c37ce82f81dfb6037",
+      "sha256": "7b21e6540f8dd41179bd60a7d593f5a99f96213b71f239251a7f5f5b6c10a507"
+    },
+    {
+      "path": "backend/tests/unit/configuration/noble-secret-body-roundtrip.test.ts",
+      "mode": "100644",
+      "gitBlob": "d7541b5df3ba85c95b7b3edd85d35f54de9ec8b0",
+      "sha256": "6ac1fad91ac88bf4c5f41bcb212f3ad05cf4649b72084110c3df9ca05834129f"
+    },
+    {
+      "path": "backend/tests/unit/configuration/order-prince-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "f40123075e007be01c4297849c0d3f3e59943a96",
+      "sha256": "c00c57acfd0d4c4e00277fb5c5be2caaa6d30fe63a4711e44c1cdc92305c6b36"
+    },
+    {
+      "path": "backend/tests/unit/configuration/psychic-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "8d63f3027ae1cdc597e7ce3d2add4bf823fb6083",
+      "sha256": "617d65cf9bd083eae72c27f4a320ad68d9368dae0c220aeef30b77075742f6ee"
+    },
+    {
+      "path": "backend/tests/unit/configuration/public-rule-contract.test.ts",
+      "mode": "100644",
+      "gitBlob": "067af0d208a1773c7502310a914b363b14d1a762",
+      "sha256": "c0e1e591c4a1939678509a74dc55860e39bf418433f4ed0043609d250cf18505"
+    },
+    {
+      "path": "backend/tests/unit/configuration/pure-white-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "03edb658f9d3eee82409bcaf2e090927f9e1fc18",
+      "sha256": "32736bb88e109aa65b109daaf3a3ec2fcfa65f50f546c2d1affec8d1bfc8ea2e"
+    },
+    {
+      "path": "backend/tests/unit/configuration/radiant-eclipse-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "a01052d0a769ab2aeb208b5baea68d1a372a7c73",
+      "sha256": "f34df3a76ba4860cf625972d754dae774d9f08e6f5a4fab24bea0706d906123d"
+    },
+    {
+      "path": "backend/tests/unit/configuration/radiant-eclipse-roundtrip.test.ts",
+      "mode": "100644",
+      "gitBlob": "870b970bd543f058725c9a49b7ce2e5e78e0e17c",
+      "sha256": "9e04fa974b517ca716e9db3d9489351ac1721732198ea74442d93e5572648af4"
+    },
+    {
+      "path": "backend/tests/unit/configuration/red-moon-configuration.test.ts",
+      "mode": "100644",
+      "gitBlob": "d9c0d93999668f338c57eb4fc97ae4494448e2c6",
+      "sha256": "ae53a41413b80a220b3194068ba583f563b7d9e8f48d14a752f19126ea0fbeb5"
+    },
+    {
+      "path": "backend/tests/unit/configuration/runtime-prompt-selections.test.ts",
+      "mode": "100644",
+      "gitBlob": "8e36b84771f920d8a5e68961b2d44b9416f755bd",
+      "sha256": "3ee0ef8c51e3edc65e724eb80c6e9663d0672d3d6d5406eac3f2bb60580e008d"
+    },
+    {
+      "path": "backend/tests/unit/configuration/scholar-mentor-public-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "2ce2cbb9c6d6264ff7368ce79b1e1639c3a33e43",
+      "sha256": "dada007837f333507e006b3e6d029f315b399c7006706917a9d20d1415ad0ff4"
+    },
+    {
+      "path": "backend/tests/unit/configuration/time-wolf-consort-public-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "a9f6e7e3c1f6fda37d75e826c9087c25470dac44",
+      "sha256": "7db63f933c8a4adec022eca13c35a1d257923f103dfd14a6f43ab05ecc89ae82"
+    },
+    {
+      "path": "backend/tests/unit/configuration/trickster-public-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "7f7ff4d0a88392c0679040f681e68f297aeec9d8",
+      "sha256": "e3b9818de8e6871b688c6db044bced9ec82dab69a486d746651ec52aa0b4271b"
+    },
+    {
+      "path": "backend/tests/unit/configuration/white-wolf-king-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "08f3f44d3af85bdd4c1ef9f2e2f0d530acd64518",
+      "sha256": "aa4b6f109bd47df508cd1fa01aa3d0390f74205463930478e1496dd6a7cb9640"
+    },
+    {
+      "path": "backend/tests/unit/configuration/wolf-beauty-config.test.ts",
+      "mode": "100644",
+      "gitBlob": "ffe508259cac20890890fcb5fcad66ee2be8633d",
+      "sha256": "8fb277f834a219dad7312b0965ad899f517f71c5c8b719f180a39cea555709f7"
+    },
+    {
+      "path": "backend/tests/unit/configuration/wolf-sorcerer-public-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "c0020a3646ac8a84144bf17a56d96caee74489b1",
+      "sha256": "4d296af3f4659e32dbd825021285f0b24327d306539134765d4a8b01148f7626"
+    },
+    {
+      "path": "backend/tests/unit/diagnostics/error-diagnostic.test.ts",
+      "mode": "100644",
+      "gitBlob": "87bdeac90fa03d119ae745d15de7995dbb2ef50d",
+      "sha256": "42477cfe7def4f662112192407a4889860ebc6f671446a2de81578146c3cf259"
+    },
+    {
+      "path": "backend/tests/unit/diagnostics/opaque-error-warnings.test.ts",
+      "mode": "100644",
+      "gitBlob": "9fdab26ab64bd20bc75dcf5391dde269eaca0b46",
+      "sha256": "03611a025da57b0853f7a42e18f4c850be9bc94ce855cd5da71048658f10fe17"
+    },
+    {
+      "path": "backend/tests/unit/domain/random-vectors-and-deal.test.ts",
+      "mode": "100644",
+      "gitBlob": "a7846d667b273bdb15d11348a747111b572ad7b2",
+      "sha256": "db50805887730fc9630e236b478e61375f6f753c6209e2c8dc84b53fa9715507"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-alias.test.ts",
+      "mode": "100644",
+      "gitBlob": "f787b4dbf87e9be1c093c0aa324e7c70295f186b",
+      "sha256": "ceb674f91ca6062934b621686a9d1d9b08a762ca8cfe771b2f62eee89ea02e87"
+    },
+    {
+      "path": "backend/tests/unit/engine/action-request-factory.test.ts",
+      "mode": "100644",
+      "gitBlob": "81afa978992d9781d35537527759350303fea99f",
+      "sha256": "4199c23559e484b79ffbe81744d0f817963002f77a25bca5d347014ffb2f926f"
+    },
+    {
+      "path": "backend/tests/unit/engine/agent-visible-event-feed.test.ts",
+      "mode": "100644",
+      "gitBlob": "5d6f4a4e75e89314961eccfacc10eba541f83c62",
+      "sha256": "09082939f9d26106a798e87965f113a32931494fcdf7ff77ad23e502e95aec05"
+    },
+    {
+      "path": "backend/tests/unit/engine/day-interrupt-hooks.test.ts",
+      "mode": "100644",
+      "gitBlob": "44f26ff9941c4a82748c38aecfdcba0916db78e7",
+      "sha256": "e732f6dc91bfeb4313826d7de06e8325259f190cdea7ffd7f46a59b6d040065f"
+    },
+    {
+      "path": "backend/tests/unit/engine/death/request-authority.test.ts",
+      "mode": "100644",
+      "gitBlob": "031a530ba61c6121235ecf6268864074f3acdea2",
+      "sha256": "01e84b1d3d750c0de6ca01df518d5506ffdd0ef896b28f6386b5012853757173"
+    },
+    {
+      "path": "backend/tests/unit/engine/elimination-priority.test.ts",
+      "mode": "100644",
+      "gitBlob": "1eedea6d9dd527d2a22fa5e5706a8ae8cfdd1237",
+      "sha256": "81459ee957132e14bb2562f2456e34ebfa0455c430f955896d7da36c523aa057"
+    },
+    {
+      "path": "backend/tests/unit/engine/event-snapshot-authority.test.ts",
+      "mode": "100644",
+      "gitBlob": "6df531e5d80be032cd40f75869b6b497e2c7c84b",
+      "sha256": "63e975fd628e060f4d3e2d03c571791b80f073cfcb67a0ee68f816224e590f60"
+    },
+    {
+      "path": "backend/tests/unit/engine/noble-night-handoff.test.ts",
+      "mode": "100644",
+      "gitBlob": "8d48092133c6de70e240b2afd5c74a4030ade992",
+      "sha256": "a6557f30b2e697b5e7ea667405a717c7a318792ef93a9b642825b10e126a0411"
+    },
+    {
+      "path": "backend/tests/unit/engine/parallel-agent-dispatch.test.ts",
+      "mode": "100644",
+      "gitBlob": "b1cad51120e6efb0d3e3daeb69237946f0d937d6",
+      "sha256": "6d3cb8541d686a1c8771d26347ab928970dad8e5fc93a696d8e6707412a93b3c"
+    },
+    {
+      "path": "backend/tests/unit/engine/player-shot.test.ts",
+      "mode": "100644",
+      "gitBlob": "f45199afc80447ad23c6c38fe5849a30740e01dd",
+      "sha256": "b7485d060202eadfe1fd0f2fb65b2cfecdf88e43c2766cf59b8073e24edcc132"
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "mode": "100644",
+      "gitBlob": "9d7c71108981b3be12f9a788c6eac8db330d2517",
+      "sha256": "5c7be9330cb0d87690a6934df04b2f672fd11fa13d94b4dc748c779f80ee29d5"
+    },
+    {
+      "path": "backend/tests/unit/engine/red-moon-visibility.test.ts",
+      "mode": "100644",
+      "gitBlob": "b0af5880f4d29bcecd9e27edba6d813c594fb32a",
+      "sha256": "375675e1163441fdf51c8b4f0c512b3abe11a8588de6db6a953a6834674df0b3"
+    },
+    {
+      "path": "backend/tests/unit/engine/turn-constraints-context.test.ts",
+      "mode": "100644",
+      "gitBlob": "841d5f005ff0e78dba5c9a4e667b200b93fc2842",
+      "sha256": "9010b56b575edf2880f76887bd069e4649c4f184d2f220ecf8c96234273ea25f"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/authority.test.ts",
+      "mode": "100644",
+      "gitBlob": "f0f4d336b9bb0e7b012910be2c9464a8db41340a",
+      "sha256": "3fbcbbf8dd5a429dbd5ce13ebf577c5c6ce94a49f475865dfd8cb77daf1a6dbc"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "3cf49ec72d19234c8039c8364ee18596e7b26cd7",
+      "sha256": "d1e7c6776863e170e7edfc7b502f63cea18c99f99d748702fb5bbc705e0d6a53"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/publication.test.ts",
+      "mode": "100644",
+      "gitBlob": "7937d5b6d530e8e7d4b27336cda93c2771f0fda3",
+      "sha256": "533a929ab4963c317264042df7d4d6c0c1fdb0aef5af4aed06e7a47ce5041326"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/state.test.ts",
+      "mode": "100644",
+      "gitBlob": "11bb4750fd81d3046bcfd104dde31a80e7edc129",
+      "sha256": "c2dc79956dea4264429a14b74dbd2e49c9dc09e5f7179e6adbce9f4ec251793f"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/state.test.ts",
+      "mode": "100644",
+      "gitBlob": "0e5684a8c97469de2ddd38847b6724fc409a3f14",
+      "sha256": "b8cf34c6d361f2ecf2f9011ba5e1f523262321cfa0ab6a0161902904b9ca6b28"
+    },
+    {
+      "path": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+      "mode": "100644",
+      "gitBlob": "7bf62a4207f9e41fdcc487aaf5346d0d8e9d6d42",
+      "sha256": "674fd1e9852caa1e262cc0980254196c8b8f687b127f1be0f39b0e0e3be5db88"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "mode": "100644",
+      "gitBlob": "72323d01ea78d56a094dbb068ca0d7856402e715",
+      "sha256": "8d08740c3ce50db965bc182352daa0e29e90fec87ee3740ec157efe81c5a16cb"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/radiant-eclipse-damage.test.ts",
+      "mode": "100644",
+      "gitBlob": "5a4b21d69c9251d293486d7f2106d82488686570",
+      "sha256": "96b38cf5e29ac0aaa8f5a192a5ecc087c1dfdf8003f6b115f9abc60bdccaacaf"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/fact-audience-rejection.test.ts",
+      "mode": "100644",
+      "gitBlob": "978585bfc451f7ce80cc563a30a3a6be092e923f",
+      "sha256": "8df8c988308506daf20c9c65bff63c29301201cf328629381752aed4c728089f"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/knowledge.test.ts",
+      "mode": "100644",
+      "gitBlob": "985cab48625122ec0a47d8d30f9bfae459bb62b5",
+      "sha256": "0ad48af46d2b9ac3892bb40ec17f36d13ace2bab575fee97e5dc19318fd24cd6"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "8316fed1f81845cdfd2396ecb7b129132fa38dc5",
+      "sha256": "e4f9fc640be96f4911d5aa73565b8cdcb38882de3f21dbb83ff3ad047b8671c1"
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "mode": "100644",
+      "gitBlob": "63165a9badc3acaf0a4d4cc55d4f4d84669b8866",
+      "sha256": "558ef752bbaef522c55bf6228a02d7c6ecd630cc21e4b1214ec345932eddecd7"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "0210b4819623ab0823dba132944970c7a24bb325",
+      "sha256": "8b7d7e166225049af9a586aa77b3374c1e389c2a588df131c6e38105595b81cb"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/inheritance.test.ts",
+      "mode": "100644",
+      "gitBlob": "b56672265f20b204282dcae1bb5a506a114423b0",
+      "sha256": "db927cb549f2541d23890803a0b12a4af345438ba4bb728984ec6130960332dc"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/scope.test.ts",
+      "mode": "100644",
+      "gitBlob": "05cfacc41d84a190f02e142422ebbb62e3d81d19",
+      "sha256": "715abd49e09918d3aa8d4e04ea949e94ba3984b4d70f09062c31e95e43893fef"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven-pending-night.test.ts",
+      "mode": "100644",
+      "gitBlob": "75ccbe2ab14637460d2531558a4e15fe5ecebf2d",
+      "sha256": "843b9da778b77c5e43a396ce34d33bf8e5f0243fd9c4e1e592d1884c6abf58c7"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/mist-raven-transport-oracle.test.ts",
+      "mode": "100644",
+      "gitBlob": "fc4fc6051e1feccae48bb1ab9dc30de07fad6378",
+      "sha256": "f9d9cb81d4b463016e6477048728d43e9788e9f3fee3586171abb2374319d6ba"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "fac0b697674b76e404b039ea1842b6d901a9a64e",
+      "sha256": "1015a33afc1132815b12111e946ebaae7874ec33878e525e8df215d1aa45a5ea"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/state.test.ts",
+      "mode": "100644",
+      "gitBlob": "aea65093eb1f069354ab9e609840dadeb006441f",
+      "sha256": "c364d8f07cfb07c0e2d950fdbc8a699bd90026bc141df10f508fab13e4b4a836"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body-shared-wire-review.test.ts",
+      "mode": "100644",
+      "gitBlob": "782a5df77c73dcb2acebca89d01278f39f928f6e",
+      "sha256": "2dd7ec41b89825689182ed78c7eb9bb80d60a989250a608f7fb3efd37e74c8d2"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority-reentry.test.ts",
+      "mode": "100644",
+      "gitBlob": "0229b83bf09860db2413d6a95e4ffab652c7b334",
+      "sha256": "31303f300008c6ebafe12400f1ba84ab0a37f1ee4517e6e36ab32fd0d8c73609"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/contract-boundaries.test.ts",
+      "mode": "100644",
+      "gitBlob": "4bc5ace0cec47d204ab6d9acd7f4877be5dc5103",
+      "sha256": "5c140d96ebe467246fd5e666ea799777c47fcfa1f898996f136e5ec128f05a02"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/damage-snapshot.test.ts",
+      "mode": "100644",
+      "gitBlob": "213855a6e2cc682c9e0e3a52851f32ab227d6ce0",
+      "sha256": "b36ef6b8f2e91985f1340c8a12546d7c9fc578cfc2635dba1902388db4bfceb7"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/damage.test.ts",
+      "mode": "100644",
+      "gitBlob": "b7899d55aa02f1597c977e9a57be879da525127a",
+      "sha256": "2073bd2827e2586b60ae7bea835d32084054309550b4bf3c57a9cce99230fe3a"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "d71c9858b9afcd041da683c02d3797f4bb29fdf6",
+      "sha256": "84824299f28e4d1458c0298aa40c258eaec031e78bb285ccc2ced19e4003c2fd"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/noble-secret-body-future-history-review.test.ts",
+      "mode": "100644",
+      "gitBlob": "2bc3ff5a712e9e6da25890e8f6cc49446661e801",
+      "sha256": "292dfb7bcf5777c58931e42f14352b87c0cc0713412acd998207662295f2d152"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/noble-secret-body-schema-current-review.test.ts",
+      "mode": "100644",
+      "gitBlob": "a9299793bd3b8eacaf74a2b2a2d9fe5b2a2fd1b2",
+      "sha256": "d9e4d9cc1bc4536cc631844d50ca78fa3bfbf625c7185edeb6f1685b12872dcf"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/noble-secret-body-wire-oracle-review.test.ts",
+      "mode": "100644",
+      "gitBlob": "99a18bfe1a37cbfca14d6c37bc93e2895b6f845e",
+      "sha256": "8e761efd0680db1a98502284f67dbedad4015e9c746fad3de6b35287b9ac2f99"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/notice-snapshots.test.ts",
+      "mode": "100644",
+      "gitBlob": "f29dd529ea83c38ebedf4ea18b99b4889753432c",
+      "sha256": "f5044bc9e006362c3b63be52bf7c9b843ccd2de5e1b513fab1cb9042f81a3fc8"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/player-projection.test.ts",
+      "mode": "100644",
+      "gitBlob": "1b327f585662538583cb54c39a5d01ba9c86abf4",
+      "sha256": "ea764f7cc9aa8de63280681b6d5d6a1a4d17a197463703e1598ea73b459b45ce"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-snapshot.test.ts",
+      "mode": "100644",
+      "gitBlob": "d4d2975cc2a7086260c2db007d23275c16fd4d77",
+      "sha256": "83161f166870eada47efb125c40f939e53db74d345e3dba19a844572fc095d72"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state.test.ts",
+      "mode": "100644",
+      "gitBlob": "a0e6fa2a70ecba7b98f3372aaadecb53a16fce5f",
+      "sha256": "555463ef98fa5b12f0f7cfaae4b8c26a9c0e9f0cf1ab1c0812b9f001145b4087"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "5bd7191ae9f68675029a4ad44f3d9c90fdc16ca9",
+      "sha256": "bae3c698a2cd1d3dbb392cda792e6726d20a2c6373bbcc74c1cb0e92148cc47a"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/transport-mapping-and-binding-oracles.test.ts",
+      "mode": "100644",
+      "gitBlob": "c1a0a463800cb984975fddea4f67f2fc0689f202",
+      "sha256": "a7211a8f0b1bb351692e06806c7d38ee9cbe78e26b2c1de530e2563e4e6a4b40"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "1d7deefd0d1d480924d6766fa6b8e3ece6b294a5",
+      "sha256": "07809ab8e52109c200a7b4cc5d0c543d90a50f56aeba20ec3ad782f8dfdc9c98"
+    },
+    {
+      "path": "backend/tests/unit/features/time-wolf-consort/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "3e2215f75e3ee27dfe078cb7d13a4f42bb2d362b",
+      "sha256": "ef0ba65a8b159f147eb49e207a7fa6ed239eca133c874c25c362bc05def39582"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster/frame.test.ts",
+      "mode": "100644",
+      "gitBlob": "061a0b9e0ea197551ff8376957790acaee15e420",
+      "sha256": "761b986b70c07499a76ebe39f7a12df77aa4a5004b4239ea6eb99ec8ecea9339"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "58503ea2b4ce0245a66ef4b4c8198743bcc255e1",
+      "sha256": "d20c6ae3cf8912bf7922bfbf72c74ad5f72195e4f919a766d261cd952c5437a3"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+      "mode": "100644",
+      "gitBlob": "d4a91b82439038803dc81f84a52d406ca5441811",
+      "sha256": "c91c57cfd214a0acb9a1c3af08451543b89de10110568112928e53f4e0d53212"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/native-shot-authority.test.ts",
+      "mode": "100644",
+      "gitBlob": "125572b3eb45afbcda44214659307c1a940a3488",
+      "sha256": "2d87d94884e34c66abe78efc4c4f2090c5a85de5568d11b9b18c088c3ba61dec"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/night-lifecycle.test.ts",
+      "mode": "100644",
+      "gitBlob": "a2032f60b0bb633e5236e0e2d011050cffaa129a",
+      "sha256": "719a1125171371ee12859a718240f0728deb492d2808c10ebc4ef856517cce89"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/seat-mapping.test.ts",
+      "mode": "100644",
+      "gitBlob": "0678d769214f669511bd554f1b5a92aea9e93579",
+      "sha256": "4fdcd82700490c7f81483355d0be10fa3cb652bd09ce76bc052e76212fc6973e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "mode": "100644",
+      "gitBlob": "d32be250296235a3cba417671007c0f25b0552dc",
+      "sha256": "da6a5fce05e0e869344fc263dd955f5010bb756be7a1dd853037ef1374f6b18e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/demon-hunt-death-shot-causes.test.ts",
+      "mode": "100644",
+      "gitBlob": "713788040462c744ac49ea22d5753f4e8c51a57f",
+      "sha256": "0f044b4a4a8c2bf03ba6ccf954cf91532eb38f3a52817120c14e355abc052ead"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/hunter-death-causes.test.ts",
+      "mode": "100644",
+      "gitBlob": "5e00eed4a999ca68cbf0dd9a979a4e33c8d9f4f7",
+      "sha256": "f053403dd69280844fec334a11164ace49e197cb04376d005fceab9e1fcaf327"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/inspection-target-policies.test.ts",
+      "mode": "100644",
+      "gitBlob": "83c124865824e05cdefb7d8e6c797d19bde9ccd5",
+      "sha256": "85af0e80ced7988ae9c38ee9ab9b3e7c2096572108ad352808cff2fb4f0bb19c"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/native-night-cleanup-ownership.test.ts",
+      "mode": "100644",
+      "gitBlob": "67fd688d4177729b39e1e93a340b96a095690226",
+      "sha256": "a879eb9497b23c2e16632f719c0b09ea7e23120cdf97090c92d69ff9f5ab3e70"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-actors.test.ts",
+      "mode": "100644",
+      "gitBlob": "243a592c531b847e5eefd2cb88743c5c049786aa",
+      "sha256": "c410a4b224e41706dc3adf0a08182ab26151231c5ed856964556c4a05860b2b5"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "mode": "100644",
+      "gitBlob": "b14809872a5a7940ba9368e28fd6a48aa195d3d1",
+      "sha256": "92df014e6ff6b3a5d18b05207349b6e8613d708b902e590eedd62cc335f26037"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "mode": "100644",
+      "gitBlob": "e032d6d19abda5c7b1148b14ec65858fb892e832",
+      "sha256": "ff487eed9164e8bbaff5e426a1eef0a35b808bd6dc30ad6c47177be784ad6825"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-manager-receiver-ownership.test.ts",
+      "mode": "100644",
+      "gitBlob": "f101b28c3f83c22d682bc227fc4843e876daeb3f",
+      "sha256": "232d4e5992ffec06e10121083bb51380743ed8ddab0c6edce32973e4a4a289bf"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "mode": "100644",
+      "gitBlob": "6e81591c863c44527b13c4fead4ad9ea277483d2",
+      "sha256": "6e3082632d9c55e4daf61880d822a79b3128965bf4718b58509838eb04d8a878"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+      "mode": "100644",
+      "gitBlob": "7ac1ac0085912c9b373f2bd4fa5311fdb714496e",
+      "sha256": "341810c3fb54889df38c1dba53e8a8476fe3df466a124c29adf28ea8f50b61ed"
+    },
+    {
+      "path": "backend/tests/unit/presentation/badge-policy-prompt.test.ts",
+      "mode": "100644",
+      "gitBlob": "59e3816344e6a647716521056ca2cfdd276c6744",
+      "sha256": "c0e21a39cda129ee5b24c0f448ab89e3a20d750b00741d831cbb4885710ba26d"
+    },
+    {
+      "path": "backend/tests/unit/presentation/bilingual-console.test.ts",
+      "mode": "100644",
+      "gitBlob": "c7183c3cf908106cadc47bceaa291135f47c8a69",
+      "sha256": "fb952e0f394bdf9a566129aa41f85f6e69b1d07dfc53b179760819ac6979a669"
+    },
+    {
+      "path": "backend/tests/unit/presentation/broadcast-localization.test.ts",
+      "mode": "100644",
+      "gitBlob": "339ae7c036d8c82d80f516a894c0e4929f5d5fe0",
+      "sha256": "621aa8f381251863a1f49a71424ece67503be563363adfa2fa2e035712560342"
+    },
+    {
+      "path": "backend/tests/unit/presentation/config-render-registry.test.ts",
+      "mode": "100644",
+      "gitBlob": "d97b0695d265194953486f4b646829fdf93e18c0",
+      "sha256": "83790d549ed720b47efe4b266ce134cc1ba491249de41ee9a694dd50763b2bdd"
+    },
+    {
+      "path": "backend/tests/unit/presentation/console-presenter.test.ts",
+      "mode": "100644",
+      "gitBlob": "b38855c195bd5e54b256d1f8367be4aa17af9164",
+      "sha256": "829fb74f6eaeb3df858fef6ea1c8e58a30ce28864763a1a85abf7bca5004f92b"
+    },
+    {
+      "path": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "mode": "100644",
+      "gitBlob": "d18a7ba319aacc1e17660d0ec0367b4b6ea7e165",
+      "sha256": "161cd339e3c41529fbc6f36a13674ca8a9c8a8f0bd5a03ed939535b9d0dbc456"
+    },
+    {
+      "path": "backend/tests/unit/presentation/idiot-revealed-presenters.test.ts",
+      "mode": "100644",
+      "gitBlob": "c98a852fbe065e569cdac96e661aaa7be9a57e11",
+      "sha256": "1698e605dc9fbaee5eb968f36ca8773b8907118bb43f1b782d00aaa029e51a7e"
+    },
+    {
+      "path": "backend/tests/unit/presentation/player-shot.test.ts",
+      "mode": "100644",
+      "gitBlob": "3e9380c66fa995c114c555259f6d7e9a570fa9ce",
+      "sha256": "fdebd4bb9610092d06b39824a21e921ecc2a20170bf6b86a791d2b0487d616dd"
+    },
+    {
+      "path": "backend/tests/unit/presentation/speech-text.test.ts",
+      "mode": "100644",
+      "gitBlob": "bb4dd36a42e0e83ec7d1a763e1b20676f113fb52",
+      "sha256": "0d73f6902e50777cdd6c51d3e6a93edcc8564a422c6add4774bee2e7bf24a1bf"
+    },
+    {
+      "path": "backend/tests/unit/recording/animal-dream-initial-review.test.ts",
+      "mode": "100644",
+      "gitBlob": "d73b631ab6cc8069b4af7f13bee1ecfa175732ae",
+      "sha256": "9240c71e2ffc776f664cb91755725d8a03beecb42921e0358645f00140d33ef7"
+    },
+    {
+      "path": "backend/tests/unit/recording/board-config-recording.test.ts",
+      "mode": "100644",
+      "gitBlob": "e6341edad633db9b840ca2833e7a6ef122c98888",
+      "sha256": "b7757ab3d7788ee5b11508d02cb898fd23340cde2bb345a62ca337ae9a08804a"
+    },
+    {
+      "path": "backend/tests/unit/recording/private-archive-reader.test.ts",
+      "mode": "100644",
+      "gitBlob": "348f22bbbade14b0aefe741b3be94b9650c81a3c",
+      "sha256": "86bed9e49c769ddec9cb5189d0253e0f87c3cc17e1565c4cece28445d2911708"
+    },
+    {
+      "path": "backend/tests/unit/recording/replay-document.test.ts",
+      "mode": "100644",
+      "gitBlob": "2f01645189071614647779f2786406e0eb1ccc2d",
+      "sha256": "0183f4849fcc26ddb6b9b152b0bb46bc4ad0b0b3b93234f1887d31e6cc2eb337"
+    },
+    {
+      "path": "backend/tests/unit/recording/replay-version-reader.test.ts",
+      "mode": "100644",
+      "gitBlob": "914bd834c0ccf67e51440cf0ef530a71ef8ca319",
+      "sha256": "abb043ae0a82445f04a972b300e0eed450a96fec48466cfe153e1673dba4733a"
+    },
+    {
+      "path": "backend/tests/unit/recording/reproduction-error-names.test.ts",
+      "mode": "100644",
+      "gitBlob": "27d9e26db4c492f2660f066b61997fc3712e2983",
+      "sha256": "d14f2977848ac39be6b79c784dca893eaa57fdff8d184b5c3459af7a6a18987a"
+    },
+    {
+      "path": "backend/tests/unit/recording/victory-result-reader-and-cloning.test.ts",
+      "mode": "100644",
+      "gitBlob": "895854888de0d8ee259b64e734dab66864d0652e",
+      "sha256": "e79862576db786924cfb12a4d60f5d7591369da71312e66ffad2130fc7ccd4eb"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/board-parameters.test.ts",
+      "mode": "100644",
+      "gitBlob": "16c4f302a32acb884397cda76c25bf41ca0ab619",
+      "sha256": "fe2263e228f3b71cce728017abae7f41ee348640e435d8952f89ab9ab3408d35"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/fragrant-roster-policy.test.ts",
+      "mode": "100644",
+      "gitBlob": "1f5a359d6a178a7cd7110cceae3df93da87fb542",
+      "sha256": "bfe14606d85c6c410921370fc39e234f5723fdce952f96ef1ce41df497f668c8"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ghost-bride-local-stage-priority.test.ts",
+      "mode": "100644",
+      "gitBlob": "486ce20ecdb29025d69a384da2d24a37b2706942",
+      "sha256": "4a0d260e4bdd1283f25256fe0a34d527bfa80d2654a071441fbedcb16e1de58a"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/native-night-policy.test.ts",
+      "mode": "100644",
+      "gitBlob": "5196e5d4ce0dbdf54e84be6644eb473e20b6da0b",
+      "sha256": "611d75e6b5318cc146a1ae2af514254574cf32f7635ab838155e6b49965f2afb"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "mode": "100644",
+      "gitBlob": "543cb150a8f0cdf2403ab4763aa01f4e1df59e9b",
+      "sha256": "350f547fff74910c3f590b8e605ec2a2d1aefffbdd75fdfc900b2b9caa5e4dad"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-provenance.test.ts",
+      "mode": "100644",
+      "gitBlob": "31581f3218b524766a7eb956860f8b225fc4fe3c",
+      "sha256": "9f0c9ec703d3f3c585a85317d35485a029b028713e4fd4334f6871b916a158e0"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-registration.test.ts",
+      "mode": "100644",
+      "gitBlob": "ee4cbf04e9cf05cf44affa5eabd94de1d9f19a95",
+      "sha256": "e38e4b6012059e1b4c1ad6d0c0a5103dc4438420f135c9201dbb4eafddc4eb9c"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/scholar-mentor-preset.test.ts",
+      "mode": "100644",
+      "gitBlob": "3916782ccb9b9f3895149e3a0c4db055d6a33252",
+      "sha256": "0774dd403c92246f055967ab4944a7d67654ddbddb743b40c4922337f96f83c0"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/supported-role-deck.test.ts",
+      "mode": "100644",
+      "gitBlob": "3bb45215cf690259050959fab4dc1cbb4dd5bad2",
+      "sha256": "c0da9711441e74fc0b0dc2db7bab4123ff9e8929a43728ccfad744d3b68d88ba"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/tool-spec-registration.test.ts",
+      "mode": "100644",
+      "gitBlob": "569773f2eb6e1155733b0a4a09ec2b232cbc295f",
+      "sha256": "3f473bdb045862aa0ed1b88ac2a4982766f49ae8c549f0857651aec3613d156d"
+    },
+    {
+      "path": "tooling/refactor/architecture.test.ts",
+      "mode": "100644",
+      "gitBlob": "3711a89267a9add254724de9e23eac9a2ef401e1",
+      "sha256": "e84f77ab9d107d8a757fa2854c7de9e15def0a071ef61f644a40a07c89633e46"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "mode": "100644",
+      "gitBlob": "2f5192030fb70378ddf3f72e7d5ace96fc3eb876",
+      "sha256": "f6d1ae19ccdf27e03f04ba3495593f33beca18b351b7b4444ac1f6b6f1623427"
+    },
+    {
+      "path": "tooling/refactor/inventory.ts",
+      "mode": "100644",
+      "gitBlob": "4bc180a4ab83950d822fb411f7c42f602f60d9f1",
+      "sha256": "0c8a49e809c877644052e0fda2bf67552a7dafad5d2876aee9e323346ee4bb24"
+    }
+  ],
+  "controls": [
+    {
+      "path": "bun.lock",
+      "mode": "100644",
+      "gitBlob": "e06dd0a3aa20b6890a45d262a609bf2bdb474bb6",
+      "sha256": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "gitBlob": "c5db1fd702cdb80a5dca8c4fe61d8d965050a24b",
+      "sha256": "11dd0dff1c16be4cb74701840fc270d218669c6228754ef37aa0e7c74e16f40f"
+    },
+    {
+      "path": "backend/tsconfig.json",
+      "mode": "100644",
+      "gitBlob": "d13844afe6718266587697e948efbf204e95322a",
+      "sha256": "0e05aa782d7a8638bae3a1525fb8fbd8e41deefb9eb170d874aca3cbb34f96d5"
+    },
+    {
+      "path": "tooling/refactor/fixtures/manifest.json",
+      "mode": "100644",
+      "gitBlob": "7f68b755432b4d7c99b45a9df82c74fec4f55844",
+      "sha256": "bf7fe2b72afbc3fcc8d506930a477072d19bdc84ca07f86a4cd01969daea0d03"
+    }
+  ],
+  "fullCaptures": {
+    "main": "main/plan.json fields files[].before (439)",
+    "additional": "before-additional.json (5)",
+    "archive": "docs/refactor/generated/backend-maintenance-chinese-contracts-complete-inputs-and-outputs.tar.gz"
+  },
+  "note": "compact Git summary444含1已覆盖未变化源；完整字节在归档及固定Git。中间439应用后前态不冒成另一Git。"
+}

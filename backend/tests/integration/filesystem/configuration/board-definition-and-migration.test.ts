@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify canonical board rejection, source migration, backup conflicts and resolved setup metadata.
- * Input: Original public twelve-player definition reads, actual temporary board/runtime files and literal invalid overrides.
- * Output and oracle: Exact diagnostic paths, backup bytes and redacted setup values preserve loader/migration behavior; private markers are synthetic test literals and no model or game runs.
+ * 配置文件系统集成测试以原公开十二人定义、真实临时 board／runtime 文件及字面非法覆盖为输入，核对规范板子拒绝、源码迁移、备份冲突和 setup 元数据。精确诊断路径、备份字节及脱敏 setup 值为预期；私有标记均为合成字面量，不运行模型或游戏。
  */
 import { ActionWindow } from "../../../../src/domain/identity";
 import { expect, test } from "bun:test";

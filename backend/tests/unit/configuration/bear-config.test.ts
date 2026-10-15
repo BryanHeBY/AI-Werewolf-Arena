@@ -1,8 +1,5 @@
 /**
- * Unit tests: Bear configuration uses immutable public board/game examples; exact
- * single-Bear composition and frozen parameter assertions check passive role registration.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试以不可变公开板子／游戏示例为输入，用精确单 Bear 组合及冻结参数断言核对被动身份注册。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";

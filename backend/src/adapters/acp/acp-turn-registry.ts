@@ -156,7 +156,7 @@ export class AcpTurnRegistry {
       return result;
     }
 
-    // 接受一次即关闭当前窗口；后续请求只能拿到明确拒绝，不能污染下一阶段。
+    // 接受后先移除该会话的登记，再读取已选候选供 resolve；未调用 owner.close，selected 本身阻止再次选择。
     this.pendingBySession.delete(sessionId);
     pending.resolve(pending.owner.action);
     return result;

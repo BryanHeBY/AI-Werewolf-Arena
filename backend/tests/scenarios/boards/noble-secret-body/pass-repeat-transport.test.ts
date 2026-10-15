@@ -1,8 +1,8 @@
 /**
- * Complete real-transport scenarios verify Noble/Body explicit pass resets protection repetition.
- * Input: Fixed pass/repeat choices and configured policies on synthetic transports.
- * Output and independent oracle: Handwritten night death/protection sequence, exact checkpoint values and independent badge/wire oracles.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整真实传输场景验证夜之贵族／秘密之身明确跳过会重置重复保护限制。
+ * 输入为合成传输上的固定跳过／重复选择及配置策略。
+ * 输出与独立预期为手写夜死／保护顺序、精确 checkpoint 值，以及独立警徽／协议预期。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";

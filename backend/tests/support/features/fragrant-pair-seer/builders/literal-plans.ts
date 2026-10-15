@@ -1,8 +1,5 @@
 /**
- * Builds original fragrant-pair-seer test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 持有寻香测试逐夜手写行动表 fragrantLiteralPlans；以计划名索引各夜绑定、刀、药及放逐等原字面字段。此文件只导出表，由调用方驱动和检查消费；不接受构造器参数，不执行对局或从生产结果生成该表。
  */
 import type { FragrantRuntimePlan } from "../contracts";
 

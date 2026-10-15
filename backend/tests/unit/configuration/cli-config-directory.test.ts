@@ -1,9 +1,5 @@
 /**
- * Unit tests: CLI config-directory resolution uses literal cwd/environment/argument paths;
- * exact precedence and project-root assertions check pure path selection without loading
- * private configuration. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面 cwd／环境／参数路径为输入，用精确优先级及项目根断言核对 CLI 配置目录的纯路径选择，不加载私有配置。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
@@ -45,7 +41,7 @@ test("explicit config paths override environment paths and preserve cwd-relative
       environment,
     ),
   ).toMatchObject({ configDir: "../explicit-configs", gameName: "six_player_mvp" });
-  // Empty explicit/environment values must reach the loader's existing validation.
+  // 显式参数或环境值为空时，仍应进入 loader 既有验证。
   expect(resolveCliConfigDirectory("", environment)).toBe("");
   expect(resolveCliConfigDirectory(undefined, { GAME_CONFIGS_DIR: "" })).toBe("");
 });

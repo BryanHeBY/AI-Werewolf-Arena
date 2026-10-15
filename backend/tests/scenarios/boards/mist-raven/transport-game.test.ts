@@ -1,7 +1,7 @@
 /**
- * Scenario tests execute linked, saved-dreamer, protected-heal and draw Mist/Raven games through bilingual SDK, ACP and mixed transports.
- * Inputs are the original scripted plans; literal unsealing, learned identities, night deaths, actor-only facts and final golden outcomes are the oracle.
- * The transport driver owns local child/recording resources. Optional caller-selected archive exports keep their old boundaries; default tests neither overwrite goldens nor call a billed model.
+ * 场景测试通过双语 SDK、ACP 和混合传输执行迷雾组合板的关联、保住摄梦人、守护治疗及平局分支。
+ * 输入为原脚本计划；字面解封、习得身份、夜死、仅行动者事实及最终固定结果构成预期。
+ * 传输驱动拥有本地子进程和录制资源；调用方可选的归档导出保留原边界，默认测试不覆盖固定预期，也不调用付费模型。
  */
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";

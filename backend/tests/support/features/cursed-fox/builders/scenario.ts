@@ -1,8 +1,5 @@
 /**
- * Builds original cursed-fox test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 持有咒狐有限场景及板子 builder：foxBoard 接收身份表，foxScenario 接收 kind。输出为原配置、内部固定种子、身份及字面行动计划；不推进对局或用生产终局生成预期。
  */
 import { Role } from "../../../../../src/domain";
 import { WinCondition } from "../../../../../src/domain";

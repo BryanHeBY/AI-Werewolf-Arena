@@ -1,9 +1,5 @@
 /**
- * Unit tests: Noble and Secret Body history validation uses an explicit future owner fact
- * inserted into earlier SDK messages; exact rejection expectations check history timing
- * rather than executing an SDK request. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试将明确的未来 owner 事实插入更早 SDK 消息，用精确拒绝预期核对 Noble／Secret Body 历史时点，不执行 SDK 请求。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import {
@@ -11,11 +7,11 @@ import {
   type NobleWireRun,
 } from "../../../support/features/noble-secret-body/oracles/wire";
 
-// Pure oracle fixtures, not purported full engine records. Handwritten inputs
-// model the already independently validated feed at three body turns. No
-// production projector, fold, reducer, World, or generated expected snapshots.
-// Independent static wire contract, handwritten rather than importing the oracle
-// or production schema builder. Only this calibration fixture was strengthened.
+// 纯预期夹具，不冒充完整引擎档案。手写输入
+// 表示三个 Body 回合中已被独立验证的 feed；不使用
+// 生产投影、折叠器、归约器、World 或生成的预期快照。
+// 独立静态传输契约由手工编写，不导入预期检查器
+// 或生产 schema 构造器；仅本校准夹具被加强。
 function staticSchema(locale: "en" | "zh-CN") {
   return locale === "en"
     ? {
@@ -105,8 +101,8 @@ function run(kind: "sdk" | "acp", locale: "en" | "zh-CN" = "en"): NobleWireRun {
             ordinal: i + 1,
             messages: [
               { role: "system", content: "NOBLE_PRIVATE_ACTOR_5" },
-              // A legitimate bounded context can drop all old events while keeping
-              // the complete new delta. This is deliberately not a full-feed oracle.
+              // 合法的有界 context 可丢弃全部旧事件，同时保留
+              // 完整新增量；这里故意不提供全 feed 预期。
               ...facts.slice(i ? sizes[i - 1] : 0, size).map((e) => ({
                 role: "user",
                 content: JSON.stringify({ event: tuple(e) }),

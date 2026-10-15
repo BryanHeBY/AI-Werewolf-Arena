@@ -851,7 +851,7 @@ for (const revoked of [false, true])
   });
 
 test("the actual factory canonical required request binds without an invented requiresAction context field", async () => {
-  // The production bootstrap is the established initialization entry for the factory's role dependencies.
+  // 生产 bootstrap 是请求工厂身份依赖既定的初始化入口。
   await import("../../../../src/app/bootstrap");
   const { GameActionRequestFactory } =
     await import("../../../../src/engine/actions/action-request-factory");
@@ -1463,7 +1463,7 @@ for (const kind of [
       f.world.addComponent(6, COMPONENT.StatusMarks, replacement);
     }
     const token = sealDeliveredDemonWitchSources(f.world, 1);
-    marks.clear(); // Ordinary DamageResolution consumes marks between seal and final source freeze.
+    marks.clear(); // 普通 DamageResolution 在 seal 与最终来源冻结之间消耗 marks。
     if (kind === "source_revoked") f.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
     if (kind === "target_revoked") f.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
     let reads = 0;

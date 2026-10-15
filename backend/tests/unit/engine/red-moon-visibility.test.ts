@@ -1,9 +1,5 @@
 /**
- * Unit tests: Red Moon visibility uses canonical public facts and malformed secret
- * payloads; exact viewer fields and rejection assertions check projection without exposing
- * private data. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以规范公开事实及错误秘密载荷为输入，用精确 viewer 字段及拒绝断言核对 Red Moon 投影不暴露私密数据。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";

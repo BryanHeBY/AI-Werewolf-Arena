@@ -1,8 +1,5 @@
 /**
- * Builds original hidden-wolf test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 HiddenScenario 的 kind 构造隐狼传输输入，输出原板子、内部固定种子、身份及字面行动回合。继承、狼聊排除和死亡分支留在计划中；不接收任意种子，不运行游戏生成预期。
  */
 import { KnightDuelWindow } from "../../../../../src/domain";
 import { PotionType } from "../../../../../src/domain";

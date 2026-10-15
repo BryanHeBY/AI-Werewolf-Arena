@@ -38,6 +38,7 @@ function safeJsonString(value: unknown, maxChars: number): string {
   }
 }
 
+// 公共事件沿输入顺序保留首批允许类型；逻辑操作和玩家时间线另取尾部，三个来源不保证处于同一时间窗口。
 function summarizePublicEvents(events: ReplayPublicEvent[], maxItems: number) {
   const keepTypes = new Set([
     "phase_changed",
@@ -262,6 +263,10 @@ export function buildAuditTasks(
   ];
 }
 
+/**
+ * 顶层先浅复制，选中的数组、玩家视图和提示节点再单独复制，其他嵌套值仍可共享引用。
+ * 20／30 是数组截取保留量的下限，短数组不保证继续变小；展开／字段读取仍可能执行原 getter 并抛错。
+ */
 export function shrinkAuditPayload(payload: Record<string, unknown>): Record<string, unknown> {
   const clone = { ...payload };
   for (const field of ["events", "ops", "reports"]) {

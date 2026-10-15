@@ -47,7 +47,7 @@ test("literal seed golden uses one reserved draw across three actual nights rega
   for (let i = 0; i < 17; i++) random.fork("unrelated-draws").next();
   const g = game("en", random);
   for (let day = 1; day <= 3; day++) await cycle(g, {});
-  // Independent FNV/Mulberry calculation: uint32 output 4063160788, sorted wolves [2,3,4].
+  // 独立 FNV/Mulberry 计算：uint32 输出 4063160788，排序狼名单为 [2,3,4]。
   expect(fragrantAuthoritySnapshot(g.world).fragrant.knownWolfId).toBe(4);
   expect(fragrantAuthoritySnapshot(g.world).known.knifeNotices).toEqual([
     { day: 1, eligible: false },

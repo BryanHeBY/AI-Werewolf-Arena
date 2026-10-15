@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Mist/Raven knowledge feeds cannot grant unpublished, unauthorized or future facts.
- * Input: Actual mistRecording/mistPrefix sources and copied appended-feed or pending/published visibility mutations.
- * Output and oracle: Explicit original prefix acceptance and forged-feed rejection retain disclosure timing; generated records supply test input without computing an expected World.
+ * 复现场景验证迷雾组合板知识流不能授予未发表、未授权或未来事实。
+ * 输入为实际 mistRecording／mistPrefix 来源，以及追加信息流或 pending／已发表可见性的副本篡改。
+ * 输出与预期为明确原前缀接收及伪造信息流拒绝，保留公开时点；生成记录仅提供输入，不计算预期 World。
  */
 import { expect, test } from "bun:test";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";

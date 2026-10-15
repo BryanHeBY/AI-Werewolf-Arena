@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify a naturally completed Noble game rejects forged post-terminal living-player requests.
- * Input: The original beforeAll expiry recording and copied terminal-request variants.
- * Output and oracle: Explicit natural completion and parser rejection preserve the actual terminal prefix; copied archives are inputs rather than independent expected-rule goldens.
+ * 复现场景验证自然完成的夜之贵族对局拒绝伪造终局后存活玩家请求。
+ * 输入为原 beforeAll 到期录制及终局请求副本分支。
+ * 输出与预期为明确自然完成和解析拒绝，保留真实终局前缀；归档副本是输入，不是独立规则固定预期。
  */
 import { beforeAll, expect, test } from "bun:test";
 import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
@@ -29,8 +29,8 @@ for (const turn of [1, 2])
     )!;
     const extra = structuredClone(original),
       feed = extra.request.context.visible_events;
-    // The suffix after this villager's actual vote opens has only these literal
-    // public facts plus God-only death audit evidence. No production projector.
+    // 该平民实际投票请求开放后的后缀只有这些字面
+    // 公开事实及仅 God 可见的死亡审计证据；不使用生产投影器。
     const publicTail = new Set([
       "phase_changed",
       "vote_summary",

@@ -1,9 +1,5 @@
 /**
- * Unit tests: Scholar Mentor eligibility reads its immutable public board and applies
- * explicit invalid mutations; literal bootstrap and preset assertions check the declared
- * finite roster. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试读取不可变 Scholar Mentor 公开板子并显式施加坏变体，用字面 bootstrap 和预设断言核对声明的有限名单。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import {
   boardDefinitionFromConfig,

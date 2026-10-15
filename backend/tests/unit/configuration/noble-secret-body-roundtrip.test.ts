@@ -1,9 +1,5 @@
 /**
- * Unit tests: Noble and Secret Body configuration uses immutable public board examples and
- * four policy combinations; literal schema, reverse-config and bootstrap expectations
- * check exact roundtrip and invalid variants. Inputs and expected outcomes remain the
- * original literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试以不可变 Noble／Secret Body 示例及四种政策组合为输入，用字面 schema、反向配置及 bootstrap 预期核对精确往返和非法变体。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { isNobleSecretBodyPreset, isDemonHunterPreset } from "../../../src/rulesets";

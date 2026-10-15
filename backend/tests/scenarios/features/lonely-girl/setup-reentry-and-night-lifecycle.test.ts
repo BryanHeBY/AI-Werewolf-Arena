@@ -1,9 +1,8 @@
 /**
- * Scenario tests for lonely girl setup. Inputs are original required choices, getter/revocation matrices
- * and public board configuration. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual two PM cycles complete setup and day/voting flow while nested
- * phase/cycle entries are rejected. Engine sequencing remains real and models remain controlled providers;
- * production output is not a newly generated golden.
+ * 场景测试验证孤独少女开局；输入为原必需选择、getter／撤权矩阵及公开板子配置。
+ * 原字面回执、引用／getter／错误轨迹、事实和预期状态仍构成判断依据。
+ * 真实两个 PM 周期完成开局及白天／投票流程，同时拒绝嵌套阶段／周期进入。
+ * 引擎顺序仍为真实执行，模型由受控 provider 替代；不把生产输出新生成固定预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

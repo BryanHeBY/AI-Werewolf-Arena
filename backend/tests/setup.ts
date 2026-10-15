@@ -1,19 +1,16 @@
 /**
- * Backend test preload support verify test-local mock reset and tracked temporary-directory retirement.
- * Input: Bun per-test/after-all hooks and the original shared temporary directory owner.
- * Output and independent oracle: Outputs reset console/Jest mocks and awaited cleanup; hook order and ten-second default are retained, not a fixture or rule oracle.
- * The preload changes no production module, callback policy, archived input or expected game result.
+ * 后端测试预加载持有测试局部 mock 重置及受跟踪临时目录清理；输入为 Bun 的每测试／全部结束 hook 与原共享目录 owner。输出为 console／Jest mock 重置及等待目录清理，保留原 hook 顺序和十秒默认超时；这不是夹具或规则预期检查器。不改变生产模块、回调政策、归档输入或游戏结果预期。
  */
-// Test setup file for AI-Werewolf-Arena backend
-// This file runs before each test file
+// AI-Werewolf-Arena 后端测试预加载文件。
+// 此文件在每个测试文件之前执行。
 
 import { afterAll, afterEach, beforeEach, jest } from "bun:test";
 import { cleanupTestTempDirectories } from "./support/drivers/temp-directories";
 
-// Global test timeout
+// 全局测试超时。
 jest.setTimeout(10000);
 
-// Mock console methods to reduce noise in test output
+// 模拟 console 方法，减少测试输出噪声。
 global.console = {
   ...console,
   log: jest.fn(),
@@ -23,7 +20,7 @@ global.console = {
   debug: jest.fn(),
 };
 
-// Reset all mocks before each test
+// 每个测试之前重置全部 mock。
 beforeEach(() => {
   jest.clearAllMocks();
 });
@@ -32,7 +29,7 @@ afterEach(async () => {
   await cleanupTestTempDirectories();
 });
 
-// Clean up after all tests
+// 所有测试结束后清理。
 afterAll(() => {
   jest.restoreAllMocks();
 });

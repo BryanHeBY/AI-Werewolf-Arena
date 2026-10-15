@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify an incremental Radiant Eclipse checkpoint retains completed cleanup after a real cycle failure.
- * Input: A recorded Seer-failure cycle and the original copied checkpoint/lease mutations.
- * Output and oracle: Explicit parser acceptance or rejection distinguishes completed cleanup from a forged active lease; the generated record is input, not an independent expected-state oracle.
+ * 失败场景验证流光／蚀日增量 checkpoint 在真实周期失败后仍保留已完成清理。
+ * 输入为录制的预言家失败周期及原 checkpoint／lease 副本篡改。
+ * 输出与预期通过明确解析接收／拒绝区分已完成清理和伪造活跃 lease；生成的记录是输入，不是独立预期状态。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

@@ -1,9 +1,5 @@
 /**
- * Unit tests: Nightmare configuration reads immutable public examples and mutates explicit
- * fear/pack policies; exact roundtrip and named rejection assertions check the finite
- * board predicate. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试读取不可变 Nightmare 示例并显式修改 fear／pack 政策，用精确往返和具名拒绝核对有限板子 predicate。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { isNightmarePreset } from "../../../src/rulesets";

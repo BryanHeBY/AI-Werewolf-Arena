@@ -1,7 +1,5 @@
 /**
- * Filesystem integration tests verify event-recorder cursors persist each event once despite presentation failure.
- * Input: Original game events, a temporary SessionRecordManager and a throwing terminal presenter.
- * Output and oracle: Literal record counts and neutral player gun-stage fields retain native God source identity; terminal output does not own persistence.
+ * 文件系统集成测试以原游戏事件、临时 SessionRecordManager 及抛错终端 presenter 为输入，核对展示失败后事件游标仍使每条事件仅持久化一次。字面记录数和中立玩家枪阶段字段保留原上帝视角来源身份；终端展示不持有持久化职责。
  */
 import { Phase } from "../../../src/domain";
 import { expect, test } from "bun:test";

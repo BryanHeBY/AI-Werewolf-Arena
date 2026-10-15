@@ -1,10 +1,5 @@
 /**
- * Owns test oracle support: Independent Fragrant Pair serialized request-prefix, schema and knowledge checks from original literal status markers and parsed decisions.
- * Inputs are actual wire messages, request prefixes, snapshots or a former
- * local endpoint plus explicit expectations; outputs are the original assertions
- * and rejection diagnostics. Unit/integration/scenario tests retain their
- * independent literal markers and recorded prefixes as the oracle. No expected
- * result is regenerated from production role, observation or board algorithms.
+ * 持有 Fragrant 独立传输预期：根据原字面状态标记与已解析决策，核对序列化请求前缀、schema 和知识。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言和拒绝诊断。各测试沿用独立字面标记与已录前缀；不从生产身份、观察或板子算法生成结果预期。
  */
 import { isDeepStrictEqual as equal } from "node:util";
 import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction/format";
@@ -65,9 +60,9 @@ export function jsonAt(prompt: string, marker: string): any | null {
     }
   fail("invalid_status");
 }
-/** Requires a record previously accepted by the independent public parser.
- * Expected feed is its decision prefix tied to openedAtEventCount. No runtime projector,
- * production role/knowledge reducer or checkpoint inventory is used here. */
+/**
+ * 输入必须是已通过独立公开解析器的档案。预期 feed 取与 openedAtEventCount 绑定的决策前缀；不使用运行时投影、生产身份／知识归约器或检查点库存。
+ */
 export function fragrantKnownAt(d: RecordedDecision): Record<string, any> {
   let known: any = {
     knownWolfId: null,

@@ -1,9 +1,5 @@
 /**
- * Unit tests: Public rule contracts use immutable example boards and explicit incompatible
- * policies; handwritten direct/public acceptance and prompt-timing expectations check
- * shared finite-board validation. Inputs and expected outcomes remain the original literal
- * or immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以不可变示例板子及显式不兼容政策为输入，用手写直接／公开接受及提示时点预期核对共享有限板子验证。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { readFileSync, readdirSync } from "node:fs";
@@ -94,7 +90,7 @@ for (const locale of ["zh-CN", "en"] as const)
         const input = JSON.parse(readFileSync(new URL(name, folder), "utf8"));
         const board = parseBoardDefinition(input).config;
         if (!board.enableSheriff) continue;
-        // Independent role inventory oracle; do not call the production timing helper.
+        // 独立的身份库存预期；不要调用生产时点 helper。
         const before = board.roleSetups.some(
           (r) =>
             [Role.PureWhiteGirl, Role.EvilKnight, Role.DemonHunter, Role.GhostBride].includes(
@@ -110,8 +106,8 @@ for (const locale of ["zh-CN", "en"] as const)
             ? "After the sheriff vote, night_resolved"
             : "警长投票结束后，才由 night_resolved";
         if (name === "awa_mist_raven_12_v1.json") {
-          // This board has an explicit resource-dependent schedule every night.
-          // The public rule describes both branches without revealing current stock.
+          // 该板子明确声明每夜随资源变化的行动安排。
+          // 公开规则说明两条分支，不暴露当前库存。
           expect(summary.includes(first), name).toBe(false);
           expect(summary.includes(after), name).toBe(false);
           const markers =

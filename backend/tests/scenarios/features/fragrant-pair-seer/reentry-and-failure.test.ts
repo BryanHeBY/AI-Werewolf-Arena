@@ -65,7 +65,7 @@ for (const replace of [false, true])
     } catch (error) {
       thrown = error;
     }
-    // Restore solely to inspect the held failed owner, never to resume this game.
+    // 恢复只用于检查持有的失败 owner，不恢复本局运行。
     if (replace) g.world.addComponent(1, COMPONENT.Alive, original);
     expect(thrown).toBe(failure);
     expect(fragrantAuthoritySnapshot(g.world).nights[0]!.status).toBe("aborted");

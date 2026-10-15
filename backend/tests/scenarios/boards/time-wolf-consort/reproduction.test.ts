@@ -357,7 +357,7 @@ for (const locale of ["en", "zh-CN"] as const) {
           (d) => d.day === 1 && d.request.phase === "night",
         );
         prefix.checkpoints = [];
-        // Check the causal prefix directly, without later deaths or checkpoint comparisons.
+        // 直接检查因果前缀，不带入后续死亡或 checkpoint 对照。
         expect(() => validateTimeConsortRecord(prefix)).toThrow(
           "reproduction_time_consort_invalid",
         );

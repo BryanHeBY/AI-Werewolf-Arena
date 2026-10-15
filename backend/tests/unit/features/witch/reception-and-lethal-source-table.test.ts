@@ -107,7 +107,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal })).toEqual(
       { ok: true, accepted: true, applied: false, action: "use_potion" },
     );
-    expect(potion.heal).toBe(1); // Reception never applies or spends.
+    expect(potion.heal).toBe(1); // 接收层不应用效果，也不付款。
     marks(world, 9).remove(StatusMark.WolfKillMark);
     expect(
       new ToolGateway().validateAndSanitize(world, 6, turn.action!, {
@@ -117,7 +117,7 @@ for (const locale of ["zh-CN", "en"] as const)
       }),
     ).toMatchObject({ ok: false, error: "heal_target" });
     expect(role(world, 6).privateState).toEqual(before);
-    // A forged visible context cannot create a real knife.
+    // 伪造可见 context 不能制造真实刀伤。
     expect(
       receive.validate(request, "use_potion", { target_id: 9, potion_type: PotionType.Heal }),
     ).toMatchObject({ ok: false, error: "heal_target" });
@@ -134,6 +134,6 @@ for (const locale of ["zh-CN", "en"] as const)
         deathSources: expected.length ? { 7: expected } : {},
       });
       expect(marks(world, 7).values()).toEqual([]);
-      expect(world.getComponent(7, COMPONENT.Alive)!.alive).toBe(true); // PhaseManager owns death settlement.
+      expect(world.getComponent(7, COMPONENT.Alive)!.alive).toBe(true); // 死亡结算由 PhaseManager 持有。
     }
   });

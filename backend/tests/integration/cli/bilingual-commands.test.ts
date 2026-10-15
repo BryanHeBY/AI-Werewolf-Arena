@@ -1,7 +1,5 @@
 /**
- * Native CLI integration tests verify actual configuration commands keep safe bilingual failure and prompt fallback reports.
- * Input: Original finite command/argument matrix, temporary synthetic config files and public example copy.
- * Output and oracle: Exact process status, redacted structured reports, locale fallback and no stack assertions retain original subprocess behavior; no billed model or private credential is used.
+ * 原生 CLI 集成测试以原有限命令／参数矩阵、临时合成配置和公开示例副本为输入，核对配置命令保留安全双语失败报告与提示语言回退。精确进程状态、脱敏报告、语言回退及无堆栈断言为预期；不使用计费模型或私有凭据。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

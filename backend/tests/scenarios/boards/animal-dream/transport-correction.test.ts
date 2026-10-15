@@ -1,7 +1,7 @@
 /**
- * Scenario tests execute Fox and Puffer invalid-action correction through SDK and ACP in both locales.
- * Inputs are the original full-game plans with one handwritten invalid action; literal error, one paid history and final golden outcome expectations check correction without duplicate stock consumption.
- * The transport driver owns child/recording resources. Tests neither grant replacement-body authority nor call a billed model.
+ * 场景测试通过两种语言的 SDK／ACP 验证子狐和河豚的无效行动纠正。
+ * 输入为原完整对局计划及一条手写无效行动；字面错误、一次已付历史和最终固定结果检验纠正过程不重复消耗库存。
+ * 传输驱动拥有子进程和录制资源；测试不授予替换角色原体的权限，也不调用付费模型。
  */
 import { expect, test } from "bun:test";
 import { animalTransportScenario } from "../../../support/features/animal-dream/builders/transport-plan";

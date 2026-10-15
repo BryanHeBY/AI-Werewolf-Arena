@@ -1,7 +1,5 @@
 /**
- * Configuration integration tests verify the public config checker and bootstrap reject the same unsupported finite presets.
- * Input: The original twelve malformed board combinations and temporary public config files.
- * Output and oracle: Literal diagnostic codes and paths agree at the two entrances; no game cycle or provider request is executed.
+ * 配置集成测试以原十二种错误板子组合及临时公开配置文件为输入，核对公开检查入口和 bootstrap 拒绝相同的不支持有限预设。预期为两入口一致的字面诊断码及路径；不执行游戏循环或 provider 请求。
  */
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -38,7 +36,7 @@ for (const [id, preset] of cases) {
     );
     const config = parseBoardDefinition(raw).config;
     expect(() => bootstrapGame(config)).not.toThrow();
-    // Valid for the generic sheriff schema, unsupported by these finite boards.
+    // 该值符合通用警长 schema，但不受这些有限板子支持。
     config.sheriff!.voteWeight = 2;
     raw.mechanisms.sheriff.voteWeight = 2;
     expect(() => bootstrapGame(config)).toThrow(`${preset}_preset_invalid`);

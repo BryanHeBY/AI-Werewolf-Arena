@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Hybrid count and unsupported-role composition fail consistently at direct and normalized board entrances.
- * Input: The original ten unsupported-role values, duplicate count and literal board configuration.
- * Output and oracle: Explicit diagnostic codes/paths and direct rejection retain finite scope; no filesystem config tree or played game is needed.
+ * 单元测试以原十种不支持身份、重复数量及字面配置为输入，核对 Hybrid 数量／组合在直接及归一化入口一致拒绝。明确诊断码／路径和直接拒绝为预期；不需要文件系统配置树或完整对局。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

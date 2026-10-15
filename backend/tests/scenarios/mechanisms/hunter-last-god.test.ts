@@ -62,7 +62,7 @@ for (const locale of ["zh-CN", "en"] as const)
           ],
         },
       );
-      // City/half also reach a terminal-looking state after the knife. Side keeps villagers alive.
+      // City／half 在狼刀后也会到达看似终局的状态；Side 保留存活平民。
       if (mode !== WinCondition.SlaughterSide) for (const id of [3, 4, 5, 6]) dead(game.world, id);
       let shots = 0;
       const result = await game.phaseManager.runSingleCycle({

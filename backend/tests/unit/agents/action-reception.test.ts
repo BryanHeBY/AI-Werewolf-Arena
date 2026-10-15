@@ -288,7 +288,7 @@ test("dead actions require trusted engine authorization; role, target, candidate
       abstain: false,
     }),
   ).toMatchObject({ ok: false, error: "guard_repeat" });
-  // The final engine guard still sees changes since preflight.
+  // 最终引擎守卫仍能看到预检之后的变化。
   const action = receive.validate(request(9, ["vote"]), "vote", { target_id: 1, abstain: false });
   expect(action.ok).toBe(true);
   world.getComponent(1, COMPONENT.Alive)!.alive = false;

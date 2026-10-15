@@ -1,5 +1,5 @@
 /**
- * 负责独立重建盗贼／换皮者的完整初始发牌、选择与后续角色状态。
+ * 负责独立重建盗贼／千面人的完整初始发牌、选择与后续角色状态。
  * 输入为归档原牌、决定、事件和 checkpoint；输出保持原拒绝原因和检查顺序。
  * 本 verifier 只推导归档纯数据，不导入 World、运行时权限、结算器或 checkpoint 写方。
  * 独立算法全文保持；原体、资源、关系和事件前缀仍按冻结归档规则审核，不驱动真实游戏。
@@ -62,6 +62,7 @@ export function validateInitialIdentityRecord(record: ReproductionRecord): void 
     initial.filter((role) => role === identity).length !== 1
   )
     fail();
+  // 以下身份集合和 Wolf／Good 对照只审核这两种有限初始牌局；不能据此推断任意运行时角色的当前阵营或行动许可。
   const supported = [
     identity,
     Role.Wolf,

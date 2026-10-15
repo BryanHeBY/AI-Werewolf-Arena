@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Debater complete recorded games preserve strict challenge ballots, blocked voters and terminal timing.
- * Input: Original six/twelve-player success/tie/abstain plans across transport and locale matrices.
- * Output and oracle: Literal ballot/support/abstention, privacy and declared terminal-day assertions retain the real recorded sequence; diagnostic temporary output stays unchanged.
+ * 复现场景验证杠精完整录制对局保留严格挑战投票、受阻投票者及终局时点。
+ * 输入为原六／十二人成功、平票和弃票计划及传输／语言矩阵。
+ * 输出与预期为字面投票／支持／弃票、隐私及声明终局日断言，保留真实录制顺序；临时诊断输出不变。
  */
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";

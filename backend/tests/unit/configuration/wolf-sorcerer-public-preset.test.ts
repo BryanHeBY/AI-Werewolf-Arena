@@ -1,9 +1,5 @@
 /**
- * Unit tests: Wolf Sorcerer eligibility uses the immutable public example; exact
- * predicate, policy and normalized-board assertions check the declared finite
- * twelve-player setup. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以不可变狼术师公开示例为输入，用精确 predicate、政策及归一化板子断言核对声明的有限十二人装配。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";

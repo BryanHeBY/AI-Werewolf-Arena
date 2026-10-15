@@ -66,7 +66,7 @@ for (const kind of ["llm", "acp"] as const) {
         ),
       ),
     });
-    // Seat-to-role fixtures exercise selection after assignment, independently of shuffle.
+    // 座位到身份的夹具用于验证分配后的选择，不依赖洗牌。
     world.getComponent(4, COMPONENT.Role)!.role = Role.Wolf;
     world.getComponent(5, COMPONENT.Role)!.role = Role.Villager;
     const profiles = new Map(

@@ -1,5 +1,6 @@
 /**
- * Failure scenario tests check missing/wrong-tool actions and interruption in actual Radiant/Eclipse nights. Inputs are original stage/mode choices and currentness changes from the public board fixture; literal committed prefix, closed lease, disabled borrow and cleanup facts are the oracle. Failures retain original stock and do not generate an alternate expected replay.
+ * 失败场景测试真实流光／蚀日夜间的缺失／错误工具行动及中断。输入为公开板子 fixture 的原阶段／模式选择及当前性变化；字面已提交前缀、关闭 lease、禁用借用及清理事实构成预期。
+ * 失败保留原库存，不生成另一份预期重放。
  */
 import { expect, test } from "bun:test";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";

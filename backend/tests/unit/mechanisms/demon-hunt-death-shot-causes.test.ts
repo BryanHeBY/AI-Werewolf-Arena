@@ -1,5 +1,5 @@
 /**
- * Unit test checks new Demon hunt/backlash causes against native death-shot qualification. Inputs are literal single/compound cause vectors; explicit false permission expectations are the oracle. No World, phase cycle, stock parser, file or model runs.
+ * 单元测试用字面单一／复合死因向量，核对新增 Demon hunt／backlash 对原生死亡枪的资格；独立预期均为明确拒绝。不运行 World、阶段循环、库存解析、文件或模型。
  */
 import { expect, test } from "bun:test";
 import { DeathCause } from "../../../src/domain";

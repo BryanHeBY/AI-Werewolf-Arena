@@ -1,7 +1,5 @@
 /**
- * Unit test verifies legacy empty win arrays materialize the original effective victory conditions.
- * Input: Original literal legacy overrides with absent, explicit single and empty array conditions.
- * Output and oracle: Exact WinCondition values and warning presence remain unchanged; no public file, World or game execution is needed.
+ * 单元测试以原旧配置覆盖中的缺省、显式单条及空胜利数组为输入，核对旧空数组仍落实原有效胜利条件。精确 WinCondition 值及警告有无为预期；无需公开文件、World 或对局执行。
  */
 import { WinCondition } from "../../../src/domain/identity";
 import { expect, test } from "bun:test";

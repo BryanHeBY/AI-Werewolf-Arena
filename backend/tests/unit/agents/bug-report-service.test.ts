@@ -1,9 +1,5 @@
 /**
- * Unit tests: Bug reporting uses literal reports and in-memory stage scopes; explicit
- * validation codes, dedupe results and daily limits check the shared service without
- * invoking an audit model. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面报告及内存阶段 scope 为输入，用明确校验错误码、去重结果及每日限制核对共享 bug 服务，不调用审计模型。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

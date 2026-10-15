@@ -202,8 +202,8 @@ test("real all-pass mist draw binds an actual original knife and strikes inside 
       return null;
     },
   });
-  // Independent FNV/Mulberry hand calculation for seed+night+day:1:mist-knife:
-  // draw=0.5371968341059983, index=1; fixture outcome is not read from production RNG.
+  // 对 seed+night+day:1:mist-knife: 独立手算 FNV/Mulberry。
+  // draw=0.5371968341059983，index=1；fixture 结果不读取生产 RNG。
   expect(chosen as number | null).toBe(11);
   expect(game.world.getAliveEntityIds()).not.toContain(chosen!);
   const draw = game.phaseManager.getEvents().filter((event) => event.type === "mist_knife_drawn");

@@ -1,8 +1,5 @@
 /**
- * Unit tests: Idiot reveal presentation uses a canonical public fact; literal player-feed,
- * script and live-line expectations check consistent explicit reveal wording. Inputs and
- * expected outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试用规范公开事实核对白痴翻牌展示；字面玩家 feed、脚本及实时行预期验证明确翻牌措辞一致。预期仍为既有字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import {
   getDefaultAgentEventVisibilityRegistry,

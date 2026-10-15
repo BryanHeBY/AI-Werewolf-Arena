@@ -1,7 +1,5 @@
 /**
- * Configuration integration tests verify public Noble/Body examples, config-check files and bootstrap rejection agree without partial entity installation.
- * Input: Original wolf/body policy matrix, public board JSON and temporary runtime/game/board trees.
- * Output and oracle: Literal normalized/roundtrip/diagnostic fields and zero entity creation preserve validation order; source configurations and fixture bytes are unchanged.
+ * 配置集成测试以原 wolf／body 政策矩阵、公开板子 JSON 及临时 runtime／game／board 树为输入，核对 Noble／Body 示例、文件检查及 bootstrap 拒绝一致且不部分安装实体。字面归一化、往返及诊断字段和零实体创建为预期；不改源码配置与夹具字节。
  */
 import { fileURLToPath } from "node:url";
 import { expect, test, spyOn } from "bun:test";

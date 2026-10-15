@@ -1,8 +1,8 @@
 /**
- * Complete real-transport scenarios verify Noble wolf and Body repetition policy variants.
- * Input: Public policy combinations and fixed synthetic SDK/ACP/mixed scenario actions.
- * Output and independent oracle: Literal legal decision counts, terminal checkpoints and actor-specific wire knowledge.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整真实传输场景验证夜之贵族的狼人策略与秘密之身重复保护策略分支。
+ * 输入为公开策略组合及固定合成 SDK／ACP／混合场景行动。
+ * 输出与独立预期为合法决定次数字面值、终局 checkpoint 及行动者各自的协议知识。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";

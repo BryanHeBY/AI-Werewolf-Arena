@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Black Market Merchant complete recorded games preserve private gifts and paid resource prefixes.
- * Input: Original cross-skill, compound-gun, hold, backlash and terminal scenario matrices with handwritten survivor and last-word facts.
- * Output and oracle: Literal gift/source/stock, private-view and terminal assertions remain attached to actual replay; no expected table or archival fixture is rewritten.
+ * 复现场景验证黑市商人完整录制对局保留私有赠予及已付资源前缀。
+ * 输入为原跨技能、复合枪、保留、反噬和终局场景矩阵，以及手写存活者和遗言事实。
+ * 输出与预期为字面赠予／来源／库存、私有视图及终局断言，并绑定实际重放，不重写预期表或归档 fixture。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

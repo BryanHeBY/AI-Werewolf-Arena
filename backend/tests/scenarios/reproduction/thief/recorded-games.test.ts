@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Thief complete recorded games preserve the initial role choice, bottom cards and full-deal archive contract.
- * Input: Original six/twelve-player choice/keep/native-role plans, transports, locales and copied original-record forgeries.
- * Output and oracle: Literal initial-deal/final-role/private-view and terminal assertions retain exact reproduction; no card expectation is derived from a second game.
+ * 复现场景验证盗贼完整录制对局保留初始身份选择、底牌及完整发牌归档契约。
+ * 输入为原六／十二人选择、保留及原生身份计划、传输、语言和原记录副本伪造。
+ * 输出与预期为字面初始发牌／最终身份／私有视图及终局断言，保留精确复现；牌面预期不从第二局对局推导。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Pure White action priority and self-heal variants.
- * Input: Public policy boards, restricted robot requests and saved fixed-seed games.
- * Output and independent oracle: Manual policy/resource branch checks, natural outcomes and exact strict Tape.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行纯白板的行动优先级与女巫自疗分支。
+ * 输入为公开策略板子、受限机器人请求及保存的固定种子对局。
+ * 字面预期为自然完成、无拒绝／回退、查验及跳过分支出现；逐局 Tape 结果与原录制做一致性对照，不独立计算全部策略资源结果。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

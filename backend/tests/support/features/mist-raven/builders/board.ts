@@ -1,9 +1,5 @@
 /**
- * Owns Mist/Raven test board input loading and its fixed role/variant declarations.
- * Input is the tracked public configs.example Mist/Raven board JSON; output is the
- * original parsed board definition. The existing readFile/JSON/board parser path
- * stays intact. This builder writes no file, runs no game or model, and computes
- * no expected settlement outcome; handwritten expectations retain their oracle.
+ * 持有 Mist／Raven 测试板子输入加载及固定身份／变体声明；输入为跟踪的 configs.example 公开板子 JSON，输出为原解析后的定义，保留既有 readFile／JSON／板子解析路径。不写文件、不运行游戏或模型、不计算结算预期；预期仍由手写数据给出。
  */
 import { Role } from "../../../../../src/domain";
 import { readFile } from "node:fs/promises";

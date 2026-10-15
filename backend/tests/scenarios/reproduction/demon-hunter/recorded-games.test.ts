@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Demon Hunter recorded games preserve native toxin immunity, hunt and gun results plus strict hunt-failure prefixes.
- * Input: Original board-size, victory-policy, transport, locale and missing/late response matrices with declared scenario facts.
- * Output and oracle: Explicit private history, allowed audience, survivor/winner and unpaid failed-hunt assertions stay attached to full or interrupted games; no isolated reader case is folded into this suite.
+ * 复现场景验证猎魔人录制对局保留原生毒免、猎杀及枪击结果，以及严格猎杀失败前缀。
+ * 输入为原人数、胜利策略、传输、语言和缺失／迟到回复矩阵，并带声明场景事实。
+ * 输出与预期为明确私有历史、允许受众、存活者／胜方及未付失败猎杀断言，绑定完整或中断对局；不混入孤立 reader 用例。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

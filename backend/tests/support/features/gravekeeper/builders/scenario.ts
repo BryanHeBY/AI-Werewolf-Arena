@@ -1,8 +1,5 @@
 /**
- * Builds original gravekeeper test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责持有守墓人有限场景及反馈数据 helper；graveFeedback 接收放逐日、接收日、目标和阵营字段，gravekeeperScenario 接收 kind。输出由调用方字面字段组成的反馈对象和固定板子／内部种子／身份／回合，不执行被动反馈或整局结算。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { PotionType } from "../../../../../src/domain";

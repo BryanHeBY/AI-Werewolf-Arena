@@ -57,7 +57,7 @@ test("only assembly or actual complete death commit can acquire the sole-true-Wo
   expect(refreshMechanicalInheritance(f.world, 1)).toEqual([]);
   expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
   expect(f.state.hasInheritedKnife).toBe(false);
-  // The controller commits the death before invoking the actual-death refresh.
+  // 控制器先提交死亡，再调用实际死亡刷新。
   f.others[0]!.alive = false;
   for (let i = 0; i < 3; i++) expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
   expect(f.state.hasInheritedKnife).toBe(false);

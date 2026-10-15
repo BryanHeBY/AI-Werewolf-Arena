@@ -1,9 +1,5 @@
 /**
- * Unit tests check Mist/Raven's opening publication and late cleanup transfer.
- * Fixed public board data, native choices and throwing World/event getters supply
- * inputs; literal traces, original error identity and frame availability are the
- * independent oracle. No full game, pending-damage driver or transport runs here.
- * Business handoff must not transfer cleanup before summary preparation succeeds.
+ * 单元测试以固定公开板子、原生选择及抛错 World／event getter 为输入，核对 Mist／Raven 开窗发表及晚清理转交。字面轨迹、原错误对象及 frame 可用性为独立预期；不运行整局、pending damage 驱动或传输。业务交接不得在 summary 准备成功前转移清理权。
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";

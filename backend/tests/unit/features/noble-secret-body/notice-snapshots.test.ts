@@ -22,7 +22,7 @@ import {
   getNobleBodyPlayerState,
   snapshotNobleBodyAuthority,
 } from "../../../../src/features/noble-secret-body/authority";
-// Read-only R/A/T cases preserved with their original inputs.
+// R／A／T 只读用例保留各自原输入。
 const dto = (f: ReturnType<typeof nobleBodyAuthorityFixture>, id: number, p = Phase.Day) =>
   getNobleBodyPlayerState(f.world, id, p);
 

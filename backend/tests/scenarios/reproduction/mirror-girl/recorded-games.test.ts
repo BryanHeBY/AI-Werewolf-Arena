@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Mirror Girl complete recorded games preserve unique inspection history, privacy and terminal resource lifecycle.
- * Input: Original scenario/transport/locale matrices and handwritten targets, role labels, pass/no-target and survivor facts.
- * Output and oracle: Explicit private knowledge, opportunity/stock and result assertions retain exact replay; expected history remains the declared table.
+ * 复现场景验证魔镜少女完整录制对局保留唯一查验历史、隐私及终局资源生命期。
+ * 输入为原场景／传输／语言矩阵，以及手写目标、身份标签、跳过／无目标和存活者事实。
+ * 输出与预期为明确私有知识、机会／库存及结果断言，保留精确重放；历史预期仍由声明表提供。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

@@ -1,8 +1,5 @@
 /**
- * Builds original animal-dream test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 按 name、skip、first 构造动物梦境传输场景；公开板子、内部固定种子／身份映射、行动回合及原字面 golden 组成输出。调用方选择计划，不传入任意种子；本 builder 不执行传输或对局结算。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { createRandom } from "../../../../../src/domain";
@@ -49,7 +46,7 @@ export async function animalTransportScenario(
     board = parseBoardDefinition(boardDefinitionFromConfig("animal_dream", config)),
     turns = new Map<number, PlannedTurn[]>();
   const golden = animalGolden(name, skip, first);
-  // Original-seat life prefixes are authored independently of the engine and request factory.
+  // 原座位的生命前缀由手工独立编写，不依赖引擎或请求工厂。
   const cycleLives: Record<AnimalPlan, number[][]> = {
     fox_beauty: [
       [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],

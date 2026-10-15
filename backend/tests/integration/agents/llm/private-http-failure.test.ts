@@ -83,7 +83,7 @@ test("actual installed SDK HTTP error metadata is safe in private replay and ter
         players: [],
       });
     });
-    expect(requests).toBe(1); // Non-retryable 401 still follows the installed SDK policy.
+    expect(requests).toBe(1); // 不可重试的 401 仍遵循已安装 SDK 的政策。
     const raw = await fs.readFile(path.join(root, "http/players/player_1.json"), "utf8");
     expect(raw).not.toContain(secret);
     expect(lines.join("\n")).not.toContain(secret);

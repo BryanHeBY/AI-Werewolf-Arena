@@ -1,8 +1,5 @@
 /**
- * Owns original test oracle wolf-king handwritten expected data and bounded contract assertions. Inputs are supplied
- * plans or observed tuples; outputs preserve literal stock, identity, marker and error expectations. No
- * expected game result is regenerated from production settlement; this owner performs no game, model or
- * transport execution.
+ * 持有本模块手写测试预期和有界契约断言；输入为提供的计划或观察元组，输出保留字面库存、身份、标记及错误预期。不从生产结算重新生成预期游戏结果，也不运行游戏、模型或传输。
  */
 import { Role } from "../../../../../src/domain";
 import type { TransportGameScenario } from "../../../transport/contracts";

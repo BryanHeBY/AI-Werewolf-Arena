@@ -309,7 +309,7 @@ for (const kind of ["seer", "witch"] as const)
       const all = r.events.flatMap((e, index) => (e.type === type ? [index] : [])),
         index = all[all.length - 1]!;
       expect(index).toBeGreaterThan(0);
-      // Witch has used poison on N1; the N2 record is a real explicit none.
+      // 女巫已在 N1 使用毒药；N2 记录是真实、明确的 none。
       if (kind === "witch")
         expect(decision.outcome).toMatchObject({
           kind: "action",
@@ -343,7 +343,9 @@ for (const kind of ["seer", "witch"] as const)
     120000,
   );
 
-/** Actual pipeline and trace, failing after a real native turn; no transport timing needed. */
+/**
+ * 使用真实流水线和轨迹，在真实原生回合之后失败；不依赖传输计时。
+ */
 async function nativeFailurePrefix(boundary: "seer" | "sheriff_nomination") {
   const day = boundary === "seer" ? 2 : 1;
   const scenario = magicianScenario("exchanged");
@@ -376,7 +378,7 @@ async function nativeFailurePrefix(boundary: "seer" | "sheriff_nomination") {
         incremental = structuredClone(trace.build());
         throw new Error("fixture_native_prefix");
       }
-      // The event-branch example needs an explicit none without a poison checkpoint side effect.
+      // 事件分支样例需要明确的 none，同时不产生用毒 checkpoint 副作用。
       if (boundary === "sheriff_nomination" && request.context.stage === "witch")
         return {
           name: "use_potion",

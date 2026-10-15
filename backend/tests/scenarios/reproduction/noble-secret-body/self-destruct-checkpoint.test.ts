@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify a real Noble pre-vote self-destruct checkpoints the completed night and pending servant contract before restart.
- * Input: The original controlled Noble recording plan and declared Night2 blast day.
- * Output and oracle: Literal next-night snapshot, absent vote, preserved contract and terminal replay assertions stay causal with the source game; archive fixtures are unchanged.
+ * 复现场景验证夜之贵族真实投票前自爆在重启前对已完成夜晚和待处理夜仆契约写 checkpoint。
+ * 输入为原受控夜之贵族录制计划及声明的 Night2 自爆日。
+ * 输出与预期为字面下一夜快照、没有投票、保留契约及终局重放断言，与来源对局保持因果对应；归档 fixture 不变。
  */
 import { expect, test } from "bun:test";
 import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";

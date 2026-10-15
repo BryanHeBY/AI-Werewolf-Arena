@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises a test-owned synthetic SDK HTTP endpoint after its control
- * port is reused. Literal old-owner rejection before payload parsing checks authenticated
- * endpoint ownership without an external model. Existing literal expectations and
- * independently supplied fixture plans remain the oracle; transport/recording setup is
- * local and no billed model session is started.
+ * 集成测试在 control 端口复用后访问测试持有的合成 SDK HTTP 端点，以载荷解析前拒绝旧 owner 的字面预期核对认证后的端点所有权。预期来自既有字面值及独立夹具；仅本地传输／录制，不调用外部或计费模型。
  */
 import { expect, test } from "bun:test";
 import { LoopbackMcpControlServer } from "../../../../src/adapters/acp/loopback-mcp-control-server";

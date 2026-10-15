@@ -1,8 +1,5 @@
 /**
- * Builds original bear test input plans, fixed boards and explicit player/marker data. Inputs are supplied
- * variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured identities.
- * Existing dealing may construct input identities, while handwritten expected outcomes remain supplied
- * data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 BearScenario 的 kind 构造熊的传输输入，输出原固定板子、内部种子、身份及逐玩家回合。手写分支表留在本模块，调用方不传入语言／种子；不执行对局或从生产结算生成预期。
  */
 import { PotionType } from "../../../../../src/domain";
 import { ActionWindow } from "../../../../../src/domain";

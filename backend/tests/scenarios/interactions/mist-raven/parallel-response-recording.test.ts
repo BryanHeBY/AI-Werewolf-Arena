@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify Mist/Raven parallel blast responses preserve accepted and unpublished Snake prefixes.
- * Input: Original recording variants, copied unpublished response mutations and controlled mistPrefix driver calls.
- * Output and oracle: Explicit raw response, consumption and malformed-prefix rejection retain both original parallel owners; no response is synthesized or removed to repair the expected record.
+ * 交互场景验证迷雾组合板并行自爆回复保留已接收及尚未发表的 Snake 前缀。
+ * 输入为原录制分支、未发表回复副本篡改及受控 mistPrefix 驱动调用。
+ * 输出与预期为明确原始回复、消耗及畸形前缀拒绝，保留原两个并行 owner，不补造或移除回复以修正预期记录。
  */
 import { expect, test } from "bun:test";
 import { Camp, ActionWindow } from "../../../../src/domain";

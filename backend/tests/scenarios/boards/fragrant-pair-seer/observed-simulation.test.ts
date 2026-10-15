@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Fragrant pair choices and known-state delivery.
- * Input: Twenty fixed limited-observation seeds per locale with declared board rules.
- * Output and independent oracle: Natural terminal outcomes, independent final memberships and exact saved checkpoint replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证寻香配对选择、查验及关联触发覆盖。
+ * 输入为每种语言下二十个固定有限观察种子及声明的板子规则。
+ * 字面预期为自然完成、无拒绝／回退及三个机制事件分支出现；保存的末 checkpoint 用于精确重放一致性对照，不生成独立最终成员表。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify bilingual migration previews/publication and named party persona resolution.
- * Input: Original actual temporary legacy files, public party game JSON and literal invalid locale.
- * Output and oracle: Exact backup/report bytes, no write on invalid locale and twelve original persona strings preserve filesystem behavior; synthetic inputs are not replacement goldens.
+ * 配置文件系统集成测试以原真实临时旧文件、公开聚会游戏 JSON 及字面非法语言为输入，核对双语迁移预览／发布和具名聚会 persona 解析。精确备份／报告字节、非法语言零写入及十二个原 persona 字符串为预期；合成输入不替代 golden。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

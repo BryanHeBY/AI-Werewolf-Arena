@@ -1,5 +1,5 @@
 /**
- * Unit tests check public Animal Dream board qualification and explicit policy ordering. Inputs are literal old Bear boards and four Cat/Puffer policy variants; exact parse rejection and normalized policy fields are the oracle. Bootstrap verifies the accepted roster without executing a phase or death chain.
+ * 单元测试以字面旧 Bear 板子及四种 Cat／Puffer 政策为输入，核对公开 Animal Dream 板子资格和显式政策顺序。精确解析拒绝及归一化政策字段为预期；bootstrap 核对获准名单，不执行阶段或死亡链。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

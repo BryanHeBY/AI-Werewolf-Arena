@@ -1,7 +1,7 @@
 /**
- * Scenario tests execute complete Scholar/Mentor games through synthetic SDK, real ACP children and injected MCP.
- * Inputs are enhance/same-good/both-wolves plans and both locales; literal choices, bonuses, conflict/winner and audience assertions are the independent oracle.
- * The transport driver owns local processes and recording resources. Optional explicit archive exports keep their existing output boundary; no billed model or golden regeneration runs by default.
+ * 场景测试通过合成 SDK、真实 ACP 子进程及注入 MCP 执行完整白昼学者／寂夜导师对局。
+ * 输入为强化、同好人及双狼计划和两种语言；字面选择、加成、冲突／胜方与受众断言构成独立预期。
+ * 传输驱动拥有本地进程和录制资源；可选显式归档导出保留现有输出边界，默认不调用付费模型或重新生成固定预期。
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";

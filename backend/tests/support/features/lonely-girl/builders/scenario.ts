@@ -1,8 +1,5 @@
 /**
- * Builds original lonely-girl test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 LonelyGirlCase、六／十二人数及 locale 构造孤独少女场景，默认人数和语言保留。输出原板子、内部种子、身份与开局／后续行动计划；不执行倾慕开局或从运行结果生成预期。
  */
 import { Role } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";
@@ -144,7 +141,7 @@ export function lonelyGirlScenario(
     words(day, [exile]);
     dead.add(exile);
   }
-  // Handwritten plan deaths determine this oracle; no production World or winner data is consulted.
+  // 手写计划中的死亡决定本预期，不查询生产 World 或赢家数据。
   const winners = ids.filter((id) =>
     roles[id - 1] === Role.Wolf
       ? winner === Camp.Wolf

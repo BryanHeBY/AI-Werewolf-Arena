@@ -1,9 +1,5 @@
 /**
- * Unit tests: Noble and Secret Body current-schema oracles use literal ACP/SDK known state
- * and event suffixes; exact acceptance and forged-current-field assertions check shared
- * fixture validation. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面 ACP／SDK 已知状态及事件后缀为输入，用精确接受及伪造当前字段断言核对 Noble／Secret Body 共享夹具验证。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import {
@@ -11,8 +7,8 @@ import {
   type NobleWireRun,
 } from "../../../support/features/noble-secret-body/oracles/wire";
 
-// Literal owner notice and initial state: this unit tests the actual-wire checker,
-// not the record parser. No World/projector is consulted to derive the expected input.
+// 字面的 owner 通知及初态：本单元核对实际传输检查器，
+// 不核对档案解析器，也不查询 World／投影来生成预期输入。
 const known = {
   protectionRepeatPolicy: "awa_nonconsecutive_nights_v1",
   lastNotifiedNight: 1,

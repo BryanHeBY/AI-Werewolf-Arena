@@ -1,9 +1,5 @@
 /**
- * Unit tests: Order Prince configuration reads the immutable public board; exact
- * reverse-config and unsupported-policy assertions check named finite setup without
- * inventing variants. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试读取不可变 Order Prince 公开板子，用精确反向配置及不支持政策断言核对具名有限装配，不虚构变体。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

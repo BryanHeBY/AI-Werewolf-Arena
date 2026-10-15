@@ -1,8 +1,5 @@
 /**
- * Unit tests: Reproduction error-name capture uses native names and hostile getters;
- * literal six-name results and zero accessor counts check safe machine-name preservation.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试以原生错误名及恶意 getter 为输入，用字面六个名称结果及零 accessor 读取核对安全保留机器错误名。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { recordedErrorName } from "../../../src/recording/reproduction/format";

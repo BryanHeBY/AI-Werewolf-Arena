@@ -1,8 +1,8 @@
 /**
- * Complete real-transport scenarios verify Noble/Body death, expiry and cross-night player knowledge.
- * Input: Literal named scenarios over synthetic SDK/ACP/mixed agents and both locales.
- * Output and independent oracle: Independent terminal/death/badge goldens, handwritten knowledge anchors and actual serialized prefixes.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整真实传输场景验证夜之贵族／秘密之身死亡、到期及跨夜玩家知识。
+ * 输入为合成 SDK／ACP／混合 Agent 和两种语言上的字面命名场景。
+ * 输出与独立预期为独立终局／死亡／警徽固定结果、手写知识锚点及实际序列化前缀。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";

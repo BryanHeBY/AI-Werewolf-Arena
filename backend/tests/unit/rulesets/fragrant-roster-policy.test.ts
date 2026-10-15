@@ -1,7 +1,5 @@
 /**
- * Unit test verifies Fragrant finite preset accepts only the native roster and fixed source policies.
- * Input: Original imported board and five literal field alterations.
- * Output and oracle: Exact accepted base and rejected variants remain unchanged; no World, cycle, filesystem or model is created.
+ * 单元测试以原导入板子及五种字面字段变体为输入，核对 Fragrant 有限预设仅接受原生名单与固定来源政策。精确接受基线和拒绝变体为预期；不创建 World、周期、文件系统或模型。
  */
 import { expect, test } from "bun:test";
 import { fragrantPairSeerTwelveConfig } from "../../../src/rulesets/presets/fragrant-pair-seer-twelve";

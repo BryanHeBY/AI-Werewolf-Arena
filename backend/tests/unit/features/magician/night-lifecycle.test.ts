@@ -1,9 +1,5 @@
 /**
- * Unit tests check the exchange families' single Magician-configured cleanup gate.
- * Inert Worlds, literal getter traces and native fixed-board Magician choice supply
- * inputs; original error identity, repeat-close refusal and one shared transfer
- * observation are independent expectations. No complete night, model or recording
- * runs here. Compile-only counterexamples check the view grants no write/command.
+ * 单元测试以受控 World、字面 getter 轨迹及原生固定板子魔术师选择为输入，核对交换族唯一的魔术师配置清理门。原错误对象、重复关闭拒绝及一次共享转移观察为独立预期；不运行完整夜、模型或录制。仅编译负例核对视图不授予写入／命令能力。
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";

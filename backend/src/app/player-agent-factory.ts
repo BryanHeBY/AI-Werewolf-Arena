@@ -71,6 +71,7 @@ export async function createPlayerAgentRuntime(
       owned.push(acp);
     }
   } catch (error) {
+    // 只对已成功返回并登记到 owned 的运行时发起关闭；已收集的关闭拒绝与原初始化错误合并，不回滚目录等既有前缀。
     const cleanup = await Promise.allSettled(owned.map((runtime) => runtime.close()));
     const failures = cleanup.flatMap((result) =>
       result.status === "rejected" ? [result.reason] : [],
@@ -125,6 +126,7 @@ async function createAcpRuntime(options: PlayerAgentFactoryOptions): Promise<Pla
     group.set(actor, profile);
     groups.set(profile.providerName, group);
   }
+  // 同一 providerName 共用一个 ACP provider；客户端由会话工厂按玩家惰性创建，observer 也按玩家缓存。
   for (const [name, profiles] of groups) {
     const first = profiles.values().next().value!;
     const provider = new AcpActionProvider(options.world, {

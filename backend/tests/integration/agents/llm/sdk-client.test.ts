@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises the installed AI SDK against a test-owned localhost HTTP
- * server. Literal request/response and tool-callback expectations check provider options,
- * accepted actions and safe failure categories; no external model is contacted. Existing
- * literal expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 集成测试将已安装 AI SDK 接到测试持有的 localhost HTTP 服务，以字面请求／响应及工具回调预期核对 provider 选项、接受行动和安全失败分类。预期来自既有字面值及独立夹具；仅本地传输／录制，不接触外部或计费模型。
  */
 import { describe, expect, test } from "bun:test";
 import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";

@@ -45,7 +45,7 @@ function fixture() {
     },
     { fixedRoles },
   );
-  // Isolated frame fixture; production role registration is a later integration step.
+  // 独立 frame 夹具；生产身份注册由后续集成步骤验证。
   const role = world.getComponent(1, COMPONENT.Role)!;
   role.role = "trickster" as Role;
   (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {

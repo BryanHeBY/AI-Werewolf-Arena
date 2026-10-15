@@ -114,7 +114,7 @@ describe("buildAgentVisibleEventFeed", () => {
     }
   });
 
-  // Deliberate untyped historical input exercises the fail-closed boundary.
+  // 故意提供未类型化的历史输入，验证拒绝边界。
   test("defaults unknown events to invisible", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const feed = buildAgentVisibleEventFeed(

@@ -1,7 +1,7 @@
 /**
- * Scenario tests execute whole-night and first-effect Time Consort games through SDK, ACP and mixed transports in both locales.
- * Inputs are the original scripted guard/poison/check interactions; literal lock, reflection order, inspection, owner visibility and final golden results provide the oracle.
- * The transport driver owns children and recordings. Optional explicit archive exports preserve their output scope; default tests never rewrite goldens or call a billed model.
+ * 场景测试通过两种语言的 SDK、ACP 和混合传输执行蚀时狼妃整夜与首效果对局。
+ * 输入为原守护／毒／查验交互脚本；字面锁定、反射顺序、查验、所有者可见性及最终固定结果构成预期。
+ * 传输驱动拥有子进程和录制；可选显式归档导出保留输出范围，默认测试不重写固定预期，也不调用付费模型。
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";

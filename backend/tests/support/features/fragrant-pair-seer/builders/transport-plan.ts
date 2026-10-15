@@ -1,8 +1,5 @@
 /**
- * Builds original fragrant-pair-seer test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按具名寻香传输计划构造板子、内部固定种子及身份映射、行动回合和原字面预期。输入只有计划名（默认 inherited_gun）；不接收任意语言／种子，不运行游戏生成预期。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

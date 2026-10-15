@@ -1,8 +1,5 @@
 /**
- * Builds original awakened-hidden-wolf test input plans, fixed boards and explicit player/marker data.
- * Inputs are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and
- * configured identities. Existing dealing may construct input identities, while handwritten expected
- * outcomes remain supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 AwakenedScenario 的 kind 构造觉醒隐狼传输输入，输出原固定板子、种子、身份与逐玩家行动计划。用例集合和种子在模块内维护，调用方不传入语言／种子；不运行游戏来生成结果预期。
  */
 import { PotionType } from "../../../../../src/domain";
 import { Role } from "../../../../../src/domain";

@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public Mechanical Wolf examples resolve their declared finite role set.
- * Input: Original six/twelve-player board/game JSON and four literal invented role parameter objects.
- * Output and oracle: Exact board size, native count, empty public parameters and strict parameter refusals retain file-loader wiring; original JSON bytes are read unchanged.
+ * 配置文件系统集成测试读取原公开六／十二人机械狼板子与游戏 JSON，并提供四个手写虚构身份参数对象，核对声明的有限身份集合。精确人数、原生数量、空公开参数及严格参数拒绝为预期；只读原 JSON 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

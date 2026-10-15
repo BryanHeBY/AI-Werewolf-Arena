@@ -45,8 +45,8 @@ function setup(day = 1, consecutive = false) {
     );
   return { world, lives, dreams, pending };
 }
-// These cases freeze direct sources by hand. The future Raven source is represented by
-// a distinct existing knife cause here; this foundation does not register or execute Raven.
+// 这些用例手动冻结直接来源；此处用另一种已有刀因表示
+// 未来 Raven 来源，本基础夹具不注册或执行 Raven。
 const extra = DeathCause.AwakenedHiddenKnife;
 test("saving the dreamer removes an unconfirmed link, not merely the root id", () => {
   const { world, lives, dreams, pending } = setup(),
@@ -104,7 +104,7 @@ test("extra knife on the dreamer survives snake and establishes its real linked 
 test("snake preserves direct consecutive dream and an independent knife cause", () => {
   const { world, lives, dreams, pending } = setup(2, true);
   expect(dreams.consecutiveDeaths(world)).toEqual([2]);
-  expect(dreams.consecutiveDeaths(new World())).toEqual([]); // A different world cannot activate the saved links.
+  expect(dreams.consecutiveDeaths(new World())).toEqual([]); // 其他 World 不能激活已保存的关系。
   const p = pending(2, { 2: [DeathCause.WolfKill, DeathCause.Dream] });
   p.claim(() => true);
   expect(p.prepareFinalDamage(2, () => true)).toEqual({

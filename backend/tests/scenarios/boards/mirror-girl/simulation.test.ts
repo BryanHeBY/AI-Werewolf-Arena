@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Mirror Girl unique reports and optional passes.
- * Input: Twenty observation-limited seeds and recorded native-role metadata.
- * Output and independent oracle: Original identity/pack exclusions, real report/pass coverage and exact strict Tape.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证魔镜少女查验去重和可选跳过。
+ * 输入为二十个有限观察种子及已录原生身份元数据。
+ * 字面约束为目标不重复、查验／跳过覆盖及狼聊／刀行动排除；严格 Tape 结果另与原录制作一致性对照，不独立重建完整身份状态。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { fixtureNumber } from "../../../support/oracles/fixture-values";
 import { expect, test } from "bun:test";

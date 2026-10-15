@@ -1,10 +1,5 @@
 /**
- * Unit tests for acp-session-config; In-memory acp-session-config decision/turn/client control with supplied mocks or DTOs; no physical transport.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * acp-session-config 单元测试使用内存夹具、原回调控制、显式坏变体及提供的 mock／DTO，核对决策、回合和 client 控制，不启动实体传输。原字面预期、身份快照及拒绝断言为依据，迁移不重新生成；保留支持文件、夹具字节、政策和状态行为，不运行模型。
  */
 import { describe, expect, test } from "bun:test";
 import * as acp from "@agentclientprotocol/sdk";

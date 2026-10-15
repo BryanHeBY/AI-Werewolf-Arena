@@ -1,9 +1,5 @@
 /**
- * Unit tests: Badge prompt rendering uses explicit holder-choice/automatic policies and
- * disabled sheriffs; literal bilingual rule text checks that exactly the declared badge
- * guidance is shown. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以显式 holder-choice／automatic 政策和关闭警长的输入，用双语字面规则文本核对只显示已声明的警徽指引。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { DefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";

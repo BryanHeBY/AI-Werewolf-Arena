@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration test verifies the original source-scoped public death example resolves documented clauses and role counts.
- * Input: The same public JSON URL and original fixed board ID through the strict parser.
- * Output and oracle: Exact machine policy/count/win-condition values retain original assertions; source bytes are read unchanged without any game or model.
+ * 配置文件系统集成测试将同一个公开 JSON URL 与原固定板子 ID 送入严格解析器，核对该来源限定的公开死亡示例所声明条款及身份数量。精确机器政策、数量及胜利条件值为预期；只读原文件，不运行游戏或模型。
  */
 import { expect, test } from "bun:test";
 import { Role, WinCondition } from "../../../../src/domain";

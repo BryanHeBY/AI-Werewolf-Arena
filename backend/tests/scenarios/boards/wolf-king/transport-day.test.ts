@@ -235,7 +235,9 @@ for (const transport of ["llm", "acp"] as const)
       expect(() => validateMagicianRecord(altered)).toThrow("reproduction_magician_state_invalid");
     }, 120000);
 
-/** Capture actual pending/failed trace snapshots, without retaining future decisions. */
+/**
+ * 捕获真实 pending／失败轨迹快照，不保留未来决定。
+ */
 async function gunPrefix(
   mode:
     | "day"

@@ -1,8 +1,5 @@
 /**
- * Builds original thief test input plans, fixed boards and explicit player/marker data. Inputs are supplied
- * variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured identities.
- * Existing dealing may construct input identities, while handwritten expected outcomes remain supplied
- * data. It runs no game or model and changes no oracle algorithm.
+ * 按 ThiefCase、六／十二人数及 locale 构造盗贼场景，保留原默认人数和语言。内部发牌种子及原字面计划提供身份、完整发牌和行动输入；不执行选牌窗口或从运行终局生成预期。
  */
 import { text } from "@ai-werewolf-arena/game-text";
 import { roleName } from "@ai-werewolf-arena/game-text";

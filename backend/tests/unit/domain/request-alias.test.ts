@@ -1,8 +1,5 @@
 /**
- * Unit tests for request-local alias routing and delivery completion ownership.
- * Handwritten callback traces, literal errors and original reference comparisons
- * are independent oracles. A real Noble owner verifies accepted alias chains,
- * foreign-context rejection and closure; no transport or archived input changes.
+ * 单元测试验证请求局部别名路由及交付完成所有权。手写回调轨迹、字面错误和原引用比较为独立预期；真实 Noble owner 验证别名链、外来 context 拒绝及关闭。不运行传输或改写归档输入。
  */
 import { expect, test } from "bun:test";
 import { Phase, type ActionRequest } from "../../../src/domain";

@@ -1,9 +1,5 @@
 /**
- * Unit tests for Radiant's acquired night and original terminal argument reads.
- * A fixed public board and delegated getter failures supply inputs; literal
- * traces, error identity and lease-closed facts independently check the prefix.
- * Native frame no-ops must not skip argument evaluation after normal close or
- * failed fact publication. No full game, transport or billed model runs here.
+ * 单元测试以固定公开板子及委托 getter 故障为输入，核对 Radiant 已获取的夜及原终态参数读取。字面轨迹、错误对象和 lease-closed 事实为独立预期；正常关闭或事实发表失败后，原生 frame 空操作仍不能跳过参数求值。不运行整局、传输或计费模型。
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";

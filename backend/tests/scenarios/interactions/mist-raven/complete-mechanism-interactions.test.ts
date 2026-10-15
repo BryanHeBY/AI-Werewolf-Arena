@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify complete Mist/Raven recordings preserve declared rescue, dream, knowledge and death-chain interactions.
- * Input: Original recording variants, locale matrix and literal deaths, Snake/extra targets, knowledge and dream-reason tables.
- * Output and oracle: Explicit event/checkpoint/result assertions retain actual causal replay; no expected table or archive fixture is regenerated.
+ * 交互场景验证完整迷雾组合板录制保留声明的救援、梦、知识及死亡链交互。
+ * 输入为原录制分支、语言矩阵及字面死亡、Snake／额外目标、知识和梦死因表。
+ * 输出与预期为明确事件／checkpoint／结果断言，保留实际因果重放，不重新生成预期表或归档 fixture。
  */
 import { expect, test } from "bun:test";
 import { Camp } from "../../../../src/domain";

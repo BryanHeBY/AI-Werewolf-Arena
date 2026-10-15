@@ -1,9 +1,5 @@
 /**
- * Unit tests: Day interrupt hooks use in-memory requests and explicit enable flags;
- * literal dispatch order and accepted self-destruct windows check the hook module at each
- * declared boundary. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以内存请求及显式启用标志为输入，用字面分派顺序和接受的自爆窗口核对各声明边界的日间中断 hook。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {

@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify missing or late required Magician exchange responses preserve the original partial recorded game.
- * Input: Original controlled LLM/ACP transport plans, locale matrix and required-response failures.
- * Output and oracle: Literal failed checkpoint/decision and absent exchange/night settlement assertions span the actual provider-to-recording prefix; no role action is invented as fallback.
+ * 失败场景验证魔术师必需交换回复缺失或迟到时保留原部分录制对局。
+ * 输入为原受控 LLM／ACP 传输计划、语言矩阵及必需回复失败。
+ * 输出与预期为字面失败 checkpoint／决定及无交换／夜间结算断言，覆盖真实 provider 到录制前缀，不补造角色行动作为回退。
  */
 import { expect, test } from "bun:test";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";

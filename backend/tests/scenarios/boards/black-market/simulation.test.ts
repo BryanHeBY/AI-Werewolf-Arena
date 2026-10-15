@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Black Market inventory and granted effects across twenty seeds.
- * Input: Existing boards, restricted observation and captured per-game records.
- * Output and independent oracle: Independent stock/resource checkpoints, natural finish and strict Tape reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景以二十个种子验证黑市库存和赠予分支。
+ * 输入为现有板子、受限观察及逐局捕获的记录。
+ * 字面约束为库存不增、资源字段固定、至多一次提交及提交／跳过分支覆盖；严格 Tape 结果另与原录制作一致性对照，checkpoint 本身来自记录。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

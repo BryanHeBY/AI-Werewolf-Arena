@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify complete and failed Radiant Eclipse recordings preserve exact paid prefixes and reject copied state forgeries.
- * Input: Original named full plans, locale/failure/action matrices and shared recording helper calls.
- * Output and oracle: Explicit checkpoint, private-state, publication and malformed-record assertions remain attached to generated game inputs; source archives and expected tables are unchanged.
+ * 复现场景验证完整及失败的流光／蚀日录制保留精确已付前缀，并拒绝复制状态伪造。
+ * 输入为原命名完整计划、语言／失败／行动矩阵及共享录制 helper 调用。
+ * 输出与预期为明确 checkpoint、私态、发表及畸形记录断言，并绑定生成对局输入；源归档和预期表不变。
  */
 import { Camp } from "../../../../src/domain";
 import { expect, test } from "bun:test";

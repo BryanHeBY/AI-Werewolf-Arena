@@ -158,7 +158,7 @@ test("dream ownState and selected ability expose the same detached, valid histor
       return 6;
     },
   });
-  // Raw-state malformed rows test the DTO boundary independently of native typing.
+  // 原始状态的坏行用于独立核对 DTO 边界，不依赖原生类型限制。
   const malformed: unknown[] = [
     ability.state.history[0],
     invalid,

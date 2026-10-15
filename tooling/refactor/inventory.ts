@@ -10,7 +10,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import type * as TypeScript from "typescript";
 
-// 六根保留历史盘点口径；目录迁移后的现行精确身份由 recording/engine-fingerprint.ts 枚举。
+// 六根保留历史盘点口径；目录迁移后的现行精确身份由 recording/reproduction/engine-fingerprint.ts 枚举。
 const sourceRoots = [
   "backend/src/core",
   "backend/src/game",

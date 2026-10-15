@@ -1,8 +1,5 @@
 /**
- * Builds original hybrid test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 HybridScenario 的 kind 构造混血儿传输输入，输出原板子、内部固定种子、身份及榜样选择等字面回合。分支选择不等于执行归属结算；不从实际引擎阵营或胜方生成预期。
  */
 import { PotionType } from "../../../../../src/domain";
 import { Role } from "../../../../../src/domain";

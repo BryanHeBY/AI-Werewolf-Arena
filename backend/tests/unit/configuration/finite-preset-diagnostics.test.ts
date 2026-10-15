@@ -1,10 +1,5 @@
 /**
- * Unit tests for finite-preset-diagnostics; Pure finite-board schema/reader/writer or safe diagnostic validation against literal configuration.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * finite-preset-diagnostics 单元测试以既有内存配置、原回调控制和显式坏变体核对有限板子 schema／读写器及安全诊断。原字面预期、身份快照和拒绝断言为依据，迁移不重新生成；保留支持文件、夹具字节、政策及状态，不运行模型或实体传输。
  */
 import { expect, test } from "bun:test";
 import { BoardConfigurationError } from "../../../src/app/config/board-definition";

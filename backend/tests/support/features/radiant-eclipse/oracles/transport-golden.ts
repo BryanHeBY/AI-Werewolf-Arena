@@ -1,10 +1,5 @@
 /**
- * Owns test oracle support: Independent Radiant/Eclipse terminal and causal-event literal assertions over completed transport runs.
- * Inputs are actual wire messages, request prefixes, snapshots or a former
- * local endpoint plus explicit expectations; outputs are the original assertions
- * and rejection diagnostics. Unit/integration/scenario tests retain their
- * independent literal markers and recorded prefixes as the oracle. No expected
- * result is regenerated from production role, observation or board algorithms.
+ * 持有完整传输执行后的独立 Radiant／Eclipse 终局及因果事件字面断言。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言与拒绝诊断；各层测试沿用独立标记和已录前缀，不从生产身份、观察或板子算法生成结果预期。
  */
 import { expect } from "bun:test";
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";

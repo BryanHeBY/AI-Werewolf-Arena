@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Animal Dream policy variants over fixed restricted-observation seeds.
- * Input: Existing Animal boards, explicit Cat/Puffer policies and simulation recordings.
- * Output and independent oracle: Natural termination, per-game policy/resource checks and exact strict replay of original checkpoints.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行动物梦境在固定受限观察种子下的策略分支。
+ * 输入为现有动物板、明确的白猫／河豚策略及模拟录制。
+ * 字面预期为二十局自然完成、无拒绝／回退；逐局严格重放与原末 checkpoint 对照，属于录制一致性检查。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

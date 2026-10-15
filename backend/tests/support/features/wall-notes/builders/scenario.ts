@@ -1,8 +1,5 @@
 /**
- * Builds original wall-notes test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按六／十二人数及 write／skip 模式构造匿名墙传输输入，输出原板子、内部固定种子、身份及字面开局／后续回合。不发表真实纸条、不运行游戏或从生产结果生成预期。
  */
 import { Role } from "../../../../../src/domain";
 import { PotionType } from "../../../../../src/domain";

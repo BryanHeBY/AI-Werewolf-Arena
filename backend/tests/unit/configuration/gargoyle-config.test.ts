@@ -1,8 +1,5 @@
 /**
- * Unit tests: Gargoyle configuration uses immutable public examples; literal single-role
- * and frozen-pack policy assertions check finite registration without expanding its rule
- * set. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试以不可变公开示例为输入，用字面单身份及冻结狼队政策断言核对 Gargoyle 有限注册，不扩大规则集。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";

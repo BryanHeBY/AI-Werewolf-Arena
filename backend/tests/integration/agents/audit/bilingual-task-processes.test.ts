@@ -1,7 +1,5 @@
 /**
- * ACP integration tests verify actual audit task subprocesses and the complete summary pipeline preserve locale, evidence and cleanup.
- * Input: Original local adapter fixture, temporary workspaces, mode/locale matrix and literal manifest/report payloads.
- * Output and oracle: Exact prompt/context/summary fields and closed agent/MCP PIDs retain the native process boundary; shared literal metadata does not generate expected game rules.
+ * ACP 集成测试用原本地 adapter 夹具、临时工作区、模式／语言矩阵及字面 manifest／report，验证真实审计子进程与完整汇总管线保留语言、证据和清理。精确提示／context／summary 字段及已关闭 agent／MCP PID 为预期；共享字面元数据不生成游戏规则预期。
  */
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { auditSummaryFixture } from "../../../support/builders/audit-summary";

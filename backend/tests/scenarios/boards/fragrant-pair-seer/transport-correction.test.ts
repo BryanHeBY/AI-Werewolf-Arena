@@ -1,8 +1,8 @@
 /**
- * Real transport correction scenarios verify invalid Fragrant pair submissions remain correctable.
- * Input: Literal invalid pair arguments followed by permitted corrections over synthetic SDK/ACP.
- * Output and independent oracle: Exact rejection counts, accepted bound choice and independent serialized wire-prefix assertions.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 真实传输纠正场景验证无效寻香配对提交仍可纠正。
+ * 输入为字面无效配对参数及合成 SDK／ACP 上后续允许的纠正。
+ * 输出与独立预期为精确拒绝次数、被接收的已绑定选择，以及独立的序列化协议前缀断言。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { fragrantTransportScenario } from "../../../support/features/fragrant-pair-seer/builders/transport-plan";

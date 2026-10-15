@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Wolf King original death shot is actually exercised.
- * Input: Restricted-observation fixed seeds and original runtime records.
- * Output and independent oracle: Real shot coverage, natural terminal state and exact strict reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证狼王原死亡枪确实被执行。
+ * 输入为受限观察下的固定种子及原运行时记录。
+ * 字面预期为十二局自然完成、无拒绝／回退及枪击分支出现；精确严格复现另对照原录制结果，不另称独立终局表。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";

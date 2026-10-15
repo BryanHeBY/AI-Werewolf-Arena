@@ -1,8 +1,5 @@
 /**
- * Unit tests: Psychic configuration uses immutable public examples; exact single-role and
- * frozen-inspection assertions check finite registration and invalid variants. Inputs and
- * expected outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试用不可变公开示例核对 Psychic 配置；精确单身份及冻结查验断言验证有限注册与非法变体。预期仍为既有字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";

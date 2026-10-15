@@ -1,8 +1,5 @@
 /**
- * Builds original time-wolf-consort test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 whole_night／first_effect 范围构造蚀时狼妃传输输入，输出原板子、内部固定种子、身份、角色编号及字面行动计划。不执行时间锁／反射或对局结算生成预期。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

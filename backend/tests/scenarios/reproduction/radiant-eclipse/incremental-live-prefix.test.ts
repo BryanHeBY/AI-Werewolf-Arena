@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify pending or just-settled Radiant Eclipse prefixes remain serializable against their prior complete checkpoint.
- * Input: The original top-level awaited full recording and exact day/stage/pending prefix matrix.
- * Output and oracle: Explicit full/prefix parser acceptance preserves source cut positions and setup evaluation timing; no frozen archive or expected action is regenerated.
+ * 复现场景验证流光／蚀日 pending 或刚结算前缀仍可结合此前完整 checkpoint 序列化。
+ * 输入为原顶层 await 创建的完整录制，以及精确日次／阶段／pending 前缀矩阵。
+ * 输出与预期为明确完整／前缀解析接收，保留来源截断位置和 setup 求值时点；不重新生成冻结归档或预期行动。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

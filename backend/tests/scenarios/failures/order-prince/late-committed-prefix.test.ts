@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify Order Prince interruption retains only the already-paid choice, speech and revote prefix.
- * Input: Original controlled transport plans, late responses and a copied activation-history forgery.
- * Output and oracle: Literal incomplete checkpoint, activation/history values and absent final exile are followed by explicit rejection; no generic vote expectation replaces the original policy.
+ * 失败场景验证定序王子中断仅保留已付选择、发言及重投票前缀。
+ * 输入为原受控传输计划、迟到回复及激活历史副本伪造。
+ * 输出与预期为字面不完整 checkpoint、激活／历史值及没有最终放逐，并明确验证伪造被拒；不用通用投票预期替代原策略。
  */
 import { expect, test } from "bun:test";
 import { orderPrinceScenario } from "../../../support/features/order-prince/builders/transport-plan";

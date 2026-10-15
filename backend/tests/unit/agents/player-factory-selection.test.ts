@@ -1,7 +1,5 @@
 /**
- * Unit tests verify SDK strategy selection and strict ACP positive concurrency parsing before native transport startup.
- * Input: Original literal profiles, local bootstrap and unused SDK workspace pathname under the original factory describe prefix.
- * Output and oracle: Handwritten strategy and exact invalid-budget errors remain unchanged; no listener, subprocess or workspace file is created by these callbacks.
+ * 单元测试在原生传输启动前，以原字面 profile、本地 bootstrap 及未使用的 SDK 工作区路径核对 SDK 策略选择与 ACP 正并发数严格解析。原 factory describe 内的手写策略及精确预算错误为预期；回调不创建 listener、子进程或工作区文件。
  */
 import { describe, expect, test } from "bun:test";
 import { tmpdir } from "node:os";

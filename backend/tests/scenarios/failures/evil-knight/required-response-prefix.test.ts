@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify required Evil Knight game responses preserve the original incomplete recorded prefix across six stages.
- * Input: The original missing/late LLM/ACP responses, both locales and deterministic night/death-shot plans.
- * Output and oracle: Literal failed actor/stage, prior-night count and absent fallback assertions remain tied to the real execution; no full passing game is substituted for the failure prefix.
+ * 失败场景验证恶夜骑士对局的六个阶段在必需回复失败时保留原不完整录制前缀。
+ * 输入为原缺失／迟到的 LLM／ACP 回复、两种语言及确定性的夜间／死亡枪计划。
+ * 输出与预期为字面失败行动者／阶段、此前夜数及无回退断言，并绑定真实执行；不以完整通过的对局替换失败前缀。
  */
 import { expect, test } from "bun:test";
 import { Role } from "../../../../src/domain";

@@ -1003,3 +1003,5 @@
 - C42/C46生命周期命名门槛：仅四类request/session文件分隔符识别兼容[-_]，canonical新名不再退为普通behavior/adapter，required/concepts/原检查顺序保持。两源与新增真实checkComments独立反例经作者和非作者审查，首新1声明/16断言通过、37原项filtered，无旧绿色/type/业务重跑；见 [命名后的生命周期门槛](canonical-lifecycle-head-policy.md)。九basename纯迁移与后继中文继续。
 
 - C42 九个剩余basename：真实d993前态十八完整输入／九物理移动，十四模块引用与三非模块引用明确分证；33物理目标、17完整规范化程序、34逆输出／17 ESNext对照同，历史Seer整模板与冻结alias原字节保。新路径边界扫描首次0；准备helper的owner位静态finding修后才执行。无业务或已绿类型重跑，中文与C43/C47继续；见 [九文件名归一](kebab-basename-followup.md)。
+
+- C45 后端测试/关键结构中文维护：主553候选／439源中552项应用438源，1已覆盖；439完整程序与1756输出记录同。首头318诊断/155源原文保，40support补真实层级/来源，115自然中文测试头通过English tests对称的单词项修正；新1声明/4断言通过，只155失败头重检0，284绿头不复。三源正式名/现owner/RequestLease状态说明追加，43注释程序45增量/86输出同；2政策源单列非纯注释，末443变化源冻结。作者与非作者逐条审查见 [中文维护](backend-maintenance-chinese-contracts.md)，不冒类型/业务/全门禁或C47完成。

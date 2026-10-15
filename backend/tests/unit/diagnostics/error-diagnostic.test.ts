@@ -1,9 +1,5 @@
 /**
- * Unit tests: Error diagnostics use literal SDK/network/file/cancellation errors and
- * hostile objects; whitelisted safe facts, original identity and zero-getter expectations
- * check detached diagnostic classification. Inputs and expected outcomes remain the
- * original literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试以字面 SDK／网络／文件／取消错误和恶意对象为输入，用白名单安全事实、原引用及零 getter 预期核对脱离来源的错误分类。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { RetryError } from "ai";

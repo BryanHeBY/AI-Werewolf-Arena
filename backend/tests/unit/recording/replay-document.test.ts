@@ -1,9 +1,5 @@
 /**
- * Unit tests: Replay document validation uses literal duplicated/missing sequences and
- * player records; exact rejection assertions check the public archive shape without
- * writing an output file. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面重复／缺失序号及玩家档案为输入，用精确拒绝断言核对公开 replay 形状，不写输出文件。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { createReplayDocument } from "../../../src/recording/session/replay-document";

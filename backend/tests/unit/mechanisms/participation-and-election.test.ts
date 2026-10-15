@@ -171,7 +171,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(await bot.getAction(request(8, "vote", "voting"))).toBeNull();
     expect(await bot.getAction(request(8, "run_for_sheriff", "sheriff_nomination"))).toBeNull();
     expect(await bot.getAction(request(8, "speak", "day_speech"))).toMatchObject({ name: "speak" });
-    // An unrelated component edit cannot grant back this public role restriction.
+    // 无关组件修改不能恢复已失去的公开身份权限。
     world.getComponent(8, COMPONENT.VotingRight)!.canVote = true;
     expect(canVote(world, 8)).toBe(false);
     expect(canBeSheriff(world, 8)).toBe(false);
@@ -182,7 +182,7 @@ for (const locale of ["zh-CN", "en"] as const)
     });
     expect(prompt).not.toContain("1, 2, 3, 4, 5, 6, 7, 8,");
     if (locale === "en") expect(prompt).not.toMatch(/\p{Script=Han}/u);
-    // Poison is still a real death, rather than exile immunity.
+    // 中毒仍是真实死亡，不属于放逐免死。
     await new DeathResolution(world, events, new ToolGateway(), registry, {
       day: 2,
       phase: Phase.Day,

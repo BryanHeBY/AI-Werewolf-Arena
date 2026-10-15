@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public Awakened examples load declared role composition and reject invented parameters.
- * Input: Original six/twelve-player public board/game JSON files and literal role-parameter alterations.
- * Output and oracle: Exact composition, strict parameter errors and successful initialization retain file-to-configuration wiring; source files are read without model or game execution.
+ * 配置文件系统集成测试读取原公开六／十二人板子与游戏 JSON，并手写修改身份参数，核对 Awakened 示例声明的身份组合及虚构参数拒绝。精确组合、严格参数错误和初始化成功为预期；只读原文件，不运行模型或游戏。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

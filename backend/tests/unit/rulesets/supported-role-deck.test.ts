@@ -37,7 +37,9 @@ const cards = [Role.Wolf, Role.Wolf, Role.Villager, Role.Villager, Role.Seer, Ro
 const supported = (config: BoardConfig, fixed?: readonly Role[]) =>
   buildSupportedRoleDeck(config, fixed, getDefaultRoleCatalog, supportsWallRoles);
 
-/** Compile-only: metadata contributors expose reads, not mutation or runtime assembly. */
+/**
+ * 仅编译：元数据贡献者仅提供读取，不提供修改或运行时装配能力。
+ */
 function readPortTypes(catalog: SupportedRoleDeckCatalog) {
   // @ts-expect-error The support owner cannot assign a profile's configured count limit.
   catalog.requireMetadata(Role.Wolf).maxCount = 2;
@@ -248,9 +250,9 @@ test("actual bootstrap retains fixed/random selection, original initialization a
         return mode === "fixed" ? fixed : undefined;
       },
     };
-    // Same original getter input is now refused before invocation at the owned-data boundary.
-    // The fixed/random initialization and 18-read before-policy traces remain in Git7e59ee68
-    // and /tmp/awa-c21-supported-deck-bootstrap-before.json; no fixture input is replaced.
+    // 同一个原 getter 输入现在于自有数据边界在调用前被拒绝。
+    // 固定／随机初始化及政策变更前 18 次读取轨迹仍保存在 Git 7e59ee68
+    // 及 /tmp/awa-c21-supported-deck-bootstrap-before.json；未替换夹具输入。
     expect(() => bootstrapGame(config, options)).toThrow("rule_parameters_not_data");
     expect(trace).toEqual(["locale", "random", "fixedRoles", "fork:deal"]);
   }
@@ -268,7 +270,7 @@ test("actual bootstrap rejects after deal fork without any random draw", () => {
       return rows;
     },
   });
-  // Preserve the original accessor input; data refusal now precedes its old size error.
+  // 保留原 accessor 输入；数据拒绝现在早于原尺寸错误。
   expect(() => bootstrapGame(config, { random })).toThrow("rule_parameters_not_data");
   expect(trace).toEqual(["fork:deal"]);
 });

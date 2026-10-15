@@ -1,9 +1,5 @@
 /**
- * Unit tests: Audit evidence policy uses duplicate findings and explicit sequence
- * references; literal order and rejection assertions check citation ownership and
- * missing-evidence failure. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以重复 findings 和显式序号引用为输入，用字面顺序及拒绝断言核对审计引用归属和缺证据失败。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { auditSummaryFixture } from "../../support/builders/audit-summary";
 import { describe, expect, test } from "bun:test";

@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Gargoyle complete recorded games retain private role knowledge, native check-before-knife and inheritance.
- * Input: Original scenario/transport/locale matrices with handwritten role-label, awakening, survivor and terminal facts.
- * Output and oracle: Explicit private history, knife timing, inheritance and result assertions remain causal with exact replay; no production World computes the expected table.
+ * 复现场景验证石像鬼完整录制对局保留私有身份知识、原生先验后刀及继承。
+ * 输入为原场景／传输／语言矩阵，以及手写身份标签、觉醒、存活者和终局事实。
+ * 输出与预期为明确私有历史、刀权时点、继承及结果断言，与精确重放保持因果对应；不用生产 World 计算预期表。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

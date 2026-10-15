@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public six- and twelve-player Knight examples resolve the discrete duel-window policy.
- * Input: Existing public board/game JSON files and literal unsupported window, role and variant mutations.
- * Output and oracle: Exact registered Knight defaults and validation failures are asserted; the test does not execute a duel or call a provider.
+ * 配置文件系统集成测试读取既有公开六／十二人骑士板子与游戏 JSON，并修改为不支持的窗口、身份或变体，核对离散决斗窗口政策。精确已注册骑士默认值与验证失败为预期；不执行决斗或 provider 调用。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";

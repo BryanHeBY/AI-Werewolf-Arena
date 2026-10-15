@@ -1,10 +1,5 @@
 /**
- * Owns test driver support: Strict supplied action-script execution and consumed-step trace; caller-owned literal steps remain the oracle.
- * Inputs are supplied script steps, callbacks or fixture resource requests;
- * outputs are the original controlled traces, handles and boundary responses.
- * Unit and scenario tests keep their supplied literal actions and failure
- * expectations as the oracle. Driver ownership, cleanup and error policy never
- * change during this relocation; no billed model is introduced.
+ * 持有测试驱动：严格执行外部行动脚本并记录已消耗步骤，预期仍为调用方字面步骤。输入为脚本、回调或夹具资源请求，输出为原受控轨迹、句柄和响应；单元／场景预期仍由调用方给出。迁移不改变所有权、清理或错误政策，不引入计费模型。
  */
 import type { ActionProvider, ActionRequest, ActionStage, ToolCall } from "../../../src/domain";
 
@@ -12,7 +7,9 @@ export interface ScriptStep {
   actorId: number;
   day: number;
   stage: ActionStage;
-  /** Ordinal within this player's day/stage, independent of other players. */
+  /**
+ * 该玩家在指定 day／stage 内的序号，不受其他玩家影响。
+ */
   turn: number;
   action: ToolCall | null;
   assertRequest?: (request: ActionRequest) => void;
@@ -21,7 +18,9 @@ export interface ScriptStep {
 const stepKey = (step: Pick<ScriptStep, "actorId" | "day" | "stage" | "turn">) =>
   `${step.actorId}/${step.day}/${step.stage}/${step.turn}`;
 
-/** Replace decisions only; extra/missing requests cannot hide behind a default action. */
+/**
+ * 只替换决策；多出或缺失的请求不能用默认行动掩盖。
+ */
 export class StrictScriptedPlayers implements ActionProvider {
   readonly trace: Array<{ request: ActionRequest; action: ToolCall | null }> = [];
   private readonly steps = new Map<string, ScriptStep>();

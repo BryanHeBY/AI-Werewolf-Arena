@@ -1,9 +1,5 @@
 /**
- * Owns literal test oracle SDK/ACP transport observation and closure expectations.
- * Inputs are original actor plans, parsed archive/trace data and captured timing;
- * outputs retain the original field checks, failure prefix and handwritten action
- * comparisons in their original read order. It performs no IO, process, game or
- * replay execution and derives no expected winner from production settlement.
+ * 测试支持模块负责持有 SDK／ACP 传输观察及关闭的字面预期；输入为原行动者计划、已解析档案／轨迹及捕获时序，按原读取顺序输出字段检查、失败前缀及手写行动比较。不执行 IO、进程、游戏或复现，也不从生产结算推导赢家预期。
  */
 import { expect } from "bun:test";
 import type { ActorTransportPlan, TransportGameScenario } from "../../transport/contracts";

@@ -1,7 +1,5 @@
 /**
- * Native CLI integration test verifies invalid provider JSON is rejected without opaque values or duplicate uncaught errors.
- * Input: Original getter/proxy diagnostic probes, temporary synthetic malformed providers file and real run_game child arguments.
- * Output and oracle: Exact safe code/status and zero getter reads preserve assertions; the source command path changes only to the same original file.
+ * 原生 CLI 集成测试以原 getter／Proxy 诊断探针、临时错误 providers 文件及真实 run_game 子参数为输入，核对非法 provider JSON 被安全拒绝，不暴露不透明值或重复未捕获错误。精确安全码／状态及零 getter 读取为预期；命令路径仍指向原同一文件。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

@@ -1,7 +1,5 @@
 /**
- * Runner integration tests verify selected-deadline failures and closed observers retain their original errors after runtime owners drain.
- * Input: The actual runner, injected selectors/observers and temporary termination archives.
- * Output and oracle: Explicit drained scheduler snapshots, zero opened turns for invalid deadlines and recorded primary/cleanup errors preserve one lifecycle boundary; no billed model is invoked.
+ * Runner 集成测试以真实 runner、注入 selector／observer 和临时终止档案为输入，验证 runtime owner 排空后仍保留期限选择失败及已关闭 observer 的原错误。明确的排空调度器快照、非法期限下零开窗及已录主错／清理错为预期；不调用计费模型。
  */
 import { expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
@@ -41,7 +39,7 @@ async function setup(maxRuntimeMs: number) {
 }
 test("runner reports one detached closed snapshot after actions and schedulers drain", async () => {
   const { game } = await setup(0);
-  // Exercise an already exhausted run directly; JSON configuration stays positive.
+  // 直接验证已耗尽的运行；JSON 配置中的限制仍为正数。
   game.options.maxRuntimeMs = 0;
   const states: Parameters<NonNullable<GameRunDependencies["onRuntimeClosed"]>>[0][] = [];
   await runGame(game, { onRuntimeClosed: (state) => states.push(state) });

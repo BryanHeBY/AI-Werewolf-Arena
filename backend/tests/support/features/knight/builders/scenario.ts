@@ -1,8 +1,5 @@
 /**
- * Builds original knight test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 KnightScenario 的 kind 及 KnightDuelWindow 构造骑士传输场景，窗口有原默认值。输出原板子、内部固定种子、身份和字面决斗／后续回合；不实际提交决斗或运行对局计算预期。
  */
 import { oracle } from "../oracles/prompt-plan";
 import { Role } from "../../../../../src/domain";

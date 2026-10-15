@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify ordinary wolf chat, abstention, self-destruct and exile PK branches remain valid inside a Radiant Eclipse recorded game.
- * Input: Original controlled providers, chat-round/window matrices and existing recording plans.
- * Output and oracle: Literal request/event counts, death sequences and next-night/terminal checkpoints retain actual causal execution; no unrelated unit or generic vote engine replaces these branches.
+ * 交互场景验证流光／蚀日录制对局中普通狼聊、弃票、自爆及放逐 PK 分支仍有效。
+ * 输入为原受控 provider、聊天轮数／窗口矩阵及现有录制计划。
+ * 输出与预期为字面请求／事件数、死亡顺序及下一夜／终局 checkpoint，保留真实因果执行；不用无关单元或通用投票引擎替代这些分支。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

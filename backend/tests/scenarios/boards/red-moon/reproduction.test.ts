@@ -1,8 +1,8 @@
 /**
- * Red Moon recording/replay scenarios verify expiry, knife and blast policy tapes.
- * Input: Actual fixed-action games, both policies/locales and temporary finalized records.
- * Output and independent oracle: Handwritten state/terminal checkpoints and strict rejection/reproduction of original causal tapes.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 赤月录制／重放场景验证到期、刀口与自爆策略 Tape。
+ * 输入为真实固定行动对局、两种策略／语言及临时终结记录。
+ * 手写状态／终局 checkpoint 及篡改 Tape 的拒绝构成独立预期；原因果 Tape 严格复现另核对本局录制一致性。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

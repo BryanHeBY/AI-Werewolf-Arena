@@ -1,5 +1,5 @@
 /**
- * Filesystem agent integration tests check required-turn retry rejection in actual session output. Inputs are controlled invalid tool calls and a temporary recorder; literal retry counts and recorded domain-rejection diagnostics are the oracle. Provider transport is inert; no complete game or model is run.
+ * 文件系统 agent 集成测试将受控非法工具调用送入真实会话输出及临时录制器，核对必需回合重试被拒。预期为字面重试次数和已录领域拒绝诊断；provider 传输不执行动作，不运行完整对局或模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

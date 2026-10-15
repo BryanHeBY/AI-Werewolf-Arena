@@ -1,8 +1,5 @@
 /**
- * Builds original mist-raven test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责持有迷雾组合板逐夜手写行动表 manualPlans；以 MistRecordVariant 索引梦、刀及其他原字面字段。此文件只导出计划，由调用方驱动和检查消费；不接受语言／种子参数，不执行对局或从生产结果生成该表。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import type { MistRecordVariant } from "./board";

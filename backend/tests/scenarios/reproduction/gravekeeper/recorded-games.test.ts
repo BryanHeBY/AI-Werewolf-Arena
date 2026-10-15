@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Gravekeeper complete recorded games preserve passive private grave feedback and original terminal membership.
- * Input: Original scenario/transport/locale matrices with declared feedback, survivor, last-word and winner tables.
- * Output and oracle: Explicit private prompts, feedback timing and chain-final result assertions retain the actual action replay; stored source fixtures are only read.
+ * 复现场景验证守墓人完整录制对局保留被动私有墓地反馈及原终局成员归属。
+ * 输入为原场景／传输／语言矩阵，以及声明的反馈、存活者、遗言和胜方表。
+ * 输出与预期为明确私有提示、反馈时点及链末结果断言，保留实际行动重放；保存的源 fixture 只读。
  */
 import { fixtureNumber } from "../../../support/oracles/fixture-values";
 import { Camp, DeathCause, Phase } from "../../../../src/domain";

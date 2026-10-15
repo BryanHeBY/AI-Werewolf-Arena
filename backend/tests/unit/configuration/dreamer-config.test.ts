@@ -1,8 +1,5 @@
 /**
- * Unit tests: Dreamer configuration uses immutable public examples and explicit policies;
- * exact registration and arbitrary-variant rejection checks sourced role parameters.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试用不可变公开示例和显式政策核对 Dreamer 配置；精确注册及任意变体拒绝用于验证声明的身份参数。预期仍为既有字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";

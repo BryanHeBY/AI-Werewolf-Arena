@@ -190,7 +190,7 @@ for (const poison of [false, true])
     const intercepted = spyOn(NightPipeline.prototype, "execute").mockImplementation(
       async function (this: NightPipeline, ...args) {
         const result = await original.apply(this, args);
-        // Exact cross-await gap: captured pack owner dies after pipeline result, before PM commits.
+        // 精确跨 await 间隙：捕获的狼队 owner 在流水线结果返回后、PM 提交前死亡。
         g.world.getComponent(4, COMPONENT.Alive)!.alive = false;
         return result;
       },

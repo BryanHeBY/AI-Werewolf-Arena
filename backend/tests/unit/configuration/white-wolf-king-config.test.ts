@@ -1,8 +1,5 @@
 /**
- * Unit tests: White Wolf King configuration uses immutable public examples; exact
- * activated profile and parameter assertions check registration without adding unsupported
- * hooks. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试以不可变 White Wolf King 公开示例为输入，用精确激活 profile 及参数断言核对注册，不增加不支持 hook。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";

@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Ghost Bride full three-faction games under limited observations.
- * Input: One hundred fixed robot seeds per locale and captured per-game archives.
- * Output and independent oracle: Natural finish, explicit relationship/membership checks and strict replay of every record.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行有限观察下鬼魂新娘的完整三阵营对局。
+ * 输入为每种语言下一百个固定机器人种子及逐局捕获的归档。
+ * 字面预期为一百局自然完成、无拒绝／回退及婚约开局完成；逐局严格重放与原末 checkpoint 对照，不另称独立关系／成员预期。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
@@ -37,7 +37,7 @@ for (const locale of ["zh-CN", "en"] as const)
         await fs.readFile(path.join(game.recordDir, "logic_ops.json")),
       );
     expect(report.games).toHaveLength(100);
-    // The private per-actor shooting candidate list excludes co-night deaths without exposing roles or causes.
+    // 逐行动者的私有开枪候选名单排除同夜死亡者，不暴露身份或死因。
     expect(report.rejects).toBe(0);
     expect(report.games.filter((game) => game.rejects)).toEqual([]);
     expect(report.fallbacks).toBe(0);

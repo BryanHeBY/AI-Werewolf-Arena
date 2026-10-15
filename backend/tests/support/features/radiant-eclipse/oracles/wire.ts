@@ -1,15 +1,11 @@
 /**
- * Owns test oracle support: Compare actual serialized transport event prefixes with the independently validated request ledger, never production observation algorithms.
- * Inputs are actual wire messages, request prefixes, snapshots or a former
- * local endpoint plus explicit expectations; outputs are the original assertions
- * and rejection diagnostics. Unit/integration/scenario tests retain their
- * independent literal markers and recorded prefixes as the oracle. No expected
- * result is regenerated from production role, observation or board algorithms.
+ * 持有传输预期检查：比较实际序列化事件前缀与独立验证的请求账本，不调用生产观察算法。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言与拒绝诊断；各层测试沿用独立标记和已录前缀，不从生产身份、观察或板子算法生成结果预期。
  */
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";
 type Tuple = [number, string, Record<string, unknown>];
-/** Compare actual serialized transport events to the independent, strictly validated ledger's
- * request prefix. A final archive alone cannot prove what was sent during an earlier turn. */
+/**
+ * 将实际序列化的传输事件与独立且已严格验证账本的请求前缀比较；最终档案本身不能证明更早回合实际发送了什么。
+ */
 export function assertRadiantWireEvents(
   record: ReproductionRecord,
   actor: number,

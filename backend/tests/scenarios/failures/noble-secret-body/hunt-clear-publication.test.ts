@@ -83,8 +83,8 @@ test("actual delivered hunt clear has required God op before subsequent FINAL-so
     recordRequiredLogicOp(op: any) {
       ops.push(structuredClone(op));
       if (op.op === "noble_contract_closed" && op.output.status === "cleared") {
-        // Narrow external fault after successful required append returns: the next
-        // source/owner check must fail; no resources or Alive are manually advanced.
+        // 在必需追加成功返回后注入窄外部故障：下一次
+        // 来源／所有者检查必须失败；不手动推进资源或 Alive。
         expect(checkpointNobleBodyAuthority(g.world, true).noble.contracts[0]!.status).toEqual({
           kind: "cleared",
           day: 2,

@@ -1,8 +1,5 @@
 /**
- * Unit tests: Broadcast localization uses literal game, potion, role and vote events;
- * handwritten rendered captions check localized labels while preserving raw game facts.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试以字面游戏、药剂、身份及投票事件为输入，用手写渲染字幕核对本地化标签且保留原始游戏事实。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Camp, Phase, PotionType } from "../../../src/domain/identity";
 import { fixtureResult } from "../../support/builders/recording/result";

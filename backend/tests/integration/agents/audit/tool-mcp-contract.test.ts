@@ -1,8 +1,5 @@
 /**
- * Integration test owns the actual audit MCP listener and stdio sidecar against a real
- * turn registry. Literal tool names and accepted findings/source assertions are the
- * oracle; session binding, process transport and cleanup remain together under the
- * original describe prefix. No external audit model is invoked.
+ * 集成测试针对真实回合 registry 持有实际 audit MCP listener 和 stdio sidecar，以字面工具名及已接受 findings／source 断言为预期。会话绑定、进程传输和清理保留在原 describe 范围内；不调用外部审计模型。
  */
 import { describe, expect, test } from "bun:test";
 import { AuditToolTurnRegistry } from "../../../../src/audit/agents/audit-tool-protocol";

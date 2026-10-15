@@ -1,9 +1,5 @@
 /**
- * Unit tests: Radiant Eclipse configuration reads its immutable public example as input;
- * literal roundtrip/bootstrap equality and named Witch-policy rejection check the finite
- * board contract. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试读取不可变 Radiant／Eclipse 公开示例，用字面往返／bootstrap 相等及具名 Witch 政策拒绝核对有限板子契约。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";

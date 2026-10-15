@@ -1,5 +1,6 @@
 /**
- * Failure scenario tests send permitted tools with illegal domain arguments through a full Radiant/Eclipse night pipeline. Inputs are literal stage/borrow/action/error rows and the public board fixture; exact abort, suppression cleanup and preserved native stock are the oracle. Original board input and role state are not normalized to avoid rejection.
+ * 失败场景测试在完整流光／蚀日夜间流水线中提交允许工具及非法领域参数。输入为字面阶段／借用／行动／错误行和公开板子 fixture；精确中止、压制清理及保留原生库存构成预期。
+ * 原板子输入和角色状态不为规避拒绝而归一化。
  */
 import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import { PotionType } from "../../../../src/domain";

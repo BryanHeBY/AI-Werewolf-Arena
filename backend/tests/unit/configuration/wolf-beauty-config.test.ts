@@ -1,8 +1,5 @@
 /**
- * Unit tests: Beauty/Knight configuration uses immutable public examples and explicit
- * death policies; literal acceptance/rejection checks sourced parameter normalization.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试用不可变公开示例及显式死亡政策核对 Beauty／Knight 配置；字面接受／拒绝断言验证来源参数的归一化。预期仍为既有字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";

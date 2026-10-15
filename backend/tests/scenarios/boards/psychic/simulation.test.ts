@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Psychic unique inspection, repeat and optional pass.
- * Input: Restricted observations, existing boards and recorded fixed seed games.
- * Output and independent oracle: Real inspection coverage, no hidden-pack input and exact original checkpoint replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证通灵师查验、重复机会及可选跳过。
+ * 输入为受限观察、现有板子及固定种子录制对局。
+ * 字面约束为查验／重复／跳过覆盖及狼聊／刀行动排除；原 checkpoint 的精确重放另作录制一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { fixtureNumber } from "../../../support/oracles/fixture-values";
 import { expect, test } from "bun:test";

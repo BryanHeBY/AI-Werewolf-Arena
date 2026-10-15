@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Merchant gifts/backlashes and recipient Lucky effects.
- * Input: Own-observation seeds and original native/gifted instances.
- * Output and independent oracle: Literal grant/backlash/effect coverage and exact per-game checkpoint reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证奇迹商人赠予／反噬及接收者的幸运效果。
+ * 输入为自身观察种子及原有原生／赠予实例。
+ * 字面约束为赠予、反噬、幸运效果及跳过分支均出现；逐局 checkpoint 重放结果另与原录制作一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

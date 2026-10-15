@@ -1,8 +1,5 @@
 /**
- * Builds original nightmare-shadow test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责构造固定的噩梦之影传输场景；nightmareScenario 不接收参数。内部配置、固定种子、身份和行动表组成场景及角色编号输出；不执行恐惧或游戏结算来计算预期。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

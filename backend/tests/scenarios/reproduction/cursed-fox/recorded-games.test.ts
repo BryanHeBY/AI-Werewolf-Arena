@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Cursed Fox complete recorded games preserve inspection interactions and chain-final individual or faction victory.
- * Input: Original knife, inspection, dream, mirror, lucky and king-chain transport/locale matrices with a literal result table.
- * Output and oracle: Handwritten death/survivor/winner facts and private-view assertions remain causal with the actual replay; no engine run generates expected terminal data.
+ * 复现场景验证咒狐完整录制对局保留查验交互，以及链末个人或阵营胜利。
+ * 输入为原狼刀、查验、梦、魔镜、幸运和狼王链的传输／语言矩阵，并带字面结果表。
+ * 输出与预期为手写死亡／存活者／胜方事实和私有视图断言，与实际重放保持因果对应；不用引擎运行生成预期终局数据。
  */
 import { expect, test } from "bun:test";
 import { Camp, DeathCause, Phase } from "../../../../src/domain";

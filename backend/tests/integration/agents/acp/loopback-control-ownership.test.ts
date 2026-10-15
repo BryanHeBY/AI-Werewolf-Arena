@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises the real loopback MCP control listener across startup/close
- * and owner rebinding. Literal terminal error and listening snapshots check permanent
- * closure and the original single owner. Existing literal expectations and independently
- * supplied fixture plans remain the oracle; transport/recording setup is local and no
- * billed model session is started.
+ * 集成测试驱动真实本地回环 MCP listener 的启动／关闭及 owner 重绑定，以字面终态错误和监听快照核对永久关闭与原单一 owner。预期来自既有字面值和独立夹具计划；传输与录制仅在本地，不启动计费模型会话。
  */
 import { expect, test } from "bun:test";
 import { LoopbackMcpControlServer } from "../../../../src/adapters/acp/loopback-mcp-control-server";

@@ -1,9 +1,5 @@
 /**
- * Integration tests for ACP process initialization deadlines and child cleanup.
- * Input: real local child commands, deadlines and temporary PID evidence;
- * output: the original process termination and initialization assertions.
- * Child liveness and literal error/timing bounds are independent oracles;
- * synthetic children never connect to a billed model or read authentication.
+ * 集成测试使用真实本地子命令、截止时间及临时 PID 证据，验证 ACP 初始化期限与子进程清理。输出为既有终止及初始化断言；子进程存活状态和字面错误／时限是独立预期。合成子进程不连接计费模型，也不读取认证信息。
  */
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { bootstrapGame } from "../../../src/app/bootstrap";

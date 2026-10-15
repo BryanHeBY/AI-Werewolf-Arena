@@ -1,7 +1,7 @@
 /**
- * Scenario tests stop real Animal Dream game execution on missing, invalid or late Fox/Puffer required actions.
- * Inputs are the original SDK/ACP scripts truncated at the failing turn in both locales; literal incomplete/stopped checkpoints, empty histories and absent commit/game-over events are the oracle.
- * The transport driver owns local process and record cleanup. These failure-prefix scenarios never synthesize a successful action, refund a paid effect or call a billed model.
+ * 场景测试验证子狐／河豚必需行动缺失、无效或迟到时，真实动物梦境对局停止。
+ * 输入为两种语言中截断于失败回合的原 SDK／ACP 脚本；不完整／停止的 checkpoint、空历史及缺少提交／终局事件构成字面预期。
+ * 传输驱动负责本地进程和记录清理；失败前缀测试不补造成功行动、不退还已付效果，也不调用付费模型。
  */
 import { expect, test } from "bun:test";
 import { animalTransportScenario } from "../../../support/features/animal-dream/builders/transport-plan";

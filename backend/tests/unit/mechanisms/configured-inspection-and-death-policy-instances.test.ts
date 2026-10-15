@@ -466,7 +466,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         expect(ability.lastUsedDay).toBe(1);
       }
       expect(ability.uses).toBe(0);
-      // A fresh World avoids authorizing reentry through an already committed optional pass.
+      // 使用全新 World，避免已提交的可选跳过授权再次进入。
       const exhausted = fixture(kind, { inspectionPolicy: policy }),
         exhaustedRole = exhausted.world.getComponent(1, COMPONENT.Role)!,
         exhaustedAbility = findNightAbility(exhaustedRole, "role_check")!;

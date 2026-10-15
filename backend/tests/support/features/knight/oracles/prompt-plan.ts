@@ -1,8 +1,5 @@
 /**
- * Owns original test oracle knight handwritten expected data and bounded contract assertions. Inputs are supplied plans
- * or observed tuples; outputs preserve literal stock, identity, marker and error expectations. No expected
- * game result is regenerated from production settlement; this owner performs no game, model or transport
- * execution.
+ * 测试支持模块负责为骑士传输计划补写字面资源与双语提示预期；输入为原场景对象。遍历骑士的原 turns，直接写入每个 turn.knightResourceRemaining，并在字面 duel 后将后续预期归零；返回新场景外壳及提示回调，原 turn 引用仍共享。不执行真实决斗或从生产结算生成预期。
  */
 import { Role } from "../../../../../src/domain";
 import type { TransportGameScenario } from "../../../transport/contracts";

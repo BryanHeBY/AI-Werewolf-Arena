@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify pending Radiant Eclipse traces use the prior complete checkpoint and current unarchived request.
- * Input: The real Seer-failure recording and original incremental or finalized terminal-request mutations.
- * Output and oracle: Explicit parser acceptance and rejection preserve pending/finalized distinctions; the original record is not rewritten as a new golden.
+ * 失败场景验证流光／蚀日 pending 轨迹使用此前完整 checkpoint 及当前未归档请求。
+ * 输入为真实预言家失败录制，以及原增量／已终结记录中的终端请求篡改。
+ * 输出与预期为明确的解析接收／拒绝，保留 pending 与 finalized 区别，不将原记录重写为新固定预期。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

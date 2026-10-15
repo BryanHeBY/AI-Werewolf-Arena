@@ -52,7 +52,7 @@ for (const size of [6, 12] as const)
             input.steps[0]!.mutation.playerId,
             COMPONENT.Alive,
           );
-        input.steps[0]!.mutation.playerId = 3; // Constructor retains independent input.
+        input.steps[0]!.mutation.playerId = 3; // 构造器保留独立的输入。
         await f.phaseManager.runSingleCycle(provider(f.witchId), 10);
         await f.phaseManager.runSingleCycle(provider(f.witchId, 1, true), 10);
         f.phaseManager.assertFaultPlanConsumed();

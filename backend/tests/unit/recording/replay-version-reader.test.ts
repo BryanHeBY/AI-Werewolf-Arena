@@ -1,9 +1,5 @@
 /**
- * Unit tests own explicit legacy/canonical replay metadata paths, malformed versions and
- * the pure new-version writer shape. Fresh immutable public archive reads and literal
- * mutations supply input; original user text, unknown IDs, private-metadata omission and
- * detached-output assertions remain the oracle. No archive is rewritten or exported to
- * disk.
+ * 单元测试持有显式旧版／规范 replay 元数据路径、错误版本及纯新版本 writer 形状。输入为每次新读的不可变公开档案及字面变体；原用户文本、未知 ID、私密元数据省略及脱离来源输出为预期。不改写或导出档案到磁盘。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
@@ -64,7 +60,7 @@ test("future/malformed version values fail before legacy conversion and canonica
   }
   expect(() => assertReplayDocument(old)).toThrow("schemaVersion");
   const v2 = { ...old, schemaVersion: 2, meta: { ...old.meta, locale: "en" } };
-  expect(readReplayDocument(v2).events[0].phase).toBe("夜晚"); // New-version opaque values are never interpreted as legacy.
+  expect(readReplayDocument(v2).events[0].phase).toBe("夜晚"); // 新版本的不透明值绝不按旧版本解释。
   expect(() => readReplayDocument({ ...v2, meta: { ...v2.meta, locale: "en-US" } })).toThrow(
     "meta.locale",
   );

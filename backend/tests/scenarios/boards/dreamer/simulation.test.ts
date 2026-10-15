@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Dreamer actual actions and linked deaths.
- * Input: Existing boards, restricted robot seeds and persisted complete games.
- * Output and independent oracle: Literal dream skill coverage and exact strict replay without hidden World data in bot inputs.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证受限观察对局中摄梦技能实际执行及逐局重放。
+ * 输入为现有板子、受限机器人种子及持久化的完整对局。
+ * 字面预期为梦技能分支出现、自然结束及无拒绝／回退；重放结果与本局录制结果做一致性对照，机器人输入不携带隐藏 World 数据。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";

@@ -1,9 +1,5 @@
 /**
- * Integration tests for shapeshifter setup. Inputs are original N+2 deals, reserve card/lease mutations and
- * strict provider failure tapes. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual fs reads public six/twelve board example files, then
- * parse/reverse/bootstrap initialization; no game cycle. Actual public filesystem or synthetic local
- * transport boundaries are exercised; private config/auth and paid model services are excluded.
+ * 千面人公开示例集成测试读取原六／十二人板子 JSON，经 JSON／板子解析后，以内部固定 RNG 调用真实 bootstrap。字面断言核对人数、身份总数、千面人政策、N 名玩家及 N+2 张初始牌；不执行选择窗口、provider 失败 Tape、租约变体或游戏循环。
  */
 import path from "node:path";
 import { promises as fs } from "node:fs";

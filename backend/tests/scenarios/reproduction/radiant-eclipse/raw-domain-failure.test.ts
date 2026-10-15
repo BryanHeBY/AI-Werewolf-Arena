@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify real Radiant Eclipse same-tool missing-target failures finalize and replay their raw failed prefix.
- * Input: Original swallow/shelter requests, empty action arguments and the existing controlled recording driver.
- * Output and oracle: Literal action-reached, finalization and replay assertions retain the original failed outcome; invalid action arguments are not repaired by the test.
+ * 复现场景验证真实流光／蚀日同工具缺目标失败能够终结并重放原始失败前缀。
+ * 输入为原吞噬／庇护请求、空行动参数及现有受控录制驱动。
+ * 输出与预期为字面到达行动点、终结及重放断言，保留原失败结果；测试不修复非法行动参数。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

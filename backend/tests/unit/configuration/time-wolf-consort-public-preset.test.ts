@@ -1,9 +1,5 @@
 /**
- * Unit tests: Time Consort eligibility uses the public example and incompatible policy
- * mutations; explicit preset, reverse-config and rejection assertions check the supported
- * twelve-player contract. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以 Time Consort 公开示例及不兼容政策为输入，用明确预设、反向配置和拒绝断言核对支持的十二人契约。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { isTimeConsortPreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";

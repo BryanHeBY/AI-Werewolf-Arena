@@ -1,8 +1,5 @@
 /**
- * Builds original black-market-merchant test input plans, fixed boards and explicit player/marker data.
- * Inputs are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and
- * configured identities. Existing dealing may construct input identities, while handwritten expected
- * outcomes remain supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 BlackScenario 的 kind 构造黑市商人传输输入，输出原板子、内部固定种子、身份及逐玩家行动。跨技能和终局分支由原字面计划表达；不接收任意种子，不运行对局来计算预期。
  */
 import { PotionType } from "../../../../../src/domain";
 import { Role } from "../../../../../src/domain";

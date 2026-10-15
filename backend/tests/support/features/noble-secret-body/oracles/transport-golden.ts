@@ -1,10 +1,5 @@
 /**
- * Owns test oracle support: Independent Noble/Body terminal, causality and player-view literal expectations over completed transport runs.
- * Inputs are actual wire messages, request prefixes, snapshots or a former
- * local endpoint plus explicit expectations; outputs are the original assertions
- * and rejection diagnostics. Unit/integration/scenario tests retain their
- * independent literal markers and recorded prefixes as the oracle. No expected
- * result is regenerated from production role, observation or board algorithms.
+ * 持有完整传输执行后的独立 Noble／Body 终局、因果及玩家视图字面预期。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言与拒绝诊断；各层测试沿用独立标记和已录前缀，不从生产身份、观察或板子算法生成结果预期。
  */
 import { expect } from "bun:test";
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";
@@ -21,7 +16,9 @@ type Contract = [
   status: "pending" | "cleared" | "expired" | "target_dead",
   terminal: number | null,
 ];
-/** These terminal causes/statuses are handwritten; no production transitions calculate them. */
+/**
+ * 终局原因与状态均为手写预期，不由生产状态转换计算。
+ */
 const finals: Record<
   Scenario["name"],
   { body: null | BodySpend | "revealed"; contracts: Contract[] }

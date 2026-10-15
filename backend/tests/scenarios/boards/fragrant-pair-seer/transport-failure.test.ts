@@ -1,8 +1,8 @@
 /**
- * Real transport failure scenarios verify Fragrant required bind/check delivery failures.
- * Input: Synthetic SDK/ACP transports and explicit required-stage failure plans.
- * Output and independent oracle: Unconsumed/paid prefix as originally expected, absent fabricated domain facts and strict wire/replay checks.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 真实传输失败场景验证寻香必需绑定／查验的交付失败。
+ * 输入为合成 SDK／ACP 传输及明确的必需阶段失败计划。
+ * 原未消耗／已付前缀与协议字面约束构成独立预期，不补造领域事实；严格重放另核对本局录制一致性。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { assertFragrantTransportWire } from "../../../support/features/fragrant-pair-seer/oracles/wire";
 import { expect, test } from "bun:test";

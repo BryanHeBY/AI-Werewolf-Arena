@@ -1,9 +1,5 @@
 /**
- * Unit tests: Action request construction uses an in-memory world and visible events;
- * exact day, stage, constraint and projection fields check canonical request ownership and
- * the sole action-stage label. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以内存 World 和可见事件为输入，用精确 day、stage、约束及投影字段核对规范请求所有权和唯一行动阶段标签。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -17,7 +13,7 @@ import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp
 describe("GameActionRequestFactory", () => {
   test("owns canonical day, stage, visibility and constraint fields", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    // Runtime input can carry forged canonical fields; the factory must overwrite them.
+    // 运行时输入可伪造规范字段；工厂必须覆盖这些字段。
     const forgedContext = {
       trigger: "test",
       day: 99,

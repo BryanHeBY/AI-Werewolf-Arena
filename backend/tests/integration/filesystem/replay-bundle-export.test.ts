@@ -1,7 +1,5 @@
 /**
- * Filesystem integration tests verify recorded-session export produces a valid offline replay bundle and rejects malformed source fields.
- * Input: Temporary session documents, output paths and literal malformed nested replay data.
- * Output and oracle: Explicit bundle/file equality and validation failures are asserted; existing archived fixtures are only read.
+ * 文件系统集成测试以临时会话文档、输出路径及手写错误嵌套 replay 数据为输入，核对已录会话导出合法离线包并拒绝坏来源字段。明确的包／文件相等及验证失败为预期；既有归档夹具只读。
  */
 import { promises as fs } from "fs";
 import path from "path";

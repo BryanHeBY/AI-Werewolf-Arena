@@ -1,7 +1,5 @@
 /**
- * Transport integration tests verify real SDK HTTP and game/audit MCP subprocesses preserve bilingual schemas and authorization.
- * Input: The original locale/kind/mode matrix, local client/control resources and one retained shared request object.
- * Output and oracle: Literal descriptions, submission fields, responses and resource cleanup preserve native protocols; shared request setup is not duplicated across transport cases or unit files.
+ * 传输集成测试以原语言／类别／模式矩阵、本地 client／control 资源及一个保留的共享请求为输入，验证真实 SDK HTTP 与游戏／审计 MCP 子进程的双语 schema 和授权。字面描述、提交字段、响应及资源清理为预期；不在传输用例或单元文件重复共享请求装配。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify wall notes expiry, order and public event branches.
- * Input: Twenty limited-observation seeds per board/locale and original note action records.
- * Output and independent oracle: Literal note/event coverage, natural results and exact checkpoint/Tape replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证匿名墙首次发表及公开事件形状。
+ * 输入为每个板子／语言下二十个有限观察种子及原纸条行动记录。
+ * 字面预期为自然完成、无拒绝／回退、启动至多一次及首日发表 payload 的原字段；checkpoint／Tape 做精确重放一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

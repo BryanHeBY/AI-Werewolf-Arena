@@ -1,10 +1,5 @@
 /**
- * Owns test driver support: Filesystem fixture directory ownership and cleanup; original prefixes, allocation and tracked lifecycle remain unchanged.
- * Inputs are supplied script steps, callbacks or fixture resource requests;
- * outputs are the original controlled traces, handles and boundary responses.
- * Unit and scenario tests keep their supplied literal actions and failure
- * expectations as the oracle. Driver ownership, cleanup and error policy never
- * change during this relocation; no billed model is introduced.
+ * 持有文件系统测试夹具目录及清理，保留原前缀、分配与跟踪生命周期。输入为调用方脚本、回调或资源请求，输出为原轨迹、句柄和边界响应；单元／场景预期仍由调用方字面数据给出。迁移不改变驱动所有权、清理或错误政策，不引入计费模型。
  */
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";

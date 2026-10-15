@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Thief optional choice and original initial-role setup.
- * Input: Twenty restricted robot seeds per board/locale with preserved action records.
- * Output and independent oracle: Literal setup choices, no repaired terminal result and exact strict reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行盗贼可选选择及原初始身份设置。
+ * 输入为每个板子／语言下二十个受限机器人种子，并保留行动记录。
+ * 字面预期为自然完成、无拒绝／回退、起始决定至多一次及开局完成；严格复现与原末 checkpoint 做一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

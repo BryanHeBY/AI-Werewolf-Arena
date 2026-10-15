@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Animal Dream paid knowledge and PK ballot forgeries cannot rewrite original accepted actions.
- * Input: Original beforeAll fox/PK recordings and copied settlement, action, knowledge or revoter mutations.
- * Output and oracle: Explicit baseline acceptance and forgery rejection retain tied-candidate and paid-fact ordering; both shared source games remain in their original setup phase.
+ * 复现场景验证动物梦境已付知识及 PK 投票伪造不能改写原已接收行动。
+ * 输入为原 beforeAll 子狐／PK 录制及结算、行动、知识或重投者副本篡改。
+ * 输出与预期为明确原记录接收及伪造拒绝，保留平票候选和已付事实顺序；两个共用来源对局仍在原设置时点创建。
  */
 import { beforeAll, expect, test } from "bun:test";
 import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";

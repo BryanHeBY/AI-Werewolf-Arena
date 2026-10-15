@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Psychic complete recorded games preserve private role labels and repeated or passed inspection opportunities.
- * Input: Original scenario/transport/locale matrices with handwritten label, skip, use-count, survivor and last-word facts.
- * Output and oracle: Literal audience/resource/terminal assertions remain causal with the actual replay; expected state is supplied independently of observed engine output.
+ * 复现场景验证通灵师完整录制对局保留私有身份标签及重复／跳过的查验机会。
+ * 输入为原场景／传输／语言矩阵，以及手写标签、跳过、使用次数、存活者和遗言事实。
+ * 输出与预期为字面受众／资源／终局断言，与实际重放保持因果对应；预期状态独立于观察到的引擎输出。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

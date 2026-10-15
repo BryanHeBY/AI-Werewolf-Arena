@@ -114,8 +114,8 @@ describe("F01 current production fallback privilege", () => {
       args: { target_id: 3, abstain: false },
     });
 
-    // God-only intervention, not a legal conversion scenario: alter just the
-    // field baseline reads. HiddenWolf remains absent from pack recognition.
+    // 仅由上帝视角介入；这不是合法转换场景，只改基线实际读取的
+    // 字段。隐狼仍不被狼队识别。
     game.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
     await observed.getAction(request);
     expect(observations[1]).toEqual(observations[0]);

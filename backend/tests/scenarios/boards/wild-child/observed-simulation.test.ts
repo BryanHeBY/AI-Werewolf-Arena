@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Wild Child chosen model, death and transformation.
- * Input: Twenty limited-observation seeds per board/locale with original role metadata.
- * Output and independent oracle: Literal model/transformation/knife coverage, natural terminal result and exact strict reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证野孩子首次榜样选择、终局及逐局重放。
+ * 输入为每个板子／语言下二十个有限观察种子，并保留原身份元数据。
+ * 字面预期为自然完成、无拒绝／回退、榜样选择恰一次及起始决定至多一次；严格复现对照原末 checkpoint，不宣称每局必有转化／狼刀覆盖。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

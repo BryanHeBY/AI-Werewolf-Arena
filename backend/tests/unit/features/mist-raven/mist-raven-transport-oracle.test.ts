@@ -1,9 +1,5 @@
 /**
- * Unit tests: Mist Raven wire oracles use literal event tuples, localized prompts and
- * actor-known state; handwritten sequence/privacy/stock assertions check test-support
- * validators without starting a transport. Inputs and expected outcomes remain the
- * original literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试以字面事件元组、本地化提示及行动者已知状态为输入，用手写序列／私密／库存断言核对 Mist Raven 测试支持校验器，不启动传输。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { mistTransportScenario } from "../../../support/features/mist-raven/builders/transport-plan";
 import { expect, test } from "bun:test";

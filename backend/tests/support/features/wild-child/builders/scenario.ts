@@ -1,8 +1,5 @@
 /**
- * Builds original wild-child test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 WildChildCase、六／十二人数及 locale 构造野孩子场景，保留原默认人数和语言。输出原板子、内部种子、身份及榜样／后续行动计划；不提交榜样选择或转狼，也不从运行结果生成预期。
  */
 import { text } from "@ai-werewolf-arena/game-text";
 import { roleName } from "@ai-werewolf-arena/game-text";

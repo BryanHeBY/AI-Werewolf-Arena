@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises the actual game MCP control listener and stdio sidecar from
- * an in-memory turn. Literal tool/schema/receipt expectations check session binding and
- * current-turn submission; the process owns only the injected game capability. Existing
- * literal expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 集成测试从内存回合驱动真实游戏 MCP listener 及 stdio sidecar，以字面工具／schema／回执预期核对会话绑定和当前回合提交。进程只拥有注入的游戏能力；预期来自既有字面值和独立夹具计划，传输与录制仅在本地，不启动计费模型会话。
  */
 import { describe, expect, test } from "bun:test";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";

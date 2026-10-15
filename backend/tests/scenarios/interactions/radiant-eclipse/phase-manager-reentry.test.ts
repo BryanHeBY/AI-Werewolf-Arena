@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify PhaseManager rejects Radiant Eclipse reentry while retaining the original stage owner.
- * Input: The original held swallow/day-speech requests and a second call on the same PhaseManager.
- * Output and oracle: Explicit phase, lifetime and rejection checks retain the first cycle's ownership; the second invocation never becomes a new owner.
+ * 交互场景验证 PhaseManager 拒绝流光／蚀日重入，同时保留原阶段 owner。
+ * 输入为原暂挂吞噬／白天发言请求及同一 PhaseManager 上的第二次调用。
+ * 输出与预期通过明确阶段、生命期和拒绝检查保留首周期所有权；第二次调用不成为新 owner。
  */
 import { expect, test } from "bun:test";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";

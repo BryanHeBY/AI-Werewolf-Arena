@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Debater challenges, ballots and natural termination.
- * Input: Declared boards, restricted robot requests and twenty per-game seed records.
- * Output and independent oracle: Literal debate action coverage, no repaired finish and exact checkpoint/Tape reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证杠精挑战、投票及自然结束。
+ * 输入为声明的板子、受限机器人请求和二十个逐局种子记录。
+ * 过半支持、票数总和、受阻者及其禁票构成字面约束；checkpoint／Tape 另做精确录制一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

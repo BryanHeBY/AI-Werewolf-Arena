@@ -1,8 +1,5 @@
 /**
- * Unit tests: Magician configuration reads immutable public board examples; exact
- * first-night/shot-policy roundtrip and bootstrap fields check the finite setup contract.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试读取不可变魔术师公开示例，用精确首夜／枪政策往返和 bootstrap 字段核对有限装配契约。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { isMagicianPreset } from "../../../src/rulesets";

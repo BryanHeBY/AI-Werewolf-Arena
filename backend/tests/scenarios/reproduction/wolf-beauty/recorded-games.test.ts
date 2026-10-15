@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Wolf Beauty complete recorded games preserve charm, coupled deaths and private state through final settlement.
- * Input: Original scenario/transport/locale matrices and handwritten charm choices, extra death waves, survivors and last-word facts.
- * Output and oracle: Literal effect, privacy and chain-final outcome assertions remain attached to exact action replay; no production result is reused to manufacture expected state.
+ * 复现场景验证狼美人完整录制对局保留魅惑、关联死亡及最终结算前的私有状态。
+ * 输入为原场景／传输／语言矩阵，以及手写魅惑选择、追加死亡波、存活者和遗言事实。
+ * 输出与预期为字面效果、隐私及链末结果断言，并绑定精确行动重放；不复用生产结果制造预期状态。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

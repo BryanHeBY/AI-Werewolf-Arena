@@ -1,9 +1,5 @@
 /**
- * Unit tests: Pure White configuration reads immutable paired-board examples; literal
- * priority/self-heal roundtrip and unsupported-composition assertions check exact setup
- * before play. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试读取不可变 Pure White 配对板子示例，用字面优先级／自愈往返及不支持组合断言核对开局前精确装配。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { isPureWhitePreset } from "../../../src/rulesets";

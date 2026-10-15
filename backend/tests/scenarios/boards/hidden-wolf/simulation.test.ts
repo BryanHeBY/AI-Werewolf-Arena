@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Hidden Wolf activation and late knife without pack chat.
- * Input: Declared policy boards, fixed restricted-observation seeds and records.
- * Output and independent oracle: Literal original-role/knife/chat conditions, natural finish and exact action replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证隐狼没有狼聊时的激活及后续刀权。
+ * 输入为声明的策略板子、固定受限观察种子及记录。
+ * 字面约束为未继承初态、伪装开局计数、实际继承狼刀及狼聊排除；精确行动重放结果另与原录制作一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
@@ -15,8 +15,8 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 import path from "node:path";
 for (const id of ["six_player_hidden_wolf", "twelve_player_hidden_wolf"] as const)
   test(`${id}: restricted-observation seeds inherit real knives without pack chat and every complete game strictly replays`, async () => {
-    // Twelve-player all-active scripts win for wolves before inheritance; the existing
-    // four-style mix on seeds 0–19 exercises actual inheritance and subsequent knives.
+    // 十二人全主动风格的脚本会在继承前使狼方获胜；现有
+    // 种子 0–19 的四种风格混合用于覆盖真实继承及后续狼刀。
     const board = await loadBoardDefinition(
         path.resolve(import.meta.dir, "../../../../../configs.example"),
         id,

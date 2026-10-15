@@ -1,9 +1,5 @@
 /**
- * Unit tests for declared same-handler sharing and the four Ghost replacement operations.
- * Inputs are literal colliding handlers and an observed Map; expected getter counts,
- * exact conflict codes, operation traces and receiver-bearing references are independent
- * oracles. The old first-winner policy is separately frozen as before evidence; these
- * tests never run a model, invent a role permission or generate a golden from a compiler.
+ * 单元测试以字面冲突 handler 和可观察 Map 为输入，核对声明的同 handler 共享及四种 Ghost 替换操作。getter 次数、精确冲突码、操作轨迹及带接收者引用为独立预期；旧 first-winner 政策另存前态证据。不运行模型、不虚构身份许可或从编译器生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { NightStageHandler } from "../../../src/engine/night/contracts";
@@ -77,7 +73,7 @@ test("conflict diagnostics never coerce a foreign observed ID or stringify a han
       throw new Error("foreign_coercion");
     },
   };
-  // Explicit malformed JS input tests diagnostic safety; production IDs remain typed strings.
+  // 显式坏 JS 输入核对诊断安全；生产 ID 仍为类型化字符串。
   const first: NightStageHandler = {
       id: foreign as unknown as string,
       priority: 1,

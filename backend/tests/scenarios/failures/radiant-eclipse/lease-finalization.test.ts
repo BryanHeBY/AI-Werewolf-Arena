@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify finalized Radiant Eclipse lease and borrowed-stock facts remain consistent after controlled archive mutations.
- * Input: The existing real Seer-failure recording and the original copied event, decision, abort and stock alterations.
- * Output and oracle: Literal acceptance/rejection assertions retain lifecycle invariants; the production-generated archive supplies test input rather than independently computed expected state.
+ * 失败场景验证流光／蚀日终结后的 lease 与借用库存事实在受控归档篡改后仍一致。
+ * 输入为现有真实预言家失败录制，以及原事件、决定、中止和库存副本改动。
+ * 输出与预期为保留生命周期不变量的字面接收／拒绝断言；生产生成归档仅提供测试输入，不是独立计算的预期状态。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

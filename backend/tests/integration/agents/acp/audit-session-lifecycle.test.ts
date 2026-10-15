@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual audit workspaces with controlled ACP session
- * creation, hung prompts and close failures. Original error identities, forced-close
- * counts and executor snapshots check cancellation and late reclamation. Existing literal
- * expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 集成测试在真实 audit 工作区控制 ACP 会话创建、挂起提示及关闭失败，以原错误对象、强制关闭次数和 executor 快照核对取消与晚回收。预期仍来自既有字面值和独立夹具计划；传输与录制仅在本地，不启动计费模型会话。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

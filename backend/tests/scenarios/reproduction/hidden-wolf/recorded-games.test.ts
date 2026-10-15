@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Hidden Wolf complete recorded games retain one-way knowledge, masking and actual knife inheritance.
- * Input: Original scenario/transport/locale matrices with handwritten check, roar, awakening, survivor and last-word facts.
- * Output and oracle: Literal private-view, inheritance and chain-final outcome assertions remain attached to the real replay; expected survivors are not generated from another World.
+ * 复现场景验证隐狼完整录制对局保留单向知识、伪装及实际刀权继承。
+ * 输入为原场景／传输／语言矩阵，以及手写查验、吼叫、觉醒、存活者和遗言事实。
+ * 输出与预期为字面私有视图、继承及链末结果断言，并绑定真实重放；存活预期不由另一个 World 生成。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

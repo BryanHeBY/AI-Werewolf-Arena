@@ -1,7 +1,5 @@
 /**
- * Unit test verifies Noble and Secret Body enum or unknown-key policy failures precede silent normalization.
- * Input: The original immutable public board JSON as fixture input and three literal policy/key alterations.
- * Output and oracle: Exact diagnostic codes and private-canary omission preserve parser behavior; the test reads input but creates no config tree or archive.
+ * 单元测试以原不可变公开板子 JSON 及三个手写政策／key 变体为输入，核对 Noble／Secret Body 枚举或未知 key 错误早于静默归一化。精确诊断码及私密探针不泄露为预期；只读输入，不创建配置树或档案。
  */
 import { fileURLToPath } from "node:url";
 import { expect, test } from "bun:test";

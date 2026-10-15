@@ -46,6 +46,7 @@ export function validateWildChildRecord(record: ReproductionRecord): void {
     chosen = false,
     transformed = false,
     activated = false;
+  // 每个事件前缀保存一份独立推演结果；checkpoint 按 eventCount 对齐当时状态，不拿最终转化结果回填较早阵营。
   const byCount = new Map<
     number,
     {

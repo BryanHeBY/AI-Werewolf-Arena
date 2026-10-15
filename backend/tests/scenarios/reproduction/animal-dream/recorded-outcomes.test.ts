@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Animal Dream literal recorded games preserve exact night deaths and terminal survivor facts.
- * Input: Original six scenario names, skip and first-night matrices with the declared animalGolden expectation table.
- * Output and oracle: Literal winner/alive/night assertions inspect the actual Record and replay; existing action matrices and archival fixture bytes are unchanged.
+ * 复现场景验证动物梦境字面录制对局保留精确夜死及终局存活事实。
+ * 输入为原六个场景名、跳过／首夜矩阵，以及声明的 animalGolden 预期表。
+ * 输出与预期为检查实际 Record 和重放的字面胜方／存活／夜间断言；现有行动矩阵及归档 fixture 字节不变。
  */
 import { expect, test } from "bun:test";
 import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";

@@ -1,15 +1,12 @@
 /**
- * Owns test oracle support: Independent literal bilingual badge-policy assertions over initialization prompts and actually sent messages.
- * Inputs are actual wire messages, request prefixes, snapshots or a former
- * local endpoint plus explicit expectations; outputs are the original assertions
- * and rejection diagnostics. Unit/integration/scenario tests retain their
- * independent literal markers and recorded prefixes as the oracle. No expected
- * result is regenerated from production role, observation or board algorithms.
+ * 持有初始化提示与实际已发消息上的独立双语警徽政策字面断言。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言与拒绝诊断；各层测试沿用独立标记和已录前缀，不从生产身份、观察或板子算法生成结果预期。
  */
 import { expect } from "bun:test";
 import type { ReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import type { NobleWireRun } from "./wire";
-/** Independent literal policy assertion over actual initialization and sent messages. */
+/**
+ * 针对真实初始化及已发送消息，使用独立的字面政策断言。
+ */
 export function assertNobleBadgeRules(
   run: NobleWireRun & { views: ReplayPlayerView[] },
   locale: "en" | "zh-CN",

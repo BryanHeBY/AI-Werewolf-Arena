@@ -1,7 +1,5 @@
 /**
- * Unit test verifies Fragrant God trigger and malformed owner facts cannot become player events through forged audience.
- * Input: Original local world bootstrap and literal event envelopes with extra owner fields.
- * Output and oracle: Exact null/false visibility checks preserve the existing projection boundary; no cycle, transport or recording executes.
+ * 单元测试以原本地 World bootstrap 及带额外 owner 字段的字面事件 envelope 为输入，核对 Fragrant 上帝触发和坏 owner 事实不能因伪造受众成为玩家事件。精确 null／false 可见性为预期；不执行循环、传输或录制。
  */
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/domain/identity";

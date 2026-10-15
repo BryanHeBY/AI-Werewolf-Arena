@@ -1,9 +1,8 @@
 /**
- * Scenario tests for complete evil-knight games over real local transports.
- * Input: original fixed scenario actions, transport and language matrices;
- * output: unchanged terminal, player-view and strict reproduction assertions.
- * Literal winners, alive seats and causal facts are the independent oracle.
- * Synthetic local model/ACP processes exercise the wire; no billed model runs.
+ * 场景测试通过真实本地传输执行完整恶夜骑士对局。
+ * 输入为原固定场景行动、传输和语言矩阵；输出保留原终局、玩家视图及严格复现断言。
+ * 字面胜方、存活席位和因果事实构成独立预期。
+ * 合成本地模型／ACP 进程实际走协议传输，不运行付费模型。
  */
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";

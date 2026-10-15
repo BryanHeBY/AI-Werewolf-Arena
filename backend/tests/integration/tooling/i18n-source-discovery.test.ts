@@ -1,5 +1,5 @@
 /**
- * Filesystem tooling integration tests check public source discovery, native directory failures and root/ancestor/dangling symlink refusal. Inputs are isolated temporary source trees plus the actual reviewed exception file; literal paths, error IDs and exact exceptions are the oracle. Private-source canaries are test-created literals, not real private configuration, and the exception policy is not rewritten.
+ * 文件系统工具集成测试以隔离临时源码树及真实已审例外文件为输入，核对公开源码发现、原生目录错误及根／祖先／悬空符号链接拒绝。字面路径、错误 ID 和精确例外为预期；私有来源探针均为测试创建字面量，不读取真实私配置或重写例外政策。
  */
 import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";

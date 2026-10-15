@@ -1,8 +1,8 @@
 /**
- * Complete badge Tape scenarios verify actual deceased-holder badge choice and reproduction.
- * Input: Fixed scripts, original deaths/holder choices and scoped checkpoints.
- * Output and independent oracle: Independent successor/destruction outcomes and exact strict replay of badge decisions.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整警徽 Tape 场景验证真实死亡持徽者的警徽选择及其复现。
+ * 输入为固定脚本、原死亡／持徽者选择及有界 checkpoint。
+ * 字面预期为按策略出现的选择请求次数、移交给 5 号或 1 号及持徽选择字段；警徽决定的严格重放另核对本局录制一致性。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

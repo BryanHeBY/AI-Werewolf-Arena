@@ -1,8 +1,5 @@
 /**
- * Unit tests for the finite Scholar Mentor production support predicate.
- * Literal canonical boards, reordered decks, removed fields and policy patches
- * are the independent acceptance/rejection oracle. The original dynamic case
- * tables and accessor counter remain unchanged; no World, model or game runs.
+ * 单元测试以字面规范板子、重排牌组、删除字段及政策补丁为输入，核对有限 Scholar Mentor 生产支持 predicate；独立预期为接受／拒绝。原动态用例表和 accessor 计数保留，不运行 World、模型或游戏。
  */
 import { test, expect } from "bun:test";
 import { isScholarMentorPreset as accepts } from "../../../src/rulesets";

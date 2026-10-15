@@ -1,8 +1,8 @@
 /**
- * Complete real-transport scenarios verify live Noble windows close at original interruptions.
- * Input: Fixed interruption scenarios and synthetic agents with original owned requests.
- * Output and independent oracle: Literal blast/death order, no stale later decisions and exact terminal/wire oracles.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整真实传输场景验证活跃夜之贵族窗口在原中断点关闭。
+ * 输入为固定中断场景及持有原绑定请求的合成 Agent。
+ * 输出与独立预期为字面自爆／死亡顺序、没有陈旧后续决定，以及精确终局／协议预期。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/domain";

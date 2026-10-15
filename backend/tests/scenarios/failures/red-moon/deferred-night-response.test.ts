@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify Red Moon deferred-night missing or late responses retain the original interrupted recorded prefix.
- * Input: Existing Red Moon transport plans and exact day-three actor/stage cutoff across transports and locales.
- * Output and oracle: Explicit failed decision and absent settlement assertions retain paid deferred state; the existing World-derived plan/alive oracle debt remains unchanged and is not independent coverage.
+ * 失败场景验证赤月延后夜间回复缺失或迟到时保留原中断录制前缀。
+ * 输入为现有赤月传输计划，以及各传输／语言下精确的第三日行动者／阶段截断。
+ * 输出与预期为明确失败决定及无结算断言，并保留已付延后状态；现有从 World 推导计划／存活预期的债务保留，不能算独立覆盖。
  */
 import { expect, test } from "bun:test";
 import { redMoonScenario } from "../../../support/features/red-moon-apostle/drivers/transport-plan";

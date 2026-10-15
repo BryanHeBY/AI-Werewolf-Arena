@@ -1,8 +1,5 @@
 /**
- * Builds original fragrant-pair-seer test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 以 locale 和 RandomSource 初始化寻香测试的原生游戏对象，默认随机源在模块内指定。输出真实 bootstrap 及既有固定角色／依赖句柄；不把 seed 当调用参数，不推进夜间或替调用方生成结果预期。
  */
 import { Role } from "../../../../../src/domain/identity";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";

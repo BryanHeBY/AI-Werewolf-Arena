@@ -1,10 +1,5 @@
 /**
- * Owns Radiant/Eclipse transport test input construction from a handwritten plan.
- * Inputs are the tracked public configs.example board JSON and original plan name;
- * outputs retain deterministic role remapping, action turns, prompt markers and
- * scenario expectations derived from that supplied literal plan. The original
- * public readFile/JSON/board parse and input callbacks stay intact. This builder
- * starts no server or model and invokes no production settlement or game cycle.
+ * 依据手写计划构造 Radiant／Eclipse 传输测试输入；输入为跟踪的 configs.example 公开板子 JSON 及原计划名，输出保留确定性身份重映射、行动回合、提示标记及该字面计划提供的场景预期。原 readFile／JSON／板子解析和输入回调保持；不启动服务或模型，不调用生产结算或游戏循环。
  */
 import { readFile } from "node:fs/promises";
 import { ActionWindow } from "../../../../../src/domain";

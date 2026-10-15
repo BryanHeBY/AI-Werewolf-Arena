@@ -1,5 +1,5 @@
 /**
- * Unit tests check explicit victory result reader/cloning consistency and malformed terminal display. Inputs are literal decisions, getter mutations and legacy JSON; literal rejection, unknown labels and preserved detached fields are the oracle. No filesystem record or full game is created.
+ * 单元测试以字面决策、getter 变体及旧 JSON 为输入，核对显式胜利结果 reader／克隆一致性及错误终局展示。字面拒绝、未知标签和保留的脱离来源字段为预期；不创建文件系统档案或完整游戏。
  */
 import { expect, test } from "bun:test";
 import { ReplaySessionAggregate } from "../../../src/recording/session/aggregate";

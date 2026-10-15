@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify an actual sheriff primary tie and completed PK retain the first summary in later PK speech requests.
- * Input: Original candidate/vote choices and the existing Radiant Eclipse recording provider.
- * Output and oracle: Explicit speech/vote counters and visible-summary assertions retain election timing; no generic vote engine or regenerated expectation is used.
+ * 交互场景验证真实警长初选平票并完成 PK 后，后续 PK 发言请求仍保留首次摘要。
+ * 输入为原候选／投票选择及现有流光／蚀日录制 provider。
+ * 输出与预期为明确发言／投票计数和可见摘要断言，保留竞选时序，不使用通用投票引擎或重新生成预期。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

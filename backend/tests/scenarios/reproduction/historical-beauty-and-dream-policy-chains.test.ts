@@ -247,7 +247,7 @@ for (const kind of ["poison", "hunter", "wolf_king", "black_backlash"] as const)
         expect(replay.snapshot).toEqual(game.phaseManager.getSnapshot());
         expect(replay.eventCount).toBe(record.events.length);
         expect(replay.decisionCount).toBe(record.decisions.length);
-        // Changing policy while preserving recorded decisions/events cannot masquerade as the original Tape.
+        // 保留已录决定／事件却改变策略，不能冒充原 Tape。
         const changed = structuredClone(record);
         if (kind === "black_backlash")
           changed.metadata.normalizedBoard.dreamer!.protectionPolicy = alternate

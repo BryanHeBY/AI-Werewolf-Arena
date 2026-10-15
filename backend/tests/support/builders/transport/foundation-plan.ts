@@ -1,8 +1,5 @@
 /**
- * Builds original shared test test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责根据 size（六或十二）及 alternate 标志构造基础传输行动计划，返回按玩家编号分组的 PlannedTurn Map。原字面行动及分支顺序留在表中；不接收语言或种子，也不执行传输或游戏。
  */
 import type { PlannedTurn } from "../../transport/contracts";
 import { ActionWindow } from "../../../../src/domain";

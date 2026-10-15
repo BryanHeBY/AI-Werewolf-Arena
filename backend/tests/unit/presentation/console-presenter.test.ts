@@ -1,9 +1,5 @@
 /**
- * Unit tests: Console stream aggregation uses token deltas, message IDs and tool
- * boundaries; exact captured lines check buffered output, flush ordering and role/actor
- * separation. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以 token 增量、消息 ID 和工具边界为输入，用精确捕获行核对 console 缓冲输出、刷新顺序及身份／行动者分离。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { describe, expect, test } from "bun:test";
 import { createAcpConsoleLogger } from "../../../src/adapters/console/console-presenter";
@@ -117,7 +113,7 @@ describe("ACP console text", () => {
     logger({ sessionUpdate: "tool_call", toolCallId: "call2", title: "submit_action" });
     logger({ sessionUpdate: "tool_call_update", toolCallId: "call2", status: "completed" });
     logger.flush();
-    // Session reuse must not suppress a new prompt that reuses a tool call id.
+    // 会话复用不能吞掉复用 tool call id 的新提示。
     logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "submit_action" });
     logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", status: "completed" });
     expect(lines).toEqual([

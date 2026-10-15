@@ -1,11 +1,8 @@
 /**
- * Scenario tests for complete Red Moon games over real local transports.
- * Inputs are original controlled action plans plus transport/language matrices;
- * outputs retain terminal, player-view and strict reproduction comparisons.
- * Winner/alive expectations come from the driver’s production rehearsal and are
- * consistency checks, not independent rules oracles. Literal event-count and
- * rejection assertions remain separate handwritten checks. Synthetic local
- * model/ACP processes exercise the wire; no billed model is called.
+ * 场景测试通过真实本地传输执行完整赤月对局。
+ * 输入为原受控行动计划及传输／语言矩阵；输出保留终局、玩家视图及严格复现对照。
+ * 胜方／存活预期来自驱动对生产逻辑的预演，属于一致性检查，不是独立规则预期。
+ * 字面事件次数和拒绝断言仍为另行手写检查；合成本地模型／ACP 进程实际走协议，不调用付费模型。
  */
 import { expect, test } from "bun:test";
 import { redMoonScenario } from "../../../support/features/red-moon-apostle/drivers/transport-plan";

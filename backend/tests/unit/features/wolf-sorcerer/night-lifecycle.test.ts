@@ -1,9 +1,5 @@
 /**
- * Unit tests check Wolf Sorcerer's borrowed shared cleanup ownership and terminals.
- * A fixed N2 public paired board, native pass and delegated World failures supply
- * inputs; literal getter counts and original unsettled errors are the oracle.
- * No new source algorithm supplies expected output, and no complete night,
- * composed-effect driver, model or recording executes here.
+ * 单元测试以固定 N2 公开配对板子、原生跳过及委托 World 故障为输入，核对狼术师借用的共享清理权和终态。字面 getter 次数及原未结算错误为预期；不以新来源算法生成预期，也不运行完整夜、组合效果驱动、模型或录制。
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
@@ -48,7 +44,7 @@ function fixture() {
 }
 
 function openEligibleSecondNight(world: ReturnType<typeof fixture>["world"]): number {
-  // This unchanged public board activates both casters at N2; N1 has no choice.
+  // 该未改变的公开板子在 N2 激活两名施法者，N1 没有选择。
   expect(beginWolfSorcererNight(world, 1)).toBeNull();
   wolfSorcererNightTerminal.closeNormally(world, 1);
   return beginWolfSorcererNight(world, 2)!;

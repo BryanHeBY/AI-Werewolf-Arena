@@ -1,8 +1,5 @@
 /**
- * Builds original debater test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责根据六／十二人数及 success／tie／abstain 结果分支构造杠精传输输入，输出原板子、内部固定种子、身份与字面挑战／投票回合。不接收任意语言或种子，不执行辩论结算来计算预期。
  */
 import { Role } from "../../../../../src/domain";
 import { PotionType } from "../../../../../src/domain";
@@ -73,7 +70,7 @@ export function debaterScenario(
     );
     if (day > 1) dead.add(knife);
     const alive = ids.filter((id) => !dead.has(id));
-    // The challenge is before the first other ordinary speaker; only the actor may precede it.
+    // 挑战发生在首个其他普通发言者之前；此前只可有行动者本人发言。
     if (day === 1) {
       if (alive[0] === actor)
         add(day, [actor], "day_speech", { name: "speak", args: { text: "Speech" } });

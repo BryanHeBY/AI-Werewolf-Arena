@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify automatic recording can flush during pending Radiant Eclipse election, speech and voting requests.
- * Input: The existing recording driver and one delayed response in the original three-stage matrix.
- * Output and oracle: Literal delay-reached, finalization and empty-error assertions cover the running cycle; no archived expected output is regenerated.
+ * 交互场景验证流光／蚀日竞选、发言和投票请求处于 pending 时，自动录制仍可刷盘。
+ * 输入为现有录制驱动，以及原三个阶段矩阵中一次延迟回复。
+ * 输出与预期为字面到达延迟点、终结和空错误断言，覆盖运行中的周期；不重新生成归档预期输出。
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";

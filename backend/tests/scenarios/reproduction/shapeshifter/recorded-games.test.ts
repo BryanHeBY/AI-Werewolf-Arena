@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Shapeshifter complete recorded games preserve the initial swap window and full-deal archive contract.
- * Input: Original board-size, swap/keep/bottom-role, transport and locale matrices and copied original-record forgeries.
- * Output and oracle: Declared initial deal, final roles and private knowledge assertions retain exact replay; action matrices and source fixture bytes are unchanged.
+ * 复现场景验证千面人完整录制对局保留初始换牌窗口及完整发牌归档契约。
+ * 输入为原人数、换牌／保留／底牌身份、传输和语言矩阵，以及原记录副本伪造。
+ * 输出与预期为声明的初始发牌、最终身份和私有知识断言，保留精确重放；行动矩阵及源 fixture 字节不变。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

@@ -1,8 +1,5 @@
 /**
- * Unit tests: Ghost Bride configuration reads the immutable named public board; exact
- * roster/bootstrap and unsupported-combination assertions check the native finite setup.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试读取不可变具名公开板子，以精确名单／bootstrap 和不支持组合断言核对 Ghost Bride 原生有限装配。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";

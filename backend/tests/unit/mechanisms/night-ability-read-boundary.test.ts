@@ -98,7 +98,7 @@ function rejectedLiveWrites(
     healUsedThisNight: false,
     poisonUsedThisNight: false,
   };
-  data.poison = 0; // Installation DTO retains its existing writable fields.
+  data.poison = 0; // 安装 DTO 保留原有可写字段。
   // @ts-expect-error A native install returns a stored read alias, not its writable input DTO.
   installNativeAbility(role, "potion", data).poison = 0;
 }

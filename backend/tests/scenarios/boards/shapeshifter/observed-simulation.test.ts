@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Shapeshifter original setup cards and strict recorded choices.
- * Input: Twenty restricted robot seeds per board/locale and fixed setup inputs.
- * Output and independent oracle: Literal setup/role decision coverage, natural finish and exact per-game reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行千面人原开局牌及严格录制请求。
+ * 输入为每个板子／语言下二十个受限机器人种子及固定开局输入。
+ * 字面预期为自然完成、无拒绝／回退、起始决定至多一次及开局完成；逐局重放与原末 checkpoint 对照，不将该次数上限说成每局选择覆盖。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

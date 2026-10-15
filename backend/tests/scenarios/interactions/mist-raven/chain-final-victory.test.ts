@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify Mist/Raven chain-final victory waits for actual pending rescue and rejects illegal late self-heal.
- * Input: Original last-villager/last-god recording plans, locale matrix and captured request observations.
- * Output and oracle: Literal terminal timing, live-state, stock and failed-prefix assertions remain tied to actual recordings; failed healing is not repaired into a legal action.
+ * 交互场景验证迷雾组合板在链末判胜前等待真实待处理救援，并拒绝非法迟到自疗。
+ * 输入为原末平民／末神录制计划、语言矩阵及捕获的请求观察。
+ * 输出与预期为字面终局时点、实时状态、库存及失败前缀断言，并绑定真实录制；不将失败治疗修成合法行动。
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase } from "../../../../src/domain";

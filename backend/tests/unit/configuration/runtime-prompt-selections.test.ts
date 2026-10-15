@@ -1,7 +1,5 @@
 /**
- * Unit tests verify SDK/ACP profile prompts and role/seat selection precedence through pure runtime configuration parsing.
- * Input: Original transport-kind matrix and literal malformed persona strings.
- * Output and oracle: Exact profile text, inherited spawn arguments and diagnostic paths retain original assertions; no config file, transport or model is loaded.
+ * 单元测试通过纯 runtime 配置解析，以原传输类别矩阵和字面错误 persona 字符串核对 SDK／ACP profile 提示及身份／座位选择优先级。精确 profile 文本、继承 spawn 参数及诊断路径为预期；不加载配置文件、传输或模型。
  */
 import { expect, test } from "bun:test";
 import {

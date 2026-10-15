@@ -125,5 +125,5 @@ for (const locale of ["zh-CN", "en"] as const)
       if (kind === "individual" || kind === "relationship" || kind === "multiple")
         expect(label).not.toBe(locale === "en" ? "No winner" : "无获胜方");
       if (original.outcome.kind === "victory") original.outcome.winningPlayerIds.length = 0;
-      expect(replay.result.decision).toEqual({ ...result }); // Detached from other copies.
+      expect(replay.result.decision).toEqual({ ...result }); // 与其他副本脱离引用共享。
     });

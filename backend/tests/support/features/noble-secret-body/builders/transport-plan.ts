@@ -1,8 +1,5 @@
 /**
- * Builds original noble-secret-body test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 NobleTransportPlanName 及 wolf／repeat 策略选项构造夜之贵族传输输入，计划名有原默认值。内部固定种子用于原身份映射，输出板子、回合和字面预期；不接收任意语言／种子或运行对局生成结果。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

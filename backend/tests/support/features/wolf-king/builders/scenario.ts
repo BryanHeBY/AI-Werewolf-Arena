@@ -1,8 +1,5 @@
 /**
- * Builds original wolf-king test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 WolfKingScenario 的 kind 构造狼王传输输入，输出原板子、内部固定种子、身份及死亡枪／后续字面回合。十二人分支仍只做原字面编号重映射；不实际开枪或执行对局计算预期。
  */
 import { PotionType } from "../../../../../src/domain";
 import { withPromptOracle } from "../oracles/prompt-plan";
@@ -22,7 +19,7 @@ export type WolfKingScenario =
 
 export function wolfKingScenario(kind: WolfKingScenario): TransportGameScenario {
   if (kind === "twelve") {
-    // Frozen seed maps the first old wolf card to seat 2. Permute only literal wolf IDs 1/2.
+    // 冻结种子将第一张旧狼牌分到座位 2；只交换字面狼编号 1／2。
     const ids = (id: number) => (id === 1 ? 2 : id === 2 ? 1 : id);
     const turns = new Map<number, PlannedTurn[]>();
     for (const [actor, rows] of foundationTransportPlan(12))

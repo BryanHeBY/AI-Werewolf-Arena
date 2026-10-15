@@ -1,8 +1,8 @@
 /**
- * Complete scripted Tape scenarios verify AWA election/exile PK and night badge choice together.
- * Input: Public preset, fixed actions/RNG, both locales and real phase-manager records.
- * Output and independent oracle: Handwritten election/death/badge sequence and exact strict replay, not generated golden replacement.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整脚本 Tape 场景一并验证 AWA 竞选／放逐 PK 和夜间警徽选择。
+ * 输入为公开预设、固定行动／RNG、两种语言及真实阶段管理器记录。
+ * 字面预期为归一化警长／投票配置、两类 PK 各一次、1 号夜死后移交给 6 号及其持徽字段；严格重放另核对本局录制一致性，不重新生成固定预期。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

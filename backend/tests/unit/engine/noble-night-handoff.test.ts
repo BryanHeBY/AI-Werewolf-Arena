@@ -1,9 +1,5 @@
 /**
- * Unit tests check the backend-only Noble receiver on original pipeline result objects.
- * Literal data and property descriptors prove identity and JSON/spread boundaries;
- * an actual pipeline early interruption proves it does not read config ownership.
- * Original authority receivers remain callable with manager arguments. These
- * bounded cases use native in-memory components and no model, transport or game loop.
+ * 单元测试针对原管线结果对象核对仅 backend 使用的 Noble 接收者。字面数据和 descriptor 验证引用及 JSON／spread 边界；真实管线早中断验证不读取配置所有权，原 authority 接收者仍可用 manager 参数调用。仅原生内存组件，不运行模型、传输或游戏循环。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

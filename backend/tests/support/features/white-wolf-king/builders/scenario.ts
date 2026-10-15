@@ -1,8 +1,5 @@
 /**
- * Builds original white-wolf-king test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 WhiteWolfScenario 的 kind 及 ActionWindow 构造白狼王传输输入，保留原默认窗口。输出原板子、内部固定种子、身份及字面自爆／后续回合；不执行自爆、死亡链或对局结算生成预期。
  */
 import { PotionType } from "../../../../../src/domain";
 import { oracle } from "../oracles/prompt-plan";
@@ -47,7 +44,7 @@ export function whiteWolfScenario(
     cast.expectedInvalidError = "white_wolf_blast_target";
     for (const row of turns.get(5)!.filter((row) => row.stage === "seer"))
       row.action = { name: "check_identity", args: { target_id: row.day === 1 ? 2 : 1 } };
-    // Remaining ordinary wolf 1 survives the first interruption and replaces old wolf 2's second-night/final-blast script.
+    // 余下普通狼 1 活过首次中断，接替旧狼 2 的第二夜及最终自爆脚本。
     turns.set(1, [
       ...turns.get(1)!,
       ...foundationTransportPlan(12)
@@ -181,5 +178,5 @@ export function whiteWolfScenario(
       : kind === "wolf_king"
         ? "white-wolf-wolf_king:336"
         : "white-wolf-hunter:641",
-  }); // Frozen role-specific seed is installed below.
+  }); // 下方安装已冻结的角色专用种子。
 }

@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Cupid policy branches and relationship winner membership.
- * Input: Twenty restricted-observation seeds per policy/locale with individual recordings.
- * Output and independent oracle: Handwritten relationship/member outcomes, recorded choices and exact complete-game replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证丘比特策略分支及关系胜利成员。
+ * 输入为每种策略／语言下二十个受限观察种子，各局单独录制。
+ * 配对／互认次数及手写关系／成员公式构成字面约束；完整对局重放结果另与原录制作一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

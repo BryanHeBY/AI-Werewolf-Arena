@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify White Wolf King actual blast targets and outcomes.
- * Input: Existing boards, restricted player inputs and fixed seed recordings.
- * Output and independent oracle: Executed target/death coverage and strict replay of every complete game.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证白狼王实际自爆分支及完整对局重放。
+ * 输入为现有板子、受限玩家输入及固定种子录制。
+ * 字面预期为十六局自然完成、无拒绝／回退及自爆分支出现；逐局严格重放对照原结果，不另称独立逐目标死亡预期。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";

@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public Hybrid examples resolve finite role composition without arbitrary policy parameters.
- * Input: Original six/twelve-player public board/game files and four literal invented parameter objects.
- * Output and oracle: Exact counts/board identity and strict parameter rejection preserve file-loader wiring; existing example bytes and initialization behavior are unchanged.
+ * 配置文件系统集成测试读取原公开六／十二人 Hybrid 文件及四个手写虚构参数对象，核对有限身份组合而非任意政策参数。精确数量／板子身份及严格参数拒绝为预期；示例字节与初始化行为保持原状。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

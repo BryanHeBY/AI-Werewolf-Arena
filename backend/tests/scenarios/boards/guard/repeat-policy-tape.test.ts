@@ -1,8 +1,8 @@
 /**
- * Complete Guard policy Tape scenarios verify A/no-action/A repeat semantics across night boundaries.
- * Input: Explicit repeat policies, fixed scripts and real phase-manager requests.
- * Output and independent oracle: Manual permitted/refused guard actions and strict replay of original policy decisions.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整守卫策略 Tape 场景验证跨夜 A／不行动／A 的重复守护语义。
+ * 输入为明确的重复策略、固定脚本及真实阶段管理器请求。
+ * 手写允许／拒绝的守护行动构成独立预期；原策略决定的严格重放另核对本局录制一致性。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

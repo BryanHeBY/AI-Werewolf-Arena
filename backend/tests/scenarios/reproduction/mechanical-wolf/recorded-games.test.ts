@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Mechanical Wolf complete recorded games preserve independent learned abilities, readiness and source authority.
- * Input: Original scenario/transport/locale matrices with handwritten learned-role, ready-day, survivor and last-word facts.
- * Output and oracle: Explicit private resource, knowledge, death and terminal assertions retain exact replay; no copy state or expected table is regenerated.
+ * 复现场景验证机械狼完整录制对局保留独立习得能力、就绪时点及来源权限。
+ * 输入为原场景／传输／语言矩阵，以及手写习得身份、就绪日、存活者和遗言事实。
+ * 输出与预期为明确私有资源、知识、死亡及终局断言，保留精确重放；不重新生成复制状态或预期表。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

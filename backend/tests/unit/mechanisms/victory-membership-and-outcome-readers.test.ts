@@ -56,7 +56,7 @@ for (const locale of ["zh-CN", "en"] as const)
         .reason,
     ).toBe("wolves_reach_half");
     dead(world, [1, 2, 5, 6]);
-    expect(registry.evaluate(world, WinCondition.SlaughterCity)!.winner).toBe(Camp.Good); // Simultaneous all-dead priority.
+    expect(registry.evaluate(world, WinCondition.SlaughterCity)!.winner).toBe(Camp.Good); // 同时全员死亡的优先级。
   });
 
 for (const locale of ["zh-CN", "en"] as const)

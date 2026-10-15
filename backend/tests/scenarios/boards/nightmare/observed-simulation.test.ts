@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Nightmare fear and wolf action policy combinations.
- * Input: Public fear/wolf policy variants, limited observations and per-game recordings.
- * Output and independent oracle: Actual fear ordering, natural terminal checkpoints and exact strict replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行噩梦之影恐惧与狼人行动策略组合。
+ * 输入为公开恐惧／狼人策略分支、有限观察及逐局录制。
+ * 字面预期为首恐惧事实存在、畸形受众／payload 被拒、自然完成及无回退；严格重放与原末 checkpoint 做一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { expect, test } from "bun:test";

@@ -1,8 +1,5 @@
 /**
- * Builds original demon-hunter test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责根据人数和胜利目标构造猎魔人传输场景；失败入口另接收 missing／late 并截断原回合。输出原板子、内部固定种子、身份、行动及字面胜方／存活预期；不执行游戏或重新计算结果。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

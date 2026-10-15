@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Awakened Hidden Wolf count and unsupported-role combinations are rejected consistently before installation.
- * Input: Original literal extra-role and duplicate-count matrices passed to board normalization and direct bootstrap.
- * Output and oracle: Explicit combination/count diagnostic codes remain unchanged; no example file or complete game is loaded by these cases.
+ * 单元测试将原字面额外身份及重复数量矩阵送入归一化和直接 bootstrap，核对 Awakened Hidden Wolf 数量及不支持组合在安装前一致拒绝。预期为明确组合／数量诊断码；不加载示例文件或完整游戏。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

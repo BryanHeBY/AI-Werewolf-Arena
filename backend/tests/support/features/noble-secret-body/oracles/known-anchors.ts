@@ -1,15 +1,12 @@
 /**
- * Owns test oracle support: Handwritten cross-night knowledge anchors in actual current Noble/Body prompts, separate from production projection.
- * Inputs are actual wire messages, request prefixes, snapshots or a former
- * local endpoint plus explicit expectations; outputs are the original assertions
- * and rejection diagnostics. Unit/integration/scenario tests retain their
- * independent literal markers and recorded prefixes as the oracle. No expected
- * result is regenerated from production role, observation or board algorithms.
+ * 持有真实 Noble／Body 当前提示中的手写跨夜知识锚点，与生产投影分开。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言与拒绝诊断；各层测试沿用独立标记和已录前缀，不从生产身份、观察或板子算法生成结果预期。
  */
 import { expect } from "bun:test";
 import { noblePromptStatus, type NobleWireRun } from "./wire";
 import { type nobleTransportScenario } from "../builders/transport-plan";
-/** Handwritten cross-night checkpoints in actual current prompts, separate from feed folds. */
+/**
+ * 真实当前提示中的跨夜检查点由手写提供，与 feed 折叠相互独立。
+ */
 export function assertNobleKnownAnchors(
   run: NobleWireRun,
   s: ReturnType<typeof nobleTransportScenario>,

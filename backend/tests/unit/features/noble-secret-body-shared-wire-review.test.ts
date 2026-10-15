@@ -1,9 +1,5 @@
 /**
- * Unit tests: Noble and Secret Body shared wire oracles use literal owner choices and
- * unrelated villagers; exact allowed/rejected facts check semantic message privacy without
- * an actual MCP session. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面 owner 选择及无关村民为输入，用精确允许／拒绝事实核对 Noble／Secret Body 共享传输预期的消息私密语义，不创建真实 MCP 会话。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../../support/features/noble-secret-body/builders/transport-plan";

@@ -1,9 +1,5 @@
 /**
- * Unit / filesystem contract for strict engine provenance. Independent literal
- * path-byte hashes prove runtime/AI/recording/new package/schema membership;
- * adding or changing those inputs changes identity, while tests/private configs
- * remain outside the declared production scope. Source symlinks fail closed.
- * No role settlement, model, archive rewriting or compatibility oracle is used.
+ * 严格引擎来源的单元／文件系统契约测试。以独立字面路径及字节哈希核对 runtime、AI、recording、新包和 schema 是否纳入指纹；新增或改变这些输入会改变构建身份，测试及私有配置仍在声明的生产范围之外。源码符号链接必须被拒绝；不执行身份结算、模型、档案改写，也不借兼容路径生成预期。
  */
 import { expect, test } from "bun:test";
 import { createHash } from "node:crypto";

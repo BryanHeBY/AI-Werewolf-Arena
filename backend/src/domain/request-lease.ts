@@ -101,6 +101,13 @@ export interface RequestLeaseTurn {
 }
 /** pin 只核顶层枚举字段及原值引用；嵌套数据/合法 getter/Proxy 不套新 schema 或深只读政策。 */
 interface FieldPin { keys: string[]; values: unknown[] }
+/**
+ * 原请求与合法别名共享此运行记录；deadline 为 null 时没有有限共同预算，有效期限别名可保持或缩短预算，不能延长。
+ * closed 初始为 true；pin／原期限捕获完成且原期限缺省或为有限未来值时才置 false，捕获抛错或无效原期限仍保持关闭。
+ * 后续观察失效或 finish 后关闭；关闭本身不表示已经通知交付结果。
+ * settled 只由 finish 置位，先记终态再通知，通知抛错也不再发送第二次。
+ * opened 仅表示原请求已安装交付 guard，不表示领域付款成功；completion 是这一组请求共享的不透明通知身份。
+ */
 interface LeaseTurn<Owner, Binding> {
   owner: Owner;
   original: ActionRequest;
@@ -115,6 +122,7 @@ interface LeaseTurn<Owner, Binding> {
   aliases: Set<ActionRequest>;
   handle?: RequestLeaseTurn;
 }
+/** 每个请求对象有独立条目；retired 隔离失配别名，共同许可失效由 turn.closed 表达。 */
 interface LeaseEntry<Owner, Binding> {
   turn: LeaseTurn<Owner, Binding>;
   retired: boolean;

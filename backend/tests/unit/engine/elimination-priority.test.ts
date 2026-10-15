@@ -108,7 +108,7 @@ for (const locale of ["zh-CN", "en"] as const) {
             });
           }
         }
-        // A configured registry never changes the shared legacy default.
+        // 配置过的 registry 不能改变共享的旧默认值。
         expect(
           getDefaultWinConditionRegistry().evaluate(world, WinCondition.SlaughterSide)?.winner ??
             null,

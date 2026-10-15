@@ -1,8 +1,5 @@
 /**
- * Builds original shared test test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责根据 ActionWindow 构造六人自爆传输计划，返回按玩家分组的原 PlannedTurn Map。窗口只选择字面脚本中自爆出现的位置；不执行自爆、分配真实请求权限或运行对局。
  */
 import { ActionWindow } from "../../../../src/domain";
 import type { ToolCall } from "../../../../src/domain";

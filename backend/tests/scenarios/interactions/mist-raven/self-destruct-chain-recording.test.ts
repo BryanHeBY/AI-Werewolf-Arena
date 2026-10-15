@@ -1,7 +1,7 @@
 /**
- * Interaction scenarios verify Mist/Raven self-destruct chains preserve delivered resources, death order and queued-night recording.
- * Input: Original recording variants, locale matrix and controlled blast responses on actual games.
- * Output and oracle: Literal event/role/checkpoint assertions retain chain-final outcomes and action replay; the original variant tables and archived fixtures are unchanged.
+ * 交互场景验证迷雾组合板自爆链保留已交付资源、死亡顺序及排队夜间录制。
+ * 输入为原录制分支、语言矩阵及真实对局中的受控自爆回复。
+ * 输出与预期为字面事件／身份／checkpoint 断言，保留链末结果和行动重放；原分支表与归档 fixture 不变。
  */
 import { expect, test } from "bun:test";
 import { ActionWindow, Camp, Phase } from "../../../../src/domain";

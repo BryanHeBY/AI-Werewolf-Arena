@@ -1,8 +1,5 @@
 /**
- * Builds original pure-white-girl test input plans, fixed boards and explicit player/marker data. Inputs
- * are supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 wolf／good 分支构造纯白之女与狼巫传输场景，输出原板子、内部固定种子、身份、角色编号及字面回合。不执行查验或死亡结算来计算预期。
  */
 import { roleName } from "@ai-werewolf-arena/game-text";
 import { ActionWindow } from "../../../../../src/domain";

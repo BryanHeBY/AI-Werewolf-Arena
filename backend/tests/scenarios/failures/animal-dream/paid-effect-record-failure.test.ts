@@ -57,8 +57,8 @@ for (const skill of ["fox", "puffer"] as const)
         locale: "zh-CN",
         maxDays: 8,
       });
-      // Test-only recording sink failure at the actual ReproductionTrace settle notification.
-      // Domain owner, action, votes, lives and append logic remain production implementations.
+      // 仅测试使用的录制 sink 故障，落在真实 ReproductionTrace 结算通知处。
+      // 领域 owner、行动、投票、生命及追加逻辑仍使用生产实现。
       const sink = manager as unknown as { scheduleFlush(): void };
       const original = sink.scheduleFlush;
       sink.scheduleFlush = function () {
@@ -151,7 +151,7 @@ for (const skill of ["fox", "puffer"] as const)
         checkpoints: unknown[];
         errors: unknown[];
       };
-      // Save the true trace before validation: this is not a fabricated replay fixture.
+      // 在验证前保存真实轨迹，不构造伪造的重放 fixture。
       const input = (manager as any).aggregate.debugSummaryInput();
       const operations = (input.logicOps ?? [])
         .filter((op: any) => op.scope !== "llm_action_provider")

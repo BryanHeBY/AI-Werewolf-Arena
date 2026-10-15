@@ -1,9 +1,5 @@
 /**
- * Unit tests check Noble's concrete opening and sender-to-manager night ownership.
- * Fixed authority players and throwing runtime ports supply the inputs; literal
- * getter order, original errors, retained notices and authority terminal states
- * supply independent expectations. One bounded night uses no transport or model.
- * Normal manager close must retain the original later abort until body resolution.
+ * 单元测试以固定 authority 玩家及抛错 runtime 端口为输入，核对 Noble 具体开窗及 sender 到 manager 的夜所有权。字面 getter 顺序、原错误、保留通知及 authority 终态为独立预期；仅一个有界夜，不运行传输或模型。正常 manager close 后，原晚 abort 必须保留到 body 解析结束。
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";

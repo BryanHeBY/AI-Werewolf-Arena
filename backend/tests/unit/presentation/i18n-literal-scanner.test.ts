@@ -1,5 +1,5 @@
 /**
- * Unit tests check controlled AST literal discovery and exact translation ownership exemptions. Inputs are literal TS/JSX/template snippets and reviewed exception rows; handwritten hit lists and invalid exception counts are the oracle. No repository or temporary filesystem tree is scanned.
+ * 单元测试以字面 TS／JSX／模板片段及已审例外项为输入，核对受控 AST 字面发现和精确翻译所有权豁免。手写命中清单及非法例外数量为预期；不扫描仓库或临时文件系统树。
  */
 import { expect, test } from "bun:test";
 import { collectChineseLiterals, verifyLiteralExceptions } from "../../../scripts/check-i18n-literals.mjs";

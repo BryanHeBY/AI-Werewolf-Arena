@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify complete recorded games preserve anonymous wall-note publication and strict required request handling.
- * Input: Original six/twelve-player write/skip plans across transport and locale matrices.
- * Output and oracle: Literal publication count/text count, anonymous audience and terminal assertions retain exact replay; original diagnostic temporary output is unchanged.
+ * 复现场景验证完整录制对局保留匿名墙纸条发表及严格必需请求处理。
+ * 输入为原六／十二人书写／跳过计划及传输／语言矩阵。
+ * 输出与预期为字面发表次数／文本数、匿名受众及终局断言，保留精确重放；原临时诊断输出不变。
  */
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";

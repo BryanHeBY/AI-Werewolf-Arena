@@ -1,8 +1,8 @@
 /**
- * Delivery failure/replay integration verify revoked actual request records an error before settlement.
- * Input: A bound real engine request, injected currentness failure and runner recording.
- * Output and independent oracle: Literal decision_failed partial cycle, unchanged stock/no fake night result and exact replay without a synthetic replay clock.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 交付失败／重放集成测试验证真实请求撤权后在结算前记录错误。
+ * 输入为已绑定的真实引擎请求、注入的当前性失效及 runner 录制。
+ * 字面 decision_failed 部分周期、库存不变／没有伪造夜间结果构成独立预期；精确重放另核对本局录制一致性，不依赖合成重放时钟。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test, spyOn } from "bun:test";
 import path from "node:path";

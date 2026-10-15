@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify real Fragrant Pair Seer recordings reject forged source, request, knowledge and death-wave evidence.
- * Input: Three original beforeAll recordings, copied records and literal duplicate/co-deletion/refund mutations.
- * Output and oracle: Explicit original acceptance, exact rejection and paid-prefix assertions retain the actual causal source; generated recordings do not become independent expected state.
+ * 复现场景验证真实寻香配对板录制拒绝伪造来源、请求、知识及死亡波证据。
+ * 输入为原三个 beforeAll 录制、记录副本及字面重复／共同删除／退款篡改。
+ * 输出与预期为明确原记录接收、精确拒绝及已付前缀断言，保留真实因果来源；生成录制不成为独立预期状态。
  */
 import { beforeAll, expect, test } from "bun:test";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";

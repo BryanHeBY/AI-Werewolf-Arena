@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify positive and quiet Bear signals under limited knowledge.
- * Input: Fixed observation seeds and existing Bear boards.
- * Output and independent oracle: Actual positive/quiet skill coverage, natural results and exact complete-game replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证有限知识下熊的吼叫和安静信号。
+ * 输入为固定观察种子及现有熊板。
+ * 字面约束为信号 payload 字段、正／静默分支均出现和自然完成；完整对局重放结果另与原录制作一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";

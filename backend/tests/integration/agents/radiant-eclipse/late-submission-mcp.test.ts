@@ -19,8 +19,8 @@ import { radiantProvider } from "../../../support/features/radiant-eclipse/drive
 import { radiantManualAction } from "../../../support/features/radiant-eclipse/drivers/manual-actions";
 import { fixtureObject } from "../../../support/oracles/fixture-values";
 
-// The retained client/control belong to this adversarial test, not a provider session.
-// Real runner tests separately prove provider-owned transport/process reclamation.
+// 保留的客户端与 control 属于本对抗测试，不属于 provider 会话。
+// 真实 runner 测试另行证明 provider 所有的传输与进程会被回收。
 for (const boundary of [
   {
     stage: "eclipse_swallow",
@@ -113,7 +113,7 @@ for (const boundary of [
             );
           throw new Error("fixture_target_not_reached");
         })();
-        // If an earlier phase fails, reject promptly instead of hanging on the handoff.
+        // 若更早阶段失败，应立即拒绝，避免一直等待交接。
         const request = await Promise.race([
           requestReady,
           cycle.then(() => {
@@ -161,7 +161,7 @@ for (const boundary of [
         expect(registry.snapshot.pending).toBe(1);
         expect(await submit(next.turnId)).toMatchObject({ ok: true, accepted: true });
         expect(await next.action).toEqual(action);
-        expect(role.privateState).toEqual(state); // Reception never performs engine effects.
+        expect(role.privateState).toEqual(state); // 接收层从不执行引擎效果。
         expect(game.phaseManager.getEvents()).toEqual(events);
         const locallyClosed = registry.openTurn(
           { ...request, deadlineAtMs: Date.now() + 10000 },

@@ -1,0 +1,98 @@
+{
+  "baseCommit": "d7b5f51b770d1b5713ffe8b62fd671cac36e92eb",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+  "environment": [
+    "PATH=/usr/bin:/bin",
+    "LANG=C.UTF-8",
+    "TZ=UTC",
+    "TMPDIR=/tmp"
+  ],
+  "executions": [
+    {
+      "launch": "1e983f",
+      "session": 83467,
+      "terminal": "568909",
+      "exitCode": 0,
+      "mode": "main prepare",
+      "raw": "raw/main-prepare.txt"
+    },
+    {
+      "launch": "7972a2",
+      "session": 24755,
+      "terminal": "80a14c",
+      "exitCode": 0,
+      "mode": "main apply",
+      "raw": "raw/main-apply.txt"
+    },
+    {
+      "launch": "e6f025",
+      "session": 99764,
+      "terminal": "453b74",
+      "exitCode": 0,
+      "mode": "main prove",
+      "raw": "raw/main-proof.txt",
+      "files": 439,
+      "completeOutputRecords": 1756
+    },
+    {
+      "launch": "09f091",
+      "exitCode": 1,
+      "mode": "main heads first",
+      "raw": "raw/main-heads.txt",
+      "files": 439,
+      "diagnostics": 318,
+      "uniqueFiles": 155,
+      "rules": {
+        "comment.first-paragraph": 151,
+        "comment.responsibility": 151,
+        "comment.layer": 14,
+        "comment.oracle": 2
+      }
+    },
+    {
+      "launch": "c9c6a8",
+      "exitCode": 0,
+      "mode": "bridge apply",
+      "raw": "raw/bridge-apply.txt",
+      "commentPrograms": 43,
+      "policyPrograms": 2
+    },
+    {
+      "launch": "45729c",
+      "session": 55940,
+      "terminal": "948877",
+      "exitCode": 0,
+      "mode": "bridge prove",
+      "raw": "raw/bridge-proof.txt",
+      "files": 43,
+      "wholeOutputs": 86
+    },
+    {
+      "launch": "48abef",
+      "exitCode": 0,
+      "mode": "new policy declaration only",
+      "raw": "raw/unit.txt",
+      "pass": 1,
+      "fail": 0,
+      "filtered": 38,
+      "assertions": 4
+    },
+    {
+      "launch": "540fc9",
+      "exitCode": 0,
+      "mode": "only initially failed heads",
+      "raw": "raw/failed-heads.txt",
+      "files": 155,
+      "diagnostics": 0,
+      "notRepeatedGreen": 284
+    }
+  ],
+  "commands": "实际所有Bun前含--no-env-file。main工具argv、模式、完整base/plan/maps见归档tools/README及plan映射；Root桥脚本和实际raw完整保存。",
+  "preparationErrors": [
+    "69226a首次准备JSON误选全部57support并在任何仓库写前断言40失败；后按缺中文测试的40精确修，115自然头含另17support。不是产品或门禁红。"
+  ],
+  "limits": [
+    "主439完整proof只对应首应用点；43注释后继与2政策程序单独登记。",
+    "未重复284绿色头或旧测试/type/业务/模型；最终全门禁仍待。"
+  ]
+}

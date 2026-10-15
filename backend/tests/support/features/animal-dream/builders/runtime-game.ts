@@ -1,8 +1,5 @@
 /**
- * Builds original animal-dream test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 持有动物梦境测试的固定身份表、按 skip／first 构造的板子及 animalGame 初始化入口。初始化接收 locale 和两个策略标志，使用内部固定种子及身份建立真实 bootstrap 对象；仅初始化，不推进阶段或从运行结果生成预期。
  */
 import { Role } from "../../../../../src/domain";
 import { animalDreamTwelveConfig } from "../../../../../src/rulesets/presets/animal-dream-twelve";

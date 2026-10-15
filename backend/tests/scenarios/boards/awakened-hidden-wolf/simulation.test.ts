@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Awakened Hidden Wolf copied resources and activation.
- * Input: Existing boards and twenty fixed own-observation seeds with recorded games.
- * Output and independent oracle: Literal copied-resource/role checks, natural finish and exact per-game Tape replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证觉醒隐狼复制资源及激活中的具体不变量。
+ * 输入为现有板子、二十个固定自身观察种子及逐局录制。
+ * 字面约束包括毒库存不增、耗尽刀不恢复、查验去重、下一夜就绪及狼聊排除；逐局 Tape 结果另与原录制作一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { fixtureNumber } from "../../../support/oracles/fixture-values";
 import { expect, test } from "bun:test";

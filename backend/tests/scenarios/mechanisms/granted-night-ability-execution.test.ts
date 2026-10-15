@@ -143,7 +143,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(
       getSeerState(role(world, 5), "gift:two")?.history.map((entry) => entry.targetId),
     ).toEqual([2]);
-    expect(getSeerState(role(world, 5))).toBeUndefined(); // Ambiguous instances cannot be selected by a legacy getter.
+    expect(getSeerState(role(world, 5))).toBeUndefined(); // 旧 getter 不能从存在歧义的多个实例中擅自选取。
     expect(role(world, 5).role).toBe(Role.Villager);
     expect(role(world, 6).role).toBe(Role.Villager);
     asked.length = 0;

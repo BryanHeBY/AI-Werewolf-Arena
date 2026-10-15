@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify Scholar Mentor choice, bonus and later night interruptions preserve the exact second-cycle paid prefix.
- * Input: Original controlled response matrices and copied actor, candidate or paid-guard record forgeries.
- * Output and oracle: Literal failed actor/cycle, remaining stock and history assertions remain together with explicit forgery rejection; the generated record supplies input rather than new golden output.
+ * 失败场景验证学者／导师选择、加成及后续夜间中断保留精确的第二周期已付前缀。
+ * 输入为原受控回复矩阵及行动者、候选或已付守护记录副本伪造。
+ * 输出与预期为字面失败行动者／周期、剩余库存和历史断言，并明确拒绝伪造；生成记录提供输入，不成为新的固定输出。
  */
 import { expect, test } from "bun:test";
 import { Role } from "../../../../src/domain";

@@ -1,7 +1,7 @@
 /**
- * Sheriff scenario verifies actual first-day election feeds, candidates, voting and public result under the original describe prefix.
- * Input: Original twelve-player world and controlled complete DayPipeline responses.
- * Output and oracle: Exact vote actors, visible feeds and elected holder retain the original causal boundary; no expected result is regenerated.
+ * 警长场景验证真实首日竞选输入、候选、投票及公开结果，保留原 describe 前缀。
+ * 输入为原十二人 World 及受控完整 DayPipeline 回复。
+ * 输出与预期为精确投票行动者、可见信息及当选持徽者，保留原因果边界，不重新生成预期结果。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ActionProvider, ActionRequest, ToolCall, Phase } from "../../../src/domain/model";

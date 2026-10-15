@@ -1,5 +1,5 @@
 /**
- * Unit test checks the strict scripted provider rejects duplicate, unexpected and missing turns. Inputs are literal one-turn scripts and requests; exact original error strings and consumption assertions are the oracle. No World, recorder, transport, filesystem or model runs.
+ * 单元测试用字面单回合脚本和请求，验证严格脚本 provider 拒绝重复、意外及缺失回合；预期为原精确错误串和消耗断言。不运行 World、录制、传输、文件系统或模型。
  */
 import { expect, test } from "bun:test";
 import { Phase, type ActionRequest } from "../../../src/domain";

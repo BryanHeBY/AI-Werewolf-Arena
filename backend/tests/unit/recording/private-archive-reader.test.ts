@@ -1,8 +1,5 @@
 /**
- * Unit tests own legacy private-archive metadata conversion and strict
- * malformed-version/shape rejection. Fresh reads of the immutable public localized-role
- * fixture supply input; literal canonical fields, untouched user/tool content and source
- * nonmutation are the oracle. The tests do not write player records.
+ * 单元测试持有旧私档元数据转换及错误版本／形状的严格拒绝。输入为每次新读的不可变公开本地化身份夹具；字面规范字段、用户／工具原文不变及来源零修改为预期。不写玩家档案。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
@@ -40,7 +37,7 @@ test("private record reader converts only metadata paths and leaves prompts/even
   expect(current.timeline[1].kind === "turn" && current.timeline[1].delta_messages).toEqual(
     old.timeline[1].delta_messages,
   );
-  expect(current.timeline[2].day).toBe(0); // Preserve diagnosable historical anomalies.
+  expect(current.timeline[2].day).toBe(0); // 保留可诊断的历史异常。
   expect(old).toEqual(before);
   assertReplayPlayerView(current);
   expect(readReplayPlayerView(current)).toEqual(current);

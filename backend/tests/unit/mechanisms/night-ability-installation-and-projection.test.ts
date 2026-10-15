@@ -120,7 +120,7 @@ for (const locale of ["zh-CN", "en"] as const)
           (event) => event.payload.actorId === actor,
         ),
       ).toBe(true);
-    expect(buildAgentVisibleEventFeed(world, events, 3)).toEqual([]); // Secret copy/gift is not broadcast to its source.
+    expect(buildAgentVisibleEventFeed(world, events, 3)).toEqual([]); // 秘密复制／赠予不会广播给其来源。
   });
 
 for (const locale of ["zh-CN", "en"] as const)

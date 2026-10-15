@@ -1,8 +1,5 @@
 /**
- * Unit tests: Trickster eligibility uses the immutable public example; literal predicate
- * and normalized-board equality check the declared twelve-player setup. Inputs and
- * expected outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试用不可变公开示例核对诡术师准入；字面 predicate 和归一化板子相等断言验证声明的十二人装配。预期仍为既有字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";

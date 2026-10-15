@@ -1,7 +1,7 @@
 /**
- * Wolf King day-policy scenarios verify native policy cannot become a copied gun policy and mixed night/day guns finish before victory.
- * Input: Original copied-role and locale matrices with actual PM skill, knife, blast and shot requests.
- * Output and oracle: Exact inherited policy, request order and terminal states retain original causal assertions; existing production-generated checks are not upgraded to an independent oracle.
+ * 狼王白天策略场景验证原生策略不能变成复制枪策略，且混合夜／日来源枪在判胜前完成。
+ * 输入为原复制身份和语言矩阵，实际 PM 产生技能、狼刀、自爆及枪击请求。
+ * 输出与预期为精确继承策略、请求顺序及终局状态，保留原因果断言；既有由生产生成的检查不升级为独立预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

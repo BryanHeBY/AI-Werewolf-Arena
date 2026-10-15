@@ -1,9 +1,5 @@
 /**
- * Unit tests: Parallel action dispatch uses held in-memory provider replies; literal
- * concurrency and event-order assertions check that voter and self-destruct request timing
- * does not reorder committed facts. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试以保留的内存 provider 回复为输入，用字面并发及事件顺序断言核对投票／自爆请求时序不会重排已提交事实。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {

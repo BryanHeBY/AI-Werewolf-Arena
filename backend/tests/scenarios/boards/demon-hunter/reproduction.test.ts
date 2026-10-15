@@ -1,8 +1,8 @@
 /**
- * Engine recording/replay scenarios verify complete and faulted Demon Hunter causal tapes.
- * Input: Literal choices, fixed RNG, executed fault plans and real recorder/checkpoints.
- * Output and independent oracle: Handwritten poison/hunt/terminal prefixes and rejection of forged fault labels or coherent archive mutants.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 引擎录制／重放场景验证完整及故障猎魔人对局的因果 Tape。
+ * 输入为字面选择、固定 RNG、实际执行的故障计划和真实录制器／checkpoint。
+ * 手写毒／猎杀／终局前缀与伪造故障标签／配套篡改归档的拒绝构成独立预期；精确重放另核对本局录制一致性。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

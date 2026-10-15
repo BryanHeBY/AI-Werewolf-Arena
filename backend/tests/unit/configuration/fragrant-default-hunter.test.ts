@@ -1,7 +1,5 @@
 /**
- * Unit test verifies omitted Hunter policy restores only the fixed Fragrant board default.
- * Input: Original imported Fragrant configuration clone, shared machine board ID and detached omitted field.
- * Output and oracle: Exact preset acceptance and normalized configuration equality retain the original assertion; no public JSON reader, recorder or phase cycle runs.
+ * 单元测试以原 Fragrant 配置副本、共享机器板子 ID 及脱离引用的省略字段为输入，核对遗漏 Hunter 政策只恢复固定 Fragrant 默认值。预期为精确预设接受及归一化相等；不运行公开 JSON reader、录制器或阶段循环。
  */
 import path from "node:path";
 import { test, expect } from "bun:test";

@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Demon Hunter board sizes/goals under limited player input.
- * Input: Twenty-five fixed seeds per size/goal/locale and simulation records.
- * Output and independent oracle: Native hunt coverage, natural terminal checkpoints and independent strict replay of every game.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景运行有限玩家输入下猎魔人不同人数／目标的板子。
+ * 输入为每种人数／目标／语言下二十五个固定种子及模拟记录。
+ * 字面预期为二十五局自然完成及无回退；逐局严格重放与原末 checkpoint 对照，不额外宣称猎杀分支必已覆盖。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

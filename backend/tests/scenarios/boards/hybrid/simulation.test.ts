@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Hybrid own-knowledge choices and final faction memberships.
- * Input: Twenty fixed own-observation seeds over existing Hybrid boards.
- * Output and independent oracle: Independent exemplar/faction coverage, real committed choices and exact winner/Tape replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证混血儿按自身知识选择，以及阵营分支覆盖。
+ * 输入为现有混血儿板上的二十个固定自身观察种子。
+ * 字面约束为本体仍属好人、胜利归属与已录选择相符，以及两种选择／胜方分支均出现；Tape 结果另与原录制作一致性对照，不生成独立胜方表。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { Camp } from "../../../../src/domain";
 import { expect, test } from "bun:test";

@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Hybrid complete recorded games keep chosen secret affiliation separate from identity and declared terminal membership.
- * Input: Original scenario/transport/locale matrices and independent literal selection, target, survivor, faction and winner facts.
- * Output and oracle: Explicit private selection and outcome/member assertions preserve exact replay; observed engine camp never supplies the expected faction table.
+ * 复现场景验证混血儿完整录制对局将所选秘密胜利归属、身份及声明终局成员分别表达。
+ * 输入为原场景／传输／语言矩阵，以及独立的字面选择、目标、存活者、阵营和胜方事实。
+ * 输出与预期为明确私有选择及结果／成员断言，保留精确重放；不以观察到的引擎阵营生成预期阵营表。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
@@ -9,7 +9,9 @@ import { writeFile } from "node:fs/promises";
 import { HYBRID_CASES, hybridScenario, type HybridScenario } from "../../../support/features/hybrid/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
-/** Independent literal end states; never derived from observed engine winners or chosen camp. */
+/**
+ * 独立的字面终态，不从观察到的引擎胜方或所选阵营推导。
+ */
 const facts: Record<
   HybridScenario,
   {

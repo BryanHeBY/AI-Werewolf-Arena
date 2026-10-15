@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Dreamer complete recorded games preserve protection, linked deaths and private resource history.
- * Input: Original scenario/transport/locale matrices and handwritten survivor, dream, death-reason, checkpoint and last-word facts.
- * Output and oracle: Literal effect/knowledge/consumption and terminal assertions retain exact action replay; expected outcomes remain the supplied table.
+ * 复现场景验证摄梦人完整录制对局保留保护、关联死亡及私有资源历史。
+ * 输入为原场景／传输／语言矩阵，以及手写存活者、梦、死因、checkpoint 和遗言事实。
+ * 输出与预期为字面效果／知识／消耗及终局断言，保留精确行动重放；预期结果仍由既有表提供。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

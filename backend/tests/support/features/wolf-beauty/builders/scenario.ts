@@ -1,8 +1,5 @@
 /**
- * Builds original wolf-beauty test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 BeautyScenario 的 kind 构造狼美人传输输入，输出原板子、内部固定种子、身份及魅惑／死亡链的字面行动。有限分支保持原表，不执行魅惑或对局结算生成预期。
  */
 import { PotionType } from "../../../../../src/domain";
 import { KnightDuelWindow } from "../../../../../src/domain";
@@ -206,7 +203,7 @@ export function wolfBeautyScenario(kind: BeautyScenario): TransportGameScenario 
       }
     }
   }
-  // Static role/state assertions; transport scripts receive no World or RNG capability.
+  // 静态核对身份／状态；传输脚本不获得 World 或 RNG 能力。
   let latest: NonNullable<PlannedTurn["charmLatest"]> = { day: null, targetId: null };
   for (const turn of turns.get(1)!) {
     turn.charmLatest = latest;

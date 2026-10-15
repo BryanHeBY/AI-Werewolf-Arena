@@ -1,8 +1,8 @@
 /**
- * Real transport failure scenarios verify Noble/Body required stages preserve exact failed prefixes.
- * Input: Literal bind/protect failure plans and actual synthetic SDK/ACP runs.
- * Output and independent oracle: Manual pending/paid state, no invented terminal action and matching wire/player/checkpoint evidence.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 真实传输失败场景验证夜之贵族／秘密之身必需阶段保留精确失败前缀。
+ * 输入为字面绑定／保护失败计划及实际合成 SDK／ACP 运行。
+ * 输出与独立预期为手写 pending／已付状态、不补造终局行动，以及相互匹配的协议／玩家／checkpoint 证据。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";

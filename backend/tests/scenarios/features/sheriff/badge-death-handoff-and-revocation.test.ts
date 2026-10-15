@@ -223,7 +223,7 @@ test("provider exception closes the engine permit and remains an explicit failur
       throw new Error("offline-failure");
     }),
   ).rejects.toThrow("offline-failure");
-  // Await separately so permission cleanup is observed after the throw.
+  // 单独 await，确保抛错后的许可清理已可观察。
   await Promise.resolve();
   expect(f.world.activeDeathActionCount).toBe(0);
 });

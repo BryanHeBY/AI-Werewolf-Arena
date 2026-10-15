@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Ghost Bride complete recorded marriages preserve private recognition, independent goals and one knife channel.
- * Input: Original good/wolf/pair/witness plans across local transport and locale matrices.
- * Output and oracle: Declared survivor/winner/setup facts and exact action replay retain the original marriage prefix; initial identity and archive fixtures are unchanged.
+ * 复现场景验证鬼魂新娘完整婚约录制保留私下互认、独立目标及唯一狼刀通道。
+ * 输入为本地传输／语言矩阵下原好人、狼人、配对和见证计划。
+ * 输出与预期为声明的存活者／胜方／开局事实及精确行动重放，保留原婚约前缀；初始身份和归档 fixture 不变。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

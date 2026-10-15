@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual runtime transports, separate native/gift gun stocks,
- * recording and MCP cleanup. Literal instance, prompt, file and original-identity
- * assertions check that a granted gun cannot borrow another stock. Existing literal
- * expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 集成测试驱动真实 runtime 传输、各自独立的原生／赠枪库存、录制及 MCP 清理，以字面实例、提示、文件和原身份断言核对赠枪不能借用另一库存。预期来自既有字面值及独立夹具；仅本地传输／录制，不启动计费模型。
  */
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

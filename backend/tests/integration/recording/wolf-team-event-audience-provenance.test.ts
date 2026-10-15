@@ -121,8 +121,8 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(event.audience).toEqual([1, 2, 4]);
       expect(Object.isFrozen(event.audience)).toBe(true);
     }
-    // Admission after emission cannot reveal any previous private event. Exit
-    // cannot erase past knowledge. A knife-only grant is independent of chat.
+    // 发表之后才加入不能获知先前的私密事件；退出
+    // 也不能抹去过去知识。仅获刀权与聊天权相互独立。
     world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
     alive(world, 2).alive = false;
     role(world, 6).role = Role.Wolf;

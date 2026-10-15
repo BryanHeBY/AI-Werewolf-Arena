@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify paid Radiant Eclipse borrowed potions survive an aborted recorded game without false night disclosure.
- * Input: The existing recording driver, controlled Seer failure, two original locales and temporary saved replay/checkpoints.
- * Output and oracle: Literal stock and disclosure assertions inspect the actual failed prefix; source archives and expected fixture bytes remain unchanged.
+ * 失败场景验证流光／蚀日已付借用药剂在录制对局中止后仍保留，且不伪造夜间公开。
+ * 输入为现有录制驱动、受控预言家失败、原两种语言及临时保存的复盘／checkpoint。
+ * 输出与预期为检查真实失败前缀的字面库存和公开断言；源归档及预期 fixture 字节不变。
  */
 import { expect, test } from "bun:test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";

@@ -1,8 +1,5 @@
 /**
- * Unit tests: Hidden Wolf configuration uses immutable public examples; literal
- * native-count and frozen-pack variant assertions check the declared role contract. Inputs
- * and expected outcomes remain the original literal or immutable-fixture oracle; these
- * module assertions invoke no model or complete-game driver.
+ * 单元测试用不可变公开示例核对 Hidden Wolf 配置；字面原生数量及冻结狼队变体断言验证声明的身份契约。预期仍为既有字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";

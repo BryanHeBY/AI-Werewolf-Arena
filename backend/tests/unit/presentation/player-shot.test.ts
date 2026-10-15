@@ -1,8 +1,5 @@
 /**
- * Unit tests: Gun presentation uses native and copied origins in both locales; exact
- * neutral captions and replay stages check that text never asserts an unsupported Hunter
- * identity. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试以双语原生／复制枪源为输入，用精确中立字幕和 replay 阶段核对文字不声称无证据的 Hunter 身份。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "../../../src/domain";

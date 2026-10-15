@@ -1,8 +1,5 @@
 /**
- * Unit tests for cycle-owned concrete night receivers and late manager arguments.
- * Inputs are original unit instances, literal dispatch flags and traced terminals;
- * expected receiver identity, configuration reads and failure prefixes are literal.
- * The tests never advance a game, mutate stock, run transport or infer role rules.
+ * 单元测试以原单元实例、字面分派标志及带轨迹的终态调用为输入，核对周期持有的具体夜接收者和晚 manager 参数。接收者身份、配置读取及失败前缀预期均为字面值；不推进游戏、修改库存、运行传输或推导身份规则。
  */
 import { expect, test } from "bun:test";
 import { Role, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";

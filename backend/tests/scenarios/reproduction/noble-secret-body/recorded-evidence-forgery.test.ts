@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify actual Noble and Secret Body recordings retain paid source evidence, knowledge and terminal contracts.
- * Input: Original beforeAll complete/failed games, uniquely named literal plan additions and copied multi-field evidence forgeries.
- * Output and oracle: Explicit mark, stock, audience, receipt/checkpoint and exact-replay assertions remain causal; original shared plan mutations and callback order are preserved rather than duplicated.
+ * 复现场景验证真实夜之贵族／秘密之身录制保留已付来源证据、知识及终局契约。
+ * 输入为原 beforeAll 完整／失败对局、唯一命名的字面计划追加项及多字段证据副本伪造。
+ * 输出与预期为明确标记、库存、受众、回执／checkpoint 及精确重放断言，并保留因果关系；原共享计划修改及回调顺序保留，不复制另一套。
  */
 import { beforeAll, expect, test } from "bun:test";
 import { nobleLiteralPlans } from "../../../support/features/noble-secret-body/builders/literal-plans";

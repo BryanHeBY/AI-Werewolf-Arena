@@ -1,8 +1,5 @@
 /**
- * Owns original test driver radiant-eclipse controlled execution and recording support. Inputs are literal action plans
- * and original fixture handles; outputs preserve driver callbacks, traces, caches and cleanup. Concrete
- * transport/replay or scripted actions retain their original lifetimes; supplied handwritten oracles own
- * expected outcomes, and no billed model or production state writer is introduced.
+ * 持有本模块测试的受控执行与录制支持；输入为字面行动计划及原夹具句柄，输出保留驱动回调、轨迹、缓存和清理。真实生产流程仍由原驱动调用，不新增另一套生产状态写入算法；手写预期由调用方持有，传输／复现及脚本行动沿用原生命周期，不引入计费模型。
  */
 import type { RadiantFullPlanName } from "../oracles/literal-plans";
 import type { BootstrapResult } from "../../../../../src/app/bootstrap";

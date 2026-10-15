@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public six- and twelve-player Wolf King examples resolve the native profile.
- * Input: Existing public board/game JSON files plus literal undeclared variants and unregistered roles.
- * Output and oracle: Explicit profile/default values and strict rejection are asserted; parsed synthetic provider metadata never makes a model request.
+ * 配置文件系统集成测试读取既有公开六／十二人狼王板子与游戏 JSON，并提供字面未声明变体或未注册身份，核对原生 profile。明确的 profile／默认值及严格拒绝为预期；解析合成 provider 元数据但不发模型请求。
  */
 import { Role } from "../../../../src/domain";
 import { expect, test } from "bun:test";

@@ -1,9 +1,5 @@
 /**
- * Unit tests for Animal Dream's concrete night acquisition and terminal close.
- * Inputs are fixed native players and delegated runtime ports; literal access
- * order, authority status, unchanged resources and original errors are the oracle.
- * One bounded night runs without transport or a full-game driver. Cat/Puffer
- * death and actual-exile units remain outside these lifecycle tests.
+ * 单元测试以固定原生玩家及委托 runtime 端口为输入，核对 Animal Dream 具体夜 acquisition 和终态关闭。字面访问顺序、authority 状态、资源不变及原错误为预期；仅执行一个有界夜，不运行传输或整局。Cat／Puffer 死亡及实际放逐单元不在本生命周期测试范围。
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";

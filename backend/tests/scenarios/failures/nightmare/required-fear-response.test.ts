@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify missing or late required Nightmare fear responses preserve the original partial recorded game.
- * Input: The original controlled transport plan across LLM/ACP, both locales and required-response failure modes.
- * Output and oracle: Literal incomplete checkpoint, failed actor/stage and absent fear/night settlement assertions retain the actual prefix; the recorded input is not regenerated as a golden.
+ * 失败场景验证噩梦之影必需恐惧回复缺失或迟到时保留原部分录制对局。
+ * 输入为 LLM／ACP、两种语言及必需回复失败模式下的原受控传输计划。
+ * 输出与预期为字面不完整 checkpoint、失败行动者／阶段及无恐惧／夜间结算断言，保留实际前缀，不把录制输入重新生成固定预期。
  */
 import { expect, test } from "bun:test";
 import { nightmareScenario } from "../../../support/features/nightmare-shadow/builders/transport-plan";

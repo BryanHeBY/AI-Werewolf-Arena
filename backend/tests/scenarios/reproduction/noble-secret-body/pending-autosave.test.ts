@@ -121,8 +121,8 @@ for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speec
                       ).toBe(true);
                     }
                     await writeFile(root + "/pending-direct.json", JSON.stringify(prefix, null, 2));
-                    // Keep the real provider pending beyond the recorder's 100ms debounce;
-                    // no new checkpoint or finalization is allowed to manufacture this prefix.
+                    // 让真实 provider 保持 pending，超过录制器 100ms 的防抖间隔；
+                    // 不能靠新增 checkpoint 或终结操作制造此前缀。
                     await new Promise((resolve) => setTimeout(resolve, 350));
                     const disk = parseReproductionRecord(
                       JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8")),
@@ -195,8 +195,8 @@ for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speec
     );
     const replay = await replayReproduction(final, root + "/tape");
     expect(replay.snapshot.gameOver).toBe(false);
-    // Production projection is the system under test here, never an expected generator:
-    // every new God-only fact stays null for all seats under forged audience variants.
+    // 这里的生产投影是被测对象，绝不作为预期生成器：
+    // 每个新增仅 God 可见的事实，在所有伪造受众分支下对全部席位仍为 null。
     for (const e of final.events.filter((e) => e.type.startsWith("noble_body_")))
       for (const audience of [[], [1], [5], [1, 5], undefined])
         for (let id = 1; id <= 12; id++)

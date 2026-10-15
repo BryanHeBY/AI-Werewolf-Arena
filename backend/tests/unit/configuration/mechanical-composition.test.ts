@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Mechanical Wolf count and finite learning scope reject unsupported board compositions before play.
- * Input: Original Role-filtered unsupported-role matrix and duplicate count through public normalization and direct bootstrap.
- * Output and oracle: Exact policy-specific diagnostic codes preserve the original assertions; no public example file, transport or complete game is loaded.
+ * 单元测试将原按 Role 过滤的不支持身份矩阵及重复数量送入归一化和直接 bootstrap，核对机械狼数量／有限学习范围在开局前拒绝不支持组合。精确政策诊断码为预期；不加载公开示例、传输或完整游戏。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

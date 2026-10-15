@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Noble self-destruct restart cursors cannot rewrite the last actually completed night.
- * Input: The original beforeAll natural recording and copied restart-day/cycle forgeries.
- * Output and oracle: Explicit valid restart/checkpoint and malformed-cursor rejection preserve the shared setup and exact replay; generated baseline data remains scenario input.
+ * 复现场景验证夜之贵族自爆重启游标不能改写最后真实完成的夜晚。
+ * 输入为原 beforeAll 自然录制及重启日／周期副本伪造。
+ * 输出与预期为明确合法重启／checkpoint 和畸形游标拒绝，保留共享设置及精确重放；生成的基线数据仍仅作场景输入。
  */
 import { beforeAll, expect, test } from "bun:test";
 import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";

@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Wolf Beauty charm choices and linked deaths.
- * Input: Existing policy boards, restricted player inputs and recorded seeds.
- * Output and independent oracle: Actual charm/death coverage, original scope outcomes and exact complete-game replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证狼美人魅惑选择及关联死亡分支。
+ * 输入为现有策略板子、受限玩家输入及录制种子。
+ * 字面预期为自然完成、无拒绝／回退及魅惑／魅惑死亡分支出现；完整对局重放与原录制结果做一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
@@ -19,8 +19,8 @@ for (const id of ["six_player_wolf_beauty", "twelve_player_wolf_beauty"] as cons
       path.resolve(import.meta.dir, "../../../../../configs.example"),
       id,
     );
-    // Twelve-player seeds 20–39 include literal observed charm-death branches;
-    // 0–19 alone finish naturally but have no charm death, so completion alone is insufficient.
+    // 十二人种子 20–39 包含明确观察到的魅惑死亡分支；
+    // 仅用 0–19 虽能自然结束却没有魅惑死亡，因此完成对局本身不足以证明该分支。
     const report = await simulateGames(board, {
       seeds: Array.from(
         { length: 20 },

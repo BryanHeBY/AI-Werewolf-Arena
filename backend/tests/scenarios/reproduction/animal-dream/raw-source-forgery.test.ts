@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Animal Dream raw accepted actions, logic evidence and paid facts resist consistent-looking archive forgeries.
- * Input: The original beforeAll natural game recording and copied raw-vote, winner-neutral badge or Fox co-deletion mutations.
- * Output and oracle: Explicit original acceptance and malformed-prefix rejection remain tied to actual recording; the source baseline is not promoted to independent expected-rule output.
+ * 复现场景验证动物梦境原始接收行动、逻辑证据和已付事实能拒绝表面一致的归档伪造。
+ * 输入为原 beforeAll 自然对局录制，以及原始票、对胜方无影响的警徽或子狐共同删除副本篡改。
+ * 输出与预期为明确原记录接收及畸形前缀拒绝，绑定实际录制；来源基线不升级为独立预期规则输出。
  */
 import { beforeAll, expect, test } from "bun:test";
 import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";

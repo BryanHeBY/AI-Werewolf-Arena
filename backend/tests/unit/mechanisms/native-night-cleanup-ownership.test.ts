@@ -1,9 +1,5 @@
 /**
- * Unit tests check concrete Demon/Wedding acquisition and cleanup ownership.
- * Inputs are original installed Worlds, explicit setup choices and instrumented
- * World/events getters; live scope authorization, literal traces and original
- * opening facts are the oracle. Failed begin and failed capture retain their
- * different cleanup policies. No phase cycle, model, recording or transport runs.
+ * 单元测试以原安装后的 World、显式 setup 选择及带记录的 World／event getter 为输入，核对具体 Demon／Wedding acquisition 和清理所有权。实时 scope 授权、字面轨迹及原开窗事实为预期；begin 失败和 capture 失败保留各自不同清理政策。不运行阶段循环、模型、录制或传输。
  */
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";

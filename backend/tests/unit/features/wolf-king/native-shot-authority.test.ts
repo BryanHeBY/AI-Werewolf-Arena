@@ -118,7 +118,7 @@ for (const locale of ["zh-CN", "en"] as const)
             : { extraDeaths: [], extraDeathSources: {} },
         );
         expect(getWolfKingState(role(world, 1))!.canShoot).toBe(false);
-        expect(world.getComponent(3, COMPONENT.Alive)!.alive).toBe(true); // Hook proposes; resolver kills.
+        expect(world.getComponent(3, COMPONENT.Alive)!.alive).toBe(true); // hook 只提出死亡建议；resolver 才提交死亡。
         expect(events.map((event) => event.type)).toEqual(allowed ? ["wolf_king_shot"] : []);
         await hook(
           world,

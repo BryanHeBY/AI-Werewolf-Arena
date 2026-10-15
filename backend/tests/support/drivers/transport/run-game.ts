@@ -456,7 +456,7 @@ export async function runTransportGame(
         );
         acpTraces.push({ actor, trace });
         assertFailedAcpTrace(trace);
-        // Process-group signals are asynchronous; permit a bounded kernel-exit gap.
+        // 进程组信号异步生效，允许有界的内核退出间隙。
         for (const pid of [trace.agentPid, trace.mcpPid]) {
           let alive = true;
           for (let attempt = 0; attempt < 100 && alive; attempt++) {
@@ -531,7 +531,7 @@ export async function runTransportGame(
           await expect(
             fs.stat(path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`)),
           ).rejects.toMatchObject({ code: "ENOENT" });
-          continue; // Lazy sessions do not start for players with no decisions.
+          continue; // 没有决策的玩家不启动惰性会话。
         }
         const { controlToken, ...trace } = JSON.parse(
           await fs.readFile(

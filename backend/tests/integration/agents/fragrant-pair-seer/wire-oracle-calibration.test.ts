@@ -1,7 +1,5 @@
 /**
- * Transport integration tests calibrate Fragrant's independent wire oracle against real SDK and ACP prompt/identity/schema snapshots.
- * Input: The original two beforeAll transport games and literal copied identity, teammate, private-history or schema mutations.
- * Output and oracle: Explicit wire acceptance and specific oracle rejection codes preserve the same transcript inputs; this calibration does not claim complete domain-rule coverage.
+ * 传输集成测试以原两场 beforeAll 对局及手写复制的身份、队友、私密历史或 schema 变体为输入，对真实 SDK／ACP 提示、身份和 schema 快照校准 Fragrant 独立传输预期。明确接受及具体拒绝码保留同一 transcript 输入；不据此宣称全部领域规则覆盖。
  */
 import { beforeAll, test, expect } from "bun:test";
 import {

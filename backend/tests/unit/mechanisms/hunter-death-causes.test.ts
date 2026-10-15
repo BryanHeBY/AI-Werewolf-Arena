@@ -283,7 +283,7 @@ for (const locale of ["zh-CN", "en"] as const)
       applied: false,
       action: "shoot",
     });
-    expect(gun(world).canShoot).toBe(true); // Still owned by final application.
+    expect(gun(world).canShoot).toBe(true); // 仍由最终应用阶段持有。
     expect(turn.submit("t1", "shoot", { target_id: 1 })).toMatchObject({
       ok: false,
       error: "turn_not_open_or_session_invalid",

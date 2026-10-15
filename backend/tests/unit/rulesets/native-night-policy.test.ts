@@ -1,9 +1,5 @@
 /**
- * Unit tests for native policy binding, argument timing and separate read/write ports.
- * Inputs are an uninstalled in-memory World and deferred accessor traces; literal
- * lookup counts and untouched argument callbacks are independent expectations.
- * Compile-only valid target mutations reject stock/receipt/life write authority.
- * No complete phase, model, transport, filesystem fixture or generated oracle runs.
+ * 单元测试以未安装的内存 World 和延迟 accessor 轨迹为输入，核对原生政策绑定、参数时点及独立读写端口。字面查找次数及未触碰参数回调为独立预期；仅编译的合法 target 修改负例拒绝库存／回执／生命写权。不运行完整阶段、模型、传输、文件系统夹具或生成预期。
  */
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";

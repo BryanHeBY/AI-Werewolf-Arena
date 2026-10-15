@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Mechanical Wolf learning, mode and copied inventory.
- * Input: Fixed limited-observation seeds and recorded original-role snapshots.
- * Output and independent oracle: Real mimic/skill/mode coverage, natural terminal result and strict whole-game replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证机械狼学习、模式和后续技能事件分支。
+ * 输入为固定有限观察种子及录制的原身份快照。
+ * 字面约束为模仿／模式／技能／跳过／继承狼刀覆盖及狼聊排除；完整对局严格重放结果另与原录制作一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

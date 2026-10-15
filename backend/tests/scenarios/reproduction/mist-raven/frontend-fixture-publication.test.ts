@@ -1,7 +1,7 @@
 /**
- * Opt-in reproduction scenarios verify Mist/Raven frontend fixture publication finalizes actual manual recordings and exact replay.
- * Input: The original explicit output-directory environment condition, recording variants and locale matrix.
- * Output and oracle: Literal finalized/game-over checks cover published recordings only when enabled; the original conditional skip and source fixture bytes remain unchanged in this migration.
+ * 显式启用的复现场景验证迷雾组合板前端 fixture 导出会终结实际手工录制并精确重放。
+ * 输入为原显式输出目录环境条件、录制分支和语言矩阵。
+ * 输出与预期仅在启用时用字面 finalized／game-over 检查已导出的录制；本次维护保留原条件跳过和源 fixture 字节。
  */
 import { expect, test } from "bun:test";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";

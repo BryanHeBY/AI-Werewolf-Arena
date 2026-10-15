@@ -1,9 +1,5 @@
 /**
- * Unit tests for observed stage provenance and actual execution entries.
- * Inputs are literal shared handlers, foreign pack/plan iterators and observed
- * Ghost Map/field operations. Independent reference, source, receiver and failure
- * prefix expectations verify one-pass collection without extra handler getters.
- * No model, complete-game driver, fixture rewrite or compiler-generated oracle runs.
+ * 单元测试以字面共享 handler、外来 pack／plan 迭代器及被观察的 Ghost Map／字段操作为输入，核对可观察阶段来源和实际执行项。独立引用、来源、接收者及失败前缀预期验证单遍收集且不增加 handler getter；不运行模型／整局驱动，不改写夹具或用编译器生成预期。
  */
 import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { expect, test } from "bun:test";

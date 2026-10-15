@@ -1,8 +1,8 @@
 /**
- * Observed-game scenarios verify Knight actual duels and accepted outcomes.
- * Input: Existing boards, restricted player observations and fixed seed recordings.
- * Output and independent oracle: Executed duel coverage, natural finish and exact original checkpoint replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 观察驱动的整局场景验证骑士决斗分支实际执行。
+ * 输入为现有板子、受限玩家观察及固定种子录制。
+ * 字面预期为决斗分支出现、自然完成及无拒绝／回退；原 checkpoint 的精确重放另作录制一致性对照。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";

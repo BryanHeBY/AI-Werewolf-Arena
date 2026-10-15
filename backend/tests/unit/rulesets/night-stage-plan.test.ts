@@ -181,8 +181,8 @@ test("C22 explicitly rejects the original distinct-handler collision with the sa
     }
   }
   const registry = new NightStageRegistry(new ObservedCatalog(profiles, []));
-  // Fixed f4bbd7b accepted the first handler for this literal collision. C22
-  // strengthens that policy; the original conflicting input is preserved.
+  // 固定 f4bbd7b 对这个字面冲突接受首个处理器；C22
+  // 加强了该政策，原冲突输入仍保留。
   expect(() =>
     registry.getPlan({
       ...config,
@@ -348,7 +348,7 @@ test("Proxy arrays, Array subclasses and foreign iterables stay opaque without e
       yield stage;
     },
   };
-  // This explicit malformed typed-return fixture exercises the legacy JS override boundary.
+  // 显式坏类型返回夹具用于核对旧 JS override 边界。
   const sources = [
     proxy,
     new ForeignArray(stage),

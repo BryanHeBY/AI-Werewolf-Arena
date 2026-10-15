@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Cupid complete recorded games retain private recognition, heartbreak chains and declared group or faction winners.
- * Input: Original policy/scenario/transport/locale matrices and handwritten survivor, death-wave, checkpoint and winning-member facts.
- * Output and oracle: Explicit relationship visibility and chain-final result assertions preserve exact action replay; the declared winner table is independent of observed engine output.
+ * 复现场景验证丘比特完整录制对局保留私下互认、殉情链及声明的群组或阵营胜方。
+ * 输入为原策略／场景／传输／语言矩阵，以及手写存活者、死亡波、checkpoint 和获胜成员事实。
+ * 输出与预期为明确关系可见性及链末结果断言，保留精确行动重放；声明的胜方表独立于所观察的引擎输出。
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase } from "../../../../src/domain";

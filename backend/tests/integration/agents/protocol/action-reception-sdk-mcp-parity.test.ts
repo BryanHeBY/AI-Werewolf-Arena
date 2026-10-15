@@ -372,7 +372,7 @@ for (const locale of ["zh-CN", "en"] as const)
         }),
       );
       for (const item of cases) {
-        // Deliberately overbroad engine input tests preflight's independent guard.
+        // 故意提供范围过宽的引擎输入，验证预检层自身的独立守卫。
         const input: ActionRequest = {
           actorId: item.actor,
           phase: item.phase,

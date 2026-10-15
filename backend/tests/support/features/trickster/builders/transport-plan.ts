@@ -1,8 +1,5 @@
 /**
- * Builds original trickster test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 mapped、cancel 或 pk 变体构造诡术师传输输入，输出原板子、内部固定种子、身份、行动和字面胜方／存活表。不执行映射、复投或对局结算生成预期。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

@@ -1,7 +1,5 @@
 /**
- * Architecture tests verify the actual import-boundary checker rejects forbidden engine-to-runtime dependencies.
- * Input: An isolated synthetic source tree and the existing checker CLI in a child process.
- * Output and oracle: Literal failure status and diagnostics identify the forbidden edge; no application source tree or game is mutated.
+ * 架构测试以隔离合成源码树为输入，在子进程调用真实导入边界检查器，核对其拒绝引擎到 runtime 的禁止依赖。独立预期为字面退出状态及定位禁止边的诊断；不修改应用源码树或游戏。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

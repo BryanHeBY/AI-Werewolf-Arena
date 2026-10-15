@@ -1,7 +1,7 @@
 /**
- * Scenario tests execute complete Animal Dream games across Fox, Cat and Puffer branches, ballots, locales and synthetic SDK/ACP transports.
- * Inputs are the original scripted plans; handwritten golden deaths/winners and exact owner/public archive checks supply the oracle for committed units and visibility.
- * The transport driver owns local processes and recording state. Optional explicitly requested fixture exports retain their old boundary; default runs never rewrite golden archives or call a billed model.
+ * 场景测试通过子狐、白猫和河豚分支、投票、语言及合成本地 SDK／ACP 传输执行完整动物梦境对局。
+ * 输入为原脚本计划；手写死亡／胜负固定预期与精确的所有者／公开归档检查核对已提交单位和可见性。
+ * 传输驱动拥有本地进程和录制状态；显式选用的 fixture 导出保留原边界，默认运行不重写固定归档，也不调用付费模型。
  */
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";

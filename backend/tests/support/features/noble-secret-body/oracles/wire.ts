@@ -1,10 +1,5 @@
 /**
- * Owns test oracle support: Independent Noble/Body serialized request-prefix and published-knowledge checks tied to strictly parsed records.
- * Inputs are actual wire messages, request prefixes, snapshots or a former
- * local endpoint plus explicit expectations; outputs are the original assertions
- * and rejection diagnostics. Unit/integration/scenario tests retain their
- * independent literal markers and recorded prefixes as the oracle. No expected
- * result is regenerated from production role, observation or board algorithms.
+ * 持有绑定严格解析档案的独立 Noble／Body 序列化请求前缀和已发表知识检查。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言与拒绝诊断；各层测试沿用独立标记和已录前缀，不从生产身份、观察或板子算法生成结果预期。
  */
 import { isDeepStrictEqual } from "node:util";
 import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction/format";
@@ -55,7 +50,9 @@ export function noblePromptStatus(prompt: string): Record<string, unknown> | nul
   }
   throw Error("fixture_noble_wire_status_invalid");
 }
-/** Independent fold of authorized historical facts, never the production player projector or CP. */
+/**
+ * 独立折叠获准公开的历史事实，绝不使用生产玩家投影或 CP。
+ */
 function knownAt(record: ReproductionRecord, d: RecordedDecision): Record<string, unknown> | null {
   const role = record.metadata.players.find((p) => p.id === d.actorId)!.role,
     body = role === "awakened_idiot";
@@ -102,7 +99,9 @@ function knownAt(record: ReproductionRecord, d: RecordedDecision): Record<string
     d.request.phase !== "night" && (!body || state.resource !== "exile_revealed");
   return state;
 }
-/** Actual actor/ordinal messages must preserve complete deltas and literal owner knowledge. */
+/**
+ * 真实行动者／序号的消息必须保留完整增量与字面 owner 知识。
+ */
 export function assertNobleTransportWire(run: NobleWireRun) {
   const byActor = new Map<number, RecordedDecision[]>();
   for (const d of run.record.decisions) {

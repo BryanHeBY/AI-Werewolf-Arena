@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Miracle Merchant count and unsupported-role compositions fail at the same configuration entrances.
- * Input: Original nine unsupported role values and duplicate native count through normalization and direct bootstrap.
- * Output and oracle: Exact combination/count codes and diagnostic paths preserve the original assertions; no filesystem tree or game cycle is used.
+ * 单元测试将原九种不支持身份及重复原生数量送入归一化和直接 bootstrap，核对奇迹商人数量／组合在同一配置入口拒绝。精确组合／数量码及路径为预期；不使用文件系统树或游戏循环。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

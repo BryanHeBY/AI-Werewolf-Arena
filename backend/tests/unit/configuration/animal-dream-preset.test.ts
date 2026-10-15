@@ -1,8 +1,5 @@
 /**
- * Unit tests: Animal eligibility uses explicit Cat/Puffer policies and invalid variants;
- * literal preset acceptance/rejection checks bounded sourced setup. Inputs and expected
- * outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试用显式 Cat／Puffer 政策和非法变体，核对 Animal 有限预设接受／拒绝。预期仍为既有字面值或不可变夹具；这些模块断言不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { isAnimalDreamPreset } from "../../../src/rulesets";

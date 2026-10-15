@@ -1,7 +1,5 @@
 /**
- * Unit tests verify audit prompts, parallel retry locale and evidence filtering preserve original player facts and speech.
- * Input: Literal manifest/task contexts, a local inert executor and nonglobal Han regexp.
- * Output and oracle: Handwritten headings/messages, explicit retry/context counts and diagnostic exclusion retain task semantics; no session directory, listener or audit subprocess is created.
+ * 单元测试以字面 manifest／task context、本地受控 executor 和无全局状态的汉字正则为输入，核对审计提示、并发重试语言及证据过滤保留原玩家事实／发言。手写标题／消息、重试／context 次数及诊断排除为预期；不创建会话目录、listener 或审计子进程。
  */
 import { auditSummaryFixture } from "../../support/builders/audit-summary";
 import { expect, test } from "bun:test";

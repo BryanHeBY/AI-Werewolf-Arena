@@ -10,7 +10,7 @@ import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp
 test("named random streams have frozen versioned vectors and do not consume their parent", () => {
   const root = createRandom("awa-vector");
   expect(root.metadata.algorithm).toBe(RANDOM_ALGORITHM);
-  // Independently calculated reference vectors; changing the algorithm requires a version change.
+  // 独立计算的参考向量；算法变更必须对应版本变更。
   expect(Array.from({ length: 4 }, () => root.next())).toEqual([
     0.8902139561250806, 0.4405340019147843, 0.7681344449520111, 0.4770409520715475,
   ]);

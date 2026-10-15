@@ -58,7 +58,7 @@ describe("ScopedRequestScheduler", () => {
     });
     const releaseSecond = await second;
     expect(thirdAcquired).toBe(false);
-    releaseFirst(); // Releasing the old lease twice must not free the new owner's slot.
+    releaseFirst(); // 旧租约重复释放不能释放新 owner 的槽位。
     await Promise.resolve();
     expect(thirdAcquired).toBe(false);
     releaseSecond();

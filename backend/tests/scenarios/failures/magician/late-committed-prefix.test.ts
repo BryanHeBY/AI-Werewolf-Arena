@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify a paid Magician exchange survives later Witch, death-shot or wolf-discussion interruption.
- * Input: Original transport plans, late responses and copied original-record gun-stock forgery.
- * Output and oracle: Explicit exchange/night counts, unconsumed failed gun stock and deterministic forgery rejection retain the played prefix; expected records are not regenerated.
+ * 失败场景验证已付款的魔术师交换在后续女巫、死亡枪或狼聊中断后仍保留。
+ * 输入为原传输计划、迟到回复及原记录副本中的枪库存伪造。
+ * 输出与预期为明确交换／夜间次数、失败枪未消耗库存及确定性伪造拒绝，保留已执行前缀，不重新生成预期记录。
  */
 import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { expect, test } from "bun:test";

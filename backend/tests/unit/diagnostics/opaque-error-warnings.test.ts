@@ -1,7 +1,5 @@
 /**
- * Unit test verifies ACP update diagnostics and an inert file-writer failure retain safe error facts and original text.
- * Input: Original synthetic RetryError, local output capture and ReplayFileStore whose actual write method is replaced by a rejecting callback.
- * Output and oracle: Exact safe status/abort codes, unchanged thought text and exclusion of opaque canary values preserve assertions; no actual file or process is created.
+ * 单元测试以合成 RetryError、本地输出捕获及实际 write 方法被拒绝回调替代的 ReplayFileStore 为输入，核对 ACP update 诊断及未实际写盘的 writer 失败保留安全错误事实与原文本。精确安全状态／取消码、思考文本不变及不透明探针排除为预期；不创建真实文件或进程。
  */
 import { expect, test } from "bun:test";
 import { RetryError } from "ai";

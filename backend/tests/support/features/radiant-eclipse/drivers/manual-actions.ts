@@ -1,9 +1,5 @@
 /**
- * Provides the original radiant-eclipse scripted action driver for tests.
- * Inputs are issued requests, explicit choices or captured game handles;
- * outputs are the same callbacks and literal ToolCalls/null decisions.
- * It keeps the original local reads and defaults, without running a model,
- * advancing a phase, changing stock or regenerating expected outcomes.
+ * 提供本模块原测试脚本行动驱动；输入为已发请求、显式选择或捕获的游戏句柄，输出为原回调及字面 ToolCall／null 决策。保留原局部读取和默认值；不运行模型、推进阶段、改变库存或重新生成结果预期。
  */
 import { radiantFullPlans } from "../oracles/literal-plans";
 import type { RadiantFullPlanName } from "../oracles/literal-plans";

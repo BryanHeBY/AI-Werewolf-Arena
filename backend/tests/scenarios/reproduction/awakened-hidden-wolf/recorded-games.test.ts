@@ -1,7 +1,7 @@
 /**
- * Reproduction scenarios verify Awakened Hidden Wolf complete recorded games preserve learning, native ownership and inheritance timing.
- * Input: Original scenario/transport/locale matrices and handwritten terminal, learned-template, death and last-word facts.
- * Output and oracle: Explicit archived resource, phase, private-view and result assertions retain the original action replay; no fixture or declared expected table is regenerated.
+ * 复现场景验证觉醒隐狼完整录制对局保留学习、原生所有权及继承时点。
+ * 输入为原场景／传输／语言矩阵及手写终局、学习模板、死亡和遗言事实。
+ * 输出与预期为明确归档资源、阶段、私有视图和结果断言，保留原行动重放，不重新生成 fixture 或声明的预期表。
  */
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";

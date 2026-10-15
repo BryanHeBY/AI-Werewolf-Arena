@@ -1,9 +1,5 @@
 /**
- * Owns test builder support: Literal bounded ACP speak ActionRequest with the original visible-event and turn-constraint fields.
- * Inputs are original configs, raw component objects and caller-supplied fields;
- * outputs are the original explicit fixture values. Unit and scenario tests use
- * unchanged handwritten literals and identity snapshots as the independent oracle.
- * This builder never runs a whole game, transport or production rule verifier.
+ * 持有测试 builder：构造字面、有界的 ACP speak ActionRequest，保留原可见事件与回合约束字段。输入为原配置、原始组件对象及调用方字段，输出为原明确夹具值。单元／场景测试沿用未改变的手写字面预期和身份快照；不运行完整对局、传输或生产规则 verifier。
  */
 import { Phase, type ActionRequest } from "../../../../src/domain/model";
 export function speakRequest(actorId = 1): ActionRequest {

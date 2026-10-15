@@ -1,8 +1,5 @@
 /**
- * Unit tests: Audit gun counting uses recorded native and gifted shot facts; literal
- * bilingual counters check successful origins while excluding blocked and silent attempts.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试以已录原生／赠枪事实为输入，用双语字面计数核对成功枪源，排除被挡及静默尝试。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { renderMessage } from "@ai-werewolf-arena/game-text";

@@ -7,7 +7,7 @@ import { Role, Camp, ROLE_IDS, type EntityId, type RoleId } from "@ai-werewolf-a
 import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 import { getDefaultRoleCatalog } from "../../src/rulesets/mechanism-api";
 
-// Compile-time compatibility of re-exported enum member and unbranded ID types.
+// 重导出的枚举成员与未加品牌的 ID 类型保持编译期兼容。
 const sourceMember: CoreRole.DayScholar = Role.DayScholar;
 const contractMember: Role.DayScholar = sourceMember;
 const entity: CoreEntityId = 12;

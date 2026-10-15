@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify explicit runtime sources, strict limits and selected board override behavior.
- * Input: Original actual temporary provider/agent/game/board JSON and malformed values supplied by the existing writer helper.
- * Output and oracle: Exact resolved values and rejection paths preserve loader behavior and present-invalid refusal; all credential strings are synthetic and no model request executes.
+ * 配置文件系统集成测试以原真实临时 provider／agent／game／board JSON 和既有 writer 提供的错误值为输入，核对显式 runtime 来源、严格限制和板子覆盖。精确解析值及拒绝路径为预期，存在但非法不能被忽略；凭据均为合成字符串，不发模型请求。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

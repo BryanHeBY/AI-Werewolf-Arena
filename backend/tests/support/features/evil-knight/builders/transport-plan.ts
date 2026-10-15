@@ -1,8 +1,5 @@
 /**
- * Builds original evil-knight test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 测试支持模块负责按 EvilKnightScenarioKind 构造恶夜骑士传输输入及所需角色编号；输出原板子、内部种子、身份和字面回合。原夜免、枪绕过及白天枪分支保持，不执行对局来生成胜负预期。
  */
 import { ActionWindow } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";

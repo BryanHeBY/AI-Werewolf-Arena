@@ -1,8 +1,5 @@
 /**
- * Unit tests for public Seer lifetime-freshness and Guard repeat predicates.
- * Inputs are handwritten policy states and throwing field getters; literal booleans
- * and exact short-circuit logs are the oracle. Queries cannot write history or stock,
- * reset a cycle or add a final Guard check that the original stage did not have.
+ * 单元测试以手写政策状态及抛错字段 getter 为输入，核对公开 Seer 生命周期新鲜度和 Guard 重复目标 predicate。字面布尔值及精确短路日志为预期；查询不得写历史／库存、重置周期或添加原 stage 没有的最终 Guard 检查。
  */
 import { expect, test } from "bun:test";
 import type { NightAbilityReadView } from "../../../src/features/night-abilities/abilities";

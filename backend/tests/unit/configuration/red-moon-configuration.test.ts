@@ -1,9 +1,5 @@
 /**
- * Unit tests: Red Moon configuration reads immutable public boards and incompatible
- * mutations; exact roundtrip and named rejection assertions check finite policy
- * normalization. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试读取不可变 Red Moon 公开板子及不兼容变体，用精确往返及具名拒绝核对有限政策归一化。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { isRedMoonPreset } from "../../../src/rulesets";

@@ -1,7 +1,5 @@
 /**
- * Unit test verifies locale changes game/audit tool descriptions while preserving every declared schema constraint.
- * Input: Original protocol builders, literal locale errors and the pure description-stripping helper.
- * Output and oracle: Exact names/schema/constraint equality and invalid-locale rejection remain the original assertions; no shared request, listener or subprocess is created.
+ * 单元测试以原协议构造器、字面语言错误及纯描述剥离 helper 为输入，核对语言只改变游戏／audit 工具说明且保留所有 schema 约束。原精确名称／schema／约束相等及非法语言拒绝为预期；不创建共享请求、listener 或子进程。
  */
 import { expect, test } from "bun:test";
 import { gameToolProtocol } from "../../../../src/agents/game-tool-protocol";

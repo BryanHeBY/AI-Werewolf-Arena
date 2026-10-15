@@ -1,9 +1,5 @@
 /**
- * Unit tests: Animal configuration reads immutable public examples for skip/ballot
- * policies; exact reverse-config and installed-state assertions check the declared finite
- * board contract. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试读取不可变公开示例的 skip／ballot 政策，用精确反向配置和已安装状态断言核对 Animal 声明的有限板子契约。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

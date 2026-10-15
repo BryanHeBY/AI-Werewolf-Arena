@@ -1,8 +1,8 @@
 /**
- * Complete PK policy Tape scenarios verify sheriff and exile election/PK policy combinations.
- * Input: Explicit PK variants, literal action scripts and original recorder checkpoints.
- * Output and independent oracle: Manual nomination/vote/death sequence and exact strict replay of the executed policy.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整 PK 策略 Tape 场景验证警长竞选和放逐的投票／PK 策略组合。
+ * 输入为明确的 PK 分支、字面行动脚本及原录制器 checkpoint。
+ * 字面预期为归一化警长／投票配置、按策略各出现零或一次的两类 PK，以及零或四次放逐 PK 投票；严格重放另核对本局录制一致性。
+ * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

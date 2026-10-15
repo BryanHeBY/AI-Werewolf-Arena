@@ -20,7 +20,9 @@ import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
 import { beginGameReproduction } from "../../../src/app/simulation/reproduction-context";
 import { fragrantPairSeerTwelveConfig } from "../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 
-/** Compile-only: the execution view exposes no nested board mutation. */
+/**
+ * 仅编译：执行视图不提供板子嵌套数据的修改能力。
+ */
 function readonlyViewTypes(board: ReadonlyBoardConfig) {
   // @ts-expect-error Owned runtime rules cannot replace a top-level parameter.
   board.enableSheriff = true;
@@ -75,7 +77,7 @@ test("unused known getter and hostile data are refused without evaluating getter
       throw new Error("unused_getter_never_invoked");
     },
   });
-  // Before-policy evidence accepted this exact known unused getter with zero reads.
+  // 政策变更前的证据表明，这个确切的已知未用 getter 被接受且读取次数为零。
   expect(() => bootstrapGame(input)).toThrow("rule_parameters_not_data");
   const proxy = new Proxy(structuredClone(sixPlayerMvpConfig), {
     getPrototypeOf() {
@@ -151,7 +153,7 @@ test("actual night uses bound parameters across await and rejects the changed ne
   input.tieBreaker.wolfKillVote = "no_kill";
   release();
   const result = await execution;
-  // The identical before-policy input produced [5, null]; fixed owned parameters produce [5, 5].
+  // 政策变更前同一输入得到 [5, null]；固定的自有参数现在得到 [5, 5]。
   expect(observed).toEqual([5, 5]);
   expect(result.interrupted).toBe(false);
   expect(game.boardConfig.tieBreaker!.wolfKillVote).toBe("min_id");

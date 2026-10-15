@@ -23,7 +23,7 @@ import {
 } from "../../../../src/features/mechanical-wolf/state";
 
 function fixture(mode: "skill" | "kill" = "skill") {
-  // An isolated World exercises scope controls separately from full lifecycle scenarios.
+  // 用独立 World 核对 scope 控制，与完整生命周期场景分开。
   const world = new World(),
     actor = world.createEntity();
   const role = createRoleComponent(Role.MechanicalWolf),

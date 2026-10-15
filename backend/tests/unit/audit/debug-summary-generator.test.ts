@@ -1,9 +1,5 @@
 /**
- * Unit tests: Debug summaries use literal localized timeline phases and machine request
- * IDs; exact matching expectations check that display vocabulary does not break turn
- * association. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试以字面本地化时间线阶段及机器请求 ID 为输入，用精确匹配预期核对展示词汇不会破坏回合关联。预期仍为原字面值或不可变夹具；不调用模型或完整对局驱动。
  */
 import { buildDebugSummaryMarkdown } from "../../../src/audit/debug-summary-generator";
 import { ReplayManifest, ReplayPlayerView } from "../../../src/recording/contracts";

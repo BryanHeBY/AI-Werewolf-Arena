@@ -1,9 +1,5 @@
 /**
- * Unit tests for the concrete Fragrant night unit with original native roster setup.
- * Inputs are fixed players, handwritten choices and delegated runtime ports; literal
- * access order, authority night status and retained knowledge/bindings are the oracle.
- * Only one bounded night opens/closes; no transport, full game or paid model runs.
- * Publication failure may abort the window but never refunds a committed knowledge draw.
+ * 单元测试以原生原名单、固定玩家、手写选择及委托 runtime 端口为输入，核对 Fragrant 具体夜单元。字面访问顺序、authority 夜状态及保留知识／绑定为预期；仅开关一个有界夜，不运行传输、整局或计费模型。发表失败可中止窗口，但不能退回已提交的知识抽取。
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
@@ -159,7 +155,7 @@ test("a failed post-opening snapshot retains the original unacquired cleanup bou
   expect(events).toEqual([]);
   expect(fragrantAuthoritySnapshot(game.world).nights[0]?.status).toBe("open");
   expect(fragrantAuthoritySnapshot(game.world).fragrant.knowledgeNight).toBe(1);
-  // The original pipeline also skips abort before acquisition is recorded.
-  // This privileged fixture owner closes its retained night after the assertions.
+  // 原管线在尚未记录 acquisition 时也会跳过 abort。
+  // 该特权夹具 owner 在断言之后关闭所持有的夜窗口。
   closeFragrantNight(game.world, 1, "aborted");
 });

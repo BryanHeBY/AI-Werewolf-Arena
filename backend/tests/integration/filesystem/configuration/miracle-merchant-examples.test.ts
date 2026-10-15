@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify public Miracle Merchant examples reject arbitrary role parameters.
- * Input: Original six/twelve-player board/game files and four literal parameter alterations.
- * Output and oracle: Exact board identity, empty role parameters and unchanged strict rejections retain source-file wiring; no fixture generation or model is involved.
+ * 配置文件系统集成测试以原公开六／十二人奇迹商人文件及四个手写参数变体为输入，核对任意身份参数被拒。精确板子身份、空身份参数和原严格拒绝为预期；不生成夹具或调用模型。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

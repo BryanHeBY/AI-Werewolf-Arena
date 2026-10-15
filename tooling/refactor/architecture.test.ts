@@ -622,3 +622,16 @@ test("canonical lifecycle file names retain the terminal contract requirement", 
     expect(checkComments(ts, input({ [file]: complete }))).toEqual([]);
   }
 });
+
+// 使用真实检查器核对自然中文测试职责；层级、预期来源和缺失职责仍分别检查。
+test("中文测试职责说明与英文测试保持同等约束", () => {
+  const review = (head: string) => checkComments(ts, input({
+    "backend/tests/unit/example.test.ts": head + "\nexport const value = 1;",
+  })).map((row) => row.rule);
+  expect(review("/** 单元测试以字面输入核对公开结果。 */")).toEqual([]);
+  expect(review("/** 场景测试通过固定样本执行记录与复现。 */")).toEqual([]);
+  expect(review("/** 单元测试接收输入并输出结果。 */")).toEqual(["comment.oracle"]);
+  expect(review("/** 单元；输入为字面样本，输出为固定预期。 */")).toEqual([
+    "comment.first-paragraph", "comment.responsibility",
+  ]);
+});

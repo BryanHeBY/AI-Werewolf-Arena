@@ -218,7 +218,9 @@ test("the owned context query follows the current World reference without replac
   expect(ctx.nightActors.actors("seer_check", 1)[0]!.ability).toBe(second);
 });
 
-/** Compile-only negative capabilities: no World, clock, RNG or commit in query interfaces. */
+/**
+ * 仅编译的能力负例：查询接口不含 World、时钟、RNG 或提交能力。
+ */
 function rejectedQueryCapabilities(
   eligibility: NightActorEligibilityQuery,
   actors: NightAbilityActorQuery,
@@ -252,7 +254,7 @@ function rejectedQueryCapabilities(
     // @ts-expect-error Nested pair tuples in read-port history also have no write rights.
     pair.state.history[0]!.targetIds[0] = 2;
   }
-  // Captured actor output keeps the same reference with no ordinary write permission.
+  // 捕获的行动者输出保留同一引用，不获得普通写权。
   // @ts-expect-error Metadata writes belong to the concrete ability owner.
   actors.actors("potion", 1)[0]!.ability.uses++;
   // @ts-expect-error Potion stock writes belong to the concrete payload owner.

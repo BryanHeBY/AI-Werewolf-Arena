@@ -61,6 +61,6 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
     const replayed = await simulateGames(board, { seeds: [seeds[4]], recordRoot: replayRoot });
     const { recordDir: _firstDir, ...first } = report.games[4];
     const { recordDir: _secondDir, ...second } = replayed.games[0];
-    expect(second).toEqual(first); // Position within a batch cannot determine styles or random consumption.
-  }, 30_000); // 25 complete games plus 25 strict replays; independent of Bun's 5s unit-test default.
+    expect(second).toEqual(first); // 批次中的位置不能决定风格或随机数消耗。
+  }, 30_000); // 二十五局完整对局加二十五次严格重放，不沿用 Bun 单元测试默认的五秒期限。
 }
