@@ -3,7 +3,8 @@
  * 输出为实际组合根使用的同一贡献对象；登记不执行初始化或展示，不调用 World、不复制库存。
  * 角色支持集合仍与既有运行集合一致，顺序不得由名称、文件系统或自动发现重排。
  */
-import type { NativeRoleContributions } from "./contracts";
+import { CROW_ROLE_PROFILE } from "../../features/crow/profile";
+import type { RoleContributions } from "./contracts";
 import {
   NIGHT_NOBLE_ROLE_PROFILE,
   AWAKENED_IDIOT_ROLE_PROFILE,
@@ -68,7 +69,7 @@ import {
   ECLIPSE_MAID_ROLE_PROFILE,
 } from "../../features/radiant-eclipse/profile";
 
-export const BUILTIN_ROLE_CONTRIBUTIONS: readonly NativeRoleContributions[] = [
+export const BUILTIN_ROLE_CONTRIBUTIONS: readonly RoleContributions[] = [
   WHITE_CAT_ROLE_PROFILE,
   FOX_CUB_ROLE_PROFILE,
   PUFFERFISH_ROLE_PROFILE,
@@ -86,6 +87,7 @@ export const BUILTIN_ROLE_CONTRIBUTIONS: readonly NativeRoleContributions[] = [
   WOLF_SORCERER_ROLE_PROFILE,
   TRICKSTER_ROLE_PROFILE,
   ORDER_PRINCE_ROLE_PROFILE,
+  CROW_ROLE_PROFILE,
   MAGICIAN_ROLE_PROFILE,
   RED_MOON_ROLE_PROFILE,
   NIGHTMARE_SHADOW_ROLE_PROFILE,

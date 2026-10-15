@@ -62,6 +62,7 @@ import {
   readOrderPrinceChoiceFact,
   readOrderPrinceRevoteFact,
 } from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import {
   readMagicianExchangeFact,
@@ -327,6 +328,7 @@ const requestSchema = z.strictObject({
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
+    crow_candidates: z.array(positive).optional(),
     fox_candidates: z.array(positive).optional(),
     fragrant_pair_candidates: z.array(positive).optional(),
     pair_check_candidates: z.array(positive).optional(),
@@ -621,6 +623,16 @@ const schema2 = z.strictObject({
           (!readDeathShotMissFact(event.type, event.payload) || event.audience !== undefined)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_magician_shot_miss_invalid" });
+        if (event.type === "crow_curse_chosen" || event.type === "crow_curse_applied") {
+          const f = readCrowFact(event.type, event.payload);
+          if (
+            !f ||
+            ("actorId" in f
+              ? event.audience?.length !== 1 || event.audience[0] !== f.actorId
+              : event.audience !== undefined)
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_crow_fact_invalid" });
+        }
         if (event.type === "nightmare_fear_committed") {
           const fact = readNightmareFearFact(event.type, event.payload);
           if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
@@ -720,6 +732,7 @@ const schema2 = z.strictObject({
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          event.type !== "crow_curse_chosen" &&
           event.type !== "nightmare_fear_committed" &&
           event.type !== "modifier_choice_committed" &&
           event.type !== "modifier_choice_skipped" &&

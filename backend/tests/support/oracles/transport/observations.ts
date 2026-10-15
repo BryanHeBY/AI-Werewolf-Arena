@@ -105,6 +105,7 @@ const stages: Record<string, [string, string]> = {
   awakened_attack: ["觉醒隐狼额外刀", "Awakened Hidden Wolf extra knife"],
   role_inspection: ["具体角色查验", "Role inspection"],
   dreamer: ["摄梦人行动", "Dreamer action"],
+  crow_curse: ["乌鸦诅咒", "Crow curse"],
   nightmare_fear: ["噩梦之影恐惧", "Nightmare fear"],
   wolf_beauty: ["狼美人魅惑", "Wolf Beauty charm"],
   sheriff_nomination: ["上警报名", "Sheriff nomination"],

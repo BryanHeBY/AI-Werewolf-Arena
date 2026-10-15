@@ -129,7 +129,15 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "./event-ids";
 // 可选字段保留“未提供”的序列化含义；这里不把省略字段改成有效运行配置。
+/** 乌鸦只改变放逐开票；轮次与自选分歧必须显式配置，不从其它角色推导。 */
+export interface CrowConfig {
+  policy: "awa_netease_crow_v1";
+  ballotPolicy: "initial_ballot_only" | "all_ballots";
+  actionPolicy: "optional" | "required_when_legal";
+  selfTarget: boolean;
+}
 export interface BoardConfig {
+  crow?: CrowConfig;
   animalDream?: { policy: "awa_animal_dream_v1"; eliminationPriority: "awa_wolf_priority_v1" };
   whiteCat?: { skippedVotePolicy: CatSkippedVotePolicy };
   pufferfish?: { ballotPolicy: PufferBallotPolicy };

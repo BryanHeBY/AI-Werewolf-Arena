@@ -1,0 +1,112 @@
+/**
+ * 测试支持模块负责按首轮或全轮附加票政策构造乌鸦传输场景，输出原板子、内部固定种子、身份、行动及字面胜方／存活表。变体只选择既有脚本，不执行重投票或对局计算预期。
+ */
+import { ActionWindow } from "../../../../../src/domain";
+import { Camp } from "../../../../../src/domain";
+import { Role } from "../../../../../src/domain";
+import { PotionType } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import { shuffled } from "../../../../../src/domain";
+import type { ActionStage } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
+import { crowTwelveConfig } from "../../../../../src/rulesets/presets/crow-twelve";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
+import type { PlannedTurn } from "../../../transport/contracts";
+import type { TransportGameScenario } from "../../../transport/contracts";
+
+export function crowScenario(
+  variant: "initial_ballot_only" | "all_ballots" = "initial_ballot_only",
+): TransportGameScenario & { crow: number; alive: number[]; winner: Camp } {
+  const config = structuredClone(crowTwelveConfig),
+    seed = "crow-transport";
+  config.crow!.ballotPolicy = variant;
+  const roles = shuffled(
+    config.roleSetups.flatMap((r) => Array.from({ length: r.count }, () => r.role)),
+    createRandom(seed).fork("deal"),
+  );
+  const ids = roles.map((_, i) => i + 1),
+    id = (r: Role) => roles.indexOf(r) + 1;
+  const crow = id(Role.Crow),
+    seer = id(Role.Seer),
+    witch = id(Role.Witch);
+  const wolves = ids.filter((i) => roles[i - 1] === Role.Wolf),
+    villagers = ids.filter((i) => roles[i - 1] === Role.Villager);
+  const turns = new Map<number, PlannedTurn[]>(ids.map((i) => [i, []]));
+  const add = (
+    day: number,
+    actors: number[],
+    stage: ActionStage,
+    action: ToolCall | null | ((actor: number) => ToolCall | null),
+  ) => {
+    for (const actor of actors)
+      turns
+        .get(actor)!
+        .push({ day, stage, action: typeof action === "function" ? action(actor) : action });
+  };
+  const words = (day: number, actors: number[]) =>
+    add(day, actors, "last_words", { name: "speak", args: { text: "Words" } });
+  const pack = (day: number, actors: number[], target: number) => {
+    add(day, actors, "wolf_discussion", {
+      name: "speak_to_wolves",
+      args: { text: "End", end_chat: true },
+    });
+    add(day, actors, "wolf_vote", {
+      name: "kill_vote",
+      args: { target_id: target, abstain: false },
+    });
+  };
+  const ballot = (day: number, alive: number[], target: number, stage: ActionStage) =>
+    add(day, alive, stage, (actor) => ({
+      name: "vote",
+      args: { target_id: actor === target ? null : target, abstain: actor === target },
+    }));
+  const daylight = (day: number, alive: number[], target: number) => {
+    add(day, alive, "day_speech", { name: "speak", args: { text: "Speech" } });
+    add(
+      day,
+      wolves.filter((id) => alive.includes(id)),
+      ActionWindow.OnPreVote,
+      null,
+    );
+    ballot(day, alive, target, "voting");
+    words(day, [target]);
+  };
+  pack(1, wolves, villagers[0]!);
+  add(1, [witch], "witch", {
+    name: "use_potion",
+    args: { target_id: wolves[0]!, potion_type: PotionType.Poison },
+  });
+  add(1, [seer], "seer", { name: "check_identity", args: { target_id: wolves[1]! } });
+  add(1, [crow], "crow_curse", { name: "curse_exile", args: { target_id: wolves[1]! } });
+  add(1, wolves, ActionWindow.OnPreElection, null);
+  add(1, ids, "sheriff_nomination", { name: "run_for_sheriff", args: { run: false } });
+  words(1, [villagers[0]!, wolves[0]!]);
+  const alive1 = ids.filter((id) => id !== villagers[0] && id !== wolves[0]);
+  daylight(1, alive1, wolves[1]!);
+  pack(2, [wolves[2]!, wolves[3]!], witch);
+  add(2, [witch], "witch", {
+    name: "use_potion",
+    args: { target_id: witch, potion_type: PotionType.None },
+  });
+  add(2, [seer], "seer", { name: "check_identity", args: { target_id: wolves[2]! } });
+  add(2, [crow], "crow_curse", { name: "curse_exile", args: { target_id: wolves[2]! } });
+  const alive2 = alive1.filter((id) => id !== wolves[1] && id !== witch);
+  daylight(2, alive2, wolves[2]!);
+  pack(3, [wolves[3]!], villagers[1]!);
+  add(3, [seer], "seer", { name: "check_identity", args: { target_id: wolves[3]! } });
+  add(3, [crow], "crow_curse", { name: "curse_exile", args: { target_id: wolves[3]! } });
+  const alive3 = alive2.filter((id) => id !== wolves[2] && id !== villagers[1]);
+  daylight(3, alive3, wolves[3]!);
+  return {
+    board: parseBoardDefinition(
+      boardDefinitionFromConfig("order_crow_transport_" + variant, config),
+    ),
+    seed,
+    roles,
+    turns,
+    crow,
+    alive: alive3.filter((id) => id !== wolves[3]),
+    winner: Camp.Good,
+  };
+}

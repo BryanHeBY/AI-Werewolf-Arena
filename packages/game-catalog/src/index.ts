@@ -367,10 +367,10 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "表达权限与翻译",
   },
   {
-    id: PLANNED_ROLE_IDS.Crow,
-    status: "planned",
+    id: `${Role.Crow}`,
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/rules/awa-netease-crow-v1.md",
     mechanismSummary: "额外放逐票",
   },
   {

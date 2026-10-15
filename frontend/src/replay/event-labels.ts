@@ -13,6 +13,7 @@ import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { crowEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -54,6 +55,8 @@ export function eventLabel(
   if (!fact) return text(locale, "replay.unknown");
   event = fact.event;
   const p = event.payload;
+  const crow = crowEventLabel(event.type, p, locale);
+  if (crow !== null) return crow;
   const animal = animalDreamEventLabel(event.type, p, locale);
   if (animal !== null) return animal;
   const fragrant = fragrantPairEventLabel(event.type, p, locale);

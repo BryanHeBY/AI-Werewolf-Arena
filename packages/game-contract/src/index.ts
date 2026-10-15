@@ -56,6 +56,7 @@ export { boardConfigSchema } from "./board-schema";
 export * from "./actions";
 
 export * from "./facts/nightmare";
+export * from "./facts/crow";
 
 export * from "./facts/red-moon";
 

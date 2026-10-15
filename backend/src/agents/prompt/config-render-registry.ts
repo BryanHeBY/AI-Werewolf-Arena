@@ -42,6 +42,28 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
         : []),
       ...(config.radiantEclipse ? [text(locale, "rules.radiant_eclipse")] : []),
       text(locale, "prompt.config.title"),
+      ...(config.crow
+        ? [
+            text(locale, "prompt.config.crow", {
+              ballot: text(
+                locale,
+                config.crow.ballotPolicy === "all_ballots"
+                  ? "crow.ballot.all"
+                  : "crow.ballot.first",
+              ),
+              action: text(
+                locale,
+                config.crow.actionPolicy === "required_when_legal"
+                  ? "crow.action.required"
+                  : "crow.action.optional",
+              ),
+              self: text(
+                locale,
+                config.crow.selfTarget ? "crow.self.allowed" : "crow.self.forbidden",
+              ),
+            }),
+          ]
+        : []),
       ...(config.scholarMentor ? [text(locale, "prompt.config.scholar_mentor")] : []),
       ...(config.magician
         ? [

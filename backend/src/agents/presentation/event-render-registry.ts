@@ -19,6 +19,7 @@ import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { crowEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -608,6 +609,8 @@ export class ScriptEventRenderRegistry {
     if (magician !== null) return magician;
     const redMoon = redMoonEventLabel(event.type, event.payload, locale);
     if (redMoon !== null) return redMoon;
+    const crow = crowEventLabel(event.type, event.payload, locale);
+    if (crow !== null) return crow;
     const nightmare = nightmareEventLabel(event.type, event.payload, locale);
     if (nightmare !== null) return nightmare;
     const demon = demonHunterEventLabel(event.type, event.payload, locale);
@@ -724,6 +727,13 @@ export class ScriptEventRenderRegistry {
           : [];
     const nightmare = nightmareEventLabel(event.type, event.payload, locale);
     if (nightmare !== null) return printPrivateEvents ? [{ kind: "god", text: nightmare }] : [];
+    const crow = crowEventLabel(event.type, event.payload, locale);
+    if (crow !== null)
+      return event.type === "crow_curse_applied"
+        ? [{ kind: "system", text: crow }]
+        : printPrivateEvents
+          ? [{ kind: "private", text: crow }]
+          : [];
     const demon = demonHunterEventLabel(event.type, event.payload, locale);
     if (demon !== null) return printPrivateEvents ? [{ kind: "god", text: demon }] : [];
     const wedding = ghostBrideEventLabel(event.type, event.payload, locale);

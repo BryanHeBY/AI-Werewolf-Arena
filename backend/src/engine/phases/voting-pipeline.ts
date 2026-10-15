@@ -7,6 +7,7 @@
  * 诡术师最终映射／事实／出局提案归具名同步组合；本流水线保两块之间的 Noble 等待及原关闭、票与PK。
  * 定序王子的重收票政策归具名同步组合；同一 options 局部在原点替换，后续 PK 共享严格复验闭包。
  */
+import { applyCrowBonus } from "../../features/crow/ports";
 import { revealSecretBodyExile } from "../../features/noble-secret-body/exile-ports";
 import { openExileUnit, attachExileUnit } from "../../domain/exile-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -229,6 +230,7 @@ export class VotingPipeline {
       revoteStep = revote.next(await revoteStep.value);
     }
     if (revoteStep.value !== undefined) ({ tally, publicVotes } = revoteStep.value);
+    applyCrowBonus(this.world, options.day, 1, tally, this.events);
     const pk = config.voting?.exilePolicy === "awa_one_pk_v1";
     const maximum = Math.max(
       0,
@@ -344,6 +346,7 @@ export class VotingPipeline {
         options.day,
         options.strictRequired,
       ));
+      applyCrowBonus(this.world, options.day, 2, tally, this.events, candidates);
       round = 2;
       if (animalUnit) recordAnimalBallotRound(this.world, animalUnit, 2, publicVotes, candidates);
     }

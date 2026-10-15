@@ -15,8 +15,8 @@ import {
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
 test("existing message IDs retain their exact sequence and presentation messages are appended", () => {
-  expect(MESSAGE_IDS).toHaveLength(1558);
-  expect(new Set(MESSAGE_IDS).size).toBe(1558);
+  expect(MESSAGE_IDS).toHaveLength(1575);
+  expect(new Set(MESSAGE_IDS).size).toBe(1575);
   expect(
     createHash("sha256")
       .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
@@ -70,6 +70,23 @@ test("existing message IDs retain their exact sequence and presentation messages
     "fragrant.knife_notice",
     "console.wall.note",
     "console.wall.author",
+    "role.crow.brief",
+    "role.crow.state",
+    "action.curse_exile.hint",
+    "action.curse_exile.directive",
+    "event.crow_curse_chosen",
+    "event.crow_curse_applied",
+    "crow.ballot.first",
+    "crow.ballot.all",
+    "crow.action.optional",
+    "crow.action.required",
+    "crow.self.allowed",
+    "crow.self.forbidden",
+    "crow.pass",
+    "replay.stage.crow_curse_chosen",
+    "replay.stage.crow_curse_applied",
+    "stage.crow_curse",
+    "prompt.config.crow",
   ]);
 });
 

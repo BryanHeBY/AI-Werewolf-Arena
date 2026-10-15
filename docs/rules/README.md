@@ -2,9 +2,9 @@
 
 本目录是完整角色规则的唯一维护位置。来源／采纳版本、有限板子、身份与阵营、胜利、能力库存、时点、死亡／到期、信息、交互及不支持变体由对应卡维护。内部模块只说明自身职责与链接，不复制第二份全文。
 
-资料中的verified／implemented是目录状态，不等于所有角色组合均受支持；实际支持由schema、ruleset与真实测试决定。9个planned资料没有因本索引变成可执行角色。
+资料中的verified／implemented是目录状态，不等于所有角色组合均受支持；实际支持由schema、ruleset与真实测试决定。尚未交付的planned资料不会因本索引变成可执行角色。
 
-## 当前55个实际Role与规则来源
+## 当前交付角色与规则来源
 
 | 稳定RoleId              | 名称       | 唯一规则卡                                                                                                     |
 | ----------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
@@ -57,6 +57,7 @@
 | `day_scholar`           | 白昼学者   | [awa-scholar-mentor-twelve-v1.md](awa-scholar-mentor-twelve-v1.md)                                             |
 | `night_mentor`          | 寂夜导师   | [awa-scholar-mentor-twelve-v1.md](awa-scholar-mentor-twelve-v1.md)                                             |
 | `debater`               | 杠精       | [awa-melbourne-debater-v1.md#debater](awa-melbourne-debater-v1.md#debater)                                     |
+| `crow`                  | 乌鸦       | [awa-netease-crow-v1.md](awa-netease-crow-v1.md)                                                               |
 | `white_cat`             | 白猫       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
 | `fox_cub`               | 子狐       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
 | `pufferfish`            | 河豚       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |

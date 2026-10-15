@@ -17,6 +17,7 @@ import { messages as giftsrelations } from "./features/gifts-relations";
 import { messages as nightmodifiers } from "./features/night-modifiers";
 import { messages as mistradiant } from "./features/mist-radiant";
 import { messages as noblefragrant } from "./features/noble-fragrant";
+import { messages as crow } from "./features/crow";
 import { messages as animaldream } from "./features/animal-dream";
 
 // 保留原片段读取顺序：它决定哪个重复 key 最先报错；它不决定公开中文 key 顺序。
@@ -33,6 +34,7 @@ const modules = [
   mistradiant,
   noblefragrant,
   animaldream,
+  crow,
 ] as const;
 
 // 交集保留各中文片段的 literal 类型；英文公开类型只承诺相同 MessageKey 的 string 值。

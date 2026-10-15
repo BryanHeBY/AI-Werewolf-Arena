@@ -59,6 +59,7 @@ export interface PlayerObservation {
     orderPrince?: import("@ai-werewolf-arena/game-contract/facts/order-prince").OrderPrinceState;
     magician?: import("@ai-werewolf-arena/game-contract").MagicianState;
     redMoon?: import("@ai-werewolf-arena/game-contract").RedMoonState;
+    crow?: import("@ai-werewolf-arena/game-contract").CrowState;
     nightmare?: import("@ai-werewolf-arena/game-contract").NightmareShadowState;
     evilKnight?: import("@ai-werewolf-arena/game-contract").EvilKnightState;
     demonHunter?: import("@ai-werewolf-arena/game-contract/facts/demon-hunter").DemonHunterState;

@@ -51,3 +51,5 @@ export { formatComponentPart } from "./component-state";
 export { GAME_PRESENTATION_CONTRACT, supportsGamePresentation } from "./version";
 
 export { animalDreamEventLabel } from "./events/animal-dream";
+
+export { crowEventLabel } from "./events/crow";

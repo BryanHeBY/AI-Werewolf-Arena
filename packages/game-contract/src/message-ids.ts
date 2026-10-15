@@ -1561,6 +1561,23 @@ export const MESSAGE_IDS = Object.freeze([
   "fragrant.knife_notice",
   "console.wall.note",
   "console.wall.author",
+  "role.crow.brief",
+  "role.crow.state",
+  "action.curse_exile.hint",
+  "action.curse_exile.directive",
+  "event.crow_curse_chosen",
+  "event.crow_curse_applied",
+  "crow.ballot.first",
+  "crow.ballot.all",
+  "crow.action.optional",
+  "crow.action.required",
+  "crow.self.allowed",
+  "crow.self.forbidden",
+  "crow.pass",
+  "replay.stage.crow_curse_chosen",
+  "replay.stage.crow_curse_applied",
+  "stage.crow_curse",
+  "prompt.config.crow",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

@@ -157,6 +157,8 @@ export interface EventPayloadMap
   red_moon_night_sealed: RedMoonNextNightFact;
   red_moon_exile_delayed: RedMoonNextNightFact;
   red_moon_delay_expired: RedMoonExpiryFact;
+  crow_curse_chosen: { actorId: EntityId; day: number; targetId: EntityId | null };
+  crow_curse_applied: { day: number; targetId: EntityId; bonus: 1; round: 1 | 2 };
   nightmare_fear_committed: { actorId: EntityId; day: number; targetId: EntityId | null };
   demon_hunter_chosen: DemonHunterChoiceFact;
   demon_hunter_cancelled: DemonHunterCancelFact;
@@ -586,6 +588,7 @@ export type GameEvent = {
       | "raven_unsealed"
       | "raven_knife_chosen"
       | "raven_knife_skipped"
+      | "crow_curse_chosen"
       | "nightmare_fear_committed"
       | "modifier_choice_committed"
       | "modifier_choice_skipped"

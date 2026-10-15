@@ -74,6 +74,14 @@ export const boardConfigSchema = z.strictObject({
     })
     .optional(),
   trickster: z.strictObject({ policy: z.literal("awa_trickster_exile_v1") }).optional(),
+  crow: z
+    .strictObject({
+      policy: z.literal("awa_netease_crow_v1"),
+      ballotPolicy: z.enum(["initial_ballot_only", "all_ballots"]),
+      actionPolicy: z.enum(["optional", "required_when_legal"]),
+      selfTarget: z.boolean(),
+    })
+    .optional(),
   orderPrince: z.strictObject({ policy: z.literal("awa_order_prince_first_ballot_v1") }).optional(),
   magician: z
     .strictObject({

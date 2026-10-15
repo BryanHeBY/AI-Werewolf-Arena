@@ -217,6 +217,16 @@ export const choose_shapeshifter_card: ObservedToolHandler = ({ ownState }) => {
   return card ? { name: "choose_shapeshifter_card", args: { slot: card.slot } } : null;
 };
 
+/** 仅消费本轮明确告知的候选及自身政策，不能从 World 推导暗夜死亡或真实身份。 */
+export const curseExile: ObservedToolHandler = ({ ownState, request, style, pick }) => {
+  const s = ownState.crow;
+  if (!s || !request.context.crow_candidates) throw new Error("crow_observation_missing");
+  const target =
+    style === "conservative" && s.actionPolicy === "optional"
+      ? undefined
+      : pick([...request.context.crow_candidates]);
+  return { name: "curse_exile", args: { target_id: target ?? null } };
+};
 export const fear: ObservedToolHandler = ({
   ownState,
   request,

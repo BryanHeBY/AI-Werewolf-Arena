@@ -57,8 +57,10 @@ import { OWNED_NIGHT_STAGE_PROGRAMS as WolfSorcererNightStagesPrograms } from ".
 import { OWNED_NIGHT_STAGE_PROGRAMS as WolfNightStagesPrograms } from "../features/wolf/night-stages";
 
 // 这些引用来自内建完整程序自己的定义；没有接受外部“登记可信 callback”的通用入口。
+import { OWNED_NIGHT_STAGE_PROGRAMS as CrowPrograms } from "../features/crow/night-stage";
 const programs: ReadonlyArray<readonly [object, unknown]> = [
   ...AnimalDreamNightStagesPrograms,
+  ...CrowPrograms,
   ...AwakenedHiddenWolfNightStagesPrograms,
   ...BlackMarketMerchantNightStagePrograms,
   ...CupidNightStagePrograms,

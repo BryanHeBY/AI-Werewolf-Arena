@@ -12,6 +12,7 @@ import type { DeathCause } from "./death-facts";
 
 /** 可选附加字段由具体机制形成；工厂另供必填公共 context，候选名单／实例 ID 不是运行许可。 */
 export interface ActionRequestExtras {
+  crow_candidates?: readonly EntityId[];
   fox_candidates?: readonly EntityId[];
   fragrant_pair_candidates?: readonly EntityId[];
   pair_check_candidates?: readonly EntityId[];

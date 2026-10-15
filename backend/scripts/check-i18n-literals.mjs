@@ -25,6 +25,7 @@ const translationOwners = new Set([
   "packages/game-text/src/messages/features/mist-radiant.ts",
   "packages/game-text/src/messages/features/noble-fragrant.ts",
   "packages/game-text/src/messages/features/animal-dream.ts",
+  "packages/game-text/src/messages/features/crow.ts",
 ]);
 // 扫描结果记录源码行；例外按文件／完整字面及精确次数匹配，reason 用于保留人工说明。
 /** @typedef {{ file: string, text: string, line: number }} ChineseLiteral */

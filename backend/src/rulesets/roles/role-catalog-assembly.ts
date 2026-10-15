@@ -5,7 +5,7 @@
  */
 import { ownRoleCallback } from "./owned-bindings";
 import { RoleCatalog } from "./catalog";
-import type { RoleContributions, RoleProfile, NativeRoleContributions } from "./contracts";
+import type { RoleContributions, RoleProfile } from "./contracts";
 
 export function createRoleCatalog(
   input?: readonly RoleProfile[] | { contributions: readonly RoleContributions[] },
@@ -39,7 +39,7 @@ export function getDefaultRoleCatalog(): RoleCatalog {
 }
 
 /** 按原顺序公开组合声明的副本；保留每份贡献引用，不向调用者开放登记数组写权。 */
-export function getDefaultRoleContributions(): readonly NativeRoleContributions[] {
+export function getDefaultRoleContributions(): readonly RoleContributions[] {
   const { BUILTIN_ROLE_CONTRIBUTIONS } =
     require("./builtin-contributions") as typeof import("./builtin-contributions");
   return Array.from(BUILTIN_ROLE_CONTRIBUTIONS);

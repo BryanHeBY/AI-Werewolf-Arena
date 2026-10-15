@@ -22,6 +22,7 @@ import {
   isPureWhitePreset,
   isGhostBridePreset,
 } from "./support";
+import { isCrowPreset } from "./support/crow";
 import { Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isDemonHunterPreset } from "./node-board-support";
@@ -154,5 +155,10 @@ export function boardPresetViolation(config: ReadonlyBoardConfig) {
     !isOrderPrincePreset(config)
   )
     return "order_prince_preset_invalid";
+  if (
+    (config.crow || config.roleSetups.some((row) => row.role === Role.Crow && row.count > 0)) &&
+    !isCrowPreset(config)
+  )
+    return "crow_preset_invalid";
   return null;
 }

@@ -46,6 +46,7 @@ export interface AgentEventVisibilityQueries {
 }
 
 const PUBLIC_EVENT_TYPES = new Set([
+  "crow_curse_applied",
   "red_moon_night_sealed",
   "red_moon_exile_delayed",
   "red_moon_delay_expired",
@@ -312,6 +313,16 @@ function canViewAgentEventWithFacts(
       fact.actorId === actorId
     );
   }
+  if (event.type === "crow_curse_chosen") {
+    const fact = readAgentEventFact("readCrowFact", event.type, event.payload, prepared);
+    return (
+      !!fact &&
+      "actorId" in fact &&
+      event.audience?.length === 1 &&
+      event.audience[0] === actorId &&
+      fact.actorId === actorId
+    );
+  }
   if (event.type === "nightmare_fear_committed")
     return (
       !!readAgentEventFact("readNightmareFearFact", event.type, event.payload, prepared) &&
@@ -372,6 +383,14 @@ function projectPayload(
       );
       return fact ? { day: fact.day, pair: structuredClone(fact.pair) } : {};
     }
+    case "crow_curse_chosen":
+      return {
+        actorId: event.payload.actorId,
+        day: event.payload.day,
+        targetId: event.payload.targetId,
+      };
+    case "crow_curse_applied":
+      return { ...event.payload };
     case "nightmare_fear_committed":
       return { day: event.payload.day, targetId: event.payload.targetId };
     case "demon_hunter_chosen":

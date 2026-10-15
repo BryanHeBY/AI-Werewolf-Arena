@@ -49,6 +49,7 @@ import {
 } from "./copied";
 import {
   fear,
+  curseExile,
   demon_hunt,
   choose_admired_player,
   choose_wild_model,
@@ -107,6 +108,7 @@ export const observedToolHandlers: readonly ObservedToolEntry[] = [
   { tool: "swap_night_seats", decide: swapNightSeats },
   { tool: "swap_targets", decide: swapTargets },
   { tool: "fear", decide: fear },
+  { tool: "curse_exile", decide: curseExile },
   { tool: "choose_bridegroom", decide: choose_bridegroom },
   { tool: "speak_to_partner", decide: speak_to_partner },
   { tool: "choose_wedding_witness", decide: choose_wedding_witness },

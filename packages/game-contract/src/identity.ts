@@ -15,6 +15,7 @@ export enum Camp {
 
 /** 角色名不固定推导当前阵营、胜负或狼队资格；现场身份与资源仍须原运行规则核对。 */
 export enum Role {
+  Crow = "crow",
   FragrantPhantom = "fragrant_phantom",
   AwakenedSeer = "awakened_seer",
   NightNoble = "night_noble",

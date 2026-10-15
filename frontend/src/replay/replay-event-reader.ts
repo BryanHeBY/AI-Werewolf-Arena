@@ -98,6 +98,7 @@ import {
   readVictoryResult,
   type ReplayEvent,
 } from "@ai-werewolf-arena/replay-contract";
+import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 
 export type ReplayEffect =
@@ -120,6 +121,8 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   red_moon_night_sealed: ["actorId"],
   red_moon_exile_delayed: ["actorId"],
   red_moon_delay_expired: ["actorId"],
+  crow_curse_chosen: ["actorId"],
+  crow_curse_applied: ["targetId"],
   nightmare_fear_committed: [],
   demon_hunter_chosen: [],
   demon_hunter_cancelled: ["actorId", "targetId"],
@@ -231,6 +234,7 @@ const ID_LISTS: Readonly<Record<string, string>> = {
   sheriff_withdraw_summary: "withdrawn",
 };
 const NULLABLE_TARGETS = new Set([
+  "crow_curse_chosen",
   "nightmare_fear_committed",
   "demon_hunter_chosen",
   "ghost_bride_knife_vote",
@@ -354,6 +358,7 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   if (type === "red_moon_night_sealed" || type === "red_moon_exile_delayed")
     return !!readRedMoonNextNightFact(type, p);
   if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
+  if (type === "crow_curse_chosen" || type === "crow_curse_applied") return !!readCrowFact(type, p);
   if (type === "nightmare_fear_committed")
     return !!(readNightmareFearFact(type, p) ?? readNightmareOwnFearFact(type, p));
   if ((DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type))
@@ -724,6 +729,15 @@ export function readReplayEvent(
     if (safe.type === "order_prince_revote_started") {
       if (safe.phase !== "voting") return null;
       add(p.actorId);
+    }
+    if (safe.type === "crow_curse_chosen" || safe.type === "crow_curse_applied") {
+      if (
+        p.day !== safe.day ||
+        safe.phase !== (safe.type === "crow_curse_chosen" ? "night" : "voting")
+      )
+        return null;
+      if (Object.hasOwn(p, "actorId")) add(p.actorId);
+      if (p.targetId !== null) add(p.targetId);
     }
     if (safe.type === "nightmare_fear_committed") {
       if (p.day !== safe.day || safe.phase !== "night") return null;

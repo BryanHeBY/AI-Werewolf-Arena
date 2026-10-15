@@ -8,6 +8,7 @@ import { ActionWindow, KnightDuelWindow, type EntityId, type PotionType } from "
 import type { MessageRef } from "./message-refs";
 /** 工具名关联其原参数形状；null／abstain／activate 各有原业务意义，不在类型层统一成同一种跳过。 */
 export interface ToolArgMap {
+  curse_exile: { target_id: EntityId | null };
   fox_distract: { target_id: EntityId | null };
   puffer_retaliate: { activate: boolean };
   bind_fragrant_pair: { target_ids: readonly [EntityId, EntityId] | null };
@@ -86,6 +87,7 @@ export interface ToolArgMap {
 export type ToolName = keyof ToolArgMap;
 /** 保留公共工具标识的原顺序；列入此表不表示任意角色或阶段都可使用。 */
 export const TOOL_NAMES = [
+  "curse_exile",
   "fox_distract",
   "puffer_retaliate",
   "bind_fragrant_pair",
@@ -199,6 +201,7 @@ export const ACTION_STAGES = [
   "order_prince_revote",
   "magician_exchange",
   "nightmare_fear",
+  "crow_curse",
   "pure_white_girl",
   "wolf_witch",
   "demon_hunter",

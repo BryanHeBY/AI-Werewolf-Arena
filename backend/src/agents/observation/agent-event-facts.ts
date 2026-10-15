@@ -89,6 +89,7 @@ import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
 } from "@ai-werewolf-arena/game-contract/facts/time-wolf-consort";
+import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 
 /** 仅描述 Node 已验证且已脱离宿主引用的数据，不是行动许可或未知输入的安全断言。 */
@@ -96,6 +97,7 @@ declare const inertAgentEvent: unique symbol;
 export type InertAgentEvent = GameEvent & { readonly [inertAgentEvent]: true };
 
 const FACT_READERS = {
+  readCrowFact,
   readAnimalDreamFact,
   readNobleSecretBodyFact,
   readFragrantPairFact,
@@ -168,6 +170,9 @@ function factReader(type: GameEvent["type"]): AgentEventFactReader | null {
   switch (type) {
     case "lonely_girl_admired_chosen":
       return "readLonelyGirlEventFact";
+    case "crow_curse_chosen":
+    case "crow_curse_applied":
+      return "readCrowFact";
     case "nightmare_fear_committed":
       return "readNightmareFearFact";
     case "red_moon_night_sealed":
