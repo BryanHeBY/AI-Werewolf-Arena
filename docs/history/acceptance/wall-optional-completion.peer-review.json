@@ -1,0 +1,520 @@
+{
+  "kind": "Wall-optional-request-completion-independent-review",
+  "decision": "approved",
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "approvalScope": "当前4源：Wall两处新增完成调用、共同lease两中文注释校准、原三个场景及新增两个真实失败前缀单元；保持分段执行和证明范围。",
+  "baseCommit": "7825112a8135c9a81ec461bcbade2231f81b5cf8",
+  "source": [
+    {
+      "path": "backend/src/features/wall-notes/window.ts",
+      "mode": "100644",
+      "sha256": "e2bb7dc26a3bcc4697c66f3502fdbc91f92039b1236991b07b93ed14d54263fb",
+      "bytes": 8504,
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "c0162a88ed5b8c8989930ed97c62325bf14bf80c",
+        "sha256": "b3062d37cbcc7001f50a8f5e19e66693652f6e3bde306f37a06b51f5c39cf999",
+        "bytes": 7955
+      }
+    },
+    {
+      "path": "backend/src/domain/request-lease.ts",
+      "mode": "100644",
+      "sha256": "6f3c2ecb9e6a159c24b63588b72a831236d4b97c92e2fd56fc78f5ecd7ca6c01",
+      "bytes": 21732,
+      "beforeGit": {
+        "mode": "100644",
+        "blob": "bb07e981175394c7b8ffba3a53742e4c23f9e792",
+        "sha256": "ac7550bea1ab2266d05f0bd1cfe756c99f50487c6ced6c5a13d26f963671a76e",
+        "bytes": 21651
+      }
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wall-notes/optional-request-completion.test.ts",
+      "mode": "100644",
+      "sha256": "b77aab97b28ba40974473b1b4e69288824d114b03214e6e2448970ad9c0ec06e",
+      "bytes": 9846,
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/optional-completion-failure-prefixes.test.ts",
+      "mode": "100644",
+      "sha256": "ff061cb3c3c436542538c9b1d404fa64ecc5c18e367f69a2977062a3969998de",
+      "bytes": 3585,
+      "beforeGit": {
+        "expectedAbsent": true
+      }
+    }
+  ],
+  "deleted": [],
+  "candidateHandoff": {
+    "path": "/tmp/awa-wall-optional-request-completion/HANDOFF.json",
+    "sha256": "e4c818d8e5e8b7918bdde6382bc32a1813e25ad42e5717415b4881379d1a7d26",
+    "bytes": 1709
+  },
+  "controls": [
+    {
+      "path": "backend/src/features/wall-notes/authority.ts",
+      "sha256": "58e5f529cb29b9aa60bb367856f7b4e8b35182360c78c7524722d87c2bc96742",
+      "bytes": 6865,
+      "wholeGitUnchanged": true
+    },
+    {
+      "path": "backend/src/domain/request-delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748",
+      "bytes": 4566,
+      "wholeGitUnchanged": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/trace.ts",
+      "sha256": "8cb6531baf70574b26de5b2aacef1bef35c59b614dc1ec47976afa43cf60060a",
+      "bytes": 9041,
+      "wholeGitUnchanged": true
+    },
+    {
+      "path": "backend/src/app/simulation/replay-reproduction.ts",
+      "sha256": "669c4aaf642b34e15af1e2403228826e36037988a2a5bb11429089a2e6c87c3c",
+      "bytes": 19198,
+      "wholeGitUnchanged": true
+    },
+    {
+      "path": "backend/src/engine/actions/action-request-factory.ts",
+      "sha256": "650eec8d50413c676bbbf940fa93716a5b81ed5645e78fa3c63d8e7596b7bb17",
+      "bytes": 3495,
+      "wholeGitUnchanged": true
+    },
+    {
+      "path": "backend/src/rulesets/action-request-bindings.ts",
+      "sha256": "10e87fea086a6c7e76d9307974b35be82385aebd37ec5bd6df820da7cb7083a3",
+      "bytes": 2299,
+      "wholeGitUnchanged": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/wall-notes.ts",
+      "sha256": "09c5ec0b44224554677bb177dbb5a559035faa88356fc92d2285391ebd47e4cb",
+      "bytes": 5369,
+      "wholeGitUnchanged": true
+    },
+    {
+      "path": "packages/game-contract/src/inert-event-data.ts",
+      "sha256": "68de25bbf514a55dd7d6aaa57fb502190c6f0be1345bbc4babc62b69b456e0bb",
+      "bytes": 2435,
+      "wholeGitUnchanged": true
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/tmp/awa-wall-optional-request-completion/HANDOFF.json",
+      "sha256": "e4c818d8e5e8b7918bdde6382bc32a1813e25ad42e5717415b4881379d1a7d26",
+      "bytes": 1709
+    },
+    {
+      "path": "/tmp/awa-wall-optional-request-completion/README.md",
+      "sha256": "a5e701b5fd0ee1a51eb4b63520df4087e22653af41a84295bab145fb2840eb0e",
+      "bytes": 5553
+    },
+    {
+      "path": "/tmp/awa-wall-optional-request-completion/production-before.json",
+      "sha256": "d3683f400ccc386563dd416033d2f5918c1a47bb1b42034f1136e15255b9ef22",
+      "bytes": 8542
+    },
+    {
+      "path": "/tmp/awa-wall-optional-request-completion/production-edits.json",
+      "sha256": "9c9a02b2bc315bc252601430cb457ea75db118b7990befddfc1b2b4fc79f7dd3",
+      "bytes": 1776
+    },
+    {
+      "path": "/tmp/awa-wall-optional-request-completion/candidates/backend/src/features/wall-notes/window.ts",
+      "sha256": "e2bb7dc26a3bcc4697c66f3502fdbc91f92039b1236991b07b93ed14d54263fb",
+      "bytes": 8504
+    },
+    {
+      "path": "/tmp/awa-wall-optional-request-completion/candidates/backend/tests/scenarios/reproduction/wall-notes/optional-request-completion.test.ts",
+      "sha256": "b77aab97b28ba40974473b1b4e69288824d114b03214e6e2448970ad9c0ec06e",
+      "bytes": 9846
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/application.json",
+      "sha256": "70149e0c21333b4b6802269404db876fc7fa133e8b320bce03c13e4f9cb0191e",
+      "bytes": 1337
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red-diagnostic-test.ts",
+      "sha256": "1d8831d13968c1cb52462d8f190278c85d73b3cc3aae86ee29409629f11d572d",
+      "bytes": 10114
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/final-test.ts",
+      "sha256": "b77aab97b28ba40974473b1b4e69288824d114b03214e6e2448970ad9c0ec06e",
+      "bytes": 9846
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red/launch.json",
+      "sha256": "527e0f7d200d534a487be33f1e2ae9ad0d552bde30af85f5d14f9995c10e503d",
+      "bytes": 2014
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red/receipt.json",
+      "sha256": "41c3a401890d8921b6a58c5d2e91ac6fbe0cb4853562c841f09f1c618416ff1f",
+      "bytes": 1479
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red/stdout.raw",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red/stderr.raw",
+      "sha256": "7208d1fdce4f9c42db663856cc7c820ef56fdc878f864f9e146933a389300860",
+      "bytes": 6521
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/successor/launch.json",
+      "sha256": "f28c86f10641926c84bd2121ae2ee676a19fe28aad2e5ba26875e11dd369d2b4",
+      "bytes": 2014
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/successor/receipt.json",
+      "sha256": "a039ab770e4e92cd74e1a23e8c1abe026b91bebc41f8111e8f4d1177683e2c8e",
+      "bytes": 1478
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/successor/stdout.raw",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/successor/stderr.raw",
+      "sha256": "030455cbd2525ca885faa1969f726ccb6855fe38541ab0cbd772acdac29ae64f",
+      "bytes": 487
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red-explicit-validator.trace.json",
+      "sha256": "34edf123f2a459475d411220a4430a21669ed7b44db1067ef41619cb4be6a50b",
+      "bytes": 7378
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red-invalid-shape.reproduction.json",
+      "sha256": "afd17fdf90ffa5442b53d71ee416341fa485c08f44973013cef9d73c2bb8de09",
+      "bytes": 49484
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/first-red-null.reproduction.json",
+      "sha256": "1d558ed77d55a750df368cee1e48f6f830d1cb494bbf9b414982df5d5e82e161",
+      "bytes": 48155
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes-first-test.ts",
+      "sha256": "3e620b3ebe7f7469b8a141ed030bb94140d5d60855ca2237d3accb52b4a87a97",
+      "bytes": 3579
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes-before-type-fix.ts",
+      "sha256": "5f7f969713c948dc8045358fd9d4f849a02b89ccc96f37a061e122054e1562df",
+      "bytes": 3591
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof-first/awa-wall-boundaries-proof.ts",
+      "sha256": "78233fe7f717996188fa120ae8a0005e9a1202561d790e47f6fb3e4293286be6",
+      "bytes": 2743
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof-first/proof.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof-first/proof.stderr",
+      "sha256": "bd5795e90adab9efddf819938ee1d472108b30fc243b4f3f769eecb9f0827b44",
+      "bytes": 1103
+    },
+    {
+      "path": "/tmp/awa-wall-boundaries-proof.ts",
+      "sha256": "78233fe7f717996188fa120ae8a0005e9a1202561d790e47f6fb3e4293286be6",
+      "bytes": 2743
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/report.json",
+      "sha256": "b16cb2026b0cdf00ae4eb1c340717d702d3d40d7398d37e850e125a817aa28a3",
+      "bytes": 1932
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof.stdout",
+      "sha256": "c4eec9baaa6287772004a793159189794c3e0b10fc71a6a32cd85e172b5b64fc",
+      "bytes": 92
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes/launch.json",
+      "sha256": "b98b3367580aea68b80958de154a37543d0ca55fab4d2af213af68dd733824e2",
+      "bytes": 2204
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes/receipt.json",
+      "sha256": "1b3ad3a6cca1563312b105eae906fd3e9435a9a243d609738c6f6c7e0774dc3d",
+      "bytes": 1636
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes/stdout.raw",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes/stderr.raw",
+      "sha256": "5961f087d24b9d8dd5689fdc865483633941a7cdaf1aafcc200bd589213dd443",
+      "bytes": 374
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes-type-successor/launch.json",
+      "sha256": "adb2b6854126e3773812e91191492153f0e8ec4d4176817d31cfd0d47987bff6",
+      "bytes": 2279
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes-type-successor/receipt.json",
+      "sha256": "4644053034e7e4320ddd5f2b6aeeabe2c1b1027b8706fac315773c82e01cb3f6",
+      "bytes": 1636
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes-type-successor/stdout.raw",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/failure-prefixes-type-successor/stderr.raw",
+      "sha256": "d99b07e1d2b7d34a1cd6e3b41e69ad36dca0ca4726e529087cc9cf9f8b764a00",
+      "bytes": 374
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/type-successor/launch.json",
+      "sha256": "bc803dbea94d335c33271711a55b2945e23d5d08cc30512b202f6264798a29e7",
+      "bytes": 2184
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/type-successor/receipt.json",
+      "sha256": "b9cb655ec3a3bac66cb7be4a6503ecd4a100a1ecd937554e1ffdebca8802f1ad",
+      "bytes": 1632
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/type-successor/stdout.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/type-successor/stderr.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/type-first/receipt.json",
+      "sha256": "bf8b5b821ed6daec84df5b023883294b562a62fb0ed4f142380face73817a7e2",
+      "bytes": 319
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/type-first/backend-test-types.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/type-first/backend-test-types.stdout",
+      "sha256": "cd3f8829d86cbe18e127562cc373631165f27086206942a42f25475b86877eca",
+      "bytes": 357
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/window-esm-before.js",
+      "sha256": "54dfa0ddece3f42b49bace57d96c7845cb36e7e8c852cd624e10b15f50189b44",
+      "bytes": 7821
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/window-esm-inverse.js",
+      "sha256": "54dfa0ddece3f42b49bace57d96c7845cb36e7e8c852cd624e10b15f50189b44",
+      "bytes": 7821
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/window-cjs-before.js",
+      "sha256": "894b9dd58ae23991ae2bde2364939558cd208f16339bc31b8030db1db2a46232",
+      "bytes": 8133
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/window-cjs-inverse.js",
+      "sha256": "894b9dd58ae23991ae2bde2364939558cd208f16339bc31b8030db1db2a46232",
+      "bytes": 8133
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/request-lease-esm-before.js",
+      "sha256": "6d9e984d73cb1374021246fd2c2bf38efad78028e3025ce14ddd4a94d6de384f",
+      "bytes": 12866
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/request-lease-esm-inverse.js",
+      "sha256": "6d9e984d73cb1374021246fd2c2bf38efad78028e3025ce14ddd4a94d6de384f",
+      "bytes": 12866
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/request-lease-cjs-before.js",
+      "sha256": "e5c84f715816884d96d11f9e0854b0db140f9e5c859836e065b367be3a360a99",
+      "bytes": 13159
+    },
+    {
+      "path": "/tmp/awa-wall-completion-execution/proof/request-lease-cjs-inverse.js",
+      "sha256": "e5c84f715816884d96d11f9e0854b0db140f9e5c859836e065b367be3a360a99",
+      "bytes": 13159
+    }
+  ],
+  "semanticReview": [
+    {
+      "branch": "legal null",
+      "source": "backend/src/features/wall-notes/window.ts:135",
+      "conclusion": "原全局/作者/current复验通过，readWallTool(null)返回null，无rejected、无库存写，新增complete后继续；true表示本次可选处理已落定。"
+    },
+    {
+      "branch": "invalid non-null shape",
+      "source": "backend/src/features/wall-notes/window.ts:136",
+      "conclusion": "原readWallTool接受域及异常转null不变，先成功追加rejected再complete；reject push抛错不会走到true。"
+    },
+    {
+      "branch": "explicit gateway rejection",
+      "source": "backend/src/features/wall-notes/window.ts:149",
+      "conclusion": "原gateway读取/调用与第二次sameWallAuthor/current仍先执行，随后原rejected事实成功才新增complete；不付款、不造accepted。"
+    },
+    {
+      "branch": "revocation/provider failure",
+      "source": "backend/src/features/wall-notes/window.ts:120",
+      "conclusion": "原首Provider失败、全局失效/撤销和作者撤销分支保持；未处理的delivery在原finally false关闭，不通过新增分支发true。"
+    },
+    {
+      "branch": "paid and late effects",
+      "source": "backend/src/features/wall-notes/window.ts:159",
+      "conclusion": "原author.remaining=0→note.remaining=0→complete→accepted→收集原体未改。晚过滤/RNG/order/published或后续作者失败不撤销已完成前缀，无退款。"
+    },
+    {
+      "branch": "complete callback throws",
+      "source": "backend/src/domain/request-lease.ts:442",
+      "conclusion": "finish先closed/settled/clear aliases，settleRequestDelivery先delete callback再通知；deferred Trace先outcome/settleOrder再onChange。回调抛错不回到decide内部catch，不二次false；原窗口catch/finally继续原错误规则。"
+    },
+    {
+      "branch": "cleanup and error priority",
+      "source": "backend/src/features/wall-notes/window.ts:203",
+      "conclusion": "完整catch/finally逐字保留：body失败置failed，closeWall/expired失败置failed并覆盖body，所有delivery逐一close且记首新通知错；仅没有旧body/cleanup错才抛通知错。布尔failed能保throw undefined。"
+    },
+    {
+      "branch": "Trace versus recorded replay",
+      "source": "backend/src/recording/reproduction/trace.ts:137",
+      "conclusion": "complete(true)保原候选（含null/shape-invalid），false仍是decision_failed；RecordedActions按相同请求与settleOrder把action候选返回或error抛出，未改schema/genericfallback。"
+    }
+  ],
+  "testEvidence": {
+    "executionOwner": "Root",
+    "reviewerExecution": false,
+    "firstRed": {
+      "receipt": {
+        "path": "/tmp/awa-wall-completion-execution/first-red/receipt.json",
+        "sha256": "41c3a401890d8921b6a58c5d2e91ac6fbe0cb4853562c841f09f1c618416ff1f",
+        "bytes": 1479
+      },
+      "exitCode": 1,
+      "pass": 0,
+      "fail": 3,
+      "expectCalls": 43,
+      "meaning": "三个真实失败均在outcome action候选断言；其前库存/事实和两cycle日次断言已通过；strict replay此首红尚未到达。"
+    },
+    "firstRedDiagnosticDifference": "相比final test仅在两个返回点Bun.write保存实际Tape/Trace，原titles/输入/expect不变；原诊断文件完整保留。",
+    "successor": {
+      "receipt": {
+        "path": "/tmp/awa-wall-completion-execution/successor/receipt.json",
+        "sha256": "a039ab770e4e92cd74e1a23e8c1abe026b91bebc41f8111e8f4d1177683e2c8e",
+        "bytes": 1478
+      },
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "expectCalls": 64,
+      "meaning": "原三个声明修生产后的首次后继；null与invalid-shape各完整真实周期+默认strict replay通过，显式拒绝为同自定义validator的窗口级候选/事件重放。"
+    },
+    "independentLiteralOracles": "六名演员全活、day2、六原库存remaining1/expired、零accepted、rejected0或6、texts=[]及精确原候选；重放相等是本局记录一致性。",
+    "limits": [
+      "第三例的自定义registry未序列化入Tape，未称默认replayReproduction可重建它。",
+      "三场景未注入取消、rejected push失败、true回调失败或第二库存写失败；这些错误顺序本阶段为原体静态核对，不能把三绿称新增故障覆盖。",
+      "旧F02真实Wall部分第二写/cleanup异常、原stage/context/domain/alias规则已阅读但未重跑，不把旧用例当本次新运行。"
+    ],
+    "failurePrefixUnits": {
+      "path": "backend/tests/unit/events/wall-notes/optional-completion-failure-prefixes.test.ts",
+      "firstRuntime": {
+        "pass": 2,
+        "fail": 0,
+        "expectCalls": 36,
+        "sourceSha256": "3e620b3ebe7f7469b8a141ed030bb94140d5d60855ca2237d3accb52b4a87a97",
+        "receipt": {
+          "path": "/tmp/awa-wall-completion-execution/failure-prefixes/receipt.json",
+          "sha256": "1b3ad3a6cca1563312b105eae906fd3e9435a9a243d609738c6f6c7e0774dc3d",
+          "bytes": 1636
+        }
+      },
+      "headPrecision": {
+        "beforeSha256": "3e620b3ebe7f7469b8a141ed030bb94140d5d60855ca2237d3accb52b4a87a97",
+        "afterSha256": "5f7f969713c948dc8045358fd9d4f849a02b89ccc96f37a061e122054e1562df",
+        "delta": "仅首头加“单元测试”；首proof工具因缺测试层级真实失败，原script/stdout/stderr保proof-first。"
+      },
+      "typePrecision": {
+        "beforeSha256": "5f7f969713c948dc8045358fd9d4f849a02b89ccc96f37a061e122054e1562df",
+        "afterSha256": "ff061cb3c3c436542538c9b1d404fa64ecc5c18e367f69a2977062a3969998de",
+        "delta": "expired事件集合的filter+map改同谓词flatMap，读序仍事件type→operation→actorId；字面ids和全部故障输入/assert未改。不是type擦除等价宣称，因此Root仅这两声明实际后继2/0/36。",
+        "firstTypeExitCode": 2,
+        "diagnostic": "newunit51 payload.actorId TS2339",
+        "runtimeSuccessor": {
+          "path": "/tmp/awa-wall-completion-execution/failure-prefixes-type-successor/receipt.json",
+          "sha256": "4644053034e7e4320ddd5f2b6aeeabe2c1b1027b8706fac315773c82e01cb3f6",
+          "bytes": 1636
+        }
+      },
+      "literalOracles": [
+        "实际rejected事实push在append前抛同一Error：六个delivery都false、库存remaining1/expired、active撤回、无accepted/发表。",
+        "实际null首作者complete通知抛同一Error：首作者true已落且不补false、其余五作者false、所有库存不付且expired、无发表；真实原Error向外传播。"
+      ],
+      "limits": "这两个新case直接运行真实Factory/Window/lease/defer完成身份，不调用Trace；Trace写outcome/settleOrder再onChange的前缀为已审原体。没有新跑旧paid第二写/cleanup故障或整墙场景大套。"
+    },
+    "backendTestTypes": {
+      "first": "Root首标准入口exit2仅上述newunit诊断，原输出保type-first",
+      "successor": {
+        "path": "/tmp/awa-wall-completion-execution/type-successor/receipt.json",
+        "sha256": "b9cb655ec3a3bac66cb7be4a6503ecd4a100a1ecd937554e1ffdebca8802f1ad",
+        "bytes": 1632
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 37.333420276641846,
+      "inputSourceUnchanged": true,
+      "scope": "Root实际标准backend/tsconfig.tests.json整个后端测试项目；不是14类型项目全套重跑。"
+    }
+  },
+  "chineseReview": "窗口头与三处重要注释准确区分处理完成/付款/accepted；Root对RequestLease首头及finish JSDoc的两纯注释校准已读，无共享算法变化。",
+  "findings": [],
+  "notClaimed": [
+    "任意JS Proxy/反射/全局猴子补丁事务隔离",
+    "整墙原子付款或默认严格重放能重建自定义validator",
+    "重复执行的2unit后继计作额外新声明或把3+2运行相加成旧大范围验收",
+    "首成功proof已采最终ff061单元整程序；该报告仍诚实保5f7来源"
+  ],
+  "method": "完整原/新窗口、authority、RequestLease/Delivery、Trace/RecordedActions、factory/binding、shared reader、三个新场景和相关旧故障契约只读审查；只标准库JSON/原文/SHA/Git身份核对。未运行产品、解析器、AST、编译、类型、proof、check、测试；未写仓库。",
+  "previousApproval": {
+    "path": "/tmp/awa-wall-optional-request-completion-independent/first-approved-snapshot.json",
+    "sha256": "8b9be33fbd14aaff4f9a3b5c5035d5f4d3bbbd0b64210cda76710ba2f723f974",
+    "scope": "原3源/3场景阶段逐字保留，当前报告只增量补独立unit及其头/类型后继。"
+  },
+  "proofStages": {
+    "firstToolFailure": "proof-first/proof.stderr真实comment.layer；不能称运行产品失败",
+    "successfulReport": {
+      "path": "/tmp/awa-wall-completion-execution/proof/report.json",
+      "sha256": "b16cb2026b0cdf00ae4eb1c340717d702d3d40d7398d37e850e125a817aa28a3",
+      "bytes": 1932
+    },
+    "scope": "Root实际4头检查与两原生产源码精确逆/注释对照的4对完整ES/CJS输出；不是所有4源AST或意图行为的新旧等价。",
+    "newUnitStage": "成功头/证明报告采5f7头修后单元，最终ff061只含后继flatMap表达式；头逐字同，不改旧报告源码SHA。changed-unit2/36与标准types0另承接最终ff061。"
+  },
+  "incrementalFindings": []
+}

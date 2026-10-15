@@ -5,7 +5,7 @@
  * 原 envelope 或领域当前性观察失配永久关闭共同许可；别名自己的字段失配只退役该别名。
  * 合法期限别名共享最早绝对预算，观察到期后时钟回退也不复活。字段 pin 只保顶层原值引用，
  * 不深复制／冻结提示或 feed，不把相同 JSON、readonly 或请求字段当成领域许可。
- * Provider 返回不是付款；窗口完整付款后才 complete，状态先落再通知，晚异常不能二次结算。
+ * Provider 返回不是领域完成；窗口按机制契约在付款或可选处理落定后 complete，先落终态再通知，晚异常不能二次结算。
  */
 import type { ActionRequest } from "./actions";
 import { bindRequestDeliveryGuard, registerRequestAliasPropagation, settleRequestDelivery } from "./request-delivery";
@@ -438,7 +438,7 @@ export class RequestLease<Owner, Scope, Binding> {
     bindRequestDeliveryGuard(request, () => this.scope(turn.owner, request) !== undefined, turn.completion);
   }
 
-  /** 付款结果只由真实窗口给出；不重查已被付款改变的 pending scope。先落终态再发一次通知。 */
+  /** 处理完成只由真实窗口按机制契约给出；完成不必然表示付款，不重查已由处理改变的 pending scope。先落终态再发一次通知。 */
   private finish(turn: LeaseTurn<Owner, Binding>, accepted: boolean): void {
     if (turn.settled) return;
     turn.closed = true;

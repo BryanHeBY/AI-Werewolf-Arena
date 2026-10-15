@@ -1,5 +1,5 @@
 /**
- * 开启已配置的匿名墙机会并收集原作者行动。输入为只读政策、World、Provider 及具名 RNG 工厂；输出为墙事实与窗口完成，库存与领域窗口关闭仍归 authority，请求完成由本窗口在付款后驱动；不改规则或取得其他能力。
+ * 负责开启已配置的可选匿名墙机会并收集原作者行动。输入为只读政策、World、Provider 及具名 RNG 工厂；输出为墙事实与窗口完成，库存与领域窗口关闭仍归 authority，请求完成由本窗口在每位作者的可选处理落定后驱动；完成不等于纸条已付款或被接受，不取得其他能力。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
@@ -134,6 +134,9 @@ export class WallNotesWindow {
         const call = result.status === "fulfilled" ? readWallTool(result.value) : null;
         if (!call) {
           if (result.status === "fulfilled" && result.value !== null) change(author, "rejected");
+          // 合法空回复不付库存；非空坏形态先写拒绝事实。处理落定后记录原候选，不能把它伪装成 Provider 错误。
+          // 拒绝事实抛错时不走到此处；撤权仍由上面的复验分支关闭，完成并不表示纸条 accepted。
+          delivery.complete();
           continue;
         }
         const valid = this.gateway.validateAndSanitize(this.world, author.id, call, {
@@ -149,6 +152,8 @@ export class WallNotesWindow {
         }
         if (!valid.ok) {
           change(author, "rejected");
+          // 网关拒绝事实成功后，这位作者的一次处理已结束；不扣库存、不造 accepted／纸条内容。
+          delivery.complete();
           continue;
         }
         author.remaining = 0;

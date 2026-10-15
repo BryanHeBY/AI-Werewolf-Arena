@@ -27,3 +27,5 @@
 新的有界验收材料封存到 `docs/history/acceptance/<切片名>.tar.gz`，先完成小 JSON／MD 正常格式再冻结摘要和成员。封包不取代本页或矩阵的当前状态，也不沿旧 originPath 追加材料；临时提交／审查工具采用新路径，不将历史脚本或旧台账重新作为当前写入 owner。历史守卫只覆盖两个冻结原根，不把新的 acceptance 自动算成已核对的原历史；其内容由各次来源清单与审查单独绑定。
 
 完整目标仍见[实施计划](../guides/refactoring-plan.md)；历史提交及scope从[history](../history/README.md)按origin定位。这里没有新的暂停／停止授权，也没有把旧扩充里程碑重新变成当前任务。
+
+匿名墙可选处理的独立结算修复已完成，含真实首红、两类严格重放和两个异常前缀回归；见[验收记录](../history/acceptance/wall-optional-completion.md)。最终同输入全量门禁仍待完成。
