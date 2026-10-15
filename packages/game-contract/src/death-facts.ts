@@ -4,7 +4,6 @@
  * 原生命、来源资格、保护效果及死亡枪回调仍归运行所有者；数据记录不授予结算权限。
  */
 export enum DeathCause {
-  Deal = "deal",
   WhiteCatExpiry = "white_cat_expiry",
   PufferRetaliation = "puffer_retaliation",
   FragrantLink = "fragrant_link",
@@ -35,6 +34,7 @@ export enum DeathCause {
   MechanicalGuardFailure = "mechanical_guard_failure",
   MerchantBacklash = "merchant_backlash",
   BlackMarketBacklash = "black_market_backlash",
+  Deal = "deal",
 }
 /** 按实体编号保存可写来源数组；追加、覆盖、稳定去重与闭包展开由各结算调用方按原顺序执行。 */
 export type DeathSources = Record<number, DeathCause[]>;

@@ -62,6 +62,10 @@ function eventTypes() {
     AnimalDreamPayloadMap: "packages/game-contract/src/facts/animal-dream.ts",
     NobleSecretBodyPayloadMap: "packages/game-contract/src/facts/noble-secret-body.ts",
     FragrantPairPayloadMap: "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+    SilenceElderPayloadMap: "packages/game-contract/src/facts/silence-elder.ts",
+    WardenPayloadMap: "packages/game-contract/src/facts/warden.ts",
+    AwakenedClawPayloadMap: "packages/game-contract/src/facts/awakened-claws.ts",
+    AwakenedWitchPayloadMap: "packages/game-contract/src/facts/awakened-witch.ts",
   };
   const declaration = find(
     source("packages/game-contract/src/events.ts"),

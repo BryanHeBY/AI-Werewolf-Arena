@@ -132,6 +132,14 @@ const baselineEnums = {
     Always: "always",
   },
 } as const;
+// 原55项顺序不动；本轮只允许已交付角色以确定顺序追加，规划项仍不能执行。
+const deliveredRoleExtensions = {
+  Warden: "warden",
+  Crow: "crow",
+  SilenceElder: "silence_elder",
+  AwakenedWolfKing: "awakened_wolf_king",
+  AwakenedWitch: "awakened_witch",
+} as const;
 const baselineCatalogOrder = [
   "wolf",
   "villager",
@@ -213,18 +221,22 @@ describe("pure identity public package contract", () => {
       WitchSelfHealRule,
     };
     for (const name of Object.keys(baselineEnums) as Array<keyof typeof baselineEnums>) {
-      expect<unknown>(actual[name]).toEqual(baselineEnums[name]);
-      expect(Object.keys(actual[name])).toEqual(Object.keys(baselineEnums[name]));
-      expect<unknown>(Object.values(actual[name])).toEqual(Object.values(baselineEnums[name]));
+      const expected =
+        name === "Role"
+          ? { ...baselineEnums.Role, ...deliveredRoleExtensions }
+          : baselineEnums[name];
+      expect<unknown>(actual[name]).toEqual(expected);
+      expect(Object.keys(actual[name])).toEqual(Object.keys(expected));
+      expect<unknown>(Object.values(actual[name])).toEqual(Object.values(expected));
     }
-    expect(Object.values(Role)).toHaveLength(55);
+    expect(Object.values(Role)).toHaveLength(60);
     expect(Object.values(Role)).not.toContain("awakened_knight" as Role);
   });
 
   test("catalog IDs retain their independent 64-entry order without granting planned roles execution", () => {
     expect<unknown>(ROLE_IDS).toEqual(baselineCatalogOrder);
     expect(new Set(ROLE_IDS).size).toBe(64);
-    expect(Object.values(PLANNED_ROLE_IDS)).toHaveLength(9);
+    expect(Object.values(PLANNED_ROLE_IDS)).toHaveLength(4);
     for (const role of baselineCatalogOrder) expect(isRoleId(role)).toBe(true);
     for (const value of [null, undefined, 2, {}, [], "Wolf", "not_a_role", ""])
       expect(isRoleId(value)).toBe(false);

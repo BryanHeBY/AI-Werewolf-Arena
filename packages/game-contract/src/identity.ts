@@ -15,9 +15,6 @@ export enum Camp {
 
 /** 角色名不固定推导当前阵营、胜负或狼队资格；现场身份与资源仍须原运行规则核对。 */
 export enum Role {
-  Warden = "warden",
-  Crow = "crow",
-  SilenceElder = "silence_elder",
   FragrantPhantom = "fragrant_phantom",
   AwakenedSeer = "awakened_seer",
   NightNoble = "night_noble",
@@ -28,7 +25,6 @@ export enum Role {
   RavenClawWolf = "raven_claw_wolf",
   Wolf = "wolf",
   WolfKing = "wolf_king",
-  AwakenedWolfKing = "awakened_wolf_king",
   WhiteWolfKing = "white_wolf_king",
   Knight = "knight",
   Gravekeeper = "gravekeeper",
@@ -72,9 +68,13 @@ export enum Role {
   Seer = "seer",
   Guard = "guard",
   Witch = "witch",
-  AwakenedWitch = "awakened_witch",
   Hunter = "hunter",
   Idiot = "idiot",
+  Warden = "warden",
+  Crow = "crow",
+  SilenceElder = "silence_elder",
+  AwakenedWolfKing = "awakened_wolf_king",
+  AwakenedWitch = "awakened_witch",
 }
 
 /** 原阶段标识及顺序保持；持有该值不推进时钟或打开某个具体窗口。 */

@@ -99,8 +99,15 @@ test("重用协助者、缩小第k次人数、伪造库存或第四轮均拒绝"
   fourth.nights[4]!.approvals = [6, 7, 8].map((actorId) => ({ actorId, approve: true }));
   fourth.nights[4]!.outcome = "poison";
   expect(readAwakenedWitchStateData(fourth)).not.toBeNull();
-  fourth.nights.push({ ...fourth.nights[4]!, day: 6, ordinal: 4, assistantIds: [9, 10, 11, 12] });
-  expect(readAwakenedWitchStateData(fourth)).toBeNull();
+  // 输入边界本来就是unknown；单独构造第四轮负例，不把非法序号塞进已推导的有效数组元素类型。
+  const overflow = {
+    ...fourth,
+    nights: [
+      ...fourth.nights,
+      { ...fourth.nights[4]!, day: 6, ordinal: 4, assistantIds: [9, 10, 11, 12] },
+    ],
+  };
+  expect(readAwakenedWitchStateData(overflow)).toBeNull();
 });
 test("未完成协作与明确否决有不同数据状态，不能补默认同意或伪造毒已生效", () => {
   const premature = history();

@@ -15,13 +15,13 @@ const native = () => ({
 test("native units remain separate, transferred unit has one matching committed receipt and output is detached", () => {
   const state = native();
   const copied = readAwakenedClawStateData(state)!;
-  expect(copied).toEqual(state);
+  expect<unknown>(copied).toEqual(state);
   expect(copied).not.toBe(state);
   expect(copied.units[0]).not.toBe(state.units[0]);
   state.units[0]!.status = "transferred";
   expect(readAwakenedClawStateData(state)).toBeNull();
   state.bequests.push({ day: 2, targetId: 4, unitId: "awakened_claw:native:1" });
-  expect(readAwakenedClawStateData(state)).toEqual(state);
+  expect<unknown>(readAwakenedClawStateData(state)).toEqual(state);
   state.bequests.push({ day: 3, targetId: 5, unitId: "awakened_claw:native:1" });
   expect(readAwakenedClawStateData(state)).toBeNull();
 });
@@ -37,7 +37,7 @@ test("received unit binds giver/day/native source and rejects an extra native un
     ],
     bequests: [],
   };
-  expect(readAwakenedClawStateData(received)).toEqual(received);
+  expect<unknown>(readAwakenedClawStateData(received)).toEqual(received);
   received.units[0]!.status = "transferred";
   expect(readAwakenedClawStateData(received)).toBeNull();
   received.units[0]!.status = "ready";
@@ -55,7 +55,7 @@ test("facts require precise payload shape and reject identity/source leakage fie
     unitId: "awakened_claw:native:1",
     targetId: 4,
   };
-  expect(readAwakenedClawFact("awakened_claw_spent", payload)).toEqual({
+  expect<unknown>(readAwakenedClawFact("awakened_claw_spent", payload)).toEqual({
     type: "awakened_claw_spent",
     payload,
   });

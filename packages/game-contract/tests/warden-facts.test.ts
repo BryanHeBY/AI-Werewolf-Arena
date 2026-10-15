@@ -16,7 +16,7 @@ test("秘密历史允许真实未完成决定并脱离引用", () => {
     { day: 2, pair: [2, 3], decisions: [{ playerId: 2, choice: "trade" }], resolved: false },
   ]);
   const copy = readWardenStateData(original)!;
-  expect(copy).toEqual(original);
+  expect<unknown>(copy).toEqual(original);
   expect(copy).not.toBe(original);
   expect(copy.history[0]).not.toBe(original.history[0]);
 });

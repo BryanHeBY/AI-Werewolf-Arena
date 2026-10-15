@@ -26,10 +26,6 @@ import { readTricksterSkipFact } from "@ai-werewolf-arena/game-contract/facts/tr
 import { assertMistTransportEvents } from "../../features/mist-raven/oracles/transport";
 import type { MistWireExpectations } from "../../features/mist-raven/oracles/transport";
 import type { MistWireState } from "../../features/mist-raven/oracles/transport";
-import {
-  isAwakenedWitchEventType,
-  readAwakenedWitchFact,
-} from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
 
 export function assertTransportIdentity(plan: ActorTransportPlan, content: string): void {
   for (const marker of plan.requiredSystemMarkers ?? []) {
@@ -406,22 +402,6 @@ export function assertTransportEvents(
 ) {
   assertMistTransportEvents(role, actorId, events, expected, state);
   for (const [, type, payload] of events) {
-    if (isAwakenedWitchEventType(type)) {
-      const f = readAwakenedWitchFact(type, payload);
-      if (
-        !f ||
-        f.type === "brew_resolved" ||
-        (f.type === "awakened_brew_chosen" &&
-          (role !== "awakened_witch" || f.payload.actorId !== actorId)) ||
-        (f.type === "brew_approval" && f.payload.actorId !== actorId) ||
-        (f.type === "brew_started" && !f.payload.assistantIds.includes(actorId)) ||
-        ((f.type === "brew_started" ||
-          f.type === "brew_discussion" ||
-          f.type === "brew_approval") &&
-          role === "awakened_witch")
-      )
-        throw Error("fixture_brew_private_fact_exposed");
-    }
     if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(type)) {
       const f = readAnimalDreamFact(type, payload);
       if (
@@ -627,12 +607,7 @@ export function assertTransportEvents(
       throw new Error("fixture_girl_god_membership_exposed");
     if (type.startsWith("mechanical_") && type !== "mechanical_shot" && payload.actorId !== actorId)
       throw new Error("fixture_other_private_skill_exposed");
-    // 亲传是具名双方私有事实；受传者只能收到自己的这一条，不可借前缀放开其它觉醒信息。
-    if (
-      type.startsWith("awakened_") &&
-      payload.actorId !== actorId &&
-      !(type === "awakened_claw_bequeathed" && payload.targetId === actorId)
-    )
+    if (type.startsWith("awakened_") && payload.actorId !== actorId)
       throw new Error("fixture_other_private_skill_exposed");
     if (["dream_death", "charm_death", "charm_blocked"].includes(type))
       throw new Error("fixture_private_death_information_exposed");
@@ -680,8 +655,6 @@ export function assertTransportEvents(
       ![
         "wolf",
         "wolf_king",
-        "awakened_wolf_king",
-        "warden",
         "white_wolf_king",
         "wolf_beauty",
         "wolf_witch",

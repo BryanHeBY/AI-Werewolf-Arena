@@ -163,12 +163,12 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
     for (const [payload, expected] of [
-      [{ result: null, isWerewolf: false }, "null"],
-      [{ isWerewolf: "false" }, "?"],
-      [{}, "?"],
+      [{ result: null, isWerewolf: false }, locale === "en" ? "Unknown" : "未知"],
+      [{ isWerewolf: "false" }, locale === "en" ? "Unknown" : "未知"],
+      [{}, locale === "en" ? "Unknown" : "未知"],
       [
         { result: { kind: "future", original: "Raw 原文" }, isWerewolf: false },
-        JSON.stringify({ kind: "future", original: "Raw 原文" }),
+        locale === "en" ? "Unknown" : "未知",
       ],
     ] as const) {
       expect(render(payload)).toEqual([

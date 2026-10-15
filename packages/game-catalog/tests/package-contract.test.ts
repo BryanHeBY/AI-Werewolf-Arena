@@ -22,8 +22,8 @@ describe("catalog public package contract", () => {
     expect(ROLE_DEFINITIONS).toHaveLength(64);
     expect(new Set(ROLE_IDS).size).toBe(64);
     expect(ROLE_DEFINITIONS.filter((role) => role.status === "verified")).toHaveLength(23);
-    expect(ROLE_DEFINITIONS.filter((role) => role.status === "implemented")).toHaveLength(32);
-    expect(ROLE_DEFINITIONS.filter((role) => role.status === "planned")).toHaveLength(9);
+    expect(ROLE_DEFINITIONS.filter((role) => role.status === "implemented")).toHaveLength(37);
+    expect(ROLE_DEFINITIONS.filter((role) => role.status === "planned")).toHaveLength(4);
     expect(roleDefinition("white_cat")?.status).toBe("implemented");
     expect(roleDefinition("fox_cub")?.status).toBe("implemented");
     expect(roleDefinition("pufferfish")?.status).toBe("implemented");

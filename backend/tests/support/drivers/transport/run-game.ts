@@ -37,7 +37,8 @@ import type { ActorTransportPlan } from "../../transport/contracts";
 import { assertSubmitActionWireSchema } from "../../features/mist-raven/oracles/transport";
 import type { MistWireState } from "../../features/mist-raven/oracles/transport";
 import { assertTransportPrompt } from "../../oracles/transport/observations";
-import { assertTransportEvents } from "../../oracles/transport/observations";
+import { assertExpansionTransportEvents as assertTransportEvents } from "../../oracles/transport/expansion-observations";
+import { fileURLToPath } from "node:url";
 import { assertTransportIdentity } from "../../oracles/transport/observations";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayManifest } from "../../../../src/recording/contracts";
@@ -287,7 +288,15 @@ export async function runTransportGame(
       type: "acp",
       transport: "stdio",
       command: process.execPath,
-      args: [acpAdapterEntry("game")],
+      args: [
+        scenario.board.config.crow ||
+        scenario.board.config.silenceElder ||
+        scenario.board.config.warden ||
+        scenario.board.config.awakenedWolfKing ||
+        scenario.board.config.awakenedWitch
+          ? fileURLToPath(new URL("../agents/expansion-game-agent.ts", import.meta.url))
+          : acpAdapterEntry("game"),
+      ],
       maxConcurrentRequests: 2,
     };
     for (const [actor, plan] of plans) {

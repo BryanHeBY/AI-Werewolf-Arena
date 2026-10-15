@@ -97,6 +97,11 @@ const expectedOrder = [
   "validateCupidRecord",
   "validateHybridRecord",
   "validateDeathHistoryRecord",
+  "validateCrowRecord",
+  "validateSilenceElderRecord",
+  "validateAwakenedClawRecord",
+  "validateAwakenedWitchRecord",
+  "validateWardenRecord",
 ];
 function observeMetadata(record: ReproductionRecord) {
   const original = record.metadata,

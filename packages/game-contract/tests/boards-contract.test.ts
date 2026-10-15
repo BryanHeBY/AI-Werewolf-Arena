@@ -85,10 +85,10 @@ test("required fields, strict tails, role minimum and count bounds reject unchan
     expect(boardConfigSchema.safeParse(input).success).toBe(false);
 });
 
-test("runtime Role enum remains the 55-member schema boundary while raw JSON IDs still parse", () => {
+test("runtime Role enum remains the 60-member schema boundary while raw JSON IDs still parse", () => {
   const raw = JSON.parse(JSON.stringify(classic()));
   expect(boardConfigSchema.parse(raw).roleSetups[0]!.role).toBe(Role.Wolf);
-  expect(Object.values(Role)).toHaveLength(55);
+  expect(Object.values(Role)).toHaveLength(60);
   for (const role of ["awakened_knight", "unregistered_role", "Wolf"])
     expect(boardConfigSchema.safeParse({ ...raw, roleSetups: [{ role, count: 1 }] }).success).toBe(
       false,

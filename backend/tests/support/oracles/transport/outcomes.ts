@@ -8,7 +8,8 @@ import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayManifest } from "../../../../src/recording/contracts";
 import type { ReproductionRecord } from "../../../../src/recording/reproduction/format";
 import type { MistWireState } from "../../features/mist-raven/oracles/transport";
-import { assertTransportIdentity, assertTransportEvents } from "./observations";
+import { assertTransportIdentity } from "./observations";
+import { assertExpansionTransportEvents as assertTransportEvents } from "./expansion-observations";
 type Deadline = Parameters<NonNullable<GameRunDependencies["selectRequestDeadline"]>>[0] & {
   deadlineAtMs: number;
 };

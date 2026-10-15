@@ -328,7 +328,8 @@ export function buildPlayerStageContextHint(
   request: ActionRequest,
   queries: Pick<PlayerPromptDirectiveQueries, "locale" | "boardConfig">,
 ): string | undefined {
-  if (request.context.awakened_brew_options) {
+  // 新族先用稳定工具数组筛选；不向旧请求增加context/getter查询，保原目标提示的读取顺序。
+  if (request.allowedTools.includes("awakened_brew") && request.context.awakened_brew_options) {
     const o = request.context.awakened_brew_options,
       locale = queries.locale(),
       none = text(locale, "common.none");
@@ -343,7 +344,10 @@ export function buildPlayerStageContextHint(
       targets: o.targetIds.join(", ") || none,
     });
   }
-  if (request.context.brew_collaboration) {
+  if (
+    request.allowedTools.some((t) => t === "brew_discuss" || t === "brew_approve") &&
+    request.context.brew_collaboration
+  ) {
     const g = request.context.brew_collaboration;
     return text(queries.locale(), "prompt.stage.brew_group", {
       assistants: g.assistantIds.join(", "),
@@ -351,28 +355,41 @@ export function buildPlayerStageContextHint(
       target: g.targetId,
     });
   }
-  if (request.context.warden_candidates !== undefined)
+  if (
+    request.allowedTools.includes("warden_pair") &&
+    request.context.warden_candidates !== undefined
+  )
     return text(queries.locale(), "prompt.stage.warden_candidates", {
       ids: request.context.warden_candidates.join(", "),
     });
-  if (request.context.warden_partner_id !== undefined)
+  if (
+    request.allowedTools.includes("warden_decide") &&
+    request.context.warden_partner_id !== undefined
+  )
     return text(queries.locale(), "prompt.stage.warden_partner", {
       partner: request.context.warden_partner_id,
     });
-  if (request.context.warden_forced_target !== undefined)
+  if (
+    request.allowedTools.some((t) => ["check_identity", "use_potion", "dream"].includes(t)) &&
+    request.context.warden_forced_target !== undefined
+  )
     return text(queries.locale(), "prompt.stage.warden_forced", {
       target: request.context.warden_forced_target,
     });
   // 按原字段优先级展示请求已带来的候选，不据这些文字重新授权目标。
-  if (request.context.claw_bequest_candidates !== undefined)
+  if (
+    request.allowedTools.includes("bequeath_claw") &&
+    request.context.claw_bequest_candidates !== undefined
+  )
     return text(queries.locale(), "prompt.stage.claw_bequest_candidates", {
       ids: request.context.claw_bequest_candidates.join(", "),
     });
-  if (request.context.silence_candidates !== undefined)
+  if (request.allowedTools.includes("silence") && request.context.silence_candidates !== undefined)
     return text(queries.locale(), "prompt.stage.silence_candidates", {
       ids: request.context.silence_candidates.join(", "),
     });
   if (
+    request.allowedTools.includes("gesture") &&
     request.context.stage === "silence_gesture" &&
     request.context.silence_target_id !== undefined
   )
@@ -384,6 +401,7 @@ export function buildPlayerStageContextHint(
       ),
     });
   if (
+    request.allowedTools.includes("translate_silence") &&
     request.context.stage === "silence_translation" &&
     request.context.silence_target_id !== undefined &&
     request.context.silence_gesture_description !== undefined
@@ -396,7 +414,10 @@ export function buildPlayerStageContextHint(
       ),
       description: request.context.silence_gesture_description,
     });
-  if (request.context.crow_candidates !== undefined) {
+  if (
+    request.allowedTools.includes("curse_exile") &&
+    request.context.crow_candidates !== undefined
+  ) {
     const ids = request.context.crow_candidates;
     return ids.length
       ? text(

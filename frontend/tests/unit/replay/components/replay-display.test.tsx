@@ -97,7 +97,11 @@ test("event branches have independent English vote, skill, sheriff, death, and u
       "Sheriff votes: None; No sheriff elected",
     ],
     ["sheriff_nomination_summary", { candidates: [] }, "Sheriff candidates: None"],
-    ["sheriff_badge_transferred", { fromId: 1, toId: 3 }, "Sheriff badge: Player 1 → Player 3"],
+    [
+      "sheriff_badge_transferred",
+      { fromId: 1, toId: 3 },
+      "Player 1 transfers the sheriff badge to player 3",
+    ],
     ["night_resolved", { deaths: [2, 4] }, "Died last night: Player 2, Player 4"],
     [
       "vote_summary",
@@ -107,7 +111,7 @@ test("event branches have independent English vote, skill, sheriff, death, and u
           { actorId: 3, abstain: true },
         ],
       },
-      "Exile votes: Player 1 → Player 2 (weight 1.5), Player 3 → abstain",
+      "Exile votes: Player 1 votes for player 2 (weight 1.5), Player 3 abstains",
     ],
     [
       "idiot_revealed",

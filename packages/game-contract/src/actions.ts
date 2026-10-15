@@ -100,16 +100,6 @@ export interface ToolArgMap {
 export type ToolName = keyof ToolArgMap;
 /** 保留公共工具标识的原顺序；列入此表不表示任意角色或阶段都可使用。 */
 export const TOOL_NAMES = [
-  "awakened_brew",
-  "brew_discuss",
-  "brew_approve",
-  "warden_pair",
-  "warden_decide",
-  "bequeath_claw",
-  "curse_exile",
-  "silence",
-  "gesture",
-  "translate_silence",
   "fox_distract",
   "puffer_retaliate",
   "bind_fragrant_pair",
@@ -175,6 +165,16 @@ export const TOOL_NAMES = [
   "choose_direction",
   "run_for_sheriff",
   "vote_for_sheriff",
+  "awakened_brew",
+  "brew_discuss",
+  "brew_approve",
+  "warden_pair",
+  "warden_decide",
+  "bequeath_claw",
+  "curse_exile",
+  "silence",
+  "gesture",
+  "translate_silence",
 ] as const satisfies readonly ToolName[];
 /** name 是判别字段，args 随工具一一关联；结构匹配不等于已通过 Gateway 或已付款。 */
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
@@ -201,11 +201,6 @@ export interface TurnConstraints {
 
 /** 保留阶段字面值及两个窗口枚举的原展开顺序；此清单不推进阶段或打开行动窗口。 */
 export const ACTION_STAGES = [
-  "awakened_witch",
-  "brew_discussion",
-  "brew_approval",
-  "warden_pair",
-  "warden_decide",
   "fox_distract",
   "puffer_reaction",
   "fragrant_bind",
@@ -228,11 +223,6 @@ export const ACTION_STAGES = [
   "order_prince_revote",
   "magician_exchange",
   "nightmare_fear",
-  "crow_curse",
-  "awakened_claw_bequest",
-  "silence_elder",
-  "silence_gesture",
-  "silence_translation",
   "pure_white_girl",
   "wolf_witch",
   "demon_hunter",
@@ -288,6 +278,16 @@ export const ACTION_STAGES = [
   "sheriff_pk_vote",
   "exile_pk_speech",
   "exile_pk_vote",
+  "awakened_witch",
+  "brew_discussion",
+  "brew_approval",
+  "warden_pair",
+  "warden_decide",
+  "crow_curse",
+  "awakened_claw_bequest",
+  "silence_elder",
+  "silence_gesture",
+  "silence_translation",
 ] as const;
 export type ActionStage = (typeof ACTION_STAGES)[number];
 export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_shot"];
