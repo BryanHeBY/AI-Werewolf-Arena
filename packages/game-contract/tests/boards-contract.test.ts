@@ -1,9 +1,7 @@
 /**
- * Package unit/type contract for serialized board shapes and policy identifiers.
- * Literal configurations, malformed inert inputs and readonly DTO type errors
- * are independent oracles. Shape parsing preserves bounds and optional fields;
- * these tests never invoke finite-board support, rule algorithms, World storage
- * or model transports. A parsed board alone grants no execution authority.
+ * 包级单元／类型契约测试验证序列化板子形状和政策标识。
+ * 独立字面配置、畸形普通数据及只读 DTO 类型负例核对字段范围和可选性；schema 不补默认值，
+ * 也不统计牌数、去重角色或应用胜利目标。格式通过不代表有限板子受支持或取得执行许可；本文件不调用规则与 World。
  */
 import { expect, test } from "bun:test";
 import {
@@ -63,7 +61,7 @@ test("shape-only integer endpoints and empty goals preserve the independent supp
     ],
     winConditions: [],
   };
-  // The existing schema does not sum the deck, deduplicate roles or apply a goal.
+  // 原 schema 不统计牌堆总量、不去重角色，也不应用胜利目标。
   expect(boardConfigSchema.parse(structural)).toEqual(structural);
 });
 

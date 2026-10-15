@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Cupid pair/recognition/relation wire data.
- * Literal unsorted pairs and camps independently verify original day, exact-key,
- * mixed-faction correlation and nullable rejection. No lover relation, victory
- * policy, player state or model is created by these data reader tests.
+ * 包级单元测试验证丘比特配对、识别和关系的传输数据。
+ * 独立未排序配对与阵营字面预期核对首日、精确字段、混合阵营关联和可空拒绝；保留输入配对顺序。
+ * 测试不创建恋人关系、胜利政策或玩家状态，读取通过不表示绑定许可。
  */
 import { expect, test } from "bun:test";
 import {

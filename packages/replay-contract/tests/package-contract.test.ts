@@ -1,9 +1,8 @@
 /**
- * Package unit / compatibility contract: read the existing localized God/player
- * fixtures through the public archive reader and compare literal normalized
- * identifiers. Preserve raw user/model payloads and reject unknown versions,
- * invalid sequence/shape and non-data descriptors without invoking accessors.
- * Files are public package fixtures; no backend resolver supplies expected data.
+ * 包级单元／兼容测试验证公共归档读取。
+ * 经公共 reader 读取既有 God／player 样本，再按独立字面预期核对归一化标识；未知历史值及用户／模型原文保留。
+ * 未知版本、无效序号／形状和非数据描述符在原边界被拒绝，不调用属性 getter；这不承诺任意 Proxy 零 trap。
+ * 样本来自共享包，预期不由后端结算器生成。
  */
 import { describe, expect, test } from "bun:test";
 import {

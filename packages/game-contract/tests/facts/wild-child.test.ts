@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Wild Child full source and player transformation data.
- * Literal commit IDs, source lists and own shapes independently verify privacy
- * and original date correlations. No player transforms, pack rights or death
- * callbacks are executed; shared reader assumptions do not replace Node guards.
+ * 包级单元测试验证野孩子完整来源和玩家转化数据。
+ * 独立提交 ID、来源列表及本人形状字面预期核对隐私与原日期关联。
+ * 不转化真实玩家、不授予狼群权利或执行死亡回调；共享读取约定不替代 Node 入口防护。
  */
 import { expect, test } from "bun:test";
 import {

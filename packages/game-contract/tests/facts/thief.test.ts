@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Thief finite deal and identity wire records.
- * Literal decks and slots independently verify original whitelist, copier130,
- * role/camp correlation and optional null choice. No RNG, deck installation or
- * role change executes; parsing does not grant an identity-selection capability.
+ * 包级单元测试验证盗贼有限发牌与身份传输记录。
+ * 独立牌堆和槽位字面预期核对白名单、copier 的 130 项上限、角色／阵营关联及保留盗贼的可空选择。
+ * 不抽 RNG、不安装牌堆或转换角色；格式通过不授予身份选择能力。
  */
 import { expect, test } from "bun:test";
 import {

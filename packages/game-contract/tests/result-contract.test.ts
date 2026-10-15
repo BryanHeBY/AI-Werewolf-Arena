@@ -1,10 +1,8 @@
 /**
- * Package unit contract for mechanical result and failure data extraction.
- * Literal pre-migration enum records and wire examples are independent oracles;
- * compile-time rejection checks preserve enum-member and raw-string distinctions.
- * No engine resolver, domain callback, World, catalog or text is imported here.
- * Runtime eligibility and original-life selection deliberately remain outside
- * this pure contract and are verified through the application compatibility exit.
+ * 包级单元／类型契约测试验证结果与失败数据的提取边界。
+ * 独立迁移前枚举字面记录和传输样本构成预期，编译负例保留枚举成员与原始字符串的区别。
+ * 胜利、关系和死亡来源是声明数据；本文件不导入引擎结算、领域回调、World、目录或词典。
+ * 运行资格与原生命选择不在此纯契约内，其应用兼容出口另行验证。
  */
 import { describe, expect, test } from "bun:test";
 import {
@@ -40,7 +38,7 @@ import type { DeathShotSelection } from "@ai-werewolf-arena/game-contract";
 // @ts-expect-error Eligibility policy algorithms stay in the domain.
 import type { permitsDeathShot } from "@ai-werewolf-arena/game-contract";
 
-// Fixed original enum values, not a production source or a generated rule oracle.
+// 固定的原枚举值；它们不是生产数据源或由规则生成的预期。
 const originalEnums = {
   RuleError: {
     AnimalActionUnavailable: "animal_action_unavailable",

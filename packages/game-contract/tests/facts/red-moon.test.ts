@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Red Moon next-night and expiry facts.
- * Literal rows independently verify event IDs, exact day/night adjacency, keys,
- * nullable rejection and original inclusive safe-integer limits. The reader
- * describes committed data; it never creates a night seal, pays delay stock,
- * advances a clock or marks a death. No engine or production oracle is used.
+ * 包级单元测试验证赤月使徒的下一夜与到期事实。
+ * 独立字面预期核对事件 ID、严格相邻的日夜、精确字段、空值拒绝与原安全整数包含边界。
+ * 读取描述已提交数据，不创建夜封、支付延迟资源、推进时钟或标记死亡；不调用引擎或生产规则预期。
  */
 import { expect, test } from "bun:test";
 import {

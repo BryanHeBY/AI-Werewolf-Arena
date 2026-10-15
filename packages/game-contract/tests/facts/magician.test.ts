@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Magician full/own exchange and missed-shot facts.
- * Literal inputs independently verify privacy-shape separation, sorted nullable
- * pairs, exact fields and ID bounds. Descriptive readers never map targets or
- * mark deaths; no engine, production role state or rule oracle is loaded.
+ * 包级单元测试验证魔术师完整／本人交换事实及落空记录。
+ * 独立字面输入核对隐私形状、已排序可空配对、精确字段和 ID 边界；输出与原输入脱离。
+ * 描述性读取不映射真实目标或标记死亡，不加载引擎、角色状态或规则预期生成器。
  */
 import { expect, test } from "bun:test";
 import {

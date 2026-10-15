@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Black Market choices and resolved partial prefixes.
- * Literal cases independently preserve distinct-target/skill conditions and the
- * separate outcome stage after skill rendering. Unknown used outcome is not a
- * completed or strict archive DTO; unused objects are never copied out. Parsing
- * never grants an item, applies backlash, writes state or authorizes a purchase.
+ * 包级单元测试验证黑市商人的选择事实与结算部分前缀。
+ * 独立字面样本核对异目标、技能条件，以及技能展示之后独立校验 outcome 的两段读取；部分结果可保留未知 outcome 引用。
+ * 这不承诺严格归档 DTO，也不授物、反噬、写库存或批准购买；反射异常仍按原路径传播。
  */
 import { expect, test } from "bun:test";
 import {

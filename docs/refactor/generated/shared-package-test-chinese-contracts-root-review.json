@@ -1,0 +1,195 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "source": [
+    {
+      "path": "packages/game-contract/tests/actions-contract.test.ts",
+      "sha256": "928ca6f2e5e36b118db567a4fcc66f45bdd81f119c40a86815995bc7cbe7ce8a"
+    },
+    {
+      "path": "packages/game-contract/tests/boards-contract.test.ts",
+      "sha256": "a175f8ccf50c5e2b61baad2a9a61cc9c9f777e7aeea19f900fbe848c65d334f8"
+    },
+    {
+      "path": "packages/game-contract/tests/event-request-contract.test.ts",
+      "sha256": "dd47386e63dd186c8381d4596c68fa9563ddec387eeb10d6099af130eb1ac89e"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/animal-dream.test.ts",
+      "sha256": "71a8d6376c6b7f47c866eeb97e78f9fe1357e1718c2c73d84fee297ce6017ea4"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/awakened.test.ts",
+      "sha256": "caa06d324ed574bc11367d35e9ab6de8ac961feeced5173155197663613d9115"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/black-market.test.ts",
+      "sha256": "5651a8584562455d33364173d117090724203bb8eea1a8384ef20f0639b4bba0"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/cupid.test.ts",
+      "sha256": "efcda3836f9d1d44f00288e0f6aeebbbc2ecfc6c1dfd75ede983c7f16bc04ac1"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/death-ability.test.ts",
+      "sha256": "da29b0d5a34f91bec724c54480f6ebf1b9a7bd5407d3cb8da61c74b858793b1a"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/debate.test.ts",
+      "sha256": "38478eb2d2e1728e0760248d2eeb1e88908415219e91e40ce15f7c4cb02b2ada"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/demon-hunter.test.ts",
+      "sha256": "d108478cdc85376449f8334b1554b81f7bed0dd1af652599e27ce56808396f50"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/fragrant-pair-seer.test.ts",
+      "sha256": "9c07ecd4bdd45b07ae41885105091b14de9e08f5d7b4cb6dc5fbf143b365cda9"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/ghost-bride.test.ts",
+      "sha256": "fdc9de097f9b2eb28eb3b8a4a3a759eda544adc0ead12c996722fd4ab57e5e63"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/hybrid.test.ts",
+      "sha256": "6e9f0871beddbe7c137fdeee74bf71347306164fe0ac0f571a6dbba91452f61a"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/lonely-girl.test.ts",
+      "sha256": "2e630faac2f6a47e92d667f5ade570dcd7b067cacff4ec022272dbcf6d51073e"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/magician.test.ts",
+      "sha256": "2788ac06c6642ab8e52de602b04fb6511967e6e9ad81e38189ef6fb535076046"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/mechanical.test.ts",
+      "sha256": "bb586d2e267e4861a19657bd7a22831e2d4e1b0827f3b3980c1dc7105f7a0c2d"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/merchant.test.ts",
+      "sha256": "4a70c9d0f1a213b5343ee2bb17788265f2f666fb2e7cf9f92dc712d0a6ae923d"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/mist-raven.test.ts",
+      "sha256": "e19f5dd675adc6e1d24d6d061fa5100af7755743cc8d77f700790cf7a734c4f9"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/nightmare.test.ts",
+      "sha256": "9a7960ca9962e6a2b63c86841c6446aef88f3b64c8268da8a6481c6f7434c25e"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/noble-secret-body.test.ts",
+      "sha256": "22ae5b7a58c95b15cd6e5933aa7397e553281b785e51cfc41235ad8c3724ddca"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/order-prince.test.ts",
+      "sha256": "6754491180425de964cbbe731d1d5fc449b9909edad6b1bf303571a9ff380f1f"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/radiant-eclipse.test.ts",
+      "sha256": "47d34c0be5f666bd1ec536f6314e83043295e608cb42d0c002bd3388b980ab28"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/red-moon.test.ts",
+      "sha256": "7fb2ef41e8c68e0957246382fc15c6c5d107126b379fd786692848858e1007d4"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/scholar-mentor.test.ts",
+      "sha256": "66fd369c275e675917de1a7ca18f66d45ef96a87bd30f2006db3f1ac53f4dc9c"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/shapeshifter.test.ts",
+      "sha256": "3a298ad9e9da3d3ea3357fb02f78c3477a0e78f8b0254fc53f57f6ea8ef4a7b4"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/thief.test.ts",
+      "sha256": "1af3cf259b13de22ede5e19fb387dd776ed5331819cd21904cbd3392922763be"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/time-consort.test.ts",
+      "sha256": "4a009e9dc49457c7f76f422034141b45f0f9c24fad45b7f29c8df858f86c191b"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/trickster.test.ts",
+      "sha256": "9cb181db0a021cbac736031cb02b6ecbd745ddf2229e26476e59a0efaa9d37f5"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/wall-notes.test.ts",
+      "sha256": "23c470d32ffbbabdfc6b821455fcba4c87099786b16017b0111a20d31270a65e"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/wild-child.test.ts",
+      "sha256": "f85a7a221bcb83ed6f8dab9026399f887b01a1422871702917aadca44d158199"
+    },
+    {
+      "path": "packages/game-contract/tests/facts/wolf-sorcerer.test.ts",
+      "sha256": "85a8327c33c7989caa57cda4d7f47751fa4cf193abaf4cda788c43968e73078c"
+    },
+    {
+      "path": "packages/game-contract/tests/inert-event-data.test.ts",
+      "sha256": "5a848fbed2cc0f3cd171fd3e7b8fea60eeb355534e7a058aa60af3fae8f13358"
+    },
+    {
+      "path": "packages/game-contract/tests/message-contract.test.ts",
+      "sha256": "b4353bbc5bc3a40cfb9de82f4a4a93ceb91e2a4392dc78e25c1bd2c8f281b023"
+    },
+    {
+      "path": "packages/game-contract/tests/package-contract.test.ts",
+      "sha256": "30281a4f1450f045d48586b21c9283e4fd29031148565166a0a9725886d01551"
+    },
+    {
+      "path": "packages/game-contract/tests/result-contract.test.ts",
+      "sha256": "1a1fd31b78137d0b8753f7db0113ad734b94630a885753d5291a2adfe9c5bd45"
+    },
+    {
+      "path": "packages/game-contract/tests/unit/facts/scholar-mentor-cases.test.ts",
+      "sha256": "645550d9a00faa1a3ca0a8f646f53b332e9b903809a6c4e4a6f0bb9dde70e707"
+    },
+    {
+      "path": "packages/game-contract/tests/unit/night-ability-data.types.ts",
+      "sha256": "dbd40128c74554185d27b14c7cb020c91adb228b3129f1ee921e55a8c5c0a5f2"
+    },
+    {
+      "path": "packages/game-text/tests/package-contract.test.ts",
+      "sha256": "0e63d421a809d5c8c183483e72f38ab94ec13549ff05e6a32dd7b962014f99b8"
+    },
+    {
+      "path": "packages/replay-contract/tests/package-contract.test.ts",
+      "sha256": "d7c185772bf3b96a05ce4e107d77242a47886d15a7e4856736f9a90fc3b52d9b"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/shared-package-test-chinese-contracts-scope-final.json",
+    "sha256": "3d1f4c6d6b9a13ccfea3ae714ad27fc58fea570447b7b2c69d1ff414c0d1544a"
+  },
+  "document": {
+    "path": "docs/refactor/shared-package-test-chinese-contracts.md",
+    "sha256": "dbc42a1fa69c6e633f37e45aab39d967a66c5226e9ad3d1a7a6059babbd20828"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/shared-package-test-chinese-contracts-evidence.json",
+    "sha256": "509b2c3f3f492741946414add02be9f5b56b8c0301491abc44166dddd9818579"
+  },
+  "integrity": {
+    "freshSources": 39,
+    "actualGitBefore": 39,
+    "controls": 4,
+    "artifactHashes": 10,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "role": "真正非作者 /root；作者为 native_presentation_finish",
+    "readScope": "逐条阅读全部45精确差分，复核两包public contract、七能力types与两阶段商人完整实际断言；全39程序等价由实际语法树/NodeArray/叶/两种raw输出校验，不宣称人工重审每个现存规则算法",
+    "meaning": "描述DTO/parser与授权/付款/真实roster不同，浅层unknown outcome引用、Proxy反射与own accessor、只读类型与运行数组、默认对象与真实库存、历史catalog64与runtime55准确分清",
+    "evidence": "首39完整程序/78raw0，头39/738/0各一次；22486typed/4809arrays/31239leaves/59protected；原整条@ts-expect-error不翻译，标题和断言字面保原",
+    "limits": "无类型、业务、门禁重复执行；共享prod四controls不变；本批是维护注释不是玩法或parser接受面修改"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

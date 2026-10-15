@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Awakened's complete event-branch reader.
- * Independent literal rows cover all eight branches, ID order, original day,
- * role/self and nullable checks. Unused values are ignored and never exported.
- * These descriptions never awaken a role, install abilities or authorize action;
- * the inert browser reflection boundary does not replace Node Proxy ingress.
+ * 包级单元测试验证觉醒事实读取器的全部八个分支。
+ * 独立字面行核对 ID 顺序、日期例外、角色／自身目标及可空条件；未使用字段不会导出。
+ * 测试保留描述符读取的异常边界，不将浏览器普通数据约定当作 Node Proxy 入口防护；解析不觉醒角色或安装能力。
  */
 import { expect, test } from "bun:test";
 import {

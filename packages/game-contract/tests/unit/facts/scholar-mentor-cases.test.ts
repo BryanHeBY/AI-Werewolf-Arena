@@ -1,9 +1,7 @@
 /**
- * Unit contract regression for Scholar/Mentor facts consumed by replay clients.
- * Original literal payloads, invalid matrices and handwritten expectations are
- * the independent oracle. The public pure reader owns validation; no frontend
- * projection, engine state, model, Node proxy guard or fixture is substituted.
- * Case titles and test bodies remain the existing baseline discovery contract.
+ * 单元回归测试验证回放客户端消费的学者／导师公共事实。
+ * 独立预期为原字面 payload、无效矩阵及手写断言，校验由实际公共纯读取器完成。
+ * 不以客户端投影、引擎状态、模型或 Node Proxy 防护替代读取器；原测试标题和正文保留既有发现契约。
  */
 import { test, expect } from "bun:test";
 import {

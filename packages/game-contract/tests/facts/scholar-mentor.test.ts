@@ -1,10 +1,7 @@
 /**
- * Package unit boundaries for the public Scholar/Mentor fact readers.
- * Literal wire payloads and malformed data are independent oracles for shape,
- * numeric limits, null/pass alternatives and inspection disclosure. Tests cover
- * the shared inert-data contract; Node hostile-Proxy ingress remains separately
- * owned and is never replaced with a claimed browser Proxy guarantee here.
- * No rule resolver, actor state, transport, language renderer or model executes.
+ * 包级单元测试验证学者／导师公共事实读取边界。
+ * 独立字面传输 payload 和畸形矩阵核对形状、数值上限、空值／放弃分支及查验披露。
+ * 共享普通数据约定不替代 Node 敌对 Proxy 入口，也不承诺浏览器任意 Proxy 安全；不执行规则、角色状态、传输或展示器。
  */
 import { expect, test } from "bun:test";
 import {

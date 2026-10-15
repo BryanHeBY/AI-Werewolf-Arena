@@ -1,10 +1,7 @@
 /**
- * Package unit/type contract for the event and request DTO ownership move.
- * Literal expected IDs and payloads verify public data shapes and the original
- * conditional audience, required context and optional feature fields. Type
- * counterexamples check declared constraints without running an engine, provider
- * or lease. The projected payload stays open; these types never parse unknown
- * data, prove permissions or promise hostile-object rejection at runtime.
+ * 包级单元／类型契约测试验证事件和请求 DTO 的公共形状。
+ * 独立字面 ID／payload 及类型负例保留条件 audience、必填 context 与可选角色字段；玩家可见 payload 仍是开放数据。
+ * 这些声明不解析未知对象、不建立请求租约或证明权限；测试不运行引擎和 provider。
  */
 import { expect, test } from "bun:test";
 import {

@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Demon Hunter full/own facts, history and tool DTOs.
- * Literal rows and malformed matrices independently verify disclosure, policy
- * IDs, day/cancel limits and inert history/tool shape. State here is serialized
- * history data, not owned stock; parsing never spends a hunt or authorizes action.
- * Node hostile-Proxy rejection stays outside; no engine or rule oracle executes.
+ * 包级单元测试验证猎魔人完整／本人事实、历史和工具 DTO。
+ * 独立字面行与畸形矩阵核对信息披露、政策 ID、日期／取消限制及历史和工具形状；此处状态是序列化历史，不是可用库存。
+ * 解析不扣狩猎资源或授予行动许可；Node 敌对 Proxy 防护仍由外层负责，不执行引擎或规则预期生成器。
  */
 import { expect, test } from "bun:test";
 import {

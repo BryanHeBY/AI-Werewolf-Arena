@@ -1,9 +1,8 @@
 /**
- * Package unit/type contract for the mechanical tool and turn-data extraction.
- * Independent sequence digests are frozen from Git 87542c8: literal tool order
- * and ActionWindow/KnightDuelWindow-expanded stage order. Type counterexamples
- * preserve nullable, readonly and discriminated argument contracts. No runtime
- * provider, request lease, role resolver or gameplay authority is executed here.
+ * 包级单元／类型契约测试验证工具与回合数据的提取边界。
+ * 独立预期为 Git 87542c8 冻结的工具顺序摘要及展开 ActionWindow／KnightDuelWindow 后的阶段顺序；
+ * 类型负例保留可空目标、只读元组和工具判别参数。运行数组原本可写，不因 readonly 声明而冻结。
+ * 这里不执行 provider、请求租约、角色结算或行动授权。
  */
 import { expect, test } from "bun:test";
 import { createHash } from "node:crypto";
@@ -43,7 +42,7 @@ test("65 tool IDs and 82 runtime stages retain the exact frozen sequence and pub
   expect(TOOL_NAMES).toBe(rootTools);
   expect(ACTION_STAGES).toBe(rootStages);
   expect(DEATH_SHOT_STAGES).toBe(rootDeathStages);
-  // Original readonly types did not freeze their runtime arrays.
+  // 原 readonly 类型没有冻结运行时数组。
   expect(Object.isFrozen(TOOL_NAMES)).toBe(false);
   expect(Object.isFrozen(ACTION_STAGES)).toBe(false);
 });

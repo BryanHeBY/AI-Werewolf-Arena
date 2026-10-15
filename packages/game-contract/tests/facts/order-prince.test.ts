@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Order Prince choice and revote facts. Independent
- * literal rows verify exact keys, strict booleans, ID/day limits and detached
- * ordinary-object results. Readers never open windows, spend resources or alter
- * phases; no engine, voter list, production state or resolver is consulted.
+ * 包级单元测试验证定序王子选择与重收票事实。
+ * 独立字面行核对精确字段、严格布尔值、ID／日期上限及脱离的普通对象结果。
+ * 读取器不打开窗口、扣资源或改变阶段；不查询选民表、引擎、角色状态或结算器。
  */
 import { expect, test } from "bun:test";
 import {

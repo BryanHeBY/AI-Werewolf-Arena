@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Animal Dream payload and audience data. Literal
- * per-type JSON rows independently preserve hidden/public classification, own
- * beauty history, causal source maps, pair policy limits and accepted legacy
- * scalar conditions. No state owner, vote tally, clock, callback or resolver is
- * loaded; parsing a fact never authorizes an action or commits a game effect.
+ * 包级单元测试验证动物梦境事实 payload 与受众数据。
+ * 独立逐事件字面行核对隐私分类、美人历史、因果来源映射、配对政策边界和旧有标量接受条件；
+ * 重复来源等旧接受面不擅自收紧。事实解析不执行计票、时钟、回调或领域结算，也不提交效果或授予行动许可。
  */
 import { expect, test } from "bun:test";
 import {

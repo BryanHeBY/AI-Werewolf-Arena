@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Noble/Secret Body data and knowledge notices.
- * Literal per-event rows are independent oracles for contract dates, nullable
- * choices, source dictionaries, historical knowledge and visibility categories.
- * No original component, request lease, resource owner or death resolver is used.
- * Shared reflection assumes inert inputs; node ingress owns Proxy rejection.
+ * 包级单元测试验证夜之贵族／秘密本体数据与知识通知。
+ * 独立逐事件字面预期核对契约日期、可空选择、来源字典、历史知识和可见性分类；未知同前缀事件的分类不等于读取成功。
+ * 不使用原组件、请求租约、资源 owner 或死亡结算；共享反射以普通数据为约定，Node Proxy 拒绝归外层入口。
  */
 import { expect, test } from "bun:test";
 import {

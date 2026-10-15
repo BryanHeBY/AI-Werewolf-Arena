@@ -1,9 +1,7 @@
 /**
- * Package unit / type contract for language-neutral message identities. The
- * independent oracle is the literal 1513-key sequence digest and endpoint keys
- * frozen from Git 2d36e4d, before migration. Fixtures are unknown key values and
- * serializable references; no dictionary, renderer, World or model is loaded.
- * Runtime parameter formatting remains a separate game-text responsibility.
+ * 包级单元／类型契约测试验证不绑定语言的消息标识。
+ * 独立预期为迁移前 Git 2d36e4d 冻结的 1513 键顺序摘要与端点键；输入包括未知键和可序列化消息引用。
+ * DTO 不按每个键约束参数，运行参数格式归 game-text；本文件不加载词典、展示器、World 或模型。
  */
 import { expect, test } from "bun:test";
 import { createHash } from "node:crypto";
@@ -74,7 +72,7 @@ test("closed key typing and optional readonly parameter shape preserve existing 
   const numeric: MessageRef = { key, parameters: { id: 12 } };
   const raw = "苏茶茶\nExact custom text {role}";
   const original: MessageRef = { key: "role.generic.state", parameters: { role: raw } };
-  // The DTO intentionally has no per-key parameter generic or formatting policy.
+  // 此 DTO 原本不提供逐键参数泛型或格式政策。
   const missingParameters: MessageRef = { key: "role.witch.state" };
   const extraParameters: MessageRef = { key: "common.none", parameters: { extra: "literal" } };
   const nonfinite: MessageRef = { key, parameters: { id: NaN } };

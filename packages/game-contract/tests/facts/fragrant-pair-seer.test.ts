@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Fragrant pair, causal wave and known-state readers.
- * Literal events independently check pair ordering, historical notices, source
- * and phase maps, nulls and the original large array bound. No RNG, lease,
- * original life object or domain relation resolver participates in the oracle.
+ * 包级单元测试验证寻香魅影／觉醒预言家的配对、因果波和已知状态的读取。
+ * 独立字面事件核对配对排序、历史通知、来源与阶段映射、空值及原有大数组上限；历史知识不代表当前生命或许可。
+ * 预期不依赖 RNG、请求租约、原生命对象或关系领域结算器。
  */
 import { expect, test } from "bun:test";
 import {

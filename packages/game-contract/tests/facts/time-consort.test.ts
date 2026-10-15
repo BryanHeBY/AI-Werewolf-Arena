@@ -1,9 +1,7 @@
 /**
- * Package unit reader contract for Time Wolf Consort facts. Literal payloads,
- * original malformed fields and detached identity checks are the oracle.
- * Inputs are inert data; no World, board-support predicate or engine resolver
- * participates. Roster membership, phase and actual-night eligibility belong to
- * consumers and are deliberately not inferred by these structural readers.
+ * 包级单元测试验证蚀时狼妃事实读取。
+ * 独立字面 payload、原畸形字段和脱离引用断言核对结构；较大的合法数据 ID 并不证明属于真实 roster。
+ * World、板子支持政策与引擎结算不参与预期；成员资格、阶段和实际夜间行动资格由调用者负责。
  */
 import { expect, test } from "bun:test";
 import {

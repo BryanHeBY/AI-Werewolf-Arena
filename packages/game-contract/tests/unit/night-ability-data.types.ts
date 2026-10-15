@@ -1,9 +1,8 @@
 /**
- * Compile-only unit checks for the public seven-kind data contracts.
- * Inputs are valid literal payloads and extension-bearing data variables; the
- * TypeScript compiler is the oracle for optional/null fields, original write
- * contracts, deep read aliases and the native Role enum boundary. No live owner,
- * World, parser, game, model or runtime data validation executes in this file.
+ * 仅编译的单元类型契约验证公共七类能力数据。
+ * 输入是合法字面 payload 及带扩展字段的变量；TypeScript 编译器以原负例核对可选／可空字段、可写数据约定、
+ * 深只读别名和原生 Role 枚举边界。两个辅助函数不被执行；不加载 live owner、World、parser 或运行校验。
+ * 整条类型错误指令及其原说明保留为编译预期。
  */
 import { Role, WitchSelfHealRule } from "../../src/index";
 import type {
@@ -37,7 +36,7 @@ function copiedDataKeepsItsOriginalContracts(
   const rawOrigin: AbilitySource = { kind: "native", role: "wolf" };
   void rawOrigin;
   const extension = { lastTarget: null, lastIsWerewolf: null, history: [], custom: { free: true } };
-  const structural: SeerState = extension; // Existing structural extension acceptance stays open.
+  const structural: SeerState = extension; // 保留原结构类型对额外扩展字段的接受面。
   const absentResult: SeerState = { lastTarget: null, lastIsWerewolf: null, history: [] };
   const nullableResult: SeerState = {
     lastTarget: null,

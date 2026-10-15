@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Ghost Bride serialized wedding shapes and defaults.
- * Literal templates, witness votes and tool data independently check original
- * key/status/null correlations. freshGhostBrideState is a JSON default factory;
- * these tests install no domain stock, actor, relationship or knife authority.
+ * 包级单元测试验证鬼魂新娘序列化婚礼形状与默认数据。
+ * 独立字面模板、见证投票和工具参数核对字段／状态／空值关联；freshGhostBrideState 只生成新的 JSON 默认对象。
+ * 测试不安装本体库存、角色、婚姻关系或刀权，默认剩余次数不构成运行许可。
  */
 import { expect, test } from "bun:test";
 import {

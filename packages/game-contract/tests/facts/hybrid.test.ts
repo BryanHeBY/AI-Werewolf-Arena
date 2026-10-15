@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Hybrid's complete shallow fact reader.
- * Literal rows independently check both branches, day/self/whitelist conditions
- * and the original ignored-symbol versus rejected-string-field boundary. No
- * formatter, affiliation writer, engine or authorization oracle executes.
- * Reflection failures remain observable; Node Proxy rejection is separate.
+ * 包级单元测试验证混血儿两个完整浅层事实分支。
+ * 独立字面行核对首日、自身目标、白名单与旧边界：多余字符串字段被拒绝，忽略的 symbol 不导出。
+ * 反射失败仍可抛出；不运行展示器、归属写入或授权逻辑，Node Proxy 拒绝另归入口。
  */
 import { expect, test } from "bun:test";
 import { readHybridEventFact } from "@ai-werewolf-arena/game-contract/facts/hybrid";

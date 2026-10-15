@@ -1,8 +1,7 @@
 /**
- * Package unit contract: validate the public bilingual catalog and formatting
- * policy using literal outputs and complete key/placeholder comparisons.
- * User content is an immutable input, never a translation key. These tests use
- * no World, transport, application preload or production rule calculation.
+ * 包级单元测试验证公共双语词典与格式政策。
+ * 独立字面输出、完整键／占位符比较核对文本格式；角色名另与实际目录元数据比较，不冒充独立角色规则预期。
+ * 用户内容原样作为参数，不当翻译键；显式 locale 调用不写共享当前语言。本文件不使用 World、传输或应用预加载。
  */
 import { describe, expect, test } from "bun:test";
 import {

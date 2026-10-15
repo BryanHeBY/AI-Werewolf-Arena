@@ -1,8 +1,7 @@
 /**
- * Package unit reader contract for Wolf Sorcerer exchange and skip facts.
- * Literal pairs and malformed payloads are independent of seat mapping and
- * the game engine. Tests retain sorted-pair/null semantics and inert copying;
- * accepting positive data IDs never grants roster membership or action rights.
+ * 包级单元测试验证狼术师交换和跳过事实读取。
+ * 独立字面配对与畸形 payload 核对原排序／空值含义和普通数据复制；预期不由座位映射或游戏引擎生成。
+ * 接受正整数 ID 不代表 roster 成员或实际夜间行动资格。
  */
 import { expect, test } from "bun:test";
 import {

@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Mechanical's ten complete shallow fact branches.
- * Literal independent cases preserve day exceptions, allowed self/earlier-ready,
- * nullable target and guard/reflection predicates. No role change, death or
- * skill execution follows from parsing. Prototype rejection precedes descriptor
- * reflection; this specific order does not promise arbitrary Proxy safety.
+ * 包级单元测试验证机械狼十个完整浅层事实分支。
+ * 独立字面预期保留日期例外、自身／较早就绪时间、可空目标以及守护／反射字段条件。
+ * 原型拒绝先于描述符反射，特定顺序不承诺任意 Proxy 安全；解析不执行学习、变身、死亡或技能。
  */
 import { expect, test } from "bun:test";
 import {

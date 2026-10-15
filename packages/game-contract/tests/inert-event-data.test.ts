@@ -1,8 +1,7 @@
 /**
- * Responsibility: verify unit data-copy boundaries for shared fact payloads.
- * Literal shapes and original error codes are the oracle, independent of World
- * and feature settlement. Checks preserve depth/array limits, descriptor rejection,
- * plain-record output and the explicit inert-only browser Proxy precondition.
+ * 包级单元测试验证共享事实 payload 的数据复制边界。
+ * 独立字面形状和原错误码核对深度／数组上限、描述符拒绝及普通输出；对象和密集数组复制后与输入脱离。
+ * 实际 Proxy 描述符／原型 trap 仍可执行；此处不是 Node 敌对对象零 trap 防护，不依赖 World 或角色结算。
  */
 import { expect, test } from "bun:test";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";

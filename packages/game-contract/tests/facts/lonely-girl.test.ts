@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Lonely Girl choice and strict tool wire data.
- * Literal absent/present camp variants independently check optional disclosure,
- * exact keys, day-one and self-target restrictions. No admired-player relation,
- * camp conversion, resource state or selection authorization is established.
+ * 包级单元测试验证孤独少女选择事实与严格工具传输形状。
+ * 独立缺省／存在阵营字面预期核对可选披露、精确字段、首日与自身目标限制；省略 camp 不等于显式 undefined。
+ * 读取不建立倾慕关系、改变真实阵营、写资源或批准选择。
  */
 import { expect, test } from "bun:test";
 import {

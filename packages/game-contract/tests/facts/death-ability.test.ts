@@ -1,9 +1,7 @@
 /**
- * Package unit contract for the original Death Ability branch correlations.
- * Literal matrices preserve ability ID/night/operation conditions without adding
- * inventory or grant invariants. Selected facts never install a death trigger,
- * spend stock, write component state or authorize action. Shallow accepted extras
- * stay ignored; browser reflection errors are not a Node hostile-object guard.
+ * 包级单元测试验证死亡能力事实的原有分支关联。
+ * 独立字面矩阵核对能力 ID、夜次和操作字段；不补库存或授予不变量，未使用的浅层额外字段仍忽略。
+ * 所选事实不会安装死亡触发器或扣资源；浏览器反射异常边界不等于 Node 敌对对象入口防护。
  */
 import { expect, test } from "bun:test";
 import { readDeathAbilityEventFact } from "@ai-werewolf-arena/game-contract/facts/death-ability";

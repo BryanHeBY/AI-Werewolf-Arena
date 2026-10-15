@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Shapeshifter finite deal, selected card and tool DTO.
- * Literal decks/slots independently verify whitelist, mandatory choice and
- * original copier/prototype limits. No identity deal, RNG, component write or
- * action authorization is produced from these descriptive public readers.
+ * 包级单元测试验证千面人的有限发牌、已选卡牌和工具 DTO。
+ * 独立牌堆／槽位字面预期核对白名单、必须选择及原 copier／原型边界；选牌槽位只能为原允许值。
+ * 描述性读取不发身份、抽 RNG、写组件或批准行动。
  */
 import { expect, test } from "bun:test";
 import {

@@ -1,8 +1,7 @@
 /**
- * Package unit contract for descriptive Trickster facts. Literal JSON rows are
- * independent oracles for sorted pairs, nullable pass, exact fields, ID bounds
- * and exile mapping semantics. No engine, voter list, role state or resolver is
- * consulted; validating a fact does not authorize or apply its described effect.
+ * 包级单元测试验证诡术师描述性事实。
+ * 独立 JSON 字面行核对排序配对、可空放弃、精确字段、ID 边界和放逐映射记录语义。
+ * 不查询引擎、选民表、角色状态或结算器；事实格式通过不会授权或施加所描述的效果。
  */
 import { expect, test } from "bun:test";
 import {

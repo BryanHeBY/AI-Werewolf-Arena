@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Debate literal ballot and result records.
- * Independently supplied counts, voter IDs and speech text check exact fields,
- * majority correlation and original null/boolean behavior. No tally engine,
- * debate window, speaker permission or production oracle supplies expectations.
+ * 包级单元测试验证杠精投票与结果记录。
+ * 独立提供的票数、选民 ID、原文发言构成字面预期，核对精确字段、多数关系和原可空／布尔条件。
+ * 不通过生产计票器生成答案，也不打开辩论窗口或授予发言许可。
  */
 import { expect, test } from "bun:test";
 import {

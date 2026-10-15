@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Mist/Raven structural facts. Literal triples, draw
- * candidates and notifications are the independent oracle for uniqueness, null,
- * self-target exceptions and exact reason fields. No RNG, team lookup or domain
- * permission is evaluated; node ingress owns hostile-object safety separately.
+ * 包级单元测试验证雾鸦相关结构事实。
+ * 独立三目标、抽刀候选与通知字面预期核对唯一性、空值、自身目标例外和精确原因字段。
+ * 不抽 RNG、不查询真实狼队或判断领域许可；Node 入口的敌对对象安全不能由普通数据读取替代。
  */
 import { expect, test } from "bun:test";
 import {

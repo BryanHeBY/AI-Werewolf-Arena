@@ -1,9 +1,7 @@
 /**
- * Package unit contract for descriptive Nightmare full and player-own facts.
- * Literal payloads independently verify exact privacy shapes, nullable pass,
- * inclusive safe-integer edge, self-target rejection and detached results.
- * Readers receive inert data; Node Proxy rejection remains an outer boundary.
- * No fear state, suppressed ability, source authority or engine is exercised.
+ * 包级单元测试验证噩梦之影完整事实和玩家本人事实。
+ * 独立字面 payload 核对精确隐私形状、可空放弃、包含安全整数上界的 ID、自身目标拒绝与脱离结果。
+ * 本文件不写恐惧状态、压制能力或执行来源授权；Node Proxy 防护仍是外层边界。
  */
 import { expect, test } from "bun:test";
 import {

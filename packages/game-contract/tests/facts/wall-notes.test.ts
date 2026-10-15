@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Wall Note Unicode, ordered public records and item DTO.
- * Literal text/scalars independently verify160 codepoints, surrogate validity,
- * original row ranks and resource-description fields. No anonymous item is
- * granted or paid; these readers never publish, shuffle, translate or render it.
+ * 包级单元测试验证墙上留言的 Unicode、公开行序和物品 DTO。
+ * 独立文本／标量字面预期核对 160 码点、代理对有效性、原零基行序和资源描述字段，合法原文保持不变。
+ * 读取不授予或支付匿名物品，也不发表、洗牌、翻译或渲染留言。
  */
 import { expect, test } from "bun:test";
 import {

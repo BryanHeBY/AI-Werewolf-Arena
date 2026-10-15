@@ -1,9 +1,7 @@
 /**
- * Package unit contract for mechanical identity compatibility. The oracle is
- * the literal enum/member order and 64-role catalog order captured from fixed
- * commit 27a97cb, independently of the new canonical implementation. Runtime
- * enumeration, member types, raw RoleId typing and locale rejection are checked
- * without engine, catalog algorithm, text, transport or configuration execution.
+ * 包级单元／类型契约测试验证身份标识兼容性。
+ * 独立预期为固定 Git 27a97cb 捕获的枚举值／成员顺序及 64 角色目录顺序，不由新 canonical 实现生成。
+ * 核对运行枚举、成员类型、原始 RoleId 和 locale 拒绝；公开目录不等于可运行角色集合，不执行引擎、目录算法或配置。
  */
 import { describe, expect, test } from "bun:test";
 import {
@@ -30,7 +28,7 @@ import {
   type TieBreakerStrategy,
 } from "@ai-werewolf-arena/game-contract";
 
-// Literal pre-migration values. These expected records are not a runtime ID source.
+// 迁移前的字面值；这些预期记录不是运行时 ID 来源。
 const baselineEnums = {
   Camp: {
     Good: "good",

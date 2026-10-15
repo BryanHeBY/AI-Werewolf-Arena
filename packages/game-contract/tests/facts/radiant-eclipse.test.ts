@@ -1,8 +1,7 @@
 /**
- * Package unit contract for Radiant/Eclipse inert facts and recipient data.
- * Literal event rows independently verify borrowed ability IDs, day boundaries,
- * nullable choices and exact field sets. No roster, resource owner or effect
- * resolver is used; an accepted fact does not authorize the action it describes.
+ * 包级单元测试验证流光伯爵／蚀日侍女普通数据事实与接收者字段。
+ * 独立字面事件核对借用能力 ID、日期边界、可空选择和精确字段；受众 ID 描述披露，不授予所述能力。
+ * 不使用实际 roster、资源 owner 或效果结算器，事实通过不代表该行动可执行。
  */
 import { expect, test } from "bun:test";
 import {

@@ -1,9 +1,7 @@
 /**
- * Package unit contract for Merchant's full choices and partial resolved prefix.
- * Independent literals preserve self targeting, ignored skipped/unused fields,
- * and outcome validation as a separate second stage. A partial result may hold
- * an unknown used outcome and never claims strict archival validity or authority.
- * No skill renderer, inventory writer, effect resolver or runtime engine executes.
+ * 包级单元测试验证奇迹商人的完整选择与部分结算前缀。
+ * 独立字面预期保留自身目标、跳过分支忽略字段及独立第二阶段 outcome 校验；未知已用 outcome 可按原引用返回。
+ * 部分结果不宣称严格归档有效或已授权；本文件不调用技能展示器、库存写入或效果结算器。
  */
 import { expect, test } from "bun:test";
 import {
