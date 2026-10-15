@@ -1,9 +1,6 @@
 /**
- * Unit component tests for bear replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证熊的真实匿名播报归档。输入为邻座更新／狼王警徽样本和两语设置；
+ * 输出以手写播报、存活及胜者预期检查席位不因熊信号改变，并核对字幕、纯帧和静态 markup；不运行熊规则或修改 fixture。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

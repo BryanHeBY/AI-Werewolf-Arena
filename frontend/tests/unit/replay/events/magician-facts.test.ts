@@ -1,9 +1,6 @@
 /**
- * Unit tests verify magician fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证魔术师完整／本人换位事实和落空枪击展示。输入为手写两语事实、畸形配对及错误昼夜包络；
+ * 输出以独立关联／空效果和标签预期检查接受／拒绝，不改身份或新增死亡，不执行规则或生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";

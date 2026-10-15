@@ -300,7 +300,7 @@ test("choosing only a time zone during load does not override the incoming repla
 });
 
 test("playing video keeps advancing while display language changes", async ({ page }) => {
-  // A silent composition must keep playing even if the audio device never resumes.
+  // 即使音频设备始终未恢复，无声画面也应继续播放。
   await page.addInitScript(() => {
     AudioContext.prototype.resume = () => new Promise<void>(() => {});
   });
@@ -430,7 +430,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const hunter = locale === "en" ? "Hunter 2 shoots player 3" : "2号猎人开枪带走3号";
     await page.locator(".timeline .event").filter({ hasText: king }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(king);
-    await expect(page.locator(".seat-grid .dead")).toHaveCount(3); // Night victim 5, exiled 1, shot 2.
+    await expect(page.locator(".seat-grid .dead")).toHaveCount(3); // 夜间死者为 5，放逐者为 1，枪击死者为 2。
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
     await page.locator(".timeline .event").filter({ hasText: hunter }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(hunter);

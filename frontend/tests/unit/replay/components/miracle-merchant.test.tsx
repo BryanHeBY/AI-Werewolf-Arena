@@ -1,9 +1,6 @@
 /**
- * Unit component tests for miracle merchant replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证奇迹商人选择、反噬提案和受赠查验归档。输入为真实 fixture、两语及畸形交易字段；
+ * 输出以字面字幕／席位预期检查提案不提前杀人、真实身份和已死胜者保留，并核 getter 拒绝和纯帧，不执行交易或赠予规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

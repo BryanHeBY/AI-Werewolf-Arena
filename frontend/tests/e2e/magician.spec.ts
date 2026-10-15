@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render recorded Magician fixtures for original
- * and exchanged gun targets in both locales. The archive event order supplies
- * the assertions for unchanged seats, night-miss captions and terminal winners;
- * the browser exercises replay frames rather than resolving game actions.
+ * 浏览器集成测试验证魔术师原目标／换位目标枪政策的两语归档。
+ * 输入为 replay 与 checkpoint；输出检查换位不改席位、夜枪落空字幕和终局胜者。归档顺序及原席位预期保留，不在播放器结算行动。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

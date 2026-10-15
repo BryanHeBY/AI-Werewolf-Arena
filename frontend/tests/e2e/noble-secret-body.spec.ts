@@ -1,9 +1,7 @@
 /**
- * Browser integration tests seek recorded Noble secret-body God and owner-view
- * fixtures in both locales. Archived facts and literal expectations check
- * failed reveals, next-night notices, badge ownership and authorized movie
- * inputs at each frame, without resolving concealment or exposing other
- * players' private identities.
+ * 浏览器集成测试逐帧验证夜之贵族／觉醒愚者机制的 God 和本人两语归档。
+ * 输入为失败翻牌、次夜通知及警徽事件；输出检查各帧披露、仍存活的公开身份和授权最小画面。
+ * 原字面预期与归档事件保留，不在测试重算隐匿规则或暴露其他玩家私有身份。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";

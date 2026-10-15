@@ -1,8 +1,6 @@
 /**
- * Defines browser integration discovery and Chromium/Vite startup from CI and
- * launch environment inputs. Outputs the Playwright configuration and a local
- * server command using the registered sample archive. It owns test transport
- * setup only; replay rendering and game rules remain in their application owners.
+ * 负责浏览器集成测试发现及 Chromium／Vite 启动配置。输入为 CI 和启动环境变量；
+ * 输出为 Playwright 配置和使用登记 sample 归档的本地服务命令。只管理测试启动边界，复盘渲染和游戏规则仍归应用 owner。
  */
 import { defineConfig, devices } from "@playwright/test";
 

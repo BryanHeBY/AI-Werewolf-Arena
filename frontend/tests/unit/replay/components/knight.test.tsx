@@ -1,9 +1,6 @@
 /**
- * Unit component tests for knight replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试用手写复盘验证骑士决斗画面。输入为狼／非狼结果、未知角色和两语设置；
+ * 输出以字面死亡席位和字幕检查仅决斗败方死亡、其他身份保留及纯帧／markup，保原输入不变，不执行决斗规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

@@ -1,9 +1,7 @@
 /**
- * Unit events tests for replay event reader.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 单元事件测试验证统一复盘 fact reader、关联成员和展示效果边界。
+ * 输入为全部登记 God 归档及手写畸形／未来事实、getter、环和 Proxy；输出核对既有接受／拒绝、无部分效果及原数据不变。
+ * 归档加载与已知事实读取分别验收，字面预期不由生产规则重算；不执行真实对局。
  */
 import { frontendFixtureURL, frontendFixtureArtifacts } from "../../../support/fixtures/manifest";
 import { buildPresentationReplay } from "../../../../src/replay/replay-presentation";
@@ -88,7 +86,7 @@ for (const [index, fact] of malformed.entries())
   test(`malformed known fact ${index}/${fact.type} has no partial label, associations, death or badge effects`, () => {
     const input = replay(fact);
     const before = JSON.stringify(input);
-    expect(readReplayDocument(input).events[1]).toEqual(fact); // Archive loading remains permissive.
+    expect(readReplayDocument(input).events[1]).toEqual(fact); // 归档加载在此保留原宽接受面；已知事实的拒绝另行核对。
     expect(readReplayEvent(fact, [1, 2, 3])).toBeNull();
     expect(replayEventPlayerIds(fact, [1, 2, 3])).toEqual([]);
     for (const locale of ["zh-CN", "en"] as const)

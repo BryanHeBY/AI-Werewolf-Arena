@@ -1,9 +1,6 @@
 /**
- * Unit projection tests for mist raven literal.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 单元投影测试验证雾鸦原归档中的警徽链、败选意图和末狼结局。
+ * 输入为两语 fixture 与事件游标；输出以手写持徽者／存活／胜者预期检查事实先后，不调用运行规则或生成归档预期。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { test, expect } from "bun:test";

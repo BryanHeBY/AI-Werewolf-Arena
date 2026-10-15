@@ -1,9 +1,6 @@
 /**
- * Unit component tests for wild child archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证野孩子原始好人归档和阵营转换时点。输入为四类 fixture、两语和事件游标；
+ * 输出按字面前后状态检查只在转换事实处改阵营、不改角色／生命／警徽，并核未转换分支和纯帧／markup，不执行转换规则。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

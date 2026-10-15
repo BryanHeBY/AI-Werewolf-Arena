@@ -1,0 +1,1 @@
+{"sources":1,"commentEdits":1,"typedNodes":503,"nodeArrays":100,"noncommentLeaves":594,"wholeRawOutputs":2,"otherSourceSame":80}

@@ -1,9 +1,6 @@
 /**
- * Unit component tests for debater archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证杠精六／十二人成功及平票归档。输入为已录翻牌和匿名聚合结果；
+ * 输出检查翻牌保持存活、画面保留角色且字幕不泄露 voterId，归档及原断言为验收依据，不执行投票或真实对局。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

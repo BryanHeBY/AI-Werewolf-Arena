@@ -1,9 +1,6 @@
 /**
- * Unit tests verify debater fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证杠精翻牌、公共汇总和 God 票型事实。输入为手写两语事实、畸形成员和 getter；
+ * 输出以独立字段／效果预期检查存活翻牌、匿名汇总及拒绝不读访问器，原 case 表不变，不执行辩论或生成 golden。
  */
 import { expect, test } from "bun:test";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";

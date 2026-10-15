@@ -1,9 +1,6 @@
 /**
- * Unit component tests for fragrant pair seer archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证寻香双角色 God／玩家归档的因果帧。输入为既有 fixture 和两语游标；
+ * 输出检查机制披露不直接杀人、真实死亡及终局 checkpoint 对照、倒看和授权事件范围。原断言保留，不用生产规则重新生成归档预期。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

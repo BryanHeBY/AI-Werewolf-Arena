@@ -1,8 +1,6 @@
 /**
- * Browser integration tests seek and rewind actual Mist Raven replay fixtures
- * for linked deaths, saved/protected targets and manual outcomes in both
- * locales. Archived events and literal frame assertions check night disclosure,
- * seat changes and winner timing without replaying the game mechanics.
+ * 浏览器集成测试负责正向跳转并回看雾鸦连带死亡、救援／保护及手动结局归档。
+ * 输入为两语 replay/checkpoint；输出按事件前缀和原席位预期检查夜报、死亡、警徽及终局时点，不重演机制规则。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

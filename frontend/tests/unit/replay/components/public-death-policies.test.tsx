@@ -1,9 +1,6 @@
 /**
- * Unit component tests for public role disclosure in PlayerSeats markup.
- * Input: literal reveal payloads, event cursors and explicit display locale;
- * output: the original atomic reader, public-role snapshot and rendered seat
- * assertions. Handwritten reveal/visibility expectations are the independent
- * oracle. No live game, model transport or video rendering executes here.
+ * 单元组件测试验证 PlayerSeats 的公共翻牌展示。输入为手写揭示 payload、事件游标、语言与畸形／getter 反例；
+ * 输出以独立公开身份／生命预期核对原子拒绝和 markup，不能由翻牌推断新阵营或胜者；不执行对局或视频渲染。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

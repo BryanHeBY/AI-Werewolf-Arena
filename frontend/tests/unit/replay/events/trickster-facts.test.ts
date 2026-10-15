@@ -1,9 +1,6 @@
 /**
- * Unit tests verify trickster fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证诡术师放逐映射和私有选择的两语事实。输入为手写目标／配对、missed 及错误阶段／额外字段；
+ * 输出以独立关联、标签和空效果预期核对描述事实不自行杀人，原 case 表不变，不执行映射或生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";

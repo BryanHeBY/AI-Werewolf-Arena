@@ -1,9 +1,6 @@
 /**
- * Unit component tests for noble secret body archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证夜之贵族／觉醒愚者机制的失败翻牌、通知、死亡与警徽归档。输入为 God／玩家 fixture 和两语帧号；
+ * 输出检查披露边界、存活翻牌、授权身份遮蔽及终局 checkpoint 对照，含倒看与静态 markup。原字面预期保留，不执行机制或生成新的 oracle。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

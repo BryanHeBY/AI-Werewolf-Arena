@@ -1,9 +1,6 @@
 /**
- * Unit tests verify timeline presentation and summary-event coalescing.
- * Input: literal recorded speech, vote and concurrent event sequences.
- * Output: the original visible-row, summary and ordering assertions.
- * Handwritten expected event selections are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证时间线展示的汇总筛选。输入为手写发言／参选／投票并发事件；
+ * 输出以独立事件选择／顺序预期核对原 seq 保留、输入不变及展示视图不能当持久化 document，原 case 表不变，不运行对局或生成 golden。
  */
 import { expect, test } from "bun:test";
 import { assertReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";

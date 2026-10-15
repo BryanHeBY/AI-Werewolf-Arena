@@ -1,9 +1,6 @@
 /**
- * Unit tests verify wolf sorcerer fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证狼术师换位选择和跳过事实的两语展示。输入为手写配对／原因及畸形私有字段；
+ * 输出按独立关联、标签和空效果预期检查不互换公共身份，原 case 表不变，不执行目标组合或生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";

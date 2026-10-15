@@ -1,9 +1,6 @@
 /**
- * Unit component tests for radiant eclipse archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证光蚀 God／授权玩家归档与已付中止前缀。输入为多类 fixture、checkpoint 和两语帧号；
+ * 输出检查借用披露不改席位、死亡／警徽实际边界、失败无伪夜报或胜者，并核倒看与 markup。字面死亡表和归档对照保留，不恢复游戏或运行模型。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

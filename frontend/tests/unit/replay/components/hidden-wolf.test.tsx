@@ -1,9 +1,6 @@
 /**
- * Unit component tests for hidden wolf replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证隐狼继承归档。输入为六／十二人 fixture 和两语帧号；
+ * 输出以字面继承事实及胜者名单检查继承不改身份／生命、后续真实死亡独立发生，并核纯帧与数据不变，不运行继承规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

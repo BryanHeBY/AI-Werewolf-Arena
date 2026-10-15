@@ -1,9 +1,6 @@
 /**
- * Unit component tests for hybrid replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证混血儿私有选择与冻结胜利归属归档。输入为真实 fixture、两语和畸形字段／getter；
+ * 输出以字面席位／胜者名单检查角色阵营不随归属改变、已死成员仍可获胜及安全拒绝，并核纯帧，不运行对局或模型。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

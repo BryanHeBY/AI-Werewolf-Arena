@@ -1,9 +1,6 @@
 /**
- * Unit events tests for noble sheriff summary.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 单元事件测试验证夜之贵族归档画面中的警长摘要。输入为原归档外壳和手写首轮平票／PK／重复发表事实；
+ * 输出按独立持徽者与倒看预期检查徽章幂等、未知身份保留及畸形 winner 拒绝，不调用生产计票或选举生成预期。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
@@ -11,8 +8,8 @@ import { readFileSync } from "node:fs";
 import { readReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { buildReplayFrame, createReplayRenderInput } from "../../../../src/replay/replay-frame";
 
-// Handwritten election facts: tied initial summary, then resolved PK summary.
-// No production tally/election functions create expected winner or effects.
+// 手写选举事实：首轮汇总平票，随后 PK 汇总产生胜者。
+// 胜者和效果预期不由生产计票／选举函数生成。
 function summary(seq: number, winnerId: unknown, round: number): ReplayEvent {
   return {
     seq,

@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render recorded Pure White good- and wolf-target
- * fixtures in both locales. Archived inspection/death order and literal winner
- * counts supply the assertions for simultaneous deaths and terminal timing;
- * no inspection or death settlement runs in these replay tests.
+ * 浏览器集成测试验证纯白之女／狼巫不同查验目标的两语归档。
+ * 输入为原查验与死亡事件；输出按字面死亡／胜者数量核对同时死亡和终局时点，不执行查验或死亡结算。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

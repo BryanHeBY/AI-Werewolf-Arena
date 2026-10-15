@@ -1,9 +1,6 @@
 /**
- * Unit component tests for psychic replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证通灵师跳过和重复查验归档。输入为六／十二人 fixture、两语及未知原因变体；
+ * 输出以手写事实／胜者预期检查报告不改席位、未知原因不伪造查验，并核纯帧／markup 和输入不变，不运行查验规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

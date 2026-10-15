@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render recorded Time Consort whole-night and
- * first-effect reflection fixtures in both locales. Archive captions and
- * literal seat assertions check reflection disclosure before actual deaths
- * and terminal winners; no reflection algorithm runs in this test.
+ * 浏览器集成测试验证蚀时狼妃整夜／首次效果反射的两语归档。
+ * 输入为原事件及 checkpoint；输出以字面席位预期核对反射先披露、实际死亡和胜者随后出现，不执行反射算法。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";

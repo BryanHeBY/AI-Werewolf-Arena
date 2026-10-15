@@ -1,8 +1,6 @@
 /**
- * Browser integration tests seek recorded Order Prince day-one and day-two
- * reveal fixtures in both locales. Archive captions and literal seat assertions
- * check preserved life and the reset exile before terminal winners; the tests
- * render recorded decisions rather than selecting a reveal policy.
+ * 浏览器集成测试负责跳转定序王子首日／次日亮牌的两语归档。输入为原事件和 checkpoint；
+ * 输出检查存活、放逐重置与终局胜者，保留字面席位预期；只展示已录决定，不选择亮牌政策。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { text, roleName } from "@ai-werewolf-arena/game-text";

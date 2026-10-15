@@ -1,0 +1,2239 @@
+{
+  "approved": true,
+  "baseCommit": "15424a8426ca0e689e039a3b9d9240dc05c21fcf",
+  "sampledSourceReadySHA256": "3fb9b8306a3ac9651fc60efe99d1cf3f0de76a8a926911b09991178bb7df2ec6",
+  "programs": [
+    {
+      "path": "frontend/tests/e2e/demon-hunter.spec.ts",
+      "beforeSha256": "57a6be0397d2140d2bfa2ffae2b78ea2bc9959a62601d6d64c80e01b2e53427c",
+      "afterSha256": "6800fb4da75ade2acfd1e4badd450481b3dff76d4d0a6937b05d5e0a587b81f9",
+      "commentEdits": 1,
+      "typedNodes": 872,
+      "nodeArrays": 155,
+      "noncommentLeaves": 1017,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5024,
+          "sha256": "148ac38c94b16fb523b71c2c113941b6345724420973b08579a0bc6afaed102e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5364,
+          "sha256": "b08a6de4c392a3e2093b78ecce39d1a171fdbca3ae82ed27b1ed9e53d7f6d71b"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/evil-knight.spec.ts",
+      "beforeSha256": "2dc5a4a429ee9ba48fc6f7a9251780744afd77afdbe7a1680fbda6ea62d7845f",
+      "afterSha256": "3bfbf7697df468748b1c21809b20e4ea8daf99748f14b1b0885942693b005611",
+      "commentEdits": 1,
+      "typedNodes": 279,
+      "nodeArrays": 58,
+      "noncommentLeaves": 331,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1707,
+          "sha256": "dc162c684b51282335258cabd21f8476c011159d57b21a52b8ef04e4843b63a9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1933,
+          "sha256": "cf738e2f7badc29e3ede7c60634606c8398d4bd78d1c3a35290fba447667b38e"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/magician.spec.ts",
+      "beforeSha256": "c3775b6dadd3c75e1e2ae2c4f98df88f71d5148e6456ba5a0825b59d7409039b",
+      "afterSha256": "152e2aaacbe0acb610a58cfbd0be259600f573fac802a9d3f7f27c89666553a0",
+      "commentEdits": 1,
+      "typedNodes": 423,
+      "nodeArrays": 89,
+      "noncommentLeaves": 504,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2356,
+          "sha256": "b85d2b78d999410aa4a059d38cf5c9b903e6e68fbd8e24a20c7475f0df636dd2"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2657,
+          "sha256": "c5d4f21688c9e6716e46abd60e3ae2cbbbdef9f6ee233e0414ac632d49d79236"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/mist-raven-badge.spec.ts",
+      "beforeSha256": "f42b44d74027f2c1af13f78ec046a310bcc0287c1c746df910c8a127660777ce",
+      "afterSha256": "41c4775989f209b06f154531ca3ecdf1ad4a9b6b51ffdd01ce87c4f04730c0f9",
+      "commentEdits": 1,
+      "typedNodes": 433,
+      "nodeArrays": 83,
+      "noncommentLeaves": 511,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2323,
+          "sha256": "218b0263fcb79d129f8739f59494c925ae8e2c1c5e40f7de50b0cff8b56924d1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2537,
+          "sha256": "fe2f78a7bbd6af4db27da0ea87be579e747a54f77e3eb79134fd38879b32b08d"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/mist-raven-private.spec.ts",
+      "beforeSha256": "d894acb39bad427354dbdae693b27443b7551ca8b74d62568dedb10be370e56c",
+      "afterSha256": "0b6c18cda32b2c7c39b0b1bf2a1d5a9a097003802bf82b24416c19a25f356db3",
+      "commentEdits": 2,
+      "typedNodes": 707,
+      "nodeArrays": 123,
+      "noncommentLeaves": 824,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4229,
+          "sha256": "c9516455bb0a10fec6d8f3cd134a1f4c22863e6a62d488de7c394427671813c2"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4587,
+          "sha256": "4fd10b77356238e32e400e2d4fda6af982643e7335037f0f681c1412c43c5dbc"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/mist-raven.spec.ts",
+      "beforeSha256": "e6553ce6f643b452112c6506650db1d66b45fd27c64c6ecd3ac663e6f56ac468",
+      "afterSha256": "799740a54a0b48db7f7847df99eeb4294339d8783f6036cc5c163df48e607828",
+      "commentEdits": 1,
+      "typedNodes": 1100,
+      "nodeArrays": 227,
+      "noncommentLeaves": 1346,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 6628,
+          "sha256": "614377eaf33c642eb058dca30a7b7ddc4a0a4cdf8f410ab68e212d302dd2fee0"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 7053,
+          "sha256": "01e0262b62d86358a77f31f06d9ba80665bec8336d90e2cd4ca8ace5f60bbac3"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/nightmare.spec.ts",
+      "beforeSha256": "4977fa0dca0ef8735c9fb8feff97b5cf04f3d895a573de6f7210269db909675e",
+      "afterSha256": "eef209582d74d633ad2704223edd22cf75fdb2331fd2093c3a5a7c7a4e48874c",
+      "commentEdits": 1,
+      "typedNodes": 246,
+      "nodeArrays": 56,
+      "noncommentLeaves": 298,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1469,
+          "sha256": "4eca6ea190915f3923904af65afaa2d4d5bfb281c3c4cc232f333b49d0239a56"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1695,
+          "sha256": "320291bd0e6e889a9059536a093c5c4820e212f92612a5ea201489d45388b162"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/noble-secret-body.spec.ts",
+      "beforeSha256": "bb44ffd3cf94ac286238dfb56bb347e7c1d5ea0dd92b9345487bc7829f5e3c39",
+      "afterSha256": "cc2cd16a6dad94ea84c081fec982e9ef7699f05a2fe9979a3e4177aa8a0cd6b0",
+      "commentEdits": 1,
+      "typedNodes": 2308,
+      "nodeArrays": 388,
+      "noncommentLeaves": 2711,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 12506,
+          "sha256": "c2da7ee3bd6d63fa50370d9763ba1802384720a6c249bff18d027334abfc6ad1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 13307,
+          "sha256": "7df0d5ed5c033b171fe4802d33db07b371426072071fe7b055c0653138f5a121"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/offline-replay.spec.ts",
+      "beforeSha256": "44575142cc9b6b4fd9b94770e777bf8c72eede5c4b91e211c69f3b74a3f4d6e7",
+      "afterSha256": "b79a1abb8db53e16f267de994730deb02e9e1b49817c680cf05a3db4b064c655",
+      "commentEdits": 2,
+      "typedNodes": 12999,
+      "nodeArrays": 2402,
+      "noncommentLeaves": 15299,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 79790,
+          "sha256": "47074e8d93b57de919697e1934d1d33d3a052dca715b0470311d961d7510f20e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 85339,
+          "sha256": "ee3c8872926089bce1c6b0bce221016a5ab5b91da556c644352344765f6cb249"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/order-prince.spec.ts",
+      "beforeSha256": "7f721ceb3711e2c6361450834e6ef1ecd36a7857e8dfa2dfbda0df79b5c973ea",
+      "afterSha256": "128d1e6f49b38a1acd7b1784a6db0e0ffda215028de1923c012dbd5cdb0d8998",
+      "commentEdits": 1,
+      "typedNodes": 503,
+      "nodeArrays": 100,
+      "noncommentLeaves": 594,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2668,
+          "sha256": "1d85e43adcbbc026cbdd1a6c4fc37e3e4a666f1a1117cc1e20692652bee7d825"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3017,
+          "sha256": "724e9c7cd207893528de667e6458018d2adaadf66cb54bc61d779f25c2e7b8e0"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/pure-white.spec.ts",
+      "beforeSha256": "13296e819ca47c0cd6b00fe534239e996e951635b954101e63541fe282397863",
+      "afterSha256": "3ba17f5ca542f43c130a72268251ddf2f095fd27c048eda9bc7ea8f34d2c5288",
+      "commentEdits": 1,
+      "typedNodes": 359,
+      "nodeArrays": 61,
+      "noncommentLeaves": 393,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2121,
+          "sha256": "242c0d9528f9b3170c32d455d58a724796500c7c2aeaed7eb5fe756cffb4a2f2"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2336,
+          "sha256": "84b403672d46b53d39423871c564390227c0659d696d6f7f824156bacde36efa"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/radiant-eclipse-aborted.spec.ts",
+      "beforeSha256": "5f2345274d85c948d1e9c8860c3193e042d74a2a955a37f037ccc732b2927a6b",
+      "afterSha256": "58b96d9d81c82dcb76369831d1a3d940c175bf200cf8fddde14b8382aef38bd6",
+      "commentEdits": 1,
+      "typedNodes": 384,
+      "nodeArrays": 83,
+      "noncommentLeaves": 474,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2448,
+          "sha256": "0d6b18723b809e0f0a89e86237e4a77f028d35c7dd2592b4a6959d2b40b5000c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2686,
+          "sha256": "45f767ac65a082593a9a28098b9a31399f96598269ddbe74c0cfae3d2379bd66"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/radiant-eclipse-private.spec.ts",
+      "beforeSha256": "b6f09ef2a67109077ca7fc62593699d020af6c68e93e9367a9f0191b34508aca",
+      "afterSha256": "de14c59c7e3eb4dd22bfe1833e5f14690c11986146d4767f78b6fd949cd25409",
+      "commentEdits": 2,
+      "typedNodes": 710,
+      "nodeArrays": 121,
+      "noncommentLeaves": 822,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4322,
+          "sha256": "22f91143684138b9baed0a52f2560232a76d348156d5df50a80085c4e8cafc60"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4680,
+          "sha256": "69b7203b7a577399d3eb3e8f5d6b680816637eec28cb1058e261fbd70005225c"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/radiant-eclipse.spec.ts",
+      "beforeSha256": "f762adb11ca19c3f75692232934ae9a5f796e714e761735827b9e291337cb1d0",
+      "afterSha256": "1c1f988722752246e8ea687431d708b5e8756964a99a3ef39eaaad1866edcb45",
+      "commentEdits": 1,
+      "typedNodes": 1100,
+      "nodeArrays": 227,
+      "noncommentLeaves": 1339,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 6676,
+          "sha256": "51bc9559c87aa758bdd3715928293fe4d2aa2eb2ada824532f11430e55c8ceaf"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 7101,
+          "sha256": "2822a43f5386168934e195641e214e088e197fb5b75e454a218cf23a3bb19bff"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/red-moon.spec.ts",
+      "beforeSha256": "578fb862028abbc919e6b58b6aff7b9d444072bb63b559afe3fdb78df0df20e7",
+      "afterSha256": "714df4562f345595c43b3fb21ba86fd9b96c54d8441ed07b3b09a3c595481e74",
+      "commentEdits": 1,
+      "typedNodes": 436,
+      "nodeArrays": 80,
+      "noncommentLeaves": 513,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2529,
+          "sha256": "3992f7c241928684e22118fff0737e7b9969e3cb214e77933eebcfbd4e84705b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2811,
+          "sha256": "b4254b0750ed23412483ae6d589591843ec5ab1b1081bcb8b4ae5b1803e9880a"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/scholar-mentor.spec.ts",
+      "beforeSha256": "a646b1ebe4e24ca4530ac7a1adcee556fa64ebb3f519f850f30f0d22be5b789e",
+      "afterSha256": "8b45f31364720845df718073ecc79278e94191f6148ff37627b555b00840bfe0",
+      "commentEdits": 1,
+      "typedNodes": 1026,
+      "nodeArrays": 211,
+      "noncommentLeaves": 1228,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4841,
+          "sha256": "57c2d5418fe22a4f2e62cb18f05cf99867ec20c5012e51196dc33822e1bfd9f1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5419,
+          "sha256": "2ea1f9f94d553783cb38a49408258cbb25f46c79d8e19c6c38d97ef04658bac7"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/time-consort.spec.ts",
+      "beforeSha256": "605336145124d31100a8ee448149839e59c95545703b3bf2a0258479d9db37e1",
+      "afterSha256": "25fb0a7e34f45a7bc881a70402a63e8d4dde75692fde1d7c8b44d5e323062685",
+      "commentEdits": 1,
+      "typedNodes": 556,
+      "nodeArrays": 118,
+      "noncommentLeaves": 675,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2948,
+          "sha256": "6c83dbcec175fa013954fb607f887d4cb4cded3a1185a9645c46061c27e64dcb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3317,
+          "sha256": "28dabf306771f739241b08ece6e461d00107d556805946c73ca2a7881047c138"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/trickster.spec.ts",
+      "beforeSha256": "3ab3be03392ecd13c25f0ba95d3cc91242cfa7c8769f0a7da814f9a9ff9ede06",
+      "afterSha256": "47e7d30a965d354e7a292a1f02cf6ae23798ff9c20afd4d9b0d709d26d81a6c5",
+      "commentEdits": 1,
+      "typedNodes": 545,
+      "nodeArrays": 109,
+      "noncommentLeaves": 652,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2811,
+          "sha256": "9ba5c931647ecdd88a744863af7f460af0dd55fe2aa247cef94aad1727b46e74"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3168,
+          "sha256": "9f9feab66609844097495644ccf73254eb9b3e76f893b40bf0d1e816357b8952"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/wolf-king-day.spec.ts",
+      "beforeSha256": "8d38903032d220edbabd20ddf5b70a477d9d4898b4383829a926da1c55eef15b",
+      "afterSha256": "b1017859c582c0299e544056ff3fd950451a0ee46dc09dd38b057b875a149bcc",
+      "commentEdits": 1,
+      "typedNodes": 700,
+      "nodeArrays": 141,
+      "noncommentLeaves": 828,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3722,
+          "sha256": "46ef616ab7f1d4fea8b227b9cea637eaa01a5a2d3243d340f73a64413e5bb26b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4075,
+          "sha256": "e794ef4e3380ca03c5b782ec04eff8cd5e46f5d1fd738d7d3f0180acb911ce2a"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/e2e/wolf-sorcerer.spec.ts",
+      "beforeSha256": "3913a7628f80140c94019023d8e8073e36e72164348695956eafd7217393730c",
+      "afterSha256": "0f796cb63bdc7c55e641b068ac79f87aa2a09021ae9a30c4500fa6dc3d37238c",
+      "commentEdits": 1,
+      "typedNodes": 549,
+      "nodeArrays": 112,
+      "noncommentLeaves": 654,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2828,
+          "sha256": "28be9d8c9a4d66e22cb333d93e4a82e4c5edca3b2a8015d3cc6fd5f6e6f266a9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3185,
+          "sha256": "94adf7455223e469aa0feeb66b98318a3dfdfea6e872411401fc3f383e4762bf"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "beforeSha256": "8262bb8d920b7b816fc764d1678a8e00f5449303be05a9d55f57550e31b9809a",
+      "afterSha256": "86c34ebd9574cc65b7fd07f070652fb0e4691d9c8463ec77ab2c1c5a001063d5",
+      "commentEdits": 1,
+      "typedNodes": 553,
+      "nodeArrays": 128,
+      "noncommentLeaves": 750,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4082,
+          "sha256": "1ded28f70190d26ffec994beae14952253eff8f4211b2fe6cec40be0a206fbe4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4621,
+          "sha256": "91809caa1a17d2a83780345d6fecabda4f9ad009a49b8ae2d3c01bb2edcdbb36"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/integration/cli/replay-input.test.ts",
+      "beforeSha256": "b2f3ffa91b6d989586aed39140aa0dac01d45805d0a2c96e2b02d6a0a0e7b345",
+      "afterSha256": "dfeaa63af064e0e0298f638a941a0db51183dc7442272e1094348b1d98bdf589",
+      "commentEdits": 1,
+      "typedNodes": 193,
+      "nodeArrays": 45,
+      "noncommentLeaves": 246,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1065,
+          "sha256": "51448e0b944b3155560c2b6fd3cccd4d890d18bc819659f20f299ee808c3a2b1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1405,
+          "sha256": "27c6c2ee22659f3fa072bd68cc7eaa2063c463325a936a59526de30484b98d65"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/integration/rendering/render-replay.test.ts",
+      "beforeSha256": "70e9855ef5a5bfbe170aff756882533334d4d21db935e1bf5ef240e72276d71f",
+      "afterSha256": "a452b289e89d0be9ad9004fbc39ead038b6e574d1b67763a2de263c77a98bcb3",
+      "commentEdits": 1,
+      "typedNodes": 1172,
+      "nodeArrays": 248,
+      "noncommentLeaves": 1580,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 7714,
+          "sha256": "c85041304fa3399ba351d6228ecf2fa283d10281d2ce21c042caef8286bd8962"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 8907,
+          "sha256": "b23f33e28afba9495b2a351260cd46f55e82fe7c9c50bdade864df86f9a08dec"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/support/animal-replay.ts",
+      "beforeSha256": "06e826617f6fe817cae2aef9418c09df1ab7726c68af9c3a1be3c439feb98223",
+      "afterSha256": "0f082bb518f8c92d6bec7e22846939753722d5ddeb2af97a54b0be42e5e1a16e",
+      "commentEdits": 2,
+      "typedNodes": 245,
+      "nodeArrays": 37,
+      "noncommentLeaves": 289,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1485,
+          "sha256": "bbb916a798c26ddc0248a3946d0d3e1cea5c48d79434be7309d5f28b0c8f9e05"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1773,
+          "sha256": "c10d4103e54f1375f42c87efc11712c06a49c36198cd4a395342908eb61f2b03"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/support/fixtures/manifest.ts",
+      "beforeSha256": "3ffcd2aa409a47faa9e8374e618bda7a2d5a53cdda008032576e041b598978b2",
+      "afterSha256": "664501b9b65e020c53934af8a688725e7e5f0ba60ada494caea2fddb0e2e7ecc",
+      "commentEdits": 2,
+      "typedNodes": 594,
+      "nodeArrays": 75,
+      "noncommentLeaves": 670,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2926,
+          "sha256": "bbbc7ededfd1db8e67224adb9dda53c90c63c15816ac3e875810e41cac0ff677"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3238,
+          "sha256": "855312b4b897d29c799dcb20e7fc6657c20af85e12ea521a9b1f653b91a1d1c3"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/support/fragrant-replay.ts",
+      "beforeSha256": "2c95398708bd2a47e7e48dfb45f13d1afbc48e044a01cb263b789c81d6d928f6",
+      "afterSha256": "d4e5db08b9ba88bedc8c93d93a9690e16bf0765bca96402b396bfc635ce5e253",
+      "commentEdits": 2,
+      "typedNodes": 244,
+      "nodeArrays": 37,
+      "noncommentLeaves": 287,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1477,
+          "sha256": "1fa2142748b4b345019c37aae700bac91ed272f86100b15090ccd953b3422eed"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1777,
+          "sha256": "40eedf1e45b3d696f79264fe2ea9eea4d775c8cc4d2bcef4191d2bdf4edd553a"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/animal-dream-archive.test.tsx",
+      "beforeSha256": "5635300e1ddd28376f44b9a532058809f2bfcbfff4531a57c6cb8e2f481d2fdf",
+      "afterSha256": "82d2c2e60b49d708f60c0d4340daa2f41d38795dc856027cac771708c6e8f24f",
+      "commentEdits": 1,
+      "typedNodes": 648,
+      "nodeArrays": 112,
+      "noncommentLeaves": 791,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4665,
+          "sha256": "a72291c0a3d29f44107e1264492015597d41bf45cc1dc3b5614f9e06dd6e71bf"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5295,
+          "sha256": "47d3020af126e3c9eb29881ab61f3e4c990d76560d5d1c2edcad899a274c6677"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/bear.test.tsx",
+      "beforeSha256": "56f4f4fc6dcff8022b03172afe25215224a9372b7cb91ec5b4936433c1692d30",
+      "afterSha256": "4bc5642e11795400a185394bd98d8bacc519f798552e61d2aeb7901ce5e3604d",
+      "commentEdits": 1,
+      "typedNodes": 569,
+      "nodeArrays": 95,
+      "noncommentLeaves": 665,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3384,
+          "sha256": "f388f9b7194eab5fa3d34adf62715745b778aa35f2e3dbc8bd1afe3db703a890"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4017,
+          "sha256": "3a4280cfbefcabe3a0cbb5a5389d387903631113c5080e65d21be06c02365c4f"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/cupid-display.test.tsx",
+      "beforeSha256": "5c9579ade59bfd3cf339aedf1f7bb475bfa6060fbab4b00b07f53d62f8485e7d",
+      "afterSha256": "db6f9b97d249377b1e836a48780de0aad164c55d4a3128338b57e225de676b89",
+      "commentEdits": 1,
+      "typedNodes": 790,
+      "nodeArrays": 155,
+      "noncommentLeaves": 1027,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4623,
+          "sha256": "e05272eea52d782a5bf5731795888948fa3e2fcf5606ce7020f79951809696d9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5396,
+          "sha256": "73a15b1513bf2153c50689d5cb802d7484e5258f4e25b7af81ffc7c955c2cae7"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/cursed-fox-display.test.tsx",
+      "beforeSha256": "54c619dc9b8eb1bf150f93f49692fdebec48568b2c092dec7cc55f0b7fcd54b0",
+      "afterSha256": "39a58cd7f7366ac4f1a18eac4647fd60f0ba13d009cbfc267aa0bb3bb2296e84",
+      "commentEdits": 1,
+      "typedNodes": 420,
+      "nodeArrays": 75,
+      "noncommentLeaves": 485,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2598,
+          "sha256": "c7114cd5078d3340bb7dd80fa608cc787b57124e488c1cf56e88b30b011982ae"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3045,
+          "sha256": "4ad53fd4e1f48e462d0bf37b8e50088032a0ac2d531b805f3d3f5e81109ecafb"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/debater-archive.test.tsx",
+      "beforeSha256": "10f2af6d852bb8a75b0aee85a447a374b6e93b9df2e95fc541a014a4fee15bad",
+      "afterSha256": "e4124dc1e992627090a9cf9c10f64f9d40b9dcf1788f7ef14af071c7fd71e318",
+      "commentEdits": 1,
+      "typedNodes": 404,
+      "nodeArrays": 66,
+      "noncommentLeaves": 466,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2353,
+          "sha256": "1cd1f0f6205b77a587c97b5521d14e902d1daf345a91d001399989987cceb419"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2745,
+          "sha256": "7a410527fa127fc244837b6eda13543cc2ae0ad4aef8c7cecf3f35518ca926db"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/demon-hunter-archive.test.tsx",
+      "beforeSha256": "0cd0d8825e3baaede0cf2da1fa2df62e1c67f8fb263b8129d9d430f451e67320",
+      "afterSha256": "17f1e83c092f0a0e3c43dcb8b5540eff763c007cafe16804678d2d03a0f64ee5",
+      "commentEdits": 1,
+      "typedNodes": 812,
+      "nodeArrays": 128,
+      "noncommentLeaves": 942,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5079,
+          "sha256": "ad908d8381962f52484b4d74c1f54e8eb80deb106e34b012ac03cb760f9137d3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5794,
+          "sha256": "4498e0959d443b41baab56b60f08240d3dc9d05d662dd5f5c7c73986b967a7e9"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/dreamer.test.tsx",
+      "beforeSha256": "1fb51e3a8475c71d19794774ab381e298f9d091772de593be1a6abd672b0bfa1",
+      "afterSha256": "1fbc52c6f93b18d898017ca10798bda72936c286f795762abee7c64772960cfa",
+      "commentEdits": 1,
+      "typedNodes": 477,
+      "nodeArrays": 78,
+      "noncommentLeaves": 615,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3843,
+          "sha256": "d555b7e06e377a5b02aa296284031660580acfdcba7803ad9399a0708662d7fb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4301,
+          "sha256": "2527c27ad2b8b343d6bec3ab685bc61d3706725e471600026ab74d5816c7b5d1"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/evil-knight.test.tsx",
+      "beforeSha256": "3d8cf16e48460a6fea56602b5ecaec22e2e266452f74ef06ac4170de3d696aaf",
+      "afterSha256": "e05b66b793d5b76e809c3368de3b53eb05dc07cdd434820dc9d94e670ca02872",
+      "commentEdits": 1,
+      "typedNodes": 862,
+      "nodeArrays": 148,
+      "noncommentLeaves": 975,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4311,
+          "sha256": "d466cb77fd0d9dcd357216d901c88f223ac483f7c631b7d7f595692ac1e54c0a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4953,
+          "sha256": "3b496b728e87e58985e82ba2f242205f51ab44729d05b1548badb32f9b83c871"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/fragrant-pair-seer-archive.test.tsx",
+      "beforeSha256": "38990eac6fda6636ae8b5b897247e8a1a9a36a6e0f3e36527d553081bd9e981e",
+      "afterSha256": "faaec78800b2425db3097486294c3887df50536b1c0ecfd1f7abd1ed87046add",
+      "commentEdits": 1,
+      "typedNodes": 767,
+      "nodeArrays": 132,
+      "noncommentLeaves": 904,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4222,
+          "sha256": "82576dbb719ca84df969eca6e5b24850906bc7298e02d5d201b706d70129a1fb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4949,
+          "sha256": "4462f50062c192b710ca6701524efb86c8062196fd888ed4e2fe686879509d35"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/gargoyle.test.tsx",
+      "beforeSha256": "b0f84d2bbdcb0c31015a0e01bdbbf1254553db3ec8057f39b4d0cf0e88a27414",
+      "afterSha256": "49b71f6b1500ca85896d1b3278ae94ee0119fe3cb7ad8e26b7e2a469da43672c",
+      "commentEdits": 1,
+      "typedNodes": 712,
+      "nodeArrays": 118,
+      "noncommentLeaves": 836,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4067,
+          "sha256": "c0941cbd038044ead83c00abeb68594455aec5d0f6336bb2badf316dfb5a58f0"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5034,
+          "sha256": "392b3a71686c623525f09cffcfcfe9376317ae7e85cdccd008e237492de36002"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/gift-presentation.test.tsx",
+      "beforeSha256": "239f4089c8d7c492b84e507bf990119690cd65d062dd1c9dff5eb183218e32b4",
+      "afterSha256": "93509604f36fb661d24888236f5ba630d86c777e33d06a3cc42db3d8392a2e5e",
+      "commentEdits": 2,
+      "typedNodes": 571,
+      "nodeArrays": 106,
+      "noncommentLeaves": 700,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4050,
+          "sha256": "5a026476c6264732a502fc00670d4097c3fca478c8254351d439e3f7c30e2ad6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4811,
+          "sha256": "16c0777f573e60941a48b2fab2085897bc9fbef641bdd424eb20c278e6500ff4"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/gravekeeper.test.tsx",
+      "beforeSha256": "02659df99fdb876e347a54fe8a5e4a1e90ef7c8a23c9e7398ac3f6f876c41c81",
+      "afterSha256": "86f745a844e46cc984fc2a2a4ccac1cdbc0c204865ba73e427afc0b32a1186a3",
+      "commentEdits": 1,
+      "typedNodes": 527,
+      "nodeArrays": 83,
+      "noncommentLeaves": 650,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4478,
+          "sha256": "a82b04bdcdb726be41d7f32842021831ef51132b206a0d29483125530e868eef"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4909,
+          "sha256": "eee8ebbe7ef5cd33279ec880db0569b37d4bb1ab993ae42985714dc536df020f"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/hidden-wolf.test.tsx",
+      "beforeSha256": "576988ce488115abb96216264cebc83419fae4f64f02ca56e0e9e633a1cad4cf",
+      "afterSha256": "071ab7ab451a1087c1412c3a40381e34b76df7e2653bcf1f4d8df6596c12f10b",
+      "commentEdits": 1,
+      "typedNodes": 467,
+      "nodeArrays": 75,
+      "noncommentLeaves": 540,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2796,
+          "sha256": "268a1e61f6c55f1ed09236e9011ba9708147bd169a55cf2fdcc2c8c3e5b67387"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3377,
+          "sha256": "b2deaa0cf4f8e071f604f6bef70b80e864f277ec99de7a3b8234a300eda3eab7"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/hybrid.test.tsx",
+      "beforeSha256": "dac277e878958ae55da9c22543f4366f428764151e3704a0d1d9f406b82f048d",
+      "afterSha256": "bc82db9e09452702c5e273b9d43ea0bab7d32dbdb634bd7c4f6eb2ca279c293a",
+      "commentEdits": 1,
+      "typedNodes": 853,
+      "nodeArrays": 146,
+      "noncommentLeaves": 1045,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5721,
+          "sha256": "dc1c786bce193f4039c163635520459b0599085d96713f74427cc02305021ad4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 6704,
+          "sha256": "cd816a0769d854900e4d8b20103cf42d7d6a2670b4f77caef4e14150d6e742e3"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/knight.test.tsx",
+      "beforeSha256": "5296ebad72239213cf5d873bba2ea668ea17ce8b4a9d9b5aeb8d4fa5ce2e196d",
+      "afterSha256": "20ae1802423af866e1e3a47e80798b18bcc6b8101ac901cad248deada3b8f71d",
+      "commentEdits": 1,
+      "typedNodes": 417,
+      "nodeArrays": 65,
+      "noncommentLeaves": 507,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3394,
+          "sha256": "8e9b6edc6b84b602be679eb6f9fe56bd825e057a454a0c99f0f28d5302f74e8f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3811,
+          "sha256": "c39022a8b80ca9b66b807bac8e124aeb95e5893e68ecae907f5794250b55e56f"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/lonely-girl-archive.test.tsx",
+      "beforeSha256": "3d013853d55caec035568be7f456caa996a12fb7d09430cb7903401d2e551fd8",
+      "afterSha256": "c246376fb272066255abc6f50661b46f58741c88499b26f54325c58b171a05ed",
+      "commentEdits": 1,
+      "typedNodes": 709,
+      "nodeArrays": 103,
+      "noncommentLeaves": 839,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5203,
+          "sha256": "3401790595097dcb713c68ee7ebf59f36032b9607415355fc8d9ad572e5dc493"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5760,
+          "sha256": "36be1009419524096b55363de51ae3eacc0223aa09eaefa7cc80389f911aecbf"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/mechanical-wolf.test.tsx",
+      "beforeSha256": "e96ebe47c1adf354f64bdfc1952677f05d43814a0be5840ecc97afa3d13dd456",
+      "afterSha256": "7303597132df173f5731d6c6c9e2c5fc66be148778df1b00a33a9be55076aa65",
+      "commentEdits": 1,
+      "typedNodes": 898,
+      "nodeArrays": 146,
+      "noncommentLeaves": 1040,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5788,
+          "sha256": "7dbf9cf8bb98fffe22184cd52afd17ff81fc92db572abf515ee15f1535d43307"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 6721,
+          "sha256": "edeeb34e20fb4ca72ff0a988b4ad570347859c65582332b0643f461953746ef2"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/miracle-merchant.test.tsx",
+      "beforeSha256": "5ce3009b8892c98b1f1c59cb87d40608e8b09c16f81279999393a47834b99d5c",
+      "afterSha256": "311d125e78e4af052570bcda5321f185c55485fece3c4be2bb22aa67d081df1e",
+      "commentEdits": 1,
+      "typedNodes": 829,
+      "nodeArrays": 142,
+      "noncommentLeaves": 994,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5226,
+          "sha256": "e0e1e4de97de014f691d0f5f75ca73aaaab273bc7d49573bb0f3e0b92e6efdeb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 6184,
+          "sha256": "b0287c3db5c8e989773f0c893a6cd65782f520e9566971afcc78f6a2ee8466b8"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/mirror-girl.test.tsx",
+      "beforeSha256": "27553f7ca5f257559ab724372e981630afb176490c06be79b2e5665bde926693",
+      "afterSha256": "de94e49caada59abd4d5c41cea63228f460ce9cd0531c0b112133c21fda0dd17",
+      "commentEdits": 1,
+      "typedNodes": 902,
+      "nodeArrays": 155,
+      "noncommentLeaves": 1066,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5182,
+          "sha256": "2b0fa8ca4d67e66cb03be9da35357980065cc833df17fd536cff95042b037332"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 6207,
+          "sha256": "a9c7373ae00e09fb9db6b74dcceb2064da71e4116729efe540efac18d68080a5"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/noble-secret-body-archive.test.tsx",
+      "beforeSha256": "9760bf90f01cb9a904f20fa15c782f1d4059905f5c9283c2b3599cf5dbd6adf6",
+      "afterSha256": "d4251510b871e05fda1cf50f8e54432bbc1b63c498af7c92474777f71472ca14",
+      "commentEdits": 1,
+      "typedNodes": 1648,
+      "nodeArrays": 270,
+      "noncommentLeaves": 1950,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 9106,
+          "sha256": "d97ad6ae1ccd86272bc6ec45e106e6a3d6a7aee4f47de029083098ecaa3e98fb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 10392,
+          "sha256": "f151693c521ee8503bb355dc51950601e6de9860b1f6e2093cf46cfcf903e17e"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/player-shot.test.tsx",
+      "beforeSha256": "afec14c71555419fa8c80718b477e31683be70b59a4076b89ac6395563b794ce",
+      "afterSha256": "1f725d139737bf52e54240b50767cfa792f61af06b06b54caf65bc7c3c5c27e0",
+      "commentEdits": 1,
+      "typedNodes": 391,
+      "nodeArrays": 64,
+      "noncommentLeaves": 450,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2362,
+          "sha256": "7e3f8ceefc7d1858d89c2f28cc9f7f4e3ea38690bdcd90a21305f60bfa6ca801"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2907,
+          "sha256": "f68a8190f5a1a4289614d2f31b02958c6d7c55e4fea6232a2ca183897c4cdf8e"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/psychic.test.tsx",
+      "beforeSha256": "6562bc3ca01db4f5c6ff29bad81da1cec0d2ffcf3afdc8c43e288e60a749e5fd",
+      "afterSha256": "0d829cab417125da14bf3616273fbc626fee830f6fe408da2005ba8528888ed0",
+      "commentEdits": 1,
+      "typedNodes": 611,
+      "nodeArrays": 98,
+      "noncommentLeaves": 722,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4003,
+          "sha256": "43f3577be003e1fbd319720f439e2930413987667f0b8bdedc1fd7ae2cc5dabb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4716,
+          "sha256": "3993ee64bfeedf7139d24038d2a77e0c30788a7d01086462767fa1cc67f98285"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/public-death-policies.test.tsx",
+      "beforeSha256": "d3b68d9a7d7da13a4648cbc2206e1d764196d1828231422ef88b8933daff8ed3",
+      "afterSha256": "96d9219eb03670b708676efc81367ad6f3f3fca94993c8a890a800ff13bd4613",
+      "commentEdits": 1,
+      "typedNodes": 615,
+      "nodeArrays": 126,
+      "noncommentLeaves": 820,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3716,
+          "sha256": "d201e980def246f1d6e28612e9834609b520b5a33ba6d73d9020b30767f0500b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4404,
+          "sha256": "b16933df8450dc7870238a1ba5fada1b1aacd391f66dd0e51a81dd0a4e5997a6"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/pure-white.test.tsx",
+      "beforeSha256": "6b8a30ded174d769520aa816ee37cde43a87b6c91a5ba4379a6613b14c96b9a1",
+      "afterSha256": "517abc35e11f5e9e7136ebf388e9384852218f92cfe2e0666ff039fbc1e41e3f",
+      "commentEdits": 1,
+      "typedNodes": 499,
+      "nodeArrays": 83,
+      "noncommentLeaves": 560,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3055,
+          "sha256": "52766715ff2b78f1c2ae6389dc9bfa1bb9e0d1f22ab39fc327e53ab22f079be1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3672,
+          "sha256": "1cd911c17bc3ccc1fda7ec2754dc0495c8a7d749466902977167930badaea871"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/radiant-eclipse-archive.test.tsx",
+      "beforeSha256": "bd59909d88715fb56dbe547e720879739a4639bd820e737d493af5185df276c5",
+      "afterSha256": "8782579023063b00946b96c08d731460369f93293b595e6f9920e8da6eebd014",
+      "commentEdits": 1,
+      "typedNodes": 1788,
+      "nodeArrays": 320,
+      "noncommentLeaves": 2132,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 10001,
+          "sha256": "f622a44142c4a8033b0f57e88e26a22a187030b5347aac4acba224ee5958b2f3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 11404,
+          "sha256": "29ed5bb11bb14a510189fc8a4beb4d39f7bf1626d3a43a0b78253820729e01a1"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/replay-display.test.tsx",
+      "beforeSha256": "efd4c975ee8a39a646e6d0ed39b6498923e5c26e6f0a8b29ea623efe807bb021",
+      "afterSha256": "4550e184088c10d758e17560695446f92b8341a755e7ba7e595ccbab5322ca27",
+      "commentEdits": 1,
+      "typedNodes": 1414,
+      "nodeArrays": 322,
+      "noncommentLeaves": 1953,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 10066,
+          "sha256": "24181f66e1c74f80be599442eb9ff984f00826a7b2eab7d6101a5faa72d12e5f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 12058,
+          "sha256": "d6d815aa88de91f59bafa287828c746b5055a8f4149bb73c37179b43771741f1"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/shapeshifter-archive.test.tsx",
+      "beforeSha256": "413e83d8f7d3121de6df80bdaa0a0591ad08339461fbd55e9a1825b15fcbca4a",
+      "afterSha256": "9b33239c0ed3e0e35375ae9eefe0bf09ee7e100efc8db1cf2969d7d1828bdec9",
+      "commentEdits": 1,
+      "typedNodes": 1000,
+      "nodeArrays": 151,
+      "noncommentLeaves": 1181,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5868,
+          "sha256": "53d3fad6d304834d2c61585b3b0cf4dc13ab7f6310c716dfe3a27e8aeced9353"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 6777,
+          "sha256": "7d62d9730a0428fa4586bd41f6038df47511b11fd4d867356d36ded46cb85f00"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/thief-archive.test.tsx",
+      "beforeSha256": "05a848948d9e8fd109b0ee4667c7b78a74f3cf8ba04667125a574b8223fe1650",
+      "afterSha256": "c173023ff3f0c1708830f285c76baf7e0e983f62dc74426c2b69b32eb77eea39",
+      "commentEdits": 1,
+      "typedNodes": 467,
+      "nodeArrays": 74,
+      "noncommentLeaves": 552,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2572,
+          "sha256": "f5478b84291808d9bf903188bfab78e720fc581c15b88f02c44db08fc72ed3bb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3017,
+          "sha256": "72715e91e2414215ed5e90ea73f259bcd393c0d8cde5b8c7467972e8f5b9af9a"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wall-archive.test.tsx",
+      "beforeSha256": "7f4cf2dc3c926ceacbd9a6370c3dc594b3987c08f036d620a842ba36e9a89604",
+      "afterSha256": "6710c33e2da874dccf60ab86441c558944c2e91a2da0362eee79107280f5ad25",
+      "commentEdits": 1,
+      "typedNodes": 348,
+      "nodeArrays": 62,
+      "noncommentLeaves": 411,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2253,
+          "sha256": "d33287a6fb72173c379e51e243c8e0c850664d526398df405ea9308fd0df2f69"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2686,
+          "sha256": "0e8591fe488791d0087c56c6262abc0190b07d7bb23fe4d5e9920f3ebdaef178"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/white-wolf-king.test.tsx",
+      "beforeSha256": "f6c6a3e399f2061fa2697c05f3c3e5b18a25c5a7d4b9077ef23fc87296d090a0",
+      "afterSha256": "89d1f0158020a30a90c4ed62965734af924597407fb3ef0ce0557833b047b2c3",
+      "commentEdits": 1,
+      "typedNodes": 362,
+      "nodeArrays": 60,
+      "noncommentLeaves": 447,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3049,
+          "sha256": "a10056e2b563ca146377004b9908498d63d304f72503a3c63e6d3d4d3a3067cc"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3430,
+          "sha256": "ed0ed8a29b9006fa01a2da0169b3f3ccf0b903fa0da8eaccd9c936d393343545"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wild-child-archive.test.tsx",
+      "beforeSha256": "27595e5473b42f881a62149ab3883c9ba079909da48bb0ba756125256dc55ccb",
+      "afterSha256": "a21849713224b32bc9adbfd144c6ff900d778640f1cf266c6358c5f36c48ad9d",
+      "commentEdits": 1,
+      "typedNodes": 555,
+      "nodeArrays": 89,
+      "noncommentLeaves": 652,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3190,
+          "sha256": "6fb251b42738fa37da02314bb1e776a4d2992c162a017d02f5dac045419c3cae"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3671,
+          "sha256": "6eb43426151f059c665b377baa2a9925a673b217461045a518a834bc01ff234c"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wolf-beauty.test.tsx",
+      "beforeSha256": "bb7ecd75a2c66c1f94841070e45ed62eddc95d1fb23aac585b039798da121f5b",
+      "afterSha256": "21d942f97fef0d1ad71126a91fab62d993547f8e9fe81c38f48c71b8670fb219",
+      "commentEdits": 1,
+      "typedNodes": 573,
+      "nodeArrays": 86,
+      "noncommentLeaves": 663,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3904,
+          "sha256": "d8f79fe324eef59e9f101fecda3ac067acdd8ab987a2422061ab1c6b409fd527"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4508,
+          "sha256": "5fd5411d14e463e6506c90ccfcb133f75b2bd3e9753ff6ae4d8a749e83c830ca"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wolf-king.test.tsx",
+      "beforeSha256": "1b1bafbb7decbb40dddeb4c46b074a40a260187d0c66914755ca98a75ca24684",
+      "afterSha256": "b481be34bf2b3d22f07b4b89e734a6dbf17adc1d3e97324292e8ab585b082ec3",
+      "commentEdits": 1,
+      "typedNodes": 569,
+      "nodeArrays": 95,
+      "noncommentLeaves": 730,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3753,
+          "sha256": "16e34944656b48096eaa916a3af02f73f81e0089608b33f5bc1f91b0a28b498a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4288,
+          "sha256": "77794b5dd0d10a9f67b7c23b7f30fdc53fc4d66e75558ef300af1e2ee96bb396"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/data/offline-replay.test.ts",
+      "beforeSha256": "bd1215790cc94de9ed9d0d9f0ecef8e4684a3c09a1311e29f7ee5a5356a165a5",
+      "afterSha256": "6de6ff128f2e29c08b63bd11912b7d621b37ca424f3cf9cf37413ac984868422",
+      "commentEdits": 1,
+      "typedNodes": 1120,
+      "nodeArrays": 244,
+      "noncommentLeaves": 1621,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 7461,
+          "sha256": "7d7f2039f8d1c498c22bc707aca834de5243a761338c35c83b1b386051d2ef4c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 8323,
+          "sha256": "3331f5bd8a8e66ae22d171b6c97bc6038bba151529b0c214ebb6644fc89602ed"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/debater-display.test.ts",
+      "beforeSha256": "aff00fa17e914169525d2b11dbdd82a7344d9ce279bef95a6e6e2d47a0dea7ed",
+      "afterSha256": "9d1ecb74eafc2ba0f11e9093091e3002a133434d9f1e285b4401e3d6de684c4b",
+      "commentEdits": 1,
+      "typedNodes": 368,
+      "nodeArrays": 76,
+      "noncommentLeaves": 522,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2238,
+          "sha256": "a44ecb4d1e5b58d0df6383726e4d083cc68a78b5f61dda87a8867fa77e1af407"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2688,
+          "sha256": "12fa9c34d9e38cc40add202ee0ca69ce825b219ab676bda1bb347b1e5bad9562"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/magician-facts.test.ts",
+      "beforeSha256": "c54e5ad27f475f227ae702e6c18fc644f5175968585caa97ae3fe497ef8d1785",
+      "afterSha256": "aa7a1358cca3592a23524596c24dede8f3dc662f43d06e78315180bc79e3f224",
+      "commentEdits": 1,
+      "typedNodes": 539,
+      "nodeArrays": 125,
+      "noncommentLeaves": 770,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2805,
+          "sha256": "f909ffd909eaa1db63f1d0a3b3b4e13b8e648e9ad590a660c7b6ccf08a6aa6da"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3461,
+          "sha256": "15c79f5feb1536863ea7b509b58d039b03c6b45f6f6f9d5c32256d54f1e3d62a"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/nightmare-facts.test.ts",
+      "beforeSha256": "2a93464dbaf8ec814ff88a1295de794086a7f16b4e51e82ceeb713be3b2f6048",
+      "afterSha256": "3590cecf60793b0d4bfcd3dc926f8d19025818d592fbc273b0b4c3e3588d3f43",
+      "commentEdits": 1,
+      "typedNodes": 255,
+      "nodeArrays": 55,
+      "noncommentLeaves": 353,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1307,
+          "sha256": "99a8cb898048676f960bee992a384a07ae2782f3446248ea9772e3e58efa2738"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1610,
+          "sha256": "c032b783d4efc5f9a6d555be716b0b5b93b4c3cd70ab17155d4e1b28b8403662"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/noble-sheriff-summary.test.ts",
+      "beforeSha256": "5110b2042de3fdb1e833247bbb64a458183fc6eb8748f1b19194e967af1b1f99",
+      "afterSha256": "953209c1e4929b48b009cc857f2ba532b8c66ade29e903ec027305f07e7a351e",
+      "commentEdits": 3,
+      "typedNodes": 590,
+      "nodeArrays": 132,
+      "noncommentLeaves": 775,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3315,
+          "sha256": "5092e25808d371ea2174de3b19276b19b16df80438bcaf16cc97d2ee6b950656"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3797,
+          "sha256": "dcc317ec99221e332c12c80332cd941aab0b985319304e5755063c730388769c"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/noble-summary-descriptors.test.ts",
+      "beforeSha256": "5243b0cc62186a4ebc3ecdff42c8fbd26d505fd0cf0d2ba0cd2508137e0795e7",
+      "afterSha256": "e7379070d5f0dfc9132db440526b3e5f9e42a8dea1f83b45edea37d3fc9aed98",
+      "commentEdits": 1,
+      "typedNodes": 332,
+      "nodeArrays": 78,
+      "noncommentLeaves": 458,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1943,
+          "sha256": "7665285645462e6012b1754bcad9aebc786fd64c93a5d6a8b1bf48ac9ee4d488"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2336,
+          "sha256": "fae43a85a2c06c793b012eee469e54c809c9002924302badc29f80e157c7df38"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/red-moon-facts.test.ts",
+      "beforeSha256": "f0227ae002bc243f765ce70bdb9867a78eb1570f672a187ead7bc273f8f5a8b1",
+      "afterSha256": "a4d17720b65829fb11bad876c3d3774ecefcc8a788b3618cec94a382393863e6",
+      "commentEdits": 1,
+      "typedNodes": 366,
+      "nodeArrays": 83,
+      "noncommentLeaves": 510,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1916,
+          "sha256": "97044d6f2884cd6b6aa166c80a828cc3f22605b48735b08ebff89f75c931be4d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2484,
+          "sha256": "1171e0cac42c3bf004da7cc13fc86d2806168fe6440efa82141cea190d9dd305"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/replay-event-reader.test.ts",
+      "beforeSha256": "8b31effd8de1772a539a41f31e668feffde1e1ac1b3ad3944433f09a33cfde5a",
+      "afterSha256": "5d1df0a94facc74538ba348778144672535ba21d53182d7e4342ec25d2ead0d2",
+      "commentEdits": 2,
+      "typedNodes": 1986,
+      "nodeArrays": 468,
+      "noncommentLeaves": 2733,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 12002,
+          "sha256": "487010695eb07c9a8fa8011e714b1db1efddaab9e2868413957bbce4c4e4e32b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 14100,
+          "sha256": "4dacae02b158c94cfd1958171e839fbfc7204e63df98c64ec8107c199e84ea2f"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/scholar-mentor-events.test.ts",
+      "beforeSha256": "763c206905d30e85f32ba96dbf2873c28ef823f4efb4a9d87cb0b35c4bfe7d67",
+      "afterSha256": "78911992769011660cde54e3fc0c506c0d0e3db7f9c5e320f41347afb22bf3df",
+      "commentEdits": 1,
+      "typedNodes": 319,
+      "nodeArrays": 62,
+      "noncommentLeaves": 443,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1868,
+          "sha256": "8c69a91c5a48078636a30b1416578e81f6c52f0d35083c5e166844148858a207"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2255,
+          "sha256": "ab1dd7b6c1b70d089626a84e17008efa0c1690382130f732a054e0cb666c7c59"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/shapeshifter-display.test.ts",
+      "beforeSha256": "e7526b0df8a9039dcac05bcbc1b88c3f7c2c18f3ad2dc095661770183507e1a0",
+      "afterSha256": "ba220488d5abc07d9deabc8b4e6b513652f92fa5da99e59603c42fe470f562fc",
+      "commentEdits": 1,
+      "typedNodes": 297,
+      "nodeArrays": 65,
+      "noncommentLeaves": 427,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1790,
+          "sha256": "120cad308ef886d5d43dc63afd33ddb24d1d2aa927d2ad15b86838e258557bb7"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2120,
+          "sha256": "6b7b8cf035e740cceb903d4aa341b0ce5157007113ec2f8ee38b85482ae2c1a9"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/thief-display.test.ts",
+      "beforeSha256": "072ecbd7c412c7e960ef3807017638e293000ff0d52a98c477a4b116b815e070",
+      "afterSha256": "3c7797088639778c1ede9505a68f2431c44c4624f9a2b7647af9755aa744d338",
+      "commentEdits": 1,
+      "typedNodes": 297,
+      "nodeArrays": 65,
+      "noncommentLeaves": 427,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1731,
+          "sha256": "d90841c81c1ea6fe2411cf85164466e58377f4b7e815631509fb8fa2e361b66b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2061,
+          "sha256": "2ef51dc02b61d827816d02536ad016b4d8db89c65faaa43f7bf10577dcbc6de0"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/trickster-facts.test.ts",
+      "beforeSha256": "6a702d9016ad9f91ba99356cbaffb839620a1b1c2684a02c99aaa8857d8911ba",
+      "afterSha256": "626e17e396b89873f39660e865d3911bdb5352dd73018f4a557b0164c7c79b15",
+      "commentEdits": 1,
+      "typedNodes": 431,
+      "nodeArrays": 95,
+      "noncommentLeaves": 621,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2335,
+          "sha256": "b23dbe9d37035a5a494b8751383bba2ee1d05c7f353db4cf534aabdf51aee6eb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2826,
+          "sha256": "653e3d9342acaecb1cf346b6a03ae8c5d2976ebac000632959d0c8c60908dcbf"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/wall-display.test.ts",
+      "beforeSha256": "637f8564c8a7c8c7324bc41967a975bbaec8732305bfbe71bd4f4340ef7c81e5",
+      "afterSha256": "3d31828254c4db51dccb2656dbade3761bca489a8695d4a7694237598b77faea",
+      "commentEdits": 1,
+      "typedNodes": 295,
+      "nodeArrays": 69,
+      "noncommentLeaves": 416,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1846,
+          "sha256": "7cda5d51d214d9b492295c6e15eb184770d3ee140773402cf60f7a9625b3f5ee"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2260,
+          "sha256": "6594d398b8f9ae05dd42b8ea1a645b78fc2ad3a8ddde89ecb60bb3935d3581d3"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/wolf-sorcerer-events.test.ts",
+      "beforeSha256": "c0181ce4a33556d38a5cb239cb881bf7d810009279457b191b6aca85a0e75f17",
+      "afterSha256": "8e7c937de6bf2f71f70daba66db9c99a7434eb29378f0a5fc1091b00891f2190",
+      "commentEdits": 1,
+      "typedNodes": 433,
+      "nodeArrays": 97,
+      "noncommentLeaves": 621,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2320,
+          "sha256": "7599f86ef12a14c8b14372a792ebe88f372382aa9e5d2d0d6025ec7773af4f53"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2775,
+          "sha256": "cb3a97747358b67ac619824fb9887aa421ba9e53bcec4951fd947beb9c37b3f5"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/fragrant-link-causality.test.ts",
+      "beforeSha256": "d38deb9520515a8725912a5f4460270b7c6cc1cf22f1eded789580c1601c6dc7",
+      "afterSha256": "fc012fddcb53265d857c6614ce63dc4eb69850abda6ceaf839a3cbca3219a223",
+      "commentEdits": 1,
+      "typedNodes": 699,
+      "nodeArrays": 151,
+      "noncommentLeaves": 874,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3891,
+          "sha256": "8a6cb62f4ce6ed519d7030e01f4607a392e16d0cd51c5a4ef292c3e6aa3a3159"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4462,
+          "sha256": "6edee987fdecac1ec96cb527fbeae203c5475a325917cd6d19215b5bf880ef89"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/mist-raven-literal.test.ts",
+      "beforeSha256": "e4cb59f783f4a325da285595ae6f7d5434bb9f2b02f95568410902e517041bc2",
+      "afterSha256": "4910f578dee21fe760050b378fd5f777f1f7e0a14d892d4e0773933fc69cc688",
+      "commentEdits": 1,
+      "typedNodes": 679,
+      "nodeArrays": 152,
+      "noncommentLeaves": 860,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3098,
+          "sha256": "6a394110e5cec4c50d5942b65c854e345eb569673f9275b0dbdea52147675107"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3628,
+          "sha256": "1e14eab2aa4b21bedc446f30b16f7026ff177e16cddf3bd1b533da6bd47371a7"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/noble-badge-provenance.test.ts",
+      "beforeSha256": "078d3afebba095d66d5375d8aa8effb2cfaf739e4ad04c86564941cf39af08b5",
+      "afterSha256": "3b2f5e367666cde784571b62d28ffc2d5ae065a3aa34ce80210f0cfe6d5eba17",
+      "commentEdits": 3,
+      "typedNodes": 509,
+      "nodeArrays": 85,
+      "noncommentLeaves": 583,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2825,
+          "sha256": "bd7eea858e2a6f9b98d2d60b292e0c31e77104706f435c6bad2701323dd71331"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3207,
+          "sha256": "788bcc300c34e70ce21554c7238b75bfaddafaba9ceb0fedfc17f4b2ca6d36b8"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/pure-white-archive.test.ts",
+      "beforeSha256": "8a4e07ed83aaff3dbedd0c858e453e7a2bda5d43c2d65b04c3c97e63bd3f601d",
+      "afterSha256": "7cd2963240f43946d3606fb687aa6197624fe1f61bc6711188474bbc03e305a7",
+      "commentEdits": 1,
+      "typedNodes": 499,
+      "nodeArrays": 79,
+      "noncommentLeaves": 556,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2826,
+          "sha256": "d970665a3778aa734bdb6d94b64aae2c787800dbd23f3b32b80696ae5b244ecd"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3326,
+          "sha256": "a90480f8647dbe5915e0a3567290adb8e401bcb6387516cc93ce67e2fef9c5b0"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/radiant-private-views.test.ts",
+      "beforeSha256": "0243819281962fcb50bd7149988dad7ffeec764862d5968749db59ad2f829b95",
+      "afterSha256": "9c45929a712caa28cb1e6ab6683fc4c1a9b09754b55bb9ea1ada9d50953ccff8",
+      "commentEdits": 2,
+      "typedNodes": 1239,
+      "nodeArrays": 227,
+      "noncommentLeaves": 1487,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 6478,
+          "sha256": "5dadb64b533e704074d10192df18d2dc921b3af152b8aaf76b56c620b188c8b2"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 7381,
+          "sha256": "ea6acb9917894bc525ed7acecac3cf972fd769bcfd9ef0038e0b33f0337465ef"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/replay-presentation.test.ts",
+      "beforeSha256": "8edca3daafd44fcafbe353ea7daaec39ba3f40b04e13d26590361be72493d2d6",
+      "afterSha256": "a9543777c385ee661306f5c082a3b683639fa345466d279ddefcf522799fc6e0",
+      "commentEdits": 1,
+      "typedNodes": 362,
+      "nodeArrays": 61,
+      "noncommentLeaves": 489,
+      "jsdocTags": 0,
+      "protectedComments": 1,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2785,
+          "sha256": "368d8d3ae75b8ee539cf3f52051ae31167949e3f6663e0cd7ccb099647bde8e8"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3091,
+          "sha256": "252cf6234f3164a9ab5cc32868c5617d3d451254ebd0448260f7b3cec795d514"
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/replay-projection.test.ts",
+      "beforeSha256": "369cb6c2536f50a1bf0d31be66d19f591e9f41a43529d50b33f15278cfa92fc6",
+      "afterSha256": "a109099f7a3ed6975a73841f83594ef76def59b5e8243feaae115926f6cdc0cb",
+      "commentEdits": 1,
+      "typedNodes": 663,
+      "nodeArrays": 100,
+      "noncommentLeaves": 836,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4368,
+          "sha256": "3f3e5065d524474b680152d7c8201961763c7fb18b1fa14bea5734999f8f1d79"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4778,
+          "sha256": "f7de6cd327f048687d59ddf277bde6149d5a94a64e108ce423be38c455738b3c"
+        }
+      ]
+    },
+    {
+      "path": "frontend/playwright.config.ts",
+      "beforeSha256": "62725a212344a59b67a5b8dc5835a052424787c584e9faf76b56cbd5b9ddfd5a",
+      "afterSha256": "878540e9905ff0f7b8ac363bf06da86cb5772b89b45ab30f70b2185730f6146d",
+      "commentEdits": 1,
+      "typedNodes": 128,
+      "nodeArrays": 10,
+      "noncommentLeaves": 156,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1095,
+          "sha256": "c7c033ab8fb6fadea6bb8af72cd2c0e58d0bd7fa6e287e25b95390770fbe620a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1180,
+          "sha256": "412f24cfec18ac40de52c29de52d52b0b3500d1cec8c4218e6028d4085b4d057"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "frontend/src/replay/replay-projection.ts",
+      "sha256": "261ebde1c4d3cfc031e7d00189c144b14c95f9d2822b806be2ecc0fac38caa24",
+      "bytes": 3511,
+      "gitMode": "100644",
+      "gitBlob": "11d5895115067c6c75e9d266fd7d3af1b2c63b73"
+    },
+    {
+      "path": "frontend/src/replay/replay-frame.ts",
+      "sha256": "a35a3c11c3fe647f64087f21368184c38c644f63993813ab0def5b0325192ef6",
+      "bytes": 3457,
+      "gitMode": "100644",
+      "gitBlob": "33bc8c457d6924f324b6c8989f00469e2fdc9437"
+    },
+    {
+      "path": "frontend/src/replay/replay-event-reader.ts",
+      "sha256": "ea1689ef8b41ec5486df1db00a2d4bf427b374a446a86b22fd19a627775655cb",
+      "bytes": 38364,
+      "gitMode": "100644",
+      "gitBlob": "e5f9c4462f7b5aa8c2f2cc8b6eddfa0583cded2a"
+    },
+    {
+      "path": "frontend/src/replay/ReplayComposition.tsx",
+      "sha256": "53d7067c6b68f6fe491b3a89790238841d174a4fcbfd669ccd2d9375c73b0250",
+      "bytes": 5467,
+      "gitMode": "100644",
+      "gitBlob": "aa6603e750a79b009ac741b82b75abf5c1685a6c"
+    }
+  ],
+  "summary": {
+    "sources": 81,
+    "commentEdits": 94,
+    "typedNodes": 65116,
+    "nodeArrays": 12121,
+    "noncommentLeaves": 79683,
+    "jsdocTags": 0,
+    "protectedComments": 1,
+    "wholeRawOutputs": 162
+  },
+  "limits": [
+    "八十一个实际完整程序的非注释 AST／NodeArray／叶文本／受保护指令与162份移除注释ESNext/CJS整输出；没有类型检查、生产加载或行为测试。",
+    "完整精确正逆仅证明94注释变换的来源；职责头形状和emit相同不代替独立说明语义审查。",
+    "当前源码SHA改变；不改严格归档字段、历史sourceHash或门禁豁免。"
+  ]
+}

@@ -1,10 +1,6 @@
 /**
- * Integration tests for rendering input guards and owned output/browser cleanup.
- * Inputs are the unchanged public replay fixture, real filesystem competitors
- * and injected rendering callbacks. Literal errors, call order and output bytes
- * independently verify rejection, publication and failure prefixes. Browser
- * ownership is tested with a fake rendering adapter; no real browser or model
- * is launched. Each test removes only its owned /tmp fixtures.
+ * 集成测试验证渲染输入拒绝、输出独占与自有浏览器清理。输入为公共归档、真实文件竞争者和注入回调；
+ * 输出以字面错误、调用序列及产物字节核对发表和失败前缀。浏览器由假适配器代表，不启动真实浏览器／模型；各用例只删自有临时目录。
  */
 import { frontendFixtureURL } from "../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

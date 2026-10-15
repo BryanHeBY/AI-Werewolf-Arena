@@ -1,9 +1,6 @@
 /**
- * Unit tests verify scholar mentor fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证学者／导师选择、跳过、冲突和奖励事实的两语展示。
+ * 输入为手写 case 表及错误日期／阶段／额外字段／玩家引用；输出按独立标签和空效果预期核对接受／拒绝，不执行规则或生成 golden。
  */
 import { test, expect } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";

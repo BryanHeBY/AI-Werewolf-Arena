@@ -1,9 +1,6 @@
 /**
- * Unit tests check Fragrant link publication and reverse-frame causality.
- * Input: recorded immutable archive fixtures, handwritten link rows and seek positions.
- * Output: the original life-boundary, private-fact and frame assertions.
- * Handwritten expected live seats and literal causal boundaries are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证寻香连带发表与倒看帧的因果边界。输入为固定归档、手写存活表及跳转帧号；
+ * 输出以独立生命／披露预期区分提案、枪击和实际追加死亡，检查私有身份遮蔽及畸形 reader 拒绝，不运行游戏或重新生成 golden。
  */
 import { test, expect } from "bun:test";
 import { fragrantPrivateReplay, loadFragrant } from "../../../support/fragrant-replay";

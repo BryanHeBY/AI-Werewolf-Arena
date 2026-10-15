@@ -1,9 +1,6 @@
 /**
- * Unit component tests for replay display replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证复盘的两语文案、显式时区、原文保留和结构化加载错误。
+ * 输入为手写事实、畸形文件／显示参数和帧号；输出以独立字幕、时间及状态预期核对纯帧／markup、未知回退和无错误泄漏，不运行真实对局或模型。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

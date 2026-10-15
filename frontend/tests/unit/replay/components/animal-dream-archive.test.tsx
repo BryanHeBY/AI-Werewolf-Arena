@@ -1,9 +1,7 @@
 /**
- * Unit component tests for animal dream archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证动物梦境 God／授权玩家归档的画面。输入为原 fixture、事件游标和两语帧号；
+ * 输出检查私有机制事实不提前改变席位、死亡与公开翻牌边界、倒看和静态 markup。
+ * 原字面可见性预期及事件前后对照保留，不运行真实对局或模型。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

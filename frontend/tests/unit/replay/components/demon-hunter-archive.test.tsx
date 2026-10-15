@@ -1,9 +1,6 @@
 /**
- * Unit component tests for demon hunter archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证猎魔人 God／本人归档和终局夜链。输入覆盖人数、胜利政策和两语；
+ * 输出检查选择事实不直接伤害、他人身份遮蔽、原生身份及 checkpoint 对照，另核纯帧／markup；不从生产规则生成字面预期或运行模型。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

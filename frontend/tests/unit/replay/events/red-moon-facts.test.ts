@@ -1,9 +1,6 @@
 /**
- * Unit tests verify red moon fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证赤月使徒封夜、延期和到期事实。输入为手写字段、两语标签及畸形／外来成员／错误包络；
+ * 输出以独立翻牌／死亡效果与拒绝预期核对接受面，到期须匹配原夜间日期，不执行生命周期或生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";

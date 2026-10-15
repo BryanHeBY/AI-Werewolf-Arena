@@ -1,9 +1,6 @@
 /**
- * Unit component tests for gargoyle replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证石像鬼继承和具体角色查验归档。输入为六／十二人 fixture、两语和帧号；
+ * 输出以字面事实、存活／胜者预期检查继承不改身份生命、查验不等阵营结果及纯帧／markup，不运行继承或查验规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

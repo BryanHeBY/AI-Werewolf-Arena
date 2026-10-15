@@ -1,9 +1,6 @@
 /**
- * Unit tests verify wall fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证匿名墙公共纸条和 God 排序事实。输入为手写原文、作者行、畸形成员和 getter；
+ * 输出以独立关联／空效果预期核对原文不生成作者、角色或死亡，God ID 仍严格检查；不执行发布或生成 golden。
  */
 import { expect, test } from "bun:test";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";

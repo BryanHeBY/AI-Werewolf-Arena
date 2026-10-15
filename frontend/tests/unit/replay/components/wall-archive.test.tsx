@@ -1,9 +1,6 @@
 /**
- * Unit component tests for wall archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证六／十二人匿名墙写入／跳过归档。输入为真实 fixture 和两语帧号；
+ * 输出检查公共纸条原文不含作者字段、席位不变和静态画面，原字面内容／状态预期保留，不执行发布或重排算法。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

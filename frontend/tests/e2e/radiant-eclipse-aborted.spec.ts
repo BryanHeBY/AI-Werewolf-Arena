@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render the actual paid-but-aborted Radiant Eclipse
- * archive in both locales. Recorded events supply captions and literal absence
- * assertions check that neither night two nor a winner is announced. The test
- * only renders the incomplete record and does not resume its game.
+ * 浏览器集成测试验证光蚀已付款但中止的两语归档。输入为不完整事件前缀；
+ * 输出以原字幕对照和字面缺席断言核对未发表第二夜夜报、未出现胜者；只渲染失败记录，不恢复对局。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

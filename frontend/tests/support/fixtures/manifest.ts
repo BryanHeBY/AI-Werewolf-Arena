@@ -1,11 +1,7 @@
 /**
- * Selects god, checkpoint and actor archive members for frontend replay tests.
- * Inputs are a stable suite identity and explicit player id/role/camp filters;
- * output is the manifest's current paths and serialized actor metadata. This
- * test support owns frontend archive selection: one god archive, at most one
- * checkpoint and only player-view members of the same verified cohort. It does
- * not render, project visibility, infer rules, read fixture bytes or assign test
- * acceptance; existing loaders still exercise their actual file failure paths.
+ * 为前端复盘测试选择 God、checkpoint 和玩家归档。输入为稳定 suite 身份及显式玩家 id/role/camp 筛选；
+ * 输出为清单现行路径和已序列化玩家资料，同 cohort 只取一份 God、至多一份 checkpoint 及玩家视角成员。
+ * 本支持层不读归档字节、不生成可见性／规则／验收预期，实际加载和读取错误仍归调用方。
  */
 import snapshot from "../../../../tooling/refactor/fixtures/manifest.json";
 import {
@@ -77,7 +73,7 @@ export function playerFixtureFiles(
   return files;
 }
 
-/** Resolves only a registered frontend archive identity; callers keep real reads and errors. */
+/** 只解析已登记的前端归档身份；实际读取及原错误仍由调用方处理。 */
 export function frontendFixtureURL(originPath: string): URL {
   const file = artifacts.get(originPath);
   if (!file || file.owner !== "frontend" || file.kind === "adapter-script")

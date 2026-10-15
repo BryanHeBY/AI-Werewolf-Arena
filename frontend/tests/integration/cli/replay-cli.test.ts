@@ -1,9 +1,6 @@
 /**
- * Integration tests for replay CLI rejection and public error presentation.
- * Inputs are literal invalid arguments and hostile error objects; handwritten
- * codes and bilingual messages are the independent oracle. Real child commands
- * reject before opening a browser or server. Tests consume the public sample
- * fixture without changing its bytes and never invoke a model or private config.
+ * 集成测试验证复盘 CLI 的参数拒绝和安全错误展示。输入为字面畸形参数及带 getter 的外来错误；
+ * 输出以手写错误码和两语消息核对真实子命令在浏览器／服务启动前失败。公共 sample 字节不改，不调用模型或私有配置。
  */
 import { ReplayLoadError } from "../../../src/replay/offline-replay";
 import { expect, test } from "bun:test";

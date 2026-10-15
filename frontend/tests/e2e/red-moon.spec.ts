@@ -1,8 +1,7 @@
 /**
- * Browser integration tests render recorded Red Moon expiry, knife and blast
- * fixtures in both locales. Archived reveal/death events and literal seat
- * assertions check public captions and terminal winners at their frames; the
- * browser displays the lifecycle without applying its production rules.
+ * 浏览器集成测试验证赤月使徒到期、狼刀和自爆的两语归档。
+ * 输入为原翻牌／死亡事实及 checkpoint；输出以手写存活断言和终局 checkpoint 对照核对公共字幕、席位及胜者时点。
+ * 这些字面断言与归档对照分别保留，不在浏览器应用生命周期规则。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

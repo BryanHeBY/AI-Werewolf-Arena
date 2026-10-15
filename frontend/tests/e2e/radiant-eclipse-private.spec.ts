@@ -1,8 +1,6 @@
 /**
- * Browser integration tests build minimal render inputs from actual Radiant
- * Eclipse maid, count, witch, pack and villager player-view fixtures. Assertions
- * seek and rewind owner-visible events in both locales, checking labels and
- * identity masking without importing the God archive's private knowledge.
+ * 浏览器集成测试验证光蚀各角色真实玩家档构成的最小画面。输入为已授权事件、两语和帧号；
+ * 输出按原无胜者／零死亡及未知他人身份的字面预期核对跳转和倒看，字幕与现行展示函数对照，不引入 God 私有知识。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
@@ -44,7 +42,7 @@ for (const actor of ["maid", "count", "witch", "pack", "villager"] as const)
             ]
           : [],
       );
-      // Minimal render contract using actual authorized archive, not a private-file UI import.
+      // 用真实已授权归档构造最小渲染契约；这不是 UI 直接导入私有文件。
       const replay = readReplayDocument({
         ...god,
         result: { winner: null, reason: "private_render" },

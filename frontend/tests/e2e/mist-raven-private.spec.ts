@@ -1,8 +1,7 @@
 /**
- * Browser integration tests build minimal render inputs from actual Mist
- * Raven alchemist, raven and villager player-view fixtures. Assertions seek
- * and rewind the owner-visible events in both locales, checking private labels,
- * hidden identities and winner timing without adding God-view information.
+ * 浏览器集成测试验证雾鸦真实玩家档构成的最小画面；输入为炼金魔女、狼鸦之爪和村民档及两语帧号。
+ * 输出以手写零死亡／无胜者和未知他人身份预期核对跳转、倒看；字幕与现行展示函数对照。
+ * 只纳入玩家已导出事件，不加入 God 私有知识，也不是 UI 直接导入私有文件。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
@@ -44,7 +43,7 @@ for (const actor of ["alchemist", "raven", "villager"] as const)
             ]
           : [],
       );
-      // Minimal render contract using actual authorized archive, not a private-file UI import.
+      // 用真实已授权归档构造最小渲染契约；这不是 UI 直接导入私有文件。
       const replay = readReplayDocument({
         ...god,
         result: { winner: null, reason: "private_render" },

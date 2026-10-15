@@ -1,9 +1,6 @@
 /**
- * Unit component tests for thief archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证盗贼实际选择归档。输入为不同底牌 fixture、两语和事件游标；
+ * 输出检查原身份只在选择事实处改变角色阵营、生命／警徽不变，并核纯帧／markup 和原数据，预期沿原字面断言，不重新发牌或安装身份。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

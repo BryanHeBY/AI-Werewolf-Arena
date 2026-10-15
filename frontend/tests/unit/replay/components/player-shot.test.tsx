@@ -1,9 +1,6 @@
 /**
- * Unit component tests for player shot replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证中性 player_shot 与原归档猎人枪的展示差异。输入保原目标和两语帧号；
+ * 输出对照旧死亡投影，并以独立字面字幕核对不宣称枪主身份，另核静态 markup 和旧归档未改，不执行死亡 hook。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

@@ -1,0 +1,152 @@
+{
+  "executor": "/root",
+  "authorExecutedChecks": false,
+  "before": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-before.json",
+    "sha256": "716f40d173be6371077affcec9b651af530e1c61f22baaa825381a0a2c3bc235"
+  },
+  "firstSourceReady": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-source-ready.json",
+    "sha256": "3fb9b8306a3ac9651fc60efe99d1cf3f0de76a8a926911b09991178bb7df2ec6"
+  },
+  "finalSourceReady": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-role-name-source-ready.json",
+    "sha256": "3493f6aa0895c4126b2d93033ff38eff12266c0e39147656368641a94d8e0c84"
+  },
+  "checks": [
+    {
+      "name": "complete81-comment-program-proof",
+      "command": "bun --no-env-file docs/refactor/generated/frontend-test-chinese-contracts-proof.cjs > docs/refactor/generated/frontend-test-chinese-contracts-proof-output.txt 2>&1",
+      "launchCell": "29b7c8",
+      "sessionId": 11776,
+      "terminalCell": "f8cb02",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-proof-output.txt",
+        "sha256": "d438aeb23886d9d06593a65739911d9dbe85ede5f227aaf2d790fb969fc7ef2e"
+      },
+      "result": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-proof.json",
+        "sha256": "ffa69f2d498beaff37248ac68e4ffafec1a1f914a5d299c7e2e2fde8f3010434"
+      },
+      "summary": {
+        "sources": 81,
+        "commentEdits": 94,
+        "typedNodes": 65116,
+        "nodeArrays": 12121,
+        "noncommentLeaves": 79683,
+        "jsdocTags": 0,
+        "protectedComments": 1,
+        "wholeRawOutputs": 162
+      }
+    },
+    {
+      "name": "first81-chinese-heads",
+      "command": "bun --no-env-file docs/refactor/generated/frontend-test-chinese-contracts-heads.ts > docs/refactor/generated/frontend-test-chinese-contracts-heads-output.txt 2>&1",
+      "launchAndTerminalCell": "ca974a",
+      "exitCode": 1,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-heads-output.txt",
+        "sha256": "db8a28b2e992702bef7da17664f1c5acc0ea68ed2c93e2589364082e554368d5"
+      },
+      "result": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-heads.json",
+        "sha256": "31771bb3b8f50cb2c20cad69cc92f61f53f004f6b996101701024621497290c7"
+      },
+      "sourceCount": 81,
+      "trackedDocumentationPaths": 736,
+      "diagnostics": 11,
+      "failedSourceCount": 6,
+      "chineseHeadFailures": 0
+    },
+    {
+      "name": "changed6-complete-comment-bridge",
+      "command": "bun --no-env-file docs/refactor/generated/frontend-test-chinese-contracts-head-precision-bridge.cjs > docs/refactor/generated/frontend-test-chinese-contracts-head-precision-bridge-output.txt 2>&1",
+      "launchAndTerminalCell": "59cf21",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-head-precision-bridge-output.txt",
+        "sha256": "e8b5d005865f6a9aa7456e603dd493f1a664ba453d12127c7c92b3fbf1eedde3"
+      },
+      "result": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-head-precision-bridge.json",
+        "sha256": "fe2601a76ca267299a37039957cd686d021c6814ac9140db87f5b85bee68454b"
+      },
+      "summary": {
+        "sources": 6,
+        "commentEdits": 6,
+        "typedNodes": 3561,
+        "nodeArrays": 626,
+        "noncommentLeaves": 4286,
+        "wholeRawOutputs": 12,
+        "otherSourceSame": 75
+      }
+    },
+    {
+      "name": "onlyfailed6-chinese-heads",
+      "command": "bun --no-env-file docs/refactor/generated/frontend-test-chinese-contracts-heads-failed.ts > docs/refactor/generated/frontend-test-chinese-contracts-heads-failed-output.txt 2>&1",
+      "launchAndTerminalCell": "f88524",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-heads-failed-output.txt",
+        "sha256": "66cd13ee560048e3fda604d8125e5fa894aaac811e960019400c8b02d5bd2285"
+      },
+      "result": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-heads-failed.json",
+        "sha256": "95336103dc449984f515292021a62fe982cab19e9584f216cc9d917d3bf71783"
+      },
+      "sourceCount": 6,
+      "trackedDocumentationPaths": 737,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0
+    },
+    {
+      "name": "single-role-name-complete-comment-bridge",
+      "command": "bun --no-env-file docs/refactor/generated/frontend-test-chinese-contracts-role-name-bridge.cjs > docs/refactor/generated/frontend-test-chinese-contracts-role-name-bridge-output.txt 2>&1",
+      "launchAndTerminalCell": "006dcf",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-role-name-bridge-output.txt",
+        "sha256": "401794b33abf11a34e07a8eafdceaaffc4e524b15160a72176d5abef3742a966"
+      },
+      "result": {
+        "path": "docs/refactor/generated/frontend-test-chinese-contracts-role-name-bridge.json",
+        "sha256": "7df385c4b4c94085c50a08aa5497315186cc56603eae436dccec5af3e489488b"
+      },
+      "summary": {
+        "sources": 1,
+        "commentEdits": 1,
+        "typedNodes": 503,
+        "nodeArrays": 100,
+        "noncommentLeaves": 594,
+        "wholeRawOutputs": 2,
+        "otherSourceSame": 80
+      }
+    }
+  ],
+  "capture": "Root五次命令均将stdout/stderr原样重定向到对应-output.txt。作者完整读取结果及raw，未自行执行这些工具。",
+  "sourceStage": "首81 proof0/head1使用3fb9b830的94编辑；仅六头6编辑承接d7848e22，再仅定序王子一词承接3493f6aa。首所有工具与旧readies原bytes保；94+6+1=101记录。后继ready未执行字段均是各自捕获时点，实际Root收据如上。",
+  "failedHeadMeaning": "真实heads.json与raw为11diag/6roots：职责动词／独立预期来源表述不足，非行为失败。首formal MD/evidence的12是历史口头误记，旧全文存first-formal snapshot，原输出不改。",
+  "notRun": [
+    "types",
+    "runtime tests",
+    "production imports",
+    "models",
+    "full gates"
+  ],
+  "sourceHashPolicy": "源码SHA及位置会变，不改历史strict/sourceHash政策。",
+  "previousFinalSourceReady": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-final-source-ready.json",
+    "sha256": "d7848e22a2d6d4238affabda67310a9a3e11154691aab324a29ce8dea5002e9b"
+  },
+  "firstFormalSnapshot": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-role-name-first-formal-snapshot.json",
+    "sha256": "faca53c4ea311080b030da2b1d333162c365a4a4de822ddd634b9d53d9d5fa9d"
+  },
+  "roleNamePrecision": "Root非作者实读发现Order Prince正式名为定序王子；只改该头一词，完整桥503typed/100arrays/594叶/两raw同，另80源及全部原检查同SHA，所有heads不复。"
+}

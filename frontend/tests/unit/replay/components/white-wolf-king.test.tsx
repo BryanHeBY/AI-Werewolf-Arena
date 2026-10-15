@@ -1,9 +1,6 @@
 /**
- * Unit component tests for white wolf king replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试用手写复盘验证白狼王自爆画面。输入为目标／明确不带人的两语事实；
+ * 输出以字面死亡数组和字幕检查同一事实的死亡效果、纯帧／markup 及原输入不变，不执行自爆或死亡结算。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

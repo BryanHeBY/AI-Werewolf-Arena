@@ -1,9 +1,6 @@
 /**
- * Unit projection tests for pure white archive.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 单元投影测试验证纯白之女／狼巫归档；输入为 God、checkpoint 和十二份玩家档。
+ * 输出比对终局生命／胜者及每位仅见本人查验，归档对照与原每人次数断言分别保留；只读取 fixture，不执行后端查验或重新生成预期。
  */
 import { expect, test } from "bun:test";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";

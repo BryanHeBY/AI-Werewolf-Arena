@@ -1,9 +1,6 @@
 /**
- * Unit component tests for dreamer replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试用手写逐事件复盘验证摄梦人保护、落空枪击和匿名追加死亡。
+ * 输入为固定角色／事件和两语帧号；输出按字面死亡数组核对字幕、纯帧和静态 markup，保原数据不变，不执行保护或死亡规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

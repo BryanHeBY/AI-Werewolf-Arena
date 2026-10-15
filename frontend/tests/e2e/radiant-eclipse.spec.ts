@@ -1,8 +1,6 @@
 /**
- * Browser integration tests seek and rewind actual Radiant Eclipse replay
- * fixtures for borrowing, potion, restoration and linked-death outcomes in both
- * locales. Archive events and literal frame assertions check night disclosure,
- * seat changes and terminal winners without executing the recorded mechanics.
+ * 浏览器集成测试负责正向跳转并回看光蚀借用、药水、归还及连带死亡的两语归档。
+ * 输入为 replay/checkpoint；输出按事件前缀和原字面边界检查夜报、席位、警徽和终局，不执行记录中的规则。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

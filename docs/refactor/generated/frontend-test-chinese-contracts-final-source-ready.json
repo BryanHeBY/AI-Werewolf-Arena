@@ -1,0 +1,377 @@
+{
+  "baseCommit": "15424a8426ca0e689e039a3b9d9240dc05c21fcf",
+  "before": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-before.json",
+    "sha256": "716f40d173be6371077affcec9b651af530e1c61f22baaa825381a0a2c3bc235"
+  },
+  "edits": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-edits.json",
+    "sha256": "187fd33eacdbb3fd35435230ec8131c655301b36309f99ec922a4079c6ee41df"
+  },
+  "source": [
+    {
+      "path": "frontend/tests/e2e/demon-hunter.spec.ts",
+      "sha256": "6800fb4da75ade2acfd1e4badd450481b3dff76d4d0a6937b05d5e0a587b81f9"
+    },
+    {
+      "path": "frontend/tests/e2e/evil-knight.spec.ts",
+      "sha256": "3bfbf7697df468748b1c21809b20e4ea8daf99748f14b1b0885942693b005611"
+    },
+    {
+      "path": "frontend/tests/e2e/magician.spec.ts",
+      "sha256": "152e2aaacbe0acb610a58cfbd0be259600f573fac802a9d3f7f27c89666553a0"
+    },
+    {
+      "path": "frontend/tests/e2e/mist-raven-badge.spec.ts",
+      "sha256": "41c4775989f209b06f154531ca3ecdf1ad4a9b6b51ffdd01ce87c4f04730c0f9"
+    },
+    {
+      "path": "frontend/tests/e2e/mist-raven-private.spec.ts",
+      "sha256": "955df2c9a6a2c2cafab8fa7688738f66c631728bc634ed564e7ab8a257f89cd7"
+    },
+    {
+      "path": "frontend/tests/e2e/mist-raven.spec.ts",
+      "sha256": "799740a54a0b48db7f7847df99eeb4294339d8783f6036cc5c163df48e607828"
+    },
+    {
+      "path": "frontend/tests/e2e/nightmare.spec.ts",
+      "sha256": "eef209582d74d633ad2704223edd22cf75fdb2331fd2093c3a5a7c7a4e48874c"
+    },
+    {
+      "path": "frontend/tests/e2e/noble-secret-body.spec.ts",
+      "sha256": "cc2cd16a6dad94ea84c081fec982e9ef7699f05a2fe9979a3e4177aa8a0cd6b0"
+    },
+    {
+      "path": "frontend/tests/e2e/offline-replay.spec.ts",
+      "sha256": "b79a1abb8db53e16f267de994730deb02e9e1b49817c680cf05a3db4b064c655"
+    },
+    {
+      "path": "frontend/tests/e2e/order-prince.spec.ts",
+      "sha256": "128d1e6f49b38a1acd7b1784a6db0e0ffda215028de1923c012dbd5cdb0d8998"
+    },
+    {
+      "path": "frontend/tests/e2e/pure-white.spec.ts",
+      "sha256": "3ba17f5ca542f43c130a72268251ddf2f095fd27c048eda9bc7ea8f34d2c5288"
+    },
+    {
+      "path": "frontend/tests/e2e/radiant-eclipse-aborted.spec.ts",
+      "sha256": "58b96d9d81c82dcb76369831d1a3d940c175bf200cf8fddde14b8382aef38bd6"
+    },
+    {
+      "path": "frontend/tests/e2e/radiant-eclipse-private.spec.ts",
+      "sha256": "a3e46a0aac26f32a945c566b05276c60131647f06618a6021f5f2ced8e0143a4"
+    },
+    {
+      "path": "frontend/tests/e2e/radiant-eclipse.spec.ts",
+      "sha256": "1c1f988722752246e8ea687431d708b5e8756964a99a3ef39eaaad1866edcb45"
+    },
+    {
+      "path": "frontend/tests/e2e/red-moon.spec.ts",
+      "sha256": "e23c3d42cf0015592641fde475bf0bc36e99a6b01ae843207e8c1e0d1325b3d8"
+    },
+    {
+      "path": "frontend/tests/e2e/scholar-mentor.spec.ts",
+      "sha256": "8b45f31364720845df718073ecc79278e94191f6148ff37627b555b00840bfe0"
+    },
+    {
+      "path": "frontend/tests/e2e/time-consort.spec.ts",
+      "sha256": "25fb0a7e34f45a7bc881a70402a63e8d4dde75692fde1d7c8b44d5e323062685"
+    },
+    {
+      "path": "frontend/tests/e2e/trickster.spec.ts",
+      "sha256": "47e7d30a965d354e7a292a1f02cf6ae23798ff9c20afd4d9b0d709d26d81a6c5"
+    },
+    {
+      "path": "frontend/tests/e2e/wolf-king-day.spec.ts",
+      "sha256": "b1017859c582c0299e544056ff3fd950451a0ee46dc09dd38b057b875a149bcc"
+    },
+    {
+      "path": "frontend/tests/e2e/wolf-sorcerer.spec.ts",
+      "sha256": "0f796cb63bdc7c55e641b068ac79f87aa2a09021ae9a30c4500fa6dc3d37238c"
+    },
+    {
+      "path": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "sha256": "86c34ebd9574cc65b7fd07f070652fb0e4691d9c8463ec77ab2c1c5a001063d5"
+    },
+    {
+      "path": "frontend/tests/integration/cli/replay-input.test.ts",
+      "sha256": "dfeaa63af064e0e0298f638a941a0db51183dc7442272e1094348b1d98bdf589"
+    },
+    {
+      "path": "frontend/tests/integration/rendering/render-replay.test.ts",
+      "sha256": "a452b289e89d0be9ad9004fbc39ead038b6e574d1b67763a2de263c77a98bcb3"
+    },
+    {
+      "path": "frontend/tests/support/animal-replay.ts",
+      "sha256": "0f082bb518f8c92d6bec7e22846939753722d5ddeb2af97a54b0be42e5e1a16e"
+    },
+    {
+      "path": "frontend/tests/support/fixtures/manifest.ts",
+      "sha256": "664501b9b65e020c53934af8a688725e7e5f0ba60ada494caea2fddb0e2e7ecc"
+    },
+    {
+      "path": "frontend/tests/support/fragrant-replay.ts",
+      "sha256": "d4e5db08b9ba88bedc8c93d93a9690e16bf0765bca96402b396bfc635ce5e253"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/animal-dream-archive.test.tsx",
+      "sha256": "82d2c2e60b49d708f60c0d4340daa2f41d38795dc856027cac771708c6e8f24f"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/bear.test.tsx",
+      "sha256": "4bc5642e11795400a185394bd98d8bacc519f798552e61d2aeb7901ce5e3604d"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/cupid-display.test.tsx",
+      "sha256": "389fc90c573139b4743a050a251972ab5e85a8ae8195bcc3df2ef8eda53c6e46"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/cursed-fox-display.test.tsx",
+      "sha256": "39a58cd7f7366ac4f1a18eac4647fd60f0ba13d009cbfc267aa0bb3bb2296e84"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/debater-archive.test.tsx",
+      "sha256": "e4124dc1e992627090a9cf9c10f64f9d40b9dcf1788f7ef14af071c7fd71e318"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/demon-hunter-archive.test.tsx",
+      "sha256": "17f1e83c092f0a0e3c43dcb8b5540eff763c007cafe16804678d2d03a0f64ee5"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/dreamer.test.tsx",
+      "sha256": "1fbc52c6f93b18d898017ca10798bda72936c286f795762abee7c64772960cfa"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/evil-knight.test.tsx",
+      "sha256": "e05b66b793d5b76e809c3368de3b53eb05dc07cdd434820dc9d94e670ca02872"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/fragrant-pair-seer-archive.test.tsx",
+      "sha256": "faaec78800b2425db3097486294c3887df50536b1c0ecfd1f7abd1ed87046add"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/gargoyle.test.tsx",
+      "sha256": "49b71f6b1500ca85896d1b3278ae94ee0119fe3cb7ad8e26b7e2a469da43672c"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/gift-presentation.test.tsx",
+      "sha256": "93509604f36fb661d24888236f5ba630d86c777e33d06a3cc42db3d8392a2e5e"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/gravekeeper.test.tsx",
+      "sha256": "313d06042babcd773b888983d19d36dfa13d4a3277732e1c041d69250ab7828f"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/hidden-wolf.test.tsx",
+      "sha256": "071ab7ab451a1087c1412c3a40381e34b76df7e2653bcf1f4d8df6596c12f10b"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/hybrid.test.tsx",
+      "sha256": "bc82db9e09452702c5e273b9d43ea0bab7d32dbdb634bd7c4f6eb2ca279c293a"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/knight.test.tsx",
+      "sha256": "20ae1802423af866e1e3a47e80798b18bcc6b8101ac901cad248deada3b8f71d"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/lonely-girl-archive.test.tsx",
+      "sha256": "c246376fb272066255abc6f50661b46f58741c88499b26f54325c58b171a05ed"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/mechanical-wolf.test.tsx",
+      "sha256": "7303597132df173f5731d6c6c9e2c5fc66be148778df1b00a33a9be55076aa65"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/miracle-merchant.test.tsx",
+      "sha256": "311d125e78e4af052570bcda5321f185c55485fece3c4be2bb22aa67d081df1e"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/mirror-girl.test.tsx",
+      "sha256": "de94e49caada59abd4d5c41cea63228f460ce9cd0531c0b112133c21fda0dd17"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/noble-secret-body-archive.test.tsx",
+      "sha256": "d4251510b871e05fda1cf50f8e54432bbc1b63c498af7c92474777f71472ca14"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/player-shot.test.tsx",
+      "sha256": "3baf7054aca5364209ef4c009134801111f19cd698d75da9130d86a8eed92dca"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/psychic.test.tsx",
+      "sha256": "0d829cab417125da14bf3616273fbc626fee830f6fe408da2005ba8528888ed0"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/public-death-policies.test.tsx",
+      "sha256": "96d9219eb03670b708676efc81367ad6f3f3fca94993c8a890a800ff13bd4613"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/pure-white.test.tsx",
+      "sha256": "517abc35e11f5e9e7136ebf388e9384852218f92cfe2e0666ff039fbc1e41e3f"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/radiant-eclipse-archive.test.tsx",
+      "sha256": "8782579023063b00946b96c08d731460369f93293b595e6f9920e8da6eebd014"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/replay-display.test.tsx",
+      "sha256": "4550e184088c10d758e17560695446f92b8341a755e7ba7e595ccbab5322ca27"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/shapeshifter-archive.test.tsx",
+      "sha256": "9b33239c0ed3e0e35375ae9eefe0bf09ee7e100efc8db1cf2969d7d1828bdec9"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/thief-archive.test.tsx",
+      "sha256": "c173023ff3f0c1708830f285c76baf7e0e983f62dc74426c2b69b32eb77eea39"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wall-archive.test.tsx",
+      "sha256": "6710c33e2da874dccf60ab86441c558944c2e91a2da0362eee79107280f5ad25"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/white-wolf-king.test.tsx",
+      "sha256": "89d1f0158020a30a90c4ed62965734af924597407fb3ef0ce0557833b047b2c3"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wild-child-archive.test.tsx",
+      "sha256": "a21849713224b32bc9adbfd144c6ff900d778640f1cf266c6358c5f36c48ad9d"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wolf-beauty.test.tsx",
+      "sha256": "21d942f97fef0d1ad71126a91fab62d993547f8e9fe81c38f48c71b8670fb219"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/wolf-king.test.tsx",
+      "sha256": "b481be34bf2b3d22f07b4b89e734a6dbf17adc1d3e97324292e8ab585b082ec3"
+    },
+    {
+      "path": "frontend/tests/unit/replay/data/offline-replay.test.ts",
+      "sha256": "6de6ff128f2e29c08b63bd11912b7d621b37ca424f3cf9cf37413ac984868422"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/debater-display.test.ts",
+      "sha256": "9d1ecb74eafc2ba0f11e9093091e3002a133434d9f1e285b4401e3d6de684c4b"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/magician-facts.test.ts",
+      "sha256": "aa7a1358cca3592a23524596c24dede8f3dc662f43d06e78315180bc79e3f224"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/nightmare-facts.test.ts",
+      "sha256": "3590cecf60793b0d4bfcd3dc926f8d19025818d592fbc273b0b4c3e3588d3f43"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/noble-sheriff-summary.test.ts",
+      "sha256": "953209c1e4929b48b009cc857f2ba532b8c66ade29e903ec027305f07e7a351e"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/noble-summary-descriptors.test.ts",
+      "sha256": "e7379070d5f0dfc9132db440526b3e5f9e42a8dea1f83b45edea37d3fc9aed98"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/red-moon-facts.test.ts",
+      "sha256": "a4d17720b65829fb11bad876c3d3774ecefcc8a788b3618cec94a382393863e6"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/replay-event-reader.test.ts",
+      "sha256": "5d1df0a94facc74538ba348778144672535ba21d53182d7e4342ec25d2ead0d2"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/scholar-mentor-events.test.ts",
+      "sha256": "78911992769011660cde54e3fc0c506c0d0e3db7f9c5e320f41347afb22bf3df"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/shapeshifter-display.test.ts",
+      "sha256": "ba220488d5abc07d9deabc8b4e6b513652f92fa5da99e59603c42fe470f562fc"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/thief-display.test.ts",
+      "sha256": "3c7797088639778c1ede9505a68f2431c44c4624f9a2b7647af9755aa744d338"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/trickster-facts.test.ts",
+      "sha256": "626e17e396b89873f39660e865d3911bdb5352dd73018f4a557b0164c7c79b15"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/wall-display.test.ts",
+      "sha256": "3d31828254c4db51dccb2656dbade3761bca489a8695d4a7694237598b77faea"
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/wolf-sorcerer-events.test.ts",
+      "sha256": "8e7c937de6bf2f71f70daba66db9c99a7434eb29378f0a5fc1091b00891f2190"
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/fragrant-link-causality.test.ts",
+      "sha256": "fc012fddcb53265d857c6614ce63dc4eb69850abda6ceaf839a3cbca3219a223"
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/mist-raven-literal.test.ts",
+      "sha256": "4910f578dee21fe760050b378fd5f777f1f7e0a14d892d4e0773933fc69cc688"
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/noble-badge-provenance.test.ts",
+      "sha256": "3b2f5e367666cde784571b62d28ffc2d5ae065a3aa34ce80210f0cfe6d5eba17"
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/pure-white-archive.test.ts",
+      "sha256": "7cd2963240f43946d3606fb687aa6197624fe1f61bc6711188474bbc03e305a7"
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/radiant-private-views.test.ts",
+      "sha256": "9c45929a712caa28cb1e6ab6683fc4c1a9b09754b55bb9ea1ada9d50953ccff8"
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/replay-presentation.test.ts",
+      "sha256": "a9543777c385ee661306f5c082a3b683639fa345466d279ddefcf522799fc6e0"
+    },
+    {
+      "path": "frontend/tests/unit/replay/projection/replay-projection.test.ts",
+      "sha256": "a109099f7a3ed6975a73841f83594ef76def59b5e8243feaae115926f6cdc0cb"
+    },
+    {
+      "path": "frontend/playwright.config.ts",
+      "sha256": "878540e9905ff0f7b8ac363bf06da86cb5772b89b45ab30f70b2185730f6146d"
+    }
+  ],
+  "controls": [
+    {
+      "path": "frontend/src/replay/replay-projection.ts",
+      "sha256": "261ebde1c4d3cfc031e7d00189c144b14c95f9d2822b806be2ecc0fac38caa24"
+    },
+    {
+      "path": "frontend/src/replay/replay-frame.ts",
+      "sha256": "a35a3c11c3fe647f64087f21368184c38c644f63993813ab0def5b0325192ef6"
+    },
+    {
+      "path": "frontend/src/replay/replay-event-reader.ts",
+      "sha256": "ea1689ef8b41ec5486df1db00a2d4bf427b374a446a86b22fd19a627775655cb"
+    },
+    {
+      "path": "frontend/src/replay/ReplayComposition.tsx",
+      "sha256": "53d7067c6b68f6fe491b3a89790238841d174a4fcbfd669ccd2d9375c73b0250"
+    }
+  ],
+  "checksRun": {
+    "firstWholeProof": 0,
+    "firstHeads": 1,
+    "followupPrecision": "not run at final-ready capture"
+  },
+  "limits": [
+    "首次ready及94精确编辑/原proof和头输出字节保持；末只6头/6精确编辑。",
+    "末已读首执行结果，不沿用首ready checksRun=false为当前事实；未运行types/业务/全gate，后继桥/六失败头由Root首执行。",
+    "全部title/assert/fixture/字符串/整条指令原样；其它75源同首ready。"
+  ],
+  "firstSourceReady": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-source-ready.json",
+    "sha256": "3fb9b8306a3ac9651fc60efe99d1cf3f0de76a8a926911b09991178bb7df2ec6"
+  },
+  "headPrecisionBefore": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-head-precision-before.json",
+    "sha256": "7f784bb00f43c2733689edef489ca68229bea76162569d8b137b0d50aabce568"
+  },
+  "headPrecisionEdits": {
+    "path": "docs/refactor/generated/frontend-test-chinese-contracts-head-precision-edits.json",
+    "sha256": "d20eff1ffa921b14525e446441715bcbd2a65cf0459979f4751739aae297e490"
+  }
+}

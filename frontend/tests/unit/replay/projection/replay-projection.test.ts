@@ -1,9 +1,6 @@
 /**
- * Unit tests verify event-prefix seat, life and public-state projection.
- * Input: literal original rosters, chronological event prefixes and cursor positions.
- * Output: the original player snapshot and state-boundary assertions.
- * Handwritten expected players and state transitions are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证按事件前缀投影席位、生命和公共状态。输入为手写原始名单、按序事件与游标；
+ * 输出以独立玩家／状态边界预期检查初始警长、徽章销毁、自爆和枪击，不从最终名单倒推历史，不运行游戏或生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";

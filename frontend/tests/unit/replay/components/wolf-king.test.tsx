@@ -1,9 +1,6 @@
 /**
- * Unit component tests for wolf king replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试用手写狼王→猎人→终局链验证展示。输入为固定角色、事件前缀和两语帧号；
+ * 输出以独立字幕、死亡数组和角色预期核对不同枪击及纯帧／markup，原数据不变，不执行死亡 hook 或真实判胜。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

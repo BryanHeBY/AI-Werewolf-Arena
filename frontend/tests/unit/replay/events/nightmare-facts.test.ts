@@ -1,9 +1,6 @@
 /**
- * Unit tests verify nightmare replay fact acceptance and atomic effects.
- * Input: canonical God/player payloads, malformed fields and event envelopes.
- * Output: the original canonical fact, rejection and effect assertions.
- * Handwritten field and no-partial-effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证噩梦之影完整／本人事实的接受与包络一致性。输入为手写 God／玩家 payload、畸形字段和昼夜／日期；
+ * 输出按独立有效／拒绝预期核对规范读取，不保留部分效果。原 case 表不变，不执行游戏或重新生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";

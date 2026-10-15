@@ -1,8 +1,7 @@
 /**
- * Browser integration tests render actual Demon Hunter God and owner-view
- * fixtures across board sizes, win policies and locales. Archive/checkpoint
- * facts and literal winner assertions check choice timing, hidden identities
- * and the terminal Hunter death chain without executing a duel or rule engine.
+ * 浏览器集成测试负责读取猎魔人不同人数、胜利政策和语言的 God／本人归档。
+ * 输入为既有 replay/checkpoint；输出检查选择时点的存活席位、他人身份遮蔽及终局猎人追加死亡链。
+ * 字面胜者预期与归档对照分别保留；浏览器不执行决斗或游戏规则。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

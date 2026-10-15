@@ -1,9 +1,6 @@
 /**
- * Unit component tests for mirror girl replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证魔镜少女跳过、目标耗尽、具体报告与警徽链归档。
+ * 输入为真实 fixture 和两语帧号；输出以手写报告／席位／胜者预期检查查验不杀人、死亡与警徽随后独立发表，另核静态 markup，不运行查验规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

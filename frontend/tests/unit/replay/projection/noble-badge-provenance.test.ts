@@ -1,9 +1,6 @@
 /**
- * Unit projection tests for noble badge provenance.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 单元投影测试验证普通玩家归档的公开身体翻牌及警徽来源。输入为真实后端玩家档、公开席位资料和帧号；
+ * 输出按字面未知身份／存活／持徽预期核对翻牌仅在公开事实处可见及倒看恢复，不向私有电影输入 God 事件，不执行游戏。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { test, expect } from "bun:test";
@@ -11,8 +8,8 @@ import { readFileSync } from "node:fs";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { createReplayRenderInput, buildReplayFrame } from "../../../../src/replay/replay-frame";
 
-// Actual backend-exported viewer archive; no God event or unmasked role is fed
-// into the private movie. The God roster supplies only public seat/name fields.
+// 使用真实后端导出的玩家档；私有电影不输入 God 事件或未遮蔽角色，
+// God 名单只提供公开席位／姓名字段。
 for (const locale of ["en", "zh-CN"] as const) {
   test(`actual villager movie reveals the live Body only after public fact/${locale}`, () => {
     

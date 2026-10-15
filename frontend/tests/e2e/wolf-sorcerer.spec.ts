@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render recorded Wolf Sorcerer overlap, cancellation
- * and disjoint target fixtures in both locales. Archived captions and literal
- * seat assertions check preserved identities, actual deaths and terminal
- * winners; target composition remains outside this replay test.
+ * 浏览器集成测试验证狼术师重叠、取消和分离目标的两语归档。
+ * 输入为原事件及 checkpoint；输出以字幕对照和字面席位预期核对身份保留、真实死亡与终局，不在测试组合目标效果。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

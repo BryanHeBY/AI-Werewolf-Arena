@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render recorded Scholar Mentor bonus and conflict
- * fixtures in both locales. Archive events and literal frame assertions check
- * that bonuses preserve seats and same-good or both-wolf conflicts stay pending
- * until dawn. These tests play settled inputs without choosing a mentor.
+ * 浏览器集成测试验证学者／导师加成和冲突的两语归档。输入为已结算事件和 checkpoint；
+ * 输出检查加成不提前改变席位、同一好人或双狼冲突直到黎明才死亡，字面人数与目标预期保留，不在测试选择导师。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";

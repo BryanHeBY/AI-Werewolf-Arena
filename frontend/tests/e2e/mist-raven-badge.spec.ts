@@ -1,8 +1,6 @@
 /**
- * Browser integration tests seek and rewind a recorded Mist Raven badge chain
- * in both locales. Literal expected badge holders and archived event captions
- * check each handoff frame and the absence of premature winners; no badge
- * transfer or game rule is performed by this test.
+ * 浏览器集成测试负责正向跳转并回看雾鸦板子的警徽链。输入为两语归档事件；
+ * 输出按手写持徽者／存活预期检查每次移交和无提前胜者，字幕沿现行展示函数对照；测试不实际移交警徽。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

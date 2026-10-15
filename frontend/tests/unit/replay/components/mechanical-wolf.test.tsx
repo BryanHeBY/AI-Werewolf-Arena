@@ -1,9 +1,6 @@
 /**
- * Unit component tests for mechanical wolf replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证机械狼学习、反毒、守护失败和枪击归档。输入为真实 fixture、两语及畸形字段／getter；
+ * 输出以字面事实、死亡／胜者名单检查选择与真实死亡分离、原角色保留及纯帧／markup，不运行学习、反射或模型。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

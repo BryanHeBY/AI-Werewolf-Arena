@@ -1,8 +1,6 @@
 /**
- * Browser integration tests seek and rewind recorded Wolf King day-gun fixtures
- * across original/exchanged mapping, night/exile origin and both locales.
- * Archive events and literal seat assertions check each shot frame and winner
- * timing without executing a death hook or changing the recorded policy.
+ * 浏览器集成测试负责跳转并倒看狼王白天开枪归档，覆盖原目标／换位目标、夜间／放逐来源和两语。
+ * 输入为原事件及 checkpoint；输出按原席位预期核对各枪击帧和胜者时点，不执行死亡 hook 或更换录制政策。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

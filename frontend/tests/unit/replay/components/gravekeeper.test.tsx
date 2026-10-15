@@ -1,9 +1,6 @@
 /**
- * Unit component tests for gravekeeper replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证守墓人手写放逐／反馈复盘的两语展示。输入为三种阵营标签和畸形反馈；
+ * 输出以独立字面死亡席位／字幕预期核对被动知识不杀人、严格拒绝及纯帧／markup，保原数据不变，不执行真实放逐。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

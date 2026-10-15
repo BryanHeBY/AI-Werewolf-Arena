@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render recorded Trickster mapped, cancelled and
- * PK exile fixtures in both locales. Archived events and literal seat assertions
- * check actual exile targets, dead-target misses and terminal winners; replay
- * seeking does not perform target mapping or vote settlement.
+ * 浏览器集成测试验证诡术师映射、取消和 PK 放逐的两语归档。
+ * 输入为原事件与 checkpoint；输出检查真实放逐目标、已死目标落空及终局胜者，保留字面席位预期；跳转不执行映射或计票。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

@@ -1,9 +1,6 @@
 /**
- * Unit component tests for evil knight replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证恶夜骑士两语查验和枪政策归档。输入为 replay、checkpoint 及十二份玩家档；
+ * 输出检查查验不提前伤害、本人报告受众、终局席位／胜者及静态帧。字面数量与归档对照分别保留，不运行游戏或模型。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

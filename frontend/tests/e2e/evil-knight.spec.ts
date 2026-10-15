@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render recorded Evil Knight inspection and gun
- * policy fixtures in both locales. Assertions seek the recorded inspection,
- * shot and terminal frames to check labels, living seats and winner timing;
- * these tests consume settled archives without executing a game.
+ * 浏览器集成测试验证恶夜骑士查验和枪政策的两语归档。输入为已结算 replay；
+ * 输出检查查验、枪击及终局帧的字幕、存活席位与胜者时点，预期沿原字面数量和事件顺序，不运行对局。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

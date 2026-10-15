@@ -1,0 +1,32 @@
+{
+  "source": [
+    {
+      "path": "frontend/tests/e2e/mist-raven-private.spec.ts",
+      "sha256": "955df2c9a6a2c2cafab8fa7688738f66c631728bc634ed564e7ab8a257f89cd7"
+    },
+    {
+      "path": "frontend/tests/e2e/radiant-eclipse-private.spec.ts",
+      "sha256": "a3e46a0aac26f32a945c566b05276c60131647f06618a6021f5f2ced8e0143a4"
+    },
+    {
+      "path": "frontend/tests/e2e/red-moon.spec.ts",
+      "sha256": "e23c3d42cf0015592641fde475bf0bc36e99a6b01ae843207e8c1e0d1325b3d8"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/cupid-display.test.tsx",
+      "sha256": "389fc90c573139b4743a050a251972ab5e85a8ae8195bcc3df2ef8eda53c6e46"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/gravekeeper.test.tsx",
+      "sha256": "313d06042babcd773b888983d19d36dfa13d4a3277732e1c041d69250ab7828f"
+    },
+    {
+      "path": "frontend/tests/unit/replay/components/player-shot.test.tsx",
+      "sha256": "3baf7054aca5364209ef4c009134801111f19cd698d75da9130d86a8eed92dca"
+    }
+  ],
+  "documentationPaths": 737,
+  "documentationPathsSha256": "d7244c4c6d92ee838550c7948a7de632e85c7f38bd7d43fa5c35448111a7d9b8",
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

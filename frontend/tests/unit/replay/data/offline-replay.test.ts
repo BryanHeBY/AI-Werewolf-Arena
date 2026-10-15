@@ -1,9 +1,6 @@
 /**
- * Unit data tests for offline replay.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 单元数据测试验证离线复盘加载和历史格式处理。输入为字面有效／畸形元数据、事件序列与固定 legacy 样本；
+ * 输出以原错误、字段和两语字幕预期检查解析、未知原文与旧版本转换。fixture 只是输入来源，不调用 live 对局或重新生成预期。
  */
 import { expect, test } from "bun:test";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";

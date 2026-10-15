@@ -1,9 +1,6 @@
 /**
- * Unit component tests for gift presentation replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证两种赠予来源在时间线和视频中的中性行动阶段。输入为真实赠予归档及字面历史事件变体；
+ * 输出检查 abilityId、原事件／stage 身份、保留提示与字幕一致性，原生行动仍用归档阶段；不改变库存或从 actor 角色猜来源。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -56,7 +53,7 @@ for (const locale of ["zh-CN", "en"] as const)
           />,
         );
         expect(markup).toContain(stage);
-        // Native actions still use the archived stage name rather than guessing from the actor's role.
+        // 原生行动仍使用归档 stage 名，不从 actor 的角色猜测阶段。
         const native: ReplayEvent = {
           ...event,
           payload: { ...event.payload, abilityId: "native:seer" },

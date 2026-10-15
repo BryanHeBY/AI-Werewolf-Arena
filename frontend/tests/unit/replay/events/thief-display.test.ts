@@ -1,9 +1,6 @@
 /**
- * Unit tests verify thief replay fact acceptance and atomic effects.
- * Input: canonical God/player payloads, malformed fields and event envelopes.
- * Output: the original canonical fact, rejection and effect assertions.
- * Handwritten field and no-partial-effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证盗贼初始牌组和身份选择事实。输入为手写 God／玩家 payload、畸形字段与 getter；
+ * 输出以独立身份改变／空效果预期核对原子接受和拒绝，不留下部分身份／死亡效果，不执行发牌或生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";

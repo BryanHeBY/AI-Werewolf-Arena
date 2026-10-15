@@ -1,9 +1,7 @@
 /**
- * Unit component tests for cupid display replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证丘比特关系与阵营胜者的归档展示。输入为四类固定归档及畸形关系事实；
+ * 手写胜者／存活数组是独立预期，输出据此核对终局、死亡与关系区分，并验证拒绝不留部分效果。
+ * 帧／markup 是被测输出，不启动真实对局或模型。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { text } from "@ai-werewolf-arena/game-text";

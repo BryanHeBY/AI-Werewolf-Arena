@@ -1,9 +1,6 @@
 /**
- * Unit component tests for lonely girl archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证孤独少女 God／本人爱慕归档。输入为真实 fixture、两语和事件帧；
+ * 输出检查爱慕不改原角色阵营、本人视角遮蔽他人，以及终局已死成员的胜者标记。原字段／存活预期与归档对照保留，不执行关系或胜负规则。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

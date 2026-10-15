@@ -1,9 +1,6 @@
 /**
- * Unit tests verify Noble summary descriptor rejection and atomic badge effects.
- * Input: literal vote summaries, invalid tails and repeated publication rows.
- * Output: the original rejection, elected badge and idempotence assertions.
- * Handwritten expected badge effects and public seat state are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证警长汇总的描述符拒绝和原子警徽效果。输入为字面票型、非法尾项和重复发表；
+ * 输出以手写徽章效果／席位预期检查拒绝、当选与幂等，原 case 表不变，不运行选举或重新生成 golden。
  */
 import { expect, test } from "bun:test";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";

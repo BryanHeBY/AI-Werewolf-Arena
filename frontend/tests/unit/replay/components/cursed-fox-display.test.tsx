@@ -1,9 +1,6 @@
 /**
- * Unit component tests for cursed fox display replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证咒狐归档中的个人目标与阵营结局。输入为梦、查验和狼王链 fixture 及两语帧号；
+ * 输出以手写胜者／存活预期检查终局标记和翻译后的目标，另核对纯帧、markup 与原数据不变，不重算游戏结局。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

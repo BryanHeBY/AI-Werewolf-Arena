@@ -1,9 +1,6 @@
 /**
- * Unit component tests for shapeshifter archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证千面人 God／本人选择归档。输入为真实 fixture、两语和事件游标；
+ * 输出检查只在选择事实处改变角色阵营、生命警徽不变且玩家档不暴露他人身份，并核纯帧／markup。原预期与数据保留，不执行身份安装。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";

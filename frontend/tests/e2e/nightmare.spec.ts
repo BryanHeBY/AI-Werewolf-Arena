@@ -1,8 +1,6 @@
 /**
- * Browser integration tests render a recorded Nightmare fear and Hunter-shot
- * fixture in both locales. Archived events and literal seat/winner assertions
- * check that fear does not kill a seat and the terminal shot remains visible;
- * the tests only play and seek the recorded replay.
+ * 浏览器集成测试验证噩梦之影恐惧与猎人开枪的两语归档。
+ * 输入为录制事件；输出以字面席位／胜者预期核对恐惧不直接杀人、终局枪击仍可见，只播放和跳转原复盘。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";

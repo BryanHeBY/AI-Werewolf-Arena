@@ -1,9 +1,6 @@
 /**
- * Unit component tests for pure white replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 单元组件测试验证纯白之女／狼巫的真实查验归档。输入为好人／狼人目标样本和两语帧号；
+ * 输出检查报告只增知识不提前死亡，按字面人数核对终局及已死阵营胜者，并核纯帧／markup 和数据不变，不执行查验规则。
  */
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";

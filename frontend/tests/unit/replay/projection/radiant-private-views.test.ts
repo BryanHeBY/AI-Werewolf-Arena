@@ -1,9 +1,6 @@
 /**
- * Unit projection tests for radiant private views.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 单元投影测试验证光蚀真实玩家归档、私有来源和失败前缀。输入为固定 fixture、手写生命／警徽边界和帧号；
+ * 输出检查授权字段、已死警长移交时点、倒看以及已付失败不伪造夜报／归还／胜者；归档对照与字面预期分开，不恢复对局。
  */
 import { frontendFixtureURL, frontendFixtureArtifacts } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
@@ -49,7 +46,7 @@ test("all 112 real owner archives preserve exact private actor and source facts"
         expect(e.payload).toEqual({ day: entry.day, playerId: view.player_id });
       }
       if (privateByActor.has(e.type) || e.type.startsWith("eclipse_")) {
-        // God-only sourceDisclosed is deliberately omitted from an authorized player grant.
+        // 授权玩家获得的能力事实明确不包含仅 God 可见的 sourceDisclosed。
         if (e.type === "ability_changed")
           expect(Object.hasOwn(e.payload, "sourceDisclosed")).toBe(false);
         expect(
