@@ -1,0 +1,168 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "independentOfAuthor": "/root/preflight_final_review",
+  "baseCommit": "f5ee25e1dc9a04a047c9a063aca4ec27f295e08f",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/cupid.ts",
+      "sha256": "2ed9231d063b03ce39b7ec811bbb196468309a5e22e27e49942a3e883cb65cc0",
+      "bytes": 16761
+    },
+    {
+      "path": "backend/src/verification/reproduction/hybrid.ts",
+      "sha256": "979b8d0af0abbac6da1aa2d882e84d1c4f9b18494a04102b7457011b352220a7",
+      "bytes": 12992
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "01a888c5aef2fada07e5d28e13142e63146eb1b525c5a9acb380f995b3a6e792",
+      "bytes": 3028
+    },
+    {
+      "path": "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+      "sha256": "4f81b3af081f1ec881d378b7d9945e5f05fd4fb5011ab8d93bfba2a06336cb2e",
+      "bytes": 28088
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/cupid-hybrid-reproduction-verifiers-scope-final.json",
+    "sha256": "1c7ff6d29e00704a8f800c206f6be006338893003d14cd66026509f1bd0cf0a2"
+  },
+  "document": {
+    "path": "docs/refactor/cupid-hybrid-reproduction-verifiers.md",
+    "sha256": "9379264c6ea6c55d49991b11a045f8017657d1218cbb94162cb6c19195a2c5df"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/cupid-hybrid-reproduction-verifiers-evidence.json",
+    "sha256": "fcc4b8161bbb864f946aa43418ab83911cbba19f0078d796573c7b7693d24bfe"
+  },
+  "integrity": {
+    "freshSourceHashes": 4,
+    "actualGitBefore": 1,
+    "newGitAbsence": 3,
+    "historicalReferenceGitBefore": 7,
+    "currentImmutableControls": 5,
+    "parallelProducerSamples": 2,
+    "assemblyExactEdits": 4,
+    "causalChangedSources": 3,
+    "causalExactDeltas": 4,
+    "artifactHashes": 41,
+    "mismatches": []
+  },
+  "findings": [],
+  "resolvedFindings": [
+    {
+      "origin": "非作者完整源码静态审查，未执行为红测试",
+      "finding": "任意较早 known 候选匹配会掩盖后继不同 known、null 或无效回复；Hybrid 仅 debit 也不能由任意较早 valid 解释。",
+      "resolution": "按最后一次同族 decision 核对。末 known 必须匹配 CP 的已付配对或目标；末 error/pending 仅由 CP/facts 确定合法数据前缀，不补造回复内容或授权。Hybrid remaining 已写但 choice 尚空只接受末 valid-or-opaque。",
+      "sourceDelta": "两个 owner 三处逻辑替换，unit 新增一个独立两族字面风险声明；装配与原13完整声明/断言不改。",
+      "checks": "Root 唯一新增 a466c2 为1 pass/12 expect/13 filtered；三变根 d0add2/session94620→0b443c 0；75b621 0，3源4delta/6整程序逆输出相同，6actual输出有意不同。"
+    }
+  ],
+  "reviewDimensions": [
+    "完整独立阅读 Cupid/Hybrid 两个数据核验算法、装配和全部原13字面输入；结合原stage、relation、Victory和Trace真实写序审查。value imports 仅中立契约/事实/结果reader，Record仅type，未导入生产World/关系/付款owner作为计算oracle。",
+    "Cupid 两来源政策、配对阵营冻结与真实身份分离、Lovers→remaining→choice→按序Victory→四事实、失败CP前缀、关系事实早于物理死亡、死者胜利成员与有限殉情/枪抑制证据均按实际可录数据核；没有从God事实伪造生命版本或许可。",
+    "Hybrid 的 remaining→choice→Victory→选择事实→归属事实，只有debit的失败前缀、冻结目标Camp与真实Good身份分离，以及City/SlaughterSide/WolfHalf条件顺序按独立字面规则核；原始扩展私态不因当前role被删除。",
+    "装配原16完整调用/首错顺序保持，末追加Cupid然后Hybrid；原公开replay/player reader不接新strict入口。新增strict schema2拒绝政策和sourceHash变化明确，不冒机械等价或历史内部档案兼容。",
+    "末次决定因果修复逐条正演与完整文本核对，新14th包括两族A→B/null/invalid拒绝、末error/pending接纳及Hybrid仅debit null拒绝/error接纳；三个变源完整逆与actual JS差异已读，原13未复跑。",
+    "中文头及重要部分付款/受众/证据限制说明与实际源码一致；opaque仅是序列化证据缺失，不冒授权或候选已记录；生命/ref/退休/lease/逐await游标没有被补造。",
+    "实际f5ee原assembly全文与新增三路径absence独立核明；七历史参考均真Git，其中仅五项为当前immutable controls，两producer阶段只有原Git与后继采样，不冒全传递树固定。",
+    "完整主证明、type-only桥、末causal桥和实际raw/receipts已人工读审；末fresh4、5control、41artifacts及scope/MD/evidence全部纯字节核对0 mismatch，未执行作者程序、测试、类型、头或门禁。"
+  ],
+  "observedChecks": {
+    "executor": "/root",
+    "reviewerExecutedChecks": false,
+    "firstUnit": {
+      "chunk": "d3ed1f",
+      "exitCode": 0,
+      "differentDeclarations": 13,
+      "assertions": 76
+    },
+    "firstHeads": {
+      "chunk": "a533ae",
+      "exitCode": 0,
+      "sourceRoots": 4,
+      "documentationPaths": 727,
+      "diagnostics": 0
+    },
+    "firstProof": {
+      "chunk": "ca3d96",
+      "exitCode": 0,
+      "originalWholeStatements": 16,
+      "assemblyExactEdits": 4,
+      "inverseWholeOutputs": 2
+    },
+    "firstJointTypes": {
+      "launchChunk": "2ced09",
+      "sessionId": 88699,
+      "completionChunk": "dc5601",
+      "exitCode": 2,
+      "diagnostics": 23,
+      "diagnosticScope": "仅两新owner；不称首全绿"
+    },
+    "erasedTypeRepair": {
+      "chunk": "91c958",
+      "exitCode": 0,
+      "wholeTypeEdits": 2,
+      "actualESAndCJSOutputsSame": 4,
+      "scope": "fail变量类型显式化，其他两源字节不改"
+    },
+    "onlyFailedAndChangedTypes": {
+      "launchChunk": "04b7aa",
+      "sessionId": 75119,
+      "completionChunk": "aecef4",
+      "exitCode": 0,
+      "sourceRoots": 3,
+      "fullTenRootsRerun": false
+    },
+    "causalNewUnit": {
+      "chunk": "a466c2",
+      "exitCode": 0,
+      "pass": 1,
+      "assertions": 12,
+      "filtered": 13
+    },
+    "causalChangedTypes": {
+      "launchChunk": "d0add2",
+      "sessionId": 94620,
+      "completionChunk": "0b443c",
+      "exitCode": 0,
+      "sourceRoots": 3
+    },
+    "causalDeltaProof": {
+      "chunk": "75b621",
+      "exitCode": 0,
+      "changedSources": 3,
+      "exactDeltas": 4,
+      "retainedWholeDeclarations": 13,
+      "inverseOutputsSame": 6,
+      "actualOutputsDifferent": 6
+    },
+    "independentUnitTotals": {
+      "differentDeclarations": 14,
+      "assertions": 88,
+      "executions": 14,
+      "twoNonoverlappingRuns": true
+    },
+    "externalTraceIntegration": "另一文件0e7ef1的两族真实Trace partial/error CP 1case/24断言为协同消费证据，不计入本批独立14/88；其此前schema输入红发生在本核验器之前。"
+  },
+  "historicalStagePreservation": {
+    "firstFormalScopeSHA256": "05cd206f17f10c3d2cef2898da94cccb3162e98c81af1f5ac1afbbc9174f9c99",
+    "firstFormalDocumentSHA256": "2384d92fd31f913bf3080e4f82bc014b53b0ace8c75e8733d0ff61b31754573b",
+    "firstFormalEvidenceSHA256": "3048d46ca670bbf4b85bf3f8554dd3821eaf506b26b420b7b05be4958d5fedb0",
+    "firstRootReviewSHA256": "9989f23d932b89a6fb615c4db0f84e053de3210ca028e57bd797b2f4e898e4b1",
+    "finalSnapshotArtifact": {
+      "path": "docs/refactor/generated/cupid-hybrid-reproduction-verifiers-first-approved-metadata-snapshot.json",
+      "sha256": "8bf56b316ff03a5b89b369ed503c4a70a87a885e601c70ac2959a9993e90b7ec"
+    },
+    "originalGreenChecksNotRepeated": true
+  },
+  "limits": [
+    "这是同schema2新增严格拒绝的行为政策，不是只搬owner或全程序行为等价。原public replay/player历史兼容与内部source/lock身份核验仍分别适用。",
+    "纯数据终审只读取源码/Git/冻结metadata与已有输出，并写本独立报告；未运行proof/head/type/test/gate/verifier/生产导入。",
+    "Tape未序列化生命版本、组件引用、执行退休、请求alias/lease或精确事件游标；不声称全部授权、跨族死亡闭包、55机制或P9最终验收完成。",
+    "只记录真实首红与限定后继。首10根类型23诊断保留；末3根成功不代表末全10或全仓重绿。因果finding为静态发现，不伪称运行红。"
+  ]
+}

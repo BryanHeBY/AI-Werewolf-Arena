@@ -1,0 +1,75 @@
+{
+  "approved": true,
+  "role": "author review, not independent approval",
+  "reviewer": "/root/preflight_final_review",
+  "scope": {
+    "path": "docs/refactor/generated/cupid-hybrid-reproduction-verifiers-scope-final.json",
+    "sha256": "1c7ff6d29e00704a8f800c206f6be006338893003d14cd66026509f1bd0cf0a2"
+  },
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/cupid.ts",
+      "sha256": "2ed9231d063b03ce39b7ec811bbb196468309a5e22e27e49942a3e883cb65cc0",
+      "bytes": 16761
+    },
+    {
+      "path": "backend/src/verification/reproduction/hybrid.ts",
+      "sha256": "979b8d0af0abbac6da1aa2d882e84d1c4f9b18494a04102b7457011b352220a7",
+      "bytes": 12992
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "01a888c5aef2fada07e5d28e13142e63146eb1b525c5a9acb380f995b3a6e792",
+      "bytes": 3028
+    },
+    {
+      "path": "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+      "sha256": "4f81b3af081f1ec881d378b7d9945e5f05fd4fb5011ab8d93bfba2a06336cb2e",
+      "bytes": 28088
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/cupid-hybrid-reproduction-verifiers.md",
+    "sha256": "9379264c6ea6c55d49991b11a045f8017657d1218cbb94162cb6c19195a2c5df"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/cupid-hybrid-reproduction-verifiers-evidence.json",
+    "sha256": "fcc4b8161bbb864f946aa43418ab83911cbba19f0078d796573c7b7693d24bfe"
+  },
+  "findingsClosed": [
+    {
+      "kind": "static-precheck",
+      "detail": "opaque settlement丢候选，完整首ready/前态保留。"
+    },
+    {
+      "kind": "first-type-failure",
+      "detail": "首23诊断仅两owner fail未narrow；纯擦除annotation和4actual raw桥关闭。"
+    },
+    {
+      "kind": "independent-static-causal-finding",
+      "detail": "按末同族decision收紧，两owner准入分支＋1新unit；Root75b621完整4delta，新增1/12及3变根type均0，旧13不重。"
+    }
+  ],
+  "checks": {
+    "differentIndependentCases": 14,
+    "successfulIndependentAssertions": 88,
+    "firstTypeExit2": true,
+    "failedAndChanged3RootsExit0": true,
+    "causalChanged3RootsExit0": true,
+    "wholeTenFinalRerun": false,
+    "heads4FirstExit0": true,
+    "mainProofFirstExit0": true,
+    "erasedTypesBridgeFirstExit0": true,
+    "causalDeltaFirstExit0": true,
+    "authorExecutedChecks": false
+  },
+  "limits": [
+    "新strict拒绝不是机械等价；两新算法正确性靠独立字面风险与非作者审，不靠完整原算法逆。",
+    "Root全10首type红保，后继3失败/变更根0，不称首全绿／末全10复跑。",
+    "所有Bun由Root带--no-env-file；没有模型、全门禁、整局/seed矩阵或作者check运行。",
+    "Tape未序列化生命版本/组件ref/墓碑/lease/精确await游标；opaque不是回复或授权证明。",
+    "只有5current immutable controls；2stage在Root并行lease cohort中，只保实际原Git及共同后继来源，不冒全传递树固定。",
+    "首任意known匹配语义经非作者静态finding收紧，3源actual JS确有变化，原13绿与首formal全保；只新增1声明及3变根检查，不冒前后等价。"
+  ]
+}

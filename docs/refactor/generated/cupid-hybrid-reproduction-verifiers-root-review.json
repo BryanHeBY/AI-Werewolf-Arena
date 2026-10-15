@@ -1,0 +1,59 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "f5ee25e1dc9a04a047c9a063aca4ec27f295e08f",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/cupid.ts",
+      "sha256": "2ed9231d063b03ce39b7ec811bbb196468309a5e22e27e49942a3e883cb65cc0",
+      "bytes": 16761
+    },
+    {
+      "path": "backend/src/verification/reproduction/hybrid.ts",
+      "sha256": "979b8d0af0abbac6da1aa2d882e84d1c4f9b18494a04102b7457011b352220a7",
+      "bytes": 12992
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "01a888c5aef2fada07e5d28e13142e63146eb1b525c5a9acb380f995b3a6e792",
+      "bytes": 3028
+    },
+    {
+      "path": "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+      "sha256": "4f81b3af081f1ec881d378b7d9945e5f05fd4fb5011ab8d93bfba2a06336cb2e",
+      "bytes": 28088
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/cupid-hybrid-reproduction-verifiers-scope-final.json",
+    "sha256": "1c7ff6d29e00704a8f800c206f6be006338893003d14cd66026509f1bd0cf0a2"
+  },
+  "document": {
+    "path": "docs/refactor/cupid-hybrid-reproduction-verifiers.md",
+    "sha256": "9379264c6ea6c55d49991b11a045f8017657d1218cbb94162cb6c19195a2c5df"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/cupid-hybrid-reproduction-verifiers-evidence.json",
+    "sha256": "fcc4b8161bbb864f946aa43418ab83911cbba19f0078d796573c7b7693d24bfe"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 1,
+    "controls": 5,
+    "artifactHashes": 41,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "Root全文读两owner和13原字面风险、真实stage/relation/victory/Trace，原装配16整步与首错保，末追加两独立中立owner，World/生产算法不作oracle",
+    "schema2新strict语义拒绝及sourceHash/旧public reader范围明列；两Cupid政策、真实Camp/Victory分离、部分CP、殉情fact在标死前、死者成员与隐藏知识按可录证据核，不补life/ref/逐request cursor",
+    "Root首静态Trace false丢candidate finding和非作者后继known因果finding均完整保前样/首批准snapshot；末decision是唯一提交候选，末known必须匹配，末opaque只证明记录不足，Hybrid仅debit也末valid或opaque",
+    "首13独立76断言/head/mainproof0与first10 type23诊断保，purefail注解四actualraw桥和3failed/changed types0；末新14th a466c2仅1/12/13filtered、3变根d0add2→0b443c及75b621四delta六逆输出首0，原13声明与断言原文保持，actual3JS差异明列",
+    "actualf5ee唯一原Git/new3absence、5不变controls及2producer历史/后继区分，当前4source/末41附件与中文说明真；无green复查/模型/全仓门禁或全部55独立审计完成声称"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

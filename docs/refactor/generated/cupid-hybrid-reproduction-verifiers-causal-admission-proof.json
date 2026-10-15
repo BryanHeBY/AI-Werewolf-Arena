@@ -1,0 +1,199 @@
+{
+  "sourceReadySHA256": "2d339a8ba59703ca7d32b7d03e3da6e200bfaf4d88028e76903c9973eccb5a19",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/cupid.ts",
+      "sha256": "2ed9231d063b03ce39b7ec811bbb196468309a5e22e27e49942a3e883cb65cc0",
+      "bytes": 16761
+    },
+    {
+      "path": "backend/src/verification/reproduction/hybrid.ts",
+      "sha256": "979b8d0af0abbac6da1aa2d882e84d1c4f9b18494a04102b7457011b352220a7",
+      "bytes": 12992
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "01a888c5aef2fada07e5d28e13142e63146eb1b525c5a9acb380f995b3a6e792",
+      "bytes": 3028
+    },
+    {
+      "path": "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+      "sha256": "4f81b3af081f1ec881d378b7d9945e5f05fd4fb5011ab8d93bfba2a06336cb2e",
+      "bytes": 28088
+    }
+  ],
+  "reports": [
+    {
+      "path": "backend/src/verification/reproduction/cupid.ts",
+      "beforeSHA256": "ebf06eb37b899a86067626a2bc96325e7bf9aa8b3a73fb4aca63c8e25130f287",
+      "actualSHA256": "2ed9231d063b03ce39b7ec811bbb196468309a5e22e27e49942a3e883cb65cc0",
+      "exactDeltas": 1,
+      "oldProgram": {
+        "sha256": "e92f12130683e2303cd444f9c4238ab9b3dedba1b1eaaf6dac9fb46cdd16827e",
+        "typedNodes": 3572,
+        "nodeArrays": 402,
+        "leaves": 1882
+      },
+      "actualProgram": {
+        "sha256": "425f98eb2f003e141d8bed89498c10f33c536a5055519a4399d98a5704bc94a0",
+        "typedNodes": 3544,
+        "nodeArrays": 396,
+        "leaves": 1865
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "beforeSHA256": "11ea2c1405050595a074c77433e846c0b33824dc92fc66b7cfc3d06a7414749d",
+          "inverseSHA256": "11ea2c1405050595a074c77433e846c0b33824dc92fc66b7cfc3d06a7414749d",
+          "actualSHA256": "2da2a91e694cb08760291e55abeb31ad7ca4966be4ce9ed9c532b099fd09efc8",
+          "inverseSame": true,
+          "actualSame": false
+        },
+        {
+          "module": 1,
+          "beforeSHA256": "44d57a4ea10a69a1df4a88af1b709f05bbd861015691c44f77ac6e296d36ade8",
+          "inverseSHA256": "44d57a4ea10a69a1df4a88af1b709f05bbd861015691c44f77ac6e296d36ade8",
+          "actualSHA256": "735a0ab3aefa184aae1ef392d57945abe02c00afac5eddeadb07c61189964313",
+          "inverseSame": true,
+          "actualSame": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/verification/reproduction/hybrid.ts",
+      "beforeSHA256": "9b4852849f9ea940a956f4811203870a36950f15ba51d217dd51bfe68e94877e",
+      "actualSHA256": "979b8d0af0abbac6da1aa2d882e84d1c4f9b18494a04102b7457011b352220a7",
+      "exactDeltas": 2,
+      "oldProgram": {
+        "sha256": "d59fbc7294bffdfe6afedb5e427a7fae369ebfba86cfafc928bdc41bdca6d7ff",
+        "typedNodes": 2836,
+        "nodeArrays": 313,
+        "leaves": 1515
+      },
+      "actualProgram": {
+        "sha256": "38ab0325b895146ffdd5fd10b8253dcc0cbf1057b42ab627ad19a617e2adf37b",
+        "typedNodes": 2792,
+        "nodeArrays": 303,
+        "leaves": 1493
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "beforeSHA256": "7c2652c3a23658ea8872ca61d5723cba8c5911b8e66c99c659711cdb8de97ae3",
+          "inverseSHA256": "7c2652c3a23658ea8872ca61d5723cba8c5911b8e66c99c659711cdb8de97ae3",
+          "actualSHA256": "3aa819638bce626385a94de02671f8989a43e628d7c00e8677970aab51bc4d21",
+          "inverseSame": true,
+          "actualSame": false
+        },
+        {
+          "module": 1,
+          "beforeSHA256": "05f52e8179a402054b02506e8dba7c35959ae64880f02547e25cbadcfb21235b",
+          "inverseSHA256": "05f52e8179a402054b02506e8dba7c35959ae64880f02547e25cbadcfb21235b",
+          "actualSHA256": "43a798d335bc7e612d60e6e239aeea035891b4334cf5d4466eae32ab29b3c923",
+          "inverseSame": true,
+          "actualSame": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+      "beforeSHA256": "ec05c2c50af778a225dd9fa673c82794841ccaeccdb434d32b383c57ee699401",
+      "actualSHA256": "4f81b3af081f1ec881d378b7d9945e5f05fd4fb5011ab8d93bfba2a06336cb2e",
+      "exactDeltas": 1,
+      "oldProgram": {
+        "sha256": "595a2da496d38c8ef1b19090eef48d1218b1a98dce71c4c10c7dc91e66b91f28",
+        "typedNodes": 5177,
+        "nodeArrays": 716,
+        "leaves": 2597
+      },
+      "actualProgram": {
+        "sha256": "1fe859e2cf271a23812ca7e30a1419e07a60aba053238ff09464c14d3d5c2b36",
+        "typedNodes": 5601,
+        "nodeArrays": 774,
+        "leaves": 2816
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "beforeSHA256": "e215307034b2b392551f7ffbc0078973ff08374d34f83626d08bca6ca1e5176a",
+          "inverseSHA256": "e215307034b2b392551f7ffbc0078973ff08374d34f83626d08bca6ca1e5176a",
+          "actualSHA256": "965b9a65e8301f2b211daf8f247c4b1696f4efc44d0f3257c67ac5031dfebcad",
+          "inverseSame": true,
+          "actualSame": false
+        },
+        {
+          "module": 1,
+          "beforeSHA256": "ffd59fa5343d7485a812c46a3e55fd77c1b4def7e0e8c2df9314f2a1ba20d8cd",
+          "inverseSHA256": "ffd59fa5343d7485a812c46a3e55fd77c1b4def7e0e8c2df9314f2a1ba20d8cd",
+          "actualSHA256": "e7797697dc8f517493c396498d44ab420b5d3e84a5f7e8d6970528de63314621",
+          "inverseSame": true,
+          "actualSame": false
+        }
+      ]
+    }
+  ],
+  "retainedUnitDeclarations": [
+    {
+      "title": "Cupid: two policies keep mixed members separate from identity and include only declared dead or living winners",
+      "completeDeclarationSHA256": "a685e66984f399b5a20b951369c68c636218f4ab8e8690c79166df3f4307cd53"
+    },
+    {
+      "title": "Cupid: selecting the actor gives both source policies exactly the two declared relationship members",
+      "completeDeclarationSHA256": "c05edee75c7809a31584b73fd213ed6698b349d8e9740dbfe2f708dfe36466c3"
+    },
+    {
+      "title": "Cupid: same-Wolf pair changes membership without changing the independent Cupid's Good identity",
+      "completeDeclarationSHA256": "16e97c7af43019975ded24592a53cf50fdc0145e300dc155843f2fca8a61f511"
+    },
+    {
+      "title": "Cupid: failed checkpoint keeps bound relation, debit, partial ordered membership and partial publication",
+      "completeDeclarationSHA256": "6115fbd9b844c574b548570a6f16909eb4d70d0b37660a7ab0fb276cd839980d"
+    },
+    {
+      "title": "Cupid: pre-commit death fact is not physical death; forged recognition, duplicate death and suppressed gun are rejected",
+      "completeDeclarationSHA256": "dba9737949e42c159d2b24809a62b07a0a45ea6ff542d5468b16010a43e70867"
+    },
+    {
+      "title": "Cupid: retry request contract, private recognition and unrecorded hidden data remain distinct",
+      "completeDeclarationSHA256": "1d0e427173dc04fa6ec24fe0268a7ba49f4d9156787b04c5f4bc7ba7ad6857c4"
+    },
+    {
+      "title": "Hybrid: frozen Wolf membership survives both deaths while role and actual Camp stay Good",
+      "completeDeclarationSHA256": "98e9b363b694ef3a4621eac2cb85a2b0d1f2b0530b51427decbe75af786ea763"
+    },
+    {
+      "title": "Hybrid: Good target has independent Good affiliation and Wolf-half cannot count the follower as a real wolf",
+      "completeDeclarationSHA256": "9152639d0f3795cf8f0c37869cc6c282330ea06ae386d7e394afe1686f9b5744"
+    },
+    {
+      "title": "Hybrid: failed checkpoint accepts debit-before-choice and install-before-fact without refund",
+      "completeDeclarationSHA256": "c40d4eaa2c0475b1b2c03ab37f5754274b9e716d63b5f73807a5327722155155"
+    },
+    {
+      "title": "Hybrid: foreign target, forged hidden camp, repeated facts and leaked knowledge reject independently",
+      "completeDeclarationSHA256": "1d3d82b8bc205dcd735f328e64cafb2f0047796e63b4c6b88abbfb700e3d930b"
+    },
+    {
+      "title": "strict assembly adds rejection after the original sixteen; historical public reader remains separate",
+      "completeDeclarationSHA256": "60241cb536951209fd8955cd9b6dacec43149325e98fb26bb3db48a07f8d05a2"
+    },
+    {
+      "title": "Cupid: opaque settlement error or pending preserves the literal paid prefix without inventing a recorded reply",
+      "completeDeclarationSHA256": "71c6902a440078a2d859e889f28690346a4239a5298ce772ddde1d6533bae54c"
+    },
+    {
+      "title": "Hybrid: opaque settlement error or pending preserves consumed selection while recorded-only conflicts still reject",
+      "completeDeclarationSHA256": "d23363d1e3344ff039d63e14cd36ffb4c1f24f289eac69a128aa9d7d36d3701f"
+    }
+  ],
+  "assemblyUnchanged": {
+    "path": "backend/src/verification/reproduction/assembly.ts",
+    "sha256": "01a888c5aef2fada07e5d28e13142e63146eb1b525c5a9acb380f995b3a6e792",
+    "bytes": 3028
+  },
+  "limits": [
+    "独立审查静态因果finding修正，真实拒绝面与单元JS有意改变；不称actual raw同或算法等价。",
+    "只当前3源增量完整正逆及6inverse raw；原13完整声明/断言逐字不改，未运行它们。",
+    "原unit13/76、mainproof/heads/type-only桥仍各首采样；本工具不加载verifier或生产、不运行类型/行为/头。"
+  ]
+}

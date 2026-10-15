@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts:
+(pass) last family decision alone can explain payment; early matching candidates cannot hide later known null or invalid replies [5.85ms]
+
+ 1 pass
+ 13 filtered out
+ 0 fail
+ 12 expect() calls
+Ran 1 test across 1 file. [93.00ms]

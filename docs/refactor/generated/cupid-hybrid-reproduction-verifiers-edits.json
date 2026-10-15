@@ -1,0 +1,37 @@
+{
+  "path": "backend/src/verification/reproduction/assembly.ts",
+  "edits": [
+    {
+      "label": "retained-16-head",
+      "before": " * 输出为原拒绝或全部审计通过，16步调用和第一失败保持原顺序，不提前捕获可替换函数数组。",
+      "after": " * 输出为原拒绝或全部审计通过，既有16步及其第一失败保持原顺序，不提前捕获可替换函数数组。",
+      "count": 1
+    },
+    {
+      "label": "strict-policy-head",
+      "before": " * 本入口不导入 World、生产结算或 checkpoint 写方，不授予行动权限，不改变归档／规则版本准入。",
+      "after": " * 末尾丘比特／混血儿新增严格语义拒绝；schema 2 结构不变，公开 replay／player reader 不进入本装配。\n * 本入口不导入 World、生产结算或 checkpoint 写方，不授予行动权限；精确构建相容仍由执行器核对。",
+      "count": 1
+    },
+    {
+      "label": "append-value-bindings",
+      "before": "import { validateOrderPrinceRecord } from \"./order-prince/validate\";",
+      "after": "import { validateOrderPrinceRecord } from \"./order-prince/validate\";\nimport { validateCupidRecord } from \"./cupid\";\nimport { validateHybridRecord } from \"./hybrid\";",
+      "count": 1
+    },
+    {
+      "label": "append-two-ledgers",
+      "before": "  validateOrderPrinceRecord(result);\n}",
+      "after": "  validateOrderPrinceRecord(result);\n  // 只在原16步之后追加；旧严格 malformed 档可能在后续 sourceHash 兼容检查前被新语义拒绝。\n  validateCupidRecord(result);\n  validateHybridRecord(result);\n}",
+      "count": 1
+    }
+  ],
+  "newSource": [
+    "backend/src/verification/reproduction/cupid.ts",
+    "backend/src/verification/reproduction/hybrid.ts",
+    "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts"
+  ],
+  "limits": [
+    "两新核验算法是新增strict拒绝政策，不声称与原无verifier行为等价；旧assembly16步骤另作完整保留证明。"
+  ]
+}
