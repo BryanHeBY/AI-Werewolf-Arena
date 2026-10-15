@@ -5,7 +5,7 @@
  */
 const path = require("node:path");
 const tsParser = require("@typescript-eslint/parser");
-const { importBoundaryViolation } = require("./scripts/import_boundaries.cjs");
+const { importBoundaryViolation } = require("./scripts/import-boundaries.cjs");
 
 module.exports = [
   {

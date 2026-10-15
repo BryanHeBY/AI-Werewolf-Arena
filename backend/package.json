@@ -9,7 +9,7 @@
     "check:tests": "tsc -p tsconfig.tests.json --noEmit",
     "test": "bun test --preload ./tests/setup.ts tests",
     "lint:deps": "eslint \"src/**/*.ts\" --max-warnings=0",
-    "lint:boundaries": "bun scripts/check_import_boundaries.mjs",
+    "lint:boundaries": "bun scripts/check-import-boundaries.mjs",
     "smoke": "bun src/app/cli/run-game-smoke.ts",
     "release:check": "bun run check && bun run lint:deps && bun run lint:boundaries && bun run lint:i18n && bun run test && bun run smoke",
     "run": "bun src/app/cli/run-game.ts",
@@ -24,7 +24,7 @@
     "config:migrate": "bun src/app/cli/migrate-configs.ts",
     "simulate": "bun src/app/cli/simulate.ts",
     "replay:actions": "bun src/app/cli/replay-actions.ts",
-    "lint:i18n": "bun scripts/check_i18n_literals.mjs",
+    "lint:i18n": "bun scripts/check-i18n-literals.mjs",
     "test:unit": "bun --no-env-file test --preload ./tests/setup.ts tests/unit",
     "test:integration": "bun --no-env-file test --preload ./tests/setup.ts tests/integration",
     "test:scenarios": "bun --no-env-file test --preload ./tests/setup.ts tests/scenarios"

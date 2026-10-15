@@ -1,0 +1,57 @@
+{
+  "baseCommit": "d993b9c7c2bd6308dae1ce9ff4bdffce34c85a55",
+  "executions": [
+    {
+      "launch": "46575d",
+      "exitCode": 0,
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+      "argv": [
+        "env",
+        "-i",
+        "PATH=/usr/bin:/bin",
+        "LANG=C.UTF-8",
+        "TZ=UTC",
+        "TMPDIR=/tmp",
+        "/usr/bin/bun",
+        "--no-env-file",
+        "/tmp/awa-kebab-basename-followup-apply-proof.cjs",
+        "--repo",
+        "/home/hby/dev/AI-Werewolf-Arena",
+        "--base",
+        "d993b9c7c2bd6308dae1ce9ff4bdffce34c85a55",
+        "--proposal",
+        "/tmp/awa-kebab-basename-followup/proposal.json",
+        "--prefix",
+        "docs/refactor/generated/kebab-basename-followup-",
+        "--apply"
+      ],
+      "raw": "docs/refactor/generated/kebab-basename-followup-apply-output.txt"
+    },
+    {
+      "launch": "34e681",
+      "exitCode": 0,
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "argv": [
+        "env",
+        "-i",
+        "PATH=/usr/bin:/bin",
+        "LANG=C.UTF-8",
+        "TZ=UTC",
+        "TMPDIR=/tmp",
+        "/usr/bin/bun",
+        "--no-env-file",
+        "scripts/check-import-boundaries.mjs"
+      ],
+      "raw": "docs/refactor/generated/kebab-basename-followup-boundaries-output.txt"
+    }
+  ],
+  "staticPreflight": "未执行首稿的执行位谓词经非作者发现后仅改为 Git owner 位；首稿全文保存，不伪称产品或检查首红。",
+  "notExecuted": [
+    "工程类型",
+    "业务用例",
+    "Seer历史probe",
+    "i18n门禁",
+    "最终全门禁",
+    "付费模型"
+  ]
+}

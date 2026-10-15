@@ -4,7 +4,7 @@
  */
 import { isLocale } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { replayCommandFailure } from "./cli_error";
+import { replayCommandFailure } from "./cli-error";
 import { existsSync, statSync } from "node:fs";
 import path from "node:path";
 

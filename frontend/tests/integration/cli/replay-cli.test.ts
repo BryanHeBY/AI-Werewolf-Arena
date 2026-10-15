@@ -5,7 +5,7 @@
 import { ReplayLoadError } from "../../../src/replay/offline-replay";
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { replayCommandFailure } from "../../../scripts/cli_error";
+import { replayCommandFailure } from "../../../scripts/cli-error";
 
 async function command(script: string, args: string[]) {
   const child = Bun.spawn(

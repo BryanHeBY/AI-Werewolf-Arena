@@ -9,7 +9,7 @@ import { parseArgs } from "node:util";
 import { mkdtemp, mkdir, readFile, rm, lstat, link } from "node:fs/promises";
 import path from "node:path";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { replayCommandFailure } from "./cli_error";
+import { replayCommandFailure } from "./cli-error";
 import { isLocale } from "@ai-werewolf-arena/game-contract";
 import { resolveReplayInput } from "./replay-dev";
 import { parseOfflineReplayJson } from "../src/replay/offline-replay";

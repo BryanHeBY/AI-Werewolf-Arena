@@ -1,0 +1,224 @@
+{
+  "baseCommit": "d993b9c7c2bd6308dae1ce9ff4bdffce34c85a55",
+  "source": [
+    {
+      "path": "backend/eslint.config.cjs",
+      "sha256": "ca5ceb012a922aff0e5a90163c058d616a055d3c58e39ee3b6818c8b6d9d1c83",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/package.json",
+      "sha256": "faa5fcd8349b10566c22bf6a86874948c8371430ae02aa0af1a759f6fbf48e24",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/scripts/check-i18n-literals.mjs",
+      "sha256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/scripts/check-import-boundaries.mjs",
+      "sha256": "b8437328e569dd576801eda36048d392942a5335ffa8a5678dc6981059eb3058",
+      "mode": "100755"
+    },
+    {
+      "path": "backend/scripts/check-seer-baseline.mjs",
+      "sha256": "a3b06e39d7f36d935c639ca65922726abb6cfa9a56069bc72358a5db3f4a04de",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/scripts/import-boundaries.cjs",
+      "sha256": "11e86f541866957e76636954ee93a807e2ed93d1973d6da53d2a7614ca21d609",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "sha256": "521000886e91954ec534fe61d3c18898adf78b55f2f216292b2ec4961e467fa4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "sha256": "9c6a22a48b9abb672d5715ab76d397b67b139da87bd3da21a4d46fbbb95fcfd4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "sha256": "161cd339e3c41529fbc6f36a13674ca8a9c8a8f0bd5a03ed939535b9d0dbc456",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/scripts/cli-error.ts",
+      "sha256": "81e3dde33c593c9687727684dd0cec39626ec508756b47f8ca0103e856491391",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/scripts/render-replay.ts",
+      "sha256": "c747c48e15a12d09e489f8f4e05726cec8b8740fe45d958deef97c858d917a50",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/scripts/replay-dev.ts",
+      "sha256": "e76f2a5186d347535dfcfef21502d872af287937519139d0c87cf6082d4d118d",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "sha256": "318a0651f5964ecd93cc9f86cd7bd9e73d31061c24db79634b165f82fd16524c",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/error-diagnostic.ts",
+      "sha256": "8cbaa010d75abb4f7069dcf6c3596f75124e8deb41ce6baf83ba900889440902",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/index.ts",
+      "sha256": "00869118858cc28635bbd8383fadb49c7001a1bd32787afa4ae96e1c58b03d63",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/legacy-aliases.ts",
+      "sha256": "2bea8af8c2afae555a95d5d37c715ac6853090287faec3518b5bdb5d719eb814",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/legacy-role-aliases.ts",
+      "sha256": "caa5ac8397157da9de1de8d74d10ab1185bbb9fd5c7854871cadeb9418ab237f",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/player-record.ts",
+      "sha256": "0fca15532062ba70391ae0e3e15e8ee9c60795cc39aaf8574c330a8449d6b45a",
+      "mode": "100644"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/scripts/check_i18n_literals.mjs",
+      "sha256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/scripts/check_import_boundaries.mjs",
+      "sha256": "3d9511366e22514bac74e0b6320b244902ccf4e0fb6515c226b5de7d76a1e813",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/scripts/check_seer_baseline.mjs",
+      "sha256": "a3b06e39d7f36d935c639ca65922726abb6cfa9a56069bc72358a5db3f4a04de",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/scripts/import_boundaries.cjs",
+      "sha256": "11e86f541866957e76636954ee93a807e2ed93d1973d6da53d2a7614ca21d609",
+      "expectedAbsent": true
+    },
+    {
+      "path": "frontend/scripts/cli_error.ts",
+      "sha256": "81e3dde33c593c9687727684dd0cec39626ec508756b47f8ca0103e856491391",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/error_diagnostic.ts",
+      "sha256": "8cbaa010d75abb4f7069dcf6c3596f75124e8deb41ce6baf83ba900889440902",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/legacy_aliases.ts",
+      "sha256": "f4b88762adb0569f8fd1f821c81da2849986cf45312d077b017a1c7d2be4c152",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/legacy_role_aliases.ts",
+      "sha256": "caa5ac8397157da9de1de8d74d10ab1185bbb9fd5c7854871cadeb9418ab237f",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/player_record.ts",
+      "sha256": "e7605adda00437dd2587fbd5a5cd9fefabee8c86d24646a244c7b9e520c97733",
+      "expectedAbsent": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-apply-output.txt",
+      "sha256": "8a562989285c7b8af04cbecf6b59d719001a39c6eabb38b6cd2617de89652ced",
+      "bytes": 325
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-apply-proof.cjs",
+      "sha256": "d9f962226181245e1cbb7983cf0eb5f2f882476deabe2f72414062ab26649881",
+      "bytes": 20591
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-before.json",
+      "sha256": "26762e924a362281e3a2c49456cdac2413b7b2dec457c681c55b6d7f43ba779d",
+      "bytes": 101807
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-boundaries-output.txt",
+      "sha256": "e1d849d1ce0b80b41c07e0ee0db541d9baf3de259f5d5e0b2a14a58b20c4aaad",
+      "bytes": 21
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-helper-first-snapshot.json",
+      "sha256": "d59257350ee6944a5888ffb8b9a869f7305c83dcf06c740fd6493cb1c2a20c24",
+      "bytes": 28278
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-journal.jsonl",
+      "sha256": "d1f2aa5107629b52f1f1566f5dacff51a526b9a4afd2915bbccaf44327dbc651",
+      "bytes": 4073
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-prepared-helper-peer.json",
+      "sha256": "f23f5ca71386559e46d502f11217398e53d5cfdc7340f97c1a833f5c34874087",
+      "bytes": 6059
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-prepared-proposal.json",
+      "sha256": "ad90e9813f9e0b8977593faaabb14a5600ed06ad1a4b79c36576e3dffcaf64d2",
+      "bytes": 194456
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-prepared-route-peer.json",
+      "sha256": "cc70c30dee495b0156a470ccb2f49adcf4e267df8f6f29b7c55667867a513c0d",
+      "bytes": 1586
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-proof.json",
+      "sha256": "9fc8bb16b115ac2ff6df36000843bef83404c17470c9d36f17b7c46a29c3bd30",
+      "bytes": 46082
+    },
+    {
+      "path": "docs/refactor/generated/kebab-basename-followup-receipts.json",
+      "sha256": "7735ad082da07ec1daa23283675e9fb052d39725f20f95215c03fe9d99c72671",
+      "bytes": 1591
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/kebab-basename-followup.md",
+    "sha256": "7f5ae5de53e8c0fd1aaa47395c44b2771dc494b4c0d5d9864eb0eb62f8c8109f"
+  },
+  "summary": {
+    "physicalRenames": 9,
+    "completeInputs": 18,
+    "codePrograms": 17,
+    "packageJSON": 1,
+    "exactEdits": 17,
+    "moduleEdits": 14,
+    "nonModuleEdits": 3,
+    "relativeModuleTargetCorrespondences": 33,
+    "wholeInverseOutputs": 34,
+    "normalizedESNextOutputs": 17,
+    "packageJSONWholeInverse": true
+  },
+  "limits": [
+    "相对模块实际物理目标＋完整 import/export 名字/顺序由整程序归一化核对；不是最终 named declaration 或任意外部动态解析库存。",
+    "JSON两script值与child checker路径单独列证；只有声明的精确非module位置归一化，历史嵌入probe和其它业务/fixture字符串原样。",
+    "生命周期commentCategory正则/新增声明属于Root独立政策批，本helper不改它、不把其结果混入本17片段证明。",
+    "未执行工程类型、业务测试、架构或i18n门禁/模型；编译仅whole transpile与AST比较。",
+    "未知外部deep path、模块URL/缓存/堆栈/sourceHash变化不能冒任意JS反射或whole-cold等价。",
+    "逐文件rename/write非多文件事务；首失败和journal/before保留，由Root按实际状态恢复，不自动覆盖重试。"
+  ]
+}

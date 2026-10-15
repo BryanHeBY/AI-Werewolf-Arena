@@ -2,7 +2,7 @@
  * Unit tests check controlled AST literal discovery and exact translation ownership exemptions. Inputs are literal TS/JSX/template snippets and reviewed exception rows; handwritten hit lists and invalid exception counts are the oracle. No repository or temporary filesystem tree is scanned.
  */
 import { expect, test } from "bun:test";
-import { collectChineseLiterals, verifyLiteralExceptions } from "../../../scripts/check_i18n_literals.mjs";
+import { collectChineseLiterals, verifyLiteralExceptions } from "../../../scripts/check-i18n-literals.mjs";
 
 test("controlled source scan covers literals, all template segments and JSX while ignoring comments", () => {
   const found = collectChineseLiterals(

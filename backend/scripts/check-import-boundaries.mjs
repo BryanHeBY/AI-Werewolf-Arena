@@ -7,7 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
-import { importBoundaryViolation } from "./import_boundaries.cjs";
+import { importBoundaryViolation } from "./import-boundaries.cjs";
 
 // 维持原 cwd／argv 默认值；这里不对输入根额外 realpath，也不扩大 .ts 以外的发现范围。
 const rootDir = path.resolve(process.cwd(), process.argv[2] ?? "src");

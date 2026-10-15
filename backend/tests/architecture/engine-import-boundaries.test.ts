@@ -21,7 +21,7 @@ test("boundary checker rejects illegal game engine imports", async () => {
     'import { forbidden } from "../../runtime/forbidden";\nexport { forbidden };\n',
   );
 
-  const checker = path.resolve(import.meta.dir, "../../scripts/check_import_boundaries.mjs");
+  const checker = path.resolve(import.meta.dir, "../../scripts/check-import-boundaries.mjs");
   const result = Bun.spawnSync([process.execPath, checker, root], {
     stdout: "pipe",
     stderr: "pipe",

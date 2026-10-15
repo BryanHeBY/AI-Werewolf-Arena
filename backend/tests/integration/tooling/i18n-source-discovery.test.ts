@@ -5,7 +5,7 @@ import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { tmpdir } from "node:os";
-import { scanRepository, verifyLiteralExceptions } from "../../../scripts/check_i18n_literals.mjs";
+import { scanRepository, verifyLiteralExceptions } from "../../../scripts/check-i18n-literals.mjs";
 
 async function isolatedApplicationRoots() {
   const root = await mkdtemp(path.join(tmpdir(), "awa-i18n-root-boundary-"));

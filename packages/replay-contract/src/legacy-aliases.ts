@@ -3,7 +3,7 @@
  * 输入为单个已归档标签，输出为已知标识或原字符串；本模块拥有这些兼容表，角色表独立维护。
  * 不扫描玩家或模型正文，不模糊匹配未知标签，也不据旧标签推导真实身份、许可或游戏规则。
  */
-import { LEGACY_ROLE_ALIASES } from "./legacy_role_aliases";
+import { LEGACY_ROLE_ALIASES } from "./legacy-role-aliases";
 
 const phases: Readonly<Record<string, string>> = Object.freeze({
   夜晚: "night",

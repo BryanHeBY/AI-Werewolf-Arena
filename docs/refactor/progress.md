@@ -1001,3 +1001,5 @@
 - C37/C41 live checkpoint归属：在a55e675b实际Git前态将五完整读取/装配owner迁app/checkpoint，纯schema和审计留recording；原16features边随整owner自然退出recording，无新registry/桥/政策豁免。七完整程序/33字面/52绑定及14逆向输出、7规范ESNext和typed/token/NodeArray首次通过，全后端既有路径边界扫描首次0；原查询/克隆/部分失败顺序完整保。准备三方审查与末实际scope见 [checkpoint装配](app-checkpoint-capture.md)。无业务/模型或重类型，最终汇合检查继续。
 
 - C42/C46生命周期命名门槛：仅四类request/session文件分隔符识别兼容[-_]，canonical新名不再退为普通behavior/adapter，required/concepts/原检查顺序保持。两源与新增真实checkComments独立反例经作者和非作者审查，首新1声明/16断言通过、37原项filtered，无旧绿色/type/业务重跑；见 [命名后的生命周期门槛](canonical-lifecycle-head-policy.md)。九basename纯迁移与后继中文继续。
+
+- C42 九个剩余basename：真实d993前态十八完整输入／九物理移动，十四模块引用与三非模块引用明确分证；33物理目标、17完整规范化程序、34逆输出／17 ESNext对照同，历史Seer整模板与冻结alias原字节保。新路径边界扫描首次0；准备helper的owner位静态finding修后才执行。无业务或已绿类型重跑，中文与C43/C47继续；见 [九文件名归一](kebab-basename-followup.md)。

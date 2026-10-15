@@ -4,10 +4,10 @@
  * 新声明必须符合当前请求／展示数据协议；不把纯声明当真实来源签名或行动许可，不导入 renderer。
  */
 import { unwrapRecordingEnvelope, assertCurrentRecordingContracts } from "./archive-envelope";
-import { assertErrorDiagnostic, type ErrorDiagnostic } from "./error_diagnostic";
+import { assertErrorDiagnostic, type ErrorDiagnostic } from "./error-diagnostic";
 import { assertField, isRecord, ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
-import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId } from "./legacy_aliases";
+import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId } from "./legacy-aliases";
 
 /** 玩家单回合增量消息。 */
 export interface ReplayPlayerDeltaMessage {

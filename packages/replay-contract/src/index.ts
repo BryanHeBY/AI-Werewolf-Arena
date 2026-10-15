@@ -14,8 +14,8 @@ import {
   legacyRoleId,
   legacyCampId,
   legacyResultReasonId,
-} from "./legacy_aliases";
-export * from "./legacy_aliases";
+} from "./legacy-aliases";
+export * from "./legacy-aliases";
 export const REPLAY_SCHEMA_VERSION = 2 as const;
 export * from "./inspection";
 export * from "./gravekeeper";
@@ -217,9 +217,9 @@ export function readReplayDocument(value: unknown): ReplayDocument {
   return result;
 }
 
-export * from "./player_record";
+export * from "./player-record";
 
-export * from "./error_diagnostic";
+export * from "./error-diagnostic";
 
 export * from "./archive-envelope";
 

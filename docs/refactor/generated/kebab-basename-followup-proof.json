@@ -1,0 +1,1088 @@
+{
+  "baseCommit": "d993b9c7c2bd6308dae1ce9ff4bdffce34c85a55",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+  "prefix": "docs/refactor/generated/kebab-basename-followup-",
+  "applied": true,
+  "source": [
+    {
+      "path": "backend/eslint.config.cjs",
+      "sha256": "ca5ceb012a922aff0e5a90163c058d616a055d3c58e39ee3b6818c8b6d9d1c83",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/package.json",
+      "sha256": "faa5fcd8349b10566c22bf6a86874948c8371430ae02aa0af1a759f6fbf48e24",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/scripts/check-i18n-literals.mjs",
+      "sha256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/scripts/check-import-boundaries.mjs",
+      "sha256": "b8437328e569dd576801eda36048d392942a5335ffa8a5678dc6981059eb3058",
+      "mode": "100755"
+    },
+    {
+      "path": "backend/scripts/check-seer-baseline.mjs",
+      "sha256": "a3b06e39d7f36d935c639ca65922726abb6cfa9a56069bc72358a5db3f4a04de",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/scripts/import-boundaries.cjs",
+      "sha256": "11e86f541866957e76636954ee93a807e2ed93d1973d6da53d2a7614ca21d609",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "sha256": "521000886e91954ec534fe61d3c18898adf78b55f2f216292b2ec4961e467fa4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "sha256": "9c6a22a48b9abb672d5715ab76d397b67b139da87bd3da21a4d46fbbb95fcfd4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "sha256": "161cd339e3c41529fbc6f36a13674ca8a9c8a8f0bd5a03ed939535b9d0dbc456",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/scripts/cli-error.ts",
+      "sha256": "81e3dde33c593c9687727684dd0cec39626ec508756b47f8ca0103e856491391",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/scripts/render-replay.ts",
+      "sha256": "c747c48e15a12d09e489f8f4e05726cec8b8740fe45d958deef97c858d917a50",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/scripts/replay-dev.ts",
+      "sha256": "e76f2a5186d347535dfcfef21502d872af287937519139d0c87cf6082d4d118d",
+      "mode": "100644"
+    },
+    {
+      "path": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "sha256": "318a0651f5964ecd93cc9f86cd7bd9e73d31061c24db79634b165f82fd16524c",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/error-diagnostic.ts",
+      "sha256": "8cbaa010d75abb4f7069dcf6c3596f75124e8deb41ce6baf83ba900889440902",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/index.ts",
+      "sha256": "00869118858cc28635bbd8383fadb49c7001a1bd32787afa4ae96e1c58b03d63",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/legacy-aliases.ts",
+      "sha256": "2bea8af8c2afae555a95d5d37c715ac6853090287faec3518b5bdb5d719eb814",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/legacy-role-aliases.ts",
+      "sha256": "caa5ac8397157da9de1de8d74d10ab1185bbb9fd5c7854871cadeb9418ab237f",
+      "mode": "100644"
+    },
+    {
+      "path": "packages/replay-contract/src/player-record.ts",
+      "sha256": "0fca15532062ba70391ae0e3e15e8ee9c60795cc39aaf8574c330a8449d6b45a",
+      "mode": "100644"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/scripts/check_seer_baseline.mjs",
+      "sha256": "a3b06e39d7f36d935c639ca65922726abb6cfa9a56069bc72358a5db3f4a04de",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/scripts/check_import_boundaries.mjs",
+      "sha256": "3d9511366e22514bac74e0b6320b244902ccf4e0fb6515c226b5de7d76a1e813",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/scripts/import_boundaries.cjs",
+      "sha256": "11e86f541866957e76636954ee93a807e2ed93d1973d6da53d2a7614ca21d609",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/scripts/check_i18n_literals.mjs",
+      "sha256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+      "expectedAbsent": true
+    },
+    {
+      "path": "frontend/scripts/cli_error.ts",
+      "sha256": "81e3dde33c593c9687727684dd0cec39626ec508756b47f8ca0103e856491391",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/legacy_role_aliases.ts",
+      "sha256": "caa5ac8397157da9de1de8d74d10ab1185bbb9fd5c7854871cadeb9418ab237f",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/error_diagnostic.ts",
+      "sha256": "8cbaa010d75abb4f7069dcf6c3596f75124e8deb41ce6baf83ba900889440902",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/player_record.ts",
+      "sha256": "e7605adda00437dd2587fbd5a5cd9fefabee8c86d24646a244c7b9e520c97733",
+      "expectedAbsent": true
+    },
+    {
+      "path": "packages/replay-contract/src/legacy_aliases.ts",
+      "sha256": "f4b88762adb0569f8fd1f821c81da2849986cf45312d077b017a1c7d2be4c152",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "bun.lock",
+      "mode": "100644",
+      "gitBlob": "e06dd0a3aa20b6890a45d262a609bf2bdb474bb6",
+      "sha256": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "gitBlob": "c5db1fd702cdb80a5dca8c4fe61d8d965050a24b",
+      "sha256": "11dd0dff1c16be4cb74701840fc270d218669c6228754ef37aa0e7c74e16f40f"
+    },
+    {
+      "path": "backend/tsconfig.json",
+      "mode": "100644",
+      "gitBlob": "d13844afe6718266587697e948efbf204e95322a",
+      "sha256": "0e05aa782d7a8638bae3a1525fb8fbd8e41deefb9eb170d874aca3cbb34f96d5"
+    },
+    {
+      "path": "backend/tsconfig.tests.json",
+      "mode": "100644",
+      "gitBlob": "1b46c93f097e4d7a1352fb85ad64ef3335ad98eb",
+      "sha256": "92ca421b343cb3a54314cee112c3f6486bbbe563c5f5488e7e3f86c0953ac28c"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "mode": "100644",
+      "gitBlob": "93ff0a5ed91099c78c71bf0fa68c29b0cc00471d",
+      "sha256": "162950ecddb07745e042a9e0409647b72b5045cbaa5096ea34adad632f1583a7"
+    },
+    {
+      "path": "packages/replay-contract/package.json",
+      "mode": "100644",
+      "gitBlob": "589e5eee209fcc554bf2886c30c536cbd54f9086",
+      "sha256": "10f61a0f794f88e2696d5e1541bb860a7fbce6cae9bb9273f5b0669e7435dc72"
+    },
+    {
+      "path": "backend/tests/support/seer_baseline_request.json",
+      "mode": "100644",
+      "gitBlob": "960ae959daf546c40800134d9653a30ed0622bc7",
+      "sha256": "0229ef363dca16c7606ebc5cf798c4af33710f2d1d6d7d0cb91e4071f0220511"
+    },
+    {
+      "path": "tooling/refactor/fixtures/manifest.json",
+      "mode": "100644",
+      "gitBlob": "7f68b755432b4d7c99b45a9df82c74fec4f55844",
+      "sha256": "bf7fe2b72afbc3fcc8d506930a477072d19bdc84ca07f86a4cd01969daea0d03"
+    }
+  ],
+  "programs": [
+    {
+      "from": "backend/eslint.config.cjs",
+      "to": "backend/eslint.config.cjs",
+      "kind": "program",
+      "beforeSHA256": "cf9d97bfa802d588242ce5d3beeb4d4d09c869181f1149a5a49b891a4e2b6f5b",
+      "actualSHA256": "ca5ceb012a922aff0e5a90163c058d616a055d3c58e39ee3b6818c8b6d9d1c83",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 290,
+      "arrays": 49,
+      "leaves": 357,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "8951e1df148279018a08e4361c56921a96b69f2355dfad82f19bbaf6c85f254c",
+          "actualSHA256": "5edea40a152860f8d110ec779e68537b11222c5d1c4a9fc784c0cc0007a5af39",
+          "inverseSHA256": "8951e1df148279018a08e4361c56921a96b69f2355dfad82f19bbaf6c85f254c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "8951e1df148279018a08e4361c56921a96b69f2355dfad82f19bbaf6c85f254c",
+          "actualSHA256": "5edea40a152860f8d110ec779e68537b11222c5d1c4a9fc784c0cc0007a5af39",
+          "inverseSHA256": "8951e1df148279018a08e4361c56921a96b69f2355dfad82f19bbaf6c85f254c"
+        }
+      ]
+    },
+    {
+      "from": "backend/package.json",
+      "to": "backend/package.json",
+      "kind": "JSON",
+      "beforeSHA256": "e0f065a18fc22f3a959b1787df5128ba430c063a7a0f799d01c2a373daea534f",
+      "actualSHA256": "faa5fcd8349b10566c22bf6a86874948c8371430ae02aa0af1a759f6fbf48e24",
+      "exactWholeInverse": true,
+      "parsedDataOnlyTwoScriptValuesChanged": true,
+      "emittedOutputs": 0
+    },
+    {
+      "from": "backend/scripts/check_i18n_literals.mjs",
+      "to": "backend/scripts/check-i18n-literals.mjs",
+      "kind": "program",
+      "beforeSHA256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+      "actualSHA256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 1050,
+      "arrays": 180,
+      "leaves": 1264,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195",
+          "actualSHA256": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195",
+          "inverseSHA256": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195",
+          "actualSHA256": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195",
+          "inverseSHA256": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195"
+        }
+      ]
+    },
+    {
+      "from": "backend/scripts/check_import_boundaries.mjs",
+      "to": "backend/scripts/check-import-boundaries.mjs",
+      "kind": "program",
+      "beforeSHA256": "3d9511366e22514bac74e0b6320b244902ccf4e0fb6515c226b5de7d76a1e813",
+      "actualSHA256": "b8437328e569dd576801eda36048d392942a5335ffa8a5678dc6981059eb3058",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 355,
+      "arrays": 58,
+      "leaves": 430,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "37c9d6f48b2da1b7c10c5ffc16e0a093de3748b935015b171fec0520a448d07f",
+          "actualSHA256": "591f44781f0f8e7f168b59d7e1e9a851a1651fc66d75bc451b01a76ea74a7b15",
+          "inverseSHA256": "37c9d6f48b2da1b7c10c5ffc16e0a093de3748b935015b171fec0520a448d07f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "37c9d6f48b2da1b7c10c5ffc16e0a093de3748b935015b171fec0520a448d07f",
+          "actualSHA256": "591f44781f0f8e7f168b59d7e1e9a851a1651fc66d75bc451b01a76ea74a7b15",
+          "inverseSHA256": "37c9d6f48b2da1b7c10c5ffc16e0a093de3748b935015b171fec0520a448d07f"
+        }
+      ]
+    },
+    {
+      "from": "backend/scripts/check_seer_baseline.mjs",
+      "to": "backend/scripts/check-seer-baseline.mjs",
+      "kind": "program",
+      "beforeSHA256": "a3b06e39d7f36d935c639ca65922726abb6cfa9a56069bc72358a5db3f4a04de",
+      "actualSHA256": "a3b06e39d7f36d935c639ca65922726abb6cfa9a56069bc72358a5db3f4a04de",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 401,
+      "arrays": 78,
+      "leaves": 531,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "bbfc74a6e2ac93530325273587b790eea917ae996c5dc6290acdb011c16f03c6",
+          "actualSHA256": "bbfc74a6e2ac93530325273587b790eea917ae996c5dc6290acdb011c16f03c6",
+          "inverseSHA256": "bbfc74a6e2ac93530325273587b790eea917ae996c5dc6290acdb011c16f03c6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "bbfc74a6e2ac93530325273587b790eea917ae996c5dc6290acdb011c16f03c6",
+          "actualSHA256": "bbfc74a6e2ac93530325273587b790eea917ae996c5dc6290acdb011c16f03c6",
+          "inverseSHA256": "bbfc74a6e2ac93530325273587b790eea917ae996c5dc6290acdb011c16f03c6"
+        }
+      ]
+    },
+    {
+      "from": "backend/scripts/import_boundaries.cjs",
+      "to": "backend/scripts/import-boundaries.cjs",
+      "kind": "program",
+      "beforeSHA256": "11e86f541866957e76636954ee93a807e2ed93d1973d6da53d2a7614ca21d609",
+      "actualSHA256": "11e86f541866957e76636954ee93a807e2ed93d1973d6da53d2a7614ca21d609",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 398,
+      "arrays": 54,
+      "leaves": 603,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "82de479682c359ac9b4bcd18ac613ac3dc5738c5427c4bcfc5259e7518fc533e",
+          "actualSHA256": "82de479682c359ac9b4bcd18ac613ac3dc5738c5427c4bcfc5259e7518fc533e",
+          "inverseSHA256": "82de479682c359ac9b4bcd18ac613ac3dc5738c5427c4bcfc5259e7518fc533e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "82de479682c359ac9b4bcd18ac613ac3dc5738c5427c4bcfc5259e7518fc533e",
+          "actualSHA256": "82de479682c359ac9b4bcd18ac613ac3dc5738c5427c4bcfc5259e7518fc533e",
+          "inverseSHA256": "82de479682c359ac9b4bcd18ac613ac3dc5738c5427c4bcfc5259e7518fc533e"
+        }
+      ]
+    },
+    {
+      "from": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "to": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "kind": "program",
+      "beforeSHA256": "0ba5fef24a235f34b22cd98dfd442e1ebe16c5db8caa962280b2ce06d763aa26",
+      "actualSHA256": "521000886e91954ec534fe61d3c18898adf78b55f2f216292b2ec4961e467fa4",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 164,
+      "arrays": 32,
+      "leaves": 218,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "f006cc509f3d46c0455acb724904144ca16e0e99b243f72cdc5458617e070c01",
+          "actualSHA256": "b850c90071e3a4c6e33733f72a7d79c3f503679ca0b00444fcfe8dec00184df6",
+          "inverseSHA256": "f006cc509f3d46c0455acb724904144ca16e0e99b243f72cdc5458617e070c01"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "b6089f8417461315321358ef6269d5c45432de380eabe0a9c6ed83963894db83",
+          "actualSHA256": "438d21f400c8d180c9e07f0dfdda3a36fd0b9b8abe5df4ef55115dfaf1f5abd1",
+          "inverseSHA256": "b6089f8417461315321358ef6269d5c45432de380eabe0a9c6ed83963894db83"
+        }
+      ]
+    },
+    {
+      "from": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "to": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "kind": "program",
+      "beforeSHA256": "729361a981c06cba843b8cf3bfb87dab3e2e1da8ac873eef04db3b602875bfd1",
+      "actualSHA256": "9c6a22a48b9abb672d5715ab76d397b67b139da87bd3da21a4d46fbbb95fcfd4",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 711,
+      "arrays": 164,
+      "leaves": 956,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "e467cd233249b50282dad42506504e9935297ec23a268f23a8ec9f2b154a6b8d",
+          "actualSHA256": "146c3898a19a0f61d5256b3f5431cede34e3e11b8b7f3015686a92319fc8f155",
+          "inverseSHA256": "e467cd233249b50282dad42506504e9935297ec23a268f23a8ec9f2b154a6b8d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "1e953c5875416ceef0ad2194110f9c292588c248636be1f28301998e46d49173",
+          "actualSHA256": "d1ab02dbd5165e9c189137c7b82ea5de03f95ac6598f4be7d566b559b7b7646d",
+          "inverseSHA256": "1e953c5875416ceef0ad2194110f9c292588c248636be1f28301998e46d49173"
+        }
+      ]
+    },
+    {
+      "from": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "to": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "kind": "program",
+      "beforeSHA256": "5988cbbf2423951cdd47e6f6fcb2821db5524a5ecb9c5754bea9d88a7361ce39",
+      "actualSHA256": "161cd339e3c41529fbc6f36a13674ca8a9c8a8f0bd5a03ed939535b9d0dbc456",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 211,
+      "arrays": 52,
+      "leaves": 304,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "a485ba2213331ae3a6d0859b698428f81d184a084dc7e3500115a71cee11f812",
+          "actualSHA256": "8574526f80533c7a755242a75eb04b751002b7bbd7b0c2d0103e8c71c5497b3a",
+          "inverseSHA256": "a485ba2213331ae3a6d0859b698428f81d184a084dc7e3500115a71cee11f812"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "bfe9c4d7984c0dad571c46c33491f38651f449f33ae29fefe946d7d42cd2d091",
+          "actualSHA256": "0f75ed3858b46ef35f3d328c1fc81ef35d002f1ae3e72ec346f430cd62ffcc6d",
+          "inverseSHA256": "bfe9c4d7984c0dad571c46c33491f38651f449f33ae29fefe946d7d42cd2d091"
+        }
+      ]
+    },
+    {
+      "from": "frontend/scripts/cli_error.ts",
+      "to": "frontend/scripts/cli-error.ts",
+      "kind": "program",
+      "beforeSHA256": "81e3dde33c593c9687727684dd0cec39626ec508756b47f8ca0103e856491391",
+      "actualSHA256": "81e3dde33c593c9687727684dd0cec39626ec508756b47f8ca0103e856491391",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 387,
+      "arrays": 50,
+      "leaves": 444,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "14f8dfd68b7f5c7dad1231e8454e8935fb1f976d04e2cd2062714ba9a3e5d0d8",
+          "actualSHA256": "14f8dfd68b7f5c7dad1231e8454e8935fb1f976d04e2cd2062714ba9a3e5d0d8",
+          "inverseSHA256": "14f8dfd68b7f5c7dad1231e8454e8935fb1f976d04e2cd2062714ba9a3e5d0d8"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "f4919ca16956228ce866161f5d4615d5060167956ba49bd16506cf51148ca449",
+          "actualSHA256": "f4919ca16956228ce866161f5d4615d5060167956ba49bd16506cf51148ca449",
+          "inverseSHA256": "f4919ca16956228ce866161f5d4615d5060167956ba49bd16506cf51148ca449"
+        }
+      ]
+    },
+    {
+      "from": "frontend/scripts/render-replay.ts",
+      "to": "frontend/scripts/render-replay.ts",
+      "kind": "program",
+      "beforeSHA256": "5d1c0cb41092e15adecd510677e034e9d8a3105c6d35d1516dbdb112062c96ed",
+      "actualSHA256": "c747c48e15a12d09e489f8f4e05726cec8b8740fe45d958deef97c858d917a50",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 841,
+      "arrays": 125,
+      "leaves": 1034,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "f970bccc8c06fa63159e12775c00bf4e0a3fee1cef5955a86f67000b9ff4bd5d",
+          "actualSHA256": "0344f003d0f4a79b33309c2e96f4eb6cdcd2eeff4b38849724c976623e7a76cc",
+          "inverseSHA256": "f970bccc8c06fa63159e12775c00bf4e0a3fee1cef5955a86f67000b9ff4bd5d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "b827a2f1dc4eb1f5bb7998800c4921ba67ca8e48d382a67ec3d0dc539a381ac6",
+          "actualSHA256": "c095ae57ffa6a2e052fe70099ead7c691d372bc5bb96d311a4f3b05522bf3791",
+          "inverseSHA256": "b827a2f1dc4eb1f5bb7998800c4921ba67ca8e48d382a67ec3d0dc539a381ac6"
+        }
+      ]
+    },
+    {
+      "from": "frontend/scripts/replay-dev.ts",
+      "to": "frontend/scripts/replay-dev.ts",
+      "kind": "program",
+      "beforeSHA256": "0ccf786d7924c4cde83ef67d52d5df7846702ca497876afcabd2fe29a28d98a2",
+      "actualSHA256": "e76f2a5186d347535dfcfef21502d872af287937519139d0c87cf6082d4d118d",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 329,
+      "arrays": 55,
+      "leaves": 414,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "6b21bc4139674043a412c51aaa1ee588e3fd32a1c2c3a2ce1c06575aa4e81310",
+          "actualSHA256": "551db3c87d68e26a0652d577fd186fd06ac92f89505000188afc022794f464f0",
+          "inverseSHA256": "6b21bc4139674043a412c51aaa1ee588e3fd32a1c2c3a2ce1c06575aa4e81310"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "6b1d610314f8b8778b288cf04677202ee5d47434387ea93461b872a1bfe98cd7",
+          "actualSHA256": "366c5de7b34bbdc6721b79170193e4e9341229f7a195f63eec801b77f4a0e994",
+          "inverseSHA256": "6b1d610314f8b8778b288cf04677202ee5d47434387ea93461b872a1bfe98cd7"
+        }
+      ]
+    },
+    {
+      "from": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "to": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "kind": "program",
+      "beforeSHA256": "86c34ebd9574cc65b7fd07f070652fb0e4691d9c8463ec77ab2c1c5a001063d5",
+      "actualSHA256": "318a0651f5964ecd93cc9f86cd7bd9e73d31061c24db79634b165f82fd16524c",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 553,
+      "arrays": 128,
+      "leaves": 750,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "1ded28f70190d26ffec994beae14952253eff8f4211b2fe6cec40be0a206fbe4",
+          "actualSHA256": "c78168b26ec1e30483c3d4ac6a0f979ecab151b4565b0c810f22df6c2fa96bb6",
+          "inverseSHA256": "1ded28f70190d26ffec994beae14952253eff8f4211b2fe6cec40be0a206fbe4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "91809caa1a17d2a83780345d6fecabda4f9ad009a49b8ae2d3c01bb2edcdbb36",
+          "actualSHA256": "40e6b937c10210e8b9c410c7cbfa8130b8c6bfc0526ef2d0813107a172eb5555",
+          "inverseSHA256": "91809caa1a17d2a83780345d6fecabda4f9ad009a49b8ae2d3c01bb2edcdbb36"
+        }
+      ]
+    },
+    {
+      "from": "packages/replay-contract/src/error_diagnostic.ts",
+      "to": "packages/replay-contract/src/error-diagnostic.ts",
+      "kind": "program",
+      "beforeSHA256": "8cbaa010d75abb4f7069dcf6c3596f75124e8deb41ce6baf83ba900889440902",
+      "actualSHA256": "8cbaa010d75abb4f7069dcf6c3596f75124e8deb41ce6baf83ba900889440902",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 418,
+      "arrays": 54,
+      "leaves": 475,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "5c447fd086d0f77f72c1748e0418eddd82c85a6bcfe0e0475f8341551421d013",
+          "actualSHA256": "5c447fd086d0f77f72c1748e0418eddd82c85a6bcfe0e0475f8341551421d013",
+          "inverseSHA256": "5c447fd086d0f77f72c1748e0418eddd82c85a6bcfe0e0475f8341551421d013"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "9054298bee199f2911bce5f59bd307e708e5a5fd4087d4e1ae8c8d5221b516cc",
+          "actualSHA256": "9054298bee199f2911bce5f59bd307e708e5a5fd4087d4e1ae8c8d5221b516cc",
+          "inverseSHA256": "9054298bee199f2911bce5f59bd307e708e5a5fd4087d4e1ae8c8d5221b516cc"
+        }
+      ]
+    },
+    {
+      "from": "packages/replay-contract/src/index.ts",
+      "to": "packages/replay-contract/src/index.ts",
+      "kind": "program",
+      "beforeSHA256": "f3b6fea748e61ccbc1f6ce7984b5ff7116fc015c7899f520344fc1809e96335c",
+      "actualSHA256": "00869118858cc28635bbd8383fadb49c7001a1bd32787afa4ae96e1c58b03d63",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 1448,
+      "arrays": 182,
+      "leaves": 1642,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "48d13d96581a422ffe9e78c8de6db3b5d787ad0634b6d1acbf0682baeb798326",
+          "actualSHA256": "ab86ee971b6e445415fca2f23ca823595b5a2546e7bc7bbe3a485a493746af77",
+          "inverseSHA256": "48d13d96581a422ffe9e78c8de6db3b5d787ad0634b6d1acbf0682baeb798326"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "5adf90f37bfbb5ba40db790bda5293916854294f623eafce1f682f5c1e2b5628",
+          "actualSHA256": "6ae2b943fe2e4f8b06bed2d06b87cedc4d524191a26c16b05004a6b81d864b1b",
+          "inverseSHA256": "5adf90f37bfbb5ba40db790bda5293916854294f623eafce1f682f5c1e2b5628"
+        }
+      ]
+    },
+    {
+      "from": "packages/replay-contract/src/legacy_aliases.ts",
+      "to": "packages/replay-contract/src/legacy-aliases.ts",
+      "kind": "program",
+      "beforeSHA256": "f4b88762adb0569f8fd1f821c81da2849986cf45312d077b017a1c7d2be4c152",
+      "actualSHA256": "2bea8af8c2afae555a95d5d37c715ac6853090287faec3518b5bdb5d719eb814",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 416,
+      "arrays": 47,
+      "leaves": 549,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "7c4007a2946554fede7fa3066e75dd2c9ff6cb34792bb3f262726303a19de374",
+          "actualSHA256": "82b9a7bca4dab61cbf02b12b557a361eecc37e472ba866c617e4ced0a4befb5d",
+          "inverseSHA256": "7c4007a2946554fede7fa3066e75dd2c9ff6cb34792bb3f262726303a19de374"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "0b6d7216fc1bfef71d039c3e4a86e782980120c47c0dadd58443abdf5fa6ca43",
+          "actualSHA256": "92913c56158f543d165ac02963920c02d961bde85ee67c0e3e9a1dcd89f5b187",
+          "inverseSHA256": "0b6d7216fc1bfef71d039c3e4a86e782980120c47c0dadd58443abdf5fa6ca43"
+        }
+      ]
+    },
+    {
+      "from": "packages/replay-contract/src/legacy_role_aliases.ts",
+      "to": "packages/replay-contract/src/legacy-role-aliases.ts",
+      "kind": "program",
+      "beforeSHA256": "caa5ac8397157da9de1de8d74d10ab1185bbb9fd5c7854871cadeb9418ab237f",
+      "actualSHA256": "caa5ac8397157da9de1de8d74d10ab1185bbb9fd5c7854871cadeb9418ab237f",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 402,
+      "arrays": 7,
+      "leaves": 535,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "956da58258544a480d048a7555ce2a821e24d161e10aab9b677494e4bcf86faf",
+          "actualSHA256": "956da58258544a480d048a7555ce2a821e24d161e10aab9b677494e4bcf86faf",
+          "inverseSHA256": "956da58258544a480d048a7555ce2a821e24d161e10aab9b677494e4bcf86faf"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "08de906f88e91165cbdc611cd9e500351c0b99c16ebfb02ef948befcbf4f4533",
+          "actualSHA256": "08de906f88e91165cbdc611cd9e500351c0b99c16ebfb02ef948befcbf4f4533",
+          "inverseSHA256": "08de906f88e91165cbdc611cd9e500351c0b99c16ebfb02ef948befcbf4f4533"
+        }
+      ]
+    },
+    {
+      "from": "packages/replay-contract/src/player_record.ts",
+      "to": "packages/replay-contract/src/player-record.ts",
+      "kind": "program",
+      "beforeSHA256": "e7605adda00437dd2587fbd5a5cd9fefabee8c86d24646a244c7b9e520c97733",
+      "actualSHA256": "0fca15532062ba70391ae0e3e15e8ee9c60795cc39aaf8574c330a8449d6b45a",
+      "wholeInverse": true,
+      "normalizedTypedTokenNodeArraysSame": true,
+      "nodes": 1364,
+      "arrays": 164,
+      "leaves": 1511,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": true,
+          "originalSHA256": "2ed946645f8d7e510325528b7b08adb1d78548466049ac5b59e90fb4149b8c96",
+          "actualSHA256": "7c87dd256f31886db5a0b0f5265710f65936e75325baba80edbd41ca1416e086",
+          "inverseSHA256": "2ed946645f8d7e510325528b7b08adb1d78548466049ac5b59e90fb4149b8c96"
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseSame": true,
+          "normalizedESNextSame": null,
+          "originalSHA256": "f4ad1c9bf75fbb198965b89ffe022fc8bfcfd0569511fc224d298760f5540bcd",
+          "actualSHA256": "52b68d9c469e37ab4118b3bffac8a9c0dec8ac0631ae2b492932928bb177c884",
+          "inverseSHA256": "f4ad1c9bf75fbb198965b89ffe022fc8bfcfd0569511fc224d298760f5540bcd"
+        }
+      ]
+    }
+  ],
+  "moduleTargets": [
+    {
+      "fromFile": "backend/eslint.config.cjs",
+      "actualFile": "backend/eslint.config.cjs",
+      "ordinal": 2,
+      "originalSpecifier": "./scripts/import_boundaries.cjs",
+      "actualSpecifier": "./scripts/import-boundaries.cjs",
+      "originalTarget": "backend/scripts/import_boundaries.cjs",
+      "actualTarget": "backend/scripts/import-boundaries.cjs"
+    },
+    {
+      "fromFile": "backend/scripts/check_import_boundaries.mjs",
+      "actualFile": "backend/scripts/check-import-boundaries.mjs",
+      "ordinal": 3,
+      "originalSpecifier": "./import_boundaries.cjs",
+      "actualSpecifier": "./import-boundaries.cjs",
+      "originalTarget": "backend/scripts/import_boundaries.cjs",
+      "actualTarget": "backend/scripts/import-boundaries.cjs"
+    },
+    {
+      "fromFile": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "actualFile": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "ordinal": 3,
+      "originalSpecifier": "../support/drivers/temp-directories",
+      "actualSpecifier": "../support/drivers/temp-directories",
+      "originalTarget": "backend/tests/support/drivers/temp-directories.ts",
+      "actualTarget": "backend/tests/support/drivers/temp-directories.ts"
+    },
+    {
+      "fromFile": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "actualFile": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "ordinal": 4,
+      "originalSpecifier": "../../../scripts/check_i18n_literals.mjs",
+      "actualSpecifier": "../../../scripts/check-i18n-literals.mjs",
+      "originalTarget": "backend/scripts/check_i18n_literals.mjs",
+      "actualTarget": "backend/scripts/check-i18n-literals.mjs"
+    },
+    {
+      "fromFile": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "actualFile": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "ordinal": 1,
+      "originalSpecifier": "../../../scripts/check_i18n_literals.mjs",
+      "actualSpecifier": "../../../scripts/check-i18n-literals.mjs",
+      "originalTarget": "backend/scripts/check_i18n_literals.mjs",
+      "actualTarget": "backend/scripts/check-i18n-literals.mjs"
+    },
+    {
+      "fromFile": "frontend/scripts/cli_error.ts",
+      "actualFile": "frontend/scripts/cli-error.ts",
+      "ordinal": 1,
+      "originalSpecifier": "../src/replay/offline-replay",
+      "actualSpecifier": "../src/replay/offline-replay",
+      "originalTarget": "frontend/src/replay/offline-replay.ts",
+      "actualTarget": "frontend/src/replay/offline-replay.ts"
+    },
+    {
+      "fromFile": "frontend/scripts/render-replay.ts",
+      "actualFile": "frontend/scripts/render-replay.ts",
+      "ordinal": 6,
+      "originalSpecifier": "./cli_error",
+      "actualSpecifier": "./cli-error",
+      "originalTarget": "frontend/scripts/cli_error.ts",
+      "actualTarget": "frontend/scripts/cli-error.ts"
+    },
+    {
+      "fromFile": "frontend/scripts/render-replay.ts",
+      "actualFile": "frontend/scripts/render-replay.ts",
+      "ordinal": 8,
+      "originalSpecifier": "./replay-dev",
+      "actualSpecifier": "./replay-dev",
+      "originalTarget": "frontend/scripts/replay-dev.ts",
+      "actualTarget": "frontend/scripts/replay-dev.ts"
+    },
+    {
+      "fromFile": "frontend/scripts/render-replay.ts",
+      "actualFile": "frontend/scripts/render-replay.ts",
+      "ordinal": 9,
+      "originalSpecifier": "../src/replay/offline-replay",
+      "actualSpecifier": "../src/replay/offline-replay",
+      "originalTarget": "frontend/src/replay/offline-replay.ts",
+      "actualTarget": "frontend/src/replay/offline-replay.ts"
+    },
+    {
+      "fromFile": "frontend/scripts/render-replay.ts",
+      "actualFile": "frontend/scripts/render-replay.ts",
+      "ordinal": 10,
+      "originalSpecifier": "../src/replay/replay-frame",
+      "actualSpecifier": "../src/replay/replay-frame",
+      "originalTarget": "frontend/src/replay/replay-frame.ts",
+      "actualTarget": "frontend/src/replay/replay-frame.ts"
+    },
+    {
+      "fromFile": "frontend/scripts/render-replay.ts",
+      "actualFile": "frontend/scripts/render-replay.ts",
+      "ordinal": 11,
+      "originalSpecifier": "../src/replay/replay-display",
+      "actualSpecifier": "../src/replay/replay-display",
+      "originalTarget": "frontend/src/replay/replay-display.ts",
+      "actualTarget": "frontend/src/replay/replay-display.ts"
+    },
+    {
+      "fromFile": "frontend/scripts/replay-dev.ts",
+      "actualFile": "frontend/scripts/replay-dev.ts",
+      "ordinal": 2,
+      "originalSpecifier": "./cli_error",
+      "actualSpecifier": "./cli-error",
+      "originalTarget": "frontend/scripts/cli_error.ts",
+      "actualTarget": "frontend/scripts/cli-error.ts"
+    },
+    {
+      "fromFile": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "actualFile": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "ordinal": 0,
+      "originalSpecifier": "../../../src/replay/offline-replay",
+      "actualSpecifier": "../../../src/replay/offline-replay",
+      "originalTarget": "frontend/src/replay/offline-replay.ts",
+      "actualTarget": "frontend/src/replay/offline-replay.ts"
+    },
+    {
+      "fromFile": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "actualFile": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "ordinal": 3,
+      "originalSpecifier": "../../../scripts/cli_error",
+      "actualSpecifier": "../../../scripts/cli-error",
+      "originalTarget": "frontend/scripts/cli_error.ts",
+      "actualTarget": "frontend/scripts/cli-error.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/error_diagnostic.ts",
+      "actualFile": "packages/replay-contract/src/error-diagnostic.ts",
+      "ordinal": 0,
+      "originalSpecifier": "./validation",
+      "actualSpecifier": "./validation",
+      "originalTarget": "packages/replay-contract/src/validation.ts",
+      "actualTarget": "packages/replay-contract/src/validation.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 0,
+      "originalSpecifier": "./validation",
+      "actualSpecifier": "./validation",
+      "originalTarget": "packages/replay-contract/src/validation.ts",
+      "actualTarget": "packages/replay-contract/src/validation.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 1,
+      "originalSpecifier": "./validation",
+      "actualSpecifier": "./validation",
+      "originalTarget": "packages/replay-contract/src/validation.ts",
+      "actualTarget": "packages/replay-contract/src/validation.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 3,
+      "originalSpecifier": "./archive-envelope",
+      "actualSpecifier": "./archive-envelope",
+      "originalTarget": "packages/replay-contract/src/archive-envelope.ts",
+      "actualTarget": "packages/replay-contract/src/archive-envelope.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 4,
+      "originalSpecifier": "./outcomes",
+      "actualSpecifier": "./outcomes",
+      "originalTarget": "packages/replay-contract/src/outcomes.ts",
+      "actualTarget": "packages/replay-contract/src/outcomes.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 5,
+      "originalSpecifier": "./legacy_aliases",
+      "actualSpecifier": "./legacy-aliases",
+      "originalTarget": "packages/replay-contract/src/legacy_aliases.ts",
+      "actualTarget": "packages/replay-contract/src/legacy-aliases.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 6,
+      "originalSpecifier": "./legacy_aliases",
+      "actualSpecifier": "./legacy-aliases",
+      "originalTarget": "packages/replay-contract/src/legacy_aliases.ts",
+      "actualTarget": "packages/replay-contract/src/legacy-aliases.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 7,
+      "originalSpecifier": "./inspection",
+      "actualSpecifier": "./inspection",
+      "originalTarget": "packages/replay-contract/src/inspection.ts",
+      "actualTarget": "packages/replay-contract/src/inspection.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 8,
+      "originalSpecifier": "./gravekeeper",
+      "actualSpecifier": "./gravekeeper",
+      "originalTarget": "packages/replay-contract/src/gravekeeper.ts",
+      "actualTarget": "packages/replay-contract/src/gravekeeper.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 9,
+      "originalSpecifier": "./outcomes",
+      "actualSpecifier": "./outcomes",
+      "originalTarget": "packages/replay-contract/src/outcomes.ts",
+      "actualTarget": "packages/replay-contract/src/outcomes.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 10,
+      "originalSpecifier": "./player_record",
+      "actualSpecifier": "./player-record",
+      "originalTarget": "packages/replay-contract/src/player_record.ts",
+      "actualTarget": "packages/replay-contract/src/player-record.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 11,
+      "originalSpecifier": "./error_diagnostic",
+      "actualSpecifier": "./error-diagnostic",
+      "originalTarget": "packages/replay-contract/src/error_diagnostic.ts",
+      "actualTarget": "packages/replay-contract/src/error-diagnostic.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 12,
+      "originalSpecifier": "./archive-envelope",
+      "actualSpecifier": "./archive-envelope",
+      "originalTarget": "packages/replay-contract/src/archive-envelope.ts",
+      "actualTarget": "packages/replay-contract/src/archive-envelope.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/index.ts",
+      "actualFile": "packages/replay-contract/src/index.ts",
+      "ordinal": 13,
+      "originalSpecifier": "./manifest",
+      "actualSpecifier": "./manifest",
+      "originalTarget": "packages/replay-contract/src/manifest.ts",
+      "actualTarget": "packages/replay-contract/src/manifest.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/legacy_aliases.ts",
+      "actualFile": "packages/replay-contract/src/legacy-aliases.ts",
+      "ordinal": 0,
+      "originalSpecifier": "./legacy_role_aliases",
+      "actualSpecifier": "./legacy-role-aliases",
+      "originalTarget": "packages/replay-contract/src/legacy_role_aliases.ts",
+      "actualTarget": "packages/replay-contract/src/legacy-role-aliases.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/player_record.ts",
+      "actualFile": "packages/replay-contract/src/player-record.ts",
+      "ordinal": 0,
+      "originalSpecifier": "./archive-envelope",
+      "actualSpecifier": "./archive-envelope",
+      "originalTarget": "packages/replay-contract/src/archive-envelope.ts",
+      "actualTarget": "packages/replay-contract/src/archive-envelope.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/player_record.ts",
+      "actualFile": "packages/replay-contract/src/player-record.ts",
+      "ordinal": 1,
+      "originalSpecifier": "./error_diagnostic",
+      "actualSpecifier": "./error-diagnostic",
+      "originalTarget": "packages/replay-contract/src/error_diagnostic.ts",
+      "actualTarget": "packages/replay-contract/src/error-diagnostic.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/player_record.ts",
+      "actualFile": "packages/replay-contract/src/player-record.ts",
+      "ordinal": 2,
+      "originalSpecifier": "./validation",
+      "actualSpecifier": "./validation",
+      "originalTarget": "packages/replay-contract/src/validation.ts",
+      "actualTarget": "packages/replay-contract/src/validation.ts"
+    },
+    {
+      "fromFile": "packages/replay-contract/src/player_record.ts",
+      "actualFile": "packages/replay-contract/src/player-record.ts",
+      "ordinal": 4,
+      "originalSpecifier": "./legacy_aliases",
+      "actualSpecifier": "./legacy-aliases",
+      "originalTarget": "packages/replay-contract/src/legacy_aliases.ts",
+      "actualTarget": "packages/replay-contract/src/legacy-aliases.ts"
+    }
+  ],
+  "nonmoduleReferences": [
+    {
+      "kind": "package_script_value",
+      "file": "backend/package.json",
+      "key": "lint:boundaries",
+      "cwd": "backend",
+      "executable": "bun",
+      "originalProgram": "backend/scripts/check_import_boundaries.mjs",
+      "actualProgram": "backend/scripts/check-import-boundaries.mjs",
+      "originalValue": "bun scripts/check_import_boundaries.mjs",
+      "actualValue": "bun scripts/check-import-boundaries.mjs"
+    },
+    {
+      "kind": "package_script_value",
+      "file": "backend/package.json",
+      "key": "lint:i18n",
+      "cwd": "backend",
+      "executable": "bun",
+      "originalProgram": "backend/scripts/check_i18n_literals.mjs",
+      "actualProgram": "backend/scripts/check-i18n-literals.mjs",
+      "originalValue": "bun scripts/check_i18n_literals.mjs",
+      "actualValue": "bun scripts/check-i18n-literals.mjs"
+    },
+    {
+      "kind": "actual_child_program_argument",
+      "file": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "callee": "path.resolve",
+      "firstArgument": "import.meta.dir",
+      "argumentIndex": 1,
+      "originalProgram": "backend/scripts/check_import_boundaries.mjs",
+      "actualProgram": "backend/scripts/check-import-boundaries.mjs"
+    }
+  ],
+  "publicAPI": {
+    "package": "@ai-werewolf-arena/replay-contract",
+    "exports": {
+      ".": "./src/index.ts"
+    },
+    "types": "./src/index.ts",
+    "sourceImportExportClauseAndNameOrderPreservedByNormalizedWholeProgram": true,
+    "physicalPrivatePathsRetired": true,
+    "wrappersAdded": false
+  },
+  "protected": {
+    "seerFixedBaseline": "eb4f026a38205d420cc2172b32fe23a29cb00da0",
+    "seerWholeBodySame": true,
+    "seerFixturePath": "backend/tests/support/seer_baseline_request.json",
+    "frozenAliasTableWholeSame": true,
+    "sourceShebangPrefixesSame": true,
+    "beforeCurrentModeAndGitSame": true
+  },
+  "summary": {
+    "physicalRenames": 9,
+    "completeInputs": 18,
+    "codePrograms": 17,
+    "packageJSON": 1,
+    "exactEdits": 17,
+    "moduleEdits": 14,
+    "nonModuleEdits": 3,
+    "relativeModuleTargetCorrespondences": 33,
+    "wholeInverseOutputs": 34,
+    "normalizedESNextOutputs": 17,
+    "packageJSONWholeInverse": true
+  },
+  "limits": [
+    "相对模块实际物理目标＋完整 import/export 名字/顺序由整程序归一化核对；不是最终 named declaration 或任意外部动态解析库存。",
+    "JSON两script值与child checker路径单独列证；只有声明的精确非module位置归一化，历史嵌入probe和其它业务/fixture字符串原样。",
+    "生命周期commentCategory正则/新增声明属于Root独立政策批，本helper不改它、不把其结果混入本17片段证明。",
+    "未执行工程类型、业务测试、架构或i18n门禁/模型；编译仅whole transpile与AST比较。",
+    "未知外部deep path、模块URL/缓存/堆栈/sourceHash变化不能冒任意JS反射或whole-cold等价。",
+    "逐文件rename/write非多文件事务；首失败和journal/before保留，由Root按实际状态恢复，不自动覆盖重试。"
+  ]
+}
