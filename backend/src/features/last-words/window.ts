@@ -19,6 +19,13 @@ import type { World } from "../../domain/world";
 import { RequestLease, type RequestLeaseTurn } from "../../domain/request-lease";
 import type { ToolGateway } from "../../engine/actions/tool-gateway";
 import type { LastWordsGrantContext, LastWordsMechanism } from "./last-words-mechanism";
+import {
+  readDuelWordEntitlement,
+  grantedDuelWordCurrent,
+  markDuelWordSpoken,
+  duelWordSpoken,
+  type DuelLastWordsEntitlement,
+} from "../../engine/duel-last-words";
 
 /** 只声明原运行依赖的读口；readonly 不冻结原对象、拍摄状态快照或授予死亡行动。 */
 export interface LastWordsWindowRuntime {
@@ -51,9 +58,44 @@ const lastWordsRequests = RequestLease.window<LastWordsRequestScope>(
   ["trigger", "death_phase", "death_action_id"],
 );
 
+// 仅具名连续决斗路径额外pin严格失败策略，旧遗言窗口的字段与租约顺序保持原样。
+const duelWordsRequests = RequestLease.window<LastWordsRequestScope>(
+  {
+    actorId: (scope) => scope.actorId,
+    phase: (scope) => scope.phase,
+    day: (scope) => scope.day,
+    stage: () => "last_words",
+    current: (scope) => scope.current(),
+  },
+  253,
+  ["trigger", "death_phase", "death_action_id", "action_failure_policy", "allow_fallback"],
+);
+
 /** 持有同一运行依赖对象；构造本窗口不查询其字段，真正的工厂构造保留在收集入口。 */
 export class LastWordsWindow {
   constructor(private readonly runtime: LastWordsWindowRuntime) {}
+
+  /** DR已真实授词的原生命才能走此有限例外；没有有效答复是失败，不能默作正常链尾。 */
+  async collectDuel(
+    entitlement: DuelLastWordsEntitlement,
+    provider: ActionProvider,
+  ): Promise<void> {
+    const info = readDuelWordEntitlement(entitlement);
+    if (!grantedDuelWordCurrent(entitlement)) throw new Error("duel_last_words_revoked");
+    await this.collect(
+      [info.id],
+      info.phase,
+      info.deathPhase,
+      { [info.id]: [...info.causes] },
+      provider,
+      { [info.id]: info.deathPhase },
+      () => grantedDuelWordCurrent(entitlement),
+      "awa_initial_wave_v1",
+      undefined,
+      entitlement,
+    );
+    if (!duelWordSpoken(entitlement)) throw new Error("duel_last_words_unfinished");
+  }
 
   /** 授予事实不替代发言窗口；每位死者等待回复后复核阶段、日期、终局与原生命许可，再写发言。 */
   async collect(
@@ -66,6 +108,7 @@ export class LastWordsWindow {
     scopeCurrent: () => boolean = () => true,
     policy: LastWordsPolicy = "awa_initial_wave_v1",
     wordsContext?: LastWordsGrantContext,
+    ownedEntitlement?: DuelLastWordsEntitlement,
   ): Promise<void> {
     // 构造器先查询，再按原顺序取 World／事件／第一次日期；构造完成后另读本次收集日期。
     const requests = new this.runtime.requestFactory(
@@ -78,6 +121,7 @@ export class LastWordsWindow {
       // 来源阶段与政策先于当前性和许可；不以授予事件或请求字段代替 World 的原生命绑定。
       const actualDeathPhase = deathPhases[deadId] ?? deathPhase;
       if (
+        !ownedEntitlement &&
         !this.runtime.lastWordsMechanism.shouldGrantLastWords(
           actualDeathPhase,
           day,
@@ -110,6 +154,9 @@ export class LastWordsWindow {
             trigger: "last_words",
             death_phase: actualDeathPhase,
             death_action_id: permit.id,
+            ...(ownedEntitlement
+              ? { action_failure_policy: "error" as const, allow_fallback: false }
+              : {}),
           },
         });
         const requestScope: LastWordsRequestScope = {
@@ -124,8 +171,9 @@ export class LastWordsWindow {
             !this.runtime.state.gameOver &&
             this.runtime.world.hasDeathAction(deadId, "speak", phase, day, permit.id),
         };
-        lastWordsRequests.bind(requestScope, request);
-        delivery = lastWordsRequests.openDelivery(requestScope, request);
+        const leases = ownedEntitlement ? duelWordsRequests : lastWordsRequests;
+        leases.bind(requestScope, request);
+        delivery = leases.openDelivery(requestScope, request);
         if (!delivery) return;
         // 先保原 provider callee／receiver，再准备新增调用口；最后守卫后只调用已准备函数，不能晚读 .apply。
         const getAction = actionProvider.getAction;
@@ -168,6 +216,7 @@ export class LastWordsWindow {
         const invokePublication = Reflect.apply.bind(Reflect);
         if (!delivery.current()) return;
         invokePublication(publish, events, publicationArguments);
+        if (ownedEntitlement) markDuelWordSpoken(ownedEntitlement);
         // 只以实际 push 正常返回确认完成；先终结租约再通知，true 回调晚错不撤事件或二次 false。
         delivery.complete();
       } catch (error) {

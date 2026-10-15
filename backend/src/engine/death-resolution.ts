@@ -70,6 +70,19 @@ import { EventRegistry } from "./events/event-registry";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
 import { firstDeathGuns, finishDeathGuns } from "../features/death-actions/gift-gun-ports";
 
+import {
+  openDuelLastWordsScope,
+  duelLastWordsMetadata,
+  assertDuelLastWordsScope,
+  appendDuelWordCommit,
+  beginDuelWordsFlush,
+  readDuelWordEntitlement,
+  duelWordEntitlementCurrent,
+  markDuelWordGranted,
+  closeDuelLastWordsScope,
+  type DuelLastWordsScope,
+} from "./duel-last-words";
+
 /** 连续结算死亡波，动作阶段仍由 PhaseManager 推进。 */
 export class DeathResolution {
   // 只捕获原结算器；每条关系边在原表达式处晚读 World、事件、日期及阶段。
@@ -159,6 +172,49 @@ export class DeathResolution {
     private readonly config?: ReadonlyBoardConfig,
   ) {}
 
+  /** 连续决斗只延后授词；真实死亡、警徽、钩子仍逐次完整结算，许可不由玩家请求或JSON重建。 */
+  openDuelLastWords(current: () => boolean): DuelLastWordsScope {
+    const day = this.state.day,
+      phase = this.state.phase;
+    return openDuelLastWordsScope(
+      this,
+      this.world,
+      day,
+      phase,
+      () =>
+        current() && this.state.day === day && this.state.phase === phase && !this.state.gameOver,
+    );
+  }
+
+  /** 仅正常链尾调用；每份真实授词和发言分别保留，失败后关闭scope而不伪造后续正常终止。 */
+  async flushDuelLastWords(scope: DuelLastWordsScope, provider: ActionProvider): Promise<void> {
+    try {
+      for (const entitlement of beginDuelWordsFlush(scope, this)) {
+        const info = readDuelWordEntitlement(entitlement);
+        const events = this.events,
+          publish = events.push;
+        const event: GameEvent = {
+          timestamp: Date.now(),
+          type: "last_words_granted",
+          payload: { playerId: info.id, phase: info.phase, day: info.day },
+        };
+        const args: [GameEvent] = [event],
+          invoke = Reflect.apply.bind(Reflect);
+        if (!duelWordEntitlementCurrent(entitlement)) throw new Error("duel_last_words_revoked");
+        invoke(publish, events, args);
+        markDuelWordGranted(entitlement);
+        await this.lastWordsWindow.collectDuel(entitlement, provider);
+      }
+    } finally {
+      closeDuelLastWordsScope(scope, this);
+    }
+  }
+
+  /** 失败只收权；已经提交的死亡、徽章、钩子和授词／发言事实均不回滚，也不补正常遗言。 */
+  abortDuelLastWords(scope: DuelLastWordsScope): void {
+    closeDuelLastWordsScope(scope, this);
+  }
+
   /**
    * 初始波完成标死和必要发布后，再收遗言、交警徽、逐角色处理死亡动作；追加目标先同步标死，
    * 下一波再处理其死后动作。来源昼夜与动作执行阶段分别保存，不能用当前阶段覆盖夜间来源。
@@ -185,10 +241,14 @@ export class DeathResolution {
       poisonRoutes?: readonly NightPoisonRoute[];
       animalUnit?: object;
       execution?: DeathExecutionContext;
+      duelLastWords?: DuelLastWordsScope;
     },
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
     const resolutionDay = this.state.day;
+    const duelWords = duelLastWordsMetadata(nightEffects);
+    if (duelWords !== undefined)
+      assertDuelLastWordsScope(duelWords, this, resolutionDay, resolutionPhase);
     const lastWordsPolicy = this.config?.lastWords?.policy ?? "awa_initial_wave_v1";
     const revealPolicy = this.config?.disclosure?.deathRevealPolicy ?? "awa_hidden_v1";
     const ownsFragrant = isFragrantPairBoard(this.world);
@@ -340,6 +400,7 @@ export class DeathResolution {
             previousCommits,
           ),
         );
+        if (duelWords) appendDuelWordCommit(duelWords, this, receipt, allSources, deathPhase);
         if (firstBatch && fragrantInitial) {
           commitFragrantDeathWave(this.world, fragrantInitial);
           fragrantInitialCommitted = true;
@@ -387,6 +448,7 @@ export class DeathResolution {
         nightEffects?.dreams?.recordDeaths(pending, this.events);
         // 基础政策只考察初始波；网易具名政策还考察追加波，逐人昼夜与死因资格仍由遗言机制核对。
         if (
+          !duelWords &&
           (firstBatch || lastWordsPolicy === "netease_2017_day_and_first_night_v1") &&
           lastWordsCurrent()
         ) {
@@ -679,6 +741,8 @@ export class DeathResolution {
                         [additionalUnit],
                       ),
                     );
+                    if (duelWords)
+                      appendDuelWordCommit(duelWords, this, receipt, allSources, sourcePhase);
                     additionalReceipts.push(receipt);
                     nextCommits.push(receipt);
                     if (ownsAnimal)
