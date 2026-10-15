@@ -9,8 +9,13 @@ import { hasWallCommit } from "../../../../src/features/wall-notes/authority";
 
 const roles = [Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 
-function fixture(deck = roles) {
+function fixture(deck = roles, selfDestructBeforeVote = false) {
   const config = { ...foxBoard(deck), events: { pack: "awa_wall_notes_once_v1" as const } };
+  // hook 与同值窗口必须先写进原输入，随后 bootstrap 才捕获本场景的不可变 RulePlan。
+  if (selfDestructBeforeVote) {
+    config.hooks.onPreVote = true;
+    config.selfDestruct = { enabledWindows: [ActionWindow.OnPreVote] };
+  }
   return { ...bootstrapGame(config, { fixedRoles: deck }), config, events: [] as GameEvent[] };
 }
 
@@ -92,9 +97,10 @@ test("first-day terminal exile has no paper grants or requests", async () => {
 });
 
 test("first-day self destruction ends day early and never catches up wall on day2", async () => {
-  const g = fixture([Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager]);
-  g.config.hooks.onPreVote = true;
-  g.config.selfDestruct = { enabledWindows: [ActionWindow.OnPreVote] };
+  const g = fixture(
+    [Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager],
+    true,
+  );
   const seen: ActionRequest[] = [];
   let blasted = false;
   const provider = {

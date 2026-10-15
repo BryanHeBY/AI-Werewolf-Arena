@@ -29,3 +29,5 @@
 完整目标仍见[实施计划](../guides/refactoring-plan.md)；历史提交及scope从[history](../history/README.md)按origin定位。这里没有新的暂停／停止授权，也没有把旧扩充里程碑重新变成当前任务。
 
 匿名墙可选处理的独立结算修复已完成，含真实首红、两类严格重放和两个异常前缀回归；见[验收记录](../history/acceptance/wall-optional-completion.md)。最终同输入全量门禁仍待完成。
+
+C47 首轮发现的五组旧场景输入与故障注入点已修正，19 个指定失败声明及测试类型检查通过；见[记录](../history/acceptance/c47-scenario-inputs.md)。

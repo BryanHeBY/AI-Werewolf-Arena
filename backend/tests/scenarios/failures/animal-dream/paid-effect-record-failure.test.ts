@@ -57,11 +57,12 @@ for (const skill of ["fox", "puffer"] as const)
         locale: "zh-CN",
         maxDays: 8,
       });
-      // 仅测试使用的录制 sink 故障，落在真实 ReproductionTrace 结算通知处。
+      // 只包装本次 Trace 的真实 onChange 通知；原回调仍委托管理器写 dirty 标志并调用 lifecycle.scheduleFlush。
+      // 原付款条件命中时注入同一错误文本，未命中及后继通知仍以原 receiver 委托；不拦其它录制入口。
       // 领域 owner、行动、投票、生命及追加逻辑仍使用生产实现。
-      const sink = manager as unknown as { scheduleFlush(): void };
-      const original = sink.scheduleFlush;
-      sink.scheduleFlush = function () {
+      const sink = trace as unknown as { onChange(): void };
+      const original = sink.onChange;
+      sink.onChange = function () {
         const a = animalAuthoritySnapshot(g.world, false)!;
         if (!fired && (skill === "fox" ? a.fox.usedNight === 2 : a.puffer.usedDay === 1)) {
           fired++;
@@ -102,7 +103,7 @@ for (const skill of ["fox", "puffer"] as const)
         );
         if (failure) break;
       }
-      sink.scheduleFlush = original;
+      sink.onChange = original;
       expect(String(failure)).toContain("R_SETTLEMENT_RECORD_SINK_FAILED");
       expect(fired).toBe(1);
       const a = animalAuthoritySnapshot(g.world, false)!;

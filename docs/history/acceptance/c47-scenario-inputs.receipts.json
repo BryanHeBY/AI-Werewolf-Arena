@@ -1,0 +1,117 @@
+{
+  "schema": "awa-bounded-test-input-repair-v1",
+  "baseCommit": "555d6251d2304428f74278b63b91a05d7288de1a",
+  "source": [
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "mode": "100644",
+      "blob": "524e1db51918603c612a1f421eb21fd68a8213c7",
+      "beforeSha256": "f8431457e64ebf04d5c3a86d1c1d076bc54c77c748f3c5a97c863d9e6c8ecb45",
+      "beforeBytes": 16968,
+      "candidateSha256": "629c9d930e4aca863e97c1414f021b1fc5a394161b319f8bdee65bbb1295fe29",
+      "candidateBytes": 17238,
+      "beforeCurrentSameAsBase": true,
+      "beforePath": "before/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "candidatePath": "candidates/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "mode": "100644",
+      "blob": "54399914af51532c2aa7f82cb5df93408839d14f",
+      "beforeSha256": "a545a0ab5d94b7996a3117af0bd1fe717ab082a315af1ae1d461f1b949bef197",
+      "beforeBytes": 6177,
+      "candidateSha256": "1c37d8ab839f6f613a34cfe2e9e9e2bd183dd4986b1fb41fb14bdfef96202fcf",
+      "candidateBytes": 6391,
+      "beforeCurrentSameAsBase": true,
+      "beforePath": "before/backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "candidatePath": "candidates/backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/runtime/concurrent-error-prefix.test.ts",
+      "mode": "100644",
+      "blob": "2df4c4d0657d838d79a7c7ef8078fab136bdc01f",
+      "beforeSha256": "d8228dd6e09bfba27b0af99981cc05823488213d6156e5fec36c43616eefcf75",
+      "beforeBytes": 7104,
+      "candidateSha256": "1f4131c5cdbd7207d07944d06e7486688f14bc3eb746f8965202fd4bba9b5621",
+      "candidateBytes": 7115,
+      "beforeCurrentSameAsBase": true,
+      "beforePath": "before/backend/tests/scenarios/failures/runtime/concurrent-error-prefix.test.ts",
+      "candidatePath": "candidates/backend/tests/scenarios/failures/runtime/concurrent-error-prefix.test.ts"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts",
+      "mode": "100644",
+      "blob": "89127acbed265a6ad1edc03bdf829766d0f3c80c",
+      "beforeSha256": "e3b53172eccc81cc78f5efd58c3395d08be4cec6c62e2073902aae3140e6afc6",
+      "beforeBytes": 8493,
+      "candidateSha256": "3da84816b8de03941970f4d3f14cbd502a25f9ba4a083249da8ea00942100158",
+      "candidateBytes": 8652,
+      "beforeCurrentSameAsBase": true,
+      "beforePath": "before/backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts",
+      "candidatePath": "candidates/backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts"
+    },
+    {
+      "path": "backend/tests/scenarios/events/wall-notes/first-voting-and-terminal-cycles.test.ts",
+      "mode": "100644",
+      "blob": "538ff516a748a088ec5828fa57f175360abac46b",
+      "beforeSha256": "c98da67574a31b0bdfc19687d057aa877b2f5dd050b6695ed7c4881eebc656fc",
+      "beforeBytes": 6380,
+      "candidateSha256": "2ff7ec30857c9a2b515f3269d3f5a796fe8327413bf8b7ff9bf0e9ff4020b375",
+      "candidateBytes": 6579,
+      "beforeCurrentSameAsBase": true,
+      "beforePath": "before/backend/tests/scenarios/events/wall-notes/first-voting-and-terminal-cycles.test.ts",
+      "candidatePath": "candidates/backend/tests/scenarios/events/wall-notes/first-voting-and-terminal-cycles.test.ts"
+    }
+  ],
+  "runtime": {
+    "exitCode": 0,
+    "elapsedSeconds": 1.5184249877929688,
+    "sourcesUnchanged": true,
+    "after": {
+      "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts": "629c9d930e4aca863e97c1414f021b1fc5a394161b319f8bdee65bbb1295fe29",
+      "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts": "1c37d8ab839f6f613a34cfe2e9e9e2bd183dd4986b1fb41fb14bdfef96202fcf",
+      "backend/tests/scenarios/failures/runtime/concurrent-error-prefix.test.ts": "1f4131c5cdbd7207d07944d06e7486688f14bc3eb746f8965202fd4bba9b5621",
+      "backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts": "3da84816b8de03941970f4d3f14cbd502a25f9ba4a083249da8ea00942100158",
+      "backend/tests/scenarios/events/wall-notes/first-voting-and-terminal-cycles.test.ts": "2ff7ec30857c9a2b515f3269d3f5a796fe8327413bf8b7ff9bf0e9ff4020b375",
+      "backend/src/features/wall-notes/window.ts": "e2bb7dc26a3bcc4697c66f3502fdbc91f92039b1236991b07b93ed14d54263fb",
+      "backend/src/domain/request-lease.ts": "6f3c2ecb9e6a159c24b63588b72a831236d4b97c92e2fd56fc78f5ecd7ca6c01",
+      "bun.lock": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288"
+    }
+  },
+  "result": {
+    "pass": 19,
+    "fail": 0,
+    "filtered": 15,
+    "expect": 111,
+    "files": 5
+  },
+  "typeCheck": {
+    "command": [
+      "/usr/bin/bun",
+      "--no-env-file",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "tsconfig.tests.json",
+      "--noEmit"
+    ],
+    "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+    "exitCode": 0,
+    "stdoutBytes": 0,
+    "stderrBytes": 0
+  },
+  "peer": {
+    "sha256": "9d83bb7774218af43b92aea2975dbd0d72b4e4e45f309eab2174eaef41ba1df0",
+    "reportArchiveMember": "awa-c47-scenario-input-repair-independent/independent-review.json"
+  },
+  "archive": {
+    "path": "docs/history/acceptance/c47-scenario-inputs.tar.gz",
+    "sha256": "95f1d495f87d6564e8f040bad050dbaabbd92d3ef746e2681dbf98abcba0a295",
+    "bytes": 72061,
+    "members": 41
+  },
+  "limits": [
+    "原失败来源为被中断的大场景运行中固定的19条已观察声明，非全suite终态。",
+    "只修配置输入、公开归档解包及真实Trace故障注入点，不改生产、不弱化原断言。",
+    "15个同文件未受影响声明不重复；最终C47同输入全量尚待运行。"
+  ]
+}

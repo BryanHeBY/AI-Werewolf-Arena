@@ -101,7 +101,7 @@ for (const diskFailure of [false, true])
             file,
             data,
           ) {
-            if (file === "replay.json" && (data as any).result?.reason === "runtime_error")
+            if (file === "replay.json" && readReplayDocument(data).result?.reason === "runtime_error")
               throw persistence;
             return write.call(this, file, data);
           })

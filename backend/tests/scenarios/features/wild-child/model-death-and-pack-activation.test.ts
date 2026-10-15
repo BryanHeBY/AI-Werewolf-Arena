@@ -160,7 +160,7 @@ for (const ids of [
 ])
   test(`whole first wave ${ids} leaves simultaneous dead child Good`, async () => {
     const g = fixture();
-    await setup(g);
+    await setup({ ...g, config: g.boardConfig });
     await deaths(g, ids);
     expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     expect(g.events.some((e) => e.type === "wild_child_transformed")).toBe(false);
@@ -179,7 +179,7 @@ for (const ids of [
       Role.Wolf,
       Role.Villager,
     ]);
-    await setup(g);
+    await setup({ ...g, config: g.boardConfig });
     await new DeathResolution(
       g.world,
       g.events,
@@ -207,7 +207,7 @@ for (const ids of [
 
 test("Hunter model first dies then shoots Child in the next wave: Wolf death, no activation", async () => {
   const g = fixture([Role.WildChild, Role.Hunter, Role.Wolf, Role.Villager, Role.Seer, Role.Witch]);
-  await setup(g);
+  await setup({ ...g, config: g.boardConfig });
   await deaths(g, [2], DeathCause.Exile, 1);
   expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
   expect(g.world.getComponent(1, COMPONENT.Alive)!.alive).toBe(false);
@@ -220,7 +220,7 @@ test("Hunter model first dies then shoots Child in the next wave: Wolf death, no
 for (const change of ["modelRevive", "modelReplace", "childRevive"] as const)
   test(`${change}: external new life cannot trigger or activate an old relationship`, async () => {
     const g = fixture();
-    await setup(g);
+    await setup({ ...g, config: g.boardConfig });
     const id = change === "childRevive" ? 1 : 2;
     if (change === "modelReplace")
       g.world.addComponent(id, COMPONENT.Alive, createAliveComponent());
@@ -238,7 +238,7 @@ for (const change of ["modelRevive", "modelReplace", "childRevive"] as const)
 
 test("accepted model binding survives later role/camp change without learning or copying it", async () => {
   const g = fixture();
-  await setup(g);
+  await setup({ ...g, config: g.boardConfig });
   role(g, 2).role = Role.Villager;
   g.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
   await deaths(g, [2]);
@@ -249,7 +249,7 @@ test("accepted model binding survives later role/camp change without learning or
 
 test("raw external dead flip does not trigger a model elimination", async () => {
   const g = fixture();
-  await setup(g);
+  await setup({ ...g, config: g.boardConfig });
   g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   await deaths(g, [2]);
   expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
@@ -258,7 +258,7 @@ test("raw external dead flip does not trigger a model elimination", async () => 
 
 test("active dead Child retains pack knowledge while losing chat/knife; revival never restores actions", async () => {
   const g = fixture();
-  await setup(g);
+  await setup({ ...g, config: g.boardConfig });
   await deaths(g, [2]);
   openWildChildNight(g.world, 2, g.events)();
   await deaths(g, [1]);
@@ -273,7 +273,7 @@ test("active dead Child retains pack knowledge while losing chat/knife; revival 
 test("private resource accessors revoke death trigger/pack access without executing getters", async () => {
   for (const stage of ["chosen", "active"]) {
     const g = fixture();
-    await setup(g);
+    await setup({ ...g, config: g.boardConfig });
     if (stage === "active") {
       await deaths(g, [2]);
       openWildChildNight(g.world, 2, g.events)();
@@ -295,7 +295,7 @@ test("private resource accessors revoke death trigger/pack access without execut
 
 test("current queries never activate an eligible child or backfill old wolf events", async () => {
   const g = fixture();
-  await setup(g);
+  await setup({ ...g, config: g.boardConfig });
   const old = wolfTeamEvent(g.world, getDefaultRoleCatalog(), {
     timestamp: 1,
     type: "wolf_discussion",

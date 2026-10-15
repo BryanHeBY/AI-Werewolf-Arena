@@ -6,6 +6,8 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { World } from "../../../../src/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
@@ -26,7 +28,7 @@ import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/features/radiant-eclipse/
 import { DREAMER_NIGHT_STAGE } from "../../../../src/features/dreamer/night-stages";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import type { ActionProvider, BoardConfig } from "../../../../src/domain/model";
+import type { ActionProvider } from "../../../../src/domain/model";
 
 function fixture() {
   const world = new World();
@@ -102,13 +104,15 @@ class Stages extends NightStageRegistry {
   }
 }
 
-const config = {
-  boardSize: 12,
-  enableSheriff: false,
-  hooks: { onDaybreak: false, onPreElection: false, onPreVote: false, onPerSpeechGap: false },
-  roleSetups: [],
-  radiantEclipse: { policy: "awa_radiant_eclipse_v1" },
-} as BoardConfig;
+// 使用已交付的完整公开板子通过现有有限准入；仍由原手写 World、两阶段与字面重入预期驱动本场景。
+const config = parseBoardDefinition(
+  JSON.parse(
+    readFileSync(
+      new URL("../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+      "utf8",
+    ),
+  ),
+).config;
 
 test("rejected actual pipeline reentry must not abort the original pending borrowed Dream lease", async () => {
   const f = fixture(),
