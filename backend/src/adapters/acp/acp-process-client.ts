@@ -298,13 +298,29 @@ class AcpProcessSession implements AcpSession {
   async prompt(text: string): Promise<void> {
     if (this.closed) throw new Error("acp_session_closed");
     this.resetAuditTrace();
-    const prompt = this.session.prompt(text);
-    // prompt 与 update 消费并行；finally 仍等 update，消费／回调失败按原策略接住，不表示会话已关闭。
-    const updates = this.consumeUpdates().catch(() => undefined);
+    let promptFailure: { error: unknown } | undefined;
+    let updateFailure: { error: unknown } | undefined;
+    // 两条任务立即登记拒绝处理，避免任一任务先失败时产生未处理拒绝。
+    const prompt = this.session.prompt(text).catch((error) => {
+      promptFailure = { error };
+      throw error;
+    });
+    const updates = this.consumeUpdates().catch((error) => {
+      updateFailure = { error };
+      throw error;
+    });
     try {
-      await prompt;
-    } finally {
-      await updates;
+      await Promise.all([prompt, updates]);
+    } catch {
+      // prompt 失败仍排空已到达更新；消费自身失败则立即返回，不能等可能依赖工具授权的 prompt。
+      if (!updateFailure) await Promise.allSettled([updates]);
+      const failures = [promptFailure, updateFailure]
+        .filter((failure) => failure !== undefined)
+        .map((failure) => failure.error);
+      // SDK 会把同一协议错误同时交给 prompt 和队列；保留原对象，不重复包装同一原因。
+      if (failures.length === 2 && !Object.is(failures[0], failures[1]))
+        throw new AggregateError(failures, "acp_prompt_and_updates_failed");
+      throw failures[0];
     }
   }
 
@@ -449,18 +465,36 @@ class AcpProcessSession implements AcpSession {
   }
 
   private async consumeUpdates(): Promise<void> {
+    const failures: unknown[] = [];
     try {
       for (;;) {
         const message = await this.session.nextUpdate();
-        if (message.kind === "stop") return;
+        if (message.kind === "stop") break;
         this.trackInjectedMcpToolCall(message.update);
         this.captureAuditUpdate(message.update);
-        this.onUpdate?.({ actorId: this.actorId, update: message.update });
+        try {
+          this.onUpdate?.({ actorId: this.actorId, update: message.update });
+        } catch (error) {
+          // 显示失败延后报告；授权登记和后续协议更新必须继续处理。
+          failures.push(error);
+        }
       }
+    } catch (error) {
+      failures.unshift(error);
     } finally {
-      this.flushAuditMessage();
-      this.onPromptEnd?.(this.actorId);
+      try {
+        this.flushAuditMessage();
+      } catch (error) {
+        failures.push(error);
+      }
+      try {
+        this.onPromptEnd?.(this.actorId);
+      } catch (error) {
+        failures.push(error);
+      }
     }
+    if (failures.length === 1) throw failures[0];
+    if (failures.length > 1) throw new AggregateError(failures, "acp_update_processing_failed");
   }
 
   private captureAuditUpdate(update: unknown): void {

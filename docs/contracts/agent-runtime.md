@@ -6,6 +6,8 @@ provider内scheduler按明确provider ID共享限额，跨provider独立；不�
 
 ACP wire session ID只在连接内有意义，内部registry key绑定具体owner，模型turn_id仍原短ID。MCP无效turn先核owner／开放状态；原JSON返回引用和受众不被文档整理改成新schema。
 
+ACP 更新先处理工具授权登记与审计缓冲，再调用同步显示回调。显示回调抛错后仍消费后续更新，错误在本轮结束时报告；协议消费失败立即向调用方传播，不等待可能依赖工具授权的 prompt。prompt 自身失败仍排空已到达更新，多个独立错误一并保留，结束回调不能覆盖原失败。
+
 创建等待中止不抢占任意Promise，也不等于向已建立会话发送cancel。晚到创建仍归原owner回收；有界close超时要报告未完成，不能先清计数伪释放。内置session／MCP／进程的取消、graceful、TERM／KILL和清理保各自实际捕获失败范围，不能承诺任意getter／wait／destroy／unref throw都已被统一catch。
 
 Fallback可在原政策下处理模型失败或预算耗尽；外来TimeoutError／AbortError不因名字相同就当自己的取消。body、关闭、最终保存／observer flush真实错误不能被晚回调覆盖或静默二次兜底。

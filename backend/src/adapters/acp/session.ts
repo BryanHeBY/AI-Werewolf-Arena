@@ -52,8 +52,9 @@ export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
   env?: Record<string, string>;
   cwd: string;
   initializeTimeoutMs?: number;
+  /** 同步显示回调；抛错后继续消费协议更新，并在本次 prompt 结束时报告原错误。 */
   onUpdate?: (update: AcpSessionUpdate) => void;
-  /** prompt 更新流结束时调用，包括错误／取消；不是领域动作已成功提交的回执。 */
+  /** 更新流结束时调用，包括错误／取消；异常与已有错误一并报告，不覆盖协议失败或表示行动成功。 */
   onPromptEnd?: (actorId: number) => void;
   mcpBridge?: AcpMcpBridgeFactory<TRegistry>;
   /** session/new 后通过标准 ACP session/set_config_option 应用。 */
