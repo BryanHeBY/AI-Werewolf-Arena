@@ -7,6 +7,7 @@ import { expect, type Locator, type Page } from "@playwright/test";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayDisplayOptions } from "../../src/replay/replay-display";
 import { replayBrowserPlan } from "./replay-browser-frame";
+import { videoCaptionRange } from "../../src/video/captions";
 
 async function seek(slider: Locator, frame: number) {
   await slider.evaluate((element, value) => {
@@ -49,15 +50,18 @@ export async function expectReplayCaption(
   const slider = page.locator('.frame-control input[type="range"]');
   const savedFrame = Number(await slider.inputValue());
   const texts: string[] = [];
+  const range = videoCaptionRange(
+    replayBrowserPlan(replay, display).layout,
+    shot.scene,
+    shot.durationFrames,
+  );
   try {
     for (let index = 0; index < shot.captionPages.length; index++) {
       await seek(
         slider,
         shot.from +
-          Math.max(
-            shot.scene.cues.impact,
-            Math.ceil((index * shot.durationFrames) / shot.captionPages.length),
-          ),
+          range.from +
+          Math.ceil((index * range.durationFrames) / shot.captionPages.length),
       );
       await expect(marker).toHaveAttribute("data-event-seq", String(expected.seq));
       await expect(page.getByTestId("composition-caption")).toHaveAttribute(
