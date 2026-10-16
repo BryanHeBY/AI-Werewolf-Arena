@@ -98,7 +98,7 @@ test("broadcast merges only the recorded ballot window and preserves raw weighte
   expect(buildVideoFrame(plan, shot.from + 40).currentView.players[2]!.alive).toBe(false);
   expect(getVideoEventFrame(plan, 7)).toBe(shot.from + 40);
   expect(shot.speech.map((cue) => [cue.speaker, cue.from, cue.durationFrames])).toEqual([
-    ["god", 0, 40],
+    ["god", 24, 16],
     ["god", 40, shot.durationFrames - 40],
   ]);
   expect(JSON.parse(JSON.stringify(plan))).toEqual(plan);

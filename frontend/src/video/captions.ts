@@ -2,6 +2,17 @@
  * 负责将长字幕按保守字宽预算分页。输入为原文字串、行宽与行数，输出原文的连续切片，拼接后与原文一致。
  * 行宽只用于计算页边界，浏览器自然换行；原有换行保留，分页不依赖字体测量，预览与导出使用同一结果。
  */
+import type { VideoLayoutId, VideoScene } from "./types";
+
+/** 广播结果正文从揭晓后开始分页；玩家发言和旧布局沿用整段时钟，供纯帧与导航共用。 */
+export function videoCaptionRange(
+  layout: VideoLayoutId,
+  scene: Pick<VideoScene, "kind" | "cues">,
+  durationFrames: number,
+) {
+  const from = layout === "broadcast-v1" && scene.kind !== "speech" ? scene.cues.impact : 0;
+  return { from, durationFrames: durationFrames - from };
+}
 export function paginateVideoCaption(text: string, columns = 72, maxLines = 3): string[] {
   if (
     !Number.isSafeInteger(columns) ||

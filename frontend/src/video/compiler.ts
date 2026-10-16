@@ -451,6 +451,37 @@ export function compileVideoPlan(
       1,
     );
     const scene = compileScene(base, edit.scene, edit.emphasis, fps, durationFrames, playerIds);
+    if (
+      layout === "broadcast-v1" &&
+      (kind === "hold" || (!event && !committedFact)) &&
+      edit.scene?.cues === undefined
+    )
+      scene.cues = { establish: 0, travel: 0, impact: 0, settled: 0 };
+    if (layout === "broadcast-v1" && scene.kind !== "speech") {
+      if (pageCount > durationFrames) fail("caption_duration_too_short");
+      const latestImpact = durationFrames - pageCount;
+      if (scene.cues.impact > latestImpact) {
+        // 自动节拍为每页保留至少一帧；显式节拍冲突必须报告，不能悄悄吞掉第一页。
+        if (
+          edit.scene?.cues?.impact !== undefined ||
+          (edit.scene?.cues?.travel ?? 0) > latestImpact ||
+          (edit.scene?.cues?.establish ?? 0) > latestImpact
+        )
+          fail("caption_reveal_conflict");
+        scene.cues.impact = latestImpact;
+        scene.cues.travel = Math.min(scene.cues.travel, latestImpact);
+        scene.cues.establish = Math.min(scene.cues.establish, scene.cues.travel);
+      }
+      if (!edit.speech && kind === "event" && speech.length)
+        speech = [
+          {
+            speaker: speech[0]!.speaker,
+            text: scene.body,
+            from: scene.cues.impact,
+            durationFrames: durationFrames - scene.cues.impact,
+          },
+        ];
+    }
     if (endIndex > index && replay.events[endIndex]!.type === "voted_out") {
       scene.resolution = {
         text: eventLabel(replay.events[endIndex]!, options.locale, playerIds, names),
@@ -461,13 +492,13 @@ export function compileVideoPlan(
         const resolution = scene.resolution;
         const voice = speech[0]!.speaker;
         speech =
-          resolution.revealFrame > 0
+          resolution.revealFrame > scene.cues.impact
             ? [
                 {
                   speaker: voice,
                   text: scene.body,
-                  from: 0,
-                  durationFrames: resolution.revealFrame,
+                  from: scene.cues.impact,
+                  durationFrames: resolution.revealFrame - scene.cues.impact,
                 },
                 {
                   speaker: voice,
@@ -476,7 +507,14 @@ export function compileVideoPlan(
                   durationFrames: durationFrames - resolution.revealFrame,
                 },
               ]
-            : [{ speaker: voice, text: `${scene.body}\n${resolution.text}` }];
+            : [
+                {
+                  speaker: voice,
+                  text: `${scene.body}\n${resolution.text}`,
+                  from: scene.cues.impact,
+                  durationFrames: durationFrames - scene.cues.impact,
+                },
+              ];
       }
     }
     const compiledSpeech: CompiledSpeechCue[] = speech.map((cue, cueIndex) => {

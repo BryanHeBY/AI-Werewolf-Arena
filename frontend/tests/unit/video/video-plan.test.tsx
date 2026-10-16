@@ -493,6 +493,7 @@ test("empty canonical archive still yields one readable frame and zero gameplay 
   const plan = compileVideoPlan(replay);
   expect(plan.shots).toHaveLength(1);
   expect(plan.shots[0].eventSeq).toBeNull();
+  expect(plan.shots[0].scene.cues.impact).toBe(0);
   expect(buildVideoFrame(plan, 0).caption).toContain("暂无事件");
   expect(paginateVideoCaption("a\nb\nc\nd", 58, 3)).toEqual(["a\nb\nc\n", "d"]);
 });

@@ -4,6 +4,7 @@
  */
 import { cameraTargetPose, createVideoLayout, type CameraPose, type VideoLayout } from "./layout";
 import type { CameraKeyframe, PlannedAudioCue, VideoPlan, VideoShot } from "./types";
+import { videoCaptionRange } from "./captions";
 
 function cameraAt(
   keys: CameraKeyframe[],
@@ -59,9 +60,13 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     plan.layout,
   );
   const { pose: camera, focusPlayerIds } = cameraAt(shot.camera, localFrame, layout);
+  const captionRange = videoCaptionRange(plan.layout, shot.scene, shot.durationFrames);
   const captionPageIndex = Math.min(
     shot.captionPages.length - 1,
-    Math.floor((localFrame * shot.captionPages.length) / shot.durationFrames),
+    Math.floor(
+      (Math.max(0, localFrame - captionRange.from) * shot.captionPages.length) /
+        captionRange.durationFrames,
+    ),
   );
   const activeLayers = shot.layers.filter(
     (layer) => localFrame >= layer.from && localFrame < layer.from + layer.durationFrames,
@@ -109,6 +114,7 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     focusPlayerIds,
     activeLayers,
     captionPageIndex,
+    captionRange,
     captionOffset: shot.captionPageOffsets[captionPageIndex] ?? 0,
     caption: shot.captionPages[captionPageIndex] ?? "",
     translation: { x: translateX, y: translateY },
