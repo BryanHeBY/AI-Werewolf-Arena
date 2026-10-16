@@ -625,3 +625,37 @@ test("emphasis order is independent of author order, overlaps reject and identic
   expect(buildVideoFrame(repeated, 90).captionOffset).toBe(216);
   expect(shot.scene.emphasis).toEqual([{ text: "x", start: 300, end: 301 }]);
 });
+
+test("camera targets select explicit central focus IDs at keyframes without moving fixed roster anchors", () => {
+  const document = replay([
+    { type: "day_speech", phase: "day", payload: { actorId: 1, text: "这段话没有提到十二号。" } },
+  ]);
+  const plan = compileVideoPlan(
+    document,
+    script(document, {
+      layout: "broadcast-v1",
+      edits: [
+        {
+          anchor: { seq: 1, type: "day_speech" },
+          durationFrames: 40,
+          camera: [
+            { frame: 0, target: "table" },
+            { frame: 10, target: { playerIds: [12] }, zoom: 1.8 },
+            { frame: 20, target: { playerIds: [2, 5] } },
+            { frame: 30, target: "table" },
+          ],
+        },
+      ],
+    }),
+  );
+  const original = buildVideoFrame(plan, 0).layout.seats;
+  expect(buildVideoFrame(plan, 0).focusPlayerIds).toEqual([]);
+  expect(buildVideoFrame(plan, 9).focusPlayerIds).toEqual([]);
+  expect(buildVideoFrame(plan, 10).focusPlayerIds).toEqual([12]);
+  expect(buildVideoFrame(plan, 19).focusPlayerIds).toEqual([12]);
+  expect(buildVideoFrame(plan, 20).focusPlayerIds).toEqual([2, 5]);
+  expect(buildVideoFrame(plan, 30).focusPlayerIds).toEqual([]);
+  for (const frame of [10, 19, 20, 30])
+    expect(buildVideoFrame(plan, frame).layout.seats).toEqual(original);
+  expect(buildVideoFrame(plan, 10).scene.actorId).toBe(1);
+});

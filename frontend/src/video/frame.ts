@@ -5,21 +5,29 @@
 import { cameraTargetPose, createVideoLayout, type CameraPose, type VideoLayout } from "./layout";
 import type { CameraKeyframe, PlannedAudioCue, VideoPlan, VideoShot } from "./types";
 
-function cameraAt(keys: CameraKeyframe[], frame: number, layout: VideoLayout): CameraPose {
+function cameraAt(
+  keys: CameraKeyframe[],
+  frame: number,
+  layout: VideoLayout,
+): { pose: CameraPose; focusPlayerIds: number[] } {
   let index = 0;
   while (index + 1 < keys.length && keys[index + 1].frame <= frame) index++;
   const key = keys[index],
     next = keys[index + 1];
   const first = cameraTargetPose(key.target, key.zoom, layout);
-  if (!next) return first;
+  const focusPlayerIds = key.target === "table" ? [] : [...key.target.playerIds];
+  if (!next) return { pose: first, focusPlayerIds };
   const last = cameraTargetPose(next.target, next.zoom, layout);
   let t = (frame - key.frame) / (next.frame - key.frame);
   if (key.easing === "hold") t = 0;
   else if ((key.easing ?? "smooth") === "smooth") t = t * t * (3 - 2 * t);
   return {
-    x: first.x + (last.x - first.x) * t,
-    y: first.y + (last.y - first.y) * t,
-    scale: first.scale + (last.scale - first.scale) * t,
+    pose: {
+      x: first.x + (last.x - first.x) * t,
+      y: first.y + (last.y - first.y) * t,
+      scale: first.scale + (last.scale - first.scale) * t,
+    },
+    focusPlayerIds,
   };
 }
 function findShot(plan: VideoPlan, frame: number): number {
@@ -50,7 +58,7 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     plan.height,
     plan.layout,
   );
-  const camera = cameraAt(shot.camera, localFrame, layout);
+  const { pose: camera, focusPlayerIds } = cameraAt(shot.camera, localFrame, layout);
   const captionPageIndex = Math.min(
     shot.captionPages.length - 1,
     Math.floor((localFrame * shot.captionPages.length) / shot.durationFrames),
@@ -89,6 +97,8 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
             : ("settled" as const),
     layout,
     camera,
+    /** 当前关键帧明确选定的中央人物，插值阶段仍保持来源关键帧目标；HUD几何不随此名单移动。 */
+    focusPlayerIds,
     activeLayers,
     captionPageIndex,
     captionOffset: shot.captionPageOffsets[captionPageIndex] ?? 0,
