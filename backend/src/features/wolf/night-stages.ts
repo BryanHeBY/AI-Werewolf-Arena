@@ -5,6 +5,7 @@
  * 原演员快照晚查实际阵营值，不增加 Camp 引用撤权；每个提交仍晚查现有狼队执行资格。
  * 不增加重试额度、重建已失效的身体或把发表事实当付款；首失败和已写前缀维持原边界。
  */
+import { recordReplayFact } from "../../domain/replay-fact-log";
 import { publishNobleNightKnife } from "../noble-secret-body/knife-ports";
 import { isMistRavenBoard } from "../mist-raven/knife-ports";
 import {
@@ -159,9 +160,17 @@ const wolfKillVoteStage: NightStageHandler = {
       ctx.state.wolfTarget = null;
       delete ctx.state.wolfTargetScope;
       ctx.state.wolfTargetVoters = [];
+      recordReplayFact(ctx.events, {
+        kind: "wolf_knife_committed",
+        day: ctx.currentDay(),
+        participantIds: [],
+        requestedTargetId: null,
+        effectiveTargetId: null,
+      });
       return;
     }
     const acceptedTargets: AcceptedWolfKnifeTarget[] = [];
+    const participantIds: EntityId[] = [];
     // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
     const knifeHolders = wolfKnifeHolders(ctx.world, ctx.roleCatalog);
     // 保留普通狼队原次序；仅有刀权的角色在后半名单独立加入。
@@ -326,6 +335,7 @@ const wolfKillVoteStage: NightStageHandler = {
           },
         }),
       );
+      participantIds.push(wolfId);
       safeRecordLogicOp({
         scope: "phase_pipeline",
         op: "wolf_kill_vote_cast",
@@ -350,7 +360,13 @@ const wolfKillVoteStage: NightStageHandler = {
       if (current)
         ctx.state.wolfVotes[target.targetId] = (ctx.state.wolfVotes[target.targetId] ?? 0) + 1;
     }
-    const wolfTarget = resolveOrdinaryWolfKnife(ctx, acceptedTargets, voteOrder, explicitPasses);
+    const wolfTarget = resolveOrdinaryWolfKnife(
+      ctx,
+      acceptedTargets,
+      voteOrder,
+      explicitPasses,
+      participantIds,
+    );
     publishNobleNightKnife(() => ctx, wolfTarget);
   },
 };

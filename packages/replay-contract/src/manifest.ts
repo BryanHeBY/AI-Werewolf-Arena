@@ -16,6 +16,7 @@ import {
   type RecordingIdentities,
 } from "./archive-envelope";
 import { readVictoryResult } from "./outcomes";
+import { isReplayModelLabel } from "./player-display";
 
 export const MANIFEST_SCHEMA_VERSION = 1 as const;
 export interface ReplayManifestPlayerData {
@@ -24,6 +25,8 @@ export interface ReplayManifestPlayerData {
   camp: string;
   alive: boolean;
   name?: string;
+  seat?: number;
+  model?: string;
 }
 /** seed 仅属于私有会话清单／严格 Tape；公开或 player envelope 的 build 不包含该字段。 */
 export interface ReplayManifestData {
@@ -65,7 +68,9 @@ function assertManifestShape(value: unknown): asserts value is ReplayManifestDat
         typeof p.role === "string" &&
         typeof p.camp === "string" &&
         typeof p.alive === "boolean" &&
-        (p.name === undefined || typeof p.name === "string"),
+        (p.name === undefined || typeof p.name === "string") &&
+        (p.seat === undefined || (Number.isSafeInteger(p.seat) && Number(p.seat) > 0)) &&
+        (p.model === undefined || isReplayModelLabel(p.model)),
       "manifest.players",
     );
   }

@@ -4,6 +4,7 @@
  * 原毒来源复用既有 abilityId／目标参数读取，不新增 getter、资格重检或资源回滚。
  * 查验先调用状态 owner 再追加咒狐提案；本模块不替换状态槽，原体／当前性句柄仅留原运行效果，不进入玩家知识。
  */
+import { recordPotionStock } from "../../domain/replay-fact-log";
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { Camp, Phase, PotionType, StatusMark, type ToolName } from "../../domain/model";
@@ -88,6 +89,8 @@ export function recipientAbilityStage(
             ability.activation === policy &&
             (ability.kind !== "potion" || ability.state.poison > 0);
           if (!current()) continue;
+          if (ability.kind === "potion")
+            recordPotionStock(ctx.events, day, actorId, ability.id, ability.state);
           const tool: ToolName =
             ability.kind === "seer_check"
               ? "check_identity"
@@ -250,6 +253,7 @@ export function recipientAbilityStage(
               );
               ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
               WITCH_STATE_SLOT.allowedWrites.consumeRecipientPoison(ability);
+              recordPotionStock(ctx.events, day, actorId, ability.id, ability.state);
               ctx.events.push({
                 timestamp: Date.now(),
                 type: "witch_potion_used",

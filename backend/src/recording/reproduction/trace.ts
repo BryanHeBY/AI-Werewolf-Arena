@@ -5,6 +5,8 @@
  * 状态先写入再通知录制器，通知失败不回滚已写前缀；终结保留不完整与 pending 的原拒绝顺序。
  * Node 对象检查仅处理 provider 数据，不进入共享浏览器契约；不控制阶段、持久化文件或复盘版本。
  */
+import { replayFactLog } from "../../domain/replay-fact-log";
+import type { ReplayFactLog } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { Camp, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
@@ -83,6 +85,7 @@ export class ReproductionTrace {
   private readonly decisions: RecordedDecision[] = [];
   private readonly checkpoints: RecordedCheckpoint[] = [];
   private events: RecordedGameEvent[] = [];
+  private factLog?: ReplayFactLog;
   private settled = 0;
   private invalid = false;
   private readonly errors: Array<{ scope: ReproductionFailureScope; name: RecordedErrorName }> = [];
@@ -203,6 +206,7 @@ export class ReproductionTrace {
           : checkpoint,
       ),
     );
+    this.factLog = replayFactLog(events);
     this.events = structuredClone(
       events.map(({ payload, ...event }) => ({ ...event, payload: { ...payload } })),
     );
@@ -217,6 +221,7 @@ export class ReproductionTrace {
     if (currentEvents && currentEvents.length < (this.checkpoints.at(-1)?.eventCount ?? 0))
       throw new Error("reproduction_live_events_before_checkpoint");
     const record = {
+      ...(currentEvents ? replayFactLog(currentEvents) : this.factLog),
       schemaVersion: REPRODUCTION_SCHEMA_VERSION,
       finalized: Boolean(input),
       metadata: this.metadata,

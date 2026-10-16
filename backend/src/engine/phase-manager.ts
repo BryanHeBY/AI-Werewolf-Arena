@@ -16,6 +16,7 @@
  * 骑士日结算在原提交与死亡之后恢复具名同步序列，本经理保原死亡等待、判胜回调和阶段写权。
  * 普通黎明原因／原生命提案及动物／双生夜报名单归规则 owner；本经理先写完成标志，保原死亡 await、清理及封盘。
  */
+import { enableReplayFacts, copyReplayFacts } from "../domain/replay-fact-log";
 import { bindVictoryQueries } from "../rulesets/victory/default-specs";
 import { finishSilenceDay } from "../rulesets/silence-expression-plan";
 import {
@@ -130,7 +131,11 @@ import { createRandom, type RandomSource } from "../domain/random";
 export class PhaseManager {
   readonly #rulePlan: RulePlan;
   private readonly config: ReadonlyBoardConfig;
-  private readonly events: GameEvent[] = [];
+  private readonly events: GameEvent[] = (() => {
+    const events: GameEvent[] = [];
+    enableReplayFacts(events);
+    return events;
+  })();
   private readonly eventRegistry: EventRegistry;
   private readonly nightPipeline: NightPipeline;
   private readonly dayPipeline: DayPipeline;
@@ -268,11 +273,13 @@ export class PhaseManager {
 
   /** 获取脱离克隆的累计事件；历史 audience 数组在副本中保持冻结。 */
   getEvents(): GameEvent[] {
-    return this.events.map((event) => {
+    const snapshot = this.events.map((event) => {
       const copy = structuredClone(event);
       if ("audience" in copy) Object.freeze(copy.audience);
       return copy;
     });
+    copyReplayFacts(this.events, snapshot);
+    return snapshot;
   }
 
   /**

@@ -5,6 +5,7 @@
  * 本所有者不收集死亡波、遗言、枪击选择或警徽决定，不切换阶段，也不执行枪的最终过期。
  * 写入与记录失败均保留原先已提交的前缀，不回滚或提前发布已结算账本条目。
  */
+import { hasReplayFacts, recordReplayFact } from "../domain/replay-fact-log";
 import {
   DeathCommitReceipt,
   committedDeathEntry,
@@ -93,7 +94,21 @@ export class DeathCommitter {
       // 新prepare的原体约束在全部旧查询之后核；没有绑定的旧plan不额外读取World或访问器。
       if (hasDeathWaveOriginalLives(committedWave))
         assertDeathWaveOriginalLife(committedWave, this.context.world, id, alive);
+      const beforeVersion = aliveLifeVersion(alive);
       alive.alive = false;
+      // Alive 写入成功即记录，后续死亡钩子或档案失败不得撤销已经发生的生命变化。
+      if (
+        beforeVersion !== undefined &&
+        aliveLifeVersion(alive) !== beforeVersion &&
+        hasReplayFacts(this.context.events)
+      )
+        recordReplayFact(this.context.events, {
+          kind: "life_committed",
+          day: this.context.state.day,
+          playerId: id,
+          alive: false,
+          causes: [...(sources[id] ?? [])],
+        });
       if (firstSettlement && isAnimalDreamBoard(this.context.world)) {
         if (
           (sources[id] ?? []).includes(DeathCause.WolfKill) &&

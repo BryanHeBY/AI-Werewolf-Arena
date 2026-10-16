@@ -156,6 +156,9 @@ test("returned candidate: a real provider throw stays absent and old Tape2 shape
   expect(Object.hasOwn(record.decisions[0]!, "returnedCandidate")).toBe(false);
   const legacyShape = structuredClone(record);
   legacyShape.schemaVersion = 2;
+  // 独立事实流只属于新 Tape3；历史形状不携带新覆盖声明，不能仅改版本保留新字段。
+  delete legacyShape.facts;
+  delete legacyShape.factCoverage;
   const root = await createTestTempDirectory("awa-returned-candidate-legacy-");
   expect((await replayReproduction(legacyShape, root)).snapshot).toEqual(
     game.phaseManager.getSnapshot(),

@@ -25,6 +25,10 @@ export const REPLAY_SCHEMA_VERSION = 2 as const;
 export * from "./inspection";
 export * from "./gravekeeper";
 export * from "./outcomes";
+export * from "./replay-facts";
+import { readReplayFactLog, type ReplayFactLog } from "./replay-facts";
+export { isReplayModelLabel } from "./player-display";
+import { isReplayModelLabel } from "./player-display";
 
 /**
  * 浏览器与视频消费的公开复盘数据形状；展示视图不充当已持久化完整归档。
@@ -44,7 +48,7 @@ export interface ReplayEvent {
   payload: Record<string, unknown>;
 }
 
-export interface ReplayDocument {
+export interface ReplayDocument extends Partial<ReplayFactLog> {
   schemaVersion: typeof REPLAY_SCHEMA_VERSION;
   sessionId: string;
   perspective: ReplayPerspective;
@@ -65,6 +69,9 @@ export interface ReplayDocument {
     role: string;
     camp: string;
     name?: string;
+    /** 座位与模型仅为展示资料；缺省不能从编号或昵称推断。 */
+    seat?: number;
+    model?: string;
   }>;
   events: ReplayEvent[];
 }
@@ -99,6 +106,7 @@ function assertReplayShape(
   );
 
   const playerIds = new Set<number>();
+  const seats = new Set<number>();
   for (let index = 0; index < value.players.length; index += 1) {
     const player: unknown = value.players[index];
     const path = `players[${index}]`;
@@ -114,6 +122,15 @@ function assertReplayShape(
     assertField(typeof player.role === "string", `${path}.role`);
     assertField(typeof player.camp === "string", `${path}.camp`);
     assertField(player.name === undefined || typeof player.name === "string", `${path}.name`);
+    assertField(
+      player.seat === undefined || (Number.isSafeInteger(player.seat) && Number(player.seat) > 0),
+      `${path}.seat`,
+    );
+    if (typeof player.seat === "number") {
+      assertField(!seats.has(player.seat), `${path}.seat`);
+      seats.add(player.seat);
+    }
+    assertField(player.model === undefined || isReplayModelLabel(player.model), `${path}.model`);
   }
 
   for (let index = 0; index < value.events.length; index += 1) {
@@ -131,6 +148,7 @@ function assertReplayShape(
     assertField(typeof event.type === "string", `${path}.type`);
     assertField(isRecord(event.payload), `${path}.payload`);
   }
+  readReplayFactLog(value, value.events.length);
   const decision = Object.getOwnPropertyDescriptor(value.result, "decision");
   if (decision) {
     assertField("value" in decision && decision.enumerable === true, "result.decision");

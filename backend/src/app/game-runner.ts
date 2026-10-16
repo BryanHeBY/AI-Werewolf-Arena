@@ -9,6 +9,7 @@ import { deriveBoundedRequest, isRequestDeliveryExpired } from "../domain/reques
 import { animalOriginalAuditIds, animalOriginalAuditPlayer } from "../features/animal-dream/roster";
 import { aliveLifeDescriptor } from "../domain/components/alive";
 import { initialPlayerIdentity } from "../domain/initial-roster";
+import { replayPlayerDisplay } from "./replay-player-display";
 import { publicPlayerRoster } from "../domain/public-player-roster";
 import { initialIdentityDeal } from "../features/initial-identity/deal";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -385,7 +386,14 @@ export async function runGame(
           finishReason: failures.length
             ? "runtime_error"
             : (snapshot.result?.reason ?? (timedOut ? "runtime_timeout" : "completed")),
-          players: replayPlayers(context.world),
+          players: replayPlayers(context.world).map((player) => ({
+            ...player,
+            ...replayPlayerDisplay(
+              context.world,
+              player.player_id,
+              profilesByActor.get(player.player_id)?.model,
+            ),
+          })),
         });
         // 核心终档失败进入汇总；诊断摘要为可选输出，其异常只写日志。
         try {

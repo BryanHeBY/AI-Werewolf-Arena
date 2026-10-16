@@ -6,6 +6,7 @@
  * 原毒／反射毒使用折叠后的 owned 因果去向；外部 legacy 保留原集合后备政策。
  * 普通狼刀、机械额外刀和觉醒额外刀保留各自的保护规则，不归并不同死因。
  */
+import type { NightProtectionEvidence } from "./damage-evidence";
 import { DeathCause } from "./deaths";
 import { StatusMark, type EntityId } from "./identity";
 import type { StatusMarksComponent } from "./components/status-marks";
@@ -43,6 +44,7 @@ export function resolveNightDamageTarget(
   marks: Readonly<Pick<StatusMarksComponent, "has">> | undefined,
   cancelOrdinaryProtection: () => void,
   captureAcceptedPoison?: (routes: readonly NightPoisonRoute[]) => void,
+  captureProtection?: (evidence: NightProtectionEvidence) => void,
 ): DeathCause[] {
   const {
     awakenedShields,
@@ -100,6 +102,7 @@ export function resolveNightDamageTarget(
     // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。
     // 命令内保留先移除守护、再移除解药的原顺序；第二步失败不能撤销第一步。
     cancelOrdinaryProtection();
+    captureProtection?.({ targetId: entityId, interaction: "guard_heal_cancelled" });
     if (
       hasWolfKill &&
       !dreamProtected &&
@@ -120,6 +123,21 @@ export function resolveNightDamageTarget(
     ) {
       sources.push(DeathCause.WolfKill);
     }
+    // 只有普通守／救是本次狼刀的唯一阻断来源，才给出可证明的单一归因。
+    // 毒或其它独立死因仍可令目标死亡，因此该事实绝不命名为“救活”。
+    if (
+      hasWolfKill &&
+      !wardenProtected &&
+      !dreamProtected &&
+      !mechanicalShield &&
+      !awakenedShield &&
+      (hasGuard || hasHeal)
+    )
+      captureProtection?.({
+        targetId: entityId,
+        interaction: "wolf_attack_blocked",
+        protection: hasGuard ? "guard" : "heal",
+      });
   }
   // 机械额外刀穿过普通守护，但仍受有效解药、梦境与机械／觉醒盾保护。
   if (

@@ -5,6 +5,7 @@
  * 保留瓶数付款、commit、交付缓存、事实发布与关闭的原次序；后续失败不回滚已提交前缀。
  * 新来源 metadata 与 life 句柄仅运行时使用，不加入事件、player DTO 或归档字段。
  */
+import { recordPotionStock } from "../../domain/replay-fact-log";
 import {
   COMPONENT,
   Phase,
@@ -114,6 +115,7 @@ export async function executeDemonWitchTurn(input: {
   const ability = frame.ability as NightAbility<"potion">,
     scope = Object.freeze({});
   let closed = false;
+  recordPotionStock(events, day, frame.witchId, "native:potion", ability.state);
   if (!world.entityIds().every((id) => demonWitchMarksSafe(world, id)))
     throw new Error("demon_hunter_native_marks_invalid");
   // frame 开启和 marks 检查先完成；原 new／bind 在 try 外，失败保留复位前缀，不加新的 finally。
@@ -205,6 +207,7 @@ export async function executeDemonWitchTurn(input: {
       ability.state[potion === PotionType.Heal ? "healUsedThisNight" : "poisonUsedThisNight"] =
         true;
     }
+    recordPotionStock(events, day, frame.witchId, "native:potion", ability.state);
     if (!frame.commit(potion)) throw new Error("demon_hunter_native_witch_commit_failed");
     // frame 已提交后先登记真实贡献；随后 proof、交付或事实发布失败仍保留这段已付前缀。
     if (contribution) commitNativePoisonContribution(contribution);

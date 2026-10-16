@@ -29,3 +29,20 @@ export function attachDamagePoisonEvidence<T extends object>(
 export function damagePoisonRoutes(result: object): readonly NightPoisonRoute[] {
   return ownedResults.has(result) ? (result as EvidencedDamage)[POISON_EVIDENCE] : noRoutes;
 }
+
+/** 只对应原保护判断分支，不证明最终存活或完整死亡波已结束。 */
+export type NightProtectionEvidence = { targetId: number } & (
+  | { interaction: "guard_heal_cancelled" }
+  | { interaction: "wolf_attack_blocked"; protection: "guard" | "heal" }
+);
+const protectionEvidence = new WeakMap<object, readonly NightProtectionEvidence[]>();
+export function attachDamageProtectionEvidence<T extends object>(
+  result: T,
+  evidence: readonly NightProtectionEvidence[],
+): T {
+  protectionEvidence.set(result, structuredClone(evidence));
+  return result;
+}
+export function damageProtectionFacts(result: object): readonly NightProtectionEvidence[] {
+  return structuredClone(protectionEvidence.get(result) ?? []);
+}

@@ -4,6 +4,7 @@
  * 炼金魔女的雾圈与原生命、魔术师映射和已付加成各由原本族所有者复验；此组合不持有库存或发放许可。
  * 狼阶段仍负责聊天、逐票复验、等待与末尾贵族事实发布；这里不增加等待、随机抽取、退款或失败清理。
  */
+import { recordReplayFact } from "../domain/replay-fact-log";
 import { EntityId, Phase, StatusMark } from "../domain/model";
 import { COMPONENT } from "../domain/components/names";
 import { aliveLifeVersion } from "../domain/components/alive";
@@ -46,6 +47,7 @@ export function resolveOrdinaryWolfKnife(
   acceptedTargets: AcceptedWolfKnifeTarget[],
   voteOrder: EntityId[],
   explicitPasses: Set<EntityId>,
+  participantIds: readonly EntityId[] = voteOrder,
 ): EntityId | null {
   let wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
   let mistRandomScope: import("../domain/night-effects").NightLifeScope | null = null;
@@ -82,6 +84,7 @@ export function resolveOrdinaryWolfKnife(
     status: "ok",
     output: { tally: ctx.state.wolfVotes, wolf_target: wolfTarget },
   });
+  let effectiveTargetId: EntityId | null = null;
   if (wolfTarget !== null) {
     const target =
       (mistRandomScope
@@ -105,6 +108,7 @@ export function resolveOrdinaryWolfKnife(
       const effectiveId = mapping?.effectiveId ?? wolfTarget;
       const marks = ctx.ensureMarks(effectiveId);
       marks.add(StatusMark.WolfKillMark);
+      effectiveTargetId = effectiveId;
       ctx.state.wolfTargetScope = mapping
         ? {
             ...target,
@@ -116,5 +120,13 @@ export function resolveOrdinaryWolfKnife(
         : { ...target, marks };
     }
   }
+  // 普通刀口提交后才捕获，participants 来自实际已发表刀票，不从阵营或当前存活反推。
+  recordReplayFact(ctx.events, {
+    kind: "wolf_knife_committed",
+    day: ctx.currentDay(),
+    participantIds: [...participantIds],
+    requestedTargetId: wolfTarget,
+    effectiveTargetId,
+  });
   return wolfTarget;
 }

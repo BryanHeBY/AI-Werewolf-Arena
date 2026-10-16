@@ -109,9 +109,14 @@ test("Tape3 appends Pi metadata and detaches the exact source without normalizin
 test("Tape2 keeps llm and acp admission while rejecting Pi rather than upgrading the old archive", () => {
   for (const kind of ["llm", "acp"] as const) {
     const legacy = { ...archive(kind).record, schemaVersion: 2 as const };
+    // 当前 Trace 的新录像事实不属于 Tape2；独立历史 shape 保持旧 schema 的严格白名单。
+    delete legacy.facts;
+    delete legacy.factCoverage;
     expect(parseReproductionRecord(legacy)).toEqual(legacy);
   }
   const legacyPi = { ...archive("pi").record, schemaVersion: 2 as const };
+  delete legacyPi.facts;
+  delete legacyPi.factCoverage;
   expect(() => parseReproductionRecord(legacyPi)).toThrow("reproduction_record_invalid");
   expect(legacyPi.schemaVersion).toBe(2);
   expect(legacyPi.metadata.players[0]!.agent!.kind).toBe("pi");

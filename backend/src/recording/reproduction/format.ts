@@ -31,6 +31,12 @@ import {
   readWardenFact,
   wardenFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/warden";
+import {
+  readReplayFactLog,
+  readReplayFact,
+  type ReplayFact,
+  type ReplayFactLog,
+} from "@ai-werewolf-arena/replay-contract";
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { verifyReproductionMechanisms } from "../verification/assembly";
 import { animalCheckpointSchema } from "./checkpoint/animal-format";
@@ -264,7 +270,7 @@ export interface RecordedGameEvent {
   payload: Record<string, unknown>;
   audience?: readonly number[];
 }
-export interface ReproductionRecord {
+export interface ReproductionRecord extends Partial<ReplayFactLog> {
   schemaVersion: 2 | typeof REPRODUCTION_SCHEMA_VERSION;
   finalized: boolean;
   metadata: ReproductionMetadata;
@@ -980,6 +986,8 @@ const schema2 = z.strictObject({
 
 /** Tape3 显式接纳 Pi 来源及返回候选；Tape2 的两种 Agent 来源与旧字段准入保持原样。 */
 const schema3 = schema2.extend({
+  factCoverage: z.strictObject({ committedDeaths: z.literal(1) }).optional(),
+  facts: z.array(z.custom<ReplayFact>((value) => readReplayFact(value) !== null)).optional(),
   schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION),
   metadata: schema2.shape.metadata.extend({
     players: z
@@ -1066,6 +1074,11 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
       ))
   )
     throw new Error("reproduction_record_invalid");
+  try {
+    readReplayFactLog(result as unknown as Record<string, unknown>, result.events.length);
+  } catch {
+    throw new Error("reproduction_record_invalid");
+  }
   verifyReproductionMechanisms(result);
   return result;
 }

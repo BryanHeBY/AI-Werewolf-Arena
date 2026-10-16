@@ -5,6 +5,8 @@
  * 中途失败保原已写前缀，不补新刀、付款、回滚或关闭。运行 thunks 和 scope 引用不是 JSON、快照或行动许可。
  * 本组合不增加 await、current 检查或清理守卫；原投票、目标查询和婚约权威仍拥有各自政策与资源。
  */
+import { recordReplayFact } from "../domain/replay-fact-log";
+import type { GameEvent } from "../domain/events";
 import { bindWolfKnifeTargetQuery } from "../features/wolf/ports";
 import { weddingKnifeCurrent } from "../features/ghost-bride/ports";
 import { aliveLifeVersion } from "../domain/components/alive";
@@ -19,10 +21,15 @@ export interface NightKnifeAdmissionRuntime {
   readonly state: () => NightStageState;
   readonly ownsWedding: () => boolean;
   readonly day: () => number;
+  readonly events?: () => readonly GameEvent[];
 }
 
 /** 原普通刀历史票仍已记录；过期刀按原生命／marks／目标政策撤下，不伤害新生命。 */
-function discardStaleWolfKnife(world: World, state: NightStageState): void {
+function discardStaleWolfKnife(
+  world: World,
+  state: NightStageState,
+  runtime: NightKnifeAdmissionRuntime,
+): void {
   const scope = state.wolfTargetScope;
   if (!scope) return;
   if (
@@ -37,20 +44,39 @@ function discardStaleWolfKnife(world: World, state: NightStageState): void {
   world.getComponent(scope.targetId, COMPONENT.StatusMarks)?.remove(StatusMark.WolfKillMark);
   state.wolfTarget = null;
   state.wolfTargetScope = undefined;
+  if (runtime.events)
+    recordReplayFact(runtime.events(), {
+      kind: "wolf_knife_revoked",
+      day: runtime.day(),
+      targetId: scope.targetId,
+      reason: "stale_target",
+    });
 }
 
 /** 婚约只复验原权威；即使当前 scope 为空，调用方仍先读取原 world／day／state 参数。 */
-function discardStaleWeddingKnife(world: World, day: number, state: NightStageState): void {
+function discardStaleWeddingKnife(
+  world: World,
+  day: number,
+  state: NightStageState,
+  runtime: NightKnifeAdmissionRuntime,
+): void {
   const scope = state.wolfTargetScope;
   if (!scope || weddingKnifeCurrent(world, day, scope.targetId)) return;
   scope.marks.remove(StatusMark.WolfKillMark);
   state.wolfTarget = null;
   state.wolfTargetScope = undefined;
+  if (runtime.events)
+    recordReplayFact(runtime.events(), {
+      kind: "wolf_knife_revoked",
+      day,
+      targetId: scope.targetId,
+      reason: "wedding_permission_revoked",
+    });
 }
 
 /** 固定两个独立步骤的原先后顺序；前步无刀 return 不跳过婚约条件，false 不读取婚约参数。 */
 export function discardStaleNightKnives(runtime: NightKnifeAdmissionRuntime): void {
-  discardStaleWolfKnife(runtime.world(), runtime.state());
+  discardStaleWolfKnife(runtime.world(), runtime.state(), runtime);
   if (runtime.ownsWedding())
-    discardStaleWeddingKnife(runtime.world(), runtime.day(), runtime.state());
+    discardStaleWeddingKnife(runtime.world(), runtime.day(), runtime.state(), runtime);
 }

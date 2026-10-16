@@ -5,6 +5,7 @@
  * 严格前缀写失败即登记，最终发布仍尝试完成；单个失败原样传播，多失败保持原顺序聚合。
  * 此处不控制游戏阶段或资源提交，不把可选诊断写入失败改成游戏错误。
  */
+import type { ReplayFactLog } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../../utils/error-diagnostic";
 import path from "path";
@@ -90,6 +91,11 @@ export class SessionRecordManager {
     return manager;
   }
 
+  /** God 已成功追加的事件数，独立于玩家投影游标；故障事实仅能引用这个前缀。 */
+  get publicEventCount(): number {
+    return this.aggregate.publicEventCount;
+  }
+
   get sessionId(): string {
     return this.aggregate.sessionMeta.sessionId;
   }
@@ -131,6 +137,14 @@ export class SessionRecordManager {
   recordPublicEvent(input: ReplayRecordPublicEventInput): void {
     if (this.lifecycle.isClosed) return;
     this.aggregate.recordPublicEvent(input);
+    this.dirtyPublicTimeline = true;
+    this.lifecycle.scheduleFlush();
+  }
+
+  /** God 事实单独触发原公开刷盘；绝不写入玩家 timeline。 */
+  recordReplayFacts(log: ReplayFactLog): void {
+    if (this.lifecycle.isClosed) return;
+    if (!this.aggregate.recordReplayFacts(log)) return;
     this.dirtyPublicTimeline = true;
     this.lifecycle.scheduleFlush();
   }
@@ -337,6 +351,7 @@ export class SessionRecordManager {
       createReplayDocument({
         manifest: this.aggregate.buildManifest(meta),
         events: this.aggregate.publicTimelinePayload().events,
+        ...this.aggregate.replayFactsPayload(),
       }),
       this.recordingIdentities,
     );

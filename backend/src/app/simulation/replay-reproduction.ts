@@ -3,6 +3,8 @@
  * 输出为原生执行的事件／操作／checkpoint 与精确差异；真实 source、lock 和 RNG 身份必须先匹配。
  * 记录请求规范化由轨迹模块提供；本执行器保留自己的消费、等待、游标与清理，不创建兼容来源或改写原归档。
  */
+import { replayFactLog } from "../../domain/replay-fact-log";
+import { replayPlayerDisplay } from "../replay-player-display";
 import { publicPlayerRoster } from "../../domain/public-player-roster";
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { reproductionIdentitiesMatch } from "../../recording/archive-identity";
@@ -479,6 +481,13 @@ export async function replayReproduction(
           stableJson(normalizedEvents(record.events)),
         "reproduction_events_mismatch",
       );
+      // 声明过新覆盖的 Tape 必须逐条重现同一事实流；旧档缺省不伪造历史事实。
+      if (record.factCoverage)
+        requireMatch(
+          stableJson(replayFactLog(context.phaseManager.getEvents())) ===
+            stableJson({ factCoverage: record.factCoverage, facts: record.facts }),
+          "reproduction_facts_mismatch",
+        );
     } catch (error) {
       failures.push(error);
     } finally {
@@ -504,6 +513,11 @@ export async function replayReproduction(
             0,
           ).players.map((player, index) => ({
             player_id: player.id,
+            ...replayPlayerDisplay(
+              context.world,
+              player.id,
+              record.metadata.players.find((entry) => entry.id === player.id)?.agent?.model,
+            ),
             name: player.name,
             role:
               initialPlayerIdentity(context.world, player.id)?.role ??

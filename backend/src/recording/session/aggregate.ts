@@ -4,6 +4,8 @@
  * 玩家规范化在原返回前作 canonical2 断言，保 timeline 同引用；不推进游戏或回收资源，序列化外的失败不回滚已发生的聚合前缀。
  */
 import {
+  readReplayFactLog,
+  type ReplayFactLog,
   assertReplayPlayerView,
   agentOutputToDeltaMessages,
   type AgentOutput,
@@ -82,6 +84,7 @@ function normalizeDeltaMessages(
 /** 同一会话的内存聚合与投影边界；各序列只在自己的记录点追加，刷盘／关闭与严格归档仍归外层管理器。 */
 export class ReplaySessionAggregate {
   private reproductionEnabled = false;
+  private factLog?: ReplayFactLog;
 
   enableReproduction(): void {
     this.reproductionEnabled = true;
@@ -107,6 +110,24 @@ export class ReplaySessionAggregate {
       type: input.type,
       payload: safeReplayJson(input.payload) as Record<string, unknown>,
     });
+  }
+
+  /** 只追加真实 owner 的独立事实前缀；不能覆盖已发布事实或引用尚未录制的事件。 */
+  recordReplayFacts(log: ReplayFactLog): boolean {
+    const parsed = readReplayFactLog({ ...log }, this.publicEvents.length)!;
+    const prior = this.factLog;
+    if (
+      prior &&
+      (parsed.facts.length < prior.facts.length ||
+        JSON.stringify(parsed.facts.slice(0, prior.facts.length)) !== JSON.stringify(prior.facts))
+    )
+      throw new Error("replay_fact_prefix_changed");
+    if (prior && prior.facts.length === parsed.facts.length) return false;
+    this.factLog = parsed;
+    return true;
+  }
+  replayFactsPayload(): Partial<ReplayFactLog> {
+    return this.factLog ? structuredClone(this.factLog) : {};
   }
 
   // 逻辑 seq 独立追加，event_count 仅保调用方传入的因果位置，不据此重新排序公开事件。
@@ -206,6 +227,9 @@ export class ReplaySessionAggregate {
   }
 
   // 这些 payload 只新建外层包装，事件／操作／报告数组仍属同一聚合，不是深快照或冻结结果。
+  get publicEventCount(): number {
+    return this.publicEvents.length;
+  }
   publicTimelinePayload() {
     return { events: this.publicEvents };
   }

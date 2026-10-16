@@ -7,7 +7,11 @@
 import { COMPONENT } from "../components/names";
 import { EntityId, StatusMark, type DeathSources } from "../model";
 import { World } from "../world";
-import { attachDamagePoisonEvidence } from "../damage-evidence";
+import {
+  attachDamageProtectionEvidence,
+  type NightProtectionEvidence,
+  attachDamagePoisonEvidence,
+} from "../damage-evidence";
 import type { NightPoisonRoute, NightPoisonReflection } from "../night-effects";
 import { resolveNightDamageTarget } from "../night-damage-target";
 import { planNightDamage, type NightDamageEffects } from "../night-damage-plan";
@@ -38,6 +42,7 @@ export class DamageResolutionSystem {
     const deathSources: DeathSources = {};
     // 只收集单目标政策真实接受的来源，不因折叠中存在路由就宣称致死。
     const acceptedPoison: NightPoisonRoute[] = [];
+    const protections: NightProtectionEvidence[] = [];
     const plan = planNightDamage(world, effects);
     const {
       awakenedAttacks,
@@ -86,6 +91,7 @@ export class DamageResolutionSystem {
           marks?.remove(StatusMark.HealMark);
         },
         (routes) => acceptedPoison.push(...routes),
+        (evidence) => protections.push(evidence),
       );
       if (sources.length > 0) {
         deaths.push(entityId);
@@ -96,13 +102,16 @@ export class DamageResolutionSystem {
     }
 
     // 同一原结果仅带不可枚举的运行时证据；玩家摘要和归档仍读原纯数据字段。
-    return attachDamagePoisonEvidence(
-      {
-        deaths,
-        deathSources,
-        ...(mechanical.reflections.length ? { poisonReflections: mechanical.reflections } : {}),
-      },
-      acceptedPoison,
+    return attachDamageProtectionEvidence(
+      attachDamagePoisonEvidence(
+        {
+          deaths,
+          deathSources,
+          ...(mechanical.reflections.length ? { poisonReflections: mechanical.reflections } : {}),
+        },
+        acceptedPoison,
+      ),
+      protections,
     );
   }
 }

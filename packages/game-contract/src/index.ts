@@ -245,3 +245,10 @@ export { ACTION_REQUEST_CONTRACT } from "./request-version";
 export { GAME_PRESENTATION_CONTRACT } from "./presentation-version";
 
 export * from "./facts/warden";
+export { readReplayFact } from "./replay-facts";
+export type {
+  ReplayFact,
+  ReplayFactPayload,
+  ReplayFactCoverage,
+  ReplayFactLog,
+} from "./replay-facts";

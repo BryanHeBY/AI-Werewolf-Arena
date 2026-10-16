@@ -4,7 +4,7 @@
  * events 保输入数组同引用，玩家行新建，最终 decision 独立 structuredClone；文件类型／序列化不授予运行行动权限。
  */
 import { assertReplayDocument, REPLAY_SCHEMA_VERSION } from "@ai-werewolf-arena/replay-contract";
-import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import type { ReplayFactLog, ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { ReplayManifest, ReplayPublicEvent } from "../contracts";
 
 /** 浏览器播放器与视频渲染器直接消费的离线复盘文件。 */
@@ -16,10 +16,12 @@ export type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
  * events 不做筛选、合并或重排，保输入完整序列；派生的阶段窗口、
  * 最终存活状态及 Agent 审计轨迹不重复写入前端文件。
  */
-export function createReplayDocument(input: {
-  manifest: ReplayManifest;
-  events: ReplayPublicEvent[];
-}): ReplayDocument {
+export function createReplayDocument(
+  input: {
+    manifest: ReplayManifest;
+    events: ReplayPublicEvent[];
+  } & Partial<ReplayFactLog>,
+): ReplayDocument {
   assertCanonicalEventSequence(input.events);
   assertUniquePlayers(input.manifest.players);
 
@@ -40,13 +42,18 @@ export function createReplayDocument(input: {
         ? { decision: structuredClone(input.manifest.game_result) }
         : {}),
     },
-    players: input.manifest.players.map(({ player_id, role, camp, name }) => ({
+    players: input.manifest.players.map(({ player_id, role, camp, name, seat, model }) => ({
       player_id,
       role,
       camp,
       ...(name !== undefined ? { name } : {}),
+      ...(seat !== undefined ? { seat } : {}),
+      ...(model !== undefined ? { model } : {}),
     })),
     events: input.events,
+    ...(input.factCoverage
+      ? { factCoverage: structuredClone(input.factCoverage), facts: structuredClone(input.facts) }
+      : {}),
   };
   // 对已组装文档执行原序列化数据／schema 检查；不复制或冻结 events，克隆／断言失败仍沿原路径传播。
   assertReplayDocument(document);

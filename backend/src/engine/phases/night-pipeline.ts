@@ -12,6 +12,8 @@
  * 明辉／梦及增益伤害与猎魔来源交付各归具名规则组合；本流水线保封存、伤害结算及死亡生命捕获的原检查点。
  * 运行梦句柄、猎魔 token 与晚保护闭包不进入玩家摘要或归档。
  */
+import { damageProtectionFacts } from "../../domain/damage-evidence";
+import { recordReplayFact } from "../../domain/replay-fact-log";
 import { attachNightUnit } from "../../domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
@@ -295,6 +297,7 @@ export class NightPipeline {
         state: () => stageState,
         ownsWedding: () => ownsWedding,
         day: () => day,
+        events: () => this.events,
       };
 
       for (const entry of rulePlan.nightPlan(this.stageRegistry, () => this.world).entries) {
@@ -340,6 +343,9 @@ export class NightPipeline {
         solver: () => this.damageResolutionSystem,
         aliveByRole: (role) => this.getAliveByRole(role()),
       });
+      // 只搬运原求解器接受分支的保护证据；替代求解器、复杂保护或延期复制缺证据时保持未知。
+      for (const protection of damageProtectionFacts(damage))
+        recordReplayFact(this.events, { kind: "night_protection_resolved", day, ...protection });
       if (ownsNoble) {
         const payload = {
           policy: "awa_noble_secret_body_v1" as const,
