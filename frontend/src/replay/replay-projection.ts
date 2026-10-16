@@ -2,7 +2,11 @@
  * 负责按事件游标把复盘事实投影为席位与当前阶段。输入为原归档和事件索引，输出画面状态副本。
  * 投影消费共享事实 reader，不执行后端规则、不推进真实对局或把画面状态当行动许可。
  */
-import { type ReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import {
+  type ReplayDocument,
+  type ReplayEvent,
+  type ReplayFact,
+} from "@ai-werewolf-arena/replay-contract";
 import { readReplayEvent, readReplayEventEnvelope } from "./replay-event-reader";
 import type { SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 
@@ -26,7 +30,9 @@ export interface ReplaySnapshot {
 }
 
 /** 单一 effect reducer 拥有本次投影状态；索引和单帧入口共用它，不创建另一份游戏结算规则。 */
-function createProjector(replay: Pick<ReplayDocument, "players" | "events">) {
+type ProjectionReplay = Pick<ReplayDocument, "players" | "events"> &
+  Partial<Pick<ReplayDocument, "facts" | "factCoverage">>;
+function createProjector(replay: ProjectionReplay) {
   const states = new Map<number, ReplayPlayerState>(
     replay.players.map((player) => [
       player.player_id,
@@ -71,7 +77,9 @@ function createProjector(replay: Pick<ReplayDocument, "players" | "events">) {
           (states.get(effect.playerId)! as ReplayPlayerState).publicRole = effect.role;
           break;
         case "deaths":
-          for (const playerId of effect.playerIds) markDead(playerId);
+          // 新录制明确覆盖真实死亡提交，提案、刀票、夜报都不能提前改变生命；旧档保留兼容投影。
+          if (replay.factCoverage?.committedDeaths !== 1)
+            for (const playerId of effect.playerIds) markDead(playerId);
           break;
         case "sheriff_elected":
           for (const player of states.values())
@@ -96,6 +104,10 @@ function createProjector(replay: Pick<ReplayDocument, "players" | "events">) {
   };
   return {
     append,
+    appendFact: (fact: ReplayFact) => {
+      day = fact.day;
+      if (fact.kind === "life_committed") markDead(fact.playerId);
+    },
     snapshot: (): ReplaySnapshot => ({
       event: event ? structuredClone(event) : null,
       players: [...states.values()]
@@ -109,23 +121,59 @@ function createProjector(replay: Pick<ReplayDocument, "players" | "events">) {
 }
 
 /** 原独立投影入口保持游标夹入规则；只扫描所需前缀，返回脱离运行状态的副本。 */
-export function buildReplaySnapshot(
-  replay: Pick<ReplayDocument, "players" | "events">,
-  eventIndex: number,
-): ReplaySnapshot {
+export function buildReplaySnapshot(replay: ProjectionReplay, eventIndex: number): ReplaySnapshot {
   const projector = createProjector(replay);
   const lastIndex = Math.min(Math.max(eventIndex, 0), replay.events.length - 1);
-  for (let index = 0; index <= lastIndex; index++) projector.append(replay.events[index]!);
+  let factIndex = 0;
+  const appendFacts = (seq: number) => {
+    while (replay.facts?.[factIndex] && replay.facts[factIndex]!.afterSeq <= seq)
+      projector.appendFact(replay.facts[factIndex++]!);
+  };
+  appendFacts(0);
+  for (let index = 0; index <= lastIndex; index++) {
+    projector.append(replay.events[index]!);
+    appendFacts(replay.events[index]!.seq);
+  }
   return projector.snapshot();
 }
 
 /** 一次按完整事件序列建立各前缀快照；视频跳剪仍取原游标，逐帧和重复镜头不再扫描历史。 */
-export function createReplaySnapshotIndex(
-  replay: Pick<ReplayDocument, "players" | "events">,
-): ReplaySnapshot[] {
+export function createReplaySnapshotIndex(replay: ProjectionReplay): ReplaySnapshot[] {
+  return createReplayCursorIndex(replay).settledEvents;
+}
+
+/** 原事件之前的初始快照也由同一 reducer 创建，供揭晓动画保留事前状态。 */
+export function createReplayInitialSnapshot(replay: ProjectionReplay): ReplaySnapshot {
+  return createProjector(replay).snapshot();
+}
+
+/**
+ * 一次顺序建立原事件前缀与独立提交事实的索引。events 是该事件之后、同 afterSeq 事实之前；
+ * facts 是逐项真实提交之后；settledEvents 兼容旧前缀入口，包含该游标全部事实。索引不猜结算结果。
+ */
+export function createReplayCursorIndex(replay: ProjectionReplay) {
   const projector = createProjector(replay);
-  return replay.events.map((event) => {
+  const initial = projector.snapshot();
+  const events: ReplaySnapshot[] = [],
+    facts: ReplaySnapshot[] = [],
+    settledEvents: ReplaySnapshot[] = [];
+  let factIndex = 0;
+  const appendFacts = (seq: number) => {
+    while (replay.facts?.[factIndex] && replay.facts[factIndex]!.afterSeq <= seq) {
+      projector.appendFact(replay.facts[factIndex++]!);
+      facts.push(projector.snapshot());
+    }
+  };
+  appendFacts(0);
+  const initialSettled = factIndex ? projector.snapshot() : initial;
+  for (const event of replay.events) {
     projector.append(event);
-    return projector.snapshot();
-  });
+    const eventSnapshot = projector.snapshot();
+    events.push(eventSnapshot);
+    const beforeFacts = factIndex;
+    appendFacts(event.seq);
+    // 没有新增事实时两个游标就是同一不可变前缀，不重复克隆整份席位状态。
+    settledEvents.push(beforeFacts === factIndex ? eventSnapshot : projector.snapshot());
+  }
+  return { initial, initialSettled, events, facts, settledEvents };
 }

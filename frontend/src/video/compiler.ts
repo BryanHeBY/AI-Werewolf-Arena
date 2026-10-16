@@ -6,11 +6,14 @@ import {
   readReplayArchive,
   type ReplayDocument,
   type RecordingEnvelope,
+  type ReplayFact,
 } from "@ai-werewolf-arena/replay-contract";
 import { supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
 import { buildReplayEventView } from "../replay/replay-event-view";
 import { buildPresentationReplay } from "../replay/replay-presentation";
-import { createReplaySnapshotIndex } from "../replay/replay-projection";
+import { createReplayCursorIndex } from "../replay/replay-projection";
+import { presentationPlayers, resolvePlayerPresentations } from "../presentation";
+import { resolveTheme } from "../themes";
 import {
   DEFAULT_REPLAY_TIME_ZONE,
   validateReplayDisplay,
@@ -19,6 +22,7 @@ import {
 import { eventLabel } from "../replay/event-labels";
 import { paginateVideoCaption } from "./captions";
 import { getVideoSourceIdentity } from "./source";
+import { compileScene, eventScene, factScene, semanticEventGroups } from "./semantic-scenes";
 import type {
   AudioCue,
   CameraKeyframe,
@@ -253,8 +257,11 @@ export function compileVideoPlan(
   };
   validateReplayDisplay(options);
   const fps = integer(script?.fps ?? 30, "fps", 1);
-  const width = integer(script?.width ?? 1280, "width", 320);
-  const height = integer(script?.height ?? 720, "height", 240);
+  // 旧单局脚本的坐标和world图层保持原布局；新项目默认采用广播名册与中央舞台。
+  const layout = script?.layout ?? (script ? "legacy-ellipse-v1" : "broadcast-v1");
+  if (!["legacy-ellipse-v1", "broadcast-v1"].includes(layout)) fail("layout_invalid");
+  const width = integer(script?.width ?? (layout === "broadcast-v1" ? 1920 : 1280), "width", 320);
+  const height = integer(script?.height ?? (layout === "broadcast-v1" ? 1080 : 720), "height", 240);
   const defaultDuration = integer(
     script?.defaultEventFrames ?? Math.round(fps * 3),
     "default_event_duration",
@@ -268,17 +275,45 @@ export function compileVideoPlan(
   const seed = integer(script?.seed ?? 0, "seed");
   const media = compileMedia(script?.media ?? []);
   const playerIds = replay.players.map((item) => item.player_id);
-  const names = replay.players.map((item) => ({ id: item.player_id, name: item.name }));
+  const playersPresentation = resolvePlayerPresentations(replay.players, script?.presentation);
+  const names = presentationPlayers(playersPresentation);
+  const theme = resolveTheme(script?.theme);
+  for (const player of playersPresentation) {
+    const avatar = player.avatar;
+    if (
+      avatar.kind === "asset" &&
+      !media.some((asset) => asset.id === avatar.assetId && asset.kind === "image")
+    )
+      fail("avatar_asset_missing");
+  }
   const presentation = buildPresentationReplay(replay);
   const visible = new Set(presentation.events.map((event) => event.seq));
   // 让事实投影始终使用完整原序列；过滤只决定默认镜头，不删除状态历史。
-  const renderInput = { ...options, replay: { ...presentation, events: replay.events } };
-  const snapshots = createReplaySnapshotIndex(replay);
-  const views = new Map<number, VideoEventView>();
-  const viewAt = (index: number): VideoEventView => {
-    if (!views.has(index))
-      views.set(index, buildReplayEventView(renderInput, index, snapshots[index]));
-    return views.get(index)!;
+  const renderInput = {
+    ...options,
+    systemPlayers: names,
+    replay: { ...presentation, events: replay.events },
+  };
+  const snapshots = createReplayCursorIndex(replay);
+  const facts = replay.facts ?? [];
+  const factCounts = Array.from({ length: replay.events.length + 1 }, () => 0);
+  for (const fact of facts) factCounts[fact.afterSeq] = fact.seq;
+  for (let seq = 1; seq < factCounts.length; seq++)
+    factCounts[seq] = Math.max(factCounts[seq]!, factCounts[seq - 1]!);
+  const views = new Map<string, VideoEventView>();
+  const viewAt = (index: number, throughFactSeq = factCounts[index + 1] ?? 0): VideoEventView => {
+    const key = `${index}:${throughFactSeq}`;
+    if (!views.has(key)) {
+      const latestFact = facts[throughFactSeq - 1];
+      const snapshot =
+        latestFact?.afterSeq === index + 1
+          ? snapshots.facts[throughFactSeq - 1]!
+          : index < 0
+            ? snapshots.initial
+            : snapshots.events[index]!;
+      views.set(key, buildReplayEventView(renderInput, index, snapshot));
+    }
+    return views.get(key)!;
   };
   const eventIndexes = new Map(replay.events.map((event, index) => [event.seq, index]));
   const anchorIndex = (anchor: EventAnchor): number => {
@@ -293,6 +328,14 @@ export function compileVideoPlan(
     if (edits.has(index)) fail("edit_anchor_duplicate");
     edits.set(index, edit);
   }
+  const factEdits = new Map<number, NonNullable<VideoScript["factEdits"]>[number]>();
+  for (const edit of script?.factEdits ?? []) {
+    if (!Number.isSafeInteger(edit.anchor?.seq)) fail(`fact_anchor_mismatch:${edit.anchor?.seq}`);
+    const fact = facts[edit.anchor?.seq - 1];
+    if (!fact || fact.kind !== edit.anchor.kind) fail(`fact_anchor_mismatch:${edit.anchor?.seq}`);
+    if (factEdits.has(fact.seq)) fail("fact_edit_anchor_duplicate");
+    factEdits.set(fact.seq, edit);
+  }
   const holds = new Map<number, NonNullable<VideoScript["holds"]>>();
   const holdIds = new Set<string>();
   for (const hold of script?.holds ?? []) {
@@ -306,29 +349,92 @@ export function compileVideoPlan(
   const shots: VideoShot[] = [];
   const shotAudio: AudioCue[] = [];
   let cursor = 0;
-  function append(index: number, id: string, kind: VideoShot["kind"], edit: ShotOptions = {}) {
-    const view = viewAt(index);
-    if (edit.caption !== undefined && typeof edit.caption !== "string") fail("caption_invalid");
-    const captionPages = paginateVideoCaption(edit.caption ?? view.label);
-    const otherLabel =
-      edit.caption ??
-      (index < 0
-        ? view.label
-        : eventLabel(
-            replay.events[index],
-            options.locale === "en" ? "zh-CN" : "en",
-            playerIds,
-            names,
-          ));
-    const pageCount = Math.max(captionPages.length, paginateVideoCaption(otherLabel).length);
+  function append(
+    index: number,
+    id: string,
+    kind: VideoShot["kind"],
+    edit: ShotOptions = {},
+    sourceIndexes = [index],
+    committedFacts: ReplayFact[] = [],
+  ) {
+    const committedFact = committedFacts[0];
     const event = replay.events[index];
+    const endIndex = committedFact || kind === "hold" ? index : Math.max(index, ...sourceIndexes);
+    const throughSeq = endIndex + 1;
+    const throughFactSeq =
+      committedFacts.at(-1)?.seq ??
+      (kind === "hold" ? factCounts[throughSeq]! : factCounts[Math.max(0, throughSeq - 1)]!);
+    const view = viewAt(endIndex, throughFactSeq);
+    const primaryView = endIndex === index ? view : viewAt(index, factCounts[Math.max(0, index)]!);
+    const sourceEvents = sourceIndexes
+      .map((item) => replay.events[item])
+      .filter((item) => item !== undefined);
+    const base = committedFact
+      ? factScene(committedFact, options.locale, names)
+      : eventScene(
+          event,
+          sourceEvents,
+          primaryView.label,
+          primaryView.stage,
+          playerIds,
+          options.locale,
+        );
+    if (committedFacts.length > 1) {
+      base.body = committedFacts
+        .map((fact) => factScene(fact, options.locale, names).body)
+        .join("\n");
+      base.targetIds = committedFacts.flatMap((fact) =>
+        fact.kind === "life_committed" ? [fact.playerId] : [],
+      );
+    }
+    if (edit.caption !== undefined && typeof edit.caption !== "string") fail("caption_invalid");
+    if (edit.caption !== undefined && edit.scene?.body === undefined) {
+      base.body = edit.caption;
+      base.bodySource = "script";
+    }
+    const body =
+      edit.scene?.body ??
+      (layout === "broadcast-v1" || committedFact ? base.body : (edit.caption ?? view.label));
+    const captionPages = paginateVideoCaption(body);
+    let captionOffset = 0;
+    const captionPageOffsets = captionPages.map((page) => {
+      const offset = captionOffset;
+      captionOffset += page.length;
+      return offset;
+    });
+    const otherLocale = options.locale === "en" ? "zh-CN" : "en";
+    const otherScene = committedFact
+      ? factScene(committedFact, otherLocale, names)
+      : eventScene(
+          event,
+          sourceEvents,
+          event ? eventLabel(event, otherLocale, playerIds, names) : view.label,
+          view.stage,
+          playerIds,
+          otherLocale,
+        );
+    if (committedFacts.length > 1)
+      otherScene.body = committedFacts
+        .map((fact) => factScene(fact, otherLocale, names).body)
+        .join("\n");
+    const otherLabel =
+      edit.scene?.body ??
+      edit.caption ??
+      (layout === "broadcast-v1" || committedFact
+        ? otherScene.body
+        : event
+          ? eventLabel(event, otherLocale, playerIds, names)
+          : view.label);
+    const pageCount = Math.max(captionPages.length, paginateVideoCaption(otherLabel).length);
+    const automaticSpeaker = edit.scene?.speaker ?? base.speaker;
     const automaticSpeech: SpeechCue[] =
-      event?.type === "day_speech" &&
-      typeof event.payload.text === "string" &&
-      playerIds.includes(Number(event.payload.actorId))
-        ? [{ speaker: `player:${event.payload.actorId}` as SpeakerId, text: event.payload.text }]
+      automaticSpeaker &&
+      (layout === "broadcast-v1" ||
+        event?.type === "day_speech" ||
+        edit.scene?.speaker !== undefined)
+        ? [{ speaker: automaticSpeaker, text: edit.scene?.body ?? base.body }]
         : [];
-    const speech = edit.speech ?? (kind === "event" ? automaticSpeech : []);
+    let speech = edit.speech ?? (kind === "event" ? automaticSpeech : []);
     const mediaDuration = Math.max(
       0,
       ...speech.map(
@@ -344,6 +450,35 @@ export function compileVideoPlan(
       "shot_duration",
       1,
     );
+    const scene = compileScene(base, edit.scene, edit.emphasis, fps, durationFrames, playerIds);
+    if (endIndex > index && replay.events[endIndex]!.type === "voted_out") {
+      scene.resolution = {
+        text: eventLabel(replay.events[endIndex]!, options.locale, playerIds, names),
+        targetId: Number(replay.events[endIndex]!.payload.target),
+        revealFrame: scene.cues.settled,
+      };
+      if (!edit.speech && speech.length && kind === "event") {
+        const resolution = scene.resolution;
+        const voice = speech[0]!.speaker;
+        speech =
+          resolution.revealFrame > 0
+            ? [
+                {
+                  speaker: voice,
+                  text: scene.body,
+                  from: 0,
+                  durationFrames: resolution.revealFrame,
+                },
+                {
+                  speaker: voice,
+                  text: resolution.text,
+                  from: resolution.revealFrame,
+                  durationFrames: durationFrames - resolution.revealFrame,
+                },
+              ]
+            : [{ speaker: voice, text: `${scene.body}\n${resolution.text}` }];
+      }
+    }
     const compiledSpeech: CompiledSpeechCue[] = speech.map((cue, cueIndex) => {
       speaker(cue.speaker, playerIds);
       if (typeof cue.text !== "string") fail("speech_text_invalid");
@@ -370,33 +505,129 @@ export function compileVideoPlan(
         });
       return { ...structuredClone(cue), from, durationFrames: duration };
     });
+    const beforeIndex = committedFact ? index : Math.max(-1, Math.min(...sourceIndexes) - 1);
+    const beforeFactSeq = committedFact
+      ? committedFact.seq - 1
+      : factCounts[Math.max(0, beforeIndex + 1)]!;
+    const after = { frame: 0, throughSeq, throughFactSeq, view };
+    // 旧脚本保持即时状态；广播动作在命中帧才提交完整前缀，不按动画猜伤害或逐张伪造死亡。
+    const delayed =
+      layout === "broadcast-v1" &&
+      kind !== "hold" &&
+      (index >= 0 || committedFact) &&
+      base.kind !== "speech" &&
+      scene.cues.impact > 0;
+    const stateCues = delayed
+      ? [
+          {
+            frame: 0,
+            throughSeq: Math.max(0, beforeIndex + 1),
+            throughFactSeq: beforeFactSeq,
+            view: viewAt(beforeIndex, beforeFactSeq),
+          },
+          ...(endIndex > index
+            ? [
+                {
+                  frame: scene.cues.impact,
+                  throughSeq: index + 1,
+                  throughFactSeq: factCounts[index]!,
+                  view: primaryView,
+                },
+                { ...after, frame: scene.cues.settled },
+              ]
+            : [{ ...after, frame: scene.cues.impact }]),
+        ]
+      : [after];
     shots.push({
       id,
       kind,
       from: cursor,
       durationFrames,
       eventIndex: index,
-      eventSeq: view.eventSeq,
+      eventSeq: committedFact ? null : (event?.seq ?? null),
       view,
       captionPages,
+      captionPageOffsets,
       camera: compileCamera(edit.camera, durationFrames, playerIds),
       layers: compileLayers(edit.layers, durationFrames, playerIds),
       speech: compiledSpeech,
+      sourceSeqs: committedFact ? [] : sourceEvents.map((item) => item.seq),
+      sourceFacts: committedFacts.map((fact) => fact.seq),
+      scene,
+      stateCues,
     });
     cursor += durationFrames;
     integer(cursor, "timeline_duration", 1);
   }
+  const factsAfter = new Map<number, ReplayFact[]>();
+  for (const fact of facts)
+    factsAfter.set(fact.afterSeq, [...(factsAfter.get(fact.afterSeq) ?? []), fact]);
+  // 内部锚点一旦有导演修改、停留或事实提交，就切开自动聚合；原脚本无需重写整局。
+  const barriers = new Set([
+    ...edits.keys(),
+    ...holds.keys(),
+    ...facts.map((fact) => fact.afterSeq - 1),
+  ]);
+  const { groups, consumed } =
+    layout === "broadcast-v1"
+      ? semanticEventGroups(
+          replay.events,
+          playerIds,
+          barriers,
+          new Set([...edits.keys(), ...holds.keys()]),
+        )
+      : {
+          groups: new Map<number, { indexes: number[]; primary: number }>(),
+          consumed: new Set<number>(),
+        };
+  function appendFacts(afterSeq: number) {
+    const pending = factsAfter.get(afterSeq) ?? [];
+    for (let index = 0; index < pending.length; index++) {
+      const fact = pending[index]!;
+      const batch = [fact];
+      // 无原事件隔开的同日死亡同时揭晓；不按卡片播放顺序编造夜死先后。原fact序号仍完整保留。
+      while (
+        layout === "broadcast-v1" &&
+        fact.kind === "life_committed" &&
+        pending[index + 1]?.kind === "life_committed" &&
+        pending[index + 1]?.day === fact.day &&
+        !factEdits.has(fact.seq) &&
+        !factEdits.has(pending[index + 1]!.seq)
+      )
+        batch.push(pending[++index]!);
+      const edit = factEdits.get(fact.seq);
+      if (!edit?.skip) append(afterSeq - 1, `fact:${fact.seq}`, "event", edit, [], batch);
+    }
+  }
+  appendFacts(0);
   for (let index = 0; index < replay.events.length; index++) {
     const event = replay.events[index];
-    const edit = edits.get(index);
-    if (!edit?.skip && (visible.has(event.seq) || edit))
-      append(index, `event:${event.seq}`, "event", edit);
+    const group = groups.get(index);
+    const primaryIndex = group?.primary ?? index;
+    const primary = replay.events[primaryIndex]!;
+    const edit = edits.get(primaryIndex);
+    const incompleteVote =
+      layout === "broadcast-v1" && ["vote_cast", "sheriff_vote_cast"].includes(primary.type);
+    if (!consumed.has(index) && !edit?.skip && (visible.has(primary.seq) || edit || incompleteVote))
+      append(primaryIndex, `event:${primary.seq}`, "event", edit, group?.indexes ?? [index]);
+    appendFacts(event.seq);
     for (const hold of holds.get(index) ?? [])
       append(hold.stateAt ? anchorIndex(hold.stateAt) : index, `hold:${hold.id}`, "hold", hold);
   }
-  if (!replay.events.length) append(-1, "empty", "event");
+  if (!replay.events.length && !facts.length) append(-1, "empty", "event");
   if (!shots.length) fail("timeline_empty");
   const audio = compileAudio([...(script?.audio ?? []), ...shotAudio], media, cursor, playerIds);
+  const eventFrames: VideoPlan["eventFrames"] = {};
+  for (const shot of shots)
+    for (const seq of shot.sourceSeqs) {
+      const reveal = shot.stateCues.find((cue) => cue.throughSeq >= seq)!.frame;
+      eventFrames[String(seq)] ??= [];
+      eventFrames[String(seq)]!.push({
+        shotId: shot.id,
+        frame: shot.from + (shot.kind === "hold" ? 0 : reveal),
+        mode: shot.kind === "hold" ? "revisit" : seq === shot.eventSeq ? "primary" : "absorbed",
+      });
+    }
   return {
     version: 1,
     source,
@@ -409,6 +640,10 @@ export function compileVideoPlan(
     shots,
     media,
     audio,
+    layout,
+    theme,
+    playersPresentation,
+    eventFrames,
   };
 }
 

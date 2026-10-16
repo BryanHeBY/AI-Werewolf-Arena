@@ -60,12 +60,13 @@ test("default plan keeps source seq and compiled timeline survives JSON transpor
   const replay = fixture();
   const original = structuredClone(replay);
   const plan = compileVideoPlan(replay);
-  expect(plan.shots.map((shot) => shot.eventSeq)).toEqual([1, 3, 4, 5, 6, 7]);
-  expect(getVideoEventFrame(plan, 2)).toBeNull();
-  expect(getVideoEventFrame(plan, 4)).toBe(180);
-  expect(buildVideoFrame(plan, 179).shot.eventSeq).toBe(3);
-  expect(buildVideoFrame(plan, 180).shot.eventSeq).toBe(4);
-  expect(buildVideoFrame(plan, 180).shot.speech).toEqual([
+  // 新广播项目在缺少本轮summary时保留不完整逐票；不会用后续当选事件反推缺失票型。
+  expect(plan.shots.map((shot) => shot.eventSeq)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  expect(getVideoEventFrame(plan, 2)).toBe(114);
+  expect(getVideoEventFrame(plan, 4)).toBe(270);
+  expect(buildVideoFrame(plan, 269).shot.eventSeq).toBe(3);
+  expect(buildVideoFrame(plan, 270).shot.eventSeq).toBe(4);
+  expect(buildVideoFrame(plan, 270).shot.speech).toEqual([
     { speaker: "player:1", text: "我认为二号是狼人。", from: 0, durationFrames: 90 },
   ]);
   expect(JSON.parse(JSON.stringify(plan))).toEqual(plan);
@@ -185,7 +186,8 @@ test("long speeches paginate without clipping and locale does not shift scene bo
     expect(page.split("\n").length).toBeLessThanOrEqual(3);
     expect(Array.from(page).length).toBeLessThanOrEqual(130);
   }
-  expect(shot.captionPages.join("")).toBe(shot.view.label);
+  // 广播发言模板把说话者放在标题区，字幕分页仅承载原话，不能重复塞入“某号发言”前缀。
+  expect(shot.captionPages.join("")).toBe(replay.events[3].payload.text as string);
   const start = buildVideoFrame(zh, shot.from);
   const end = buildVideoFrame(zh, shot.from + shot.durationFrames - 1);
   expect(start.captionPageIndex).toBe(0);

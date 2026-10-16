@@ -2,7 +2,7 @@
  * 负责计算镜头、席位与连线共用的布局坐标。输入为席位名单、画幅与目标，输出席位锚点、字幕安全区和镜头姿态。
  * 本层仅计算几何，不决定事件语义或存活状态；字幕位于独立屏幕空间，不跟随取景变换。
  */
-import type { CameraTarget, LayerPoint } from "./types";
+import type { CameraTarget, LayerPoint, VideoLayoutId } from "./types";
 
 export interface SeatAnchor {
   playerId: number;
@@ -12,27 +12,78 @@ export interface SeatAnchor {
   height: number;
 }
 export interface VideoLayout {
+  id: VideoLayoutId;
   width: number;
   height: number;
   seats: SeatAnchor[];
   table: { x: number; y: number; width: number; height: number };
   caption: { x: number; y: number; width: number; height: number };
+  stage: { x: number; y: number; width: number; height: number };
+  rosterLeft: SeatAnchor[];
+  rosterRight: SeatAnchor[];
 }
-export function createVideoLayout(playerIds: number[], width = 1280, height = 720): VideoLayout {
+export function createVideoLayout(
+  playerIds: number[],
+  width = 1280,
+  height = 720,
+  id: VideoLayoutId = "legacy-ellipse-v1",
+): VideoLayout {
   const scale = Math.min(width / 1280, height / 720);
+  if (id === "broadcast-v1") {
+    const rows = Math.ceil(playerIds.length / 2);
+    const gap = height * 0.011;
+    const cardHeight = Math.min(
+      height * 0.122,
+      (height * 0.8 - Math.max(0, rows - 1) * gap) / Math.max(1, rows),
+    );
+    const seats = playerIds.map((playerId, index) => ({
+      playerId,
+      x: width * (index < rows ? 0.105 : 0.895),
+      y: height * 0.16 + cardHeight / 2 + (index % rows) * (cardHeight + gap),
+      width: width * 0.171,
+      height: cardHeight,
+    }));
+    const stage = {
+      x: width * 0.205,
+      y: height * 0.145,
+      width: width * 0.59,
+      height: height * 0.775,
+    };
+    return {
+      id,
+      width,
+      height,
+      seats,
+      rosterLeft: seats.slice(0, rows),
+      rosterRight: seats.slice(rows),
+      stage,
+      table: { x: width / 2, y: height * 0.48, width: stage.width, height: stage.height * 0.7 },
+      caption: {
+        x: stage.x + stage.width * 0.04,
+        y: height * 0.72,
+        width: stage.width * 0.92,
+        height: height * 0.185,
+      },
+    };
+  }
+  const seats = playerIds.map((playerId, index) => {
+    const angle = (Math.PI * 2 * index) / playerIds.length - Math.PI / 2;
+    return {
+      playerId,
+      x: width * (0.5 + Math.cos(angle) * 0.355),
+      y: height * (0.385 + Math.sin(angle) * 0.205),
+      width: (playerIds.length >= 10 ? 150 : 114) * scale,
+      height: (playerIds.length >= 10 ? 72 : 94) * scale,
+    };
+  });
   return {
+    id,
     width,
     height,
-    seats: playerIds.map((playerId, index) => {
-      const angle = (Math.PI * 2 * index) / playerIds.length - Math.PI / 2;
-      return {
-        playerId,
-        x: width * (0.5 + Math.cos(angle) * 0.355),
-        y: height * (0.385 + Math.sin(angle) * 0.205),
-        width: (playerIds.length >= 10 ? 150 : 114) * scale,
-        height: (playerIds.length >= 10 ? 72 : 94) * scale,
-      };
-    }),
+    seats,
+    rosterLeft: [],
+    rosterRight: [],
+    stage: { x: width * 0.07, y: height * 0.12, width: width * 0.86, height: height * 0.54 },
     table: { x: width * 0.5, y: height * 0.385, width: width * 0.34, height: height * 0.25 },
     caption: { x: width * 0.07, y: height * 0.7, width: width * 0.86, height: height * 0.23 },
   };
@@ -41,7 +92,7 @@ export function resolveLayerPoint(point: LayerPoint, layout: VideoLayout) {
   if (!("playerId" in point)) return { x: point.x, y: point.y };
   const seat = layout.seats.find((item) => item.playerId === point.playerId);
   if (!seat) throw new Error(`video_player_missing:${point.playerId}`);
-  return { x: seat.x, y: seat.y };
+  return { x: seat.x, y: seat.y, ...(layout.id === "broadcast-v1" ? { fixed: true } : {}) };
 }
 export interface CameraPose {
   x: number;
@@ -54,6 +105,13 @@ export function cameraTargetPose(
   zoom: number | undefined,
   layout: VideoLayout,
 ): CameraPose {
+  // 广播布局的席位属于固定 HUD，玩家聚焦只选择中央人物，不移动两侧栏。
+  if (layout.id === "broadcast-v1")
+    return {
+      x: layout.width / 2,
+      y: layout.height * 0.385,
+      scale: zoom ?? (target === "table" ? 1 : 1.12),
+    };
   if (target === "table")
     return { x: layout.width / 2, y: layout.height * 0.385, scale: zoom ?? 1 };
   const seats = target.playerIds.map((playerId) => {

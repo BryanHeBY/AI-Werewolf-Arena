@@ -16,16 +16,23 @@ import { eventLabel } from "./event-labels";
 import { phaseName, roleName, eventStageName } from "./replay-localization";
 
 export const FRAMES_PER_EVENT = 90;
-export type ReplayEventViewInput = ReplayDisplayOptions & { replay: PresentationReplay };
+export type ReplayEventViewInput = ReplayDisplayOptions & {
+  replay: PresentationReplay;
+  systemPlayers?: readonly { id: number; seat?: number; name?: string }[];
+};
 
-/** 新编排入口以事件数组游标采样；-1 仅用于无事件归档。 */
+/** 新编排入口以事件数组游标采样；显式初始快照允许 -1，以展示首事件揭晓之前的状态。 */
 export function buildReplayEventView(
   input: ReplayEventViewInput,
   index: number,
   capturedSnapshot?: ReplaySnapshot,
 ) {
   validateReplayDisplay(input);
-  if (!Number.isSafeInteger(index) || (index < 0 && !(index === -1 && !input.replay.events.length)))
+  if (
+    !Number.isSafeInteger(index) ||
+    (index < 0 &&
+      !(index === -1 && (!input.replay.events.length || capturedSnapshot?.event === null)))
+  )
     throw new Error("replay_event_index_invalid");
   return eventView(input, Math.min(index, input.replay.events.length - 1), capturedSnapshot);
 }
@@ -73,7 +80,12 @@ function eventView(
           event,
           locale,
           replay.players.map((player) => player.player_id),
-          replay.players.map((player) => ({ id: player.player_id, name: player.name })),
+          input.systemPlayers ??
+            replay.players.map((player) => ({
+              id: player.player_id,
+              name: player.name,
+              ...(player.seat === undefined ? {} : { seat: player.seat }),
+            })),
         )
       : text(locale, "replay.no_events"),
     time: formatReplayTime(event?.timestamp, input),

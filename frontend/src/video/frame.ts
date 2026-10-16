@@ -40,10 +40,15 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
   const shotIndex = findShot(plan, frame);
   const shot = plan.shots[shotIndex];
   const localFrame = frame - shot.from;
+  const state = [...shot.stateCues].reverse().find((cue) => cue.frame <= localFrame)!;
+  const currentView = state.view;
   const layout = createVideoLayout(
-    shot.view.players.map((player) => player.playerId),
+    plan.layout === "broadcast-v1"
+      ? plan.playersPresentation.map((player) => player.playerId)
+      : shot.view.players.map((player) => player.playerId),
     plan.width,
     plan.height,
+    plan.layout,
   );
   const camera = cameraAt(shot.camera, localFrame, layout);
   const captionPageIndex = Math.min(
@@ -70,10 +75,23 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     localFrame,
     shotIndex,
     shot,
+    currentView,
+    scene: shot.scene,
+    sourceSeq: state.throughSeq,
+    sourceFactSeq: state.throughFactSeq,
+    cue:
+      localFrame < shot.scene.cues.travel
+        ? ("establish" as const)
+        : localFrame < shot.scene.cues.impact
+          ? ("travel" as const)
+          : localFrame < shot.scene.cues.settled
+            ? ("impact" as const)
+            : ("settled" as const),
     layout,
     camera,
     activeLayers,
     captionPageIndex,
+    captionOffset: shot.captionPageOffsets[captionPageIndex] ?? 0,
     caption: shot.captionPages[captionPageIndex] ?? "",
     translation: { x: translateX, y: translateY },
     transform: `translate(${translateX}px, ${translateY}px) scale(${camera.scale})`,
@@ -81,15 +99,20 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
 }
 export type VideoFrameView = ReturnType<typeof buildVideoFrame>;
 /** 屏幕图层仍可引用席位锚点，几何目标跟随镜头，显式屏幕坐标保持固定。 */
-export function videoWorldToScreen(point: { x: number; y: number }, view: VideoFrameView) {
+export function videoWorldToScreen(
+  point: { x: number; y: number; fixed?: boolean },
+  view: VideoFrameView,
+) {
+  // 广播席位是HUD，不受中央舞台镜头影响；显式舞台坐标仍使用下方变换。
+  if (point.fixed) return { x: point.x, y: point.y };
   return {
     x: point.x * view.camera.scale + view.translation.x,
     y: point.y * view.camera.scale + view.translation.y,
   };
 }
-/** 事件定位只匹配原 seq；被跳剪的事件返回 null，避免跳到相邻事件。 */
+/** 原事件定位到该段的事实生效帧；被聚合的明细可定位，被跳剪且仅回顾的事件仍返回 null。 */
 export function getVideoEventFrame(plan: VideoPlan, seq: number): number | null {
-  return plan.shots.find((shot) => shot.kind === "event" && shot.eventSeq === seq)?.from ?? null;
+  return plan.eventFrames[String(seq)]?.find((item) => item.mode !== "revisit")?.frame ?? null;
 }
 export function videoShotEnd(shot: VideoShot): number {
   return shot.from + shot.durationFrames;
