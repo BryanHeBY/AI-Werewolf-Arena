@@ -58,6 +58,7 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     plan.width,
     plan.height,
     plan.layout,
+    { playersPresentation: plan.playersPresentation },
   );
   const { pose: camera, focusPlayerIds } = cameraAt(shot.camera, localFrame, layout);
   const captionRange = videoCaptionRange(plan.layout, shot.scene, shot.durationFrames);

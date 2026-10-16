@@ -25,6 +25,8 @@ function plan(layers: VideoLayer[]): VideoPlan {
     result: { winner: null, reason: null },
     players: Array.from({ length: 12 }, (_, index) => ({
       player_id: index + 1,
+      // 本组既有字面坐标专门约束完整资料列；匿名紧凑列另由自适应布局用例核对。
+      name: `Player ${index + 1}`,
       role: "villager",
       camp: "good",
     })),

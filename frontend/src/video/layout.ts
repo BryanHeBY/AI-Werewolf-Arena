@@ -3,6 +3,15 @@
  * 本层仅计算几何，不决定事件语义或存活状态；字幕位于独立屏幕空间，不跟随取景变换。
  */
 import type { CameraTarget, LayerPoint, VideoLayoutId } from "./types";
+import type { ResolvedPlayerPresentation } from "../presentation";
+
+export interface VideoLayoutOptions {
+  /** 只消费整局已完成匿名／显隐裁剪的资料；省略时保持旧广播几何，不从原始姓名或当前事件反推。 */
+  playersPresentation?: readonly Pick<
+    ResolvedPlayerPresentation,
+    "playerId" | "displayName" | "modelLabel"
+  >[];
+}
 
 export interface SeatAnchor {
   playerId: number;
@@ -21,16 +30,42 @@ export interface VideoLayout {
   stage: { x: number; y: number; width: number; height: number };
   rosterLeft: SeatAnchor[];
   rosterRight: SeatAnchor[];
+  rosterColumns: {
+    left: { width: number; hasMetadata: boolean };
+    right: { width: number; hasMetadata: boolean };
+  };
 }
 export function createVideoLayout(
   playerIds: number[],
   width = 1280,
   height = 720,
   id: VideoLayoutId = "legacy-ellipse-v1",
+  options: VideoLayoutOptions = {},
 ): VideoLayout {
   const scale = Math.min(width / 1280, height / 720);
   if (id === "broadcast-v1") {
     const rows = Math.ceil(playerIds.length / 2);
+    const metadata =
+      options.playersPresentation === undefined
+        ? undefined
+        : new Map(
+            options.playersPresentation.map((player) => [
+              player.playerId,
+              Boolean(player.displayName?.trim() || player.modelLabel?.trim()),
+            ]),
+          );
+    const column = (ids: number[]) => {
+      const hasMetadata =
+        metadata === undefined || ids.some((playerId) => metadata.get(playerId) === true);
+      // 紧凑列仍容纳头像、编号与最长语言的角色标签；列宽整局固定，与生死、说话和焦点无关。
+      return { width: width * (hasMetadata ? 0.171 : 0.1125), hasMetadata };
+    };
+    const rosterColumns = {
+      left: column(playerIds.slice(0, rows)),
+      right: column(playerIds.slice(rows)),
+    };
+    const leftReclaimed = width * 0.171 - rosterColumns.left.width;
+    const rightReclaimed = width * 0.171 - rosterColumns.right.width;
     const gap = height * 0.011;
     const cardHeight = Math.min(
       height * 0.122,
@@ -38,15 +73,15 @@ export function createVideoLayout(
     );
     const seats = playerIds.map((playerId, index) => ({
       playerId,
-      x: width * (index < rows ? 0.105 : 0.895),
+      x: index < rows ? width * 0.105 - leftReclaimed / 2 : width * 0.895 + rightReclaimed / 2,
       y: height * 0.16 + cardHeight / 2 + (index % rows) * (cardHeight + gap),
-      width: width * 0.171,
+      width: index < rows ? rosterColumns.left.width : rosterColumns.right.width,
       height: cardHeight,
     }));
     const stage = {
-      x: width * 0.205,
+      x: width * 0.205 - leftReclaimed,
       y: height * 0.145,
-      width: width * 0.59,
+      width: width * 0.59 + leftReclaimed + rightReclaimed,
       height: height * 0.775,
     };
     return {
@@ -56,8 +91,14 @@ export function createVideoLayout(
       seats,
       rosterLeft: seats.slice(0, rows),
       rosterRight: seats.slice(rows),
+      rosterColumns,
       stage,
-      table: { x: width / 2, y: height * 0.48, width: stage.width, height: stage.height * 0.7 },
+      table: {
+        x: stage.x + stage.width / 2,
+        y: height * 0.48,
+        width: stage.width,
+        height: stage.height * 0.7,
+      },
       caption: {
         x: stage.x + stage.width * 0.04,
         y: height * 0.72,
@@ -83,6 +124,10 @@ export function createVideoLayout(
     seats,
     rosterLeft: [],
     rosterRight: [],
+    rosterColumns: {
+      left: { width: 0, hasMetadata: false },
+      right: { width: 0, hasMetadata: false },
+    },
     stage: { x: width * 0.07, y: height * 0.12, width: width * 0.86, height: height * 0.54 },
     table: { x: width * 0.5, y: height * 0.385, width: width * 0.34, height: height * 0.25 },
     caption: { x: width * 0.07, y: height * 0.7, width: width * 0.86, height: height * 0.23 },
