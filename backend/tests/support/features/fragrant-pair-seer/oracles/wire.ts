@@ -28,18 +28,19 @@ const name = {
   en: { fragrant_phantom: "Fragrant Phantom", awakened_seer: "Awakened Seer" },
   "zh-CN": { fragrant_phantom: "寻香魅影", awakened_seer: "觉醒预言家" },
 };
+// 当前真实端点包含自爆二次确认字段；保留完整字面协议预期，不从生产词典生成 expected。
 const schema = {
   en: {
     get_game_schema: "{}; query the fixed tool protocol without returning game state.",
     submit_action:
-      "{ turn_id, action, arguments }; select one validated action. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+      "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
     report_bug:
       "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
   },
   "zh-CN": {
     get_game_schema: "{}；查询固定工具协议，不返回局内状态。",
     submit_action:
-      "{ turn_id, action, arguments }；选择一个通过校验的行动。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
+      "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
     report_bug: "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
   },
 };
@@ -177,9 +178,10 @@ export function assertFragrantTransportWire(run: FragrantWireRun) {
     privacy(actor, text);
     const r = role(actor);
     if (r !== "fragrant_phantom" && r !== "awakened_seer") return;
+    // 所有调用方都捕获本次真实会话：按当前开局句核对，不把保留的历史行动提示重写为当前授权。
     const identity = en
-      ? `Your seat is ${actor}. At session creation, your true role is ${name[locale][r]}.`
-      : `你的编号是${actor}号。本会话建立时，你的真实身份是${name[locale][r]}。`;
+      ? `You are taking part in a game of Werewolf, in seat ${actor}. Your true role when this session begins is ${name[locale][r]}.`
+      : `你正在参加一局狼人杀，座位编号是${actor}号。现在告知你的真实身份是${name[locale][r]}。`;
     must(text.includes(identity), "initial_identity");
     const m = (
       en ? /established, excluding yourself: ([^.]+)\./ : /队友（不含你自己）的编号：([^。]+)。/

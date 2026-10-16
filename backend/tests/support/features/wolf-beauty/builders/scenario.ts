@@ -240,7 +240,9 @@ export function wolfBeautyScenario(kind: BeautyScenario): TransportGameScenario 
       actor === 1
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Wolf Beauty." : "真实身份是狼美人。",
+              locale === "en"
+                ? "Your true role when this session begins is Wolf Beauty."
+                : "真实身份是狼美人。",
             requiredCurrentMarkers: [
               locale === "en" ? "Your role is Wolf Beauty," : "你的底牌是【狼美人】",
               locale === "en"

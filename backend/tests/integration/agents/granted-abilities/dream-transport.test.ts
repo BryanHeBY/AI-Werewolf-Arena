@@ -43,7 +43,9 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
         expectedName: "Seat 5",
         expectedIdentityMarker:
-          locale === "en" ? "your true role is Villager." : "真实身份是平民。",
+          locale === "en"
+            ? "Your true role when this session begins is Villager."
+            : "真实身份是平民。",
         requiredCurrentMarkers: [
           locale === "en" ? "Dream ability rules for this turn:" : "本轮梦能力规则：",
           '"lastTarget":6',

@@ -66,7 +66,9 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
         expectedName: "Seat 5",
         expectedIdentityMarker:
-          locale === "en" ? "your true role is Villager." : "真实身份是平民。",
+          locale === "en"
+            ? "Your true role when this session begins is Villager."
+            : "真实身份是平民。",
         forbiddenCurrentMarkers: [
           locale === "en" ? "Your role is Spirit Seer" : "你的底牌是【通灵师】",
           locale === "en" ? "Your role is Gargoyle" : "你的底牌是【石像鬼】",

@@ -267,14 +267,20 @@ export function mirrorScenario(kind: MirrorScenario): TransportGameScenario {
       ...(actor === mirror
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Mirror Girl." : "真实身份是魔镜少女。",
+              locale === "en"
+                ? "Your true role when this session begins is Mirror Girl."
+                : "真实身份是魔镜少女。",
             requiredCurrentMarkers: [
-              locale === "en" ? "Your role is Mirror Girl," : "你的角色是魔镜少女",
+              locale === "en"
+                ? "You are Mirror Girl, a Good special role"
+                : "你是魔镜少女，好人神职",
             ],
           }
         : {
             forbiddenCurrentMarkers: [
-              locale === "en" ? "Your role is Mirror Girl," : "你的角色是魔镜少女",
+              locale === "en"
+                ? "You are Mirror Girl, a Good special role"
+                : "你是魔镜少女，好人神职",
             ],
           }),
     }),

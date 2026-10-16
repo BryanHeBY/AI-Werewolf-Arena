@@ -199,14 +199,20 @@ export function hybridScenario(kind: HybridScenario): TransportGameScenario {
       ...(actor === hybrid
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Hybrid." : "真实身份是混血儿。",
+              locale === "en"
+                ? "Your true role when this session begins is Hybrid."
+                : "真实身份是混血儿。",
             requiredCurrentMarkers: [
-              locale === "en" ? "Your true role is Hybrid," : "你的真实底牌是混血儿",
+              locale === "en"
+                ? "Your role is Hybrid. Your true alignment is Good"
+                : "你的底牌是混血儿，真实阵营是好人",
             ],
           }
         : {
             forbiddenCurrentMarkers: [
-              locale === "en" ? "Your true role is Hybrid," : "你的真实底牌是混血儿",
+              locale === "en"
+                ? "Your role is Hybrid. Your true alignment is Good"
+                : "你的底牌是混血儿，真实阵营是好人",
             ],
           }),
     }),

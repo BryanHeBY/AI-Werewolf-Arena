@@ -298,7 +298,9 @@ export function merchantScenario(kind: MerchantScenario): TransportGameScenario 
       ...(actor === merchant
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Miracle Merchant." : "真实身份是奇迹商人。",
+              locale === "en"
+                ? "Your true role when this session begins is Miracle Merchant."
+                : "真实身份是奇迹商人。",
             requiredCurrentMarkers: [
               locale === "en" ? "Your true role is Miracle Merchant," : "你的真实身份是奇迹商人",
             ],

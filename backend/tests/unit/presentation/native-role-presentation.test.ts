@@ -148,8 +148,9 @@ test("native Witch prose keeps native-first stock even when the current action b
   );
   expect(getWitchState(role, "gift:potion:1")!.heal).toBe(0);
   expect(getWitchState(role)!.heal).toBe(1);
+  // 原生库存与同守同救／毒药说明一并精确核对，不借当前赠药能力替换展示来源。
   expect(renderRolePrompt(role)).toBe(
-    "Your role is Witch. Antidote:1 Poison:1 AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
+    "Your role is Witch. Antidote:1 Poison:1. Ordinary Guard protection and your antidote on the same target cancel each other, so the wolf knife may still kill that target. Ordinary protection does not block poison. AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
   );
 });
 
@@ -205,7 +206,7 @@ test("native contribution survives copied and inherited profiles without binding
       currentCamp,
     });
     expect(renderRolePrompt(role)).toBe(
-      "Your role is Witch. Antidote:1 Poison:1 AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
+      "Your role is Witch. Antidote:1 Poison:1. Ordinary Guard protection and your antidote on the same target cancel each other, so the wolf knife may still kill that target. Ordinary protection does not block poison. AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
     );
   }
 });
@@ -249,7 +250,7 @@ test("native contribution proxy reads its explicit presentation before late Worl
   });
   expect(trace).toEqual([]);
   expect(renderRolePrompt(role)).toBe(
-    "Your role is Witch. Antidote:1 Poison:1 AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
+    "Your role is Witch. Antidote:1 Poison:1. Ordinary Guard protection and your antidote on the same target cancel each other, so the wolf knife may still kill that target. Ordinary protection does not block poison. AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
   );
   expect(trace).toEqual(["presentation", "world"]);
 });

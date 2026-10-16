@@ -49,8 +49,9 @@ test("supported machine IDs have shared labels and all 64 role names are text ow
 });
 
 test("formatters reject missing text and parameters and never translate user content", () => {
+  // 独立全文预期保留库存占位符和既有保护规则，不从生产词典拼出 expected。
   expect(text("en", "role.witch.state", { heal: 1, poison: 0 })).toBe(
-    "Your role is Witch. Antidote:1 Poison:0",
+    "Your role is Witch. Antidote:1 Poison:0. Ordinary Guard protection and your antidote on the same target cancel each other, so the wolf knife may still kill that target. Ordinary protection does not block poison.",
   );
   expect(text("zh-CN", "common.player", { id: 12 })).toBe("12号");
   expect(text("en", "common.player", { id: 12 })).toBe("Player 12");

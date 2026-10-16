@@ -310,14 +310,20 @@ export function mechanicalScenario(kind: MechanicalScenario): TransportGameScena
       ...(actor === 1
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Mechanical Wolf." : "真实身份是机械狼。",
+              locale === "en"
+                ? "Your true role when this session begins is Mechanical Wolf."
+                : "真实身份是机械狼。",
             requiredCurrentMarkers: [
-              locale === "en" ? "Your true role is Mechanical Wolf and" : "你的真实底牌是机械狼",
+              locale === "en"
+                ? "Your role is Mechanical Wolf and your alignment is Werewolves."
+                : "你的底牌是机械狼，属于狼人阵营",
             ],
           }
         : {
             forbiddenCurrentMarkers: [
-              locale === "en" ? "Your true role is Mechanical Wolf and" : "你的真实底牌是机械狼",
+              locale === "en"
+                ? "Your role is Mechanical Wolf and your alignment is Werewolves."
+                : "你的底牌是机械狼，属于狼人阵营",
             ],
           }),
     }),

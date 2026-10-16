@@ -295,7 +295,10 @@ export function bearScenario(kind: BearScenario): TransportGameScenario {
     promptAssertions: (actor, locale) =>
       actor === bear
         ? {
-            expectedIdentityMarker: locale === "en" ? "your true role is Bear." : "真实身份是熊。",
+            expectedIdentityMarker:
+              locale === "en"
+                ? "Your true role when this session begins is Bear."
+                : "真实身份是熊。",
             requiredCurrentMarkers: [locale === "en" ? "Your role is Bear," : "你的底牌是【熊】"],
           }
         : {

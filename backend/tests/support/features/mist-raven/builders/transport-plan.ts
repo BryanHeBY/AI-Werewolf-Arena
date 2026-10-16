@@ -227,7 +227,7 @@ export async function mistTransportScenario(
     promptAssertions: (actor, locale) => ({
       expectedIdentityMarker:
         locale === "en"
-          ? `your true role is ${names[roles[actor - 1]!]![1]}.`
+          ? `Your true role when this session begins is ${names[roles[actor - 1]!]![1]}.`
           : `你的真实身份是${names[roles[actor - 1]!]![0]}。`,
       expectedTeammateIds:
         actor === raven

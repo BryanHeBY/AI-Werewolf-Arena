@@ -259,7 +259,9 @@ export function gargoyleScenario(kind: GargoyleScenario): TransportGameScenario 
       ...(actor === 1
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Gargoyle." : "真实身份是石像鬼。",
+              locale === "en"
+                ? "Your true role when this session begins is Gargoyle."
+                : "真实身份是石像鬼。",
             requiredCurrentMarkers: [
               locale === "en" ? "Your role is Gargoyle," : "你的底牌是【石像鬼】",
             ],

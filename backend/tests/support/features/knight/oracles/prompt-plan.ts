@@ -19,7 +19,9 @@ export function oracle(scene: TransportGameScenario): TransportGameScenario {
       scene.roles[actor - 1] === Role.Knight
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Knight." : "真实身份是骑士。",
+              locale === "en"
+                ? "Your true role when this session begins is Knight."
+                : "真实身份是骑士。",
             requiredCurrentMarkers:
               locale === "en" ? ["Your role is Knight,"] : ["你的底牌是【骑士】"],
           }

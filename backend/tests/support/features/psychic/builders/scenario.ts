@@ -237,7 +237,9 @@ export function psychicScenario(kind: PsychicScenario): TransportGameScenario {
       ...(actor === psychic
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Spirit Seer." : "真实身份是通灵师。",
+              locale === "en"
+                ? "Your true role when this session begins is Spirit Seer."
+                : "真实身份是通灵师。",
             requiredCurrentMarkers: [
               locale === "en" ? "Your role is Spirit Seer," : "你的底牌是【通灵师】",
             ],

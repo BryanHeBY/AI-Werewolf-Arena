@@ -281,7 +281,7 @@ export async function radiantTransportScenario(
       return {
         expectedIdentityMarker:
           locale === "en"
-            ? `your true role is ${names[role]![1]}.`
+            ? `Your true role when this session begins is ${names[role]![1]}.`
             : `你的真实身份是${names[role]![0]}。`,
         requiredCurrentMarkers:
           role === Role.EclipseMaid

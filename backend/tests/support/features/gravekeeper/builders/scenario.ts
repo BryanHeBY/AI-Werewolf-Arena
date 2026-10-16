@@ -265,7 +265,9 @@ export function gravekeeperScenario(kind: GravekeeperScenario): TransportGameSce
       actor === keeper
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Gravekeeper." : "真实身份是守墓人。",
+              locale === "en"
+                ? "Your true role when this session begins is Gravekeeper."
+                : "真实身份是守墓人。",
             requiredCurrentMarkers: [
               locale === "en" ? "Your role is Gravekeeper," : "你的底牌是【守墓人】",
             ],

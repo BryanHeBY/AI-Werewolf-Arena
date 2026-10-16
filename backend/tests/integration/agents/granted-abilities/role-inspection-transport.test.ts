@@ -47,7 +47,9 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
         expectedName: "Seat 5",
         expectedIdentityMarker:
-          locale === "en" ? "your true role is Villager." : "真实身份是平民。",
+          locale === "en"
+            ? "Your true role when this session begins is Villager."
+            : "真实身份是平民。",
         requiredCurrentMarkers: [
           locale === "en" ? "Role inspection ability for this turn:" : "本轮具体角色查验能力：",
           '"lastTarget":6',

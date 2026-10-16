@@ -303,14 +303,20 @@ export function awakenedScenario(kind: AwakenedScenario): TransportGameScenario 
       ...(actor === 1
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Awakened Hidden Wolf." : "真实身份是觉醒隐狼。",
+              locale === "en"
+                ? "Your true role when this session begins is Awakened Hidden Wolf."
+                : "真实身份是觉醒隐狼。",
             requiredCurrentMarkers: [
-              locale === "en" ? "Your true role is Awakened Hidden Wolf;" : "你的真底牌是觉醒隐狼",
+              locale === "en"
+                ? "Your role is Awakened Hidden Wolf; alignment and victory affiliation remain Werewolves."
+                : "你的底牌是觉醒隐狼，阵营与胜利归属始终为狼人",
             ],
           }
         : {
             forbiddenCurrentMarkers: [
-              locale === "en" ? "Your true role is Awakened Hidden Wolf;" : "你的真底牌是觉醒隐狼",
+              locale === "en"
+                ? "Your role is Awakened Hidden Wolf; alignment and victory affiliation remain Werewolves."
+                : "你的底牌是觉醒隐狼，阵营与胜利归属始终为狼人",
             ],
           }),
     }),

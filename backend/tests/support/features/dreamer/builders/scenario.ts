@@ -242,7 +242,9 @@ export function dreamerScenario(kind: DreamerScenario): TransportGameScenario {
       id === actor
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Dreamer." : "真实身份是摄梦人。",
+              locale === "en"
+                ? "Your true role when this session begins is Dreamer."
+                : "真实身份是摄梦人。",
             requiredCurrentMarkers: [
               locale === "en" ? "Your role is Dreamer," : "你的底牌是【摄梦人】",
             ],

@@ -321,7 +321,9 @@ export function hiddenWolfScenario(kind: HiddenScenario): TransportGameScenario 
       ...(actor === hidden
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Hidden Wolf." : "真实身份是隐狼。",
+              locale === "en"
+                ? "Your true role when this session begins is Hidden Wolf."
+                : "真实身份是隐狼。",
             requiredCurrentMarkers: [
               locale === "en" ? "Your role is Hidden Wolf," : "你的底牌是【隐狼】",
             ],

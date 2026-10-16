@@ -11,7 +11,9 @@ export function withPromptOracle(scenario: TransportGameScenario): TransportGame
       scenario.roles[actor - 1] === Role.WolfKing
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is Wolf King." : "真实身份是狼王。",
+              locale === "en"
+                ? "Your true role when this session begins is Wolf King."
+                : "真实身份是狼王。",
             requiredCurrentMarkers:
               locale === "en"
                 ? ["Your role is Wolf King.", "Shots remaining: 1."]

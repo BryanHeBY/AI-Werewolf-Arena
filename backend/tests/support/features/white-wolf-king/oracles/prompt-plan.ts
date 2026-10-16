@@ -11,7 +11,9 @@ export function oracle(scenario: TransportGameScenario): TransportGameScenario {
       scenario.roles[actor - 1] === Role.WhiteWolfKing
         ? {
             expectedIdentityMarker:
-              locale === "en" ? "your true role is White Wolf King." : "真实身份是白狼王。",
+              locale === "en"
+                ? "Your true role when this session begins is White Wolf King."
+                : "真实身份是白狼王。",
             requiredCurrentMarkers:
               locale === "en"
                 ? ["Your role is White Wolf King.", "Self-destruct opportunities remaining: 1."]
