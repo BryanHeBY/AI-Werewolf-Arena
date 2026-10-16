@@ -11,6 +11,10 @@ import {
   resolveTurnConstraints,
 } from "../../engine/actions/turn-constraints";
 import { awaitBeforeDeadline } from "../runtime/turn-deadline";
+import {
+  getDefaultToolSpecRegistry,
+  type ToolSpecRegistry,
+} from "../../engine/actions/tool-spec-registry";
 
 export type FallbackReason = "runtime_error" | "deadline_skip" | "model_declined_required_action";
 
@@ -22,6 +26,7 @@ export class FallbackActionPolicy {
   constructor(
     private readonly provider: ActionProvider,
     private readonly observer: LlmObserver,
+    private readonly specs: ToolSpecRegistry = getDefaultToolSpecRegistry(),
   ) {}
 
   async resolve(
@@ -30,13 +35,14 @@ export class FallbackActionPolicy {
     signal?: AbortSignal,
   ): Promise<ToolCall | null> {
     // 本地同步策略仍可在耗尽期限时立即返回；异步回退不获得新预算，也不能跨过关闭继续执行。
-    const action = allowsActionFallback(request)
+    const candidate = allowsActionFallback(request)
       ? await awaitBeforeDeadline(
           () => this.provider.getAction(request),
           request.deadlineAtMs,
           signal,
         )
       : null;
+    const action = candidate && !this.specs.requiresConfirmation(candidate.name) ? candidate : null;
     this.observer.emit(
       {
         type: "fallback",

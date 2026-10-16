@@ -15,7 +15,7 @@ import { runWithSessionRecorder } from "../../../../src/recording/session/contex
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 for (const required of [false, true])
-  test(`successful ACP prompt with no tool submission ${required ? "falls back for a required turn" : "honors an optional pass"}`, async () => {
+  test(`successful ACP prompt with no tool submission ${required ? "blocks automatic self-destruction for a required turn" : "honors an optional pass"}`, async () => {
     const { world } = bootstrapGame(sixPlayerMvpConfig);
     let fallbacks = 0,
       closes = 0;
@@ -60,7 +60,7 @@ for (const required of [false, true])
     };
     await runWithSessionRecorder(manager, async () => {
       const action = await provider.getAction(request);
-      expect(required ? action?.name : action).toBe(required ? "self_destruct" : null);
+      expect(action).toBeNull();
       await provider.close();
       await manager.finalize({
         endedAtIso: "2026-10-08T00:01:00.000Z",

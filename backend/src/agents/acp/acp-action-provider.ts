@@ -7,7 +7,12 @@ import {
   allowsActionFallback,
   resolveTurnConstraints,
 } from "../../engine/actions/turn-constraints";
-import { type AgentOutputSink, type ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
+import {
+  agentActionConfirmation,
+  type AgentOutput,
+  type AgentOutputSink,
+  type ErrorDiagnostic,
+} from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../utils/error-diagnostic";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../domain/components/role";
@@ -33,6 +38,7 @@ import { AcpSessionPool } from "./session-pool";
 import {
   AcpBugReport,
   AcpTurnRegistry,
+  type AcpPendingTurn,
   McpBridgeResult,
 } from "../../adapters/acp/acp-turn-registry";
 import {
@@ -313,7 +319,7 @@ export class AcpActionProvider implements ActionProvider {
       if (this.closed) return this.closedResult(request);
       if (signal.aborted || deadlineAtMs <= Date.now())
         throw signal.reason ?? new Error("acp_deadline_elapsed");
-      auditTrace = session.takeAuditTrace?.();
+      auditTrace = this.captureAuditTrace(request, session, turn);
       if (this.closed) return this.closedResult(request);
       if (outcome.action) {
         this.observer.trace(
@@ -373,7 +379,7 @@ export class AcpActionProvider implements ActionProvider {
     }
     if (this.closed) return this.closedResult(request);
     built ??= this.buildTurnPrompt(request, turn?.turnId ?? "unopened", false);
-    auditTrace ??= session?.takeAuditTrace?.();
+    auditTrace ??= this.captureAuditTrace(request, session, turn);
     if (this.closed) return this.closedResult(request);
     let fallback: ToolCall | null;
     try {
@@ -384,6 +390,8 @@ export class AcpActionProvider implements ActionProvider {
             this.closeController.signal,
           )
         : null;
+      if (fallback && getDefaultToolSpecRegistry().requiresConfirmation(fallback.name))
+        fallback = null;
     } catch (error) {
       if (error === this.closeController.signal.reason) return this.closedResult(request);
       if (!(error instanceof TurnDeadlineElapsed)) throw error;
@@ -530,6 +538,49 @@ export class AcpActionProvider implements ActionProvider {
       turnId,
       eventCursorBefore: cursor,
       eventCursorAfter: advanceCursor ? nextCursor : cursor,
+    };
+  }
+
+  /** MCP 回执由引擎留底；即便 ACP 不发 rawOutput，也能私有记录并展示确认警示。 */
+  private captureAuditTrace(
+    request: ActionRequest,
+    session?: AcpSession,
+    turn?: AcpPendingTurn,
+  ): AcpSessionAuditTrace | undefined {
+    const trace = session?.takeAuditTrace?.();
+    const confirmations = turn?.confirmationOutputs ?? [];
+    if (!confirmations.length) return trace;
+    const native: AgentOutput[] = trace?.outputs ?? [
+      ...(trace?.thoughts ?? []).map((value) => ({
+        type: "text" as const,
+        channel: "thinking" as const,
+        text: value,
+      })),
+      ...(trace?.messages ?? []).map((value) => ({
+        type: "text" as const,
+        channel: "message" as const,
+        text: value,
+      })),
+    ];
+    // 能在原生轨迹定位的回执保留原顺序；遗漏的回执补在尾部，不依赖展示文本猜测行动。
+    const remaining = [...confirmations];
+    const outputs = native.map((output) => {
+      const fact = agentActionConfirmation(output);
+      if (!fact) return output;
+      const index = remaining.findIndex((candidate) => {
+        const known = agentActionConfirmation(candidate);
+        return known?.status === fact.status && known?.confirmation_id === fact.confirmation_id;
+      });
+      if (index < 0) return output;
+      const [canonical] = remaining.splice(index, 1);
+      return { ...canonical!, ...(output.type === "tool" ? { id: output.id } : {}) } as AgentOutput;
+    });
+    for (const output of confirmations) this.observer.emit(output, this.observer.context(request));
+    return {
+      messages: trace?.messages ?? [],
+      thoughts: trace?.thoughts ?? [],
+      ...trace,
+      outputs: [...outputs, ...remaining],
     };
   }
 

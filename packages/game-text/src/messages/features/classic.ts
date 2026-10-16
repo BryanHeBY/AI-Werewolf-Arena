@@ -352,7 +352,7 @@ export const zhCN = {
   "role.white_wolf_king.state":
     "你的底牌是【白狼王】。普通狼队互认、夜聊与刀票权限；自爆带人只在允许的离散窗口行动。self_destruct_with_target的target_id选择另一存活玩家，可选队友；null明确不带人。只有被采纳才耗一次，非自爆死亡无技能，首日待夜死者不能吞刀/毒发动带人；最终资格核对不提示隐藏夜死原因。目标的猎人/狼王可开枪，复合毒仍禁枪；完整死亡链后判胜。自爆机会剩余：{remaining}。",
   "action.white_wolf_king.directive":
-    "可选高风险自爆带人；confirm=true，target_id为其它存活编号或null不带人。没有行动时可不调用工具。",
+    "可选高风险自爆带人；confirm=true，target_id为其它存活编号或null不带人。第一次 submit_action 只提案；阅读引擎警示后，再用相同 turn_id、action、arguments 和顶层 confirmation_id 确认。改变目标须重新提案。若不自爆，直接结束回合，禁止占位提交。",
   "action.white_wolf_king.hint":
     "self_destruct_with_target需要reason、confirm=true、target_id；null明确不带人，非法目标不消耗机会。",
   "error.white_wolf_blast_unavailable": "当前没有白狼王自爆带人资格或机会",
@@ -454,7 +454,7 @@ export const zhCN = {
   "action.wolf_vote.directive":
     "当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。",
   "action.self_destruct.directive":
-    "自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。",
+    "当前是可选的【狼人自爆窗口】。不自爆请直接结束回合，不调用工具；禁止用自爆占位或表示跳过。确实要自爆时，先用 submit_action 提交 self_destruct（confirm=true）；引擎返回警示和 confirmation_id 后，阅读并再次原样提交同一行动，在顶层附上该编号。首次提案不会生效，未确认即跳过。",
   "action.witch.directive":
     '当前是【女巫行动阶段】：必须调用 use_potion；若本夜不用药，调用 use_potion 并设置 potion_type="none"。',
   "action.speak_to_wolves.hint":
@@ -628,7 +628,7 @@ export const en = {
   "role.white_wolf_king.state":
     "Your role is White Wolf King. You share normal pack recognition, chat and knife voting. Self-destruct with a target only at enabled discrete public windows. For self_destruct_with_target, choose another living player, including a teammate; target_id=null deliberately takes nobody. Only a committed choice spends the opportunity. Other deaths grant no skill; a pending first-night victim cannot swallow its knife/poison death with this skill, and final eligibility checking does not reveal hidden night-death reasons. A targeted Hunter or Wolf King may shoot unless poison or another forbidden cause blocks it; victory follows the full death chain. Self-destruct opportunities remaining: {remaining}.",
   "action.white_wolf_king.directive":
-    "Optional high-risk self-destruct: confirm=true and target_id=another living player or null to take nobody. You may skip calling a tool.",
+    "Optional high-risk self-destruct: confirm=true and target_id=another living player or null to take nobody. The first submit_action only proposes. Read the engine warning, then confirm with unchanged turn_id, action and arguments plus the top-level confirmation_id. A changed target needs a fresh proposal. To decline, end the turn; never submit a placeholder.",
   "action.white_wolf_king.hint":
     "self_destruct_with_target requires reason, confirm=true and target_id. Null deliberately takes nobody; an invalid target does not spend the opportunity.",
   "error.white_wolf_blast_unavailable":
@@ -748,7 +748,7 @@ export const en = {
   "action.wolf_vote.directive":
     "This is the wolf kill vote: submit kill_vote. To abstain, set abstain=true and target_id=null.",
   "action.self_destruct.directive":
-    "Use self-destruction cautiously. In this window, only self_destruct changes the game. Use it only in a severely unfavorable situation and set confirm=true.",
+    "This is an optional self-destruct window. To decline, end the turn without calling a tool; never use self-destruct as a placeholder or skip. To proceed, propose self_destruct with confirm=true through submit_action, read the engine warning and confirmation_id, then resubmit the identical action with that ID at the top level. The first proposal has no effect; an unconfirmed proposal is skipped.",
   "action.witch.directive":
     'This is the Witch stage: submit use_potion. To use no potion tonight, submit use_potion with potion_type="none".',
   "action.speak_to_wolves.hint":

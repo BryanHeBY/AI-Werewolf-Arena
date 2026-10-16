@@ -121,6 +121,7 @@ export class LlmObserver {
             type: "tool",
             id: call.id,
             name: call.name,
+            args,
             result: call.toolResult,
             status: "completed",
             step: index + 1,

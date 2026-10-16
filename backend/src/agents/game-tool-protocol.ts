@@ -25,6 +25,11 @@ export function gameToolProtocol(locale: Locale = "zh-CN") {
         arguments: z
           .record(z.string({ error: schemaError }), z.unknown(), { error: schemaError })
           .describe(text(locale, "schema.arguments")),
+        confirmation_id: z
+          .string({ error: schemaError })
+          .min(1, { error: schemaError })
+          .optional()
+          .describe(text(locale, "schema.confirmation_id")),
       },
       { error: schemaError },
     ),

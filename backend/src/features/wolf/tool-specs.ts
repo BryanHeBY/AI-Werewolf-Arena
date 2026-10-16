@@ -38,6 +38,7 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
   },
   {
     name: "self_destruct",
+    confirmation: "self_destruct",
     parameters: {
       type: "object",
       properties: {

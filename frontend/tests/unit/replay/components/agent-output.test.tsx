@@ -85,3 +85,53 @@ test("游戏回放或坏文件不能冒充玩家私有档案", () => {
     parsePlayerAgentArchive(JSON.stringify({ players: [], events: [], meta: {}, result: {} })),
   ).toThrow();
 });
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: 私有回执在关闭详细输出时仍标明未确认与已确认，不当作已生效事件`, () => {
+    const value = JSON.parse(raw);
+    value.timeline[0].delta_messages = [
+      {
+        role: "tool",
+        kind: "tool_result",
+        name: "submit_action",
+        result: {
+          ok: true,
+          accepted: false,
+          applied: false,
+          status: "confirmation_required",
+          confirmation_id: "only-private",
+          action: "self_destruct",
+          arguments: { reason: "placeholder", confirm: true },
+          warning: "Not selected <script>danger</script>",
+        },
+      },
+      {
+        role: "tool",
+        kind: "tool_result",
+        name: "submit_action",
+        result: {
+          ok: true,
+          accepted: true,
+          applied: false,
+          status: "confirmed",
+          action: "self_destruct",
+        },
+      },
+    ];
+    const html = renderToStaticMarkup(
+      <PlayerAgentOutputView
+        view={parsePlayerAgentArchive(JSON.stringify(value))}
+        locale={locale}
+        display={{ printThinking: false, printLlmIo: false, trace: false }}
+      />,
+    );
+    expect(html).toContain(
+      locale === "en" ? "Second confirmation required (not selected)" : "需要二次确认（尚未选定）",
+    );
+    expect(html).toContain(
+      locale === "en" ? "Confirmed (not yet applied)" : "已二次确认（尚未生效）",
+    );
+    expect(html).toContain("agent-output-warn");
+    expect(html).toContain("&lt;script&gt;");
+    expect(html).not.toContain("<script>");
+  });

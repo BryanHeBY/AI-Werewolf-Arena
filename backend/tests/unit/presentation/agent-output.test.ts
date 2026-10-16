@@ -31,7 +31,12 @@ test("相同消费者接收 LLM、ACP、Pi 输出，关闭显示仍保留所有�
     actorId: 1,
     phase: Phase.Day,
     allowedTools: ["speak"],
-    context: { day: 1, stage: "day_speech", visible_events: [] },
+    context: {
+      day: 1,
+      stage: "day_speech",
+      visible_events: [],
+      turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
+    },
   };
   new LlmObserver({
     printThinking: false,
@@ -121,7 +126,12 @@ test("SDK 录制保留完整原文并与可变显示消费者隔离，取走后�
     actorId: 1,
     phase: Phase.Day,
     allowedTools: ["speak"],
-    context: { day: 1, stage: "day_speech", visible_events: [] },
+    context: {
+      day: 1,
+      stage: "day_speech",
+      visible_events: [],
+      turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
+    },
   };
   observer.thinking(
     [
@@ -172,4 +182,130 @@ test("ACP 结束后补充工具结果会进入档案，终端仍只显示一行"
     status: "updated",
     result: { ok: true, applied: false },
   });
+});
+
+test("三种传输的自爆警示即使关闭详细输出也可见，工具正文迟到只提示一次", () => {
+  const warning = {
+    ok: true,
+    accepted: false,
+    applied: false,
+    status: "confirmation_required",
+    confirmation_id: "private-id",
+    action: "self_destruct",
+    arguments: { reason: "占位", confirm: true },
+    warning: "警告：尚未选定，自爆不是跳过。",
+  };
+  for (const transport of ["llm", "acp", "pi"] as const) {
+    const lines: string[] = [],
+      tones: string[] = [];
+    const display = createAgentConsoleSink({
+      printThinking: false,
+      printLlmIo: false,
+      trace: false,
+      log: (line, tone) => {
+        lines.push(line);
+        tones.push(tone!);
+      },
+    });
+    const context = { transport, playerId: 8 };
+    const result =
+      transport === "llm"
+        ? JSON.stringify(warning)
+        : { content: [{ type: "text", text: JSON.stringify(warning) }] };
+    display({
+      visibility: "private",
+      context,
+      output: {
+        type: "tool",
+        id: "proposal",
+        name: "mcp__werewolf-game__submit_action",
+        status: "completed",
+        result,
+      },
+    });
+    display({
+      visibility: "private",
+      context,
+      output: {
+        type: "tool",
+        id: "proposal",
+        name: "mcp__werewolf-game__submit_action",
+        status: "updated",
+        result,
+      },
+    });
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("需要二次确认");
+    expect(lines[0]).toContain("不是跳过");
+    expect(lines[0]).toContain('"confirm":true');
+    expect(tones).toEqual(["warn"]);
+    display({
+      visibility: "private",
+      context,
+      output: {
+        type: "tool",
+        id: "confirm",
+        name: "submit_action",
+        status: "completed",
+        result: {
+          ok: true,
+          accepted: true,
+          applied: false,
+          status: "confirmed",
+          action: "self_destruct",
+        },
+      },
+    });
+    expect(lines).toHaveLength(2);
+    expect(lines[1]).toContain("已二次确认（尚未生效）");
+    // 引擎在回合收尾补齐相同回执，不能把早已展示的警示再次打印。
+    display({
+      visibility: "private",
+      context,
+      output: {
+        type: "tool",
+        id: "engine-copy",
+        name: "submit_action",
+        status: "completed",
+        result,
+      },
+    });
+    expect(lines).toHaveLength(2);
+  }
+});
+
+test("Pi 与 ACP 的普通工具结束输出保留原提交行动参数", () => {
+  const outputs: AgentOutputEvent[] = [],
+    args = { turn_id: "t1", action: "speak", arguments: { text: "真实提交" } };
+  const pi = createPiOutputObserver({ transport: "pi", playerId: 8 }, (event) =>
+    outputs.push(event),
+  );
+  pi.update({ type: "tool_start", id: "one", name: "submit_action", args });
+  pi.update({
+    type: "tool_end",
+    id: "one",
+    name: "submit_action",
+    result: { ok: true },
+    isError: false,
+  });
+  const acp = createAcpOutputObserver({ transport: "acp", playerId: 8 }, (event) =>
+    outputs.push(event),
+  );
+  acp.update({
+    sessionUpdate: "tool_call",
+    toolCallId: "one",
+    title: "submit_action",
+    rawInput: args,
+  });
+  acp.update({ sessionUpdate: "tool_call_update", toolCallId: "one", status: "completed" });
+  const lines: string[] = [],
+    display = createAgentConsoleSink({
+      printThinking: true,
+      printLlmIo: false,
+      trace: false,
+      log: (line) => lines.push(line),
+    });
+  outputs.forEach(display);
+  expect(lines).toHaveLength(2);
+  expect(lines.every((line) => line.includes('speak {"text":"真实提交"}'))).toBe(true);
 });

@@ -15,12 +15,16 @@ export function createPiOutputObserver(context: AgentOutputContext, sink: AgentO
   const emit = (output: AgentOutput) =>
     sink({ visibility: "private", context: { ...context }, output: structuredClone(output) });
   const text = new AgentTextBuffer(emit);
+  const calls = new Map<string, Record<string, unknown>>();
   return {
     update(event: PiSessionEvent): void {
       if (event.type === "thinking" || event.type === "message") {
         if (event.partial) text.append(event.blockId, event.type, event.text);
         else text.finish(event.blockId);
       } else if (event.type === "tool_start" || event.type === "tool_end") {
+        if (event.type === "tool_start") calls.set(event.id, structuredClone(event.args));
+        const args = calls.get(event.id);
+        if (event.type === "tool_end") calls.delete(event.id);
         text.flush();
         emit(
           event.type === "tool_start"
@@ -30,6 +34,7 @@ export function createPiOutputObserver(context: AgentOutputContext, sink: AgentO
                 id: event.id,
                 name: event.name,
                 status: event.isError ? "failed" : "completed",
+                args,
                 result:
                   typeof event.result === "string" ||
                   (event.result && typeof event.result === "object" && !Array.isArray(event.result))
@@ -37,8 +42,14 @@ export function createPiOutputObserver(context: AgentOutputContext, sink: AgentO
                     : undefined,
               },
         );
-      } else if (event.type === "settled") text.flush();
+      } else if (event.type === "settled") {
+        text.flush();
+        calls.clear();
+      }
     },
-    flush: () => text.flush(),
+    flush: () => {
+      text.flush();
+      calls.clear();
+    },
   };
 }

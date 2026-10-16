@@ -23,6 +23,7 @@ import {
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { isLocale } from "@ai-werewolf-arena/game-contract";
 import { getActionRequestDay, getActionRequestStage } from "../../domain/action-request-context";
+import type { AgentOutput } from "@ai-werewolf-arena/replay-contract";
 export type {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,
@@ -50,12 +51,18 @@ export interface AcpPendingTurn {
   turnId: string;
   action: Promise<ToolCall | null>;
   readonly outcome: ActionTurn["outcome"];
+  /** 引擎确实返回的确认回执，独立于适配器是否发布 rawOutput。 */
+  readonly confirmationOutputs: AgentOutput[];
 }
 
 interface PendingTurn extends AcpPendingTurn {
   request: ActionRequest;
   owner: ActionTurn;
   resolve: (action: ToolCall | null) => void;
+  captureConfirmation: (
+    receipt: Extract<ActionReceipt, { ok: true }>,
+    confirmationId?: string,
+  ) => void;
 }
 
 /**
@@ -103,11 +110,33 @@ export class AcpTurnRegistry {
       resolve = done;
     });
     const owner = new ActionTurn(this.reception, request, turnId);
+    const confirmationOutputs: AgentOutput[] = [];
+    const readConfirmations = () => structuredClone(confirmationOutputs);
     this.pendingBySession.set(sessionId, {
       sessionId,
       turnId,
       request,
       owner,
+      get confirmationOutputs() {
+        return readConfirmations();
+      },
+      captureConfirmation(receipt, confirmationId) {
+        if (!receipt.status) return;
+        confirmationOutputs.push({
+          type: "tool",
+          name: "submit_action",
+          status: "completed",
+          id: `engine:${turnId}:${confirmationOutputs.length + 1}`,
+          args: {
+            turn_id: turnId,
+            action: receipt.action,
+            arguments: receipt.accepted ? owner.action!.args : receipt.arguments,
+            ...(confirmationId ? { confirmation_id: confirmationId } : {}),
+          },
+          result: structuredClone(receipt),
+          accepted: receipt.accepted,
+        });
+      },
       get outcome() {
         return owner.outcome;
       },
@@ -118,6 +147,9 @@ export class AcpTurnRegistry {
       sessionId,
       turnId,
       action,
+      get confirmationOutputs() {
+        return readConfirmations();
+      },
       get outcome() {
         return owner.outcome;
       },
@@ -143,7 +175,12 @@ export class AcpTurnRegistry {
     if (!pending) {
       return toolFailure(this.locale, "turn_not_open_or_session_invalid");
     }
-    const result = pending.owner.submit(input.turn_id, input.action, input.arguments);
+    const result = pending.owner.submit(
+      input.turn_id,
+      input.action,
+      input.arguments,
+      input.confirmation_id,
+    );
     if (!result.ok) {
       if (pending.owner.outcome.failureCode) {
         this.pendingBySession.delete(sessionId);
@@ -152,6 +189,9 @@ export class AcpTurnRegistry {
       }
       return result;
     }
+
+    pending.captureConfirmation(result, input.confirmation_id);
+    if (!result.accepted) return result;
 
     // 接受后先移除该会话的登记，再读取已选候选供 resolve；未调用 owner.close，selected 本身阻止再次选择。
     this.pendingBySession.delete(sessionId);

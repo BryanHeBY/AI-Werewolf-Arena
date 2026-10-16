@@ -21,7 +21,10 @@ export function createAcpOutputObserver(context: AgentOutputContext, sink: Agent
     sink({ visibility: "private", context: { ...context }, output: structuredClone(output) });
   const text = new AgentTextBuffer(emit, { maxChunkLength: 500, splitLines: true });
   let pending: string | undefined;
-  const tools = new Map<string, { name: string; status?: string; error: string }>();
+  const tools = new Map<
+    string,
+    { name: string; status?: string; error: string; args?: Record<string, unknown> }
+  >();
   return {
     update(value: unknown): void {
       const update = record(value);
@@ -64,6 +67,7 @@ export function createAcpOutputObserver(context: AgentOutputContext, sink: Agent
             name,
             status: status ?? previous?.status,
             error: error || previous?.error || "",
+            args: input ?? previous?.args,
           });
         if (type === "tool_call")
           emit({ type: "tool", id, name, status: "started", args: record(update.rawInput) });
@@ -77,7 +81,7 @@ export function createAcpOutputObserver(context: AgentOutputContext, sink: Agent
             type: "tool",
             id,
             name,
-            args: record(update.rawInput),
+            args: input ?? previous?.args,
             status:
               status === previous?.status && !error
                 ? "updated"

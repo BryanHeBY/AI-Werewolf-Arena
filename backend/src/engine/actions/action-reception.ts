@@ -23,7 +23,7 @@ import type { Locale } from "@ai-werewolf-arena/game-contract";
 
 /** 只描述预检结果，不表示领域已付款或生效；可选回合字段保留原拒绝结构接受集合。 */
 export type GameActionValidation =
-  | { ok: true; action: ToolCall }
+  | { ok: true; action: ToolCall; confirmation?: "self_destruct" }
   | {
       ok: false;
       error: string;
@@ -175,6 +175,10 @@ export class ActionReception {
       return { ...fail("turn_constraints_not_satisfied"), details: evaluation.errors };
     }
     // 已接受的是脱离的候选，不是领域 commit；库存、租约完成和实际效果仍要在原 owner 重验。
-    return { ok: true, action: structuredClone(checked.sanitizedCall) };
+    return {
+      ok: true,
+      action: structuredClone(checked.sanitizedCall),
+      ...(spec.confirmation ? { confirmation: spec.confirmation } : {}),
+    };
   }
 }

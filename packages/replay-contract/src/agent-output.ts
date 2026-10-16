@@ -1,6 +1,6 @@
 /**
  * 负责定义 Agent 私有输出的传输无关契约，以及现有玩家增量档案的双向适配。
- * 只描述已经发生的模型输出，不授予工具权限；受众始终是本地私有观察，不进入公开游戏事件。
+ * 只描述已经发生的模型输出与宿主工具回执，不授予工具权限；受众始终是本地私有观察，不进入公开游戏事件。
  * 实时消费者与离线消费者使用相同分类，ANSI、HTML 和语言文案由展示端添加。
  */
 import type { ErrorDiagnostic } from "./error-diagnostic";
@@ -66,6 +66,59 @@ export interface AgentOutputEvent {
   output: AgentOutput;
 }
 export type AgentOutputSink = (event: AgentOutputEvent) => void;
+
+/** 只解析已知工具回执包装；模型普通发言中的 JSON 不作为确认事实。 */
+export function agentActionConfirmation(output: AgentOutput):
+  | {
+      status: "confirmation_required" | "confirmed";
+      action: string;
+      warning?: string;
+      arguments?: Record<string, unknown>;
+      confirmation_id?: string;
+    }
+  | undefined {
+  if (output.type !== "tool" || !/(?:^|[._])submit_action$/.test(output.name)) return;
+  let value: unknown = output.result;
+  for (let depth = 0; depth < 4; depth++) {
+    if (typeof value === "string") {
+      try {
+        value = JSON.parse(value);
+      } catch {
+        return;
+      }
+    }
+    if (!value || typeof value !== "object" || Array.isArray(value)) return;
+    const item = value as Record<string, unknown>;
+    if (item.ok === true && item.applied === false && typeof item.action === "string") {
+      if (item.status === "confirmed" && item.accepted === true)
+        return {
+          status: "confirmed",
+          action: item.action,
+          confirmation_id:
+            typeof item.confirmation_id === "string" ? item.confirmation_id : undefined,
+        };
+      if (
+        item.status === "confirmation_required" &&
+        item.accepted === false &&
+        typeof item.warning === "string" &&
+        typeof item.confirmation_id === "string"
+      )
+        return {
+          status: "confirmation_required",
+          action: item.action,
+          warning: item.warning,
+          confirmation_id: item.confirmation_id,
+          arguments:
+            item.arguments && typeof item.arguments === "object" && !Array.isArray(item.arguments)
+              ? (item.arguments as Record<string, unknown>)
+              : undefined,
+        };
+      return;
+    }
+    const content = Array.isArray(item.content) ? item.content : [];
+    value = item.structuredContent ?? content.find((block) => block?.type === "text")?.text;
+  }
+}
 
 /** 保持 player schema 2 的字段；原文分片保存，避免聚合器既有单条长度上限截断思考。 */
 export function agentOutputToDeltaMessages(

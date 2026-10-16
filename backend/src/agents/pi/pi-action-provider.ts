@@ -373,6 +373,8 @@ export class PiActionProvider implements ActionProvider {
               request.deadlineAtMs,
               this.closeController.signal,
             );
+            if (action && getDefaultToolSpecRegistry().requiresConfirmation(action.name))
+              action = null;
           } catch (error) {
             if (this.closed || !signal.aborted) finishingErrors.push(error);
           }
@@ -490,10 +492,11 @@ export class PiActionProvider implements ActionProvider {
       invocation.args.turn_id,
       invocation.args.action,
       invocation.args.arguments,
+      invocation.args.confirmation_id,
     );
     return {
       toolResult: receipt,
-      ...(receipt.ok
+      ...(receipt.ok && receipt.accepted
         ? { finalAction: turn.action!, stop: true }
         : { stop: !!turn.outcome.failureCode }),
     };

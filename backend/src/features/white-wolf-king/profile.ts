@@ -34,6 +34,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
       ),
       {
         name: "self_destruct_with_target",
+        confirmation: "self_destruct",
         parameters: {
           type: "object",
           properties: {

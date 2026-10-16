@@ -9,6 +9,8 @@ import { ToolName } from "../../domain/model";
 /** 工具规格定义。 */
 export interface ToolSpec {
   name: ToolName;
+  /** 高风险行动由共同选择窗口要求显式往返确认；不是领域提交的授权凭证。 */
+  confirmation?: "self_destruct";
   /** 只用于校验的 JSON Schema；玩家说明由共享本地化提示提供，不写进 schema。 */
   parameters: Record<string, unknown>;
   argHint: string;

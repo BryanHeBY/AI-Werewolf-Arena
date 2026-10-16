@@ -3,6 +3,7 @@
  * 输入为原六人／十二人角色计划、传输路由、语言、并发局和自爆窗口矩阵；输出由手写终局／技能、私有 prompt 与逐局精确复现断言核对。
  * 原进程清理、配置和 fixture 不变；新封装经实际 canonical reader 消费，不改预期。
  */
+import { confirmationResponse } from "../../../support/drivers/agents/confirmation-response";
 import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -93,6 +94,8 @@ async function runFixture(
           async fetch(request) {
             try {
               const body = (await request.json()) as any;
+              const confirmation = confirmationResponse(body);
+              if (confirmation) return confirmation;
               const actorId = Number(
                   /^synthetic-player-(\d+)$/.exec(body.model)?.[1] ??
                     new URL(request.url).pathname.match(/player-(\d+)/)?.[1],
@@ -197,7 +200,11 @@ async function runFixture(
         type: "acp",
         transport: "stdio",
         command: process.execPath,
-        args: [acpAdapterEntry("game")],
+        args: [
+          window
+            ? path.resolve("tests/support/drivers/agents/expansion-game-agent.ts")
+            : acpAdapterEntry("game"),
+        ],
         maxConcurrentRequests: 2,
       };
     }
@@ -221,7 +228,11 @@ async function runFixture(
           type: "acp",
           transport: "stdio",
           command: process.execPath,
-          args: [acpAdapterEntry("game")],
+          args: [
+            window
+              ? path.resolve("tests/support/drivers/agents/expansion-game-agent.ts")
+              : acpAdapterEntry("game"),
+          ],
           env: { AWA_TEST_PLAN_FILE: file },
         };
         agents[id] =

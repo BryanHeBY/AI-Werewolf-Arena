@@ -133,6 +133,7 @@ export class SdkGameToolLoop {
                 turnId,
                 invocation.args.action,
                 invocation.args.arguments,
+                invocation.args.confirmation_id,
               );
               if (!receipt.ok)
                 return {
@@ -143,7 +144,10 @@ export class SdkGameToolLoop {
                     receipt,
                   ),
                 };
-              return { toolResult: receipt, finalAction: turn.action! };
+              return {
+                toolResult: receipt,
+                ...(receipt.accepted ? { finalAction: turn.action! } : {}),
+              };
             }
             const receipt = turn.submit(turnId, actionName, actionArgs);
             if (!receipt.ok) {
@@ -151,7 +155,10 @@ export class SdkGameToolLoop {
                 toolResult: this.recordRefusal(request, invocation.name, invocation.args, receipt),
               };
             }
-            return { toolResult: receipt, finalAction: turn.action! };
+            return {
+              toolResult: receipt,
+              ...(receipt.accepted ? { finalAction: turn.action! } : {}),
+            };
           },
         },
         {

@@ -3,6 +3,7 @@
  * 输出保留原驱动回调、轨迹、缓存和清理；新封装只在实际磁盘入口解包，预期由既有手写 oracle 持有。
  * 原传输／复盘／脚本行动生命周期不变，不引入计费模型或生产状态写入器。
  */
+import { confirmationResponse } from "../agents/confirmation-response";
 import { runtimeConfigV2 } from "../../builders/runtime-config-v2";
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -131,6 +132,8 @@ export async function runTransportGame(
           fetch: authenticatedSyntheticModelFetch(sdkToken, async (request) => {
             try {
               const body = (await request.json()) as any;
+              const confirmation = confirmationResponse(body);
+              if (confirmation) return confirmation;
               const actor = Number(/^synthetic-player-(\d+)$/.exec(body.model)?.[1]);
               if (transportKind(actor) !== "llm") throw new Error("fixture_wrong_transport");
               const plan = plans.get(actor)!,
@@ -290,6 +293,13 @@ export async function runTransportGame(
       transport: "stdio",
       command: process.execPath,
       args: [
+        [...plans.values()].some((plan) =>
+          plan.turns.some(
+            (turn) =>
+              turn.action?.name === "self_destruct" ||
+              turn.action?.name === "self_destruct_with_target",
+          ),
+        ) ||
         scenario.board.config.crow ||
         scenario.board.config.silenceElder ||
         scenario.board.config.warden ||

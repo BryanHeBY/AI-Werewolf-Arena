@@ -52,6 +52,11 @@ export const definition = {
     "schema.turn_id": [],
     "schema.action": [],
     "schema.arguments": [],
+    "schema.confirmation_id": [],
+    "runtime.action.confirmation_required": [],
+    "runtime.action.confirmed": [],
+    "action.self_destruct.confirmation_warning": ["actor"],
+    "error.action_confirmation_invalid": [],
     "schema.category": [],
     "schema.severity": [],
     "schema.report_message": [],
@@ -264,17 +269,25 @@ export const zhCN = {
   "console.pk.exile": "放逐PK开始：{players}。",
   "schema.game.query": "查询固定的狼人杀工具协议；不返回局内状态。",
   "schema.game.submit":
-    "选择当前回合唯一通过校验的游戏行动。accepted=true、applied=false 表示已选定但尚未生效；引擎会再次校验，是否生效以结果事件为准。普通文本不会产生游戏效果。",
+    "选择当前回合唯一通过校验的游戏行动。accepted=true、applied=false 表示已选定但尚未生效；引擎会再次校验，是否生效以结果事件为准。普通文本不会产生游戏效果。自爆首次返回 confirmation_required、accepted=false 和警示，不会选定行动；阅读后必须原样提交同一行动并附上 confirmation_id 才能确认。不行动请直接结束回合，禁止占位提交。",
   "schema.game.report": "上报明确的规则、流程、状态、日志或可见性矛盾；不替代必须行动。",
   "schema.turn_id": "当前有效回合的turn_id，必须与行动提示一致。",
   "schema.action": "当前回合允许的行动名称，保持机器ID。",
   "schema.arguments": "所选行动的结构化参数，参数key保持不变。",
+  "runtime.action.confirmation_required": "需要二次确认（尚未选定）",
+  "runtime.action.confirmed": "已二次确认（尚未生效）",
+  "schema.confirmation_id":
+    "仅二次确认时填写引擎上一回执的 confirmation_id；保持同一 turn_id、action、arguments。首次提案不填。",
+  "action.self_destruct.confirmation_warning":
+    "警告：{actor}号正在提议自爆。这不是占位或跳过操作；确认后将按本局规则结算自身、所选目标的死亡与流程中断。当前尚未选定行动。若确实要自爆，请再次调用 submit_action，原样保留 turn_id、action、arguments，并在顶层附上本回执的 confirmation_id；否则直接结束回合，不调用工具。",
+  "error.action_confirmation_invalid":
+    "确认编号无效、已失效或与当前提案不符；本次未选定行动。若仍要行动，请不带 confirmation_id 重新提案并阅读新警示。",
   "schema.category": "问题类别的稳定机器值。",
   "schema.severity": "严重级别的稳定机器值。",
   "schema.report_message": "已确认矛盾的简洁说明，不包含认证或私有传输信息。",
   "schema.game.static_query": "{}；查询固定工具协议，不返回局内状态。",
   "schema.game.static_submit":
-    "{ turn_id, action, arguments }；选择一个通过校验的行动。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
+    "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
   "schema.game.static_report": "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
   "schema.audit.query": "查询固定审计工具协议，不返回任何复盘内容。",
   "schema.audit.context":
@@ -504,20 +517,28 @@ export const en = {
   "console.pk.exile": "Exile PK begins: {players}.",
   "schema.game.query": "Query the fixed Werewolf tool protocol; it does not return game state.",
   "schema.game.submit":
-    "Select the single validated game action for the current turn. accepted=true, applied=false means selected but not yet applied. The engine validates again; result events determine whether it takes effect. Ordinary text has no game effect.",
+    "Select the single validated game action for the current turn. accepted=true, applied=false means selected but not yet applied. The engine validates again; result events determine whether it takes effect. Ordinary text has no game effect. A first self-destruct proposal returns confirmation_required, accepted=false and a warning without selecting an action. Read it, then resubmit the identical action with confirmation_id to confirm. To skip, end the turn; never submit a placeholder.",
   "schema.game.report":
     "Report a confirmed contradiction in rules, flow, state, logging or visibility; this does not replace a required action.",
   "schema.turn_id": "The active turn_id, matching the action prompt exactly.",
   "schema.action": "An action allowed in the current turn, using its stable machine ID.",
   "schema.arguments":
     "Structured arguments for the selected action, with unchanged parameter keys.",
+  "runtime.action.confirmation_required": "Second confirmation required (not selected)",
+  "runtime.action.confirmed": "Confirmed (not yet applied)",
+  "schema.confirmation_id":
+    "Only for a second confirmation: copy confirmation_id from the engine receipt and keep the same turn_id, action and arguments. Omit for an initial proposal.",
+  "action.self_destruct.confirmation_warning":
+    "Warning: player {actor} is proposing self-destruction. This is not a placeholder or a skip. Confirmation will resolve deaths of the actor and any chosen target, and interrupt the flow according to this game’s rules. No action is selected yet. To proceed, call submit_action again with unchanged turn_id, action and arguments, adding this receipt’s confirmation_id at the top level. Otherwise end the turn without calling a tool.",
+  "error.action_confirmation_invalid":
+    "The confirmation ID is invalid, expired or does not match the current proposal. No action was selected. To proceed, submit a fresh proposal without confirmation_id and read the new warning.",
   "schema.category": "Stable machine value for the issue category.",
   "schema.severity": "Stable machine value for severity.",
   "schema.report_message":
     "A concise confirmed contradiction without authentication or private transport data.",
   "schema.game.static_query": "{}; query the fixed tool protocol without returning game state.",
   "schema.game.static_submit":
-    "{ turn_id, action, arguments }; select one validated action. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+    "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
   "schema.game.static_report":
     "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
   "schema.audit.query": "Query the fixed audit tool protocol without returning replay content.",

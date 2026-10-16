@@ -50,6 +50,11 @@ export class ToolSpecRegistry {
     return this.specByName.get(name);
   }
 
+  /** 自动回退没有模型的第二次确认，不能选择声明了确认要求的行动。 */
+  requiresConfirmation(name: ToolName): boolean {
+    return this.specByName.get(name)?.confirmation !== undefined;
+  }
+
   getArgHint(name: ToolName): string | null {
     return this.specByName.get(name)?.argHint ?? null;
   }

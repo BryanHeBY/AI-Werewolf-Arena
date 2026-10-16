@@ -169,10 +169,29 @@ try {
           );
         }
         if (turn.action) {
-          const result = await client!.callTool({
+          let result = await client!.callTool({
             name: "submit_action",
             arguments: { turn_id: turnId, action: turn.action.name, arguments: turn.action.args },
           });
+          const proposal = fixtureObject(result.structuredContent);
+          if (proposal.status === "confirmation_required") {
+            if (
+              proposal.accepted !== false ||
+              proposal.applied !== false ||
+              typeof proposal.confirmation_id !== "string" ||
+              typeof proposal.warning !== "string"
+            )
+              throw new Error("fixture_confirmation_invalid");
+            result = await client!.callTool({
+              name: "submit_action",
+              arguments: {
+                turn_id: turnId,
+                action: turn.action.name,
+                arguments: turn.action.args,
+                confirmation_id: proposal.confirmation_id,
+              },
+            });
+          }
           if (
             fixtureObject(result.structuredContent).ok !== true ||
             fixtureObject(result.structuredContent).accepted !== true

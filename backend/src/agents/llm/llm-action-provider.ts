@@ -124,6 +124,7 @@ export class LlmActionProvider implements ActionProvider {
           options.fallbackStrategy ?? new ObservationFallbackStrategy(world.locale),
         ),
       observer,
+      toolSpecRegistry,
     );
     const recorder = new PlayerRoundRecorder(world, (request) => observer.takeOutputs(request));
     const sdkToolLoop = new SdkGameToolLoop(
