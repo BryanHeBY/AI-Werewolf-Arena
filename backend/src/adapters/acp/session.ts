@@ -5,6 +5,7 @@
  * 取消通知不等于资源已关闭；这些结构和 sessionId 本身不授予游戏行动权限。
  */
 import { AcpTurnRegistry } from "./acp-turn-registry";
+import type { AgentOutput } from "@ai-werewolf-arena/replay-contract";
 import { AcpMcpBridgeFactory } from "./acp-mcp-bridge";
 import { AcpSessionConfigOptionValue } from "./acp-session-config";
 
@@ -16,6 +17,8 @@ export interface AcpSessionUpdate {
 
 /** 回合结束供记录器读取的限长模型原文轨迹；thoughts 不是玩家公开知识，保留原语言。 */
 export interface AcpSessionAuditTrace {
+  /** 原生结构化轨迹；旧注入会话可以只实现兼容的 messages／thoughts 摘要。 */
+  outputs?: AgentOutput[];
   messages: string[];
   thoughts: string[];
 }

@@ -65,3 +65,5 @@ export { awakenedPatrolEventLabel, patrolDirection } from "./events/awakened-pat
 
 export { awakenedGuardEventLabel } from "./events/awakened-guard";
 export { awakenedDuelEventLabel } from "./events/awakened-duel";
+export { agentOutputPresentation, isAgentOutputVisible } from "./agent-output";
+export type { AgentOutputDisplayOptions, AgentOutputTone } from "./agent-output";

@@ -7,7 +7,7 @@ import {
   allowsActionFallback,
   resolveTurnConstraints,
 } from "../../engine/actions/turn-constraints";
-import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
+import { type AgentOutputSink, type ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../utils/error-diagnostic";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../domain/components/role";
@@ -49,6 +49,7 @@ import { ScopedRequestScheduler } from "../runtime/request-scheduler";
 import { LlmObserver } from "../player/player-observer";
 
 export interface AcpActionProviderOptions {
+  outputSink?: AgentOutputSink;
   /** 生产自定义选择只接收脱离的玩家观察，不获得原请求或 World。 */
   fallbackStrategy?: ObservedPlayerStrategy;
   /** 显式特权测试驱动；生产运行装配不注入，保留原请求身份和取消测试。 */
@@ -112,6 +113,7 @@ export class AcpActionProvider implements ActionProvider {
     private readonly options: AcpActionProviderOptions,
   ) {
     this.observer = new LlmObserver({
+      outputSink: options.outputSink,
       transport: "acp",
       trace: options.trace ?? false,
       locale: options.displayLocale ?? world.locale,
@@ -572,6 +574,18 @@ export class AcpActionProvider implements ActionProvider {
       ],
     };
     const outcome: PlayerRoundOutcome = {
+      agentOutputs: input.auditTrace?.outputs ?? [
+        ...(input.auditTrace?.thoughts ?? []).map((thought) => ({
+          type: "text" as const,
+          channel: "thinking" as const,
+          text: thought,
+        })),
+        ...(input.auditTrace?.messages ?? []).map((message) => ({
+          type: "text" as const,
+          channel: "message" as const,
+          text: message,
+        })),
+      ],
       ...(thinkingText ? { thinkingText } : {}),
       actionMode: input.action ? "tool_call" : "none",
       toolCalls: input.action

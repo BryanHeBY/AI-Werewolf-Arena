@@ -5,7 +5,6 @@
  * 取消／关闭仅收走本 provider 资源，不代替规则预检或领域 commit，不扩大 fallback 的原预算。
  */
 import { inheritRequestAlias } from "../../domain/request-delivery";
-import { text } from "@ai-werewolf-arena/game-text";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../utils/error-diagnostic";
 import { COMPONENT } from "../../domain/components/names";
@@ -307,8 +306,14 @@ export class LlmTurnOrchestrator {
     for (let attemptNumber = 1; attemptNumber <= 3; attemptNumber++) {
       const retryPrompt = buildConstraintRetryPrompt(attemptNumber, 3, this.options.world.locale);
       messages = [...messages, { role: "user", content: retryPrompt }];
-      console.log(
-        `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attemptNumber}/3 reason=turn_constraints_no_valid_action · ${text(this.options.observer.locale, "runtime.retry")}`,
+      this.options.observer.emit(
+        {
+          type: "retry",
+          attempt: attemptNumber,
+          maxAttempts: 3,
+          reason: "turn_constraints_no_valid_action",
+        },
+        this.options.observer.context(request),
       );
       const trace: PlayerRetryTraceEntry = {
         attempt: attemptNumber,

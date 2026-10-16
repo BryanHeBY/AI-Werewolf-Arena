@@ -3,6 +3,7 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
+import type { AgentOutputSink } from "@ai-werewolf-arena/replay-contract";
 import { RoleComponent } from "../../domain/components/role";
 import { ActionProvider, ActionRequest, ToolCall } from "../../domain";
 import { World } from "../../domain/world";
@@ -37,6 +38,7 @@ import { SdkGameToolLoop } from "./sdk-game-tool-loop";
 import { LlmTurnOrchestrator } from "./llm-turn-orchestrator";
 
 export interface LlmActionProviderOptions {
+  outputSink?: AgentOutputSink;
   maxPromptEvents?: number;
   displayLocale?: Locale;
   trace?: boolean;
@@ -85,6 +87,7 @@ export class LlmActionProvider implements ActionProvider {
     const configuredConcurrency =
       options.maxConcurrentRequests ?? this.readConcurrencyFromEnvironment();
     const observer = new LlmObserver({
+      outputSink: options.outputSink,
       trace: options.trace ?? false,
       locale: options.displayLocale ?? world.locale,
       colorizeLogs: options.colorizeLogs,
@@ -122,7 +125,7 @@ export class LlmActionProvider implements ActionProvider {
         ),
       observer,
     );
-    const recorder = new PlayerRoundRecorder(world);
+    const recorder = new PlayerRoundRecorder(world, (request) => observer.takeOutputs(request));
     const sdkToolLoop = new SdkGameToolLoop(
       world,
       repairRegistry,

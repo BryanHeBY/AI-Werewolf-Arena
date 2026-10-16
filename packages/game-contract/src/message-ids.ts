@@ -1794,6 +1794,14 @@ export const MESSAGE_IDS = Object.freeze([
   "replay.stage.awakened_protection_chosen",
   "replay.stage.awakened_protection_block_detail",
   "replay.stage.awakened_protection_expired",
+  "replay.agent_output",
+  "replay.agent_import",
+  "replay.agent_private",
+  "replay.agent_clear",
+  "replay.agent_invalid",
+  "replay.agent_thinking",
+  "replay.agent_io",
+  "replay.agent_empty",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

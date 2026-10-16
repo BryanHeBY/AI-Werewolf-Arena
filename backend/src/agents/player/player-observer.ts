@@ -1,112 +1,135 @@
 /**
- * 将玩家提示、模型原文和工具轨迹输出到终端，按选项控制日志、思考内容及着色。
- * 输入为编排器已提供的数据；输出只有日志与诊断文本，不负责事件投影、持久化或行动判定。
- * 文案依据 locale 渲染，机器标签及模型原文保持原值；console 异常仍交给调用方处理。
+ * 将编排器的提示、回应、工具和生命周期事实转换为共同私有输出，不包含终端格式或颜色。
+ * 生产运行由入口注入输出端；直接使用 provider 时保留默认终端适配，显示错误仍交还调用方。
+ * 原始模型与工具数据保持原文，输出端不会取得回合许可或改变行动接收结果。
  */
-import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
-import { ActionRequest } from "../../domain";
-import { colorize, isAnsiEnabled } from "../../utils/ansi";
-import { ChatMessage, ToolLoopStepTrace } from "../../adapters/llm/transport";
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import type {
+  AgentOutput,
+  AgentOutputContext,
+  AgentOutputSink,
+  AgentTransport,
+} from "@ai-werewolf-arena/replay-contract";
+import type { ActionRequest } from "../../domain";
+import { createAgentConsoleSink } from "../../adapters/console/agent-console-presenter";
+import type { ChatMessage, ToolLoopStepTrace } from "../../adapters/llm/transport";
 
-/** 仅控制日志展示；printThinking 不创建思考结果，transport 只选择原标签，locale 不改变模型原文。 */
 export interface LlmObserverOptions {
   trace: boolean;
   locale?: Locale;
   colorizeLogs?: boolean;
   printLlmIo: boolean;
   printThinking: boolean;
-  transport?: "llm" | "acp" | "pi";
+  transport?: AgentTransport;
+  outputSink?: AgentOutputSink;
 }
 
-/** 终端观察与游戏决策分离；最近 80 条 trace 由本实例持有。 */
 export class LlmObserver {
   private readonly recentEvents: string[] = [];
-  private readonly colorizeLogs: boolean;
-
+  // 仅 SDK 路径在完成记录时取走当轮事实；弱键不把请求或完整会话历史变成第二份持久状态。
+  private readonly roundOutputs = new WeakMap<ActionRequest, AgentOutput[]>();
+  private readonly sink: AgentOutputSink;
   constructor(private readonly options: LlmObserverOptions) {
-    this.colorizeLogs = isAnsiEnabled(options.colorizeLogs);
+    this.sink =
+      options.outputSink ?? createAgentConsoleSink({ ...options, color: options.colorizeLogs });
   }
-
   get locale(): Locale {
     return this.options.locale ?? "zh-CN";
   }
-
-  // 先记原 line 并裁到最近 80 条，再决定是否打印；装饰／console 失败不会撤回已改缓冲。
+  emit(
+    output: AgentOutput,
+    context: Omit<AgentOutputContext, "transport"> = {},
+    request?: ActionRequest,
+  ): void {
+    if (
+      request &&
+      (this.options.transport ?? "llm") === "llm" &&
+      ["text", "tool", "raw_response"].includes(output.type)
+    ) {
+      const outputs = this.roundOutputs.get(request) ?? [];
+      outputs.push(structuredClone(output));
+      this.roundOutputs.set(request, outputs);
+    }
+    this.sink({
+      visibility: "private",
+      context: { ...context, transport: this.options.transport ?? "llm" },
+      output: structuredClone(output),
+    });
+  }
+  takeOutputs(request: ActionRequest): AgentOutput[] {
+    const outputs = this.roundOutputs.get(request) ?? [];
+    this.roundOutputs.delete(request);
+    const facts = outputs.filter((output) => output.type === "text" || output.type === "tool");
+    if (!facts.some((output) => output.type === "text")) {
+      const raw = [...outputs].reverse().find((output) => output.type === "raw_response");
+      if (raw?.type === "raw_response" && raw.text)
+        facts.push({ type: "text", channel: "message", text: raw.text });
+    }
+    return facts;
+  }
+  context(request: ActionRequest): Omit<AgentOutputContext, "transport"> {
+    return {
+      playerId: request.actorId,
+      phase: request.phase,
+      day: request.context.day,
+      stage: request.context.stage,
+    };
+  }
   trace(line: string): void {
     this.recentEvents.push(line);
     if (this.recentEvents.length > 80) this.recentEvents.shift();
-    if (this.options.trace) console.log(this.decorate(line));
+    this.emit({ type: "trace", text: line });
   }
-
-  /** 原调用方负责可见数据范围；此处只按消息顺序打印，未知 role 显示原标签，不自行过滤或转交行动。 */
   prompt(messages: ChatMessage[], request: ActionRequest): void {
-    if (!this.options.printLlmIo) return;
-    const prefix = colorize(
-      this.options.transport === "acp"
-        ? "[ACP_IO]"
-        : this.options.transport === "pi"
-          ? "[PI_IO]"
-          : "[LLM_IO]",
-      "accent",
-      this.colorizeLogs,
+    this.emit(
+      {
+        type: "prompt",
+        messages: messages.map((message) => ({ role: message.role, content: message.content })),
+      },
+      this.context(request),
+      request,
     );
-    const marker = `player=${request.actorId} phase=${request.phase}`;
-    console.log(`${prefix} prompt_start ${marker} · ${text(this.locale, "runtime.prompt_start")}`);
-    for (const msg of messages) {
-      const roleTag = typeof msg.role === "string" ? msg.role : "unknown";
-      const roleKey = `runtime.prompt_${roleTag}` as MessageKey;
-      const roleLabel = Object.hasOwn(dictionaries[this.locale], roleKey)
-        ? text(this.locale, roleKey)
-        : roleTag;
-      console.log(`${prefix} prompt_${roleTag} · ${roleLabel}: ${msg.content}`);
-    }
-    console.log(`${prefix} prompt_end ${marker} · ${text(this.locale, "runtime.prompt_end")}`);
   }
-
-  /** 原回应不解析成工具；打印开关关闭则早返，日志／翻译错误保持原抛出，不变成请求校验结果。 */
   rawResponse(raw: string, request: ActionRequest): void {
-    if (!this.options.printLlmIo) return;
-    const prefix = colorize(
-      this.options.transport === "acp"
-        ? "[ACP_IO]"
-        : this.options.transport === "pi"
-          ? "[PI_IO]"
-          : "[LLM_IO]",
-      "accent",
-      this.colorizeLogs,
-    );
-    const marker = `player=${request.actorId} phase=${request.phase}`;
-    console.log(
-      `${prefix} raw_response_start ${marker} · ${text(this.locale, "runtime.raw_response_start")}`,
-    );
-    console.log(`${prefix} raw_response · ${text(this.locale, "runtime.raw_response")}: ${raw}`);
-    console.log(
-      `${prefix} raw_response_end ${marker} · ${text(this.locale, "runtime.raw_response_end")}`,
-    );
+    this.emit({ type: "raw_response", text: raw }, this.context(request), request);
   }
-
-  /** 按原 step 和 toolCalls 顺序展示文本与原工具轨迹；不由 accepted 字段推断资源付款或隐藏信息许可。 */
   thinking(trace: ToolLoopStepTrace[], request: ActionRequest): void {
-    if (!this.options.printThinking || trace.length === 0) return;
-    const prefix = colorize("[THINKING]", "muted", this.colorizeLogs);
-    const marker = `player=${request.actorId} phase=${request.phase}`;
-    console.log(`${prefix} start ${marker} · ${text(this.locale, "runtime.thinking_start")}`);
-    for (const [stepIndex, step] of trace.entries()) {
-      if (step.assistantText?.trim()) {
-        console.log(
-          `${prefix} assistant step=${stepIndex + 1} · ${text(this.locale, "runtime.assistant_output")}: ${step.assistantText}`,
+    const context = this.context(request);
+    for (const [index, step] of trace.entries()) {
+      if (step.assistantText?.trim())
+        this.emit(
+          { type: "text", channel: "output", text: step.assistantText, step: index + 1 },
+          context,
+          request,
         );
-      }
       for (const call of step.toolCalls) {
-        console.log(
-          `${prefix} ${text(this.locale, "runtime.tool_call")} | tool_call step=${stepIndex + 1} id=${call.id} name=${call.name} args=${call.rawArgs}`,
+        let args: Record<string, unknown> = { raw: call.rawArgs };
+        try {
+          const parsed: unknown = JSON.parse(call.rawArgs);
+          if (parsed && typeof parsed === "object" && !Array.isArray(parsed))
+            args = parsed as Record<string, unknown>;
+        } catch {
+          /* 失败原文只用于私有展示，行动校验仍由原工具网关处理。 */
+        }
+        this.emit(
+          { type: "tool", id: call.id, name: call.name, args, status: "started", step: index + 1 },
+          context,
+          request,
         );
-        console.log(
-          `${prefix} ${text(this.locale, "runtime.tool_result")} | tool_result step=${stepIndex + 1} id=${call.id} result=${call.toolResult}`,
+        this.emit(
+          {
+            type: "tool",
+            id: call.id,
+            name: call.name,
+            result: call.toolResult,
+            status: "completed",
+            step: index + 1,
+          },
+          context,
+          request,
         );
       }
     }
-    console.log(`${prefix} end ${marker} · ${text(this.locale, "runtime.thinking_end")}`);
   }
 
   /** 诊断摘要优先采用最终文本，否则取最后一条非空步骤文本；仅摘要截断，原始日志不由此改写。 */
@@ -118,30 +141,5 @@ export class LlmObserver {
       if (text) return text.length > 1200 ? `${text.slice(0, 1200)}…` : text;
     }
     return null;
-  }
-
-  // 只按原首 token 查展示 key，再按包含的机器标签选颜色；没有解码事件或改变原 line 的诊断含义。
-  private decorate(line: string): string {
-    const prefix =
-      this.options.transport === "acp"
-        ? "[ACPActionProvider]"
-        : this.options.transport === "pi"
-          ? "[PiActionProvider]"
-          : "[LLMActionProvider]";
-    const key = `runtime.trace.${line.split(" ", 1)[0]}` as MessageKey;
-    if (Object.hasOwn(dictionaries[this.locale], key)) line = `${text(this.locale, key)} | ${line}`;
-    if (!this.colorizeLogs) return `${prefix} ${line}`;
-    if (line.includes("request_ok"))
-      return `${colorize(prefix, "ok", true)} ${colorize(line, "ok", true)}`;
-    if (line.includes("request_recovered") || line.includes("request_timeout")) {
-      return `${colorize(prefix, "warn", true)} ${colorize(line, "warn", true)}`;
-    }
-    if (line.includes("request_transport_fail")) {
-      return `${colorize(prefix, "error", true)} ${colorize(line, "error", true)}`;
-    }
-    if (line.includes("request_start")) {
-      return `${colorize(prefix, "info", true)} ${colorize(line, "info", true)}`;
-    }
-    return `${colorize(prefix, "muted", true)} ${colorize(line, "muted", true)}`;
   }
 }

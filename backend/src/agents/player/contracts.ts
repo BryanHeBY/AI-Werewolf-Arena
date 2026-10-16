@@ -4,6 +4,7 @@
  * 原始文案、工具参数与诊断保留输入含义；工具接受结果和最终游戏结算分别由各自所有者确认。
  */
 import type { ErrorDiagnostic, ReplayPlayerDeltaMessage } from "@ai-werewolf-arena/replay-contract";
+import type { AgentOutput } from "@ai-werewolf-arena/replay-contract";
 import { ToolCall } from "../../domain";
 import { ChatMessage } from "../../adapters/llm/transport";
 
@@ -42,6 +43,8 @@ export interface PlayerRetryTraceEntry {
 
 /** 轮次决策记录；actionMode 与 finalAction 描述返回选择，不表示已付款或生效。 */
 export interface PlayerRoundOutcome {
+  /** 已归一的模型原文；记录器沿共同契约编码，展示开关不参与收集。 */
+  agentOutputs?: readonly AgentOutput[];
   /** 传输原生块的显式记录；只保存本轮增量，不把完整会话历史复制成第二份状态。 */
   deltaMessages?: ReplayPlayerDeltaMessage[];
   actionMode: "tool_call" | "none";

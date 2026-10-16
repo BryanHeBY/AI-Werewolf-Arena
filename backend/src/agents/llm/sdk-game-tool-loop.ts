@@ -50,8 +50,16 @@ export class SdkGameToolLoop {
       onAccepted: (report, reportId) => {
         const message =
           report.message.length > 120 ? `${report.message.slice(0, 120)}...` : report.message;
-        console.log(
-          `[LLM_BUG] player=${report.actorId} phase=${report.phase} stage=${report.stage} severity=${report.severity} category=${report.category} report_id=${reportId} message=${message}`,
+        this.observer.emit(
+          {
+            type: "bug",
+            reportId,
+            message,
+            severity: report.severity,
+            category: report.category,
+            stage: report.stage,
+          },
+          { playerId: report.actorId, phase: report.phase, day: report.day, stage: report.stage },
         );
       },
     });

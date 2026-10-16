@@ -8,6 +8,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@ai-werewolf-arena/replay-contract": "workspace:*",
     "@ai-werewolf-arena/game-contract": "workspace:*",
     "@ai-werewolf-arena/game-text": "workspace:*"
   },

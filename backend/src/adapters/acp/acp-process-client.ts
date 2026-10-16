@@ -11,6 +11,8 @@ import * as path from "node:path";
 import { Readable, Writable } from "node:stream";
 import * as acp from "@agentclientprotocol/sdk";
 import { AcpTurnRegistry } from "./acp-turn-registry";
+import type { AgentOutput } from "@ai-werewolf-arena/replay-contract";
+import { createAcpOutputObserver } from "./acp-output";
 import { WerewolfMcpControlServer } from "./werewolf-mcp-control";
 import { AcpMcpBridgeFactory, AcpMcpControlServer } from "./acp-mcp-bridge";
 import { applyAcpSessionConfigOptions } from "./acp-session-config";
@@ -272,6 +274,9 @@ class AcpProcessSession implements AcpSession {
   private reclaimed = false;
   // 本次 prompt 的消息／思考缓冲与当前消息 ID；取审计 trace 后清空，不把文本解析成行动。
   private auditMessages: string[] = [];
+  // 完整私有轨迹与旧限长摘要各有明确用途；录制消费前者，既有审计 API 保留后者。
+  private auditOutputs: AgentOutput[] = [];
+  private auditOutputObserver?: ReturnType<typeof createAcpOutputObserver>;
   private auditThoughtText = "";
   private auditMessageId: string | null = null;
   private auditMessageText = "";
@@ -455,8 +460,10 @@ class AcpProcessSession implements AcpSession {
 
   /** 消息先归并，再返回消息数组副本／规范化思考并清缓冲；字符上限不是完整协议事件归档。 */
   takeAuditTrace(): AcpSessionAuditTrace {
+    this.auditOutputObserver?.flush();
     this.flushAuditMessage();
     const trace = {
+      outputs: [...this.auditOutputs],
       messages: [...this.auditMessages],
       thoughts: this.auditThoughtText ? [this.normalizeAuditText(this.auditThoughtText)] : [],
     };
@@ -498,6 +505,7 @@ class AcpProcessSession implements AcpSession {
   }
 
   private captureAuditUpdate(update: unknown): void {
+    this.auditOutputObserver?.update(update);
     if (!update || typeof update !== "object") return;
     const event = update as Record<string, unknown>;
     if (event.sessionUpdate === "agent_message_chunk") {
@@ -532,6 +540,11 @@ class AcpProcessSession implements AcpSession {
   }
 
   private resetAuditTrace(): void {
+    this.auditOutputs = [];
+    this.auditOutputObserver = createAcpOutputObserver(
+      { transport: "acp", playerId: this.actorId },
+      (event) => this.auditOutputs.push(event.output),
+    );
     this.auditMessages = [];
     this.auditThoughtText = "";
     this.auditMessageId = null;

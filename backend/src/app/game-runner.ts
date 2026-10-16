@@ -31,11 +31,11 @@ import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 import type { ResolvedGameSetup } from "./config/resolve-game-setup";
 import { resolvePlayerProfile } from "./config/resolve-game-setup";
 import {
-  createAcpConsoleLogger,
   createConsoleLog,
   presentGameResult,
   presentStreamEvents,
 } from "../adapters/console/console-presenter";
+import { createAgentConsoleSink } from "../adapters/console/agent-console-presenter";
 import { GameEventRecorder } from "./game-event-recorder";
 import {
   buildSessionId,
@@ -215,14 +215,13 @@ export async function runGame(
         colorizeLogs: options.color,
         printLlmIo: options.printLlmIo,
         printThinking: options.printThinking,
-        createAcpUpdateObserver:
-          options.printThinking || options.printLlmIo
-            ? (actorId) =>
-                createAcpConsoleLogger(actorId, log, setup.context.displayLocale, {
-                  printThinking: options.printThinking,
-                  printLlmIo: options.printLlmIo,
-                })
-            : undefined,
+        outputSink: createAgentConsoleSink({
+          log,
+          locale: setup.context.displayLocale,
+          trace: options.trace,
+          printThinking: options.printThinking,
+          printLlmIo: options.printLlmIo,
+        }),
       });
       const selectedProvider: ActionProvider = {
         async getAction(request) {

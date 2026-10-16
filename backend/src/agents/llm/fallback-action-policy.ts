@@ -3,7 +3,6 @@
  * 输出为原回退候选或 null；是否允许回退由游戏约束决定，已注入 provider 仍按原期限调用。
  * 本模块不新增时间预算、读取角色库存或提交领域动作；取消在原记录前后重检，保留失败前缀。
  */
-import { text } from "@ai-werewolf-arena/game-text";
 import { ActionProvider, ActionRequest, ToolCall } from "../../domain";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { LlmObserver } from "../player/player-observer";
@@ -38,11 +37,15 @@ export class FallbackActionPolicy {
           signal,
         )
       : null;
-    const actionText = action
-      ? `${action.name} ${JSON.stringify((action as any).args ?? {})}`
-      : "none";
-    console.log(
-      `[LLM_FALLBACK] player=${request.actorId} phase=${request.phase} reason=${reason} min_valid_actions=${resolveTurnConstraints(request).minValidActions} allowedTools=${request.allowedTools.join(",")} fallback=${actionText} · ${text(this.observer.locale, "runtime.fallback")}`,
+    this.observer.emit(
+      {
+        type: "fallback",
+        reason,
+        minValidActions: resolveTurnConstraints(request).minValidActions,
+        allowedTools: request.allowedTools,
+        ...(action ? { action } : {}),
+      },
+      this.observer.context(request),
     );
     if (signal?.aborted) throw signal.reason;
     safeRecordLogicOp({

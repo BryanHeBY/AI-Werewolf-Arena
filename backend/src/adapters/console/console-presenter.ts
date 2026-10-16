@@ -4,8 +4,9 @@
  * 本模块不计算请求期限或发起取消；会话关闭与超时由运行调用方处理，flush 仅输出本地尾段并清空工具显示缓存。
  * 分段、去重与输出调用保原顺序；渲染、字段读取或日志抛错仍向调用方传播，不在此回滚已输出内容。
  */
-import { formatErrorDiagnostic } from "../../utils/error-diagnostic";
-import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
+import { createAcpOutputObserver } from "../acp/acp-output";
+import { createAgentConsoleSink } from "./agent-console-presenter";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import {
   outcomeLabel,
   outcomeWinnersLabel,
@@ -107,137 +108,25 @@ export function presentGameResult(input: {
   }
 }
 
-type AcpUpdateRecord = Record<string, unknown>;
-function asRecord(value: unknown): AcpUpdateRecord | null {
-  return value && typeof value === "object" ? (value as AcpUpdateRecord) : null;
-}
-function updateText(value: unknown): string {
-  if (typeof value === "string") return value;
-  const record = asRecord(value);
-  return typeof record?.text === "string" ? record.text : "";
-}
-function compact(value: string, maxLength = 500): string {
-  const normalized = value.replace(/\s+/g, " ").trim();
-  return normalized.length > maxLength ? `${normalized.slice(0, maxLength)}…` : normalized;
-}
-
+/** 原 ACP 公开入口仅负责接线；协议转换与终端展示分别有唯一所有者。 */
 export interface AcpConsoleLogger {
   (update: unknown): void;
   flush(): void;
 }
-
 export function createAcpConsoleLogger(
   actorId: number,
   log: ConsoleLog,
   locale: Locale = "zh-CN",
-  options: { printThinking: boolean; printLlmIo: boolean } = {
+  options: { printThinking: boolean; printLlmIo: boolean; trace?: boolean } = {
     printThinking: true,
     printLlmIo: false,
   },
 ): AcpConsoleLogger {
-  const textLabel = (key: MessageKey) => text(locale, key);
-  // 每个 logger 只服务一个玩家；按文本类别和 messageId 合并增量，工具状态仅用于显示去重。
-  let pending: { kind: "message" | "thought"; id: string; text: string } | null = null;
-  const toolStates = new Map<string, { label: string; status?: string; error: string }>();
-  const emitText = (kind: "message" | "thought", value: string) => {
-    if (kind === "thought" ? !options.printThinking : !options.printThinking && !options.printLlmIo)
-      return;
-    const text = compact(value, Infinity);
-    if (text && !/^\*?conversation interrupted\*?$/i.test(text)) {
-      log(
-        `[acp][${actorId}][${kind}] ${kind === "thought" ? textLabel("runtime.acp.thought") : textLabel("runtime.acp.message")}: ${text}`,
-        "muted",
-      );
-    }
-  };
-  const flush = () => {
-    const previous = pending;
-    pending = null;
-    if (previous) emitText(previous.kind, previous.text);
-  };
-  const observer = (update: unknown) => {
-    const event = asRecord(update);
-    if (!event || typeof event.sessionUpdate !== "string") return;
-    const type = event.sessionUpdate;
-    if (type === "agent_message_chunk" || type === "agent_thought_chunk") {
-      const kind = type === "agent_message_chunk" ? "message" : "thought";
-      if (
-        kind === "thought" ? !options.printThinking : !options.printThinking && !options.printLlmIo
-      ) {
-        flush();
-        return;
-      }
-      const messageId = typeof event.messageId === "string" ? event.messageId : "unknown";
-      if (pending && (pending.kind !== kind || pending.id !== messageId)) flush();
-      if (!pending) pending = { kind, id: messageId, text: "" };
-      pending.text += updateText(event.content);
-      // ACP 片段是增量文本；按原分段边界合并后输出，保留文字并限制缓冲长度。
-      while (pending.text.length) {
-        const newline = pending.text.search(/[\r\n]/);
-        let end = newline >= 0 && newline <= 500 ? newline : 500;
-        if (newline < 0 && pending.text.length <= 500) break;
-        const hasNewline = end === newline;
-        // 分段边界不能切断 UTF-16 代理对，否则中文或 emoji 会损坏。
-        if (!hasNewline && /[\uD800-\uDBFF]/.test(pending.text[end - 1])) end--;
-        emitText(kind, pending.text.slice(0, end));
-        pending.text = pending.text.slice(end + (hasNewline ? 1 : 0));
-      }
-      return;
-    }
-    flush();
-    if (!options.printThinking) return;
-    if (type === "tool_call") {
-      const rawInput = asRecord(event.rawInput);
-      const server = typeof rawInput?.server === "string" ? rawInput.server : undefined;
-      const tool = typeof rawInput?.tool === "string" ? rawInput.tool : undefined;
-      const title = typeof event.title === "string" ? compact(event.title, 180) : "tool";
-      const label = server && tool ? `${server}.${tool}` : title;
-      const toolCallId = typeof event.toolCallId === "string" ? event.toolCallId : undefined;
-      if (toolCallId)
-        toolStates.set(toolCallId, {
-          label,
-          status: typeof event.status === "string" ? event.status : undefined,
-          error: "",
-        });
-      log(`[acp][${actorId}][tool] start ${label} · ${textLabel("runtime.acp.start")}`, "muted");
-      return;
-    }
-    if (type === "tool_call_update") {
-      const toolCallId = typeof event.toolCallId === "string" ? event.toolCallId : undefined;
-      const previous = toolCallId ? toolStates.get(toolCallId) : undefined;
-      const label =
-        typeof event.title === "string" ? compact(event.title, 180) : (previous?.label ?? "tool");
-      const status = typeof event.status === "string" ? event.status : undefined;
-      const error =
-        event.error === undefined || event.error === null || event.error === ""
-          ? ""
-          : formatErrorDiagnostic(event.error, locale);
-      // 部分更新可只补充输入或内容；保留其显示元数据，仅在状态改变或出现新错误时打印。
-      const changed =
-        (status !== undefined && status !== previous?.status) ||
-        (error !== "" && error !== previous?.error);
-      if (toolCallId)
-        toolStates.set(toolCallId, {
-          label,
-          status: status ?? previous?.status,
-          error: error || previous?.error || "",
-        });
-      if (!changed) return;
-      const displayStatus = status ?? previous?.status ?? "error";
-      const statusKey = `runtime.acp.${displayStatus}` as MessageKey;
-      const explanation = Object.hasOwn(dictionaries[locale], statusKey)
-        ? textLabel(statusKey)
-        : displayStatus;
-      log(
-        `[acp][${actorId}][tool] ${displayStatus} ${label} · ${explanation}${error ? ` error=${error}` : ""}`,
-        error || status === "failed" ? "warn" : "muted",
-      );
-    }
-  };
-  return Object.assign(observer, {
-    flush: () => {
-      flush();
-      toolStates.clear();
-    },
+  const observer = createAcpOutputObserver(
+    { transport: "acp", playerId: actorId },
+    createAgentConsoleSink({ ...options, trace: options.trace ?? false, locale, log }),
+  );
+  return Object.assign((update: unknown) => observer.update(update), {
+    flush: () => observer.flush(),
   });
 }

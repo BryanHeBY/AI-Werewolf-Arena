@@ -9,7 +9,8 @@ import {
   type PiPlayerRuntime,
   type PiPlayerSession,
 } from "../../../../src/agents/pi/pi-action-provider";
-import { PiConsolePresenter } from "../../../../src/agents/pi/pi-console-presenter";
+import { createPiOutputObserver } from "../../../../src/adapters/pi/pi-output";
+import { createAgentConsoleSink } from "../../../../src/adapters/console/agent-console-presenter";
 import type {
   PiPromptOptions,
   PiPromptResult,
@@ -343,13 +344,29 @@ for (const io of [false, true])
         logs.push(String(line));
       });
       try {
-        const presenter = new PiConsolePresenter(1, io, thinking, "en");
+        const presenter = createPiOutputObserver(
+          { transport: "pi", playerId: 1 },
+          createAgentConsoleSink({
+            printLlmIo: io,
+            printThinking: thinking,
+            trace: false,
+            locale: "en",
+            color: false,
+          }),
+        );
         for (const type of ["thinking", "message"] as const) {
           presenter.update({ type, text: "前", partial: true, blockId: type });
           presenter.update({ type, text: "后", partial: true, blockId: type });
           presenter.update({ type, text: "", partial: false, blockId: type });
         }
         presenter.update({ type: "tool_start", id: "one", name: "submit_action", args: {} });
+        presenter.update({
+          type: "tool_end",
+          id: "one",
+          name: "submit_action",
+          result: { ok: true },
+          isError: false,
+        });
         presenter.flush();
         expect(logs.filter((line) => line.includes("[thought]")).length).toBe(thinking ? 1 : 0);
         expect(logs.filter((line) => line.includes("[message]")).length).toBe(

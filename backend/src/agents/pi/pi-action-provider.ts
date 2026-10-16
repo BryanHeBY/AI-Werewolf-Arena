@@ -4,9 +4,14 @@
  * Pi 持内存 transcript；本 owner 只持会话引用、游标及当轮证据。工具候选经原 ActionTurn／
  * ActionReception 接收，实际提交仍归引擎；取消先撤权，再等待底层结束，槽位不提前释放。
  */
-import { text, toolFailure, type Locale } from "@ai-werewolf-arena/game-text";
+import { toolFailure, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { ReplayPlayerDeltaMessage } from "@ai-werewolf-arena/replay-contract";
+import {
+  agentOutputToDeltaMessages,
+  type AgentOutput,
+  type AgentOutputSink,
+  type ReplayPlayerDeltaMessage,
+} from "@ai-werewolf-arena/replay-contract";
 import type { PiPromptOptions, PiPromptResult, PiSessionOptions } from "../../adapters/pi";
 import type { ToolInvocation } from "../../adapters/llm/transport";
 import { PlayerRoundRecorder } from "../../app/player-round-recorder";
@@ -45,7 +50,7 @@ import { ScopedRequestScheduler } from "../runtime/request-scheduler";
 import { awaitBeforeDeadline } from "../runtime/turn-deadline";
 import { LlmObserver } from "../player/player-observer";
 import { PiPromptState } from "./pi-prompt-state";
-import { PiConsolePresenter } from "./pi-console-presenter";
+import { createPiOutputObserver } from "../../adapters/pi/pi-output";
 
 /** 只依赖传输窄端口；测试可注入合成会话，不能取得领域写权。 */
 export interface PiPlayerSession {
@@ -58,6 +63,7 @@ export interface PiPlayerRuntime {
   close(): Promise<void>;
 }
 export interface PiActionProviderOptions {
+  outputSink?: AgentOutputSink;
   runtime: PiPlayerRuntime;
   settingsResolver: (actorId: number) => Record<string, unknown>;
   personalityPromptResolver?: (request: ActionRequest) => string | undefined;
@@ -99,6 +105,7 @@ export class PiActionProvider implements ActionProvider {
   ) {
     const catalog = getDefaultRoleCatalog();
     this.observer = new LlmObserver({
+      outputSink: options.outputSink,
       transport: "pi",
       trace: options.trace ?? false,
       locale: options.displayLocale ?? world.locale,
@@ -230,11 +237,9 @@ export class PiActionProvider implements ActionProvider {
     const cleanupErrors: unknown[] = [];
     const finishingErrors: unknown[] = [];
     const calls: PlayerRoundOutcome["toolCalls"] = [];
-    const presenter = new PiConsolePresenter(
-      request.actorId,
-      this.options.printLlmIo ?? false,
-      this.options.printThinking ?? false,
-      this.options.displayLocale ?? this.world.locale,
+    const presenter = createPiOutputObserver(
+      { transport: "pi", ...this.observer.context(request) },
+      ({ output, context }) => this.observer.emit(output, context),
     );
     // 取消先封行动窗口；底层 Pi 也接收同一 signal，但是否完成回收由其实际 settlement 确认。
     const revoke = () => turn?.close();
@@ -373,8 +378,9 @@ export class PiActionProvider implements ActionProvider {
           }
         }
         try {
-          console.log(
-            `[PI_FALLBACK] player=${request.actorId} phase=${request.phase} reason=${fallbackReason} fallback=${action ? `${action.name} ${JSON.stringify(action.args)}` : "none"} · ${text(this.observer.locale, "runtime.fallback")}`,
+          this.observer.emit(
+            { type: "fallback", reason: fallbackReason, ...(action ? { action } : {}) },
+            this.observer.context(request),
           );
         } catch (displayError) {
           if (displayError !== primary) finishingErrors.push(displayError);
@@ -517,20 +523,50 @@ export class PiActionProvider implements ActionProvider {
         offset = end;
       }
     };
+    const recordedCalls = new Set<string>();
     for (const [attempt, { input, trace }] of traces.entries()) {
       add("user", attempt === 0 ? "prompt" : "retry_prompt", input);
-      if (trace.thinkingText) add("assistant", "assistant_output", trace.thinkingText, "thinking");
-      if (trace.assistantText) add("assistant", "assistant_output", trace.assistantText, "message");
+      // 与实时终端消费同一个原生增量转换；合成传输没有事件时才使用已确认的原文汇总。
+      const outputs: AgentOutput[] = [];
+      const normalizer = createPiOutputObserver({ transport: "pi" }, (event) =>
+        outputs.push(event.output),
+      );
+      for (const event of trace.events) normalizer.update(event);
+      normalizer.flush();
+      if (!outputs.some((output) => output.type === "text")) {
+        if (trace.thinkingText)
+          outputs.unshift({ type: "text", channel: "thinking", text: trace.thinkingText });
+        if (trace.assistantText)
+          outputs.push({ type: "text", channel: "message", text: trace.assistantText });
+      }
+      for (const output of outputs) {
+        if (output.type !== "tool" || !output.id) continue;
+        const call = calls.find((call) => call.id === output.id);
+        if (!call) continue;
+        recordedCalls.add(output.id);
+        if (output.status === "started") {
+          output.args = call.args;
+          output.accepted = call.accepted;
+        } else if (output.status === "completed" || output.status === "failed")
+          output.result = call.result;
+      }
+      messages.push(...agentOutputToDeltaMessages(outputs));
     }
     for (const call of calls) {
-      messages.push({
-        role: "assistant",
-        kind: "tool_call",
-        name: call.name,
-        args: call.args,
-        accepted: call.accepted,
-      });
-      messages.push({ role: "tool", kind: "tool_result", name: call.name, result: call.result });
+      if (call.id && recordedCalls.has(call.id)) continue;
+      messages.push(
+        ...agentOutputToDeltaMessages([
+          {
+            type: "tool",
+            id: call.id,
+            name: call.name,
+            status: "started",
+            args: call.args,
+            accepted: call.accepted,
+          },
+          { type: "tool", id: call.id, name: call.name, status: "completed", result: call.result },
+        ]),
+      );
     }
     return messages;
   }

@@ -225,6 +225,7 @@ export function readReplayDocument(value: unknown): ReplayDocument {
 export * from "./player-record";
 
 export * from "./error-diagnostic";
+export * from "./agent-output";
 
 export * from "./archive-envelope";
 

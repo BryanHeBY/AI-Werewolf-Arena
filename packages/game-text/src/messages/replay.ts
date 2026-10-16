@@ -10,6 +10,15 @@ import type { MessageDefinition } from "./definition";
 export const definition = {
   owner: "replay",
   parameters: {
+    "replay.agent_output": [],
+    "replay.agent_import": [],
+    "replay.agent_private": [],
+    "replay.agent_clear": [],
+    "replay.agent_invalid": [],
+    "replay.agent_thinking": [],
+    "replay.agent_io": [],
+    "replay.agent_empty": [],
+
     "replay.stage.lover_recognized": [],
     "replay.stage.death_ability_changed": [],
     "replay.stage.death_shot_missed": [],
@@ -171,6 +180,16 @@ export const definition = {
 } as const satisfies MessageDefinition;
 
 export const zhCN = {
+  "replay.agent_output": "玩家私有输出",
+  "replay.agent_import": "导入玩家档案",
+  "replay.agent_private":
+    "选择 players/player_*.json 查看思考与工具轨迹。文件只在当前浏览器读取，不上传，也不会混入游戏回放或视频。",
+  "replay.agent_clear": "清除私有档案",
+  "replay.agent_invalid": "无法读取玩家档案，请选择有效的 player_*.json 文件。",
+  "replay.agent_thinking": "思考与工具轨迹",
+  "replay.agent_io": "请求与模型回应",
+  "replay.agent_empty": "此档案没有符合当前显示选项的模型输出。",
+
   "replay.stage.lover_recognized": "情侣互认",
   "replay.stage.death_ability_changed": "赠枪状态",
   "replay.stage.death_shot_missed": "空枪",
@@ -331,6 +350,16 @@ export const zhCN = {
 } as const satisfies Record<keyof typeof definition.parameters, string>;
 
 export const en = {
+  "replay.agent_output": "Private agent output",
+  "replay.agent_import": "Import player archive",
+  "replay.agent_private":
+    "Choose players/player_*.json to inspect thoughts and tools. The file stays in this browser and is not merged into the game replay or video.",
+  "replay.agent_clear": "Clear private archive",
+  "replay.agent_invalid": "Unable to read this player archive. Choose a valid player_*.json file.",
+  "replay.agent_thinking": "Thoughts and tools",
+  "replay.agent_io": "Requests and model responses",
+  "replay.agent_empty": "This archive has no model output matching these display options.",
+
   "replay.stage.lover_recognized": "Lover recognition",
   "replay.stage.death_ability_changed": "Gifted gun status",
   "replay.stage.death_shot_missed": "Shot with no effect",

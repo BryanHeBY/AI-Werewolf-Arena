@@ -20,6 +20,7 @@ import { eventLabel } from "./event-labels";
 import { ReplayStage } from "./ReplayStage";
 import { PlayerSeats } from "./PlayerSeats";
 import { EventTimeline } from "./EventTimeline";
+import { PlayerAgentOutput } from "./PlayerAgentOutput";
 import { useReplayPlayback } from "./useReplayPlayback";
 
 export function ReplayWorkspace({
@@ -152,6 +153,7 @@ export function ReplayWorkspace({
         }}
         onClearFocus={() => setFocusedPlayerId(null)}
       />
+      <PlayerAgentOutput key={replay.sessionId} locale={locale} />
     </main>
   );
 }

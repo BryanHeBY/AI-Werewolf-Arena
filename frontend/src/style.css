@@ -12,6 +12,52 @@
   font-synthesis: none;
 }
 
+.agent-output-panel {
+  margin-top: 24px;
+  padding: 24px;
+}
+.agent-output-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.agent-output-controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.agent-output-turns details {
+  margin-top: 16px;
+}
+.agent-output-turns summary {
+  cursor: pointer;
+  padding: 10px 0;
+}
+.agent-output-item {
+  border-left: 2px solid currentColor;
+  padding: 10px 16px;
+  margin: 12px 0;
+}
+.agent-output-item pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  margin-bottom: 0;
+}
+.agent-output-muted {
+  color: #94a3b8;
+}
+.agent-output-accent {
+  color: #c4b5fd;
+}
+.agent-output-warn {
+  color: #fbbf24;
+}
+.agent-output-error {
+  color: #fb7185;
+}
+
 * {
   box-sizing: border-box;
 }

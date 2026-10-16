@@ -1,6 +1,6 @@
 # Agent回合预算、取消与资源
 
-LLM／ACP的选择只通过同一ActionRequest及完成端口交给领域。回合绝对deadline取请求期限与provider预算中更早者；排队、初始化、工具循环和required-action retry共用，不因重试刷新。
+LLM／Pi／ACP的选择只通过同一ActionRequest及完成端口交给领域。回合绝对deadline取请求期限与provider预算中更早者；排队、初始化、工具循环和required-action retry共用，不因重试刷新。
 
 provider内scheduler按明确provider ID共享限额，跨provider独立；不宣称控制同密钥别名或多进程的全局并发。关闭拒新工作、取消并等待本owner操作和lease释放；逻辑active／queued归零不等于任意注入传输物理资源已释放。
 
@@ -33,3 +33,11 @@ Fallback可在原政策下处理模型失败或预算耗尽；外来TimeoutError
 `printPrivateEvents` 统一控制直播事件中的底牌、狼聊／刀票、守护／用药、查验与机制私有通知。开启后可在本地上帝视角看到子狐选择、真实封刀效果及每只狼的刀权；关闭后这些非公开事件不打印，熊公告等公开事实仍打印。子狐本人只知道自己的选择，每只狼只知道自己的刀权；真实命中效果不通过终端文案反馈给任何玩家。
 
 该开关只筛选直播事件，不覆盖独立的 `printThinking`、`printLlmIo`、`trace`、`printAllEvents` 或聊天汇总。录制的 `replay.json` 按现有契约仍是完整 God 视角；不能把关闭私有直播理解为已生成公开观众版归档。
+
+## 共同私有输出端口
+
+三种传输的模型输出使用 `AgentOutputEvent`，受众固定为 `private`。传输只归一事实；终端和 Web 共用 `game-presentation` 的分类、可见开关及语义色调，模型原文保留原语言。ANSI 只在终端 sink 添加。显示开关不影响原生输出收集与玩家档案。
+
+正常工具调用在终端仅于完成时打印一行，失败打印警告；`trace: true` 时才额外打印开始和中间状态。所有结构化消费者仍收到完整工具事实，Web 可展开调用与回执。ACP 工具状态按调用 ID 去重，文本分段继续保护 Unicode。
+
+私有输出端口不承接 ACP 权限登记。显示异常仍由原传输隔离、在回合结束时报告，不能阻断后续 MCP 工具授权或覆盖原始失败。工具接受和归档中的 `accepted` 只表示候选接受，`applied:false` 仍由引擎实际提交改变。

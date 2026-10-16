@@ -46,3 +46,15 @@ Catalog／contracts／assembly／builtin 同在 `rulesets/roles`，保原 lazy r
 | `private-state-codec.ts` | [`backend/src/app/checkpoint/private-state-codec.ts`](../../backend/src/app/checkpoint/private-state-codec.ts) |
 
 纯 animal-format、player-format、animal-audit、noble-body-format、fragrant-pair-format 五叶仍在 `recording/reproduction/checkpoint`，独立 verifier 仍在录制校验层。现场读取与纯格式的职责已分开；纯格式模块不反向取得现场状态写权。
+
+## Agent 输出、录制与双端展示
+
+LLM、ACP、Pi 使用 `replay-contract/agent-output.ts` 的私有输出契约。文本、工具状态、请求、失败诊断和回退分别有明确类型；输出上下文携带传输与已知玩家／阶段信息。输出对象不包含运行句柄或行动许可，交给外部消费者前脱离原动作参数引用。
+
+- `adapters/acp/acp-output.ts`、`adapters/pi/pi-output.ts` 转换原生增量并拥有各自缓冲；`agents/player/player-observer.ts` 将 SDK 编排事实转换为共同输出。
+- `app/game-runner.ts` 装配唯一终端 sink，工厂向三种玩家实现注入同一出口；直接使用 provider 的旧 API 仍有默认终端适配。原 ACP 日志函数仅保留公开接线入口。
+- `adapters/console/agent-console-presenter.ts` 独占终端格式、ANSI 和简洁工具日志。Agent 不直接打印模型原文。
+- `game-presentation/agent-output.ts` 拥有双语分类、显示开关和语义色调，供终端和 Web 共用；它不处理 ANSI、DOM、会话或文件。
+- 录制器沿共同契约编码现有玩家 `delta_messages`（工具状态使用新增可选元数据）；Web 显式导入私有玩家档案后，用相同分类还原。录制完成并不表示工具候选已在领域生效。
+
+这是显式函数接线，没有全局事件总线。领域游戏事件继续走原投影与事件录制链；Agent 私有输出不变成公开游戏事件。私有文件查看状态不参与 Remotion 帧或游戏时间线计算。

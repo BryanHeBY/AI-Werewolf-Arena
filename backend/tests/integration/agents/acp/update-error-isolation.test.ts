@@ -108,10 +108,14 @@ for (const mode of ["update", "end", "both"] as const)
       ]);
       expect(seen).toHaveLength(4);
       expect(ends).toBe(1);
-      expect(f.session.takeAuditTrace?.()).toEqual({
+      const trace = f.session.takeAuditTrace?.();
+      expect(trace).toMatchObject({
         messages: ["display-trigger"],
         thoughts: ["after-display"],
       });
+      expect(
+        trace?.outputs?.filter((output) => output.type === "tool").map((output) => output.id),
+      ).toEqual(["allowed", "denied"]);
     } finally {
       f.registry.close();
       await f.session.close({ force: true });

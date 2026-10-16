@@ -3,6 +3,9 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
+import type { AgentOutputSink } from "@ai-werewolf-arena/replay-contract";
+import { createAcpOutputObserver } from "../adapters/acp/acp-output";
+import { createAgentConsoleSink } from "../adapters/console/agent-console-presenter";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { isDeepStrictEqual } from "node:util";
@@ -27,6 +30,7 @@ export interface PlayerAgentRuntime {
 }
 
 export interface PlayerAgentFactoryOptions {
+  outputSink?: AgentOutputSink;
   world: World;
   boardConfig: ReadonlyBoardConfig;
   profilesByActor: ReadonlyMap<number, ResolvedAgentRuntimeProfile>;
@@ -49,6 +53,18 @@ interface AcpUpdateObserver {
 export async function createPlayerAgentRuntime(
   options: PlayerAgentFactoryOptions,
 ): Promise<PlayerAgentRuntime> {
+  options = {
+    ...options,
+    outputSink:
+      options.outputSink ??
+      createAgentConsoleSink({
+        trace: options.trace,
+        printThinking: options.printThinking,
+        printLlmIo: options.printLlmIo,
+        color: options.colorizeLogs,
+        locale: options.displayLocale ?? options.world.locale,
+      }),
+  };
   const profiles = new Map(
     [...options.profilesByActor].map(([actor, profile]) => [actor, structuredClone(profile)]),
   );
@@ -160,8 +176,19 @@ async function createAcpRuntime(options: PlayerAgentFactoryOptions): Promise<Pla
         const profile = profiles.get(actorId);
         if (!profile || profile.provider.type !== "acp")
           throw new Error(`runtime_config_acp_profile_missing_for_actor:${actorId}`);
-        if (!observers.has(actorId))
-          observers.set(actorId, options.createAcpUpdateObserver?.(actorId));
+        if (!observers.has(actorId)) {
+          const normalizer = createAcpOutputObserver(
+            { transport: "acp", playerId: actorId },
+            options.outputSink!,
+          );
+          observers.set(
+            actorId,
+            options.createAcpUpdateObserver?.(actorId) ??
+              Object.assign((update: unknown) => normalizer.update(update), {
+                flush: () => normalizer.flush(),
+              }),
+          );
+        }
         return new AcpProcessClient({
           command: profile.provider.command,
           args: [...(profile.provider.args ?? []), ...(profile.spawnArgs ?? [])],
@@ -176,6 +203,7 @@ async function createAcpRuntime(options: PlayerAgentFactoryOptions): Promise<Pla
       personalityPromptResolver: (request) => profiles.get(request.actorId)?.personalityPrompt,
       boardConfig: options.boardConfig,
       turnTimeoutMs: options.llmTimeoutMs,
+      outputSink: options.outputSink,
       trace: options.trace,
       displayLocale: options.displayLocale,
       colorizeLogs: options.colorizeLogs,
@@ -269,6 +297,7 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
       return profile.provider.maxConcurrentRequests;
     },
     personalityPromptResolver: (request) => profileFor(request.actorId).personalityPrompt,
+    outputSink: options.outputSink,
     trace: options.trace,
     displayLocale: options.displayLocale,
     maxPromptEvents: 20,
@@ -322,6 +351,7 @@ async function createPiRuntime(options: PlayerAgentFactoryOptions): Promise<Play
             displayLocale: options.displayLocale,
             printLlmIo: options.printLlmIo,
             printThinking: options.printThinking,
+            outputSink: options.outputSink,
             trace: options.trace,
             colorizeLogs: options.colorizeLogs,
           }),

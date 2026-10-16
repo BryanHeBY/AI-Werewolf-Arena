@@ -5,6 +5,7 @@
  */
 import { unwrapRecordingEnvelope, assertCurrentRecordingContracts } from "./archive-envelope";
 import { assertErrorDiagnostic, type ErrorDiagnostic } from "./error-diagnostic";
+import { AGENT_TOOL_STATUSES, type AgentToolStatus } from "./agent-output";
 import { assertField, isRecord, ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId } from "./legacy-aliases";
@@ -28,6 +29,9 @@ export interface ReplayPlayerDeltaMessage {
   name?: string;
   args?: Record<string, unknown>;
   accepted?: boolean;
+  /** 可选进度元数据，旧档缺席时仍按原 tool_call／tool_result 解释。 */
+  call_id?: string;
+  status?: AgentToolStatus;
   result?: Record<string, unknown> | string;
 }
 
@@ -179,13 +183,19 @@ function assertPlayerShape(value: unknown): asserts value is ReplayPlayerView {
             ].includes(message.kind),
           `${messagePath}.kind`,
         );
-        for (const field of ["content", "name"])
+        for (const field of ["content", "name", "call_id"])
           assertField(
             message[field] === undefined || typeof message[field] === "string",
             `${messagePath}.${field}`,
           );
         if (message.diagnostic !== undefined)
           assertErrorDiagnostic(message.diagnostic, `${messagePath}.diagnostic`);
+        assertField(
+          message.status === undefined ||
+            (typeof message.status === "string" &&
+              AGENT_TOOL_STATUSES.includes(message.status as AgentToolStatus)),
+          `${messagePath}.status`,
+        );
         assertField(
           message.attempt === undefined ||
             (typeof message.attempt === "number" &&

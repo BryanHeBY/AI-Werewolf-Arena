@@ -5,6 +5,8 @@
  */
 import {
   assertReplayPlayerView,
+  agentOutputToDeltaMessages,
+  type AgentOutput,
   readVictoryResult,
   type CanonicalReplayPlayerView,
 } from "@ai-werewolf-arena/replay-contract";
@@ -414,26 +416,31 @@ export class ReplaySessionAggregate {
           ...(item.diagnostic ? { diagnostic: structuredClone(item.diagnostic) } : {}),
         });
     }
-    if (thinkingText)
-      target.push({ role: "assistant", kind: "assistant_output", content: thinkingText });
-    for (const call of input.toolCalls) {
-      target.push({
-        role: "assistant",
-        kind: "tool_call",
+    const outputs: AgentOutput[] = input.agentOutputs
+      ? [...input.agentOutputs]
+      : thinkingText
+        ? [{ type: "text", channel: "output", text: thinkingText }]
+        : [];
+    for (const call of outputs.some((output) => output.type === "tool") ? [] : input.toolCalls) {
+      outputs.push({
+        type: "tool",
         name: call.name,
-        ...(call.args !== undefined
-          ? { args: safeReplayJson(call.args) as Record<string, unknown> }
-          : {}),
-        ...(call.accepted !== undefined ? { accepted: call.accepted } : {}),
+        status: "started",
+        args:
+          call.args === undefined
+            ? undefined
+            : (safeReplayJson(call.args) as Record<string, unknown>),
+        accepted: call.accepted,
       });
       if (call.result !== undefined)
-        target.push({
-          role: "tool",
-          kind: "tool_result",
+        outputs.push({
+          type: "tool",
           name: call.name,
+          status: "completed",
           result: safeReplayJson(call.result) as Record<string, unknown> | string,
         });
     }
+    target.push(...agentOutputToDeltaMessages(outputs));
     target.push({
       role: "meta",
       kind: "action_summary",

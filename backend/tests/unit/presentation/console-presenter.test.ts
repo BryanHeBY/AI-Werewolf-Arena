@@ -45,7 +45,6 @@ describe("ACP console text", () => {
       "[acp][8][thought] 思考: 准备调用工具",
       "[acp][8][message] 消息: 第一条",
       "[acp][8][message] 消息: 第二条",
-      "[acp][8][tool] start werewolf-game.submit_action · 开始工具调用",
       "[acp][8][tool] completed werewolf-game.submit_action · 工具调用完成",
     ]);
   });
@@ -67,7 +66,11 @@ describe("ACP console text", () => {
 
   test("prints tool state changes once and suppresses content refinements", () => {
     const lines: string[] = [];
-    const logger = createAcpConsoleLogger(10, (line) => lines.push(line));
+    const logger = createAcpConsoleLogger(10, (line) => lines.push(line), "zh-CN", {
+      printThinking: true,
+      printLlmIo: false,
+      trace: true,
+    });
     const update = (fields: Record<string, unknown>) =>
       logger({
         sessionUpdate: "tool_call_update",
@@ -97,7 +100,11 @@ describe("ACP console text", () => {
 
   test("reports safe error metadata and distinguishes separate calls to the same tool", () => {
     const lines: string[] = [];
-    const logger = createAcpConsoleLogger(10, (line) => lines.push(line));
+    const logger = createAcpConsoleLogger(10, (line) => lines.push(line), "zh-CN", {
+      printThinking: true,
+      printLlmIo: false,
+      trace: true,
+    });
     logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "submit_action" });
     logger({
       sessionUpdate: "tool_call_update",
@@ -167,6 +174,7 @@ test("ACP diagnostic flags independently control message IO and thought/tool tra
         title: "submit_action",
         status: "pending",
       });
+      logger({ sessionUpdate: "tool_call_update", toolCallId: "one", status: "completed" });
       logger.flush();
       const output = lines.join("\n");
       expect(output.includes("thought-canary")).toBe(printThinking);

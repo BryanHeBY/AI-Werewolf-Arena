@@ -177,6 +177,7 @@ export interface ReplayRecordPlayerRoundInput {
   timestampMs?: number;
   llmRequestMessages?: ReplayLlmRequestMessage[];
   deltaMessages?: ReplayPlayerDeltaMessage[];
+  agentOutputs?: readonly import("@ai-werewolf-arena/replay-contract").AgentOutput[];
   promptSystem?: string;
   initialPromptSystem?: string;
   initialBoardInfo?: string;

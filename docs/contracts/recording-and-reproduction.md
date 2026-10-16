@@ -35,3 +35,9 @@ verifier按实际assembly原顺序追加贡献；board support保持独立的有
 God公开replay、私有manifest／reproduction及逐玩家档案的字段与身份分开。[档案兼容](archive-compatibility.md)列四类当前格式；完整原字段与原始prompt／thinking／tool内容不由文档整理或显示层再编码清洗。
 
 普通死亡后果由 `recording/verification/assembly.ts` 调用 `death-history/validate.ts` 独立审核；它不是运行许可或完整生命重演。
+
+## Agent 输出分类
+
+`AgentOutput` 是 LLM／ACP／Pi、终端、录制与 Web 共用的纯数据观察契约。归档继续使用 player schema 2：思考与消息分别写入 `assistant_output` 的既有可选 `name` 字段（`thinking`／`message`）；没有明确分类的 SDK／历史输出保持 `output`。文本按 8000 字符分片并保护 UTF-16 代理对，不通过终端显示开关裁剪私有原文。
+
+工具仍映射为 `tool_call` 与 `tool_result`；原参数、候选接受信息、回执和白名单诊断沿既有字段保存。工具增量增加可选的 `call_id` 与有限枚举 `status` 元数据，用于关联真实开始／中间／完成状态；旧 reader 可忽略这些新增字段，旧档缺席时仍按原 `tool_call`／`tool_result` 解释，不补造进度。结构化记录不包含终端生成的 ANSI 或 HTML。
