@@ -38,25 +38,25 @@ test("left and right metadata columns shrink independently and return their widt
     const leftCompact = createVideoLayout(players, 1920, 1080, "broadcast-v1", {
       playersPresentation: [{ playerId: rightId, modelLabel: "Visible model" }],
     });
-    expect(leftCompact.rosterColumns.left).toEqual({ width: 216, hasMetadata: false });
+    expect(leftCompact.rosterColumns.left).toEqual({ width: 240, hasMetadata: false });
     expect(leftCompact.rosterColumns.right.width).toBeCloseTo(328.32, 8);
     expect(leftCompact.rosterColumns.right.hasMetadata).toBe(true);
-    expect(leftCompact.rosterLeft[0]!.x).toBeCloseTo(145.44, 8);
+    expect(leftCompact.rosterLeft[0]!.x).toBeCloseTo(157.44, 8);
     expect(leftCompact.rosterRight[0]!.x).toBeCloseTo(1718.4, 8);
-    expect(leftCompact.stage.x).toBeCloseTo(281.28, 8);
-    expect(leftCompact.stage.width).toBeCloseTo(1245.12, 8);
-    expect(cameraTargetPose("table", 1, leftCompact).x).toBeCloseTo(903.84, 8);
-    expect(leftCompact.table.x).toBeCloseTo(903.84, 8);
+    expect(leftCompact.stage.x).toBeCloseTo(305.28, 8);
+    expect(leftCompact.stage.width).toBeCloseTo(1221.12, 8);
+    expect(cameraTargetPose("table", 1, leftCompact).x).toBeCloseTo(915.84, 8);
+    expect(leftCompact.table.x).toBeCloseTo(915.84, 8);
     const rightCompact = createVideoLayout(players, 1920, 1080, "broadcast-v1", {
       playersPresentation: [{ playerId: 1, displayName: "Visible name" }],
     });
     expect(rightCompact.rosterColumns.left.width).toBeCloseTo(328.32, 8);
     expect(rightCompact.rosterColumns.left.hasMetadata).toBe(true);
-    expect(rightCompact.rosterColumns.right).toEqual({ width: 216, hasMetadata: false });
-    expect(rightCompact.rosterRight[0]!.x).toBeCloseTo(1774.56, 8);
+    expect(rightCompact.rosterColumns.right).toEqual({ width: 240, hasMetadata: false });
+    expect(rightCompact.rosterRight[0]!.x).toBeCloseTo(1762.56, 8);
     expect(rightCompact.stage.x).toBeCloseTo(393.6, 8);
-    expect(rightCompact.stage.width).toBeCloseTo(1245.12, 8);
-    expect(cameraTargetPose("table", 1, rightCompact).x).toBeCloseTo(1016.16, 8);
+    expect(rightCompact.stage.width).toBeCloseTo(1221.12, 8);
+    expect(cameraTargetPose("table", 1, rightCompact).x).toBeCloseTo(1004.16, 8);
     const both = createVideoLayout(players, 1920, 1080, "broadcast-v1", {
       playersPresentation: [
         { playerId: 1, displayName: " " },
@@ -64,13 +64,13 @@ test("left and right metadata columns shrink independently and return their widt
       ],
     });
     expect(both.rosterColumns).toEqual({
-      left: { width: 216, hasMetadata: false },
-      right: { width: 216, hasMetadata: false },
+      left: { width: 240, hasMetadata: false },
+      right: { width: 240, hasMetadata: false },
     });
-    expect(both.stage.x).toBeCloseTo(281.28, 8);
-    expect(both.stage.width).toBeCloseTo(1357.44, 8);
-    expect(both.caption.x).toBeCloseTo(335.5776, 8);
-    expect(both.caption.width).toBeCloseTo(1248.8448, 8);
+    expect(both.stage.x).toBeCloseTo(305.28, 8);
+    expect(both.stage.width).toBeCloseTo(1309.44, 8);
+    expect(both.caption.x).toBeCloseTo(357.6576, 8);
+    expect(both.caption.width).toBeCloseTo(1204.6848, 8);
     for (const layout of [leftCompact, rightCompact, both]) {
       expect(layout.rosterLeft[0]!.x - layout.rosterLeft[0]!.width / 2).toBeCloseTo(37.44, 8);
       expect(layout.rosterRight[0]!.x + layout.rosterRight[0]!.width / 2).toBeCloseTo(1882.56, 8);
@@ -142,7 +142,7 @@ test("frame geometry reads only the cropped whole-game presentation and never ju
   expect(first.currentView.players[0]!.name).toBe("Raw name 1");
   expect(first.layout.rosterColumns.left.hasMetadata).toBe(false);
   expect(first.layout.rosterColumns.right.hasMetadata).toBe(false);
-  expect(first.layout.stage.width).toBeCloseTo(1357.44, 8);
+  expect(first.layout.stage.width).toBeCloseTo(1309.44, 8);
   for (const frame of [29, 30, 89, 90, 114, 179])
     expect(buildVideoFrame(both, frame).layout).toEqual(first.layout);
   expect(buildVideoFrame(both, 114).currentView.players[0]!.alive).toBe(false);
@@ -178,18 +178,18 @@ test("adaptive anchors, projected world endpoints and custom layers all consume 
     .match(/-?\d+(?:\.\d+)?/g)!
     .slice(0, 4)
     .map(Number);
-  expect(d[0]).toBeCloseTo(145.44, 8);
+  expect(d[0]).toBeCloseTo(157.44, 8);
   expect(d[1]).toBeCloseTo(238.68, 8);
-  expect(d[2]).toBeCloseTo(1256.928, 8);
+  expect(d[2]).toBeCloseTo(1247.328, 8);
   expect(d[3]).toBeCloseTo(619.92, 8);
-  expect(videoWorldToScreen({ x: 1100, y: 600 }, view).x).toBeCloseTo(1256.928, 8);
+  expect(videoWorldToScreen({ x: 1100, y: 600 }, view).x).toBeCloseTo(1247.328, 8);
   const screen = renderToStaticMarkup(
     <VideoLayers view={view} plan={plan} space="screen" layerRegistry={{ Example }} />,
   );
   const ellipse = screen.match(/<ellipse[^>]+>/)![0];
-  expect(Number(ellipse.match(/\bcx="([^"]+)"/)![1])).toBeCloseTo(145.44, 8);
-  expect(Number(ellipse.match(/\brx="([^"]+)"/)![1])).toBeCloseTo(133.92, 8);
+  expect(Number(ellipse.match(/\bcx="([^"]+)"/)![1])).toBeCloseTo(157.44, 8);
+  expect(Number(ellipse.match(/\brx="([^"]+)"/)![1])).toBeCloseTo(148.8, 8);
   const custom = screen.match(/<div[^>]*data-custom-stage[^>]+>/)![0];
-  expect(Number(custom.match(/data-custom-stage="([^"]+)"/)![1])).toBeCloseTo(1245.12, 8);
-  expect(custom).toContain('data-custom-left="216"');
+  expect(Number(custom.match(/data-custom-stage="([^"]+)"/)![1])).toBeCloseTo(1221.12, 8);
+  expect(custom).toContain('data-custom-left="240"');
 });

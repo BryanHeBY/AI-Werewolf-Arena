@@ -58,7 +58,7 @@ export function createVideoLayout(
       const hasMetadata =
         metadata === undefined || ids.some((playerId) => metadata.get(playerId) === true);
       // 紧凑列仍容纳头像、编号与最长语言的角色标签；列宽整局固定，与生死、说话和焦点无关。
-      return { width: width * (hasMetadata ? 0.171 : 0.1125), hasMetadata };
+      return { width: width * (hasMetadata ? 0.171 : 0.125), hasMetadata };
     };
     const rosterColumns = {
       left: column(playerIds.slice(0, rows)),

@@ -1,123 +1,80 @@
 /**
- * 负责左右固定名册和中央语义场景的主题化视频画面。输入仅为已编译计划与显式帧，输出发言、技能、票型及结算视觉。
- * 所有动画围绕编译节拍计算；人物目标、库存和结果只读结构化场景，不解析台词意图，也不从用药推导救活。
+ * 负责固定名册与中央观众场景的主题化视频宿主。输入是编译计划、显式帧和已打包插槽，输出发言、行动、票型、阶段及结算版式。
+ * 事实只读currentView与typed visual；动画只移动中央美术，HUD、正文及结果文字不继承camera。无台词识别、规则复算或隐式库存。
  */
 import { AbsoluteFill } from "remotion";
-import { VideoImage } from "./VideoImage";
-import type { CSSProperties, ReactNode } from "react";
+import { useMemo, type CSSProperties, type ReactNode } from "react";
 import { text } from "@ai-werewolf-arena/game-text";
 import { playerLabel } from "@ai-werewolf-arena/game-presentation";
 import { AvatarMark } from "../presentation/AvatarMark";
+import { RoleCrest } from "../presentation/RoleCrest";
 import type { ResolvedPlayerPresentation } from "../presentation";
-import { getThemeSlot, resolveTheme, themePalette, type ThemeSlot } from "../themes";
-import { buildVideoFrame, resolveVideoMediaSource } from "./frame";
-import { VideoLayers } from "./VideoLayers";
-import type { VideoLayerRegistry, VideoPlan } from "./types";
-import type { VideoThemeSlotProps, VideoThemeSlotRegistry } from "./theme-renderers";
 import {
-  GothicBackdrop,
-  GothicMetalFrame,
-  GothicSkillArt,
-  PhaseSigil,
-  gothicSurface,
-  GOTHIC_METAL,
-  GOTHIC_LIGHT,
-  GOTHIC_DARK,
-} from "./GothicArt";
+  getThemeSlot,
+  normalizeResolvedTheme,
+  resolveTheme,
+  themePalette,
+  themeSurface,
+  type ThemeSlot,
+} from "../themes";
+import { buildVideoFrame, resolveVideoMediaSource } from "./frame";
+import { VideoImage } from "./VideoImage";
+import { VideoLayers } from "./VideoLayers";
+import type { VideoLayerRegistry, VideoPlan, VideoScene } from "./types";
+import type { VideoThemeSlotProps, VideoThemeSlotRegistry } from "./theme-renderers";
+import { GothicBackdrop, GothicMetalFrame, PhaseSigil } from "./GothicArt";
+import { SceneConnector, SceneHero, RecordMark } from "./SceneVisual";
 
-const quiet: CSSProperties = { overflowWrap: "anywhere", minWidth: 0 };
+const quiet: CSSProperties = { minWidth: 0, overflowWrap: "anywhere" };
 const twoLines: CSSProperties = {
   display: "-webkit-box",
   WebkitLineClamp: 2,
   WebkitBoxOrient: "vertical",
   overflow: "hidden",
 };
-const clamp = (value: number) => Math.max(0, Math.min(1, value));
+const alpha = (color: string, opacity: number) =>
+  /^#[\da-f]{6}$/i.test(color)
+    ? `${color}${Math.round(opacity * 255)
+        .toString(16)
+        .padStart(2, "0")}`
+    : color;
+/** 只估排版占幅，不解释语义；显式换行也计入，避免短但多行的编导文本溢出局部衬。 */
+function textRows(value: string, width: number, font: number) {
+  let rows = 1,
+    line = 0;
+  for (const glyph of value) {
+    if (glyph === "\n") {
+      rows++;
+      line = 0;
+      continue;
+    }
+    const advance = font * (/[^\x00-\x7f]/.test(glyph) || /[MWmw@#%&]/.test(glyph) ? 1 : 0.65);
+    if (line + advance > width) {
+      rows++;
+      line = 0;
+    }
+    line += advance;
+  }
+  return rows;
+}
 
-/** 图形只表达技能种类；实际身份仍由独立角色徽章显示。 */
-export function SkillMark({
-  kind,
-  color = "currentColor",
-  size = 100,
-}: {
-  kind: string;
-  color?: string;
-  size?: number;
-}) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      fill="none"
-      aria-hidden="true"
-      style={{ color, flexShrink: 0 }}
-    >
-      {kind === "inspect" ? (
-        <>
-          <path d="M8 50Q50 8 92 50Q50 92 8 50Z" stroke="currentColor" strokeWidth="4" />
-          <circle cx="50" cy="50" r="14" stroke="currentColor" strokeWidth="4" />
-          <circle cx="50" cy="50" r="5" fill="currentColor" />
-          <path d="M50 4V15M18 16L26 25M82 16L74 25" stroke="currentColor" strokeWidth="3" />
-        </>
-      ) : kind === "heal" || kind === "poison" ? (
-        <>
-          <path
-            d="M39 10H61V19L58 22V37C81 49 82 83 65 89H35C18 83 19 49 42 37V22L39 19Z"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path
-            d="M29 61Q50 51 71 61V76Q70 83 63 83H37Q30 83 29 76Z"
-            fill="currentColor"
-            opacity=".25"
-          />
-          {kind === "heal" ? (
-            <path d="M50 53V73M40 63H60" stroke="currentColor" strokeWidth="5" />
-          ) : (
-            <>
-              <circle cx="43" cy="62" r="4" fill="currentColor" />
-              <circle cx="57" cy="62" r="4" fill="currentColor" />
-              <path d="M43 75L57 75" stroke="currentColor" strokeWidth="3" />
-            </>
-          )}
-        </>
-      ) : kind === "guard" || kind === "protection" ? (
-        <>
-          <path
-            d="M50 8L82 23V53Q80 77 50 94Q20 77 18 53V23Z"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path d="M33 50L45 64L69 36" stroke="currentColor" strokeWidth="5" />
-        </>
-      ) : kind === "exile" ? (
-        <>
-          <circle cx="50" cy="50" r="33" stroke="currentColor" strokeWidth="5" />
-          <path d="M29 29L71 71M71 29L29 71" stroke="currentColor" strokeWidth="4" />
-        </>
-      ) : kind === "wolf-knife" || kind === "wolf-vote" ? (
-        <>
-          <path
-            d="M17 11L33 32L50 25L67 32L83 11L80 61L65 84L50 93L35 84L20 61Z"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path
-            d="M30 48L42 53M70 48L58 53M43 71L50 77L57 71"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path d="M43 60L50 65L57 60" fill="currentColor" />
-        </>
-      ) : (
-        <>
-          <path d="M50 8L87 50L50 92L13 50Z" stroke="currentColor" strokeWidth="3" />
-          <path d="M50 28V72M28 50H72" stroke="currentColor" strokeWidth="3" />
-        </>
-      )}
-    </svg>
-  );
+/** 只选择版式，不更改scene.kind、来源、结果或事实时钟。旧无意图计划安全退到原scene语义。 */
+export function broadcastSceneLayout(scene: VideoScene) {
+  if (scene.kind === "speech") return "speech";
+  if (scene.kind === "ballot") return "ballot";
+  if (scene.visual?.family === "game_result") return "end";
+  if (scene.kind === "phase" || scene.visual?.family === "phase_transition") return "phase";
+  if (scene.kind === "settlement" || scene.visual?.family === "life_settlement")
+    return "settlement";
+  if (scene.stock) return "action";
+  if (
+    scene.visual?.fallbackReason ||
+    scene.visual?.process === "notice" ||
+    scene.visual?.process === "unknown" ||
+    scene.visual?.process === "skipped"
+  )
+    return "notice";
+  return scene.kind === "action" || scene.visual ? "action" : "notice";
 }
 
 export function BroadcastVideoFrame({
@@ -134,50 +91,42 @@ export function BroadcastVideoFrame({
   mediaBaseUrl?: string;
 }) {
   const view = buildVideoFrame(plan, frame);
-  const current = view.currentView;
-  const scene = view.scene;
-  const locale = plan.display.locale;
-  const theme = plan.theme ?? resolveTheme();
+  const current = view.currentView,
+    scene = view.scene,
+    locale = plan.display.locale;
+  const theme = useMemo(() => normalizeResolvedTheme(plan.theme ?? resolveTheme()), [plan.theme]);
   const gothic = theme.id === "gothic-v1";
   const night = current.snapshot.phase === "night";
-  const basePalette = themePalette(theme, night ? "night" : "day");
+  const tone = night ? "night" : "day";
+  const base = themePalette(theme, tone);
   const palette =
-    theme.options.highContrast === true
-      ? { ...basePalette, border: basePalette.text, muted: basePalette.text }
-      : basePalette;
-  const compact = theme.options.density === "compact";
-  const cardPalette = gothic ? themePalette(theme, "night") : palette;
-  // 同一发言者已在正文抬头，不再多画一排重复的聚焦信息。
-  const hasFocusPanel =
-    view.focusPlayerIds.length > 0 &&
-    !(
-      scene.kind === "speech" &&
-      view.focusPlayerIds.length === 1 &&
-      view.focusPlayerIds[0] === scene.actorId
-    );
-  const s = Math.min(plan.width / 1280, plan.height / 720);
-  const props: VideoThemeSlotProps = { plan, view, theme, palette, mediaBaseUrl };
+    theme.options.highContrast === true ? { ...base, border: base.text, muted: base.text } : base;
+  const cards = gothic ? themePalette(theme, "night") : palette;
+  const surface = themeSurface(theme, tone),
+    tokens = theme.definition;
+  const scale = Math.min(
+    plan.width / tokens.typography.referenceWidth,
+    plan.height / tokens.typography.referenceHeight,
+  );
+  const t = tokens.typography,
+    stage = view.layout.stage;
   const revealed = view.localFrame >= scene.cues.impact;
-  const enter = clamp(
-    (view.localFrame - scene.cues.establish + 1) /
-      Math.max(1, scene.cues.travel - scene.cues.establish),
-  );
-  const progress = clamp(
-    (view.localFrame - scene.cues.travel) / Math.max(1, scene.cues.impact - scene.cues.travel),
-  );
+  const layout = broadcastSceneLayout(scene);
+  // 编导可单独标注actor，但记录原话仍署真实说话者；不改既有SpeechCue/声音来源。
+  const speechActor =
+    scene.bodySource === "event" && scene.visual?.dialogue ? scene.visual.actorId : scene.actorId;
   const roster = plan.playersPresentation;
   const profile = (id: number) => roster.find((player) => player.playerId === id);
-  const label = (id: number) => {
-    const player = profile(id);
-    return playerLabel({ id, seat: player?.seat ?? id, name: player?.displayName }, locale);
-  };
+  const label = (id: number) =>
+    playerLabel({ id, seat: profile(id)?.seat ?? id, name: profile(id)?.displayName }, locale);
   const seatLabel = (id: number) => playerLabel({ id, seat: profile(id)?.seat ?? id }, locale);
+  const slotProps: VideoThemeSlotProps = { plan, view, theme, palette, mediaBaseUrl };
   const slot = (key: ThemeSlot, fallback: ReactNode, playerId?: number) => {
     const Component = getThemeSlot(themeSlots, theme, key);
     return Component ? (
       <Component
-        {...props}
-        palette={key === "playerCard" || key === "seatBadge" ? cardPalette : palette}
+        {...slotProps}
+        palette={key === "playerCard" || key === "seatBadge" ? cards : palette}
         {...(playerId === undefined ? {} : { playerId })}
       />
     ) : (
@@ -187,8 +136,8 @@ export function BroadcastVideoFrame({
   const avatar = (player: ResolvedPlayerPresentation | undefined, size: number) => {
     if (!player) return null;
     if (player.avatar.kind === "asset") {
-      const assetId = player.avatar.assetId;
-      const asset = plan.media.find((item) => item.id === assetId && item.kind === "image");
+      const id = player.avatar.assetId;
+      const asset = plan.media.find((item) => item.id === id && item.kind === "image");
       if (asset)
         return (
           <VideoImage
@@ -201,182 +150,255 @@ export function BroadcastVideoFrame({
     }
     return <AvatarMark avatar={player.avatar} size={size} />;
   };
-  const medallion = (id: number, size = gothic ? 96 : 72) => (
-    <div
-      style={{
-        display: "grid",
-        justifyItems: "center",
-        gap: 9 * s,
-        width: (size + 28) * s,
-        minWidth: 0,
-      }}
-    >
-      <div
-        style={{
-          width: size * s,
-          height: size * s,
-          border: `${gothic ? 3 * s : 1}px solid ${gothic ? GOTHIC_METAL : palette.border}`,
-          borderRadius: "50%",
-          display: "grid",
-          placeItems: "center",
-          background: gothic
-            ? "radial-gradient(circle at 40% 30%, #29404b, #071018 80%)"
-            : palette.panel,
-          color: gothic ? GOTHIC_LIGHT : palette.text,
-          boxShadow: gothic
-            ? `0 0 0 ${3 * s}px #060c12, 0 0 0 ${4 * s}px ${GOTHIC_METAL}77, 0 ${5 * s}px ${12 * s}px #0008`
-            : undefined,
-        }}
-      >
-        {avatar(profile(id), size * 0.67 * s)}
-      </div>
-      <div
-        title={label(id)}
-        style={{
-          ...twoLines,
-          color: palette.text,
-          fontSize: 18 * s,
-          fontWeight: 650,
-          ...quiet,
-          maxWidth: "100%",
-          textAlign: "center",
-        }}
-      >
-        {label(id)}
-      </div>
-    </div>
-  );
-  const backdrop = gothic ? (
-    <GothicBackdrop night={night} />
-  ) : (
-    <AbsoluteFill style={{ background: palette.canvas }}>
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: `radial-gradient(ellipse at 50% 15%, ${palette.border}33, transparent 70%)`,
-        }}
-      />
-    </AbsoluteFill>
-  );
+  const readingInk = surface.readingText,
+    mutedInk = surface.readingMuted;
+  const padding = tokens.frame.padding * scale;
+  const readingWidth = Math.min(stage.width - padding * 2, t.readingMaxWidth * scale);
+  const bodySize =
+    (theme.options.largeText === true ? t.bodyLarge : locale === "en" ? t.bodyEn : t.bodyZh) *
+    scale;
+  const lineHeight = locale === "en" ? t.lineHeightEn : t.lineHeightZh;
+  const localSurface = (
+    opacity = night ? surface.readingOpacityNight : surface.readingOpacityDay,
+  ): CSSProperties => ({
+    backgroundColor: alpha(surface.readingColor, opacity),
+    color: readingInk,
+    borderLeft: `${tokens.frame.width * scale}px solid ${alpha(tokens.frame.color, 0.7)}`,
+    ...(theme.options.paperTexture === true
+      ? {
+          backgroundImage: `repeating-linear-gradient(0deg, ${alpha(readingInk, 0.018)} 0px, ${alpha(readingInk, 0.018)} 1px, transparent 1px, transparent 4px)`,
+        }
+      : {}),
+  });
 
   function bodyParts() {
-    // 分页使用编译器同一套字符网格，显式强调只标注作者选定的原文范围。
-    const page = view.caption;
-    const offset = view.captionOffset;
-    const parts: ReactNode[] = [];
+    const page = view.caption,
+      offset = view.captionOffset;
+    const result: ReactNode[] = [];
     let cursor = 0;
     for (const emphasis of scene.emphasis) {
       const start = Math.max(0, emphasis.start - offset),
         end = Math.min(page.length, emphasis.end - offset);
       if (end <= start || start < cursor) continue;
-      parts.push(
+      result.push(
         page.slice(cursor, start),
         <mark
           key={`${start}:${end}`}
-          style={{ background: "transparent", color: palette.wolf, fontWeight: 800 }}
+          style={{
+            background: "transparent",
+            color: gothic ? "#efb4a8" : palette.wolf,
+            fontWeight: 700,
+          }}
         >
           {page.slice(start, end)}
         </mark>,
       );
       cursor = end;
     }
-    parts.push(page.slice(cursor));
-    return parts;
+    result.push(page.slice(cursor));
+    return result;
   }
-  function speech() {
+  function pageCounter() {
+    return text(locale, "video.page", {
+      page: view.captionPageIndex + 1,
+      pages: view.shot.captionPages.length,
+    });
+  }
+  function medallion(id: number, size: number, compact = false) {
     return (
-      <div style={{ height: "100%", display: "flex", flexDirection: "column", gap: 20 * s }}>
+      <div
+        key={id}
+        style={{
+          width: size + (compact ? 24 : 42) * scale,
+          display: "grid",
+          justifyItems: "center",
+          gap: 8 * scale,
+        }}
+      >
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 18 * s,
-            paddingBottom: 15 * s,
-            borderBottom: `1px solid ${palette.border}`,
+            width: size,
+            height: size,
+            borderRadius: "50%",
+            display: "grid",
+            placeItems: "center",
+            background: alpha(surface.readingColor, 0.85),
+            border: `${2 * scale}px solid ${tokens.frame.color}`,
           }}
         >
-          {scene.actorId !== undefined && avatar(profile(scene.actorId), 52 * s)}
-          <div style={{ minWidth: 0 }}>
-            <div style={{ ...quiet, ...twoLines, fontSize: 26 * s, fontWeight: 700 }}>
-              {scene.actorId === undefined ? scene.title : label(scene.actorId)}
+          {avatar(profile(id), size * 0.72)}
+        </div>
+        <div
+          title={label(id)}
+          style={{
+            ...quiet,
+            ...twoLines,
+            textAlign: "center",
+            fontSize: (compact ? 22 : 26) * scale,
+            color: readingInk,
+            background: alpha(surface.readingColor, 0.86),
+            padding: `${4 * scale}px ${8 * scale}px`,
+          }}
+        >
+          {compact ? seatLabel(id) : label(id)}
+        </div>
+      </div>
+    );
+  }
+  function speech() {
+    // 按整段最大页固定阅读面高度；翻页不推动署名、行宽或背景。
+    const lines = Math.max(
+      1,
+      ...view.shot.captionPages.map((page) => textRows(page, readingWidth - 60 * scale, bodySize)),
+    );
+    const signatures =
+      (scene.visual?.recipientIds.length ? 32 : 0) +
+      (scene.visual?.dialogue?.originalSpeakerId !== undefined ? 32 : 0);
+    const height = Math.min(
+      stage.height * (view.shot.captionPageRanges ? surface.readingMaxHeightRatio : 0.88),
+      Math.max(stage.height * 0.4, lines * bodySize * lineHeight + (240 + signatures) * scale),
+    );
+    return (
+      <div
+        data-surface="speech"
+        style={{
+          ...localSurface(),
+          position: "absolute",
+          bottom: 32 * scale,
+          left: (stage.width - readingWidth) / 2,
+          width: readingWidth,
+          height,
+          padding: 30 * scale,
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
+          gap: 18 * scale,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 18 * scale }}>
+          {speechActor !== undefined && avatar(profile(speechActor), 48 * scale)}
+          <div style={{ ...quiet, flex: 1 }}>
+            <div
+              data-speech-speaker={speechActor}
+              style={{ ...twoLines, fontSize: t.speaker * scale, fontWeight: 700 }}
+            >
+              {speechActor === undefined ? scene.title : label(speechActor)}
             </div>
-            <div style={{ fontSize: 13 * s, marginTop: 6 * s, color: palette.muted }}>
+            <div style={{ fontSize: t.aux * scale, color: mutedInk, marginTop: 6 * scale }}>
               {scene.title}
             </div>
           </div>
         </div>
+        {scene.visual?.recipientIds.length ? (
+          <div data-dialogue-recipients style={{ color: mutedInk, fontSize: t.aux * scale }}>
+            {text(locale, "video.recipient")} ·{" "}
+            {scene.visual.recipientIds.map(seatLabel).join(" / ")}
+          </div>
+        ) : null}
+        {scene.visual?.dialogue?.originalSpeakerId !== undefined && (
+          <div
+            data-original-speaker={scene.visual.dialogue.originalSpeakerId}
+            style={{ color: mutedInk, fontSize: t.aux * scale }}
+          >
+            {text(locale, "video.original_speaker")} ·{" "}
+            {label(scene.visual.dialogue.originalSpeakerId)}
+          </div>
+        )}
         <div
           data-scene-speech
           style={{
             ...quiet,
-            fontSize: (hasFocusPanel ? 24 : 30) * s,
-            lineHeight: hasFocusPanel ? 1.4 : 1.48,
-            fontFamily: gothic ? theme.definition.fonts.heading : undefined,
-            fontWeight: 550,
+            fontSize: bodySize,
+            lineHeight,
             whiteSpace: "pre-wrap",
             flex: 1,
+            fontWeight: 400,
           }}
         >
           {bodyParts()}
         </div>
-        <div style={{ alignSelf: "flex-end", fontSize: 12 * s, color: palette.muted }}>
-          {text(locale, "video.page", {
-            page: view.captionPageIndex + 1,
-            pages: view.shot.captionPages.length,
-          })}
+        <div style={{ alignSelf: "flex-end", color: mutedInk, fontSize: t.aux * scale }}>
+          {pageCounter()}
         </div>
       </div>
     );
   }
   function ballot() {
     const data = scene.ballot;
-    if (!data) return <p>{text(locale, "video.no_ballots")}</p>;
-    if (!revealed)
+    if (!data || !revealed)
       return (
-        <p data-scene-ballot-pending style={{ fontSize: 24 * s, color: palette.muted }}>
-          {text(locale, "video.waiting")}
-        </p>
+        <div
+          data-scene-ballot-pending
+          style={{
+            ...localSurface(),
+            position: "absolute",
+            bottom: "20%",
+            left: "12%",
+            right: "12%",
+            padding,
+            fontSize: bodySize,
+          }}
+        >
+          {text(locale, data ? "video.waiting" : "video.no_ballots")}
+        </div>
       );
     const targets = [
       ...new Set([
         ...Object.keys(data.tally ?? {}).map(Number),
-        ...data.votes.filter((vote) => vote.targetId !== null).map((vote) => vote.targetId!),
+        ...data.votes.flatMap((vote) => (vote.targetId === null ? [] : [vote.targetId])),
+        ...(data.targetId === null ? [] : [data.targetId]),
       ]),
     ];
+    const dense = targets.length > 4;
     const total = Math.max(1, ...Object.values(data.tally ?? {}));
     const abstentions = data.votes.filter((vote) => vote.abstain);
-    // 显式重点可以直接定位默认原文；不能因为作者未替换整段文案而吞掉合法标记。
     const editorial = scene.bodySource === "script" || scene.emphasis.length > 0;
-    const dense = targets.length > 4 || editorial;
+    const detailsMissing = data.votes.length === 0 && Object.keys(data.tally ?? {}).length === 0;
     return (
       <div
+        data-scene-ballot
+        data-surface="ballot"
         style={{
+          ...localSurface(surface.ballotOpacity),
+          position: "absolute",
+          bottom: 24 * scale,
+          left: padding,
+          right: padding,
+          padding,
+          boxSizing: "border-box",
           display: "flex",
           flexDirection: "column",
-          gap: (dense ? 8 : 15) * s,
-          opacity: revealed ? 1 : 0.2,
+          gap: 16 * scale,
         }}
-        data-scene-ballot
       >
         {editorial && (
           <div
             data-scene-editorial
-            style={{ ...quiet, fontSize: 17 * s, lineHeight: 1.45, whiteSpace: "pre-wrap" }}
+            style={{
+              ...quiet,
+              fontSize: (locale === "en" ? 30 : 32) * scale,
+              lineHeight,
+              whiteSpace: "pre-wrap",
+            }}
           >
             {bodyParts()}
+          </div>
+        )}
+        {detailsMissing && (
+          <div data-ballot-details-unavailable style={{ fontSize: t.aux * scale, color: mutedInk }}>
+            {text(locale, "video.ballots_unavailable")}
+          </div>
+        )}
+        {detailsMissing && data.targetId !== null && (
+          <div data-ballot-recorded-result style={{ fontSize: t.result * scale }}>
+            {text(locale, "video.result")} · {seatLabel(data.targetId)}
           </div>
         )}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns:
-              editorial && targets.length > 8
-                ? "repeat(3,minmax(0,1fr))"
-                : dense
-                  ? "minmax(0,1fr) minmax(0,1fr)"
-                  : "minmax(0,1fr)",
-            gap: (dense ? 9 : 15) * s,
+            gridTemplateColumns: dense ? "minmax(0,1fr) minmax(0,1fr)" : "minmax(0,1fr)",
+            gap: `${14 * scale}px ${26 * scale}px`,
           }}
         >
           {targets.map((id) => (
@@ -385,82 +407,82 @@ export function BroadcastVideoFrame({
               data-ballot-target={id}
               style={{
                 minWidth: 0,
-                borderBottom: `1px solid ${palette.border}`,
-                paddingBottom: (dense ? 7 : 16) * s,
+                borderBottom: `${scale}px solid ${alpha(tokens.frame.color, 0.4)}`,
+                paddingBottom: 12 * scale,
               }}
             >
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: (dense ? 7 : 14) * s,
-                  marginBottom: (dense ? 6 : 10) * s,
+                  gap: 14 * scale,
+                  marginBottom: 10 * scale,
                 }}
               >
-                <strong
-                  title={label(id)}
-                  style={{ minWidth: (dense ? 40 : 70) * s, fontSize: (dense ? 15 : 20) * s }}
-                >
+                <strong title={label(id)} style={{ minWidth: 58 * scale, fontSize: 28 * scale }}>
                   {seatLabel(id)}
                 </strong>
                 <strong
                   style={{
-                    fontSize: (dense ? 18 : 26) * s,
-                    color: id === data.targetId ? palette.wolf : palette.accent,
+                    fontSize: (dense ? 30 : 36) * scale,
+                    color:
+                      id === data.targetId ? (gothic ? "#efb4a8" : palette.accent) : readingInk,
                   }}
                 >
-                  {data.tally && revealed
-                    ? text(locale, "video.votes", { count: data.tally[String(id)] ?? 0 })
+                  {data.tally && Object.hasOwn(data.tally, String(id))
+                    ? text(locale, "video.votes", { count: data.tally[String(id)]! })
                     : "—"}
                 </strong>
                 <div
                   style={{
+                    marginLeft: "auto",
                     display: "flex",
                     flexWrap: "wrap",
-                    gap: 6 * s,
-                    marginLeft: "auto",
-                    maxWidth: "52%",
+                    justifyContent: "flex-end",
+                    gap: 6 * scale,
+                    maxWidth: "56%",
                   }}
                 >
-                  {revealed &&
-                    data.votes
-                      .filter((vote) => vote.targetId === id && !vote.abstain)
-                      .map((vote) => (
-                        <span
-                          key={vote.actorId}
-                          style={{
-                            fontSize: (dense ? 11 : 14) * s,
-                            padding: `${(dense ? 2 : 4) * s}px ${(dense ? 4 : 7) * s}px`,
-                            border: `1px solid ${palette.border}`,
-                            borderRadius: 4 * s,
-                          }}
-                        >
-                          {profile(vote.actorId)?.seat ?? vote.actorId}
-                          {vote.weight !== null && vote.weight !== 1 ? ` ×${vote.weight}` : ""}
-                        </span>
-                      ))}
+                  {data.votes
+                    .filter((vote) => vote.targetId === id && !vote.abstain)
+                    .map((vote) => (
+                      <span
+                        key={vote.actorId}
+                        style={{
+                          fontSize: 24 * scale,
+                          border: `${scale}px solid ${tokens.frame.color}`,
+                          padding: `${2 * scale}px ${6 * scale}px`,
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      >
+                        {profile(vote.actorId)?.seat ?? vote.actorId}
+                        {vote.weight !== null && vote.weight !== 1 ? ` ×${vote.weight}` : ""}
+                      </span>
+                    ))}
                 </div>
               </div>
-              <div style={{ height: (dense ? 5 : 8) * s, background: `${palette.border}44` }}>
-                <div
-                  style={{
-                    height: "100%",
-                    width: `${revealed && data.tally ? (100 * (data.tally[String(id)] ?? 0)) / total : 0}%`,
-                    background: id === data.targetId ? palette.wolf : palette.good,
-                  }}
-                />
-              </div>
+              {data.tally && Object.hasOwn(data.tally, String(id)) && (
+                <div style={{ height: 5 * scale, background: alpha(tokens.frame.color, 0.25) }}>
+                  <div
+                    style={{
+                      height: "100%",
+                      width: `${data.tally ? (100 * (data.tally[String(id)] ?? 0)) / total : 0}%`,
+                      background: id === data.targetId ? palette.accent : palette.good,
+                    }}
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>
-        {revealed && abstentions.length > 0 && (
-          <div style={{ fontSize: 16 * s, color: palette.muted }}>
+        {abstentions.length > 0 && (
+          <div style={{ fontSize: t.aux * scale, color: mutedInk }}>
             {text(locale, "video.abstentions")} ·{" "}
             {abstentions.map((vote) => seatLabel(vote.actorId)).join(" / ")}
           </div>
         )}
-        {revealed && data.adjustments.length > 0 && (
-          <div style={{ fontSize: 15 * s, color: palette.muted }}>
+        {data.adjustments.length > 0 && (
+          <div style={{ fontSize: t.aux * scale, color: mutedInk }}>
             {text(locale, "video.extra_votes")} ·{" "}
             {data.adjustments
               .map((item) => `${seatLabel(item.targetId)} +${item.weight}`)
@@ -471,209 +493,358 @@ export function BroadcastVideoFrame({
           <div
             data-scene-resolution
             style={{
-              ...twoLines,
-              borderTop: `1px solid ${palette.border}`,
-              paddingTop: 20 * s,
-              fontSize: 24 * s,
-              color: palette.wolf,
-              fontFamily: theme.definition.fonts.heading,
+              ...quiet,
+              borderTop: `${scale}px solid ${tokens.frame.color}`,
+              paddingTop: 16 * scale,
+              fontSize: t.result * scale,
+              color: gothic ? "#efb4a8" : palette.wolf,
+              lineHeight: 1.35,
             }}
           >
-            {theme.options.waxSeals === true && (
-              <SkillMark kind="exile" color={palette.wolf} size={27 * s} />
-            )}
             {scene.resolution.text}
           </div>
         )}
-        {!revealed && <p style={{ fontSize: 20 * s }}>{text(locale, "video.waiting")}</p>}
       </div>
     );
   }
-  function action(diagramOnly = false) {
-    const kind = scene.action?.kind ?? "generic";
+  function action() {
+    const visual = scene.visual;
+    const sources = visual?.participantIds?.length
+      ? visual.participantIds
+      : visual?.actorId !== undefined
+        ? [visual.actorId]
+        : scene.actorId !== undefined
+          ? [scene.actorId]
+          : (scene.participantIds ?? []);
+    const requested = visual?.requestedTargetIds ?? scene.targetIds;
+    const effectiveKnown = revealed && visual?.effectiveTargetKnown === true;
+    const targets = effectiveKnown ? visual!.effectiveTargetIds : requested;
+    const rows = Math.max(
+      1,
+      ...view.shot.captionPages.map((page) => textRows(page, readingWidth - 56 * scale, bodySize)),
+    );
+    const resultHeight =
+      rows * bodySize * lineHeight +
+      ((scene.stock ? 130 : 90) + (visual?.effectSourceId !== undefined ? 34 : 0)) * scale;
+    const bodyTop = Math.max(
+      110 * scale,
+      Math.min(stage.height * 0.585, stage.height - resultHeight - 24 * scale),
+    );
+    const size = Math.min(tokens.effect.heroSize * scale, stage.width * 0.4, bodyTop - 80 * scale);
     const color =
-      kind === "heal" || kind === "protection" || kind === "guard"
-        ? palette.success
-        : kind === "poison" || kind.startsWith("wolf") || kind === "exile"
-          ? palette.wolf
-          : palette.accent;
-    const paintedProp = gothic && ["inspect", "heal", "poison"].includes(kind);
-    const diagram = (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: (gothic ? 32 : 28) * s,
-        }}
-      >
-        {scene.actorId !== undefined && medallion(scene.actorId)}
-        {scene.actorId === undefined && scene.participantIds?.length ? (
-          <div style={{ display: "flex", gap: 9 * s }}>
-            {scene.participantIds.map((id) => (
-              <div key={id}>{medallion(id, 45)}</div>
-            ))}
-          </div>
-        ) : null}
-        {paintedProp && scene.actorId !== undefined && (
-          <span style={{ color, fontSize: 30 * s, opacity: 0.5 + progress * 0.5 }}>→</span>
-        )}
+      visual?.family === "pack_attack" || scene.action?.kind === "poison"
+        ? gothic
+          ? "#c48186"
+          : palette.wolf
+        : tokens.frame.light;
+    return (
+      <>
+        {/* 唯一world容器应用中央矩阵一次；正文、结果、HUD永远是它的兄弟。 */}
         <div
           style={{
-            display: "grid",
-            justifyItems: "center",
-            gap: 10 * s,
-            transform: `translateY(${(1 - enter) * 10 * s}px)`,
+            position: "absolute",
+            inset: 0,
+            overflow: "hidden",
+            clipPath: `inset(${70 * scale}px 0 ${Math.max(0, stage.height - bodyTop + 10 * scale)}px 0)`,
           }}
         >
-          {slot(
-            "actionEffect",
-            <div
-              style={{
-                transform: `scale(${0.9 + 0.1 * progress})`,
-                opacity: 0.55 + 0.45 * enter,
-              }}
-            >
-              {paintedProp ? (
-                <GothicSkillArt
-                  kind={kind}
-                  size={(kind === "inspect" ? 250 : 210) * s}
-                  progress={progress}
+          <AbsoluteFill
+            data-video-world
+            style={{ transform: view.stageTransform, transformOrigin: "50% 50%" }}
+          >
+            {visual && (
+              <SceneConnector
+                intent={visual}
+                scene={scene}
+                frame={view.localFrame}
+                width={stage.width}
+                height={stage.height}
+                theme={theme}
+                color={color}
+                scale={scale}
+              />
+            )}
+            <div style={{ position: "absolute", left: (stage.width - size) / 2, top: 68 * scale }}>
+              {slot(
+                "actionEffect",
+                <SceneHero
+                  scene={scene}
                   frame={view.localFrame}
-                />
-              ) : (
-                <div
-                  style={
-                    gothic
-                      ? {
-                          padding: 20 * s,
-                          borderRadius: "50%",
-                          background: `radial-gradient(circle, ${color}22, #05101999 65%, transparent 70%)`,
-                          filter: `drop-shadow(0 0 ${14 * s}px ${color}44)`,
-                        }
-                      : undefined
-                  }
+                  size={size}
+                  theme={theme}
+                  gothic={gothic}
+                  color={color}
+                />,
+              )}
+            </div>
+            {sources.length > 0 && (
+              <div
+                data-action-sources
+                style={{
+                  position: "absolute",
+                  top: 150 * scale,
+                  left: 24 * scale,
+                  width: stage.width * 0.25,
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: 8 * scale,
+                }}
+              >
+                {sources.map((id) =>
+                  medallion(id, (sources.length > 2 ? 44 : 86) * scale, sources.length > 2),
+                )}
+              </div>
+            )}
+            {targets.length > 0 && (
+              <div
+                data-action-targets
+                data-target-kind={effectiveKnown ? "effective" : "requested"}
+                style={{
+                  position: "absolute",
+                  top: 150 * scale,
+                  right: 24 * scale,
+                  width: stage.width * 0.25,
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: 8 * scale,
+                }}
+              >
+                {targets.map((id) =>
+                  medallion(id, (targets.length > 2 ? 44 : 86) * scale, targets.length > 2),
+                )}
+              </div>
+            )}
+            {effectiveKnown && targets.length === 0 && (
+              <div
+                data-action-no-target
+                style={{
+                  position: "absolute",
+                  top: 170 * scale,
+                  right: 24 * scale,
+                  width: stage.width * 0.25,
+                  textAlign: "center",
+                  color: readingInk,
+                  fontSize: 28 * scale,
+                }}
+              >
+                <span
+                  style={{ background: alpha(surface.readingColor, 0.88), padding: 10 * scale }}
                 >
-                  <SkillMark kind={kind} color={color} size={(gothic ? 155 : 108) * s} />
+                  {text(locale, "video.no_target")}
+                </span>
+              </div>
+            )}
+            {effectiveKnown &&
+              requested.length > 0 &&
+              requested.join(",") !== targets.join(",") && (
+                <div
+                  data-requested-targets={requested.join(",")}
+                  style={{
+                    position: "absolute",
+                    top: bodyTop - 52 * scale,
+                    left: "20%",
+                    right: "20%",
+                    textAlign: "center",
+                    color: mutedInk,
+                    fontSize: t.aux * scale,
+                  }}
+                >
+                  <span
+                    style={{ background: alpha(surface.readingColor, 0.88), padding: 6 * scale }}
+                  >
+                    {text(locale, "video.choice")} · {requested.map(seatLabel).join(" / ")}
+                  </span>
                 </div>
               )}
-            </div>,
-          )}
-          {(scene.actorId !== undefined || scene.participantIds?.length) &&
-            scene.targetIds.length > 0 &&
-            !paintedProp && <span style={{ color, fontSize: 35 * s }}>→</span>}
+          </AbsoluteFill>
         </div>
-        {paintedProp && scene.targetIds.length > 0 && (
-          <span style={{ color, fontSize: 30 * s, opacity: 0.5 + progress * 0.5 }}>
-            {kind === "inspect" ? "←" : "→"}
-          </span>
-        )}
-        {scene.targetIds.length > 0 && (
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 * s }}>
-            {scene.targetIds.map((id) => (
-              <div key={id}>{medallion(id)}</div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-    if (diagramOnly) return diagram;
-    return (
-      <div
-        style={{
-          height: "100%",
-          boxSizing: "border-box",
-          paddingTop: view.layout.stage.height * (gothic ? 0.47 : 0.32),
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: gothic ? "flex-start" : "flex-end",
-          gap: 18 * s,
-        }}
-      >
-        <div style={{ textAlign: "center", minHeight: 92 * s }}>
+        <div
+          data-surface="result"
+          style={{
+            ...localSurface(surface.resultOpacity),
+            position: "absolute",
+            top: bodyTop,
+            left: (stage.width - readingWidth) / 2,
+            width: readingWidth,
+            padding: `${20 * scale}px ${28 * scale}px`,
+            boxSizing: "border-box",
+          }}
+        >
           <div
             data-scene-result
             style={{
               ...quiet,
-              color: revealed ? color : palette.muted,
-              fontSize:
-                (gothic
-                  ? view.caption.length > 100
-                    ? 22
-                    : view.caption.length > 65
-                      ? 26
-                      : 32
-                  : 26) * s,
-              lineHeight: 1.4,
-              fontFamily: gothic ? theme.definition.fonts.heading : undefined,
+              fontSize: bodySize,
+              lineHeight,
               whiteSpace: "pre-wrap",
+              textAlign: "center",
+              textWrap: "balance",
             }}
           >
-            {revealed
-              ? scene.stock && scene.bodySource !== "script" && scene.emphasis.length === 0
-                ? text(locale, "video.inventory", {
-                    heal: scene.stock.heal,
-                    poison: scene.stock.poison,
-                  })
-                : bodyParts()
-              : text(locale, "video.waiting")}
+            {revealed ? bodyParts() : text(locale, "video.waiting")}
           </div>
-        </div>
-        <div style={{ color: palette.muted, fontSize: 12 * s, textAlign: "center" }}>
-          {text(
-            locale,
-            !revealed
-              ? "video.waiting"
-              : scene.action?.status === "revoked"
-                ? "video.revoked"
-                : scene.action?.status === "committed"
-                  ? "video.committed"
+          {revealed && (
+            <div
+              style={{
+                fontSize: t.aux * scale,
+                color: mutedInk,
+                marginTop: 16 * scale,
+                textAlign: "center",
+              }}
+            >
+              {text(
+                locale,
+                visual
+                  ? (
+                      {
+                        notice: "video.recorded",
+                        choice: "video.choice",
+                        used: "video.process_used",
+                        paid: "video.process_paid",
+                        reported: "video.report",
+                        blocked: "video.process_blocked",
+                        revoked: "video.revoked",
+                        expired: "video.process_expired",
+                        resolved: "video.committed",
+                        skipped: "video.process_skipped",
+                        suppressed: "video.process_suppressed",
+                        unknown: "video.process_unknown",
+                      } as const
+                    )[visual.process]
                   : scene.action?.status === "choice"
                     ? "video.choice"
                     : "video.recorded",
+              )}
+              {revealed && visual?.recipientIds.length ? (
+                <span data-feedback-recipients>
+                  {" "}
+                  · {text(locale, "video.recipient")} ·{" "}
+                  {visual.recipientIds.map(seatLabel).join(" / ")}
+                </span>
+              ) : null}
+            </div>
+          )}
+          {revealed && visual?.effectSourceId !== undefined && (
+            <div
+              data-original-effect-source={visual.effectSourceId}
+              style={{
+                marginTop: 10 * scale,
+                textAlign: "center",
+                color: mutedInk,
+                fontSize: t.aux * scale,
+              }}
+            >
+              {text(locale, "video.effect_source")} · {seatLabel(visual.effectSourceId)}
+            </div>
+          )}
+          {revealed && scene.stock && scene.bodySource === "script" && (
+            <div
+              data-scene-stock
+              data-stock-ability={scene.stock.abilityId}
+              style={{
+                marginTop: 10 * scale,
+                textAlign: "center",
+                color: mutedInk,
+                fontSize: t.aux * scale,
+              }}
+            >
+              {text(locale, "video.inventory", {
+                heal: scene.stock.heal,
+                poison: scene.stock.poison,
+              })}
+            </div>
           )}
         </div>
-      </div>
+      </>
+    );
+  }
+  function announcement() {
+    const end = layout === "end",
+      phase = layout === "phase",
+      settlement = layout === "settlement",
+      compact = layout === "notice";
+    const maxLength = Math.max(1, ...view.shot.captionPages.map((page) => page.length));
+    const rows = Math.ceil(maxLength / Math.max(1, readingWidth / bodySize));
+    const height = Math.max(
+      stage.height * 0.21,
+      Math.min(
+        stage.height * (settlement ? 0.48 : 0.32),
+        rows * bodySize * lineHeight + padding * 2,
+      ),
+    );
+    const artSize = (end ? 330 : phase ? 54 : settlement ? 170 : 80) * scale;
+    // 普通记录没有大动作：标记与正文组成同一居中组，不把小图留在上空、正文压到脚边。
+    const compactTop = Math.max(90 * scale, (stage.height - height - artSize - 24 * scale) / 2);
+    return (
+      <>
+        <div
+          data-announcement-art
+          style={{
+            position: "absolute",
+            top: compact ? compactTop : end ? "12%" : "22%",
+            left: (stage.width - artSize) / 2,
+          }}
+        >
+          {phase ? (
+            <PhaseSigil night={night} size={artSize} />
+          ) : end || settlement ? (
+            <SceneHero
+              scene={scene}
+              frame={view.localFrame}
+              size={artSize}
+              theme={theme}
+              gothic={gothic}
+              color={tokens.frame.light}
+            />
+          ) : (
+            <RecordMark size={artSize} color={tokens.frame.color} />
+          )}
+        </div>
+        <div
+          data-surface={layout}
+          style={{
+            ...localSurface(surface.resultOpacity),
+            position: "absolute",
+            top: compact ? compactTop + artSize + 24 * scale : undefined,
+            bottom: compact ? undefined : (end ? 30 : 90) * scale,
+            left: (stage.width - readingWidth) / 2,
+            width: readingWidth,
+            minHeight: height,
+            padding,
+            boxSizing: "border-box",
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
+          <div
+            data-scene-announcement
+            style={{
+              ...quiet,
+              fontSize: bodySize,
+              lineHeight,
+              whiteSpace: "pre-wrap",
+              textAlign: "center",
+              textWrap: "balance",
+            }}
+          >
+            {revealed ? bodyParts() : text(locale, "video.waiting")}
+          </div>
+        </div>
+      </>
     );
   }
   const content =
-    scene.kind === "speech" ? (
-      slot("speech", speech())
-    ) : scene.kind === "ballot" ? (
-      slot("ballot", ballot())
-    ) : scene.kind === "action" ? (
-      action()
-    ) : (
-      <div
-        style={{
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          gap: 25 * s,
-          textAlign: "center",
-        }}
-      >
-        <SkillMark
-          kind={scene.action?.kind ?? (night ? "inspect" : "generic")}
-          color={palette.accent}
-          size={90 * s}
-        />
-        <div
-          data-scene-announcement
-          style={{
-            ...quiet,
-            fontSize: 30 * s,
-            lineHeight: 1.55,
-            whiteSpace: "pre-wrap",
-            color: palette.text,
-          }}
-        >
-          {revealed ? bodyParts() : text(locale, "video.waiting")}
-        </div>
-      </div>
-    );
+    layout === "speech"
+      ? slot("speech", speech())
+      : layout === "ballot"
+        ? slot("ballot", ballot())
+        : layout === "action"
+          ? action()
+          : announcement();
+  const focus = view.focusPlayerIds.filter((id) => !(layout === "speech" && id === scene.actorId));
+
   return (
     <AbsoluteFill
       data-video-shot={view.shot.id}
@@ -687,59 +858,57 @@ export function BroadcastVideoFrame({
         overflow: "hidden",
       }}
     >
-      {slot("background", backdrop)}
+      {slot(
+        "background",
+        gothic ? (
+          <GothicBackdrop night={night} />
+        ) : (
+          <AbsoluteFill style={{ background: palette.canvas }} />
+        ),
+      )}
       <header
         style={{
           position: "absolute",
-          left: 27 * s,
-          right: 27 * s,
-          top: 20 * s,
-          height: 48 * s,
+          left: 42 * scale,
+          right: 42 * scale,
+          top: 28 * scale,
+          height: 74 * scale,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          borderBottom: `1px solid ${gothic ? `${GOTHIC_METAL}99` : palette.border}`,
-          color: gothic ? GOTHIC_LIGHT : palette.canvasText,
+          borderBottom: `${scale}px solid ${alpha(tokens.frame.color, 0.7)}`,
+          color: palette.canvasText,
           textShadow: gothic ? "0 2px 5px #000a" : undefined,
         }}
       >
-        <div style={{ display: "flex", alignItems: "baseline", gap: 16 * s }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 20 * scale }}>
           <strong
             style={{
               fontFamily: theme.definition.fonts.heading,
-              fontSize: 27 * s,
-              letterSpacing: 2 * s,
+              fontSize: t.title * scale,
+              fontWeight: 700,
             }}
           >
             {text(locale, "video.game_title")}
           </strong>
-          <span style={{ fontSize: 12 * s, color: palette.canvasMuted }}>
+          <span style={{ fontSize: t.aux * scale, color: palette.canvasMuted }}>
             {text(locale, "video.god_view")}
           </span>
         </div>
         <span
           data-testid="composition-phase"
           style={{
-            position: gothic ? "absolute" : undefined,
-            left: gothic ? "50%" : undefined,
-            top: gothic ? 0 : undefined,
-            transform: gothic ? "translateX(-50%)" : undefined,
-            fontSize: (gothic ? 24 : 20) * s,
-            fontFamily: theme.definition.fonts.heading,
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            gap: 12 * s,
-            background: gothic ? `${GOTHIC_DARK}ed` : undefined,
-            padding: gothic ? `${12 * s}px ${24 * s}px` : undefined,
-            minWidth: gothic ? 240 * s : undefined,
+            gap: 14 * scale,
+            fontSize: 34 * scale,
+            fontFamily: theme.definition.fonts.heading,
           }}
         >
-          {gothic && <PhaseSigil night={night} size={30 * s} />}
-          {current.dayPhase}
-          {gothic && <GothicMetalFrame scale={s} small />}
+          {gothic && current.snapshot.day > 0 && <PhaseSigil night={night} size={34 * scale} />}
+          {current.snapshot.day < 1 ? text(locale, "video.setup") : current.dayPhase}
         </span>
-        <span style={{ fontSize: 15 * s }}>
+        <span style={{ fontSize: 26 * scale }}>
           {text(locale, "video.alive", {
             count: current.players.filter((player) => player.alive).length,
             total: current.players.length,
@@ -749,77 +918,54 @@ export function BroadcastVideoFrame({
       {current.players.map((player) => {
         const seat = view.layout.seats.find((item) => item.playerId === player.playerId)!;
         const identity = profile(player.playerId);
-        const right = view.layout.rosterRight.some((item) => item.playerId === player.playerId);
-        const column = right ? view.layout.rosterColumns.right : view.layout.rosterColumns.left;
-        const hasMetadata =
-          column.hasMetadata &&
-          Boolean(identity?.displayName?.trim() || identity?.modelLabel?.trim());
+        const hasMetadata = Boolean(identity?.displayName?.trim() || identity?.modelLabel?.trim());
         const active =
           view.focusPlayerIds.includes(player.playerId) ||
           scene.actorId === player.playerId ||
+          scene.visual?.actorId === player.playerId ||
           scene.participantIds?.includes(player.playerId);
         const target =
-          (scene.kind !== "ballot" || revealed) && scene.targetIds.includes(player.playerId);
-        // 目标边框只表达本次技能的选中对象；绿色用药不等于已经救活，生命仍取 currentView。
-        const targetAccent = ["heal", "guard", "protection"].includes(scene.action?.kind ?? "")
-          ? cardPalette.success
-          : scene.action?.kind === "inspect"
-            ? cardPalette.accent
-            : cardPalette.wolf;
-        const accent = active
-          ? gothic
-            ? GOTHIC_METAL
-            : palette.accent
-          : target
-            ? targetAccent
-            : gothic
-              ? GOTHIC_METAL
-              : palette.border;
-        const portraitSize = gothic ? (locale === "en" ? 58 : 66) : 48;
+          (layout !== "ballot" || revealed) &&
+          (scene.visual?.requestedTargetIds ?? scene.targetIds).includes(player.playerId);
+        const accent =
+          active || target ? (gothic ? tokens.frame.light : palette.accent) : tokens.frame.color;
+        const avatarSize = (hasMetadata ? 54 : locale === "en" ? 64 : 76) * scale;
+        const roleColor =
+          player.camp === "wolf" ? cards.wolf : player.camp === "good" ? cards.good : cards.neutral;
         const portrait = (
           <div
             style={{
               position: "relative",
-              width: portraitSize * s,
-              height: portraitSize * s,
+              width: avatarSize,
+              height: avatarSize,
+              flexShrink: 0,
               display: "grid",
               placeItems: "center",
-              flexShrink: 0,
+              borderRadius: "50%",
+              border: `${tokens.frame.width * scale}px solid ${accent}`,
+              background: alpha(cards.canvas, 0.9),
               filter: player.alive ? undefined : "grayscale(1)",
-              borderRadius: gothic ? "50%" : undefined,
-              border: gothic
-                ? `${2 * s}px solid ${active ? GOTHIC_LIGHT : GOTHIC_METAL}`
-                : undefined,
-              background: gothic
-                ? "radial-gradient(circle at 35% 25%, #304650, #0a141c 75%)"
-                : undefined,
-              boxSizing: "border-box",
-              boxShadow: gothic
-                ? `inset 0 0 ${8 * s}px #0008, 0 0 0 ${2 * s}px #020a10, 0 0 0 ${3 * s}px ${GOTHIC_METAL}55`
-                : undefined,
-              color: gothic ? GOTHIC_LIGHT : undefined,
             }}
           >
-            {avatar(identity, (gothic ? portraitSize * 0.76 : 44) * s)}
+            {avatar(identity, avatarSize * 0.86)}
             {slot(
               "seatBadge",
               <span
                 style={{
                   position: "absolute",
-                  bottom: -6 * s,
-                  left: -3 * s,
-                  minWidth: (gothic ? 27 : 22) * s,
-                  height: (gothic ? 27 : 22) * s,
-                  borderRadius: "50%",
-                  background: gothic
-                    ? "linear-gradient(135deg, #544631, #161b1c 65%)"
-                    : palette.canvas,
-                  border: `${gothic ? 2 : 1}px solid ${gothic ? GOTHIC_METAL : accent}`,
-                  color: gothic ? GOTHIC_LIGHT : palette.canvasText,
-                  fontFamily: gothic ? theme.definition.fonts.heading : undefined,
-                  fontSize: (gothic ? 19 : 14) * s,
+                  bottom: hasMetadata ? -9 * scale : undefined,
+                  top: hasMetadata ? undefined : 4 * scale,
+                  left: (hasMetadata ? -7 : -42) * scale,
+                  minWidth: 34 * scale,
+                  height: 34 * scale,
                   display: "grid",
                   placeItems: "center",
+                  color: cards.canvasText,
+                  background: cards.canvas,
+                  border: `${tokens.frame.width * scale}px solid ${accent}`,
+                  fontSize: 30 * scale,
+                  fontVariantNumeric: "tabular-nums",
+                  fontWeight: 700,
                 }}
               >
                 {identity?.seat ?? player.playerId}
@@ -828,78 +974,18 @@ export function BroadcastVideoFrame({
             )}
           </div>
         );
-        const metadata = hasMetadata ? (
-          <div
-            data-player-metadata
-            style={{
-              ...quiet,
-              flex: 1,
-              textAlign: right ? "right" : "left",
-              maxHeight: seat.height - 14 * s,
-              overflow: "hidden",
-            }}
-          >
-            {identity?.modelLabel && (
-              <div
-                title={identity.modelLabel}
-                style={{
-                  fontSize: 10 * s,
-                  color: cardPalette.muted,
-                  lineHeight: 1.3,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {identity.modelLabel}
-              </div>
-            )}
-            {identity?.displayName && (
-              <div
-                title={identity.displayName}
-                style={{
-                  ...twoLines,
-                  fontSize: 15 * s,
-                  fontWeight: 650,
-                  lineHeight: 1.25,
-                  marginTop: 3 * s,
-                  maxHeight: 39 * s,
-                }}
-              >
-                {identity.displayName}
-              </div>
-            )}
-          </div>
-        ) : null;
         const role = (
           <div
             title={player.roleLabel}
+            data-role-label
             style={{
+              ...quiet,
               ...twoLines,
-              WebkitLineClamp: 3,
-              width:
-                (locale === "en" ? 56 : gothic ? (player.roleLabel.length > 3 ? 37 : 25) : 34) * s,
-              maxHeight: Math.min((gothic ? 70 : 58) * s, seat.height - 14 * s),
-              textAlign: "center",
-              flexShrink: 0,
-              color:
-                player.camp === "wolf"
-                  ? cardPalette.wolf
-                  : player.camp === "good"
-                    ? cardPalette.good
-                    : cardPalette.neutral,
-              fontFamily: theme.definition.fonts.heading,
-              fontSize:
-                (locale === "en" ? 11 : gothic ? (player.roleLabel.length > 3 ? 14 : 18) : 15) * s,
-              lineHeight: gothic ? 1.1 : 1.2,
-              overflowWrap: "anywhere",
-              background: gothic
-                ? player.camp === "wolf"
-                  ? "linear-gradient(#54252b77, #29171b55)"
-                  : "linear-gradient(#25404a66, #10212b55)"
-                : undefined,
-              padding: gothic ? `${3 * s}px ${2 * s}px` : undefined,
-              boxSizing: "border-box",
+              color: roleColor,
+              fontSize: (locale === "en" ? t.roleEn : t.roleZh) * scale,
+              lineHeight: 1.2,
+              fontWeight: 600,
+              maxHeight: (locale === "en" ? t.roleEn : t.roleZh) * 2.4 * scale,
             }}
           >
             {player.roleLabel}
@@ -919,12 +1005,11 @@ export function BroadcastVideoFrame({
               width: seat.width,
               height: seat.height,
               boxSizing: "border-box",
-              background: gothic ? "linear-gradient(125deg, #162630f0, #08141cf5)" : palette.panel,
-              border: `1px solid ${accent}`,
-              borderRadius: gothic ? 1 : theme.definition.radii.card * s,
-              color: cardPalette.text,
-              opacity: player.alive ? 1 : 0.72,
+              background: alpha(cards.panel, surface.cardOpacity),
+              border: `${(active || target ? tokens.frame.activeWidth : tokens.frame.width) * scale}px solid ${accent}`,
+              color: cards.text,
               overflow: "hidden",
+              borderRadius: gothic ? 2 * scale : theme.definition.radii.card * scale,
             }}
           >
             {slot(
@@ -932,45 +1017,95 @@ export function BroadcastVideoFrame({
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: 8 * s,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  gap: (hasMetadata ? 6 : 4) * scale,
                   height: "100%",
-                  padding: `${7 * s}px ${9 * s}px`,
+                  padding: `${(hasMetadata ? 4 : 2) * scale}px ${14 * scale}px`,
                   boxSizing: "border-box",
-                  justifyContent: hasMetadata ? undefined : "center",
                 }}
               >
-                {right ? (
-                  <>
-                    {role}
-                    {portrait}
-                    {metadata}
-                  </>
-                ) : (
-                  <>
-                    {metadata}
-                    {portrait}
-                    {role}
-                  </>
-                )}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: hasMetadata ? undefined : "center",
+                    gap: 18 * scale,
+                    width: "100%",
+                  }}
+                >
+                  {portrait}
+                  <RoleCrest role={player.role} size={24 * scale} color={roleColor} />
+                  {hasMetadata && (
+                    <div data-player-metadata style={{ ...quiet, flex: 1 }}>
+                      {identity?.displayName?.trim() && (
+                        <div
+                          title={identity.displayName}
+                          style={{
+                            ...twoLines,
+                            WebkitLineClamp: 1,
+                            paddingBlock: scale,
+                            fontSize: t.name * scale,
+                            lineHeight: 1.4,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {identity.displayName}
+                        </div>
+                      )}
+                      {identity?.modelLabel?.trim() && (
+                        <div
+                          title={identity.modelLabel}
+                          style={{
+                            fontSize: t.model * scale,
+                            lineHeight: 1.3,
+                            color: cards.muted,
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            marginTop: 3 * scale,
+                          }}
+                        >
+                          {identity.modelLabel}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 7 * scale,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minWidth: 0,
+                    width: "100%",
+                  }}
+                >
+                  {role}
+                </div>
               </div>,
               player.playerId,
             )}
             {gothic && (
-              <GothicMetalFrame scale={s} active={Boolean(active || target)} color={accent} small />
+              <GothicMetalFrame
+                scale={scale}
+                active={Boolean(active || target)}
+                color={accent}
+                small
+              />
             )}
             {!player.alive && (
               <span
                 style={{
                   position: "absolute",
-                  right: 5 * s,
-                  bottom: 3 * s,
-                  color: cardPalette.wolf,
-                  fontSize: (gothic ? 13 : 10) * s,
-                  border: `${gothic ? 2 : 1}px solid ${cardPalette.wolf}`,
-                  padding: `0 ${3 * s}px`,
-                  transform: gothic ? "rotate(-12deg)" : undefined,
-                  background: gothic ? "#171c20ee" : undefined,
+                  right: 4 * scale,
+                  bottom: 2 * scale,
+                  color: cards.wolf,
+                  background: cards.canvas,
+                  fontSize: 20 * scale,
+                  borderBottom: `${2 * scale}px solid ${cards.wolf}`,
+                  padding: `0 ${4 * scale}px`,
                 }}
               >
                 {text(locale, "video.eliminated")}
@@ -980,10 +1115,11 @@ export function BroadcastVideoFrame({
               <span
                 style={{
                   position: "absolute",
-                  left: 4 * s,
-                  top: 2 * s,
-                  color: gothic ? GOTHIC_LIGHT : palette.accent,
-                  fontSize: 10 * s,
+                  right: 4 * scale,
+                  top: 2 * scale,
+                  color: cards.canvasText,
+                  background: cards.canvas,
+                  fontSize: 20 * scale,
                 }}
               >
                 {player.sheriffLabel}
@@ -994,124 +1130,115 @@ export function BroadcastVideoFrame({
       })}
       <section
         data-video-stage
-        data-video-focus={
-          view.focusPlayerIds.length && !hasFocusPanel ? view.focusPlayerIds.join(",") : undefined
-        }
+        data-scene-layout={layout}
+        data-video-focus={focus.length ? focus.join(",") : undefined}
         style={{
           position: "absolute",
-          left: view.layout.stage.x,
-          top: view.layout.stage.y,
-          width: view.layout.stage.width,
-          height: view.layout.stage.height,
+          left: stage.x,
+          top: stage.y,
+          width: stage.width,
+          height: stage.height,
           boxSizing: "border-box",
-          backgroundColor: palette.panel,
-          ...(gothic ? gothicSurface(night) : {}),
-          backgroundImage:
-            theme.options.paperTexture === true
-              ? `repeating-linear-gradient(0deg, ${palette.ink}06 0px, ${palette.ink}06 1px, transparent 1px, transparent 4px)${gothic ? `, ${gothicSurface(night).backgroundImage}` : ""}`
-              : gothic
-                ? gothicSurface(night).backgroundImage
-                : undefined,
-          border: `1px solid ${palette.border}`,
-          borderRadius: gothic ? 2 : theme.definition.radii.panel * s,
+          background: "transparent",
           overflow: "hidden",
+          color: readingInk,
         }}
       >
-        {scene.kind === "action" && (
-          <AbsoluteFill
-            style={{
-              clipPath: gothic
-                ? hasFocusPanel
-                  ? "inset(29% 2% 30% 2%)"
-                  : "inset(17% 2% 33% 2%)"
-                : hasFocusPanel
-                  ? "inset(29% 2% 38% 2%)"
-                  : "inset(19% 2% 38% 2%)",
-              pointerEvents: "none",
-            }}
-          >
-            <AbsoluteFill
-              data-video-world
-              style={{ transform: view.stageTransform, transformOrigin: "50% 50%" }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: gothic ? (hasFocusPanel ? "30%" : "20%") : hasFocusPanel ? "32%" : "24%",
-                  height: gothic ? "42%" : "28%",
-                  display: "grid",
-                  placeItems: "center",
-                }}
-              >
-                {action(true)}
-              </div>
-            </AbsoluteFill>
-          </AbsoluteFill>
-        )}
-        <div
-          style={{
-            position: "relative",
-            height: "100%",
-            padding: `${(compact ? 18 : 24) * s}px ${(compact ? 22 : 28) * s}px`,
-            boxSizing: "border-box",
-            display: "flex",
-            flexDirection: "column",
-            gap: (hasFocusPanel ? 12 : 22) * s,
-          }}
-        >
-          {hasFocusPanel && (
+        {layout !== "speech" &&
+          slot(
+            "sceneHeading",
             <div
-              data-video-focus={view.focusPlayerIds.join(",")}
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: 10 * s,
-                paddingBottom: 8 * s,
-                borderBottom: `1px solid ${palette.border}`,
+                position: "absolute",
+                top: 0,
+                left: "6%",
+                right: "6%",
+                textAlign: "center",
+                zIndex: 1,
               }}
             >
-              {view.focusPlayerIds.map((id) => (
-                <div
-                  key={id}
-                  style={{ display: "flex", alignItems: "center", gap: 6 * s, maxWidth: 165 * s }}
-                >
-                  {avatar(profile(id), 26 * s)}
-                  <span
-                    title={label(id)}
-                    style={{ ...twoLines, fontSize: 14 * s, fontWeight: 650 }}
-                  >
-                    {label(id)}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-          {scene.kind !== "speech" &&
-            slot(
-              "sceneHeading",
-              <div
+              <span
                 style={{
-                  fontSize: (gothic ? 36 : 27) * s,
+                  ...quiet,
+                  ...twoLines,
+                  display: "inline-block",
+                  maxWidth: "100%",
+                  fontSize: (layout === "phase" || layout === "end" ? t.chapter : t.scene) * scale,
+                  lineHeight: 1.25,
                   fontFamily: theme.definition.fonts.heading,
-                  fontWeight: 700,
-                  borderBottom: `1px solid ${palette.border}`,
-                  paddingBottom: 16 * s,
-                  textAlign: gothic ? "center" : undefined,
-                  color: gothic && night ? GOTHIC_LIGHT : undefined,
+                  color: readingInk,
+                  background: alpha(surface.readingColor, 0.84),
+                  borderBottom: `${tokens.frame.width * scale}px solid ${tokens.frame.color}`,
+                  padding: `${10 * scale}px ${20 * scale}px`,
                 }}
               >
                 {scene.title}
-              </div>,
-            )}
-          <div style={{ flex: 1, minHeight: 0 }}>{content}</div>
-        </div>
+              </span>
+            </div>,
+          )}
+        {content}
+        {scene.editorial && (
+          <div
+            data-editorial-targets={scene.editorial.targetIds?.join(",")}
+            data-editorial-actor={scene.editorial.actorId}
+            style={{
+              position: "absolute",
+              top: layout === "speech" ? 18 * scale : 92 * scale,
+              left: "10%",
+              right: "10%",
+              textAlign: "center",
+              zIndex: 2,
+              fontSize: t.aux * scale,
+              color: mutedInk,
+            }}
+          >
+            <span style={{ background: alpha(surface.readingColor, 0.88), padding: 6 * scale }}>
+              {text(locale, "video.editorial_targets")} ·{" "}
+              {[
+                ...(scene.editorial.actorId === undefined ? [] : [scene.editorial.actorId]),
+                ...(scene.editorial.targetIds ?? []),
+              ]
+                .map(label)
+                .join(" / ")}
+            </span>
+          </div>
+        )}
+        {focus.length > 0 && (
+          <div
+            data-focus-labels
+            style={{
+              position: "absolute",
+              top: layout === "speech" ? 20 * scale : 78 * scale,
+              left: 16 * scale,
+              right: 16 * scale,
+              display: "flex",
+              justifyContent: "center",
+              gap: 14 * scale,
+              pointerEvents: "none",
+            }}
+          >
+            {focus.map((id) => (
+              <span
+                key={id}
+                style={{
+                  ...quiet,
+                  ...twoLines,
+                  maxWidth: 220 * scale,
+                  fontSize: t.aux * scale,
+                  color: mutedInk,
+                  background: alpha(surface.readingColor, 0.85),
+                  padding: 6 * scale,
+                }}
+              >
+                {label(id)}
+              </span>
+            ))}
+          </div>
+        )}
         {slot(
           "frame",
-          gothic ? (
-            <GothicMetalFrame scale={s} ornamental={theme.options.ornamentalFrames === true} />
+          gothic && theme.options.ornamentalFrames === true ? (
+            <GothicMetalFrame scale={scale} ornamental />
           ) : null,
         )}
       </section>
@@ -1135,58 +1262,32 @@ export function BroadcastVideoFrame({
         data-caption-page={view.captionPageIndex}
         style={{
           position: "absolute",
-          left: view.layout.stage.x,
-          width: view.layout.stage.width,
-          // 铭牌比旧文字条更高，靠下保留完整12席的垂直边界，避免压到最后一排。
-          bottom: (gothic ? 2 : 18) * s,
-          display: "flex",
-          justifyContent: "space-between",
+          left: stage.x,
+          width: stage.width,
+          bottom: 16 * scale,
+          display: "grid",
+          gridTemplateColumns: "minmax(0,1fr) max-content",
           alignItems: "center",
-          gap: 15 * s,
+          gap: 18 * scale,
           color: palette.canvasMuted,
-          fontSize: 12 * s,
-          ...(gothic
-            ? {
-                background: `${GOTHIC_DARK}ed`,
-                padding: `${10 * s}px ${24 * s}px`,
-                boxSizing: "border-box",
-                color: GOTHIC_LIGHT,
-              }
-            : {}),
+          fontSize: t.aux * scale,
         }}
       >
-        <span>{text(locale, scene.kind === "speech" ? "video.speaking" : "video.narrator")}</span>
         <span
           data-testid="composition-event"
           data-event-seq={view.sourceSeq}
           style={{ ...quiet, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
         >
-          {scene.kind === "speech" && scene.actorId !== undefined
-            ? label(scene.actorId)
-            : scene.title}
+          {text(locale, layout === "speech" ? "video.speaking" : "video.narrator")}
+          {layout === "speech" && speechActor !== undefined ? ` · ${label(speechActor)}` : ""}
+          {current.victory && (
+            <span data-testid="composition-victory" title={current.victory}>
+              {` · ${current.victory}`}
+            </span>
+          )}
         </span>
-        <span>
-          {text(locale, "video.page", {
-            page: view.captionPageIndex + 1,
-            pages: view.shot.captionPages.length,
-          })}
-        </span>
-        {gothic && <GothicMetalFrame scale={s} small />}
+        <span>{pageCounter()}</span>
       </div>
-      {current.victory && (
-        <span
-          data-testid="composition-victory"
-          style={{
-            position: "absolute",
-            bottom: 7 * s,
-            left: 25 * s,
-            color: palette.accent,
-            fontSize: 10 * s,
-          }}
-        >
-          {current.victory}
-        </span>
-      )}
     </AbsoluteFill>
   );
 }

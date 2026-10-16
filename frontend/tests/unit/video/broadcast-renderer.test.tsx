@@ -86,17 +86,33 @@ test("all twelve recorded targets and voter sources remain represented in a dens
   expect(html).toContain("grid-template-columns:minmax(0,1fr) minmax(0,1fr)");
   expect(html.match(/data-player-alive="true"/g)).toHaveLength(12);
 });
+test("a winner-only archived sheriff summary shows the recorded result without inventing zero votes", () => {
+  const document = replay([
+    { type: "sheriff_vote_summary", payload: { votes: [], winnerId: 6, round: 1 } },
+  ]);
+  const video = plan(document);
+  const html = renderToStaticMarkup(<VideoFrame plan={video} frame={24} />);
+  expect(html).toContain('data-ballot-target="6"');
+  expect(html).toContain("未记录逐票明细");
+  expect(html).toContain("结果 · 6号");
+  expect(html).toContain("—");
+  expect(html).not.toContain("0票");
+  expect(html.match(/data-player-alive="true"/g)).toHaveLength(12);
+});
 test("repeated subtitle pages highlight only the exact occurrence selected by the script", () => {
   const document = replay([
     { type: "day_speech", payload: { actorId: 2, text: "甲".repeat(250) } },
   ]);
   const video = plan(document, {
+    // 显式旧分页预算让重复页保持108字/90帧，独立核对第120个字不会误标第一屏。
+    captionPageFrames: 90,
     edits: [
       { anchor: { seq: 1, type: "day_speech" }, emphasis: [{ text: "甲", occurrence: 120 }] },
     ],
   });
   const shot = video.shots[0]!;
-  const secondPage = Math.ceil(shot.durationFrames / shot.captionPages.length);
+  const secondPage = 90;
+  expect(shot.captionPages[0]).toBe("甲".repeat(108));
   expect(renderToStaticMarkup(<VideoFrame plan={video} frame={0} />)).not.toContain("<mark");
   expect(renderToStaticMarkup(<VideoFrame plan={video} frame={secondPage} />)).toContain("<mark");
 });
@@ -134,6 +150,14 @@ test("theme-specific options affect the default renderer and explicit camera foc
   expect(html).toContain("repeating-linear-gradient");
   expect(html).toContain('data-video-focus="12"');
   expect(html.match(/data-composition-player=/g)).toHaveLength(12);
+});
+test("minimal daytime speaker focus uses the dark semantic accent on its white card", () => {
+  const document = replay([{ type: "day_speech", payload: { actorId: 2, text: "Words." } }]);
+  const video = plan(document, { theme: { id: "minimal-v1" } });
+  const html = renderToStaticMarkup(<VideoFrame plan={video} frame={0} />);
+  const actorCard = html.match(/<div data-composition-player="2"[^>]*>/)?.[0];
+  expect(actorCard).toContain("border:3px solid #274f85");
+  expect(actorCard).not.toContain("#d9e4f0");
 });
 
 test("authored ballot and inventory text remains visible with precise emphasis and unchanged facts", () => {
@@ -209,7 +233,7 @@ test("emphasis alone can annotate original ballot and stock prose without replac
     },
   ]);
   const ballot = plan(document, {
-    edits: [{ anchor: { seq: 1, type: "vote_summary" }, emphasis: [{ text: "2号" }] }],
+    edits: [{ anchor: { seq: 1, type: "vote_summary" }, emphasis: [{ text: "本轮票型" }] }],
   });
   const ballotHtml = renderToStaticMarkup(<VideoFrame plan={ballot} frame={24} />);
   expect(ballot.shots[0]!.scene.bodySource).toBe("event");
@@ -269,8 +293,8 @@ test("hidden or absent metadata removes its entire roster slot while a mixed col
   const hidden = plan(document, { presentation: { showNames: false, showModels: false } });
   const hiddenHtml = renderToStaticMarkup(<VideoFrame plan={hidden} frame={0} />);
   expect(hiddenHtml).not.toContain("data-player-metadata");
-  expect(buildVideoFrame(hidden, 0).layout.rosterColumns.left.width).toBe(216);
-  expect(buildVideoFrame(hidden, 0).layout.rosterColumns.right.width).toBe(216);
+  expect(buildVideoFrame(hidden, 0).layout.rosterColumns.left.width).toBe(240);
+  expect(buildVideoFrame(hidden, 0).layout.rosterColumns.right.width).toBe(240);
   for (const player of document.players) {
     delete player.name;
     delete player.model;

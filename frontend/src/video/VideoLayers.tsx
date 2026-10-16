@@ -3,10 +3,11 @@
  * 图层只根据显式帧号绘制，不使用时钟或网络；自定义名称必须存在于注册表，组件本身不进入计划数据。
  * 广播world坐标投影到画布，席位始终固定HUD；旧布局仍由原父级world矩阵负责，不能重复变换。
  */
-import type { CSSProperties } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { resolveLayerPoint } from "./layout";
 import { videoWorldToScreen, type VideoFrameView } from "./frame";
 import type { PlannedVideoLayer, VideoLayerRegistry, VideoPlan } from "./types";
+import { normalizeResolvedTheme, resolveTheme, themeSurface } from "../themes";
 
 const fill: CSSProperties = { position: "absolute", inset: 0, pointerEvents: "none" };
 export function VideoLayers({
@@ -57,6 +58,12 @@ function PresetLayer({
   const frame = view.localFrame - layer.from;
   const scale = Math.min(plan.width / 1280, plan.height / 720);
   const broadcast = view.layout.id === "broadcast-v1";
+  const theme = useMemo(() => normalizeResolvedTheme(plan.theme ?? resolveTheme()), [plan.theme]);
+  const surface = themeSurface(
+    theme,
+    view.currentView.snapshot.phase === "night" ? "night" : "day",
+  );
+  const referenceScale = scale / 1.5;
   const projectedWorld = broadcast && layer.space === "world";
   const worldScale = projectedWorld ? view.camera.scale : 1;
   const worldContainer: CSSProperties = projectedWorld
@@ -78,10 +85,11 @@ function PresetLayer({
             width: layer.width ?? plan.width * 0.76,
             padding: 16 * scale,
             boxSizing: "border-box",
-            color: layer.color ?? "#fff4d4",
-            background: layer.background ?? "rgba(8,15,26,.93)",
-            border: "1px solid rgba(228,198,125,.55)",
-            borderRadius: 12 * scale,
+            color: layer.color ?? (broadcast ? surface.readingText : "#fff4d4"),
+            background:
+              layer.background ?? (broadcast ? surface.readingColor : "rgba(8,15,26,.93)"),
+            border: `1px solid ${broadcast ? theme.definition.frame.color : "rgba(228,198,125,.55)"}`,
+            borderRadius: (broadcast ? 2 : 12) * scale,
             fontSize: layer.fontSize ?? 28 * scale,
             lineHeight: 1.4,
             whiteSpace: "pre-wrap",
@@ -115,8 +123,13 @@ function PresetLayer({
           <path
             d={`M ${from.x} ${from.y} L ${to.x} ${to.y} M ${to.x - Math.cos(angle - 0.45) * head} ${to.y - Math.sin(angle - 0.45) * head} L ${to.x} ${to.y} L ${to.x - Math.cos(angle + 0.45) * head} ${to.y - Math.sin(angle + 0.45) * head}`}
             fill="none"
-            stroke={layer.color ?? "#ffd47a"}
-            strokeWidth={(layer.strokeWidth ?? 4) * scale * worldScale}
+            stroke={layer.color ?? (broadcast ? theme.definition.frame.light : "#ffd47a")}
+            strokeWidth={
+              layer.strokeWidth !== undefined
+                ? layer.strokeWidth * scale * worldScale
+                : (broadcast ? theme.definition.connector.heroWidth * referenceScale : 4 * scale) *
+                  worldScale
+            }
             strokeLinecap="round"
           />
         </svg>
@@ -145,7 +158,7 @@ function PresetLayer({
               : seat,
         );
       const id = `mask-${view.shotIndex}-${encodeURIComponent(layer.id).replace(/%/g, "_")}`;
-      const color = layer.color ?? "#ffd47a";
+      const color = layer.color ?? (broadcast ? theme.definition.frame.light : "#ffd47a");
       return (
         <svg width={plan.width} height={plan.height} style={fill}>
           {layer.kind === "spotlight" && (

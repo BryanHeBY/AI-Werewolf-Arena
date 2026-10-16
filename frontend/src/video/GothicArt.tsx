@@ -1,5 +1,5 @@
 /**
- * 负责哥特视频主题的本地环境、技能道具和旧金属框体。输入为显式昼夜、技能种类及动画进度，输出无游戏文字的纯视觉层。
+ * 负责哥特视频主题的本地环境、静态技能道具和旧金属框体。输入为显式昼夜及素材标识，输出无游戏文字的纯视觉层。
  * 图片仅承担美术，不包含身份、库存或结果；所有事实仍由广播宿主排版。静态资源由 Vite／Remotion 打包，不依赖远程地址。
  */
 import type { CSSProperties } from "react";
@@ -16,6 +16,27 @@ const nightFog = new URL("./assets/gothic/fog-night.png", import.meta.url).href;
 const mirror = new URL("./assets/gothic/seer-mirror.png", import.meta.url).href;
 const healVial = new URL("./assets/gothic/heal-vial.png", import.meta.url).href;
 const poisonVial = new URL("./assets/gothic/poison-vial.png", import.meta.url).href;
+const art = {
+  inspect: mirror,
+  heal: healVial,
+  poison: poisonVial,
+  "blood-wolf-claw": new URL("./assets/gothic/blood-wolf-claw.png", import.meta.url).href,
+  "dueling-blades": new URL("./assets/gothic/dueling-blades.png", import.meta.url).href,
+  "demon-crossbow": new URL("./assets/gothic/demon-crossbow.png", import.meta.url).href,
+  "iron-ward": new URL("./assets/gothic/iron-ward.png", import.meta.url).href,
+  flintlock: new URL("./assets/gothic/flintlock.png", import.meta.url).href,
+  "oath-contract": new URL("./assets/gothic/oath-contract.png", import.meta.url).href,
+  "bond-rings": new URL("./assets/gothic/bond-rings.png", import.meta.url).href,
+  "mapping-gates": new URL("./assets/gothic/mapping-gates.png", import.meta.url).href,
+  "clock-lock": new URL("./assets/gothic/clock-lock.png", import.meta.url).href,
+  "sealed-grimoire": new URL("./assets/gothic/sealed-grimoire.png", import.meta.url).href,
+  "judgement-seal": new URL("./assets/gothic/judgement-seal.png", import.meta.url).href,
+  "raven-quill": new URL("./assets/gothic/raven-quill.png", import.meta.url).href,
+  "beast-totem": new URL("./assets/gothic/beast-totem.png", import.meta.url).href,
+  "report-silver-seal": new URL("./assets/gothic/report-silver-seal.png", import.meta.url).href,
+  "report-eclipse-seal": new URL("./assets/gothic/report-eclipse-seal.png", import.meta.url).href,
+} as const;
+export type GothicArtId = keyof typeof art;
 
 export function GothicBackdrop({ night }: { night: boolean }) {
   return (
@@ -33,13 +54,10 @@ export function GothicBackdrop({ night }: { night: boolean }) {
   );
 }
 
-/** 磨砂石面保留正文对比；夜景透出少量环境，白天不用泛黄羊皮纸。 */
+/** 局部阅读面只承托文字；整块stage不再调用此表面遮住环境。 */
 export function gothicSurface(night: boolean): CSSProperties {
   return {
-    backgroundColor: night ? "#091820de" : "#dce2e0f5",
-    backgroundImage: night
-      ? "radial-gradient(ellipse at 50% 5%, #35505c22, transparent 75%), linear-gradient(120deg, #71838a08, #01090c20)"
-      : "radial-gradient(ellipse at 50% 25%, #f5f5ed80, transparent 80%), linear-gradient(125deg, #ffffff18, #71818b18)",
+    backgroundColor: night ? "#081219cc" : "#081219db",
     borderRadius: 2,
     boxShadow: "0 10px 32px #00000055, inset 0 0 45px #00000014",
   };
@@ -59,7 +77,7 @@ export function GothicMetalFrame({
   small?: boolean;
   ornamental?: boolean;
 }) {
-  const size = (small ? 13 : ornamental ? 30 : 22) * scale;
+  const size = (small ? 12 : ornamental ? 20 : 16) * scale;
   return (
     <AbsoluteFill
       aria-hidden="true"
@@ -67,19 +85,21 @@ export function GothicMetalFrame({
       data-theme-ornamental-frame={ornamental || undefined}
       style={{
         pointerEvents: "none",
-        border: `${(active ? 2 : 1) * scale}px solid ${color}`,
+        border: small ? "none" : `${(active ? 2 : 1.5) * scale}px solid ${color}`,
         boxSizing: "border-box",
-        boxShadow: `inset 0 0 0 ${2 * scale}px #02070c, inset 0 0 0 ${3 * scale}px ${color}55, 0 0 ${active ? 12 * scale : 0}px ${color}33`,
+        boxShadow: small ? undefined : `inset 0 0 0 ${2 * scale}px #02070c`,
       }}
     >
-      <AbsoluteFill
-        style={{
-          inset: (ornamental ? 8 : 5) * scale,
-          width: "auto",
-          height: "auto",
-          border: `${0.6 * scale}px solid ${color}55`,
-        }}
-      />
+      {ornamental && (
+        <AbsoluteFill
+          style={{
+            inset: (ornamental ? 8 : 5) * scale,
+            width: "auto",
+            height: "auto",
+            border: `${0.6 * scale}px solid ${color}55`,
+          }}
+        />
+      )}
       {ornamental && !small && (
         <div
           style={{
@@ -94,7 +114,7 @@ export function GothicMetalFrame({
           }}
         />
       )}
-      {[0, 1, 2, 3].map((corner) => (
+      {(small ? [0, 3] : [0, 1, 2, 3]).map((corner) => (
         <svg
           key={corner}
           width={size}
@@ -147,27 +167,8 @@ export function PhaseSigil({ night, size = 30 }: { night: boolean; size?: number
   );
 }
 
-/** 道具没有阵营答案；镜面始终中性，不能提前泄露或替代当时查验报告。 */
-export function GothicSkillArt({
-  kind,
-  size,
-  progress,
-  frame,
-}: {
-  kind: string;
-  size: number;
-  progress: number;
-  frame: number;
-}) {
-  const source =
-    kind === "inspect"
-      ? mirror
-      : kind === "heal"
-        ? healVial
-        : kind === "poison"
-          ? poisonVial
-          : null;
-  if (!source) return null;
+/** 道具没有阵营答案，也不持有动画。唯一宿主决定有限入场，暂停和阅读时不再永久漂浮。 */
+export function GothicSkillArt({ kind, size }: { kind: GothicArtId; size: number }) {
   return (
     <div
       data-gothic-skill-art={kind}
@@ -175,7 +176,6 @@ export function GothicSkillArt({
         position: "relative",
         width: size,
         height: size,
-        transform: `translateY(${Math.sin(frame / 24) * 3}px) scale(${0.94 + progress * 0.06})`,
       }}
     >
       <div
@@ -188,7 +188,7 @@ export function GothicSkillArt({
         }}
       />
       <VideoImage
-        src={source}
+        src={art[kind]}
         style={{
           position: "relative",
           width: "100%",
