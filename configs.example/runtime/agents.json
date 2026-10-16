@@ -22,7 +22,7 @@
       "options": {
         "defaultProvider": "openai",
         "defaultModel": "gpt-6-luna",
-        "defaultThinkingLevel": "medium",
+        "defaultThinkingLevel": "low",
         "cacheWarming": "off"
       }
     },
@@ -31,7 +31,7 @@
       "options": {
         "defaultProvider": "openai",
         "defaultModel": "gpt-6-luna",
-        "defaultThinkingLevel": "medium",
+        "defaultThinkingLevel": "low",
         "cacheWarming": "off"
       }
     },
@@ -40,7 +40,7 @@
       "options": {
         "defaultProvider": "anthropic",
         "defaultModel": "claude-sonnet-5-5",
-        "defaultThinkingLevel": "medium",
+        "defaultThinkingLevel": "low",
         "cacheWarming": "off"
       }
     },
@@ -49,7 +49,7 @@
       "options": {
         "defaultProvider": "zai-coding-cn",
         "defaultModel": "glm-5.3-flash",
-        "defaultThinkingLevel": "medium",
+        "defaultThinkingLevel": "low",
         "cacheWarming": "off"
       }
     },
@@ -58,7 +58,7 @@
       "options": {
         "defaultProvider": "kimi-coding",
         "defaultModel": "k3",
-        "defaultThinkingLevel": "medium",
+        "defaultThinkingLevel": "low",
         "cacheWarming": "off"
       }
     }
