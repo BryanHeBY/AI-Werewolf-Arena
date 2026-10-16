@@ -102,7 +102,7 @@ describe("LlmActionProvider prompts", () => {
     });
   });
 
-  test("user prompt keeps compact natural action instructions", async () => {
+  test("user prompt keeps compact action instructions alongside a public-fact summary", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
@@ -126,13 +126,14 @@ describe("LlmActionProvider prompts", () => {
         const userMessages = messages.filter((m) => m.role === "user").map((m) => m.content);
         const latest = userMessages[userMessages.length - 1] ?? "";
         const lines = latest.split("\n");
-        expect(lines.length).toBe(4);
-        expect(lines[0]).toContain("[行动提示]");
-        expect(lines[0]).toContain("目前是你的公开发言轮次");
-        expect(lines[1]).toContain("阶段规则：");
-        expect(lines[2]).toContain("本轮结束前需满足");
-        expect(lines[3]).toContain("行动参数提示：");
-        expect(lines[3]).toContain("submit_action");
+        expect(lines.length).toBe(5);
+        expect(lines[0]).toContain("上帝已公布");
+        expect(lines[1]).toContain("[行动提示]");
+        expect(lines[1]).toContain("目前是你的公开发言轮次");
+        expect(lines[2]).toContain("阶段规则：");
+        expect(lines[3]).toContain("本轮结束前需满足");
+        expect(lines[4]).toContain("行动参数提示：");
+        expect(lines[4]).toContain("submit_action");
         expect(latest).not.toContain("玩家编号=");
         expect(latest).not.toContain("当前板子信息");
       }),

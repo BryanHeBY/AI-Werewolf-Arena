@@ -10,6 +10,10 @@ import { encodePlayerVisibleEvent, parsePlayerVisibleEvents } from "../visible-e
 import { BuiltPlayerPrompt } from "../player/contracts";
 import { ChatMessage } from "../../adapters/llm/transport";
 import { PlayerPromptPolicy } from "../player/player-prompt-policy";
+import {
+  appendPublicGameKnowledge,
+  type PublicGameKnowledge,
+} from "../observation/public-game-knowledge";
 
 export interface PlayerPromptSessionOptions {
   maxPromptEvents: number;
@@ -24,6 +28,8 @@ export class PlayerPromptSession {
   private readonly eventCursors = new Map<EntityId, number>();
   private readonly toolTurnCounters = new Map<EntityId, number>();
   private readonly systemPrompts = new Map<EntityId, string>();
+  // 对话可以截断，已经公开的局面不能随之遗忘；这里只保留此玩家实际收到的结果。
+  private readonly publicKnowledge = new Map<EntityId, PublicGameKnowledge>();
 
   constructor(private readonly options: PlayerPromptSessionOptions) {}
 
@@ -43,7 +49,7 @@ export class PlayerPromptSession {
     // 系统提示只在首次构建后缓存；后续请求复用该文本，本轮行动与观察放在 user 提示中。
     const systemPrompt = this.systemPrompts.get(request.actorId) ?? system!.systemPrompt;
     if (isInitialRound) this.systemPrompts.set(request.actorId, systemPrompt);
-    const userPrompt = this.options.promptPolicy.buildUser(request, {
+    const turnPrompt = this.options.promptPolicy.buildUser(request, {
       turnId,
       allowedTools,
       effectiveActionTools: allowedTools.filter(
@@ -53,6 +59,12 @@ export class PlayerPromptSession {
         turn: turnId,
       }),
     });
+    const userPrompt = [
+      text(this.options.promptPolicy.locale, "prompt.known_public_facts", {
+        facts: JSON.stringify(this.publicKnowledge.get(request.actorId)),
+      }),
+      turnPrompt,
+    ].join("\n");
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
     // 先追加本轮提示再返回。后续传输失败不回滚已经推进的历史、游标和回合计数。
     this.append(request.actorId, currentTurnUser);
@@ -93,12 +105,15 @@ export class PlayerPromptSession {
   } {
     const events = parsePlayerVisibleEvents(request.context.visible_events);
     const cursor = this.eventCursors.get(request.actorId) ?? 0;
-    if (!events.length) return { delta: [], cursorBefore: cursor, cursorAfter: cursor };
     // 只按玩家可见序号去重，保留输入事件顺序；不读取全局事件序号或补齐隐藏缺口。
     const delta = events.filter((event) => event.seq > cursor);
     for (const event of delta) {
       this.append(request.actorId, { role: "user", content: encodePlayerVisibleEvent(event) });
     }
+    this.publicKnowledge.set(
+      request.actorId,
+      appendPublicGameKnowledge(this.publicKnowledge.get(request.actorId), delta),
+    );
     const nextCursor = events.reduce((max, event) => Math.max(max, event.seq), cursor);
     this.eventCursors.set(request.actorId, nextCursor);
     return { delta, cursorBefore: cursor, cursorAfter: nextCursor };

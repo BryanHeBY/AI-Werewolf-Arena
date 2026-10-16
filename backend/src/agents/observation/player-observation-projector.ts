@@ -87,6 +87,7 @@ import { projectLover } from "../../features/cupid/relation";
 import { getHybridState, projectHybridState } from "../../features/hybrid/ports";
 import { getMerchantState, projectMerchantState } from "../../features/miracle-merchant/state";
 import { projectEclipseState } from "../../features/radiant-eclipse/ports";
+import { announcedDeathIds } from "./public-game-knowledge";
 import { COMPONENT } from "../../domain/components/names";
 import { publicPlayerRoster } from "../../domain/public-player-roster";
 import { Camp, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
@@ -152,43 +153,7 @@ export function capturePlayerObservation(
   queries: PlayerObservationQueries,
 ): PlayerObservation {
   const role = queries.role(() => request.actorId);
-  const dead = new Set<number>();
-  for (const event of request.context.visible_events) {
-    if (
-      (event.type === "night_resolved" ||
-        event.type === "additional_deaths" ||
-        event.type === "awakened_duel_resolved" ||
-        event.type === "awakened_self_destruct_resolved") &&
-      Array.isArray(event.payload.deaths)
-    ) {
-      for (const id of event.payload.deaths) if (typeof id === "number") dead.add(id);
-    }
-    const target =
-      event.type === "voted_out"
-        ? event.payload.target
-        : event.type === "wolf_self_destruct"
-          ? event.payload.wolfId
-          : event.type === "player_shot" ||
-              event.type === "hunter_shot" ||
-              event.type === "wolf_king_shot" ||
-              event.type === "mechanical_shot"
-            ? event.payload.targetId
-            : undefined;
-    if (typeof target === "number") dead.add(target);
-    if (event.type === "white_wolf_king_self_destruct") {
-      if (typeof event.payload.actorId === "number") dead.add(event.payload.actorId);
-      if (typeof event.payload.targetId === "number") dead.add(event.payload.targetId);
-    }
-    if (event.type === "knight_duel") {
-      const victim =
-        event.payload.result === "wolf"
-          ? event.payload.targetId
-          : event.payload.result === "not_wolf"
-            ? event.payload.actorId
-            : undefined;
-      if (typeof victim === "number") dead.add(victim);
-    }
-  }
+  const dead = announcedDeathIds(request.context.visible_events);
   const ownState: PlayerObservation["ownState"] = {};
   if (role?.role === Role.FragrantPhantom && isFragrantPairBoard(queries.world())) {
     const known = fragrantPlayerKnowledge(queries.world(), request.phase, request.context.day);
