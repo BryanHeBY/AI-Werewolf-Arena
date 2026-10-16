@@ -1,0 +1,32 @@
+{
+  "description": "职责：记录真实渲染使用的原创哥特背景与技能道具及生成提示词；素材不包含文字、玩家身份或结果，按语义类型由代码选择。",
+  "generator": "built-in image_gen (imagegen skill)",
+  "createdAt": "2026-10-17",
+  "assets": [
+    {
+      "file": "fog-day.png",
+      "prompt": "Asset type: 16:9 background, ideally 1920x1080. Use case: stylized-concept. Create a production raster asset for an ORIGINAL medieval gothic werewolf-game broadcast renderer, NOT a UI mockup. Restrained painterly realism, tactile aged iron and worn brass, desaturated slate blue, bone highlights and muted crimson. Gothic medieval village tragedy with a faint precision-craft feel, not cyberpunk. Absolutely no text, letters, numerals, logos, watermark, border frames, people, player cards or interface. High quality material and volumetric light, quiet composition, not a flat line icon. Overcast cold daylight, soft layered grey-blue fog, a single very faint medieval village roofline along the low horizon, subtle rough slate ground in bottom 15 percent. Keep the central 75 percent calm and low-contrast for readable code-rendered panels. Gentle pale mist at upper center, darkened corners, no sun disk, no moon, no trees, fences, candles, objects or decorative clutter. Sinister and austere, not cozy or sepia.",
+      "transparent": false
+    },
+    {
+      "file": "fog-night.png",
+      "prompt": "Asset type: 16:9 background, ideally 1920x1080. Use case: stylized-concept. Create a production raster asset for an ORIGINAL medieval gothic werewolf-game broadcast renderer, NOT a UI mockup. Restrained painterly realism, tactile aged iron and worn brass, desaturated slate blue, bone highlights and muted crimson. Gothic medieval village tragedy with a faint precision-craft feel, not cyberpunk. Absolutely no text, letters, numerals, logos, watermark, border frames, people, player cards or interface. High quality material and volumetric light, quiet composition, not a flat line icon. Midnight blue-black fog with restrained moonlit depth, a single faint village roofline along low horizon, soft slate ground in bottom 15 percent. A small realistic pale blood-tinged moon sits high at 82 percent horizontal / 12 percent vertical, faded partially by cloud. Keep the center 75 percent calm, low-detail dark fog for readable code-rendered panels. Subtle muted red light at far low horizon, no bright nebulae, trees, fences, candles, elaborate castles or clutter.",
+      "transparent": false
+    },
+    {
+      "file": "seer-mirror.png",
+      "prompt": "Asset type: square isolated skill prop on GENUINELY TRANSPARENT background. Use case: stylized-concept. Create a production raster asset for an ORIGINAL medieval gothic werewolf-game broadcast renderer, NOT a UI mockup. Restrained painterly realism, tactile aged iron and worn brass, desaturated slate blue, bone highlights and muted crimson. Gothic medieval village tragedy with a faint precision-craft feel, not cyberpunk. Absolutely no text, letters, numerals, logos, watermark, border frames, people, player cards or interface. High quality material and volumetric light, quiet composition, not a flat line icon. One large antique divination hand-mirror lying diagonally, round dark smoky glass facing camera, worn bronze rim with restrained two wolf-ear notches in the frame, tiny precise astrolabe etching and short heavy handle angled down right. Rich realistic metal edge lighting, cold mist WITHIN the glass, subtle pale blue star reflection. The glass is neutral and mysterious: NO wolf face, no human, no eye, no identity result inside. Prop occupies 85 percent of frame, full silhouette and handle visible with space around edges. Genuine transparent alpha outside the object, no square backdrop, ground or large opaque shadow.",
+      "transparent": true
+    },
+    {
+      "file": "heal-vial.png",
+      "prompt": "Asset type: square isolated skill prop on GENUINELY TRANSPARENT background. Use case: stylized-concept. Create a production raster asset for an ORIGINAL medieval gothic werewolf-game broadcast renderer, NOT a UI mockup. Restrained painterly realism, tactile aged iron and worn brass, desaturated slate blue, bone highlights and muted crimson. Gothic medieval village tragedy with a faint precision-craft feel, not cyberpunk. Absolutely no text, letters, numerals, logos, watermark, border frames, people, player cards or interface. High quality material and volumetric light, quiet composition, not a flat line icon. One substantial old apothecary antidote flask, rounded blown smoky-green glass, luminous pale sage-green liquid, uneven cork stopper, worn brass collar and a small engraved leaf-shaped metal charm. Dramatic but restrained side light showing glass thickness and hand-crafted material. Small pale mist swirl attached to the flask, no protective shield, no human, no medical cross, no label, no text. Object fills 78 percent of image, entire stopper and base visible, centered, transparent alpha outside the prop, no rectangular background or floor.",
+      "transparent": true
+    },
+    {
+      "file": "poison-vial.png",
+      "prompt": "Asset type: square isolated skill prop on GENUINELY TRANSPARENT background. Use case: stylized-concept. Create a production raster asset for an ORIGINAL medieval gothic werewolf-game broadcast renderer, NOT a UI mockup. Restrained painterly realism, tactile aged iron and worn brass, desaturated slate blue, bone highlights and muted crimson. Gothic medieval village tragedy with a faint precision-craft feel, not cyberpunk. Absolutely no text, letters, numerals, logos, watermark, border frames, people, player cards or interface. High quality material and volumetric light, quiet composition, not a flat line icon. One old apothecary poison flask, narrow faceted smoky dark glass, muted crimson-purple liquid, dark cork and aged bronze wire neck, a tiny sculpted skull-shaped metal clasp without text. Fine realistic edge lighting and slightly ominous attached wisps. Restrained material rendering, no gore, no human, no neon, no medical cross, no label. Object fills 78 percent of image, entire stopper and base visible, centered, transparent alpha outside the prop, no rectangular background or floor.",
+      "transparent": true
+    }
+  ]
+}

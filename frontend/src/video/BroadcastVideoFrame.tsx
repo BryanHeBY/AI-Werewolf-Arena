@@ -2,7 +2,8 @@
  * 负责左右固定名册和中央语义场景的主题化视频画面。输入仅为已编译计划与显式帧，输出发言、技能、票型及结算视觉。
  * 所有动画围绕编译节拍计算；人物目标、库存和结果只读结构化场景，不解析台词意图，也不从用药推导救活。
  */
-import { AbsoluteFill, Img } from "remotion";
+import { AbsoluteFill } from "remotion";
+import { VideoImage } from "./VideoImage";
 import type { CSSProperties, ReactNode } from "react";
 import { text } from "@ai-werewolf-arena/game-text";
 import { playerLabel } from "@ai-werewolf-arena/game-presentation";
@@ -13,6 +14,16 @@ import { buildVideoFrame, resolveVideoMediaSource } from "./frame";
 import { VideoLayers } from "./VideoLayers";
 import type { VideoLayerRegistry, VideoPlan } from "./types";
 import type { VideoThemeSlotProps, VideoThemeSlotRegistry } from "./theme-renderers";
+import {
+  GothicBackdrop,
+  GothicMetalFrame,
+  GothicSkillArt,
+  PhaseSigil,
+  gothicSurface,
+  GOTHIC_METAL,
+  GOTHIC_LIGHT,
+  GOTHIC_DARK,
+} from "./GothicArt";
 
 const quiet: CSSProperties = { overflowWrap: "anywhere", minWidth: 0 };
 const twoLines: CSSProperties = {
@@ -127,6 +138,7 @@ export function BroadcastVideoFrame({
   const scene = view.scene;
   const locale = plan.display.locale;
   const theme = plan.theme ?? resolveTheme();
+  const gothic = theme.id === "gothic-v1";
   const night = current.snapshot.phase === "night";
   const basePalette = themePalette(theme, night ? "night" : "day");
   const palette =
@@ -134,6 +146,15 @@ export function BroadcastVideoFrame({
       ? { ...basePalette, border: basePalette.text, muted: basePalette.text }
       : basePalette;
   const compact = theme.options.density === "compact";
+  const cardPalette = gothic ? themePalette(theme, "night") : palette;
+  // 同一发言者已在正文抬头，不再多画一排重复的聚焦信息。
+  const hasFocusPanel =
+    view.focusPlayerIds.length > 0 &&
+    !(
+      scene.kind === "speech" &&
+      view.focusPlayerIds.length === 1 &&
+      view.focusPlayerIds[0] === scene.actorId
+    );
   const s = Math.min(plan.width / 1280, plan.height / 720);
   const props: VideoThemeSlotProps = { plan, view, theme, palette, mediaBaseUrl };
   const revealed = view.localFrame >= scene.cues.impact;
@@ -154,7 +175,11 @@ export function BroadcastVideoFrame({
   const slot = (key: ThemeSlot, fallback: ReactNode, playerId?: number) => {
     const Component = getThemeSlot(themeSlots, theme, key);
     return Component ? (
-      <Component {...props} {...(playerId === undefined ? {} : { playerId })} />
+      <Component
+        {...props}
+        palette={key === "playerCard" || key === "seatBadge" ? cardPalette : palette}
+        {...(playerId === undefined ? {} : { playerId })}
+      />
     ) : (
       fallback
     );
@@ -166,7 +191,7 @@ export function BroadcastVideoFrame({
       const asset = plan.media.find((item) => item.id === assetId && item.kind === "image");
       if (asset)
         return (
-          <Img
+          <VideoImage
             src={resolveVideoMediaSource(asset.src, mediaBaseUrl)}
             width={size}
             height={size}
@@ -176,7 +201,7 @@ export function BroadcastVideoFrame({
     }
     return <AvatarMark avatar={player.avatar} size={size} />;
   };
-  const medallion = (id: number, size = 72) => (
+  const medallion = (id: number, size = gothic ? 96 : 72) => (
     <div
       style={{
         display: "grid",
@@ -190,11 +215,17 @@ export function BroadcastVideoFrame({
         style={{
           width: size * s,
           height: size * s,
-          border: `1px solid ${palette.border}`,
+          border: `${gothic ? 3 * s : 1}px solid ${gothic ? GOTHIC_METAL : palette.border}`,
           borderRadius: "50%",
           display: "grid",
           placeItems: "center",
-          background: palette.panel,
+          background: gothic
+            ? "radial-gradient(circle at 40% 30%, #29404b, #071018 80%)"
+            : palette.panel,
+          color: gothic ? GOTHIC_LIGHT : palette.text,
+          boxShadow: gothic
+            ? `0 0 0 ${3 * s}px #060c12, 0 0 0 ${4 * s}px ${GOTHIC_METAL}77, 0 ${5 * s}px ${12 * s}px #0008`
+            : undefined,
         }}
       >
         {avatar(profile(id), size * 0.67 * s)}
@@ -215,7 +246,9 @@ export function BroadcastVideoFrame({
       </div>
     </div>
   );
-  const backdrop = (
+  const backdrop = gothic ? (
+    <GothicBackdrop night={night} />
+  ) : (
     <AbsoluteFill style={{ background: palette.canvas }}>
       <div
         style={{
@@ -224,33 +257,6 @@ export function BroadcastVideoFrame({
           background: `radial-gradient(ellipse at 50% 15%, ${palette.border}33, transparent 70%)`,
         }}
       />
-      {theme.id === "gothic-v1" && (
-        <svg
-          width={plan.width}
-          height={plan.height}
-          viewBox="0 0 1280 720"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          style={{ position: "absolute", opacity: 0.11 }}
-        >
-          <path
-            d="M320 136L354 112L384 136L404 118L425 136L425 156H320ZM835 136L856 118L883 136L916 110L946 136V156H835Z"
-            fill={palette.muted}
-          />
-          {night && (
-            <circle
-              cx="640"
-              cy="190"
-              r="72"
-              fill={scene.action?.kind.startsWith("wolf") ? palette.wolf : palette.muted}
-            />
-          )}
-          <path
-            d="M690 460L714 403L737 424L768 390L790 428L827 448L799 468L810 495L782 502L757 527L740 579L720 579L721 530L694 553L672 609L649 609L665 537L646 494Z"
-            fill={palette.muted}
-          />
-        </svg>
-      )}
     </AbsoluteFill>
   );
 
@@ -304,8 +310,9 @@ export function BroadcastVideoFrame({
           data-scene-speech
           style={{
             ...quiet,
-            fontSize: (view.focusPlayerIds.length ? 24 : 30) * s,
-            lineHeight: view.focusPlayerIds.length ? 1.4 : 1.58,
+            fontSize: (hasFocusPanel ? 24 : 30) * s,
+            lineHeight: hasFocusPanel ? 1.4 : 1.48,
+            fontFamily: gothic ? theme.definition.fonts.heading : undefined,
             fontWeight: 550,
             whiteSpace: "pre-wrap",
             flex: 1,
@@ -490,8 +497,16 @@ export function BroadcastVideoFrame({
         : kind === "poison" || kind.startsWith("wolf") || kind === "exile"
           ? palette.wolf
           : palette.accent;
+    const paintedProp = gothic && ["inspect", "heal", "poison"].includes(kind);
     const diagram = (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 28 * s }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: (gothic ? 32 : 28) * s,
+        }}
+      >
         {scene.actorId !== undefined && medallion(scene.actorId)}
         {scene.actorId === undefined && scene.participantIds?.length ? (
           <div style={{ display: "flex", gap: 9 * s }}>
@@ -500,6 +515,9 @@ export function BroadcastVideoFrame({
             ))}
           </div>
         ) : null}
+        {paintedProp && scene.actorId !== undefined && (
+          <span style={{ color, fontSize: 30 * s, opacity: 0.5 + progress * 0.5 }}>→</span>
+        )}
         <div
           style={{
             display: "grid",
@@ -516,12 +534,40 @@ export function BroadcastVideoFrame({
                 opacity: 0.55 + 0.45 * enter,
               }}
             >
-              <SkillMark kind={kind} color={color} size={108 * s} />
+              {paintedProp ? (
+                <GothicSkillArt
+                  kind={kind}
+                  size={(kind === "inspect" ? 250 : 210) * s}
+                  progress={progress}
+                  frame={view.localFrame}
+                />
+              ) : (
+                <div
+                  style={
+                    gothic
+                      ? {
+                          padding: 20 * s,
+                          borderRadius: "50%",
+                          background: `radial-gradient(circle, ${color}22, #05101999 65%, transparent 70%)`,
+                          filter: `drop-shadow(0 0 ${14 * s}px ${color}44)`,
+                        }
+                      : undefined
+                  }
+                >
+                  <SkillMark kind={kind} color={color} size={(gothic ? 155 : 108) * s} />
+                </div>
+              )}
             </div>,
           )}
           {(scene.actorId !== undefined || scene.participantIds?.length) &&
-            scene.targetIds.length > 0 && <span style={{ color, fontSize: 35 * s }}>→</span>}
+            scene.targetIds.length > 0 &&
+            !paintedProp && <span style={{ color, fontSize: 35 * s }}>→</span>}
         </div>
+        {paintedProp && scene.targetIds.length > 0 && (
+          <span style={{ color, fontSize: 30 * s, opacity: 0.5 + progress * 0.5 }}>
+            {kind === "inspect" ? "←" : "→"}
+          </span>
+        )}
         {scene.targetIds.length > 0 && (
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 * s }}>
             {scene.targetIds.map((id) => (
@@ -537,10 +583,10 @@ export function BroadcastVideoFrame({
         style={{
           height: "100%",
           boxSizing: "border-box",
-          paddingTop: view.layout.stage.height * 0.32,
+          paddingTop: view.layout.stage.height * (gothic ? 0.47 : 0.32),
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
+          justifyContent: gothic ? "flex-start" : "flex-end",
           gap: 18 * s,
         }}
       >
@@ -550,8 +596,16 @@ export function BroadcastVideoFrame({
             style={{
               ...quiet,
               color: revealed ? color : palette.muted,
-              fontSize: 26 * s,
-              lineHeight: 1.5,
+              fontSize:
+                (gothic
+                  ? view.caption.length > 100
+                    ? 22
+                    : view.caption.length > 65
+                      ? 26
+                      : 32
+                  : 26) * s,
+              lineHeight: 1.4,
+              fontFamily: gothic ? theme.definition.fonts.heading : undefined,
               whiteSpace: "pre-wrap",
             }}
           >
@@ -626,7 +680,12 @@ export function BroadcastVideoFrame({
       data-video-layout="broadcast-v1"
       data-theme={theme.id}
       data-state-seq={view.sourceSeq}
-      style={{ fontFamily: theme.definition.fonts.body, color: palette.text, overflow: "hidden" }}
+      style={{
+        fontFamily: theme.definition.fonts.body,
+        lineHeight: 1.2,
+        color: palette.text,
+        overflow: "hidden",
+      }}
     >
       {slot("background", backdrop)}
       <header
@@ -639,8 +698,9 @@ export function BroadcastVideoFrame({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          borderBottom: `1px solid ${palette.border}`,
-          color: palette.canvasText,
+          borderBottom: `1px solid ${gothic ? `${GOTHIC_METAL}99` : palette.border}`,
+          color: gothic ? GOTHIC_LIGHT : palette.canvasText,
+          textShadow: gothic ? "0 2px 5px #000a" : undefined,
         }}
       >
         <div style={{ display: "flex", alignItems: "baseline", gap: 16 * s }}>
@@ -659,9 +719,25 @@ export function BroadcastVideoFrame({
         </div>
         <span
           data-testid="composition-phase"
-          style={{ fontSize: 20 * s, fontFamily: theme.definition.fonts.heading }}
+          style={{
+            position: gothic ? "absolute" : undefined,
+            left: gothic ? "50%" : undefined,
+            top: gothic ? 0 : undefined,
+            transform: gothic ? "translateX(-50%)" : undefined,
+            fontSize: (gothic ? 24 : 20) * s,
+            fontFamily: theme.definition.fonts.heading,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 12 * s,
+            background: gothic ? `${GOTHIC_DARK}ed` : undefined,
+            padding: gothic ? `${12 * s}px ${24 * s}px` : undefined,
+            minWidth: gothic ? 240 * s : undefined,
+          }}
         >
+          {gothic && <PhaseSigil night={night} size={30 * s} />}
           {current.dayPhase}
+          {gothic && <GothicMetalFrame scale={s} small />}
         </span>
         <span style={{ fontSize: 15 * s }}>
           {text(locale, "video.alive", {
@@ -674,26 +750,57 @@ export function BroadcastVideoFrame({
         const seat = view.layout.seats.find((item) => item.playerId === player.playerId)!;
         const identity = profile(player.playerId);
         const right = view.layout.rosterRight.some((item) => item.playerId === player.playerId);
+        const column = right ? view.layout.rosterColumns.right : view.layout.rosterColumns.left;
+        const hasMetadata =
+          column.hasMetadata &&
+          Boolean(identity?.displayName?.trim() || identity?.modelLabel?.trim());
         const active =
           view.focusPlayerIds.includes(player.playerId) ||
           scene.actorId === player.playerId ||
           scene.participantIds?.includes(player.playerId);
         const target =
           (scene.kind !== "ballot" || revealed) && scene.targetIds.includes(player.playerId);
-        const accent = active ? palette.accent : target ? palette.wolf : palette.border;
+        // 目标边框只表达本次技能的选中对象；绿色用药不等于已经救活，生命仍取 currentView。
+        const targetAccent = ["heal", "guard", "protection"].includes(scene.action?.kind ?? "")
+          ? cardPalette.success
+          : scene.action?.kind === "inspect"
+            ? cardPalette.accent
+            : cardPalette.wolf;
+        const accent = active
+          ? gothic
+            ? GOTHIC_METAL
+            : palette.accent
+          : target
+            ? targetAccent
+            : gothic
+              ? GOTHIC_METAL
+              : palette.border;
+        const portraitSize = gothic ? (locale === "en" ? 58 : 66) : 48;
         const portrait = (
           <div
             style={{
               position: "relative",
-              width: 48 * s,
-              height: 52 * s,
+              width: portraitSize * s,
+              height: portraitSize * s,
               display: "grid",
               placeItems: "center",
               flexShrink: 0,
               filter: player.alive ? undefined : "grayscale(1)",
+              borderRadius: gothic ? "50%" : undefined,
+              border: gothic
+                ? `${2 * s}px solid ${active ? GOTHIC_LIGHT : GOTHIC_METAL}`
+                : undefined,
+              background: gothic
+                ? "radial-gradient(circle at 35% 25%, #304650, #0a141c 75%)"
+                : undefined,
+              boxSizing: "border-box",
+              boxShadow: gothic
+                ? `inset 0 0 ${8 * s}px #0008, 0 0 0 ${2 * s}px #020a10, 0 0 0 ${3 * s}px ${GOTHIC_METAL}55`
+                : undefined,
+              color: gothic ? GOTHIC_LIGHT : undefined,
             }}
           >
-            {avatar(identity, 44 * s)}
+            {avatar(identity, (gothic ? portraitSize * 0.76 : 44) * s)}
             {slot(
               "seatBadge",
               <span
@@ -701,13 +808,16 @@ export function BroadcastVideoFrame({
                   position: "absolute",
                   bottom: -6 * s,
                   left: -3 * s,
-                  minWidth: 22 * s,
-                  height: 22 * s,
+                  minWidth: (gothic ? 27 : 22) * s,
+                  height: (gothic ? 27 : 22) * s,
                   borderRadius: "50%",
-                  background: palette.canvas,
-                  border: `1px solid ${accent}`,
-                  color: palette.canvasText,
-                  fontSize: 14 * s,
+                  background: gothic
+                    ? "linear-gradient(135deg, #544631, #161b1c 65%)"
+                    : palette.canvas,
+                  border: `${gothic ? 2 : 1}px solid ${gothic ? GOTHIC_METAL : accent}`,
+                  color: gothic ? GOTHIC_LIGHT : palette.canvasText,
+                  fontFamily: gothic ? theme.definition.fonts.heading : undefined,
+                  fontSize: (gothic ? 19 : 14) * s,
                   display: "grid",
                   placeItems: "center",
                 }}
@@ -718,8 +828,9 @@ export function BroadcastVideoFrame({
             )}
           </div>
         );
-        const metadata = (
+        const metadata = hasMetadata ? (
           <div
+            data-player-metadata
             style={{
               ...quiet,
               flex: 1,
@@ -733,7 +844,7 @@ export function BroadcastVideoFrame({
                 title={identity.modelLabel}
                 style={{
                   fontSize: 10 * s,
-                  color: palette.muted,
+                  color: cardPalette.muted,
                   lineHeight: 1.3,
                   whiteSpace: "nowrap",
                   overflow: "hidden",
@@ -759,27 +870,36 @@ export function BroadcastVideoFrame({
               </div>
             )}
           </div>
-        );
+        ) : null;
         const role = (
           <div
             title={player.roleLabel}
             style={{
               ...twoLines,
               WebkitLineClamp: 3,
-              width: (locale === "en" ? 56 : 34) * s,
-              maxHeight: Math.min(58 * s, seat.height - 14 * s),
+              width:
+                (locale === "en" ? 56 : gothic ? (player.roleLabel.length > 3 ? 37 : 25) : 34) * s,
+              maxHeight: Math.min((gothic ? 70 : 58) * s, seat.height - 14 * s),
               textAlign: "center",
               flexShrink: 0,
               color:
                 player.camp === "wolf"
-                  ? palette.wolf
+                  ? cardPalette.wolf
                   : player.camp === "good"
-                    ? palette.good
-                    : palette.neutral,
+                    ? cardPalette.good
+                    : cardPalette.neutral,
               fontFamily: theme.definition.fonts.heading,
-              fontSize: (locale === "en" ? 11 : 15) * s,
-              lineHeight: 1.2,
+              fontSize:
+                (locale === "en" ? 11 : gothic ? (player.roleLabel.length > 3 ? 14 : 18) : 15) * s,
+              lineHeight: gothic ? 1.1 : 1.2,
               overflowWrap: "anywhere",
+              background: gothic
+                ? player.camp === "wolf"
+                  ? "linear-gradient(#54252b77, #29171b55)"
+                  : "linear-gradient(#25404a66, #10212b55)"
+                : undefined,
+              padding: gothic ? `${3 * s}px ${2 * s}px` : undefined,
+              boxSizing: "border-box",
             }}
           >
             {player.roleLabel}
@@ -799,10 +919,10 @@ export function BroadcastVideoFrame({
               width: seat.width,
               height: seat.height,
               boxSizing: "border-box",
-              background: palette.panel,
+              background: gothic ? "linear-gradient(125deg, #162630f0, #08141cf5)" : palette.panel,
               border: `1px solid ${accent}`,
-              borderRadius: theme.definition.radii.card * s,
-              color: palette.text,
+              borderRadius: gothic ? 1 : theme.definition.radii.card * s,
+              color: cardPalette.text,
               opacity: player.alive ? 1 : 0.72,
               overflow: "hidden",
             }}
@@ -817,6 +937,7 @@ export function BroadcastVideoFrame({
                   height: "100%",
                   padding: `${7 * s}px ${9 * s}px`,
                   boxSizing: "border-box",
+                  justifyContent: hasMetadata ? undefined : "center",
                 }}
               >
                 {right ? (
@@ -835,16 +956,21 @@ export function BroadcastVideoFrame({
               </div>,
               player.playerId,
             )}
+            {gothic && (
+              <GothicMetalFrame scale={s} active={Boolean(active || target)} color={accent} small />
+            )}
             {!player.alive && (
               <span
                 style={{
                   position: "absolute",
                   right: 5 * s,
                   bottom: 3 * s,
-                  color: palette.wolf,
-                  fontSize: 10 * s,
-                  border: `1px solid ${palette.wolf}`,
+                  color: cardPalette.wolf,
+                  fontSize: (gothic ? 13 : 10) * s,
+                  border: `${gothic ? 2 : 1}px solid ${cardPalette.wolf}`,
                   padding: `0 ${3 * s}px`,
+                  transform: gothic ? "rotate(-12deg)" : undefined,
+                  background: gothic ? "#171c20ee" : undefined,
                 }}
               >
                 {text(locale, "video.eliminated")}
@@ -856,7 +982,7 @@ export function BroadcastVideoFrame({
                   position: "absolute",
                   left: 4 * s,
                   top: 2 * s,
-                  color: palette.accent,
+                  color: gothic ? GOTHIC_LIGHT : palette.accent,
                   fontSize: 10 * s,
                 }}
               >
@@ -868,6 +994,9 @@ export function BroadcastVideoFrame({
       })}
       <section
         data-video-stage
+        data-video-focus={
+          view.focusPlayerIds.length && !hasFocusPanel ? view.focusPlayerIds.join(",") : undefined
+        }
         style={{
           position: "absolute",
           left: view.layout.stage.x,
@@ -876,21 +1005,28 @@ export function BroadcastVideoFrame({
           height: view.layout.stage.height,
           boxSizing: "border-box",
           backgroundColor: palette.panel,
+          ...(gothic ? gothicSurface(night) : {}),
           backgroundImage:
             theme.options.paperTexture === true
-              ? `repeating-linear-gradient(0deg, ${palette.ink}06 0px, ${palette.ink}06 1px, transparent 1px, transparent 4px)`
-              : undefined,
+              ? `repeating-linear-gradient(0deg, ${palette.ink}06 0px, ${palette.ink}06 1px, transparent 1px, transparent 4px)${gothic ? `, ${gothicSurface(night).backgroundImage}` : ""}`
+              : gothic
+                ? gothicSurface(night).backgroundImage
+                : undefined,
           border: `1px solid ${palette.border}`,
-          borderRadius: theme.definition.radii.panel * s,
+          borderRadius: gothic ? 2 : theme.definition.radii.panel * s,
           overflow: "hidden",
         }}
       >
         {scene.kind === "action" && (
           <AbsoluteFill
             style={{
-              clipPath: view.focusPlayerIds.length
-                ? "inset(29% 2% 38% 2%)"
-                : "inset(19% 2% 38% 2%)",
+              clipPath: gothic
+                ? hasFocusPanel
+                  ? "inset(29% 2% 30% 2%)"
+                  : "inset(17% 2% 33% 2%)"
+                : hasFocusPanel
+                  ? "inset(29% 2% 38% 2%)"
+                  : "inset(19% 2% 38% 2%)",
               pointerEvents: "none",
             }}
           >
@@ -903,8 +1039,8 @@ export function BroadcastVideoFrame({
                   position: "absolute",
                   left: 0,
                   right: 0,
-                  top: view.focusPlayerIds.length ? "32%" : "24%",
-                  height: "28%",
+                  top: gothic ? (hasFocusPanel ? "30%" : "20%") : hasFocusPanel ? "32%" : "24%",
+                  height: gothic ? "42%" : "28%",
                   display: "grid",
                   placeItems: "center",
                 }}
@@ -922,10 +1058,10 @@ export function BroadcastVideoFrame({
             boxSizing: "border-box",
             display: "flex",
             flexDirection: "column",
-            gap: (view.focusPlayerIds.length ? 12 : 22) * s,
+            gap: (hasFocusPanel ? 12 : 22) * s,
           }}
         >
-          {view.focusPlayerIds.length > 0 && (
+          {hasFocusPanel && (
             <div
               data-video-focus={view.focusPlayerIds.join(",")}
               style={{
@@ -958,11 +1094,13 @@ export function BroadcastVideoFrame({
               "sceneHeading",
               <div
                 style={{
-                  fontSize: 27 * s,
+                  fontSize: (gothic ? 36 : 27) * s,
                   fontFamily: theme.definition.fonts.heading,
                   fontWeight: 700,
                   borderBottom: `1px solid ${palette.border}`,
                   paddingBottom: 16 * s,
+                  textAlign: gothic ? "center" : undefined,
+                  color: gothic && night ? GOTHIC_LIGHT : undefined,
                 }}
               >
                 {scene.title}
@@ -972,82 +1110,9 @@ export function BroadcastVideoFrame({
         </div>
         {slot(
           "frame",
-          <AbsoluteFill style={{ pointerEvents: "none" }}>
-            {/* 低密度主题符号留在面板内，避免被不透明阅读面板遮住；自定义 frame 插槽可整体替换。 */}
-            {theme.id === "gothic-v1" && (
-              <>
-                <svg
-                  data-theme-moon
-                  width={116 * s}
-                  height={94 * s}
-                  viewBox="0 0 116 94"
-                  aria-hidden="true"
-                  style={{ position: "absolute", right: 17 * s, top: 8 * s }}
-                >
-                  <circle
-                    cx="75"
-                    cy="41"
-                    r="28"
-                    fill={night ? palette.wolf : palette.good}
-                    opacity=".12"
-                  />
-                  <circle
-                    cx="75"
-                    cy="41"
-                    r="34"
-                    stroke={palette.border}
-                    strokeWidth=".7"
-                    opacity=".45"
-                    fill="none"
-                  />
-                  <path
-                    d="M12 74V43Q12 24 28 14Q44 24 44 43V74M18 74V45Q18 32 28 24Q38 32 38 45V74"
-                    stroke={palette.border}
-                    opacity=".35"
-                    fill="none"
-                  />
-                  {night && scene.action?.kind.startsWith("wolf") && (
-                    <path
-                      d="M62 24L53 60M75 20L65 62M88 25L78 58"
-                      stroke={palette.wolf}
-                      strokeWidth="2"
-                      opacity=".4"
-                    />
-                  )}
-                </svg>
-                <svg
-                  data-theme-wolf-shadow
-                  width={160 * s}
-                  height={132 * s}
-                  viewBox="0 0 200 180"
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    right: 18 * s,
-                    bottom: 20 * s,
-                    opacity: night ? 0.065 : 0.045,
-                  }}
-                >
-                  <path
-                    d="M54 48L78 9L101 30L132 3L154 34L191 54L163 74L174 101L146 108L121 133L104 175H84L85 136L58 159L36 179H13L29 143L10 100Z"
-                    fill={palette.text}
-                  />
-                </svg>
-              </>
-            )}
-            {theme.options.ornamentalFrames === true && (
-              <div
-                data-theme-ornamental-frame
-                style={{
-                  position: "absolute",
-                  inset: 6 * s,
-                  border: `1px solid ${palette.border}`,
-                  clipPath:
-                    "polygon(0 0,22% 0,22% 1%,78% 1%,78% 0,100% 0,100% 100%,78% 100%,78% 99%,22% 99%,22% 100%,0 100%)",
-                }}
-              />
-            )}
-          </AbsoluteFill>,
+          gothic ? (
+            <GothicMetalFrame scale={s} ornamental={theme.options.ornamentalFrames === true} />
+          ) : null,
         )}
       </section>
       <VideoLayers
@@ -1072,13 +1137,22 @@ export function BroadcastVideoFrame({
           position: "absolute",
           left: view.layout.stage.x,
           width: view.layout.stage.width,
-          bottom: 18 * s,
+          // 铭牌比旧文字条更高，靠下保留完整12席的垂直边界，避免压到最后一排。
+          bottom: (gothic ? 2 : 18) * s,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           gap: 15 * s,
           color: palette.canvasMuted,
           fontSize: 12 * s,
+          ...(gothic
+            ? {
+                background: `${GOTHIC_DARK}ed`,
+                padding: `${10 * s}px ${24 * s}px`,
+                boxSizing: "border-box",
+                color: GOTHIC_LIGHT,
+              }
+            : {}),
         }}
       >
         <span>{text(locale, scene.kind === "speech" ? "video.speaking" : "video.narrator")}</span>
@@ -1097,6 +1171,7 @@ export function BroadcastVideoFrame({
             pages: view.shot.captionPages.length,
           })}
         </span>
+        {gothic && <GothicMetalFrame scale={s} small />}
       </div>
       {current.victory && (
         <span

@@ -24,6 +24,8 @@ bun run --cwd frontend video:inspect -- --input ../record/session_<id>/replay.js
 # 哥特广播版示例：真实十二人回放、语义场景、精确重点和镜头
 bun run --cwd frontend video:preview -- --project videos/gothic-demo/project.tsx
 bun run --cwd frontend video:render -- --project videos/gothic-demo/project.tsx --output /tmp/gothic-demo.mp4 --browser /usr/bin/chromium
+# 长中文仅作编导稿排版示例，画面明确标注“非玩家原话”
+bun run --cwd frontend video:preview -- --project videos/gothic-demo/layout-demo.tsx
 # 既有椭圆桌示例保持兼容：推近、图层、自定义 TSX/SVG 与回顾
 bun run --cwd frontend video:preview -- --project videos/example/project.tsx
 bun run --cwd frontend video:render -- --project videos/example/project.tsx --output /tmp/example.png --frame 230 --browser /usr/bin/chromium
@@ -36,6 +38,8 @@ bun run --cwd frontend replay:render -- --input ../record/session_<id> --output 
 预览地址为命令输出的 `/video.html`。输出 PNG 或 H.264 MP4；已有目标、源归档、项目与素材均不能覆盖。修改脚本、归档、素材或字体后重启预览以重新准备；自定义 TSX 可由 Vite 更新。
 
 无脚本默认 `broadcast-v1`：12 人分双侧常驻名册，中央分发言、技能、票型、结算和阶段场景，日夜使用不同色板。已有脚本未声明 `layout` 时保持 `legacy-ellipse-v1`；旧 `createReplayRenderInput/buildReplayFrame` 保留90帧采样 API。新视频定位必须用原 seq 对应的揭晓帧，不能用 `index * 90`。聚合逐票明细仍可导航，姓名、身份与死亡在视频和工作台共用同一事实游标。
+
+双侧名册按整局已裁剪的展示资料分别定宽：某侧没有可显示的姓名或模型时，1920画幅下从328.32px收至216px，空间归还中央；空单卡不创建文字槽。死亡、镜头和事件切换不会改变列宽，箭头、高亮及自定义层共用实际席位坐标。
 
 ## 主题、展示资料与扩展
 
@@ -53,6 +57,8 @@ bun run --cwd frontend replay:render -- --input ../record/session_<id> --output 
 `fonts` 显式登记本地字体 `{ family, src, weight? }`；准备时捕获原字节并以 SHA256 命名，后续源编辑不改变已准备的素材。预览和渲染等待字体加载，失败中止；字体族名应匹配主题字体栈（如 `Noto Sans SC`）或自定义组件的 `fontFamily`。不接受远程或 data 字体，不在仓库复制系统字体。完整字段和项目写法见[离线复盘与视频指南](../docs/guides/offline-replay.md#通用视频与单局脚本)。
 
 `scene`、`emphasis`、`edits/factEdits`、镜头和图层支持单局微调。发言主张只作原话，技能、库存、狼刀、保护归因和死亡只消费结构化事件／提交事实；证据缺失时显示未知，不在前端重跑游戏规则。已准备的音轨和 `god/player:<id>` 说话者元数据可接入；TTS 服务尚未接入。
+
+哥特主题使用原创本地雾景、古镜和药瓶，结合代码绘制的旧金属框、铭牌和LLM图标圆章。图片不含文字、身份答案或库存；镜面保持中性，查验结果单独按事实揭晓。素材及内置 imagegen 的完整提示词见 [`src/video/assets/gothic/manifest.json`](src/video/assets/gothic/manifest.json)。`minimal-v1` 保持简洁模板；主题的 background/frame/actionEffect 插槽可替换相应美术层。
 
 ## 模块与验证
 

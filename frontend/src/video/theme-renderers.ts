@@ -11,6 +11,7 @@ export interface VideoThemeSlotProps {
   plan: VideoPlan;
   view: VideoFrameView;
   theme: ResolvedTheme;
+  /** 对应插槽实际表面的色板；哥特名册日夜均深色，中央阅读面仍随阶段变化。 */
   palette: ThemePalette;
   playerId?: number;
   /** 已准备素材在本次宿主中的基准，预览和导出都通过同一解析器取资源。 */

@@ -263,3 +263,36 @@ test("inspection prose uses only its caption page and authored replacement does 
   expect(authoredHtml).not.toContain(shot.scene.action!.result!);
   expect(authored.shots[0]!.scene.action!.result).toBe(shot.scene.action!.result);
 });
+
+test("hidden or absent metadata removes its entire roster slot while a mixed column keeps only real labels", () => {
+  const document = replay([{ type: "day_speech", payload: { actorId: 2, text: "Words." } }]);
+  const hidden = plan(document, { presentation: { showNames: false, showModels: false } });
+  const hiddenHtml = renderToStaticMarkup(<VideoFrame plan={hidden} frame={0} />);
+  expect(hiddenHtml).not.toContain("data-player-metadata");
+  expect(buildVideoFrame(hidden, 0).layout.rosterColumns.left.width).toBe(216);
+  expect(buildVideoFrame(hidden, 0).layout.rosterColumns.right.width).toBe(216);
+  for (const player of document.players) {
+    delete player.name;
+    delete player.model;
+  }
+  document.players[0]!.model = "Only visible model";
+  const mixed = plan(document);
+  const mixedHtml = renderToStaticMarkup(<VideoFrame plan={mixed} frame={0} />);
+  expect(mixedHtml.match(/data-player-metadata/g)).toHaveLength(1);
+  expect(mixedHtml).toContain("Only visible model");
+  expect(buildVideoFrame(mixed, 0).layout.rosterColumns.left.hasMetadata).toBe(true);
+  expect(buildVideoFrame(mixed, 0).layout.rosterColumns.right.hasMetadata).toBe(false);
+});
+
+test("daytime gothic card slots receive the dark roster palette while the reading frame retains day ink", () => {
+  const document = replay([{ type: "day_speech", payload: { actorId: 2, text: "Words." } }]);
+  const slots: VideoThemeSlotRegistry = {
+    "gothic-v1/playerCard": ({ palette }) => <span data-roster-ink={palette.text} />,
+    "gothic-v1/frame": ({ palette }) => <span data-reading-ink={palette.text} />,
+  };
+  const html = renderToStaticMarkup(
+    <VideoFrame plan={plan(document)} frame={0} themeSlots={slots} />,
+  );
+  expect(html).toContain('data-roster-ink="#e4e9ed"');
+  expect(html).toContain('data-reading-ink="#242a31"');
+});

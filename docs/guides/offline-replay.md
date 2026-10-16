@@ -38,6 +38,8 @@ fixture通过稳定origin／suite选择，loader根据manifest currentPath定位
 
 无脚本时默认 `broadcast-v1`，画幅1920×1080：12人分左右各6席，名册固定，中央按结构化出处显示发言、技能、票型、结算、阶段与通用说明。日夜使用独立色板；原文与身份牌分开，玩家声称不会改真实身份。移动网页提供独立全文和席位查看，完整视频可全屏横向观看。
 
+名册左右独立按整局裁剪后的 `playersPresentation` 判宽：整侧没有非空姓名和模型时，列宽由画幅17.1%收至11.25%，中央收回对应空间。资料只有部分玩家可见时，该侧仍保留完整列宽，但无资料的单卡不创建空文字槽。列宽不受生死、当前发言或聚焦影响；舞台、字幕安全区、相机、席位锚点和自定义图层共用同一几何，不只用 CSS 偷缩卡片。
+
 既有脚本未声明 `layout` 时使用 `legacy-ellipse-v1`，保留1280×720椭圆桌与原镜头语义；新脚本可显式选择任一版本。旧 `createReplayRenderInput/buildReplayFrame` 保留90帧采样兼容，主工作台与导出按计划导航。原事件序号、展示数组下标、镜头下标和局部帧不是同一个时钟，禁止用 seq 或展示下标直接乘90。
 
 ### 项目、来源与时长
@@ -59,6 +61,8 @@ fixture通过稳定origin／suite选择，loader根据manifest currentPath定位
 | `minimal-v1`（简洁看板） | 清晰明暗看板；`density: "comfortable"`（也可 `"compact"`）、`highContrast: false`。分别控制间距与边框／次要文字对比。                                                   |
 
 `script.theme = { id, options? }` 只接受该主题的白名单选项，未知主题、跨主题选项或错误值失败。`resolveTheme` 输出独立 JSON 数据；palette 区分画布文字 `canvasText/canvasMuted` 与面板文字 `text/muted`，不把浅色面板字直接用于深色背景。
+
+哥特模板的基础框体使用旧金属双线和角件，`ornamentalFrames` 进一步增加内框与中心饰件；白天为冷灰磨砂阅读面，夜间透出低对比雾景。`GothicArt` 独立拥有本地环境与无字技能道具，素材路径由两个 bundler 静态打包，不写入归档、身份或原文。图标头像保留LLM徽记，不强制替换成人物画像；背景、边框和技能道具仍可分别由主题插槽覆盖。
 
 项目模块可独立具名导出 `themeSlots`，不要求同时有 `layers`。注册键固定为 `<themeId>/<slot>`：
 
