@@ -96,7 +96,7 @@ export default defineVideoProject({
 
 ### 本地字体与素材固化
 
-`fonts` 是项目级 `{ family, src, weight? }[]`，接受本地路径或本地 file URL；HTTP(S)、data 字体、同 family／weight 重复项、额外字段与错误权重被拒绝。`weight` 缺省 normal，可用 bold、整百字重或变量范围（例如 `400 700`）。字体族名应对应主题字体栈，如 `Noto Sans SC/Noto Serif SC`，或组件显式声明的 `fontFamily`。未提供时使用主题字体栈。
+`fonts` 是项目级 `{ family, src, weight? }[]`，接受本地路径或本地 file URL；HTTP(S)、data 字体、同 family／weight 重复项、额外字段与错误权重被拒绝。`weight` 缺省 normal，可用 bold、整百字重或前小后大的变量范围（例如 `400 700`）；normal／bold 规范化为400／700，family 去首尾空格并忽略大小写判重。字体族名应对应主题字体栈，如 `Noto Sans SC/Noto Serif SC`，或组件显式声明的 `fontFamily`。未提供时使用主题字体栈。
 
 准备器捕获本地素材和字体字节，按SHA256内容摘要写入临时素材目录；plan 只引用 `assets/<digest>.<ext>`，绝对源路径只留在命令侧。准备后的源文件修改不会改变该次预览／导出的已捕获字节，源文件保持不写回；要采用新字节须重新准备。
 

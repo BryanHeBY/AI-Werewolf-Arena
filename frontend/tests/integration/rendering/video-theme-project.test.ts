@@ -184,11 +184,54 @@ test("unknown slot registrations and duplicate, remote or invalid font definitio
       [{ family: "Inline", src: "data:font/woff2;base64,AA==" }],
       [{ family: "", src: "./font.woff2" }],
       [{ family: "Local", src: "./font.woff2", weight: "450" }],
+      [{ family: "Local", src: "./font.woff2", weight: "700 400" }],
+      [{ family: "Local", src: "./font.woff2", weight: "bold 700" }],
       [{ family: "Local", src: "./font.woff2", extra: true }],
     ])
       await expect(prepareVideo({ project: await project(directory, { fonts }) })).rejects.toThrow(
         "video_fonts_invalid",
       );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("CSS-equivalent family and weight labels cannot register the same font face twice", async () => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), "awa-video-font-normalization-"));
+  try {
+    for (const [first, second] of [
+      ["normal", "400"],
+      ["bold", "700"],
+      [undefined, "400"],
+    ] as const) {
+      const fonts = [
+        {
+          family: "LocalFont",
+          src: "./one.woff2",
+          ...(first === undefined ? {} : { weight: first }),
+        },
+        { family: " localfont ", src: "./two.woff2", weight: second },
+      ];
+      await expect(prepareVideo({ project: await project(directory, { fonts }) })).rejects.toThrow(
+        "video_font_duplicate",
+      );
+    }
+    await writeFile(path.join(directory, "local.woff2"), fontBytes);
+    const prepared = await prepareVideo({
+      project: await project(directory, {
+        fonts: [
+          { family: " NormalFace ", src: "./local.woff2", weight: "normal" },
+          { family: " BoldFace ", src: "./local.woff2", weight: "bold" },
+        ],
+      }),
+    });
+    expect(
+      prepared.plan.fonts?.map((font) => ({ family: font.family, weight: font.weight })),
+    ).toEqual([
+      { family: "NormalFace", weight: "400" },
+      { family: "BoldFace", weight: "700" },
+    ]);
+    expect(prepared.assets).toHaveLength(1);
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
