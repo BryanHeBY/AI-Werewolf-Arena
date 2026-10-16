@@ -19,7 +19,10 @@ import {
   currentEngineVersion,
 } from "../../../../src/app/simulation/reproduction-context";
 import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  REPRODUCTION_SCHEMA_VERSION,
+} from "../../../../src/recording/reproduction/format";
 import { animalAuthoritySnapshot } from "../../../../src/features/animal-dream/authority";
 import {
   animalFoxKnowledge,
@@ -158,7 +161,8 @@ for (const skill of ["fox", "puffer"] as const)
         .filter((op: any) => op.scope !== "llm_action_provider")
         .map(({ seq: _seq, timestamp: _timestamp, ...op }: any) => op);
       const raw = {
-        schemaVersion: 2,
+        // 本载体来自当前 Trace，使用其实际格式版本；不把匿名当前记录冒充姓名必填的 Tape2。
+        schemaVersion: REPRODUCTION_SCHEMA_VERSION,
         finalized: true,
         metadata: rawTrace.metadata,
         decisions: rawTrace.decisions,

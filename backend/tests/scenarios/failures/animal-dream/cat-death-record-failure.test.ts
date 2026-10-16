@@ -17,7 +17,10 @@ import {
   currentEngineVersion,
 } from "../../../../src/app/simulation/reproduction-context";
 import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  REPRODUCTION_SCHEMA_VERSION,
+} from "../../../../src/recording/reproduction/format";
 import { animalAuthoritySnapshot } from "../../../../src/features/animal-dream/authority";
 import { animalCatKnowledge } from "../../../../src/features/animal-dream/facts";
 import {
@@ -125,7 +128,8 @@ for (const point of ["deferred", "actually_dead"] as const)
           .filter((op: any) => op.scope !== "llm_action_provider")
           .map(({ seq: _seq, timestamp: _timestamp, ...op }: any) => op);
       const raw = {
-        schemaVersion: 2,
+        // 当前 Trace 的匿名玩家合法归属 Tape3；故障前缀和死亡篡改仍按完整当前格式校验。
+        schemaVersion: REPRODUCTION_SCHEMA_VERSION,
         finalized: true,
         metadata: rawTrace.metadata,
         decisions: rawTrace.decisions,
