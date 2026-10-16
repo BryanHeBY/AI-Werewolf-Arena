@@ -36,7 +36,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "59700067df499d0e85f51065686253395f0925868a75960bfe70a3cdfe5c3fde",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -48,7 +51,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "9d05a07a65a666a13920c7da4e5aa615e557d547e4b3cbfe8cadf8b0069001da",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -60,7 +66,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "aabb25c881bec07309eee481443c00c8db4dcfc8bee0c084697b1ac6810a088b",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -72,7 +81,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "5a9b277d76c41b66309049d32433024b157a6966a77858a6a827dc946e4551a7",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -84,7 +96,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "d4e89bbc88e64dd11e2f91b35a58568f2c573e42e7bd4c541b95517c09388d81",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -96,7 +111,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "4c1001a12e9fc8a6534d9e91f010e8adfc7623d18decd109a0b402ecdc7ef525",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -108,7 +126,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "a97b4f8ac8de9190932c3a0b7926f93dc740538fbb889a5da30f2aadbe362f5f",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -120,7 +141,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "35b8df20a2c5e5f5201a4019368d8418f4024987ef8435332c4cd801501a6c4e",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -132,7 +156,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "8ad635d98d286895687c99602680200aa53c7a7ba0bbde797b0ec1881cb8ef68",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -144,7 +171,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "2c2a732fcef5d450cc34648d969cb539372b69ff0737c30c8d2cd13ebef4ffae",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -156,7 +186,10 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "a7eef84e97a33170962cf6ebc37402bb0293ddadc14f3f0f3e123ebcde996ca8",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     },
@@ -168,9 +201,57 @@
       "kind": "prop",
       "status": "reviewed",
       "sha256": "347b7ef0c65bd83434222563dbab49346fe50ea265921810438433adc2aed22e",
-      "dimensions": [1254, 1254],
+      "dimensions": [
+        1254,
+        1254
+      ],
       "lightDirection": "upper-left",
       "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "report-silver-seal",
+      "file": "report-silver-seal.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small material result medallion for a medieval gothic game's divination mirror, square isolated prop on genuinely TRANSPARENT alpha. Tactile painterly realism, restrained engraved and raised metal, cool upper-left lighting, desaturated cold silver with blackened iron shadow and a little worn brass, consistent with an antique brass mirror. Entire compact object within 80 percent canvas, full silhouette, no text, letters, numerals, UI, logo, watermark, people, floor, square backdrop or large outer glow. Not a flat vector icon, not cartoon, no colorful blue plastic. The final code will separately show the meaning as text. A compact physical cold-silver divination seal, a round astrolabe disk with a low-relief six-point compass star etched into its surface, shallow subtle beveled rays, fine worn hammer marks and darkened grooves. One quiet circular silver medallion, no shield silhouette, no cross or check mark. Restrained silver moonlit sheen, not bright white, no identity face or animal. This will be used at only about90 pixels on screen.",
+      "transparent": true,
+      "kind": "report-overlay",
+      "status": "reviewed",
+      "sha256": "a6325c1898e40f5e7b2bcda3641d48fb4198ebd488627d8685b1826ec515b624",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "lightDirection": "upper-left",
+      "safeArea": "小型报告材质印记；代码另排报告文字"
+    },
+    {
+      "id": "report-eclipse-seal",
+      "file": "report-eclipse-seal.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small material result medallion for a medieval gothic game's divination mirror, square isolated prop on genuinely TRANSPARENT alpha. Tactile painterly realism, restrained engraved and raised metal, cool upper-left lighting, desaturated cold silver with blackened iron shadow and a little worn brass, consistent with an antique brass mirror. Entire compact object within 80 percent canvas, full silhouette, no text, letters, numerals, UI, logo, watermark, people, floor, square backdrop or large outer glow. Not a flat vector icon, not cartoon, no colorful blue plastic. The final code will separately show the meaning as text. A compact physical dark-silver divination seal, a round obsidian inset with one off-center pale crescent cut-out cradling a small unmarked silver sphere, framed by narrow blackened iron rim with worn brass side clasps. Uncanny neutral third-party omen, clearly distinct from a star or ordinary moon glyph. Weighty tactile relief, no numbers, no role or wolf face, no check mark or crossed swords. Restrained cool silver edge light and black stone.",
+      "transparent": true,
+      "kind": "report-overlay",
+      "status": "reviewed",
+      "sha256": "70c58a11cf20e9fdb796fd8553a98d981d2f2b2f3c729f2e809421f75349b225",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "lightDirection": "upper-left",
+      "safeArea": "小型报告材质印记；代码另排报告文字"
+    },
+    {
+      "id": "demon-crossbow",
+      "file": "demon-crossbow.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game weapon prop, square, on GENUINELY TRANSPARENT alpha background. A compact original medieval gothic demon-hunter crossbow with a short blackened iron bow limb, heavy dark wood stock, worn brass winding mechanism, crimson leather grip, one unmarked steel bolt seated but NOT fired. Entire clear recognizable CROSSBOW silhouette visible within82percent canvas, diagonal three-quarter view, tactile painterly realism consistent with antique brass divination mirrors and old steel knight swords, cool upper-left light, dark iron shadows and restrained bone highlights. No text, letters, numerals, UI, logos, watermark, people, victims, floor, opaque rectangle, no flat vector or cartoon, no neon, no glowing orb, no blood effect, no wolf or monster face or role insignia. No swords or firearm. Neutral weapon prop; code will separately display the hunter's actual recorded choice/result, this image contains no success or death answer.",
+      "transparent": true,
+      "kind": "skill-prop",
+      "status": "reviewed",
+      "sha256": "a4536a562e024ea9768021dffe4d897d5da7b14b65c92a3ffc0e1e2f0357fac5",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "lightDirection": "upper-left",
+      "safeArea": "完整弩形位于画布82%以内；不得把猎魔人混同骑士或火枪"
     }
   ],
   "updatedAt": "2026-10-17"
