@@ -16,12 +16,14 @@ test("two themes are independent JSON values and day/night tokens share a common
   expect(gothic.options).toEqual({ paperTexture: false, ornamentalFrames: false, waxSeals: false });
   expect(themePalette(gothic, "day").paper).toBe("#eef0ef");
   expect(themePalette(gothic, "night").canvas).toBe("#101723");
+  expect(themePalette(gothic, "day").canvasText).toBe("#edf0f3");
   expect(JSON.parse(JSON.stringify(gothic))).toEqual(gothic);
   gothic.definition.palette.day.paper = "changed";
   expect(themePalette(resolveTheme("gothic-v1"), "day").paper).toBe("#eef0ef");
   const minimal = resolveTheme({ id: "minimal-v1", options: { density: "compact" } });
   expect(minimal.options).toEqual({ density: "compact", highContrast: false });
   expect(themeToCssVariables(minimal, "day")["--awa-panel"]).toBe("#ffffff");
+  expect(themeToCssVariables(minimal, "day")["--awa-canvasText"]).toBe("#162131");
 });
 test("theme-specific options reject cross-theme keys and getters before execution", () => {
   for (const value of [

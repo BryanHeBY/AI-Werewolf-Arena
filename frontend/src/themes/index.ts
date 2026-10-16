@@ -20,6 +20,8 @@ export type ThemeOptionDefinition =
   { type: "boolean"; default: boolean } | { type: "choice"; default: string; values: string[] };
 export interface ThemePalette {
   canvas: string;
+  canvasText: string;
+  canvasMuted: string;
   panel: string;
   paper: string;
   ink: string;
@@ -75,6 +77,8 @@ const slots = (id: ThemeId): Record<ThemeSlot, string> => ({
 });
 const gothicDay: ThemePalette = {
   canvas: "#505b67",
+  canvasText: "#edf0f3",
+  canvasMuted: "#d0d7dd",
   panel: "#e3e7ea",
   paper: "#eef0ef",
   ink: "#20262b",
@@ -91,6 +95,8 @@ const gothicDay: ThemePalette = {
 };
 const gothicNight: ThemePalette = {
   canvas: "#101723",
+  canvasText: "#e4e9ed",
+  canvasMuted: "#b7c4cf",
   panel: "#1e2938",
   paper: "#dbe1e4",
   ink: "#252a30",
@@ -107,6 +113,8 @@ const gothicNight: ThemePalette = {
 };
 const minimalDay: ThemePalette = {
   canvas: "#f2f4f7",
+  canvasText: "#162131",
+  canvasMuted: "#526174",
   panel: "#ffffff",
   paper: "#ffffff",
   ink: "#162131",
@@ -123,6 +131,8 @@ const minimalDay: ThemePalette = {
 };
 const minimalNight: ThemePalette = {
   canvas: "#111722",
+  canvasText: "#edf1f6",
+  canvasMuted: "#b2bfcd",
   panel: "#1b2533",
   paper: "#edf0f4",
   ink: "#172131",
