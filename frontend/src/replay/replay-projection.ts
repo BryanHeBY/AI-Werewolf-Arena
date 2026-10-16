@@ -25,11 +25,9 @@ export interface ReplaySnapshot {
   decision: SealedVictoryResult | null;
 }
 
-export function buildReplaySnapshot(
-  replay: Pick<ReplayDocument, "players" | "events">,
-  eventIndex: number,
-): ReplaySnapshot {
-  const states = new Map(
+/** 单一 effect reducer 拥有本次投影状态；索引和单帧入口共用它，不创建另一份游戏结算规则。 */
+function createProjector(replay: Pick<ReplayDocument, "players" | "events">) {
+  const states = new Map<number, ReplayPlayerState>(
     replay.players.map((player) => [
       player.player_id,
       {
@@ -43,7 +41,6 @@ export function buildReplaySnapshot(
       },
     ]),
   );
-  const lastIndex = Math.min(Math.max(eventIndex, 0), replay.events.length - 1);
   let decision: SealedVictoryResult | null = null;
 
   const markDead = (playerId: number | null) => {
@@ -54,7 +51,7 @@ export function buildReplaySnapshot(
   let event: ReplayEvent | null = null,
     day = 0,
     phase = "night";
-  for (const raw of replay.events.slice(0, lastIndex + 1)) {
+  const append = (raw: ReplayEvent) => {
     const fact = readReplayEvent(raw, playerIds);
     event = fact?.event ?? readReplayEventEnvelope(raw);
     if (fact) {
@@ -96,13 +93,39 @@ export function buildReplaySnapshot(
         }
       }
     }
-  }
-
-  return {
-    event,
-    players: [...states.values()].sort((left, right) => left.playerId - right.playerId),
-    day,
-    phase,
-    decision,
   };
+  return {
+    append,
+    snapshot: (): ReplaySnapshot => ({
+      event: event ? structuredClone(event) : null,
+      players: [...states.values()]
+        .map((player) => ({ ...player }))
+        .sort((left, right) => left.playerId - right.playerId),
+      day,
+      phase,
+      decision: decision ? structuredClone(decision) : null,
+    }),
+  };
+}
+
+/** 原独立投影入口保持游标夹入规则；只扫描所需前缀，返回脱离运行状态的副本。 */
+export function buildReplaySnapshot(
+  replay: Pick<ReplayDocument, "players" | "events">,
+  eventIndex: number,
+): ReplaySnapshot {
+  const projector = createProjector(replay);
+  const lastIndex = Math.min(Math.max(eventIndex, 0), replay.events.length - 1);
+  for (let index = 0; index <= lastIndex; index++) projector.append(replay.events[index]!);
+  return projector.snapshot();
+}
+
+/** 一次按完整事件序列建立各前缀快照；视频跳剪仍取原游标，逐帧和重复镜头不再扫描历史。 */
+export function createReplaySnapshotIndex(
+  replay: Pick<ReplayDocument, "players" | "events">,
+): ReplaySnapshot[] {
+  const projector = createProjector(replay);
+  return replay.events.map((event) => {
+    projector.append(event);
+    return projector.snapshot();
+  });
 }
