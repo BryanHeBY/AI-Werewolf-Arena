@@ -1,4 +1,4 @@
-# AWA 网易卡表来源猎魔人 v1（规则冻结）
+# AWA 网易卡表来源猎魔人 v1
 
 来源为[网易官网公开卡表](https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js)的 `num:23/type:2`；2026-10-10直接下载并Unicode解码读取。文件未标条目发布日期，URL数字不是出版日期。官网条款支持第二夜起逐夜可猎、真狼目标次日出局/好人目标导致猎魔人次日出局、女巫毒无效；未写每夜必须、一次总库存、全部特殊伤害免疫或所有扩展交互。
 
@@ -38,7 +38,7 @@ schema→bootstrap/实例→请求/严格preflight→域提交/伤害→DTO/双�
 
 第一夜无hunt仍挡合法native Witch毒；第二夜选狼/好人/弃猎；跨夜重复对象，禁自/尸体/额外参数/一次原请求；目标身份/配置/生命/原组件/phase/deadline撤权、getter/Proxy零副作用；actor同夜狼刀+猎狼双根、误猎+刀复合源；Guard/Heal不挡hunt/反噬，普通刀原矩阵；Witch毒实际消费但免毒，不吞其它源；完整遗言/徽/枪链后City/Side结果，两方全灭Good。
 
-独立手写人工结果；四板分别实际双语SDK HTTP/ACP子进程MCP/mixed完整胜利与strictfailure partialTape；God/Demon/Witch/普通人四scope字段矩阵；失败CP真实已消费Witch库存与late取消；受限Observed逐Tape、1000World、前端sharedFrame/Chromium/PNG。前端坏档拒伪库存、泄漏Camp、无owner/首夜history/假取消。三组只读review与完整离线门禁。角色仍planned，目录23verified/8implemented/33planned；Ghost完整功能已在f5153b8交付，继续本角色实现。
+独立手写人工结果；四板分别实际双语SDK HTTP/ACP子进程MCP/mixed完整胜利与strictfailure partialTape；God/Demon/Witch/普通人四scope字段矩阵；失败CP真实已消费Witch库存与late取消；受限Observed逐Tape、1000World、前端sharedFrame/Chromium/PNG。前端坏档拒伪库存、泄漏Camp、无owner/首夜history/假取消。规则、运行与独立账本分别审查；当前有限支持和公开入口见[支持矩阵](../contracts/gameplay-support-matrix.md)。
 
 ## 选择预算与晚撤权的可执行Tape输入
 
@@ -65,5 +65,3 @@ source/Replay同一engine边界都真正以World操作新建Alive组件，记录
 ## 有限原生夜间严格交付与 Guard 来源
 
 四板原Seer/Guard采用真实Factory error/noFallback请求；Seer精确整数且必答，Guard只接受整数/false或null/true。原scope和最早deadline约束实际提交，成功后保存真实库存并确认receipt。Guard实际单次贡献在普通Damage清印记前封存，冻结时复验原source/target，撤权不退款；独立未知贡献及清印记后当前factory marks保留。普通刀按有效Guard/Heal重新计算同守同救，hunt/反噬仍绕过。以上为有限交付工程补全，不变更网易角色规则，不开放其它板变体。
-
-## 2026-10-10 完整实现状态

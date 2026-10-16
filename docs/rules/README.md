@@ -75,6 +75,7 @@
 
 ## 共同规则与维护
 
+- [匿名墙纸条](awa-wall-notes-v1.md)：有限事件／道具及其公开边界。
 - [具名规则变体](policy-variants.md)：守卫、隐狼、查验、死亡枪、摄梦、狼美人、女巫及公共策略。
 - [共同游戏机制](../contracts/common-gameplay.md)：权限、查验、死亡、自爆、公共参与和胜利。
 - [新增机制指南](../guides/add-mechanism.md)与[当前契约](../contracts/README.md)。

@@ -24,7 +24,8 @@ bun run --cwd frontend build
 - 当前入口：`src/main.tsx` → `src/App.tsx`（加载状态）→ `src/replay/ReplayWorkspace.tsx`（工作台）。播放控制集中在 `useReplayPlayback.ts`，舞台、席位、时间线分别由 `ReplayStage`、`PlayerSeats`、`EventTimeline` 呈现。
 - 当前数据源：`@ai-werewolf-arena/replay-contract` 的 `ReplayDocument`，当前为完整的 `god`（上帝）离线复盘视角。
 - 文件加载与校验在 `offline-replay.ts`，事件文案在 `event-labels.ts`，状态投影在 `replay-projection.ts`；Remotion 画面仍按 frame 推导事件，不依赖工作台的筛选状态。
-- 角色视角、公开脱敏、在线观战和 MP4 任务队列均不属于这一版范围。
+- “玩家私有输出”可显式导入独立玩家文件，展示思考、消息和工具轨迹；它不生成角色视角舞台，也不把 God 席位筛选变成权限过滤。操作见[离线复盘指南](../docs/guides/offline-replay.md)。
+- 角色视角舞台、公开脱敏、在线观战和 MP4 任务队列均不属于当前范围。
 
 ## 双语图片/视频
 

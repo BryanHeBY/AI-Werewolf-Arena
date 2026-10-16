@@ -14,11 +14,17 @@ bun run --cwd backend config:check --configs-dir ../configs --game-config-name a
 bun run --cwd backend run --configs-dir ../configs --game-config-name awa_classic_pk_choice_12_v1 --locale zh-CN --display-locale zh-CN
 ```
 
-切换英文使用 `--locale en --display-locale en`。新增的旧板入口默认引用公开示例中已有的 `deepseek_v4_flash`；可把game的 `agent` 换为个人runtime中已有的SDK或ACP Agent名。ACP沿用个人隔离启动器，不把裸工作目录当沙箱。无需整目录覆盖runtime或把认证写入board/game。其它角色专门的ACP、中英文与真实教学示例见相应子目录。
+切换英文使用 `--locale en --display-locale en`。新增的旧板入口默认引用公开示例中已有的 `deepseek_v4_flash`；可把game的 `agent` 换为个人runtime中已有的 LLM、Pi 或 ACP Agent 名。ACP沿用个人隔离启动器，不把裸工作目录当沙箱。无需整目录覆盖runtime或把认证写入board/game。其它角色专门的ACP、中英文与真实教学示例见相应子目录。
+
+## 专题示例
+
+- 基础关系与第三方：[丘比特](cupid/README.md)、[咒狐](cursed-fox/README.md)、[杠精](debater/README.md)。
+- 投票、表达与秘密互动：[乌鸦](crow/README.md)、[禁言长老](silence-elder/README.md)、[典狱长](warden/README.md)。
+- 觉醒角色与来源合板：[觉醒狼王](awakened-wolf-king/README.md)、[觉醒女巫](awakened-witch/README.md)、[暗夜星辰](awakened-dark-stars/README.md)、[觉醒守卫与骑士](awakened-knight/README.md)。
 
 ## 完整映射
 
-当前共104份board、137份game；下表每板列一个入口，角色导航见[64角色对应表](../contracts/gameplay-support-matrix.md)。表中入口经过实际公开解析、两语设置合并与bootstrap，测试使用显式合成Provider、不联网、不启动Agent。配置装配通过不代替整局与交互验收，后者按规则卡和阶段回执维护。
+当前共104份board、137份game；下表每板列一个入口，角色导航见[64角色对应表](../contracts/gameplay-support-matrix.md)。表中入口经过实际公开解析、两语设置合并与bootstrap，测试使用显式合成Provider、不联网、不启动Agent。配置装配通过不代替整局与交互验收，后者按规则卡和验证指南维护。
 
 | Board／政策                                                                                                                                                              | 人数 | Game入口                                                                                                                                                                |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

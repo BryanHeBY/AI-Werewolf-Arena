@@ -2,7 +2,7 @@
 
 ## 角色和板子
 
-当前运行Role以`packages/game-contract/src/identity.ts`的封闭枚举及`backend/src/rulesets/roles/builtin-contributions.ts`的实际贡献为准。完整规则及配置变体见[规则 spec](../rules/README.md)，实现入口见[机制索引](../architecture/feature-ownership.md)，本轮交付数量与验收见[扩展目标](gameplay-expansion-target.md)。资料目录中的规划角色不授予运行支持。
+当前运行Role以`packages/game-contract/src/identity.ts`的封闭枚举及`backend/src/rulesets/roles/builtin-contributions.ts`的实际贡献为准。完整规则及配置变体见[规则 spec](../rules/README.md)，实现入口见[机制索引](../architecture/feature-ownership.md)，角色与公开入口见[支持矩阵](gameplay-support-matrix.md)。资料目录中的规划角色不授予运行支持。
 
 角色可用性受完整板子 schema、profile 的 `supportedBoardRoles`／`supportedWinConditions`／`maxCount`、策略配置及 ruleset 组合共同约束。没有显式角色限制也不代表支持任意混搭。公共发言、投票、获赠能力与原生技能分别判断资格；被动角色没有额外请求不代表免除共同流程。
 
@@ -35,7 +35,7 @@
 | M21  | Agent运行      | Provider／Agent与席位绑定、并发／超时／取消／日志               | `agents/`、`adapters/`、`app/game-runner.ts`；统一接收器，独立会话与清理，裸cwd不算沙箱                   |
 | M22  | 记录与审计     | 稳定事实、locale、私有Tape、公开God与逐玩家导出                 | `recording/`、`app/simulation/`及公共replay包；格式、独立审计与同构建执行三层分别验收                     |
 
-验收使用人工规则反例、具名板完整局、受限观察、真实本地SDK／ACP／MCP及双语帧；覆盖机制种类不等于穷尽所有交互。约千局阶段批次按公开板分配并逐局严格复现，实际结果进入[扩展目标回执](gameplay-expansion-target.md)。
+验收使用人工规则反例、具名板完整局、受限观察、真实本地SDK／ACP／MCP及双语帧；覆盖机制种类不等于穷尽所有交互。公开板批次按[验证方法](../guides/validation.md)执行并保留对应构建的实际结果。
 
 ## 数据与运行权限
 
@@ -150,4 +150,4 @@ Tape3 仅在自身明确保存返回候选时重交原值；旧 Tape2 或字段�
 
 本板普通狼自爆的接受声明与真实 `awakened_self_destruct_resolved` 分开：盾能挡死但合法自爆仍结束当日；保活者后续日按既有资格行动，不新增整局一次库存。未结首夜伤与自爆可由同一次DR实际提交，夜报只列Night根的真实死者，自爆结果另列实际自爆者，空结果也必须发表；提案、声明或付款都不能提前把AI／Web／视频画死。
 
-夜间保护选择只给本人，白天非空保护另公开守卫与目标；具体阻挡原因、替死付款及到期明细只给God。`recording/verification/awakened-day-roles/validate.ts`独立核三族资源、真实动作／窗口、夜伤来源、逐目标根与两份公开桥、延期词、历史feed和完整／失败CP，不导入生产库存或恢复许可。受限自然局逐份strict、实际SDK／ACP／mixed及缺失迟到、自爆有无盾和两语Web倒看证据见[联合交付回执](../rules/awa-awakened-knight-v1.md#交付与交叉审查回执2026-10-16)，不外推T6付费模型效果或其它混板。
+夜间保护选择只给本人，白天非空保护另公开守卫与目标；具体阻挡原因、替死付款及到期明细只给God。`recording/verification/awakened-day-roles/validate.ts`独立核三族资源、真实动作／窗口、夜伤来源、逐目标根与两份公开桥、延期词、历史feed和完整／失败CP，不导入生产库存或恢复许可。受限自然局逐份strict、实际SDK／ACP／mixed及缺失迟到、自爆有无盾和两语Web倒看证据见[联合规则与回归边界](../rules/awa-awakened-knight-v1.md#示例与回归边界)，不外推真实模型效果或其它混板。

@@ -76,16 +76,10 @@
 5. W 与 A 的四格严格为：trade/trade→W，betray/betray→W，trade/betray→A，betray/trade→A；每格仅 Deal，不叠普通保护／强制。
 6. N2 pair 已付，A 有合法决定后 B 超时：保留两人已参与与 A 的已收记录，未收 B 不补默认决定，不发表正常博弈结算；下夜不能用 A／B 重新参与。
 
-## 交付与独立审查回执（2026-10-16）
+## 示例与回归边界
 
-已冻结并交付 `awa_melbourne_warden_v1`／`awa_warden_partner_native_v1`。完整公开板与 LLM／ACP 入口、两语 God 教学档案见[本族示例](../examples/warden/README.md)；God 档不替代玩家授权档。未知政策、未知字段与高级角色混板均显式拒绝。无私人配置、认证或付费模型调用。
+仅开放 `awa_melbourne_warden_v1`／`awa_warden_partner_native_v1`。完整原十二人板、LLM／ACP 入口与两语 God 教学见[典狱长示例](../examples/warden/README.md)；未知政策、未知字段及高级角色混板显式拒绝。
 
-- T1–T3：本族运行／独立审计单元 `63 tests / 334 assertions`；共享事实 `4 / 18`；Web 真实两语样本及倒看 `2 / 194`。覆盖普通与本人两张四格、原体与库存、双方并发／部分失败、真实刀毒梦／夜源 Shot、纯 Deal 枪权和完整来源、秘密观察及严格配置。
-- T4：`tests/scenarios/boards/warden/observed-simulation.test.ts` 两语各二十固定 seed，40 局自然终局、零 fallback、40 局严格 Tape；`2 tests / 132 assertions / 38.36s`。另从真实归档伪造双交易受保护者的初始刀伤，本族独立 validator 与归档解析均拒绝。
-- T5：`tests/scenarios/boards/warden/transport-game.test.ts` 六组两语 LLM／ACP／mixed 正常完整局，加 pair／decide × LLM／ACP × missing／late 八组失败局，`11 tests / 2977 assertions / 33.59s`；每局经真实工具／权限／录制及严格 Tape 驱动。包括 Deal 来源伪造与未来双背叛授权过去请求的真实档案反例。失败局的预期严格失败不计作正常局 fallback。
-- 独立可构建提交边界：基于 `d040df20` 的 Warden-only 临时目标树，backend src tsc、frontend tsc、i18n 扫描通过；本族／公共消息／角色名／稳定身份／Web 合并 `78 tests / 795 assertions`。此数包含前述单元，不重复累计。该边界只追加 28 个消息与第 58 个运行角色，未借其它在研觉醒角色构建。
-- 根代理完成非作者 R/A/T/L+D 审查，第二非作者完成规则／原生技能／夜伤及权限、真实归档审查。已报告的 none 晚 sink、未来 force、末 World 查询互相撤权和同步重入丢回执均修正并经提出者复查；独立 authority＋audit 复跑 `40 / 196` 通过。
+回归覆盖普通配对与本人参与的四格真值表、双方并发和部分失败、原体与真实付款、刀毒梦及夜源枪击、纯 Deal 死因枪权、本人知情与 God 完整结果。强制目标须与女巫本轮获准知道的刀口同时说明，不能遮掉合法救人所需的信息。
 
-首次协议集中运行曾在 ACP missing 夹具中遇到另一方尚未付款即被运行入口取消；原 MCP 严格拒绝是正确失败语义。夹具将缺失一方响应延后 80ms，明确验证“另一方已实际付款”的前缀；生产入口未放宽权限或改取消政策。定向反例仍保留零／单回执的不同失败时序，修后完整 11 组重新通过。
-
-共享全量／浏览器与视频发布验收归 P10，T6 未执行。实际命令与范围不扩成任意高级混搭声明。
+独立审计拒绝伪造交易来源、未来双背叛授权过去请求、库存退款及秘密受众扩大。缺失一方时区分另一方尚未付款、已经付款和被取消后的晚提交，不放宽 MCP 权限或把取消当成功。完整局、严格重放、合成传输与展示按[验证方法](../guides/validation.md)分别检查。

@@ -1,6 +1,6 @@
 # 角色、原板与可运行入口
 
-本表核对原目标64个稳定ID，各选一个实际公开board及配套game作为入口；不是全部合法组合列表，也不代替完整ruleset检查。规则全文只在规则卡维护，更多具名变体见[规则索引](../rules/README.md)与[全部公开入口](../examples/README.md)。交付状态、实际测试及未执行T6见[扩展目标回执](gameplay-expansion-target.md)。
+本表核对当前64个稳定ID，各选一个实际公开board及配套game作为入口；不是全部合法组合列表，也不代替完整ruleset检查。规则全文只在规则卡维护，更多具名变体见[规则索引](../rules/README.md)与[全部公开入口](../examples/README.md)。新增机制的交付条件见[开发指南](../guides/add-mechanism.md)，离线与真实模型的验证边界见[验证方法](../guides/validation.md)。
 
 表中game引用公开Agent名称，运行前需在独立本地runtime配置模型或隔离ACP；不得整目录覆盖个人认证与人格。所有公开board的resolve/bootstrap、受限观察及严格重放覆盖分别验收，入口存在不等于付费模型已评测。
 
@@ -71,4 +71,4 @@
 | `awakened_guard`        | 觉醒守卫   | [规则](../rules/awa-awakened-guard-v1.md#awakened_guard)               | [awa_netease_awakened_knight_12_v1](../../configs.example/boards/awa_netease_awakened_knight_12_v1.json)                                                                 | [twelve_player_awakened_knight](../../configs.example/games/twelve_player_awakened_knight.json)                                                                         |
 | `awakened_knight`       | 觉醒骑士   | [规则](../rules/awa-awakened-knight-v1.md#awakened_knight)             | [awa_netease_awakened_knight_12_v1](../../configs.example/boards/awa_netease_awakened_knight_12_v1.json)                                                                 | [twelve_player_awakened_knight](../../configs.example/games/twelve_player_awakened_knight.json)                                                                         |
 
-22类机制及其字段、所有者和边界见[机制支持表](mechanism-support-boundaries.md#原m01m22与现行实现)。本轮范围外的觉醒摄梦人、觉醒石像鬼、觉醒白狼王和一夜狼人没有登记为已交付。
+22类机制及其字段、所有者和边界见[机制支持表](mechanism-support-boundaries.md#原m01m22与现行实现)。当前范围外的觉醒摄梦人、觉醒石像鬼、觉醒白狼王和一夜狼人没有登记为已交付。
