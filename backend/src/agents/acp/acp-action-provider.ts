@@ -78,6 +78,8 @@ export interface AcpActionProviderOptions {
 interface AcpTurnPromptBuild {
   prompt: string;
   userPrompt: string;
+  /** 只表示已调用会话输入端口，不推断远端读取、模型完成或行动生效。 */
+  dispatched: boolean;
   turnId: string;
   eventCursorBefore: number;
   eventCursorAfter: number;
@@ -286,6 +288,7 @@ export class AcpActionProvider implements ActionProvider {
       built = this.buildTurnPrompt(request, turn.turnId, true);
       this.observer.prompt([{ role: "user", content: built.prompt }], request);
       if (this.closed) return this.closedResult(request);
+      built.dispatched = true;
       const promptTask = session.prompt(built.prompt);
       const outcome = await awaitWithAbort(
         this.waitForAction(turn.action, promptTask, request),
@@ -535,6 +538,7 @@ export class AcpActionProvider implements ActionProvider {
     return {
       prompt: lines.filter(Boolean).join("\n"),
       userPrompt,
+      dispatched: false,
       turnId,
       eventCursorBefore: cursor,
       eventCursorAfter: advanceCursor ? nextCursor : cursor,
@@ -605,13 +609,16 @@ export class AcpActionProvider implements ActionProvider {
     const actionArgs = input.action
       ? ((input.action.args ?? {}) as Record<string, unknown>)
       : undefined;
+    // 初始化失败或开始前超时时仍可保留拟发送提示用于诊断，但不能伪造一条已派发请求。
+    const requestMessages: BuiltPlayerPrompt["messages"] = built.dispatched
+      ? [{ role: "user", content: built.prompt }]
+      : [];
     const prompt: BuiltPlayerPrompt = {
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: built.userPrompt },
-      ],
+      messages: [{ role: "system", content: systemPrompt }, ...requestMessages],
+      requestMessages,
       systemPrompt,
-      userPrompt: built.userPrompt,
+      // 保存真正发给 ACP 的本轮增量，包括事件批次和 turn_id，不能只存其中的行动提示。
+      userPrompt: built.prompt,
       boardInfoPrompt: this.promptPolicy.buildBoardInfo(),
       isInitialRound: false,
       eventCursorBefore: built.eventCursorBefore,
@@ -621,7 +628,7 @@ export class AcpActionProvider implements ActionProvider {
       contextWindowTotal: 0,
       turnId: built.turnId,
       auditMetadata: [
-        `transport=acp_mcp;turn_id=${built.turnId};event_cursor=${built.eventCursorBefore}->${built.eventCursorAfter};elapsed_ms=${input.elapsedMs}`,
+        `transport=acp_mcp;turn_id=${built.turnId};prompt_dispatched=${built.dispatched};event_cursor=${built.eventCursorBefore}->${built.eventCursorAfter};elapsed_ms=${input.elapsedMs}`,
       ],
     };
     const outcome: PlayerRoundOutcome = {

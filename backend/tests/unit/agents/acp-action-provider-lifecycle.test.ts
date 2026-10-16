@@ -19,7 +19,7 @@ function request(deadlineAtMs: number): ActionRequest {
 }
 
 describe("AcpActionProvider session lifecycle", () => {
-  test("falls back when session initialization never resolves", async () => {
+  test("an initialization deadline closes the turn without starting a late fallback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const factory: AcpSessionFactory = {
       createSession(input): Promise<never> {
@@ -30,10 +30,12 @@ describe("AcpActionProvider session lifecycle", () => {
         );
       },
     };
+    let fallbackCalls = 0;
     const provider = new AcpActionProvider(context.world, {
       sessionFactory: factory,
       privilegedFallbackProvider: {
         async getAction() {
+          fallbackCalls++;
           return { name: "speak", args: { text: "超时回退" } };
         },
       },
@@ -41,10 +43,8 @@ describe("AcpActionProvider session lifecycle", () => {
     });
 
     const startedAt = Date.now();
-    await expect(provider.getAction(request(Date.now() + 50))).resolves.toEqual({
-      name: "speak",
-      args: { text: "超时回退" },
-    });
+    await expect(provider.getAction(request(Date.now() + 50))).resolves.toBeNull();
+    expect(fallbackCalls).toBe(0);
     expect(Date.now() - startedAt).toBeLessThan(1_000);
     await provider.close();
   });

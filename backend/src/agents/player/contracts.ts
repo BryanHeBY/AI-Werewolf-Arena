@@ -12,6 +12,8 @@ import { ChatMessage } from "../../adapters/llm/transport";
 export interface BuiltPlayerPrompt {
   /** 原提示消息数组可写；声明不复制、冻结或保证与任一传输内部历史共享同一对象。 */
   messages: ChatMessage[];
+  /** 本轮已交给传输的输入增量；空数组表示尚未派发，缺席时沿用 userPrompt 的旧录制方式。 */
+  requestMessages?: ChatMessage[];
   systemPrompt: string;
   userPrompt: string;
   boardInfoPrompt?: string;

@@ -13,6 +13,26 @@ import type { World } from "../domain/world";
 import { getSessionRecorder } from "../recording/session/context";
 import type { BuiltPlayerPrompt, PlayerRoundOutcome } from "../agents/player/contracts";
 import type { AgentOutput } from "@ai-werewolf-arena/replay-contract";
+import type { ChatMessage } from "../adapters/llm/transport";
+
+/**
+ * 实际输入增量按玩家档案的单消息上限分片，拼接保持原字符串且不切断 Unicode 代理对。
+ * 旧录制输入仍走原路径；显式空数组保持空，不把拟发送提示补成真实请求。
+ */
+function recordedRequestChunks(messages: readonly ChatMessage[]): ChatMessage[] {
+  return messages.flatMap((message) => {
+    const chunks: ChatMessage[] = [];
+    for (let offset = 0; offset < message.content.length;) {
+      let end = Math.min(offset + 8000, message.content.length);
+      const last = message.content.charCodeAt(end - 1);
+      const next = message.content.charCodeAt(end);
+      if (last >= 0xd800 && last <= 0xdbff && next >= 0xdc00 && next <= 0xdfff) end--;
+      chunks.push({ ...message, content: message.content.slice(offset, end) });
+      offset = end;
+    }
+    return chunks.length ? chunks : [{ ...message }];
+  });
+}
 
 /** 唯一拥有本适配实例的玩家计数；记录失败保留已递增前缀，不另建第二份计数账本。 */
 export class PlayerRoundRecorder {
@@ -44,7 +64,9 @@ export class PlayerRoundRecorder {
       stage,
       requestId: `${day}-${phase}-${request.actorId}-${round}`,
       timestampMs: Date.now(),
-      llmRequestMessages: [{ role: "user", content: prompt.userPrompt }],
+      llmRequestMessages: prompt.requestMessages
+        ? recordedRequestChunks(prompt.requestMessages)
+        : [{ role: "user", content: prompt.userPrompt }],
       ...(outcome.deltaMessages ? { deltaMessages: outcome.deltaMessages } : {}),
       ...(outcome.agentOutputs || outputs?.length
         ? { agentOutputs: outcome.agentOutputs ?? outputs }
