@@ -3,6 +3,8 @@
  * 输入为真实 SDK HTTP 消息，输出为带原编号的第二次工具调用或 undefined。
  * 只接收最后一条工具回执，不修改冻结 fixture、领域状态、计划游标或时间预算。
  */
+import { isDeepStrictEqual } from "node:util";
+
 export function confirmationResponse(body: any): Response | undefined {
   const last = body.messages.at(-1);
   if (last?.role !== "tool" || typeof last.content !== "string") return;
@@ -22,9 +24,10 @@ export function confirmationResponse(body: any): Response | undefined {
   if (call?.function?.name !== "submit_action")
     throw new Error("fixture_confirmation_call_missing");
   const proposal = JSON.parse(call.function.arguments);
+  // 校验后的回执可能按 schema 重排键；所有参数值仍须一致，不能把序列化顺序当成行动变更。
   if (
     proposal.action !== receipt.action ||
-    JSON.stringify(proposal.arguments) !== JSON.stringify(receipt.arguments)
+    !isDeepStrictEqual(proposal.arguments, receipt.arguments)
   )
     throw new Error("fixture_confirmation_proposal_changed");
   return Response.json({
