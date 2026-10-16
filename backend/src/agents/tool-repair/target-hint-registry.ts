@@ -50,7 +50,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     fear: { allowSelf: false },
     swap_targets: { allowSelf: true },
     guard: { allowSelf: false },
-    check_identity: { allowSelf: false },
+    // 自验与重复查验由本轮绑定实例的政策决定；不能先在工具层统一排除本人。
+    check_identity: { allowSelf: true },
     inspect_role: { allowSelf: false },
     inspect_night_identity: { allowSelf: false },
     mimic_role: { allowSelf: false },
@@ -155,12 +156,11 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       (ctx.allowedTools.includes("use_potion") ||
         ctx.allowedTools.includes("check_identity") ||
         ctx.allowedTools.includes("kill_vote"));
-    const allowSelf =
-      radiantSelf || targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
     const inspection = ctx.queries.inspection();
     const actorRules = ctx.queries.actorRules();
     const ids = ctx.queries
       .aliveIds()
+      .filter((id) => ctx.wardenForcedTarget === undefined || id === ctx.wardenForcedTarget)
       .filter((id) =>
         targetTools.some(
           (tool) =>
@@ -195,7 +195,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     if (ids.length === 0) {
       return text(ctx.queries.locale(), "prompt.targets.none");
     }
-    if (allowSelf) {
+    if (ids.includes(ctx.actorId)) {
       return text(ctx.queries.locale(), "prompt.targets.self", { ids: ids.join(", ") });
     }
     return text(ctx.queries.locale(), "prompt.targets.others", { ids: ids.join(", ") });
@@ -269,7 +269,7 @@ export function bindTargetHintContext(source: TargetHintRuntimeInput): TargetHin
                   : null;
           if (!kind) return true;
           const ability = findNightAbility(ownRole, kind, source.abilityId);
-          if (!ability) return true;
+          if (!ability) return kind !== "seer_check";
           // 普通女巫仍可救这个目标，即使其毒药目标因该行动者的历史记录而被限制。
           if (
             ability.kind === "potion" &&
@@ -334,6 +334,9 @@ export function bindTargetHintContext(source: TargetHintRuntimeInput): TargetHin
     },
     get abilityId() {
       return source.abilityId;
+    },
+    get wardenForcedTarget() {
+      return source.wardenForcedTarget;
     },
     get debateTargetId() {
       return source.debateTargetId;

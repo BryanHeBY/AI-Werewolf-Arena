@@ -265,7 +265,11 @@ test("paid relation survives Cupid/partner role replacement, while revived or re
   role(game, 2).role = Role.Villager;
   (role(game, 2) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
   expect(loversRecord(game.world)).toBe(record);
-  expect(projectLover(game.world, 2)).toEqual({ partnerId: 3, mayNotVotePartner: false });
+  expect(projectLover(game.world, 2)).toEqual({
+    partnerId: 3,
+    policy: "netease_2017_cupid_follows_lovers_v1",
+    mayNotVotePartner: false,
+  });
   await resolver(game, []).resolve(
     [2],
     { 2: [DeathCause.Exile] },

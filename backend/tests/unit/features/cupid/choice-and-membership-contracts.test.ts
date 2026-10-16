@@ -384,7 +384,11 @@ for (const replacement of [false, true])
   test(`partner original life replacement=${replacement} revokes active DTO/prompt and mutual-vote restriction without deleting historical notification`, async () => {
     const game = fixture(deck, "lui_meme_lovers_only_v1"),
       events = await connect(game, 2, 3);
-    expect(projectLover(game.world, 2)).toEqual({ partnerId: 3, mayNotVotePartner: true });
+    expect(projectLover(game.world, 2)).toEqual({
+      partnerId: 3,
+      policy: "lui_meme_lovers_only_v1",
+      mayNotVotePartner: true,
+    });
     if (replacement) game.world.addComponent(3, COMPONENT.Alive, createAliveComponent());
     else {
       life(game, 3).alive = false;

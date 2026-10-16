@@ -66,6 +66,8 @@ export function projectLover(world: World, actorId: EntityId) {
   return record && life && binding!.lives.every((scope) => sameBody(world, scope))
     ? {
         partnerId: record.pairIds.find((id) => id !== actorId)!,
+        // 具名来源政策是本局公开规则；这里不公开 pairCamps、mixed 或秘密胜利归属。
+        policy: record.policy,
         mayNotVotePartner: record.policy === "lui_meme_lovers_only_v1",
       }
     : null;

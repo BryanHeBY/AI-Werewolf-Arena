@@ -10,6 +10,8 @@ import type { MessageDefinition } from "../definition";
 export const definition = {
   owner: "features/gifts-relations",
   parameters: {
+    "rules.lovers.netease": [],
+    "rules.lovers.lui": [],
     "console.ghost_bride_pair_chosen": ["bride", "groom"],
     "replay.stage.ghost_bride_pair_chosen": [],
     "console.ghost_bride_group_chosen": ["bride", "groom", "witness"],
@@ -361,6 +363,10 @@ export const zhCN = {
   "replay.stage.debate_ballots_recorded": "上帝匿名选票记录",
   "rule.netease_2017_cupid_follows_lovers_v1": "网易2017：丘比特跟随情侣",
   "rule.lui_meme_lovers_only_v1": "Lui-même原版：独立丘比特随好人",
+  "rules.lovers.netease":
+    "本局情侣规则（网易2017）：情侣只互认伴侣编号，不获知伴侣底牌、阵营或秘密胜利归属；原身份、技能、查验结果与狼队权限不变。一人死亡，另一人殉情且不能发动死亡技能，保护无法阻止殉情。双好情侣随好人获胜，双狼情侣随狼人获胜；人狼恋须双方存活并消灭除情侣与丘比特外的所有人。丘比特始终跟随情侣胜利，可以已出局。本局不额外禁止情侣互相放逐投票。上述是条件规则，不表示你已知道伴侣阵营。",
+  "rules.lovers.lui":
+    "本局情侣规则（Lui-même）：情侣只互认伴侣编号，不获知伴侣底牌、阵营或秘密胜利归属；原身份、技能、查验结果与狼队权限不变。一人死亡，另一人殉情且不能发动死亡技能，保护无法阻止殉情。双好情侣随好人获胜，双狼情侣随狼人获胜；人狼恋须双方存活并消灭所有其他人，包括未入情侣的丘比特。未入情侣的丘比特仍随好人；丘比特若入情侣则随情侣。情侣不能互相投放逐票（包括PK），警长投票不受此限制。上述是条件规则，不表示你已知道伴侣阵营。",
   "prompt.status.lovers_vote": "此来源策略禁止情侣互投放逐（包括PK）。",
   "role.shapeshifter.brief": "第一夜在其它技能前必选一张底牌；只要有普通狼牌就必须选狼。",
   "role.shapeshifter.state":
@@ -404,12 +410,12 @@ export const zhCN = {
     "可以提交一次choose_thief_card(slot0或1)换牌，或不调用工具保留盗贼；禁止代选。",
   "role.cupid.brief": "首夜连接两名情侣；一人死亡另一人殉情，殉情禁技能；按具名来源策略判胜。",
   "role.cupid.state":
-    "你的底牌是【丘比特】，真实阵营为好人神职。首夜阶段80必须以choose_lovers选择两名不同实际活人，可包括自己。null、重复、死人均无效，不可跳过或后夜补选。提交后不能更换；你只知道所选编号，不知道底牌、阵营或秘密胜利分组。情侣只互认编号，保留原技能、查验标签及原狼队权限。一人死亡使另一人殉情；殉情禁枪与狼美人死亡牵连，保护不能阻挡。双方同波独立致死都追加殉情禁技能，属于显式工程补全。已付费当夜梦关系仍按夜死条件牵连。死亡链全部结束才判胜。",
+    "你的底牌是【丘比特】，真实阵营为好人神职。首夜轮到你时，必须以choose_lovers选择两名不同存活玩家，可包括自己。不能选空、重复或已出局目标，也不能跳过后夜补选。提交后不能更换；你只知道所选编号，不知道底牌、阵营或秘密胜利分组。情侣只互认编号，保留原技能、查验结果及原狼队权限。一人死亡使另一人殉情；殉情不能发动枪与狼美人死亡牵连，保护不能阻挡。两人即使在同一轮死亡中分别被杀，仍同时计入殉情、不能发动相应死亡技能。当夜已经生效的摄梦关系仍按夜死条件牵连。整条死亡连锁结束才判胜。",
   "role.cupid.netease":
     "来源策略：网易2017。你始终跟随情侣胜利。双好人情侣随好人；双狼人情侣随狼，但你不会因此获得狼队信息或刀权，也不会被当作额外真狼。人狼恋的两个情侣须同时存活并消灭除情侣和你之外的所有人；你可活或死而同胜。跟随狼或第三方的你不阻挡狼屠城；全体真狼死亡照常好人胜。网易未明确禁情侣互投，当前保留AWA许可。",
   "role.cupid.lui":
     "来源策略：Lui-même原版。你若未被选为情侣，仍随好人并计好人数。人狼恋双方必须存活并消灭所有其他人，包括独立丘比特。你若在情侣中则随情侣。情侣不能互相放逐投票（包括PK）；不限制警长选举。",
-  "role.cupid.status": "你自己的已选编号与机会：{state}。没有来自引擎的情侣底牌或阵营信息。",
+  "role.cupid.status": "你自己的已选编号与机会：{state}。上帝没有告诉你情侣的底牌或阵营。",
   "action.choose_lovers.hint": "必须选两名不同活人：first_id和second_id；可选自己，不可跳过。",
   "prompt.targets.lovers":
     "first_id和second_id分别选自实际活人编号：{ids}；二者必须不同，可包括自己。",
@@ -643,6 +649,10 @@ export const en = {
   "replay.stage.debate_ballots_recorded": "God sealed ballot ledger",
   "rule.netease_2017_cupid_follows_lovers_v1": "NetEase 2017: Cupid follows lovers",
   "rule.lui_meme_lovers_only_v1": "Lui-même original: separate Cupid follows Good",
+  "rules.lovers.netease":
+    "Lovers rules (NetEase 2017): lovers learn only their partner ID, never the partner's role, faction or hidden victory affiliation. Original roles, abilities, inspection results and wolf permissions stay unchanged. Either death causes the other to die of heartbreak; protection cannot prevent it and heartbreak blocks death abilities. Two Good lovers win with Good; two Wolf lovers win with Wolf. Mixed lovers must both survive and eliminate everyone except themselves and Cupid. Cupid always wins with the pair, even if already dead. This policy adds no mutual exile-vote ban. These are conditional rules, not disclosure of your partner's faction.",
+  "rules.lovers.lui":
+    "Lovers rules (Lui-même): lovers learn only their partner ID, never the partner's role, faction or hidden victory affiliation. Original roles, abilities, inspection results and wolf permissions stay unchanged. Either death causes the other to die of heartbreak; protection cannot prevent it and heartbreak blocks death abilities. Two Good lovers win with Good; two Wolf lovers win with Wolf. Mixed lovers must both survive and eliminate everyone else, including an unselected Cupid. An unselected Cupid stays with Good; a selected Cupid follows the pair. Lovers cannot vote to exile each other, including PK; sheriff voting is unaffected. These are conditional rules, not disclosure of your partner's faction.",
   "prompt.status.lovers_vote":
     "This source policy forbids lovers from voting to exile each other, including PK.",
   "role.shapeshifter.brief":
@@ -698,13 +708,13 @@ export const en = {
   "role.cupid.brief":
     "Connect two lovers on night one; either death causes heartbreak, which suppresses death abilities. Victory uses a named source policy.",
   "role.cupid.state":
-    "Your role is Cupid, a true Good god. At stage 80 on night one you must choose two distinct actually living players with choose_lovers; you may include yourself. No null, duplicate, dead target, passing or later choice. After commitment you cannot change them. You learn only your selected IDs, never their roles, factions or hidden victory group. Lovers learn only their partner ID and keep original abilities, inspection labels and wolf permissions. Either death causes the other to die of heartbreak, which suppresses guns and Wolf Beauty death links and ignores protection. Two independent lethal sources in the same wave add heartbreak to both lovers: an explicit engineering completion. Paid Dreamer effects still follow night death. Victory waits for the entire death chain.",
+    "Your role is Cupid, a true Good god. On your first-night turn, choose two distinct living players with choose_lovers; you may include yourself. No empty, duplicate or dead target, passing or later choice. After commitment you cannot change them. You learn only your selected IDs, never their roles, factions or hidden victory group. Lovers learn only their partner ID and keep original abilities, inspection results and wolf permissions. Either death causes the other to die of heartbreak, which blocks guns and Wolf Beauty death links and ignores protection. If both are killed independently in the same death wave, both still suffer heartbreak and lose the corresponding death abilities. Already effective Dreamer links still follow night death. Victory waits for the entire death chain.",
   "role.cupid.netease":
     "Source policy: NetEase 2017. You always win with the lovers. Two Good lovers follow Good; two Wolf lovers follow Wolf, but this grants you no wolf knowledge or knife and never counts you as a true wolf. Mixed lovers must both survive and eliminate everyone except themselves and you; you win with them whether alive or dead. When following Wolf or the relationship group, you no longer block Wolf slaughter of Good. All true wolves dying still awards Good victory. The source does not specify a mutual-vote ban; current AWA voting permission is retained.",
   "role.cupid.lui":
     "Source policy: Lui-même original. An unselected Cupid stays with Good and counts as Good. Mixed lovers must both survive and eliminate everyone else, including a separate Cupid. A selected Cupid follows the pair. Lovers cannot vote to exile each other, including PK; sheriff elections are unaffected.",
   "role.cupid.status":
-    "Your own chosen IDs and opportunity: {state}. The engine has not disclosed their roles or factions.",
+    "Your own chosen IDs and opportunity: {state}. The moderator has not told you the lovers' roles or factions.",
   "action.choose_lovers.hint":
     "Choose two distinct living IDs using first_id and second_id; self is allowed and passing is forbidden.",
   "prompt.targets.lovers":

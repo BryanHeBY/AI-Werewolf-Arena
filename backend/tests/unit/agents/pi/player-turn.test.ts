@@ -291,6 +291,13 @@ describe("Pi 玩家行动窗口", () => {
         else expect(await f.run(optional)).toBeNull();
         expect(f.records[0]!.finalAction).toBeNull();
         expect(f.sessions[0]!.inputs).toHaveLength(invalid ? 3 : 1);
+        if (invalid) {
+          for (const input of f.sessions[0]!.inputs.slice(1)) {
+            expect(input).toContain("本轮是可选窗口");
+            expect(input).toContain("不能当作合法等待");
+            expect(input).not.toContain("请立即提交行动");
+          }
+        }
       } finally {
         await f.provider.close();
       }

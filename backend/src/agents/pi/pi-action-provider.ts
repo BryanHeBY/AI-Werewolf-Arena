@@ -226,6 +226,7 @@ export class PiActionProvider implements ActionProvider {
   }
 
   private async runTurn(request: ActionRequest, signal: AbortSignal): Promise<ToolCall | null> {
+    const constraints = resolveTurnConstraints(request);
     let release: (() => void) | undefined;
     let owned: PlayerSession | undefined;
     let prompt: BuiltPlayerPrompt | undefined;
@@ -254,7 +255,12 @@ export class PiActionProvider implements ActionProvider {
         const input =
           attempt === 0
             ? prompt.userPrompt
-            : buildConstraintRetryPrompt(attempt, 3, this.world.locale);
+            : buildConstraintRetryPrompt(
+                attempt,
+                3,
+                this.world.locale,
+                constraints.minValidActions > 0,
+              );
         let attempted = false;
         try {
           this.observer.prompt(

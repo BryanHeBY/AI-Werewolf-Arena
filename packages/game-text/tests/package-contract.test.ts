@@ -31,7 +31,7 @@ describe("text public package contract", () => {
 
   test("literal bilingual outputs and role labels preserve the public contract", () => {
     expect(text("en", "role.witch.state", { heal: 1, poison: 0 })).toBe(
-      "Your role is Witch. Antidote:1 Poison:0",
+      "Your role is Witch. Antidote:1 Poison:0. Ordinary Guard protection and your antidote on the same target cancel each other, so the wolf knife may still kill that target. Ordinary protection does not block poison.",
     );
     expect(text("zh-CN", "common.player", { id: 12 })).toBe("12号");
     expect(renderMessage("en", { key: "common.player", parameters: { id: 12 } })).toBe("Player 12");

@@ -17,7 +17,7 @@ describe("AcpActionProvider", () => {
     const factory: AcpSessionFactory = {
       async createSession(input): Promise<AcpSession> {
         sessionsCreated += 1;
-        expect(input.initialPrompt).toContain("你的唯一目标是帮助你所在阵营赢得本局");
+        expect(input.initialPrompt).toContain("争取达成本局规则赋予你的个人胜利目标");
         expect(input.initialPrompt).toContain("你的性格与发言风格要求：先总结事实，再提出问题。");
         expect(input.initialPrompt).not.toContain("MCP 协议");
         expect(input.initialPrompt).not.toContain("werewolf-game");
@@ -29,7 +29,7 @@ describe("AcpActionProvider", () => {
             const turnId = /当前回合 ID：(\S+)/.exec(prompt)?.[1];
             expect(turnId).toBeDefined();
             expect(prompt).toContain("MCP 服务 werewolf-game 的 submit_action");
-            expect(prompt).toContain(`参数 turn_id 必须为 ${turnId}`);
+            expect(prompt).toContain(`turn_id 必须为 ${turnId}`);
             const response = input.registry.submitAction("fake-session-1", {
               turn_id: turnId!,
               action: "speak",

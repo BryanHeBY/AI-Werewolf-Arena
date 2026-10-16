@@ -102,7 +102,7 @@ describe("LlmActionProvider prompts", () => {
     });
   });
 
-  test("user prompt should use compact three-line natural language format", async () => {
+  test("user prompt keeps compact natural action instructions", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
@@ -115,20 +115,20 @@ describe("LlmActionProvider prompts", () => {
         expect(systemMessages).toContain("总玩家数=6");
         expect(systemMessages).toContain("角色构成=");
         expect(systemMessages).toContain("角色技能简介=");
-        expect(systemMessages).toContain("当你看到“[行动提示]”时，说明你可以开始行动了");
-        expect(systemMessages).toContain("结构化事件是引擎确认的事实");
+        expect(systemMessages).toContain("收到“[行动提示]”后再进行本轮行动");
+        expect(systemMessages).toContain("上帝公开公告是所有玩家已获知的结果");
         expect(systemMessages).toContain("只有收到 night_resolved 才能确认昨夜公开结果");
         expect(systemMessages).toContain("空数组仅表示该初始批次平安");
         expect(systemMessages).toContain("additional_deaths 和成功的公开枪击可确认后续追加死亡");
         expect(systemMessages).toContain("death_shot_blocked 表示落空，不能当作击杀");
-        expect(systemMessages).toContain("狼人刀人投票只表示刀口选择");
+        expect(systemMessages).toContain("狼刀投票只表示刀口选择");
 
         const userMessages = messages.filter((m) => m.role === "user").map((m) => m.content);
         const latest = userMessages[userMessages.length - 1] ?? "";
         const lines = latest.split("\n");
         expect(lines.length).toBe(4);
         expect(lines[0]).toContain("[行动提示]");
-        expect(lines[0]).toContain("目前是你的发言轮次");
+        expect(lines[0]).toContain("目前是你的公开发言轮次");
         expect(lines[1]).toContain("阶段规则：");
         expect(lines[2]).toContain("本轮结束前需满足");
         expect(lines[3]).toContain("行动参数提示：");
@@ -382,7 +382,7 @@ describe("LlmActionProvider prompts", () => {
     expect(user).toContain("你的私有状态：你的底牌是【女巫】。解药:0 毒药:1");
   });
 
-  test("on_pre_vote self_destruct window should include strict tool boundary hint", async () => {
+  test("on_pre_vote explains the optional window and an unconfirmed proposal remains inactive", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world.entityIds().find((id) => {
       const role = context.world.getComponent(id, COMPONENT.Role);
@@ -410,10 +410,8 @@ describe("LlmActionProvider prompts", () => {
       context: { day: 1, visible_events: [], turn_constraints: {}, stage: ActionWindow.OnPreVote },
     });
 
-    expect(action).toEqual({
-      name: "self_destruct",
-      args: { reason: "test", confirm: true },
-    });
+    expect(action).toBeNull();
+    expect(context.world.getComponent(wolfId, COMPONENT.Alive)!.alive).toBe(true);
   });
 
   test("initial system prompt should include rendered board config summary", async () => {
@@ -460,7 +458,7 @@ describe("LlmActionProvider prompts", () => {
     });
     const system = client.lastMessages.find((message) => message.role === "system")?.content;
     expect(system).toContain("你的性格与发言风格要求：先总结事实，再提出问题。");
-    expect(system).toContain("你的唯一目标是帮助你所在阵营赢得本局");
+    expect(system).toContain("争取达成本局规则赋予你的个人胜利目标");
   });
 
   test("first-day sheriff prompts distinguish pending night results and run semantics", async () => {
@@ -518,8 +516,8 @@ describe("LlmActionProvider prompts", () => {
 
     const system = client.lastMessages.find((message) => message.role === "system")?.content ?? "";
     expect(system).toContain("所有能起效的行动都必须调用 submit_action 提交");
-    expect(system).toContain("普通 assistant 文本只会被当作本地思考");
-    expect(system).toContain("内容写入 arguments.text");
+    expect(system).toContain("普通 assistant 文本不会被其他玩家听见");
+    expect(system).toContain("正文均写入 arguments.text");
     expect(system).toContain("可以先调用 report_bug 上报，再继续本轮正常行动");
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
     expect(user).toContain("正常策略分歧、身份声称、诈身份或信息不足不是 bug");

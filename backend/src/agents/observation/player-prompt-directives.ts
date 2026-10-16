@@ -311,6 +311,13 @@ export function buildPlayerStatusDirective(
   const lover = projectLover(queries.world(), request.actorId);
   if (lover) {
     lines.push(text(queries.locale(), "prompt.status.lover", { partner: lover.partnerId }));
+    // 只解释公开政策；不展示关系记录中的伴侣阵营、是否人狼恋或秘密胜利分组。
+    lines.push(
+      text(
+        queries.locale(),
+        lover.policy === "lui_meme_lovers_only_v1" ? "rules.lovers.lui" : "rules.lovers.netease",
+      ),
+    );
     if (lover.mayNotVotePartner) lines.push(text(queries.locale(), "prompt.status.lovers_vote"));
   }
   // 原文最后调用；optional-call 在没有 renderer 时不读取语言，不提前捕获自定义回调结果。
@@ -400,10 +407,16 @@ export function buildPlayerStageContextHint(
   if (
     request.allowedTools.some((t) => ["check_identity", "use_potion", "dream"].includes(t)) &&
     request.context.warden_forced_target !== undefined
-  )
-    return text(queries.locale(), "prompt.stage.warden_forced", {
+  ) {
+    const forced = text(queries.locale(), "prompt.stage.warden_forced", {
       target: request.context.warden_forced_target,
     });
+    // 强制目标和已获准的刀口是两条独立信息，不能因交易约束遮掉女巫的合法知情。
+    // 刀口只读取本次请求，不向 World 查询未披露的狼刀或交易对象身份。
+    return request.allowedTools.includes("use_potion")
+      ? [forced, buildWitchKnifeContextHint(request, queries.locale())].join(" ")
+      : forced;
+  }
   // 按原字段优先级展示请求已带来的候选，不据这些文字重新授权目标。
   if (
     request.allowedTools.includes("bequeath_claw") &&
@@ -510,10 +523,15 @@ export function buildPlayerStageContextHint(
       .filter(Boolean)
       .join(" ");
   }
-  if (stage === "sheriff_vote") {
-    return [text(queries.locale(), "prompt.stage.sheriff_vote"), firstDaySheriffTiming]
-      .filter(Boolean)
-      .join(" ");
+  if (stage === "sheriff_vote" || stage === "sheriff_pk_vote") {
+    const pk = queries.boardConfig()?.sheriff?.electionPolicy === "awa_nomination_offstage_pk_v1";
+    const eligibility =
+      stage === "sheriff_pk_vote" || request.context.round === 2
+        ? "prompt.stage.sheriff_vote_pk_second"
+        : pk
+          ? "prompt.stage.sheriff_vote_pk_first"
+          : "prompt.stage.sheriff_vote";
+    return [text(queries.locale(), eligibility), firstDaySheriffTiming].filter(Boolean).join(" ");
   }
   if (stage === "scholar_mentor_choice")
     return text(queries.locale(), "prompt.stage.modifier_choice", {
@@ -538,18 +556,23 @@ export function buildPlayerStageContextHint(
         })
       : undefined;
   }
+  return buildWitchKnifeContextHint(request, queries.locale());
+}
+
+/** 只渲染请求已授权披露的刀口；undefined 与 null 分别保留“不知情”和“没有刀口”的含义。 */
+function buildWitchKnifeContextHint(request: ActionRequest, locale: Locale): string {
   if (request.context.wolf_targets !== undefined)
     return request.context.wolf_targets.length
-      ? text(queries.locale(), "prompt.stage.wolf_targets", {
+      ? text(locale, "prompt.stage.wolf_targets", {
           targets: request.context.wolf_targets.join(", "),
         })
-      : text(queries.locale(), "prompt.stage.no_wolf_target");
+      : text(locale, "prompt.stage.no_wolf_target");
   if (typeof request.context.wolf_target === "number") {
-    return text(queries.locale(), "prompt.stage.wolf_target", {
+    return text(locale, "prompt.stage.wolf_target", {
       target: request.context.wolf_target,
     });
   }
   return request.context.wolf_target === null
-    ? text(queries.locale(), "prompt.stage.no_wolf_target")
-    : text(queries.locale(), "prompt.stage.unknown_wolf_target");
+    ? text(locale, "prompt.stage.no_wolf_target")
+    : text(locale, "prompt.stage.unknown_wolf_target");
 }

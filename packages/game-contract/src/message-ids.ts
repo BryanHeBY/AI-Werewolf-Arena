@@ -1809,6 +1809,18 @@ export const MESSAGE_IDS = Object.freeze([
   "replay.agent_empty",
   "prompt.system.players",
   "common.player_reference",
+  "prompt.system.speaking_style",
+  "prompt.user.speech_public",
+  "prompt.user.speech_wolves",
+  "prompt.user.speech_partner",
+  "prompt.user.speech_brew",
+  "prompt.retry.optional",
+  "prompt.stage.sheriff_vote_pk_first",
+  "prompt.stage.sheriff_vote_pk_second",
+  "prompt.known_public_facts",
+  "rules.ordinary_night_protection",
+  "rules.lovers.netease",
+  "rules.lovers.lui",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

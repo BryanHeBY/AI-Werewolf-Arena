@@ -304,7 +304,12 @@ export class LlmTurnOrchestrator {
     });
     let messages = [...prompt.messages];
     for (let attemptNumber = 1; attemptNumber <= 3; attemptNumber++) {
-      const retryPrompt = buildConstraintRetryPrompt(attemptNumber, 3, this.options.world.locale);
+      const retryPrompt = buildConstraintRetryPrompt(
+        attemptNumber,
+        3,
+        this.options.world.locale,
+        this.requiresAction(request),
+      );
       messages = [...messages, { role: "user", content: retryPrompt }];
       this.options.observer.emit(
         {

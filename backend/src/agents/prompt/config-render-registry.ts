@@ -42,6 +42,21 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
         : []),
       ...(config.radiantEclipse ? [text(locale, "rules.radiant_eclipse")] : []),
       text(locale, "prompt.config.title"),
+      ...(config.cupid ||
+      config.roleSetups.some((entry) => entry.role === Role.Cupid && entry.count > 0)
+        ? [
+            text(
+              locale,
+              config.cupid?.policy === "lui_meme_lovers_only_v1"
+                ? "rules.lovers.lui"
+                : "rules.lovers.netease",
+            ),
+          ]
+        : []),
+      ...(config.roleSetups.some((entry) => entry.role === Role.Guard && entry.count > 0) &&
+      config.roleSetups.some((entry) => entry.role === Role.Witch && entry.count > 0)
+        ? [text(locale, "rules.ordinary_night_protection")]
+        : []),
       ...(config.awakenedWitch ? [text(locale, "prompt.config.awakened_witch")] : []),
       ...(config.awakenedWolfBeauty ? [text(locale, "prompt.config.awakened_wolf_beauty")] : []),
       ...(config.awakenedHunter ? [text(locale, "prompt.config.awakened_hunter")] : []),

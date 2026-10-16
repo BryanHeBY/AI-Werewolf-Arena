@@ -109,9 +109,19 @@ test("bilingual party example resolves every named seat without missing-language
       expect(entry.name).toBe(game.players[seat].name);
       expect(entry.personalityPrompt).toBe(game.players[seat].personalityPrompt[locale]);
       expect(entry.personalityPrompt).toContain(locale === "en" ? "playful game" : "欢乐局");
+      expect(entry.personalityPrompt).toContain(
+        locale === "en" ? "sharing of your own inspections" : "分享自己的查验",
+      );
+      expect(entry.personalityPrompt).toContain(locale === "en" ? "in your reasoning" : "自己记清");
+      expect(entry.personalityPrompt).not.toContain(
+        locale === "en" ? "private information must not be casually disclosed" : "不该公开的信息",
+      );
     }
     expect(new Set(Object.values(setup.players).map((entry) => entry.personalityPrompt)).size).toBe(
       12,
     );
+    const ceo = setup.players["2"].personalityPrompt!;
+    expect(ceo).toContain(locale === "en" ? "occasionally signing off" : "偶尔用");
+    expect(ceo).not.toContain(locale === "en" ? "then finish with" : "每次发言");
   }
 });

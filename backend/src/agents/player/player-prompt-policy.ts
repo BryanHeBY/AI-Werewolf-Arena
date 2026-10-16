@@ -134,6 +134,16 @@ export class PlayerPromptPolicy {
     const { bound, targetRuleRole } = resolvePlayerPromptAbility(request, role);
     const constraints = resolveTurnConstraints(request);
     const stage = getActionRequestStage(request);
+    // 交流动作的受众不同；识别可交流轮次不扩大实际工具或消息可见性。
+    const speechChannel = input.allowedTools.includes("speak_to_partner")
+      ? "partner"
+      : input.allowedTools.includes("brew_discuss")
+        ? "brew"
+        : input.allowedTools.includes("speak_to_wolves")
+          ? "wolves"
+          : input.allowedTools.includes("speak")
+            ? "public"
+            : undefined;
     return buildUserPrompt({
       locale: this.locale,
       actorId: request.actorId,
@@ -142,8 +152,8 @@ export class PlayerPromptPolicy {
         this.locale,
       ),
       stage: this.options.phaseStageLocalizationRegistry.stageName(stage, this.locale),
-      isSpeechTurn:
-        input.allowedTools.includes("speak") || input.allowedTools.includes("speak_to_wolves"),
+      isSpeechTurn: speechChannel !== undefined,
+      speechChannel,
       stageDirective:
         bound?.activation === "black_market"
           ? text(this.locale, "action.black_market_recipient.directive")
@@ -199,6 +209,7 @@ export class PlayerPromptPolicy {
           sheriffCandidates: request.context.sheriff_candidates,
           exileCandidates: request.context.exile_candidates,
           badgeCandidates: request.context.badge_candidates,
+          wardenForcedTarget: request.context.warden_forced_target,
         }),
       ),
       actionSubmissionHint: input.actionSubmissionHint,

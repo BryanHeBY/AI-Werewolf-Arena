@@ -33,6 +33,8 @@ export interface UserPromptInput {
   phase: string;
   stage: string;
   isSpeechTurn: boolean;
+  /** 这里只描述规则授予的受众；实际消息投影仍由对应机制维护。 */
+  speechChannel?: "public" | "wolves" | "partner" | "brew";
   stageDirective: string;
   statusDirective?: string;
   /** 仅在没有有效 turnConstraintHint 时选择原必需／可选文案，不在这里强制提交或付款。 */
@@ -82,6 +84,7 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     text(locale, "prompt.system.inspection"),
     text(locale, "prompt.system.events"),
     text(locale, "prompt.system.facts"),
+    text(locale, "prompt.system.speaking_style"),
     // 仅显式 false 关闭工具说明；报告还要求原 supportsDebugReporting，开关不注册真实工具。
     ...(input.includeToolUseInstructions !== false ? [text(locale, "prompt.system.tools")] : []),
     text(locale, "prompt.system.confidential"),
@@ -100,7 +103,14 @@ export function buildUserPrompt(input: UserPromptInput): string {
       actor: input.actorId,
       phase: input.phase,
       stage: input.stage,
-      speech: text(locale, input.isSpeechTurn ? "prompt.user.speech" : "prompt.user.no_speech"),
+      speech: text(
+        locale,
+        input.speechChannel
+          ? `prompt.user.speech_${input.speechChannel}`
+          : input.isSpeechTurn
+            ? "prompt.user.speech"
+            : "prompt.user.no_speech",
+      ),
       context: input.stageContextHint ? ` ${input.stageContextHint}` : "",
     }),
     text(locale, "prompt.user.rules", {
@@ -150,14 +160,17 @@ export function buildConstraintRetryPrompt(
   attempt: number,
   maxRetries: number,
   locale: Locale = "zh-CN",
+  requiresAction = true,
 ): string {
   return text(
     locale,
-    attempt === 1
-      ? "prompt.retry.first"
-      : attempt === 2
-        ? "prompt.retry.second"
-        : "prompt.retry.last",
+    !requiresAction
+      ? "prompt.retry.optional"
+      : attempt === 1
+        ? "prompt.retry.first"
+        : attempt === 2
+          ? "prompt.retry.second"
+          : "prompt.retry.last",
     { attempt, max: maxRetries },
   );
 }

@@ -40,6 +40,8 @@ export interface TargetHintContext {
   actorRole?: Role;
   /** 能力实例标识只定位本次目标规则，不独立授予该实例的使用权。 */
   abilityId?: string;
+  /** 请求明确披露的典狱长强制目标；提示只能缩小到该编号，不从世界补造秘密交易。 */
+  wardenForcedTarget?: EntityId;
   debateTargetId?: number;
   /** 原可写工具数组决定提示分支；是否可提交仍由真实请求、接收器和机制复验。 */
   allowedTools: ToolName[];

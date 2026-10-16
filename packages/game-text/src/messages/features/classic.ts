@@ -10,6 +10,7 @@ import type { MessageDefinition } from "../definition";
 export const definition = {
   owner: "features/classic",
   parameters: {
+    "rules.ordinary_night_protection": [],
     "role.hunter.configured_state": [],
     "role.wolf_king.configured_state": ["remaining"],
     "role.inspection.unique_required": [],
@@ -393,13 +394,16 @@ export const zhCN = {
   "ability.operation.transferred_out": "转出",
   "ability.change": "{actor}号的能力 {id}（{kind}）：{operation}",
   "role.guard.state":
-    "你的底牌是【守卫】。每夜可以守护一名存活玩家（包括自己），也可以明确空守。重复目标限制遵循本局配置的策略。",
+    "你的底牌是【守卫】。每夜可以守护一名存活玩家（包括自己），也可以明确空守。普通守护能挡狼刀，不能挡毒药；同一目标同时被普通守护与解药救治时，两者抵消。重复目标限制遵循本局配置的策略。",
+  "rules.ordinary_night_protection":
+    "夜间保护规则：普通守护能挡狼刀，但不能挡毒药。普通守护与解药作用于同一目标时相互抵消；该目标若中狼刀且没有其它有效保护，仍会死亡。梦境保护、机械守护、觉醒守护等独立保护按各自规则结算，不随同守同救一起抵消。",
   "role.witch.knife_always": "AWA原生刀口策略：即使解药耗尽也显示本夜刀口。",
   "role.witch.knife_with_heal": "AWA原生刀口策略：仅解药本夜可用时披露刀口。",
   "role.witch.potions_both":
     "AWA原生用药实验（非已核验主流规则）：同夜可各用一瓶；首次有效用药后开放第二回合，空动作终止，复制/赠予药不适用。",
   "role.witch.potions_one": "AWA原生用药策略：同夜至多用一瓶。",
-  "role.witch.state": "你的底牌是【女巫】。解药:{heal} 毒药:{poison}",
+  "role.witch.state":
+    "你的底牌是【女巫】。解药:{heal} 毒药:{poison}。同一目标若同时被普通守卫守护与你的解药救治，两者抵消，狼刀仍可能致死；普通守护不能挡毒药。",
   "role.hunter.state":
     "你的底牌是【猎人】。狼刀、放逐、枪击或白狼王带人死亡可在授权窗口开枪；含毒等禁止来源不能开枪。末神仍可开枪，主动空枪以target_id=null提交并消耗机会。",
   "action.shoot.hint":
@@ -675,7 +679,9 @@ export const en = {
   "ability.operation.transferred_out": "Transferred out",
   "ability.change": "Player {actor}'s ability {id} ({kind}): {operation}",
   "role.guard.state":
-    "Your role is Guard. Each night choose a living player to protect, including yourself, or explicitly leave the guard empty. Target repetition follows this game’s configured policy.",
+    "Your role is Guard. Each night choose a living player to protect, including yourself, or explicitly leave the guard empty. Ordinary protection blocks the wolf knife, but not poison. Ordinary protection and antidote on the same target cancel each other. Target repetition follows this game’s configured policy.",
+  "rules.ordinary_night_protection":
+    "Night protection: ordinary Guard protection blocks the wolf knife, but not poison. Ordinary protection and antidote on the same target cancel each other; a wolf knife still kills that target unless another effective protection applies. Dream protection, Mechanical Guard and Awakened Guard protections follow their own rules and are not cancelled with the ordinary guard-and-heal pair.",
   "role.witch.knife_always":
     "AWA native knife disclosure: reveal the wolf target even after heal is spent.",
   "role.witch.knife_with_heal":
@@ -683,7 +689,8 @@ export const en = {
   "role.witch.potions_both":
     "AWA native potion experiment (not a verified mainstream rule): use one of each potion per night; an accepted potion opens a second turn, a pass ends it; copied and gifted potions are excluded.",
   "role.witch.potions_one": "AWA native potion policy: at most one potion per night.",
-  "role.witch.state": "Your role is Witch. Antidote:{heal} Poison:{poison}",
+  "role.witch.state":
+    "Your role is Witch. Antidote:{heal} Poison:{poison}. Ordinary Guard protection and your antidote on the same target cancel each other, so the wolf knife may still kill that target. Ordinary protection does not block poison.",
   "role.hunter.state":
     "Your role is Hunter. An authorized death window permits shooting after wolf kill, exile, a shot or White Wolf King blast; poison and forbidden causes block it. The last good special role may still shoot. To pass deliberately, submit target_id=null and spend the opportunity.",
   "action.shoot.hint":
