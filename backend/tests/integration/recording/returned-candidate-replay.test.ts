@@ -24,7 +24,7 @@ import {
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
-async function failedRecord(original?: Error) {
+async function failedRecord(original?: Error, playerNames?: Readonly<Record<string, string>>) {
   const roles = [Role.Hybrid, Role.Wolf, Role.Seer, Role.Witch, Role.Villager, Role.Villager];
   const game = bootstrapGame(
     {
@@ -36,7 +36,7 @@ async function failedRecord(original?: Error) {
       winConditions: [WinCondition.SlaughterCity],
       selfDestruct: { enabledWindows: [] },
     },
-    { fixedRoles: roles, locale: "en" },
+    { fixedRoles: roles, locale: "en", playerNames },
   );
   const manager = await SessionRecordManager.create(
     {
@@ -142,7 +142,15 @@ test("returned candidate: three real Hybrid null returns replay all retries and 
 
 test("returned candidate: a real provider throw stays absent and old Tape2 shape still rejects foreign source", async () => {
   const original = new TypeError("literal provider throw");
-  const { game, record, failure, calls } = await failedRecord(original);
+  // Tape2 的姓名原本必填：从真实开局提供字面姓名，不能把匿名 Tape3 仅改版本后冒充历史输入。
+  const { game, record, failure, calls } = await failedRecord(original, {
+    "1": "Legacy One",
+    "2": "Legacy Two",
+    "3": "Legacy Three",
+    "4": "Legacy Four",
+    "5": "Legacy Five",
+    "6": "Legacy Six",
+  });
   expect(failure).toBe(original);
   expect(calls).toBe(1);
   expect(Object.hasOwn(record.decisions[0]!, "returnedCandidate")).toBe(false);

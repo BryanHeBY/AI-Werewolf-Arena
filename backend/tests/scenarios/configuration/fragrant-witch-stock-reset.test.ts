@@ -7,7 +7,10 @@ import { recordFragrantLiteral } from "../../support/features/fragrant-pair-seer
 import { test, expect } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../support/features/fragrant-pair-seer/drivers/actions";
-import { parseReproductionRecord } from "../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  REPRODUCTION_SCHEMA_VERSION,
+} from "../../../src/recording/reproduction/format";
 import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
 import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 
@@ -66,7 +69,8 @@ for (const dead of [false, true])
       );
       const t = trace as any,
         record = {
-          schemaVersion: 2,
+          // 本载体来自当前 Trace：Tape3 允许省略昵称，不应误标为姓名必填的历史 Tape2。
+          schemaVersion: REPRODUCTION_SCHEMA_VERSION,
           finalized: false,
           metadata: t.metadata,
           decisions: t.decisions,
