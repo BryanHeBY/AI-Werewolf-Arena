@@ -6,8 +6,7 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayDisplayOptions } from "../../src/replay/replay-display";
-import { replayBrowserPlan } from "./replay-browser-frame";
-import { videoCaptionRange } from "../../src/video/captions";
+import { replayBrowserPlan, replayCaptionPageFrame } from "./replay-browser-frame";
 
 async function seek(slider: Locator, frame: number) {
   await slider.evaluate((element, value) => {
@@ -35,11 +34,22 @@ export async function expectReplayCaption(
   );
   if (!shot) throw new Error(`browser_caption_event_missing:${expected.seq}`);
   const event = replay.events.find((item) => item.seq === expected.seq)!;
-  const expectedBody =
-    ["day_speech", "last_words_spoken", "wolf_discussion"].includes(event.type) &&
-    typeof event.payload.text === "string"
-      ? event.payload.text
-      : expected.text;
+  // 台词类型白名单直接取归档原文字段；不读取生产 scene.body 或字幕页来制造预期。
+  const rawBody = [
+    "day_speech",
+    "last_words_spoken",
+    "wolf_discussion",
+    "debate_speech",
+    "ghost_bride_partner_chat",
+    "brew_discussion",
+    "secret_body_reveal_speech",
+    "silence_translated",
+  ].includes(event.type)
+    ? event.payload.text
+    : event.type === "silence_gesture"
+      ? event.payload.description
+      : undefined;
+  const expectedBody = typeof rawBody === "string" ? rawBody : expected.text;
   const caption = page.locator(
     "[data-scene-speech], [data-scene-announcement], [data-scene-result]",
   );
@@ -50,18 +60,11 @@ export async function expectReplayCaption(
   const slider = page.locator('.frame-control input[type="range"]');
   const savedFrame = Number(await slider.inputValue());
   const texts: string[] = [];
-  const range = videoCaptionRange(
-    replayBrowserPlan(replay, display).layout,
-    shot.scene,
-    shot.durationFrames,
-  );
   try {
     for (let index = 0; index < shot.captionPages.length; index++) {
       await seek(
         slider,
-        shot.from +
-          range.from +
-          Math.ceil((index * range.durationFrames) / shot.captionPages.length),
+        replayCaptionPageFrame(shot, replayBrowserPlan(replay, display).layout, index),
       );
       await expect(marker).toHaveAttribute("data-event-seq", String(expected.seq));
       await expect(page.getByTestId("composition-caption")).toHaveAttribute(

@@ -92,16 +92,56 @@ test("broadcast merges only the recorded ballot window and preserves raw weighte
   expect(shot.scene.resolution).toEqual({
     text: "3号·真实姓名3被放逐出局",
     targetId: 3,
-    revealFrame: 40,
+    // 英文中性票型总述9词+句末停顿=93帧，落定40后读完，再揭示放逐。
+    revealFrame: 133,
   });
-  expect(buildVideoFrame(plan, shot.from + 39).currentView.players[2]!.alive).toBe(true);
-  expect(buildVideoFrame(plan, shot.from + 40).currentView.players[2]!.alive).toBe(false);
-  expect(getVideoEventFrame(plan, 7)).toBe(shot.from + 40);
+  expect(buildVideoFrame(plan, shot.from + 132).currentView.players[2]!.alive).toBe(true);
+  expect(buildVideoFrame(plan, shot.from + 133).currentView.players[2]!.alive).toBe(false);
+  expect(getVideoEventFrame(plan, 7)).toBe(shot.from + 133);
   expect(shot.speech.map((cue) => [cue.speaker, cue.from, cue.durationFrames])).toEqual([
-    ["god", 24, 16],
-    ["god", 40, shot.durationFrames - 40],
+    ["god", 24, 109],
+    ["god", 133, shot.durationFrames - 133],
   ]);
   expect(JSON.parse(JSON.stringify(plan))).toEqual(plan);
+});
+
+test("a result-only sheriff summary admits missing ballots without inventing counts or discarding its winner", () => {
+  const document = replay([
+    { type: "sheriff_vote_summary", payload: { votes: [], winnerId: 6, round: 1 } },
+  ]);
+  document.players = document.players.map(({ name: _name, ...player }) => player);
+  for (const [locale, body] of [
+    ["zh-CN", "未记录逐票明细"],
+    ["en", "Individual ballots not recorded"],
+  ] as const) {
+    const shot = compileVideoPlan(document, undefined, { locale, timeZone: "UTC" }).shots[0]!;
+    expect(shot.scene.body).toBe(body);
+    expect(shot.scene.ballot).toEqual({
+      kind: "sheriff",
+      round: 1,
+      votes: [],
+      tally: null,
+      targetId: 6,
+      adjustments: [],
+      complete: true,
+    });
+    expect(shot.scene.targetIds).toEqual([6]);
+    expect(shot.view.label).toBe(
+      locale === "zh-CN"
+        ? "警长票型：无；6号当选警长"
+        : "Sheriff votes: None; Player 6 is elected sheriff",
+    );
+  }
+  const authored = compileVideoPlan(
+    document,
+    script(document, {
+      layout: "broadcast-v1",
+      edits: [{ anchor: { seq: 1, type: "sheriff_vote_summary" }, caption: "作者结果说明" }],
+    }),
+  ).shots[0]!;
+  expect(authored.scene.body).toBe("作者结果说明");
+  expect(authored.scene.bodySource).toBe("script");
+  expect(authored.scene.ballot?.targetId).toBe(6);
 });
 
 test("edits and holds split an internal window, while PK, sheriff and phase boundaries stay independent", () => {
@@ -256,7 +296,7 @@ test("structured choices never imply a final knife, successful healing or guesse
   expect(plan.shots[3]!.view.players[3]!.alive).toBe(true);
 });
 
-test("independent knife and protection facts keep their scope, while a contiguous death batch reveals together", () => {
+test("independent knife and protection facts keep their scope, while an explicit same-prefix wave reveals together", () => {
   const document = replay([
     { type: "voted_out", payload: { target: 3 } },
     { type: "night_resolved", phase: "night", payload: { deaths: [3, 4] } },
@@ -286,6 +326,7 @@ test("independent knife and protection facts keep their scope, while a contiguou
       afterSeq: 2,
       kind: "life_committed",
       day: 1,
+      waveId: 1,
       playerId: 3,
       alive: false,
       causes: ["poison"],
@@ -295,6 +336,7 @@ test("independent knife and protection facts keep their scope, while a contiguou
       afterSeq: 2,
       kind: "life_committed",
       day: 1,
+      waveId: 1,
       playerId: 4,
       alive: false,
       causes: ["other"],
@@ -317,6 +359,14 @@ test("independent knife and protection facts keep their scope, while a contiguou
   const deaths = plan.shots.find((shot) => shot.id === "fact:3")!;
   expect(deaths.sourceFacts).toEqual([3, 4]);
   expect(deaths.scene.targetIds).toEqual([3, 4]);
+  expect(deaths.scene.visual?.effectiveTargetIds).toEqual([3, 4]);
+  expect(deaths.scene.visual?.effectiveTargetKnown).toBe(true);
+  expect(deaths.scene.visual?.life).toEqual({
+    playerIds: [3, 4],
+    committed: true,
+    causes: { 3: ["poison"], 4: ["other"] },
+    waveId: 1,
+  });
   expect(
     buildVideoFrame(plan, deaths.from + 23)
       .currentView.players.slice(2, 4)
@@ -335,6 +385,57 @@ test("independent knife and protection facts keep their scope, while a contiguou
       .players.slice(2, 4)
       .map((player) => player.alive),
   ).toEqual([true, true]);
+});
+
+test("same afterSeq is not wave evidence and a recorded wave crossing events keeps both exact prefixes", () => {
+  const document = replay([
+    { type: "night_resolved", phase: "night", payload: { deaths: [3, 4] } },
+    { type: "phase_changed", phase: "day", payload: { phase: "day" } },
+  ]);
+  document.factCoverage = { committedDeaths: 1 };
+  const life = (seq: number, playerId: number, afterSeq: number, waveId?: number) => ({
+    seq,
+    afterSeq,
+    kind: "life_committed" as const,
+    day: 1,
+    playerId,
+    alive: false as const,
+    causes: ["other"],
+    ...(waveId === undefined ? {} : { waveId }),
+  });
+  for (const facts of [
+    [life(1, 3, 1), life(2, 4, 1)],
+    [life(1, 3, 1, 7), life(2, 4, 1, 8)],
+    [life(1, 3, 1, 7), life(2, 4, 2, 7)],
+  ]) {
+    document.facts = facts;
+    const plan = compileVideoPlan(document);
+    const first = plan.shots.find((s) => s.id === "fact:1")!;
+    const second = plan.shots.find((s) => s.id === "fact:2")!;
+    expect(first.sourceFacts).toEqual([1]);
+    expect(second.sourceFacts).toEqual([2]);
+    expect(first.scene.visual?.life?.waveId).toBe(facts[0]!.waveId);
+    expect(second.scene.visual?.life?.waveId).toBe(facts[1]!.waveId);
+    expect(
+      buildVideoFrame(plan, first.from + 24)
+        .currentView.players.slice(2, 4)
+        .map((p) => p.alive),
+    ).toEqual([false, true]);
+    expect(
+      buildVideoFrame(plan, second.from + 23)
+        .currentView.players.slice(2, 4)
+        .map((p) => p.alive),
+    ).toEqual([false, true]);
+    expect(
+      buildVideoFrame(plan, second.from + 24)
+        .currentView.players.slice(2, 4)
+        .map((p) => p.alive),
+    ).toEqual([false, false]);
+    expect(buildVideoFrame(plan, second.from + 24).sourceSeq).toBe(facts[1]!.afterSeq);
+    expect(buildVideoFrame(plan, second.from + 24).sourceFactSeq).toBe(2);
+    const commitCue = second.stateCues.find((cue) => cue.throughFactSeq === 2)!;
+    expect([commitCue.frame, commitCue.throughSeq]).toEqual([24, facts[1]!.afterSeq]);
+  }
 });
 
 test("knife revocation is explicit and a new covered ballot paragraph cannot commit proposal deaths", () => {
@@ -377,7 +478,7 @@ test("knife revocation is explicit and a new covered ballot paragraph cannot com
   });
   const ballot = plan.shots.find((shot) => shot.id === "event:6")!;
   expect(ballot.sourceSeqs).toEqual([2, 3, 4, 5, 6, 7]);
-  expect(ballot.scene.resolution?.revealFrame).toBe(40);
+  expect(ballot.scene.resolution?.revealFrame).toBe(133);
   expect(
     buildVideoFrame(plan, ballot.from + ballot.durationFrames - 1).currentView.players[2]!.alive,
   ).toBe(true);
@@ -501,6 +602,7 @@ test("fact edits anchor their own kind and split default death batches without d
       afterSeq: 1,
       kind: "life_committed",
       day: 1,
+      waveId: 1,
       playerId: 3,
       alive: false,
       causes: ["poison"],
@@ -510,6 +612,7 @@ test("fact edits anchor their own kind and split default death batches without d
       afterSeq: 1,
       kind: "life_committed",
       day: 1,
+      waveId: 1,
       playerId: 4,
       alive: false,
       causes: ["wolf_kill"],
@@ -614,6 +717,8 @@ test("emphasis order is independent of author order, overlaps reject and identic
     document,
     script(document, {
       layout: "broadcast-v1",
+      // 本例专测相同216字页的原始offset；显式旧分页预算不随新自动阅读模板变化。
+      captionPageFrames: 90,
       edits: [
         { anchor: { seq: 1, type: "day_speech" }, emphasis: [{ text: "x", occurrence: 300 }] },
       ],

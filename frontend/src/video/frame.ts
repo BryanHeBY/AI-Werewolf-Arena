@@ -62,13 +62,19 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
   );
   const { pose: camera, focusPlayerIds } = cameraAt(shot.camera, localFrame, layout);
   const captionRange = videoCaptionRange(plan.layout, shot.scene, shot.durationFrames);
-  const captionPageIndex = Math.min(
-    shot.captionPages.length - 1,
-    Math.floor(
-      (Math.max(0, localFrame - captionRange.from) * shot.captionPages.length) /
-        captionRange.durationFrames,
-    ),
+  const scheduledPage = shot.captionPageRanges?.findIndex(
+    (range) => localFrame >= range.from && localFrame < range.from + range.durationFrames,
   );
+  const captionPageIndex =
+    scheduledPage !== undefined && scheduledPage >= 0
+      ? scheduledPage
+      : Math.min(
+          shot.captionPages.length - 1,
+          Math.floor(
+            (Math.max(0, localFrame - captionRange.from) * shot.captionPages.length) /
+              captionRange.durationFrames,
+          ),
+        );
   const activeLayers = shot.layers.filter(
     (layer) => localFrame >= layer.from && localFrame < layer.from + layer.durationFrames,
   );
@@ -116,6 +122,7 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     activeLayers,
     captionPageIndex,
     captionRange,
+    captionPageRanges: shot.captionPageRanges,
     captionOffset: shot.captionPageOffsets[captionPageIndex] ?? 0,
     caption: shot.captionPages[captionPageIndex] ?? "",
     translation: { x: translateX, y: translateY },

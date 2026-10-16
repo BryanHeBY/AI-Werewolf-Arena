@@ -69,7 +69,8 @@ test("broadcast event and fact caption overrides reach body, caption pages and a
     expect(fact.scene.body).toBe("导演库存说明");
     expect(fact.scene.bodySource).toBe("script");
     expect(fact.speech).toEqual([
-      { speaker: "god", text: "导演库存说明", from: 24, durationFrames: 66 },
+      // 揭晓24后可读，落定40后仍有独立90帧静止阅读。
+      { speaker: "god", text: "导演库存说明", from: 24, durationFrames: 106 },
     ]);
     expect(fact.scene.stock).toEqual({ actorId: 1, abilityId: "witch:potion", heal: 1, poison: 1 });
     expect(event.view.snapshot.event?.payload.text).toBe("原始发言");
@@ -134,5 +135,48 @@ test("empty authored text is intentional and old script default captions keep th
   expect(event.scene.bodySource).toBe("event");
   expect(event.speech).toEqual([
     { speaker: "player:1", text: "原始发言", from: 0, durationFrames: 90 },
+  ]);
+});
+
+test("an editorial actor never changes the recorded dialogue author or its automatic voice", () => {
+  const document = replay();
+  document.players = Array.from({ length: 12 }, (_, index) => ({
+    player_id: index + 1,
+    role: "villager",
+    camp: "good",
+  }));
+  document.events[0]!.payload = { actorId: 2, text: "这是2号的原话" };
+  const original = compileVideoPlan(
+    document,
+    script(document, {
+      layout: "broadcast-v1",
+      edits: [{ anchor: { seq: 1, type: "day_speech" }, scene: { actorId: 12 } }],
+    }),
+  ).shots.find((shot) => shot.id === "event:1")!;
+  expect(original.scene.bodySource).toBe("event");
+  expect(original.scene.body).toBe("这是2号的原话");
+  expect(original.scene.visual?.actorId).toBe(2);
+  expect(original.scene.editorial).toEqual({ actorId: 12 });
+  expect(original.speech).toEqual([
+    { speaker: "player:2", text: "这是2号的原话", from: 0, durationFrames: 90 },
+  ]);
+  const authored = compileVideoPlan(
+    document,
+    script(document, {
+      layout: "broadcast-v1",
+      edits: [
+        {
+          anchor: { seq: 1, type: "day_speech" },
+          scene: { actorId: 12, body: "编导改写说明" },
+          speech: [{ speaker: "god", text: "独立旁白稿", from: 0, durationFrames: 31 }],
+        },
+      ],
+    }),
+  ).shots.find((shot) => shot.id === "event:1")!;
+  expect(authored.scene.bodySource).toBe("script");
+  expect(authored.scene.visual?.actorId).toBe(2);
+  expect(authored.scene.editorial).toEqual({ actorId: 12 });
+  expect(authored.speech).toEqual([
+    { speaker: "god", text: "独立旁白稿", from: 0, durationFrames: 31 },
   ]);
 });

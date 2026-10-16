@@ -1888,6 +1888,22 @@ export const MESSAGE_IDS = Object.freeze([
   "video.heal_blocked",
   "video.death_title",
   "video.death_body",
+  "video.recipient",
+  "video.report",
+  "video.process_paid",
+  "video.process_used",
+  "video.process_blocked",
+  "video.process_expired",
+  "video.process_skipped",
+  "video.process_suppressed",
+  "video.process_unknown",
+  "video.ballot_summary_body",
+  "video.ballot_choice_body",
+  "video.original_speaker",
+  "video.editorial_targets",
+  "video.effect_source",
+  "video.setup",
+  "video.ballots_unavailable",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

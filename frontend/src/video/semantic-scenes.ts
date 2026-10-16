@@ -6,6 +6,7 @@ import type { ReplayEvent, ReplayFact } from "@ai-werewolf-arena/replay-contract
 import { playerLabel } from "@ai-werewolf-arena/game-presentation";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { readReplayEvent } from "../replay/replay-event-reader";
+import { eventVisualIntent, factVisualIntent } from "./visual-intent";
 import type {
   VideoScene,
   VideoSceneCues,
@@ -131,6 +132,7 @@ export function eventScene(
     speaker: "god",
     emphasis: [],
     cues: { establish: 0, travel: 0, impact: 0, settled: 0 },
+    visual: eventVisualIntent(event, playerIds),
   };
   if (!event) return scene;
   const fact = readReplayEvent(event, playerIds);
@@ -139,17 +141,34 @@ export function eventScene(
   const actorId =
     typeof p.actorId === "number"
       ? p.actorId
-      : typeof p.playerId === "number"
-        ? p.playerId
-        : undefined;
+      : event.type === "hunter_shot" && typeof p.hunterId === "number"
+        ? p.hunterId
+        : typeof p.playerId === "number"
+          ? p.playerId
+          : undefined;
   const targets = typeof p.targetId === "number" ? [p.targetId] : [];
   if (
-    ["day_speech", "last_words_spoken", "wolf_discussion"].includes(event.type) &&
+    [
+      "day_speech",
+      "last_words_spoken",
+      "wolf_discussion",
+      "debate_speech",
+      "ghost_bride_partner_chat",
+      "brew_discussion",
+      "secret_body_reveal_speech",
+      "silence_translated",
+    ].includes(event.type) &&
     typeof p.text === "string" &&
     actorId !== undefined
   ) {
     return { ...scene, kind: "speech", body: p.text, speaker: `player:${actorId}`, actorId };
   }
+  if (
+    event.type === "silence_gesture" &&
+    typeof p.description === "string" &&
+    actorId !== undefined
+  )
+    return { ...scene, kind: "speech", body: p.description, speaker: `player:${actorId}`, actorId };
   if (
     ["vote_summary", "sheriff_vote_summary", "vote_cast", "sheriff_vote_cast"].includes(event.type)
   ) {
@@ -165,6 +184,16 @@ export function eventScene(
     return {
       ...scene,
       kind: "ballot",
+      // 原始票型由图表逐项呈现；默认旁白不再把相同明细逐票念一遍。
+      // 旧档可能只保存结果、没有逐票或计票表；不能承诺不存在的图表明细，更不能据winner补造票数。
+      body: text(
+        locale,
+        !data.complete
+          ? "video.ballot_choice_body"
+          : data.votes.length === 0 && (!data.tally || Object.keys(data.tally).length === 0)
+            ? "video.ballots_unavailable"
+            : "video.ballot_summary_body",
+      ),
       ballot: data,
       targetIds: data.targetId === null ? [] : [data.targetId],
       speaker: "god",
@@ -251,6 +280,7 @@ export function factScene(fact: ReplayFact, locale: Locale, names: Names): Video
     speaker: "god",
     emphasis: [],
     cues: { establish: 0, travel: 0, impact: 0, settled: 0 },
+    visual: factVisualIntent(fact),
   };
   switch (fact.kind) {
     case "wolf_knife_revoked":
@@ -400,5 +430,17 @@ export function compileScene(
       return [key, frame];
     }),
   ) as unknown as VideoSceneCues;
-  return { ...scene, cues, emphasis: compileEmphasis(scene.body, emphasis) };
+  return {
+    ...scene,
+    cues,
+    emphasis: compileEmphasis(scene.body, emphasis),
+    ...(override?.targetIds !== undefined || override?.actorId !== undefined
+      ? {
+          editorial: {
+            ...(override.targetIds !== undefined ? { targetIds: [...override.targetIds] } : {}),
+            ...(override.actorId !== undefined ? { actorId: override.actorId } : {}),
+          },
+        }
+      : {}),
+  };
 }

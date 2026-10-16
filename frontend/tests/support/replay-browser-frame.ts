@@ -9,6 +9,7 @@ import { compileVideoPlan, type VideoPlan } from "../../src/video";
 import { buildPresentationReplay } from "../../src/replay/replay-presentation";
 import { FRAMES_PER_EVENT } from "../../src/replay/replay-frame";
 import type { ReplayDisplayOptions } from "../../src/replay/replay-display";
+import { videoCaptionRange } from "../../src/video/captions";
 
 const plans = new WeakMap<ReplayDocument, Map<string, VideoPlan>>();
 
@@ -54,4 +55,18 @@ export function replayBrowserFrame(
   const end = (shot.stateCues[cueIndex + 1]?.frame ?? shot.durationFrames) - 1;
   const offset = legacyFrame % FRAMES_PER_EVENT;
   return shot.from + (offset === FRAMES_PER_EVENT - 1 ? end : Math.min(start + offset, end));
+}
+
+/** 只借页面时间范围导航；独立正文与事实预期仍归调用方，不读取计划中的字幕文本。 */
+export function replayCaptionPageFrame(
+  shot: VideoPlan["shots"][number],
+  layout: VideoPlan["layout"],
+  index: number,
+): number {
+  const explicit = shot.captionPageRanges?.[index];
+  if (explicit) return shot.from + explicit.from;
+  const range = videoCaptionRange(layout, shot.scene, shot.durationFrames);
+  return (
+    shot.from + range.from + Math.ceil((index * range.durationFrames) / shot.captionPages.length)
+  );
 }

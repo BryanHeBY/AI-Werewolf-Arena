@@ -56,12 +56,16 @@ function script(replay: ReplayDocument, values: Omit<VideoScript, "source"> = {}
   return defineVideoScript({ source: getVideoSourceIdentity(replay), ...values });
 }
 
-test("default plan keeps source seq and compiled timeline survives JSON transport", () => {
+test("an explicit page clock keeps source seq and compiled timeline survives JSON transport", () => {
   const replay = fixture();
   const original = structuredClone(replay);
-  const plan = compileVideoPlan(replay);
+  const plan = compileVideoPlan(
+    replay,
+    script(replay, { layout: "broadcast-v1", captionPageFrames: 90 }),
+  );
   // 新广播项目在缺少本轮summary时保留不完整逐票；不会用后续当选事件反推缺失票型。
   expect(plan.shots.map((shot) => shot.eventSeq)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  // 作者固定页时钟保原90帧片段；新的自动静止阅读由专项用例独立验证。
   expect(getVideoEventFrame(plan, 2)).toBe(114);
   expect(getVideoEventFrame(plan, 4)).toBe(270);
   expect(buildVideoFrame(plan, 269).shot.eventSeq).toBe(3);
@@ -193,7 +197,8 @@ test("long speeches paginate without clipping and locale does not shift scene bo
   expect(start.captionPageIndex).toBe(0);
   expect(end.captionPageIndex).toBe(shot.captionPages.length - 1);
   const markup = renderToStaticMarkup(<VideoFrame plan={zh} frame={shot.from} />);
-  expect(markup).toContain("opacity:1");
+  expect(markup).toContain('data-scene-speech="true"');
+  expect(markup).toContain(shot.captionPages[0]!);
   expect(markup).toContain('data-caption-page="0"');
   expect(markup).toContain('data-event-seq="4"');
   expect(markup).not.toContain(replay.events[3].payload.text as string);

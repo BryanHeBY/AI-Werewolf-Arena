@@ -32,12 +32,13 @@ test("render entry rejects invalid inputs and output aliases before starting bro
     await expect(renderReplay(["--input", input, "--output", input])).rejects.toThrow(
       "replay_render_source_overwrite",
     );
+    // 越界值独立于旧90帧固定时长；自动阅读增加时长后仍须在打包前拒绝。
     for (const [extra, code] of [
       [["--locale", "xx"], "replay_display_locale_invalid"],
       [["--time-zone", "xx"], "replay_display_time_zone_invalid"],
       [["--frame=-1"], "replay_frame_invalid"],
       [["--frame", "1.5"], "replay_frame_invalid"],
-      [["--frame", "180"], "replay_frame_out_of_range"],
+      [["--frame", "9999999"], "replay_frame_out_of_range"],
     ] as const)
       await expect(
         renderReplay(["--input", input, "--output", path.join(root, "new.png"), ...extra]),

@@ -9,7 +9,10 @@ import type { ReplayDisplayOptions } from "../replay/replay-display";
 import type { ThemeSelection, ResolvedTheme } from "../themes";
 import type { PlayerPresentationConfig, ResolvedPlayerPresentation } from "../presentation";
 import type { ReplayFact } from "@ai-werewolf-arena/replay-contract";
+import type { GameOutcome, RoleId } from "@ai-werewolf-arena/game-contract";
 import type { VideoFrameView } from "./frame";
+import type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
+export type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
 
 export type JsonValue =
   null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
@@ -48,6 +51,81 @@ export interface VideoBallot {
   adjustments: Array<{ kind: "crow"; targetId: number; weight: number; sourceSeq: number }>;
   complete: boolean;
 }
+/** 只表示当时报告的揭示范围；不能据此推算真实身份、原生能力来源或单个双查目标。 */
+export type VideoVisualReport =
+  | { kind: "camp"; camp: "good" | "wolf" | "third_party" }
+  | { kind: "role"; roleId: RoleId }
+  | { kind: "combined"; camp: "good" | "wolf" | "third_party"; roleId: RoleId }
+  | { kind: "pair"; targetIds: number[]; containsWerewolf: boolean }
+  | { kind: "range"; signal: "roar" | "quiet"; scope: "adjacent_alive" }
+  | { kind: "unknown"; reason: string };
+/** 展示意图是纯数据；显式路由只选版式，不授予规则权限、不根据事件名字尾推成功。 */
+export interface VideoVisualIntent {
+  family: VideoVisualFamily;
+  template: VideoVisualTemplate;
+  process:
+    | "notice"
+    | "choice"
+    | "used"
+    | "paid"
+    | "reported"
+    | "blocked"
+    | "revoked"
+    | "expired"
+    | "resolved"
+    | "skipped"
+    | "suppressed"
+    | "unknown";
+  actorId?: number;
+  /** 反射等契约明示的原效果施法者；与机制actor分开，不反推原生角色或隐藏赠予者。 */
+  effectSourceId?: number;
+  effectKind?: "check" | "guard" | "poison";
+  requestedTargetIds: number[];
+  effectiveTargetIds: number[];
+  /** true且数组为空表示明确的空落点；不能回退请求目标伪造实际命中。 */
+  effectiveTargetKnown?: boolean;
+  recipientIds: number[];
+  participantIds?: number[];
+  report?: VideoVisualReport;
+  potion?: "heal" | "poison";
+  /** 只由明确工具事实选择道具；通用死亡行动阻断无来源时留空，不反推原生枪或爪。 */
+  deathTool?: "gun" | "claw" | "patrol" | "retaliation";
+  /** 三种机制共享对决家族但不共享武器、许可或结果；按具体事件契约区分。 */
+  duelKind?: "knight" | "awakened_knight" | "demon_hunter";
+  protection?: {
+    interaction: "guard_heal_cancelled" | "wolf_attack_blocked";
+    kind?: "guard" | "heal";
+  };
+  /** branch是本条报告/尝试分支，不是从当前生命或真实角色推断；resolved可只有已记录死者。 */
+  duel?: { branch?: "wolf" | "not_wolf" | "good"; chain?: number; recordedDeaths?: number[] };
+  dialogue?: {
+    kind: "speech" | "private" | "collaboration" | "translation" | "gesture" | "revealed";
+    originalSpeakerId?: number;
+  };
+  /** 只有真实生命提交或旧档明确死亡事件可提供；不是技能命中目标。 */
+  life?: {
+    playerIds: number[];
+    committed: boolean;
+    causes?: Record<string, string[]>;
+    waveId?: number;
+  };
+  victory?: {
+    winningPlayerIds: number[];
+    winner?: string | null;
+    reason?: string;
+    outcome?: GameOutcome;
+  };
+  /** 原事件和God事实保持独立序号；事实afterSeq另由stateCue负责前缀。 */
+  source: { eventSeqs: number[]; factSeqs: number[] };
+  /** 请求窗口只提供章节样式，不改变本条事件的动作家族或赋予行动权。 */
+  window?: {
+    id: string;
+    known: boolean;
+    family?: VideoVisualFamily;
+    template?: VideoVisualTemplate;
+  };
+  fallbackReason?: string;
+}
 export interface VideoScene {
   kind: "speech" | "action" | "ballot" | "settlement" | "phase" | "fallback";
   title: string;
@@ -77,6 +155,9 @@ export interface VideoScene {
   ballot?: VideoBallot;
   emphasis: CompiledTextEmphasis[];
   cues: VideoSceneCues;
+  visual?: VideoVisualIntent;
+  /** 导演明确的展示标注独立于记录的请求/效果目标，不覆盖事实或赋予技能。 */
+  editorial?: { targetIds?: number[]; actorId?: number };
 }
 export type VideoSceneOverride = Partial<
   Pick<VideoScene, "kind" | "title" | "body" | "speaker" | "actorId" | "targetIds">
@@ -228,6 +309,8 @@ export interface VideoShot {
   captionPages: string[];
   /** 各页在未改写正文中的UTF16起点，重复页也能精确定位文字重点。 */
   captionPageOffsets: number[];
+  /** 自动阅读保首屏落定后足额静止；旧计划缺省时仍走整段均分页兼容。 */
+  captionPageRanges?: Array<{ from: number; durationFrames: number }>;
   camera: CameraKeyframe[];
   layers: PlannedVideoLayer[];
   speech: CompiledSpeechCue[];

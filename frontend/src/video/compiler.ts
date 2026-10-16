@@ -20,7 +20,12 @@ import {
   type ReplayDisplayOptions,
 } from "../replay/replay-display";
 import { eventLabel } from "../replay/event-labels";
-import { paginateVideoCaption } from "./captions";
+import {
+  paginateVideoCaption,
+  videoCaptionBudget,
+  estimateVideoReadFrames,
+  scheduleVideoCaptionPages,
+} from "./captions";
 import { getVideoSourceIdentity } from "./source";
 import { compileScene, eventScene, factScene, semanticEventGroups } from "./semantic-scenes";
 import type {
@@ -396,7 +401,23 @@ export function compileVideoPlan(
       edit.scene?.body ??
       edit.caption ??
       (layout === "broadcast-v1" || committedFact ? base.body : view.label);
-    const captionPages = paginateVideoCaption(body);
+    // 显式时长/分页及hold保原作者切片；新广播自动模板才采用新的真实字号预算。
+    const budget = videoCaptionBudget(
+      edit.durationFrames !== undefined || script?.captionPageFrames !== undefined
+        ? "legacy-ellipse-v1"
+        : layout,
+      theme.options.largeText === true,
+    );
+    const paginate = (value: string) =>
+      paginateVideoCaption(
+        value,
+        budget.columns,
+        budget.maxLines,
+        layout === "broadcast-v1" &&
+          edit.durationFrames === undefined &&
+          script?.captionPageFrames === undefined,
+      );
+    const captionPages = paginate(body);
     let captionOffset = 0;
     const captionPageOffsets = captionPages.map((page) => {
       const offset = captionOffset;
@@ -426,7 +447,8 @@ export function compileVideoPlan(
         : event
           ? eventLabel(event, otherLocale, playerIds, names)
           : view.label);
-    const pageCount = Math.max(captionPages.length, paginateVideoCaption(otherLabel).length);
+    const otherPages = paginate(otherLabel);
+    const pageCount = Math.max(captionPages.length, otherPages.length);
     const automaticSpeaker = edit.scene?.speaker ?? base.speaker;
     const automaticSpeech: SpeechCue[] =
       automaticSpeaker &&
@@ -446,17 +468,58 @@ export function compileVideoPlan(
             0),
       ),
     );
+    const automaticReading =
+      layout === "broadcast-v1" &&
+      script?.captionPageFrames === undefined &&
+      edit.durationFrames === undefined;
+    // 纯记录没有发动/命中动画，默认立即可读；作者任一显式时钟仍完全优先，未知事件不套此快速预设。
+    const compactNotice =
+      automaticReading &&
+      base.kind === "fallback" &&
+      base.visual?.process === "notice" &&
+      base.visual.fallbackReason === "recorded_notice_without_inferred_effect" &&
+      edit.scene?.cues === undefined;
+    const readFrames = captionPages.map((page) => estimateVideoReadFrames(page, fps));
+    const otherReadFrames = otherPages.map((page) => estimateVideoReadFrames(page, fps));
+    const readingDuration = Math.max(
+      readFrames.reduce((a, b) => a + b, 0),
+      otherReadFrames.reduce((a, b) => a + b, 0),
+    );
+    const hasResolution = endIndex > index && replay.events[endIndex]!.type === "voted_out";
+    const resolutionReadFrames = hasResolution
+      ? Math.max(
+          ...([options.locale, otherLocale] as const).map((locale) =>
+            estimateVideoReadFrames(
+              eventLabel(replay.events[endIndex]!, locale, playerIds, names),
+              fps,
+            ),
+          ),
+        )
+      : 0;
+    const finalKind = edit.scene?.kind ?? base.kind;
+    const readingSettled =
+      finalKind === "speech" || compactNotice
+        ? 0
+        : Math.max(Math.round((fps * 40) / 30), ...Object.values(edit.scene?.cues ?? {}));
     const durationFrames = integer(
-      edit.durationFrames ?? Math.max(defaultDuration, pageCount * pageDuration, mediaDuration),
+      edit.durationFrames ??
+        Math.max(
+          defaultDuration,
+          pageCount * pageDuration,
+          mediaDuration +
+            (automaticReading && speech.some((cue) => cue.assetId) ? Math.round(fps * 0.4) : 0),
+          automaticReading ? readingSettled + readingDuration + resolutionReadFrames : 0,
+        ),
       "shot_duration",
       1,
     );
     const scene = compileScene(base, edit.scene, edit.emphasis, fps, durationFrames, playerIds);
     if (edit.caption !== undefined || edit.scene?.body !== undefined) scene.bodySource = "script";
     if (
-      layout === "broadcast-v1" &&
-      (kind === "hold" || (!event && !committedFact)) &&
-      edit.scene?.cues === undefined
+      compactNotice ||
+      (layout === "broadcast-v1" &&
+        (kind === "hold" || (!event && !committedFact)) &&
+        edit.scene?.cues === undefined)
     )
       scene.cues = { establish: 0, travel: 0, impact: 0, settled: 0 };
     if (layout === "broadcast-v1" && scene.kind !== "speech") {
@@ -484,11 +547,15 @@ export function compileVideoPlan(
           },
         ];
     }
-    if (endIndex > index && replay.events[endIndex]!.type === "voted_out") {
+    if (hasResolution) {
       scene.resolution = {
         text: eventLabel(replay.events[endIndex]!, options.locale, playerIds, names),
         targetId: Number(replay.events[endIndex]!.payload.target),
-        revealFrame: scene.cues.settled,
+        // 结果是第二条原始记录；自动播报先读完票型，再揭晓结果并给它独立停留。
+        revealFrame:
+          automaticReading && edit.scene?.cues?.settled === undefined
+            ? readingSettled + readingDuration
+            : scene.cues.settled,
       };
       if (!edit.speech && speech.length && kind === "event") {
         const resolution = scene.resolution;
@@ -519,6 +586,35 @@ export function compileVideoPlan(
               ];
       }
     }
+    if (base.visual) {
+      scene.visual = structuredClone(base.visual);
+      scene.visual.source = {
+        eventSeqs: committedFact ? [] : sourceEvents.map((item) => item.seq),
+        factSeqs: committedFacts.map((fact) => fact.seq),
+      };
+      if (committedFacts.length > 1 && scene.visual.life) {
+        scene.visual.effectiveTargetIds = [...base.targetIds];
+        scene.visual.effectiveTargetKnown = true;
+        scene.visual.life = {
+          ...scene.visual.life,
+          playerIds: [...base.targetIds],
+          committed: true,
+          causes: Object.fromEntries(
+            committedFacts
+              .filter((fact) => fact.kind === "life_committed")
+              .map((fact) => [fact.playerId, [...fact.causes]]),
+          ),
+        };
+      }
+    }
+    const captionPageRanges = automaticReading
+      ? scheduleVideoCaptionPages(
+          finalKind === "speech" ? 0 : scene.cues.impact,
+          finalKind === "speech" ? 0 : scene.cues.settled,
+          durationFrames,
+          readFrames,
+        )
+      : undefined;
     const compiledSpeech: CompiledSpeechCue[] = speech.map((cue, cueIndex) => {
       speaker(cue.speaker, playerIds);
       if (typeof cue.text !== "string") fail("speech_text_invalid");
@@ -573,7 +669,7 @@ export function compileVideoPlan(
                   throughFactSeq: factCounts[index]!,
                   view: primaryView,
                 },
-                { ...after, frame: scene.cues.settled },
+                { ...after, frame: scene.resolution?.revealFrame ?? scene.cues.settled },
               ]
             : [{ ...after, frame: scene.cues.impact }]),
         ]
@@ -588,6 +684,7 @@ export function compileVideoPlan(
       view,
       captionPages,
       captionPageOffsets,
+      ...(captionPageRanges ? { captionPageRanges } : {}),
       camera: compileCamera(edit.camera, durationFrames, playerIds),
       layers: compileLayers(edit.layers, durationFrames, playerIds),
       speech: compiledSpeech,
@@ -625,11 +722,15 @@ export function compileVideoPlan(
     for (let index = 0; index < pending.length; index++) {
       const fact = pending[index]!;
       const batch = [fact];
-      // 无原事件隔开的同日死亡同时揭晓；不按卡片播放顺序编造夜死先后。原fact序号仍完整保留。
+      // 只有同一前缀且owner明确标为同wave的死亡同时揭晓；afterSeq相同本身不是同波证据。
+      // 旧档缺waveId或跨原事件前缀时保守逐条陈述提交，不宣称各条属于不同真实死亡波。
       while (
         layout === "broadcast-v1" &&
         fact.kind === "life_committed" &&
+        fact.waveId !== undefined &&
         pending[index + 1]?.kind === "life_committed" &&
+        (pending[index + 1] as Extract<ReplayFact, { kind: "life_committed" }>).waveId ===
+          fact.waveId &&
         pending[index + 1]?.day === fact.day &&
         !factEdits.has(fact.seq) &&
         !factEdits.has(pending[index + 1]!.seq)
