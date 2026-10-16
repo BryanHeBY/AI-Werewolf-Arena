@@ -1,0 +1,5 @@
+<!-- 负责单局示例徽章的本地勾号素材；供预览与导出验证统一资源基址，不包含对局数据。 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <circle cx="48" cy="48" r="42" fill="#e4c67d"/>
+  <path d="M28 49 41 62 68 33" fill="none" stroke="#16283c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

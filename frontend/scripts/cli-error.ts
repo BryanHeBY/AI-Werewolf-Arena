@@ -16,7 +16,94 @@ const codes = [
   "replay_render_and_cleanup_failed",
   "replay_display_locale_invalid",
   "replay_display_time_zone_invalid",
+  "video_project_invalid",
+  "video_layers_invalid",
+  "video_custom_layer_missing",
+  "video_input_required",
+  "video_media_invalid",
+  "video_frame_range_invalid",
+  "video_preview_port_invalid",
+  "video_source_mismatch",
+  "video_anchor_mismatch",
+  "video_player_missing",
+  "video_camera_empty",
+  "video_camera_frame_order_invalid",
+  "video_camera_start_missing",
+  "video_camera_target_invalid",
+  "video_camera_easing_invalid",
+  "video_camera_zoom_invalid",
+  "video_edit_anchor_duplicate",
+  "video_hold_id_duplicate",
+  "video_timeline_empty",
+  "video_custom_props_not_json",
+  "video_layer_id_duplicate",
+  "video_layer_out_of_shot",
+  "video_layer_space_invalid",
+  "video_layer_kind_unknown",
+  "video_layer_point_invalid",
+  "video_layer_text_invalid",
+  "video_shake_requires_world_space",
+  "video_media_id_duplicate",
+  "video_media_kind_invalid",
+  "video_audio_id_duplicate",
+  "video_audio_asset_missing",
+  "video_audio_out_of_range",
+  "video_audio_fade_invalid",
+  "video_audio_track_invalid",
+  "video_speaker_invalid",
+  "video_speech_text_invalid",
+  "video_speech_asset_missing",
+  "video_speech_out_of_shot",
+  "video_caption_invalid",
+  "video_unsupported_presentation",
+  "video_frame_invalid",
+  "video_plan_empty",
 ] as const;
+// 编译器的具名数值检查仅允许有限字段；不按任意 video_ 前缀放行外来异常正文。
+const videoNumericFields = new Set([
+  "fps",
+  "width",
+  "height",
+  "seed",
+  "default_event_duration",
+  "caption_page_duration",
+  "timeline_duration",
+  "shot_duration",
+  "camera_frame",
+  "camera_zoom",
+  "point_x",
+  "point_y",
+  "layer_from",
+  "layer_duration",
+  "layer_z_index",
+  "text_x",
+  "text_y",
+  "text_width",
+  "text_font_size",
+  "arrow_width",
+  "layer_opacity",
+  "shake_intensity",
+  "shake_frequency",
+  "media_duration",
+  "media_width",
+  "media_height",
+  "audio_from",
+  "audio_duration",
+  "audio_offset",
+  "audio_volume",
+  "audio_fade_in",
+  "audio_fade_out",
+  "speech_from",
+  "speech_duration",
+]);
+const videoStringFields = new Set([
+  "layer_id",
+  "custom_component",
+  "media_id",
+  "media_src",
+  "audio_id",
+  "hold_id",
+]);
 function loaderMessage(error: unknown, locale: Locale): string | undefined {
   try {
     if (!(error instanceof ReplayLoadError)) return undefined;
@@ -80,10 +167,22 @@ export function replayCommandFailure(error: unknown, locale: Locale) {
   } catch {
     /* 外来对象的描述符查询失败，继续使用通用错误码。 */
   }
-  const code =
-    typeof candidate === "string" && codes.includes(candidate as (typeof codes)[number])
-      ? candidate
-      : "replay_command_failed";
+  let code = "replay_command_failed";
+  let reference: { eventSeq?: number; playerId?: number } = {};
+  if (typeof candidate === "string") {
+    if (codes.includes(candidate as (typeof codes)[number])) code = candidate;
+    const invalid = /^video_([a-z_]+)_invalid$/.exec(candidate);
+    if (invalid && (videoNumericFields.has(invalid[1]!) || videoStringFields.has(invalid[1]!)))
+      code = candidate;
+    const anchor = /^(video_anchor_mismatch|video_player_missing):(\d+)$/.exec(candidate);
+    if (anchor && Number.isSafeInteger(Number(anchor[2]))) {
+      code = anchor[1]!;
+      reference =
+        code === "video_anchor_mismatch"
+          ? { eventSeq: Number(anchor[2]) }
+          : { playerId: Number(anchor[2]) };
+    }
+  }
   const message = loaderMessage(error, locale) ?? text(locale, "cli.offline_failed", { code });
-  return { code, message };
+  return { code, message, ...reference };
 }

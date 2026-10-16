@@ -26,6 +26,8 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "scripts/**/*.ts",
+    "videos/**/*.ts",
+    "videos/**/*.tsx",
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "*.ts"
