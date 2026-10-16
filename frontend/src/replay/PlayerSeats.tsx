@@ -8,6 +8,7 @@ import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayPlayerState } from "./replay-projection";
 import { campName, roleName } from "./replay-localization";
 import { AvatarMark } from "../presentation/AvatarMark";
+import { RoleCrest } from "../presentation/RoleCrest";
 import type { ResolvedPlayerPresentation } from "../presentation";
 
 interface PlayerSeatsProps {
@@ -42,6 +43,7 @@ export const PlayerSeats = memo(function PlayerSeats({
           const profile = presentations?.find((item) => item.playerId === player.playerId);
           const name = presentations ? profile?.displayName : player.name;
           const seat = profile?.seat ?? player.playerId;
+          const roleLabel = roleName(player.role, locale);
           return (
             <button
               type="button"
@@ -50,6 +52,7 @@ export const PlayerSeats = memo(function PlayerSeats({
               aria-label={playerLabel({ id: player.playerId, seat, name }, locale)}
               data-player-id={player.playerId}
               data-seat={seat}
+              data-has-metadata={Boolean(name || profile?.modelLabel)}
               className={`seat ${player.alive ? "alive" : "dead"} ${player.isWinner ? "winner-seat" : ""} ${player.camp} ${focusedPlayerId === player.playerId ? "focused" : ""}`}
               onClick={() => onToggleFocus(player.playerId)}
             >
@@ -59,6 +62,7 @@ export const PlayerSeats = memo(function PlayerSeats({
                   avatar={profile?.avatar ?? { kind: "symbol", key: "neutral" }}
                   size={24}
                 />
+                <RoleCrest role={player.role} size={24} />
               </span>
               {player.isSheriff && (
                 <span className="sheriff">{text(locale, "replay.sheriff_short")}</span>
@@ -66,9 +70,19 @@ export const PlayerSeats = memo(function PlayerSeats({
               {player.isWinner && (
                 <span className="winner">{text(locale, "victory.winner_badge")}</span>
               )}
-              {name && <span className="seat-name">{name}</span>}
-              {profile?.modelLabel && <span className="seat-model">{profile.modelLabel}</span>}
-              <strong>{roleName(player.role, locale)}</strong>
+              {name && (
+                <span className="seat-name" title={name}>
+                  {name}
+                </span>
+              )}
+              {profile?.modelLabel && (
+                <span className="seat-model" title={profile.modelLabel}>
+                  {profile.modelLabel}
+                </span>
+              )}
+              <strong className="seat-role" title={roleLabel}>
+                <span>{roleLabel}</span>
+              </strong>
               <small>{campName(player.camp, locale)}</small>
               {player.publicRole && (
                 <small>

@@ -3,6 +3,8 @@
  * 消费者为网页工作台、视频编译器与场景宿主；主题不读取浏览器偏好、不判断游戏阶段或玩家身份，网页持久化与 React 插槽实现由各宿主单独装配。
  */
 import { text } from "@ai-werewolf-arena/game-text";
+import { createThemeVisualTokens, type ThemeVisualTokens } from "./tokens";
+export type * from "./tokens";
 export type ThemeId = "gothic-v1" | "minimal-v1";
 export type ThemeTone = "day" | "night";
 export type ThemeOptionValue = boolean | string | number;
@@ -36,14 +38,13 @@ export interface ThemePalette {
   danger: string;
   success: string;
 }
-export interface ThemeDefinition {
+export interface ThemeDefinition extends ThemeVisualTokens {
   id: ThemeId;
   version: 1;
   label: { "zh-CN": string; en: string };
   palette: { day: ThemePalette; night: ThemePalette };
   fonts: { body: string; heading: string; mono: string };
   radii: { panel: number; card: number };
-  motion: { durationMs: number; cameraFrames: number };
   options: Record<string, ThemeOptionDefinition>;
   /** 值为注册键，组件进入宿主 bundle，永远不进入主题 JSON。 */
   slots: Record<ThemeSlot, string>;
@@ -149,31 +150,35 @@ const minimalNight: ThemePalette = {
 };
 const definitions: Record<ThemeId, ThemeDefinition> = {
   "gothic-v1": {
+    ...createThemeVisualTokens(true),
     id: "gothic-v1",
     version: 1,
     label: { "zh-CN": text("zh-CN", "theme.gothic_name"), en: text("en", "theme.gothic_name") },
     palette: { day: gothicDay, night: gothicNight },
     fonts: { body: sans, heading: serif, mono },
     radii: { panel: 8, card: 5 },
-    motion: { durationMs: 220, cameraFrames: 18 },
     options: {
       paperTexture: { type: "boolean", default: false },
       ornamentalFrames: { type: "boolean", default: false },
       waxSeals: { type: "boolean", default: false },
+      largeText: { type: "boolean", default: false },
+      reducedMotion: { type: "boolean", default: false },
     },
     slots: slots("gothic-v1"),
   },
   "minimal-v1": {
+    ...createThemeVisualTokens(false),
     id: "minimal-v1",
     version: 1,
     label: { "zh-CN": text("zh-CN", "theme.minimal_name"), en: text("en", "theme.minimal_name") },
     palette: { day: minimalDay, night: minimalNight },
     fonts: { body: sans, heading: sans, mono },
     radii: { panel: 14, card: 9 },
-    motion: { durationMs: 140, cameraFrames: 12 },
     options: {
       density: { type: "choice", default: "comfortable", values: ["comfortable", "compact"] },
       highContrast: { type: "boolean", default: false },
+      largeText: { type: "boolean", default: false },
+      reducedMotion: { type: "boolean", default: false },
     },
     slots: slots("minimal-v1"),
   },
@@ -234,8 +239,53 @@ export function resolveTheme(
   );
   return { id: parsed.id, definition, options };
 }
+/** 旧 version1 已编译计划补齐新增语义 token；保留作者已有值，不重编译事件或修改输入计划。 */
+export function normalizeResolvedTheme(theme: ResolvedTheme): ResolvedTheme {
+  const defaults = resolveTheme(theme.id);
+  const saved = structuredClone(theme);
+  const base = defaults.definition;
+  const previous = saved.definition;
+  return {
+    ...defaults,
+    ...saved,
+    options: { ...defaults.options, ...saved.options },
+    definition: {
+      ...base,
+      ...previous,
+      palette: {
+        day: { ...base.palette.day, ...previous.palette?.day },
+        night: { ...base.palette.night, ...previous.palette?.night },
+      },
+      fonts: { ...base.fonts, ...previous.fonts },
+      radii: { ...base.radii, ...previous.radii },
+      options: { ...base.options, ...previous.options },
+      slots: { ...base.slots, ...previous.slots },
+      typography: { ...base.typography, ...previous.typography },
+      surface: {
+        ...base.surface,
+        ...previous.surface,
+        palette: {
+          day: { ...base.surface.palette.day, ...previous.surface?.palette?.day },
+          night: { ...base.surface.palette.night, ...previous.surface?.palette?.night },
+        },
+      },
+      frame: { ...base.frame, ...previous.frame },
+      connector: { ...base.connector, ...previous.connector },
+      effect: { ...base.effect, ...previous.effect },
+      motion: {
+        ...base.motion,
+        ...previous.motion,
+        standard: { ...base.motion.standard, ...previous.motion?.standard },
+      },
+    },
+  };
+}
 export function themePalette(theme: ResolvedTheme, tone: ThemeTone): ThemePalette {
   return theme.definition.palette[tone];
+}
+/** 阅读颜色由表面拥有，避免透明哥特白天误用原浅色 panel 的深色正文。 */
+export function themeSurface(theme: ResolvedTheme, tone: ThemeTone) {
+  return { ...theme.definition.surface, ...theme.definition.surface.palette[tone] };
 }
 /** 插槽是可选增强；主题切换只选择注册项，不执行或把组件写入可序列化计划。 */
 export function getThemeSlot<T>(
@@ -251,13 +301,23 @@ export function themeToCssVariables(
   tone: ThemeTone,
 ): Record<`--awa-${string}`, string> {
   const palette = themePalette(theme, tone);
+  // 网页字体独立别名避免全局 CSS face 抢占同页视频的项目字体；两者仍加载同一授权字节。
+  const webFont = (stack: string) =>
+    stack
+      .replace('"Noto Sans SC"', '"AWA Web Noto Sans SC"')
+      .replace('"Noto Serif SC"', '"AWA Web Noto Serif SC"');
   return {
     ...Object.fromEntries(Object.entries(palette).map(([key, value]) => [`--awa-${key}`, value])),
-    "--awa-font-body": theme.definition.fonts.body,
-    "--awa-font-heading": theme.definition.fonts.heading,
+    "--awa-font-body": webFont(theme.definition.fonts.body),
+    "--awa-font-heading": webFont(theme.definition.fonts.heading),
     "--awa-font-mono": theme.definition.fonts.mono,
     "--awa-radius-panel": `${theme.definition.radii.panel}px`,
     "--awa-radius-card": `${theme.definition.radii.card}px`,
     "--awa-motion-duration": `${theme.definition.motion.durationMs}ms`,
+    "--awa-web-body-size": `${theme.definition.typography.webBody}px`,
+    "--awa-web-name-size": `${theme.definition.typography.webName}px`,
+    "--awa-web-role-size": `${theme.definition.typography.webRole}px`,
+    "--awa-frame-width": `${theme.definition.frame.secondaryWidth}px`,
+    "--awa-frame-active-width": `${theme.definition.frame.activeWidth}px`,
   };
 }

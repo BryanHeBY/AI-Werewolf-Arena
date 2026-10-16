@@ -1,0 +1,43 @@
+{
+  "description": "Bundled local Noto SC fonts for deterministic Web/video typography; provenance and licenses travel with these files.",
+  "repository": "https://github.com/notofonts/noto-cjk",
+  "sourceCommit": "f8d157532fbfaeda587e826d4cd5b21a49186f7c",
+  "compressionTool": {
+    "name": "woff2_compress",
+    "binarySha256": "77f4f4fab8803ffff7a4d9bb6c16746b8e1c0bb01389d6ef1666ae7b9a88258b"
+  },
+  "fonts": [
+    {
+      "file": "NotoSansSC-VF.woff2",
+      "family": "Noto Sans SC",
+      "version": "2.004",
+      "weight": "100 900",
+      "bytes": 7779528,
+      "sha256": "bedcab88b4a6bf864d044af3ddd02bc2cc6a5f8e1f69430bdd888d9fde9309a3",
+      "sourceUrl": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/Variable/TTF/Subset/NotoSansSC-VF.ttf",
+      "sourceCommit": "f8d157532fbfaeda587e826d4cd5b21a49186f7c",
+      "sourceSha256": "d68bafcb48a2707749396aa12bbbd833cb70401f3a9a689fd2902c7e0d295964",
+      "copyright": "© 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.",
+      "license": "SIL Open Font License 1.1",
+      "licenseFile": "OFL-NotoSans.txt",
+      "licenseSourceUrl": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/LICENSE",
+      "conversion": "woff2_compress NotoSansSC-VF.ttf; complete Simplified Chinese variable font, no glyph subsetting or outline/name editing"
+    },
+    {
+      "file": "NotoSerifSC-VF.woff2",
+      "family": "Noto Serif SC",
+      "version": "2.003",
+      "weight": "200 900",
+      "bytes": 11036568,
+      "sha256": "62f4bd980dedfb1ac090b3b6ab5c397e8acdf8e94f3fdcc8cea0c5869da0e45a",
+      "sourceUrl": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Serif/Variable/TTF/Subset/NotoSerifSC-VF.ttf",
+      "sourceCommit": "f8d157532fbfaeda587e826d4cd5b21a49186f7c",
+      "sourceSha256": "5326cfb097e3ab26fcb39329752b5c0a439bf8d5c4649520e4b492939c352a09",
+      "copyright": "© 2017-2024 Adobe (http://www.adobe.com/).",
+      "license": "SIL Open Font License 1.1",
+      "licenseFile": "OFL-NotoSerif.txt",
+      "licenseSourceUrl": "https://raw.githubusercontent.com/notofonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Serif/LICENSE",
+      "conversion": "woff2_compress NotoSerifSC-VF.ttf; complete Simplified Chinese variable font, no glyph subsetting or outline/name editing"
+    }
+  ]
+}

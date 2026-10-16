@@ -1,23 +1,24 @@
 /**
- * 负责等待项目显式准备的本地字体加载完成。输入为计划中的内容寻址字体与素材基准，输出渲染阻塞句柄生命周期。
+ * 负责等待内置授权字体与项目显式本地字体加载完成。输入为计划中的内容寻址字体与素材基准，输出渲染阻塞句柄生命周期。
  * 预览和导出使用相同字节；失败明确终止渲染，不悄悄使用宿主字体造成字幕分页与画面漂移。
  */
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cancelRender, continueRender, delayRender } from "remotion";
 import { resolveVideoMediaSource } from "./frame";
-import type { VideoPlan } from "./types";
+import { resolveVideoFontFaces, type ThemeFontFace } from "../themes/fonts";
 
 export function VideoFonts({
   fonts,
   mediaBaseUrl,
 }: {
-  fonts: NonNullable<VideoPlan["fonts"]>;
+  fonts?: readonly ThemeFontFace[];
   mediaBaseUrl?: string;
 }) {
   const [handle] = useState(() => delayRender("video_project_fonts"));
+  const resolved = useMemo(() => resolveVideoFontFaces(fonts), [fonts]);
   useEffect(() => {
     let disposed = false;
-    const faces = fonts.map(
+    const faces = resolved.map(
       (font) =>
         new FontFace(
           font.family,
@@ -42,6 +43,6 @@ export function VideoFonts({
       for (const face of faces) document.fonts.delete(face);
       continueRender(handle);
     };
-  }, [fonts, mediaBaseUrl, handle]);
+  }, [resolved, mediaBaseUrl, handle]);
   return null;
 }

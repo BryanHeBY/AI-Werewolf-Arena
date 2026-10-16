@@ -3,7 +3,8 @@
  * 纯 VideoFrame 可直接按帧测试；本层只读编排结果，不读取运行时游戏状态、不调用 TTS 或生成媒体。
  */
 import { AbsoluteFill, Audio, Sequence, useCurrentFrame } from "remotion";
-import type { CSSProperties } from "react";
+import { useMemo, type CSSProperties } from "react";
+import { normalizeResolvedTheme, resolveTheme } from "../themes";
 import { audioCueVolume, buildVideoFrame, resolveVideoMediaSource } from "./frame";
 import type { VideoLayerRegistry, VideoPlan } from "./types";
 import { VideoLayers } from "./VideoLayers";
@@ -21,13 +22,11 @@ export function VideoComposition(props: VideoCompositionProps) {
   const frame = useCurrentFrame();
   return (
     <>
-      {props.plan.fonts?.length ? (
-        <VideoFonts
-          key={JSON.stringify(props.plan.fonts)}
-          fonts={props.plan.fonts}
-          mediaBaseUrl={props.mediaBaseUrl}
-        />
-      ) : null}
+      <VideoFonts
+        key={JSON.stringify(props.plan.fonts ?? [])}
+        fonts={props.plan.fonts}
+        mediaBaseUrl={props.mediaBaseUrl}
+      />
       <VideoFrame {...props} frame={frame} />
       <VideoAudio plan={props.plan} mediaBaseUrl={props.mediaBaseUrl} />
     </>
@@ -48,10 +47,15 @@ export function VideoAudio({ plan, mediaBaseUrl }: { plan: VideoPlan; mediaBaseU
   });
 }
 export function VideoFrame(props: VideoCompositionProps & { frame: number }) {
-  return props.plan.layout === "broadcast-v1" ? (
-    <BroadcastVideoFrame {...props} />
+  // 旧已准备计划可缺新主题 token；按计划身份补齐一次，逐帧不重新编译或修改事实／脚本。
+  const plan = useMemo(
+    () => ({ ...props.plan, theme: normalizeResolvedTheme(props.plan.theme ?? resolveTheme()) }),
+    [props.plan],
+  );
+  return plan.layout === "broadcast-v1" ? (
+    <BroadcastVideoFrame {...props} plan={plan} />
   ) : (
-    <LegacyVideoFrame {...props} />
+    <LegacyVideoFrame {...props} plan={plan} />
   );
 }
 function LegacyVideoFrame({
