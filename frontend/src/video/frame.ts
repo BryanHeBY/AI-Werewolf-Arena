@@ -76,8 +76,16 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
       shakeX += Math.sin(phase) * (layer.intensity ?? 8) * envelope;
       shakeY += Math.sin(phase * 1.37 + 1.3) * (layer.intensity ?? 8) * envelope;
     }
-  const translateX = plan.width / 2 - camera.x * camera.scale + shakeX;
-  const translateY = plan.height * 0.385 - camera.y * camera.scale + shakeY;
+  const origin =
+    plan.layout === "broadcast-v1"
+      ? { x: layout.stage.x + layout.stage.width / 2, y: layout.stage.y + layout.stage.height / 2 }
+      : { x: plan.width / 2, y: plan.height * 0.385 };
+  const translateX = origin.x - camera.x * camera.scale + shakeX;
+  const translateY = origin.y - camera.y * camera.scale + shakeY;
+  const stageOffset = {
+    x: (origin.x - camera.x) * camera.scale + shakeX,
+    y: (origin.y - camera.y) * camera.scale + shakeY,
+  };
   return {
     frame,
     localFrame,
@@ -105,6 +113,8 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     caption: shot.captionPages[captionPageIndex] ?? "",
     translation: { x: translateX, y: translateY },
     transform: `translate(${translateX}px, ${translateY}px) scale(${camera.scale})`,
+    /** 中央图形以stage中心为transform-origin时使用，与画布world矩阵包含同一平移／震动；HUD与字幕不继承。 */
+    stageTransform: `translate(${stageOffset.x}px, ${stageOffset.y}px) scale(${camera.scale})`,
   };
 }
 export type VideoFrameView = ReturnType<typeof buildVideoFrame>;

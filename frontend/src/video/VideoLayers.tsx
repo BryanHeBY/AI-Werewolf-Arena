@@ -1,6 +1,7 @@
 /**
  * 负责绘制视频预设与项目自定义图层。输入为当前帧视图、计划和构建时组件注册表，输出场景或屏幕空间的 React 图层。
  * 图层只根据显式帧号绘制，不使用时钟或网络；自定义名称必须存在于注册表，组件本身不进入计划数据。
+ * 广播world坐标投影到画布，席位始终固定HUD；旧布局仍由原父级world矩阵负责，不能重复变换。
  */
 import type { CSSProperties } from "react";
 import { resolveLayerPoint } from "./layout";
@@ -55,14 +56,25 @@ function PresetLayer({
 }) {
   const frame = view.localFrame - layer.from;
   const scale = Math.min(plan.width / 1280, plan.height / 720);
+  const broadcast = view.layout.id === "broadcast-v1";
+  const projectedWorld = broadcast && layer.space === "world";
+  const worldScale = projectedWorld ? view.camera.scale : 1;
+  const worldContainer: CSSProperties = projectedWorld
+    ? { ...fill, transform: view.transform, transformOrigin: "0 0" }
+    : fill;
   switch (layer.kind) {
-    case "text":
+    case "text": {
+      const raw = { x: layer.x ?? plan.width * 0.12, y: layer.y ?? plan.height * 0.17 };
+      const position = projectedWorld ? videoWorldToScreen(raw, view) : raw;
       return (
         <div
           style={{
             position: "absolute",
-            left: layer.x ?? plan.width * 0.12,
-            top: layer.y ?? plan.height * 0.17,
+            left: position.x,
+            top: position.y,
+            ...(projectedWorld
+              ? { transform: `scale(${worldScale})`, transformOrigin: "0 0" }
+              : {}),
             width: layer.width ?? plan.width * 0.76,
             padding: 16 * scale,
             boxSizing: "border-box",
@@ -81,10 +93,11 @@ function PresetLayer({
           {layer.text}
         </div>
       );
+    }
     case "arrow": {
       const resolve = (point: typeof layer.fromTarget) => {
         const position = resolveLayerPoint(point, view.layout);
-        return layer.space === "screen" && "playerId" in point
+        return projectedWorld || (layer.space === "screen" && "playerId" in point)
           ? videoWorldToScreen(position, view)
           : position;
       };
@@ -95,7 +108,7 @@ function PresetLayer({
         length = Math.hypot(dx, dy);
       if (length < 1) return null;
       const angle = Math.atan2(dy, dx),
-        head = 17 * scale;
+        head = 17 * scale * worldScale;
       // 使用显式箭头路径，避免多 composition 内 SVG marker ID 相撞。
       return (
         <svg width={plan.width} height={plan.height} style={fill}>
@@ -103,7 +116,7 @@ function PresetLayer({
             d={`M ${from.x} ${from.y} L ${to.x} ${to.y} M ${to.x - Math.cos(angle - 0.45) * head} ${to.y - Math.sin(angle - 0.45) * head} L ${to.x} ${to.y} L ${to.x - Math.cos(angle + 0.45) * head} ${to.y - Math.sin(angle + 0.45) * head}`}
             fill="none"
             stroke={layer.color ?? "#ffd47a"}
-            strokeWidth={(layer.strokeWidth ?? 4) * scale}
+            strokeWidth={(layer.strokeWidth ?? 4) * scale * worldScale}
             strokeLinecap="round"
           />
         </svg>
@@ -114,14 +127,22 @@ function PresetLayer({
       const seats = view.layout.seats
         .filter((seat) => layer.playerIds.includes(seat.playerId))
         .map((seat) =>
-          layer.space === "screen"
+          broadcast
             ? {
                 ...seat,
-                ...videoWorldToScreen(seat, view),
-                width: seat.width * view.camera.scale,
-                height: seat.height * view.camera.scale,
+                ...videoWorldToScreen(
+                  resolveLayerPoint({ playerId: seat.playerId }, view.layout),
+                  view,
+                ),
               }
-            : seat,
+            : layer.space === "screen"
+              ? {
+                  ...seat,
+                  ...videoWorldToScreen(seat, view),
+                  width: seat.width * view.camera.scale,
+                  height: seat.height * view.camera.scale,
+                }
+              : seat,
         );
       const id = `mask-${view.shotIndex}-${encodeURIComponent(layer.id).replace(/%/g, "_")}`;
       const color = layer.color ?? "#ffd47a";
@@ -173,7 +194,7 @@ function PresetLayer({
       return (
         <div
           style={{
-            ...fill,
+            ...worldContainer,
             background: layer.color ?? "#fff",
             opacity: (layer.opacity ?? 0.65) * Math.max(0, 1 - frame / layer.durationFrames),
           }}
@@ -185,7 +206,7 @@ function PresetLayer({
       if (!layerRegistry || !Object.hasOwn(layerRegistry, layer.component))
         throw new Error(`video_custom_component_missing:${layer.component}`);
       const Component = layerRegistry[layer.component];
-      return (
+      const component = (
         <Component
           frame={frame}
           durationFrames={layer.durationFrames}
@@ -193,7 +214,20 @@ function PresetLayer({
           plan={plan}
           props={layer.props ?? {}}
           mediaBaseUrl={mediaBaseUrl}
+          currentView={view.currentView}
+          scene={view.scene}
+          sourceSeq={view.sourceSeq}
+          sourceFactSeq={view.sourceFactSeq}
+          view={view}
         />
+      );
+      // 广播world自定义组件采用原始场景坐标，继承与旧布局相同的整层矩阵；HUD混合组件应声明screen。
+      return projectedWorld ? (
+        <div data-video-custom-world style={worldContainer}>
+          {component}
+        </div>
+      ) : (
+        component
       );
     }
   }

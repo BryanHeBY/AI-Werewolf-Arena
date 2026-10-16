@@ -108,8 +108,8 @@ export function cameraTargetPose(
   // 广播布局的席位属于固定 HUD，玩家聚焦只选择中央人物，不移动两侧栏。
   if (layout.id === "broadcast-v1")
     return {
-      x: layout.width / 2,
-      y: layout.height * 0.385,
+      x: layout.stage.x + layout.stage.width / 2,
+      y: layout.stage.y + layout.stage.height / 2,
       scale: zoom ?? (target === "table" ? 1 : 1.12),
     };
   if (target === "table")

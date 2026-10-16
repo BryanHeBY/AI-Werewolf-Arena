@@ -9,6 +9,7 @@ import type { ReplayDisplayOptions } from "../replay/replay-display";
 import type { ThemeSelection, ResolvedTheme } from "../themes";
 import type { PlayerPresentationConfig, ResolvedPlayerPresentation } from "../presentation";
 import type { ReplayFact } from "@ai-werewolf-arena/replay-contract";
+import type { VideoFrameView } from "./frame";
 
 export type JsonValue =
   null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
@@ -281,5 +282,7 @@ export interface CustomVideoLayerProps {
   scene?: VideoScene;
   sourceSeq?: number;
   sourceFactSeq?: number;
+  /** 当前完整几何与事实视图；world组件继承矩阵，混合席位锚点应放screen层并显式投影。 */
+  view?: VideoFrameView;
 }
 export type VideoLayerRegistry = Record<string, ComponentType<CustomVideoLayerProps>>;
