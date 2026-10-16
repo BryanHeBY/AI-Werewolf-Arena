@@ -1,0 +1,4155 @@
+{
+  "schemaVersion": 1,
+  "description": "职责：为全部64个实际RoleId提供中文纹章与技能美术简报、真实关联和必须区分的结果；设计家族不授予能力，brief不代表已实现。",
+  "baseline": "6b41efed401d07ed07830ac38f48e2745785fa84",
+  "status": "brief：全部为设计索引，未新增或集成素材。",
+  "counts": {
+    "roles": 64,
+    "roleEnums": 64,
+    "roleCatalogEntries": 64,
+    "builtinContributions": 64,
+    "plannedRoles": 0,
+    "declaredAwakenedRoleIds": 9,
+    "nominalCamp": {
+      "good": 39,
+      "wolf": 23,
+      "third_party": 2
+    },
+    "runtimePhases": 4,
+    "actionStageIds": 98,
+    "toolIds": 79,
+    "eventTypeIds": 217,
+    "godFactKinds": 5,
+    "publicBoardFiles": 104,
+    "publicUniqueBoardIds": 104,
+    "localRuntimeBoardFiles": 3,
+    "localRuntimeUniqueBoardIds": 3,
+    "combinedUniqueBoardIds": 104,
+    "exactRoleDeckGroups": 75,
+    "roleDeckGroupsHavingPolicyVariants": 12,
+    "extraPublicBoardsBeyondExactRoleDeckGroups": 29,
+    "legacyBoardNameEnum": 2,
+    "builtinUniqueNightHandlerIds": 61
+  },
+  "boundaries": [
+    "角色只计ROLE_IDS/Role枚举/catalog/BUILTIN实际贡献共同声明的64个ID。9个awakened_*已独立声明，计入64但不再重复加一个觉醒形态。",
+    "raven解封、hidden接刀、wild_child变狼、复制/借用/赠予资源、恋人和婚礼成员等状态或关系不额外算角色。",
+    "104是当前configs.example/boards公开JSON唯一ID数，不是系统上限：board ID合法模式开放，最多128人；本地configs/boards的3个ID都在公开集内。",
+    "75仅按人数+roleSetups精确组成分组，同组29份额外入口可能修改策略；不宣称等于75种全部规则玩法。",
+    "4是Phase枚举；98是ActionStage协议标识，包含四个自爆窗口和三个普通骑士决斗窗口；夜阶段handler ID另列，不混成阶段数。",
+    "catalog.targetPhase是工程交付里程碑P1/P5/P7/P8/P9，不是游戏运行阶段。",
+    "名义阵营、实际阵营、查验显示和胜利归属分离；共享美术不得反推真实身份。",
+    "role→tool/event/stage是审计索引，角色也可能观察他人事件；不是授权表。",
+    "profile默认政策可被本局board覆盖，运行时只读实际归档；全部角色还可参与当前授权的公共行动。",
+    "纹章、道具与LLM头像独立；目前只有3张action素材，不存在64套已制作角色资源。"
+  ],
+  "families": [
+    {
+      "id": "pack_attack",
+      "name": "群体进攻",
+      "grammar": "来源席位提示→票/目标线→权威刀印记→独立死亡揭晓；撤销用断线，不用复活",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "civic_ballot",
+      "name": "发言与公民投票",
+      "grammar": "发言纸页、投票匣、原始票笺与来源明确的加权角标；弃票、失权、无记录各异",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "inspection_camp",
+      "name": "阵营信息",
+      "grammar": "中性古镜/墓碑回执→明确标签的阵营血蜡；未知保持未揭；不展示具体角色，也不以眼睛作通用播报",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "inspection_role",
+      "name": "具体角色信息",
+      "grammar": "角色纹章卡→明确角色名，区别阵营封蜡；查验附带伤害独立延后结算",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "inspection_pair",
+      "name": "聚合信息",
+      "grammar": "两个头像封在同一括号，只有一枚“含狼”结果；不向单个目标连结结果",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "potion",
+      "name": "药物与炼制",
+      "grammar": "明确不同瓶形及库存刻度，付费、施加、阻断、最终生命分别播报",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "protection",
+      "name": "防护与替身",
+      "grammar": "护盾、帷幕、秘密身、全因罩分形；选择时不提前打成功勾，只有实际阻挡事件可盖章",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "death_action",
+      "name": "死亡触发与行动链",
+      "grammar": "先权威死亡，再资格/支付，再枪/方向行动；每条连锁完整结算，不合成同时枪火",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "reveal_survival",
+      "name": "身份揭示与豁免",
+      "grammar": "翻面身份卡与仍亮的生命；投票权用独立票笺状态，不以灰头像代替",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "duel",
+      "name": "决斗与审判",
+      "grammar": "双剑/裁决印，命中阵营结果与实际死亡分段；未完发言游标独立保留",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "relation_link",
+      "name": "关系、牵连与契约",
+      "grammar": "显式方向、时限与一次性资源的系带；情侣、魅惑、替死、婚礼不能共用无标签红线",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "animal_signal",
+      "name": "被动感知",
+      "grammar": "声波等环境反馈，不把范围感知可视化为确定个人身份",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "inheritance",
+      "name": "继承与权限转变",
+      "grammar": "封印→解封/交刀；当前阵营、认知范围、工具权限分列，不用一次变身掩盖延迟",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "copy_resource",
+      "name": "学习、借用与独立资源",
+      "grammar": "本体徽章固定，副卡槽承载学习角色/借用技能与独立库存，显式激活和归还时点",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "gift_resource",
+      "name": "赠予、交易与反噬",
+      "grammar": "契约转交→待激活→受赠能力；赠予者反噬另独立一条伤害链",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "affiliation",
+      "name": "胜利归属",
+      "grammar": "单向胜利丝带而非阵营徽章变色；不将隐含目标阵营泄漏给角色视角",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "identity_choice",
+      "name": "初始身份选择",
+      "grammar": "真实底牌槽、强制选择锁与身份替换；可选/必选/保留原身份明确分流",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "independent_survival",
+      "name": "第三方生存",
+      "grammar": "独立胜利纹章与特殊免疫/致死标签；不归类成普通神或普通狼",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "reflection",
+      "name": "反射与回流",
+      "grammar": "原始请求虚线→折返实际效果实线，何时支付一次性反射用独立刻度",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "suppression",
+      "name": "抑制与封印",
+      "grammar": "禁用/暂缓/解除分别用封蜡、沙漏、拆封；不把被封当主动跳过",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "mapping",
+      "name": "目标映射",
+      "grammar": "原请求号码保持原位，用门/通道显示实际落点；夜效映射、占位映射、日放逐映射不能换名混用",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "modifier",
+      "name": "增强与削弱",
+      "grammar": "加减印附着原技能，实际追加动作独立节拍；冲突按真实规则揭晓",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "expression",
+      "name": "表达与翻译",
+      "grammar": "原手势与第三方译文两个有署名文本框；仅受限场景封口",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "delayed_life",
+      "name": "延迟生命结算",
+      "grammar": "仍亮生命+有触发条件的沙漏，直到实际提交死亡才灰暗；不按剪辑时长自行到期",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "secret_decision",
+      "name": "秘密协作与博弈",
+      "grammar": "独立密封选择卡→权限范围内揭晓结算，God、参与者和公开观众视角需有明确标签",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "player_dialogue",
+      "name": "玩家原话",
+      "grammar": "明确actor/来源/翻译署名，正文原文按页，静止阅读。",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "god_announcement",
+      "name": "中性上帝播报",
+      "grammar": "来源明确的紧凑说明，没有不相关眼睛/菱形大图。",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "phase_transition",
+      "name": "阶段章节",
+      "grammar": "真实阶段揭晓后短雾/光照转换，保持固定HUD和正文安全区。",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "life_settlement",
+      "name": "真实生命结算",
+      "grammar": "life提交/已录制死亡清单，平安夜/多死/连锁分开，不从伤害猜死亡。",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "game_result",
+      "name": "终局成员与原因",
+      "grammar": "照录胜负/和局/无胜者与winningPlayerIds，生命与赢家分别展示。",
+      "status": "设计建议，非现有默认实现覆盖"
+    },
+    {
+      "id": "resource_inventory",
+      "name": "权威资源库存",
+      "grammar": "可记录才画瓶/刻度/数量，未知不补值。",
+      "status": "设计建议，非现有默认实现覆盖"
+    }
+  ],
+  "roles": [
+    {
+      "roleId": "wolf",
+      "nameZh": "狼人",
+      "nameEn": "Werewolf",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "夜聊、狼刀、自爆",
+        "projectSkillBrief": "夜间可狼队夜聊并参与刀人投票",
+        "configurationDefaults": null,
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct"],
+      "windows": "每夜狼聊与集体刀票；允许的白天自爆窗口",
+      "requestStageIds": ["wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": [
+        "wolf_self_destruct",
+        "wolf_tactical_order",
+        "wolf_discussion_ended",
+        "wolf_discussion",
+        "wolf_kill_vote_cast"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "pack_attack",
+        "motif": "爪痕与月刃",
+        "mustDistinguish": [
+          "狼聊／单张刀票／最终刀印记／撤刀／真实死亡",
+          "弃刀不等于未执行；自爆不是狼刀伤害"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/wolf/profile.ts",
+          "line": 7
+        },
+        "skillBrief": {
+          "path": "backend/src/features/wolf/profile.ts",
+          "line": 7,
+          "note": "资料由贡献引用/展开继承，见导出与实际runtime资料；此处不伪造本文件不存在的字面值。"
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 20
+        },
+        "ruleCard": "docs/rules/awa-classic-v1.md#wolf",
+        "featureDirectory": "backend/src/features/wolf",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "villager",
+      "nameZh": "平民",
+      "nameEn": "Villager",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "发言、投票",
+        "projectSkillBrief": "无夜间技能，白天通过发言和投票推进局势",
+        "configurationDefaults": null,
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [],
+      "windows": "白天发言与合法投票",
+      "requestStageIds": [],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["day_speech", "vote_cast", "vote_summary"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "civic_ballot",
+        "motif": "中性火炬与票笺",
+        "mustDistinguish": [
+          "普通发言是玩家观点，不是已验证事实",
+          "有投票权／弃票／无投票权必须分开"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/villager/profile.ts",
+          "line": 14
+        },
+        "skillBrief": {
+          "path": "backend/src/features/villager/profile.ts",
+          "line": 19
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 27
+        },
+        "ruleCard": "docs/rules/awa-classic-v1.md#villager",
+        "featureDirectory": "backend/src/features/villager",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "seer",
+      "nameZh": "预言家",
+      "nameEn": "Seer",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_seer"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "阵营查验",
+        "projectSkillBrief": "每晚可查验一名玩家阵营",
+        "configurationDefaults": {
+          "targetPolicy": "awa_alive_v1",
+          "actionPolicy": "awa_required_when_legal_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["check_identity"],
+      "windows": "每夜阵营查验",
+      "requestStageIds": ["seer"],
+      "nightHandlerIds": ["seer_check"],
+      "relatedEventIds": ["seer_checked"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "inspection_camp",
+        "motif": "古镜与阵营血蜡",
+        "mustDistinguish": [
+          "目标选择／阵营结果／未知结果",
+          "阵营标签不等于真实角色；咒狐相关死亡等后续结算单列"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/seer/profile.ts",
+          "line": 34
+        },
+        "skillBrief": {
+          "path": "backend/src/features/seer/profile.ts",
+          "line": 39
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 34
+        },
+        "ruleCard": "docs/rules/awa-classic-v1.md#seer",
+        "featureDirectory": "backend/src/features/seer",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "witch",
+      "nameZh": "女巫",
+      "nameEn": "Witch",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_witch"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "解药、毒药",
+        "projectSkillBrief": "拥有解药与毒药，可在夜间选择使用",
+        "configurationDefaults": {
+          "selfHeal": "disabled",
+          "knifeVisibility": "awa_with_heal_v1",
+          "potionPolicy": "awa_one_native_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["use_potion"],
+      "windows": "夜间药物选择与夜结算",
+      "requestStageIds": ["witch"],
+      "nightHandlerIds": ["reset_night_role_state", "witch_action"],
+      "relatedEventIds": ["witch_potion_skipped", "witch_potion_used"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": ["night_protection_resolved", "potion_stock"]
+      },
+      "proposed": {
+        "familyId": "potion",
+        "motif": "双瓶：解药与毒药",
+        "mustDistinguish": [
+          "解药／毒药／跳过／库存不足／策略禁用",
+          "支付药瓶不等于救活或毒死；请求目标与实际映射目标分开",
+          "同守同救取消与单一保护阻断分开"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/witch/profile.ts",
+          "line": 28
+        },
+        "skillBrief": {
+          "path": "backend/src/features/witch/profile.ts",
+          "line": 33
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 41
+        },
+        "ruleCard": "docs/rules/awa-classic-v1.md#witch",
+        "featureDirectory": "backend/src/features/witch",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "hunter",
+      "nameZh": "猎人",
+      "nameEn": "Hunter",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_hunter"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "死亡开枪",
+        "projectSkillBrief": "AWA默认：狼刀、放逐、枪击或白狼王带人死亡可开枪，含毒等禁枪来源则不能开枪；允许末神开枪与主动空枪",
+        "configurationDefaults": {
+          "deathActionPolicy": "awa_qualified_sources_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["shoot"],
+      "windows": "真实死亡后的资格判断与死亡行动链",
+      "requestStageIds": ["hunter_shot", "death_shot"],
+      "nightHandlerIds": [],
+      "relatedEventIds": [
+        "death_shot_missed",
+        "death_shot_blocked",
+        "hunter_silent_due_to_poison",
+        "hunter_shot",
+        "player_shot"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "death_action",
+        "motif": "单发铳与准星",
+        "mustDistinguish": [
+          "有枪资格／禁枪／主动空枪／枪击目标／真实死亡",
+          "被毒禁枪不是玩家放弃开枪；先死亡再开启枪行动"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/hunter/profile.ts",
+          "line": 26
+        },
+        "skillBrief": {
+          "path": "backend/src/features/hunter/profile.ts",
+          "line": 31
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 48
+        },
+        "ruleCard": "docs/rules/awa-classic-v1.md#hunter",
+        "featureDirectory": "backend/src/features/hunter",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "guard",
+      "nameZh": "守卫",
+      "nameEn": "Guard",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_guard"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "狼刀保护",
+        "projectSkillBrief": "每夜守护一名存活玩家或空守；重复目标限制遵循本局守卫策略。",
+        "configurationDefaults": {
+          "repeatPolicy": "awa_last_action_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["guard"],
+      "windows": "每夜守护与夜结算",
+      "requestStageIds": ["guard"],
+      "nightHandlerIds": ["guard_action"],
+      "relatedEventIds": ["guard_applied"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": ["night_protection_resolved"]
+      },
+      "proposed": {
+        "familyId": "protection",
+        "motif": "盾牌与环形护符",
+        "mustDistinguish": [
+          "守护选择／有效阻挡／同守同救取消／跳过",
+          "保护标记不等于目标最终存活；连守限制按本局策略"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/guard/profile.ts",
+          "line": 30
+        },
+        "skillBrief": {
+          "path": "backend/src/features/guard/profile.ts",
+          "line": 35
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 55
+        },
+        "ruleCard": "docs/rules/awa-classic-v1.md#guard",
+        "featureDirectory": "backend/src/features/guard",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "idiot",
+      "nameZh": "白痴",
+      "nameEn": "Village Idiot",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_idiot"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "放逐豁免、投票权",
+        "projectSkillBrief": "首次被放逐翻牌免死，此后不可投票、再被放逐或持有警徽",
+        "configurationDefaults": null,
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [],
+      "windows": "首次被放逐时的揭示与后续投票资格",
+      "requestStageIds": [],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["idiot_revealed"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "reveal_survival",
+        "motif": "翻转面具与失去的票笺",
+        "mustDistinguish": [
+          "身份公开且免此次放逐／实际死亡",
+          "被动失去投票、被放逐及警长权利，不表现成普通弃票"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/idiot/profile.ts",
+          "line": 17
+        },
+        "skillBrief": {
+          "path": "backend/src/features/idiot/profile.ts",
+          "line": 22
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 62
+        },
+        "ruleCard": "docs/rules/awa-classic-v1.md#idiot",
+        "featureDirectory": "backend/src/features/idiot",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "wolf_king",
+      "nameZh": "狼王",
+      "nameEn": "Wolf King",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_wolf_king"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "死亡带人、死因限制",
+        "projectSkillBrief": "AWA默认：狼队互认、夜聊、狼刀及普通自爆；狼刀、放逐、枪击或白狼王带人死亡可开一枪，毒、梦亡、殉情、决斗或自爆禁枪",
+        "configurationDefaults": {
+          "deathActionPolicy": "awa_qualified_sources_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "shoot"],
+      "windows": "狼队常规行动；真实死亡后的限定死因枪链",
+      "requestStageIds": ["wolf_discussion", "wolf_vote", "death_shot"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": [
+        "death_shot_missed",
+        "wolf_self_destruct",
+        "death_shot_blocked",
+        "player_shot",
+        "wolf_king_shot"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "death_action",
+        "motif": "狼冠与单发铳",
+        "mustDistinguish": [
+          "普通狼王枪／普通狼人自爆",
+          "允许死因开枪／毒梦殉情决斗等禁枪／空枪",
+          "枪击声明不等于所有后续链已结算"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/wolf-king/profile.ts",
+          "line": 30
+        },
+        "skillBrief": {
+          "path": "backend/src/features/wolf-king/profile.ts",
+          "line": 35
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 69
+        },
+        "ruleCard": "docs/rules/awa-wolf-king-v1.md#wolf_king",
+        "featureDirectory": "backend/src/features/wolf-king",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "white_wolf_king",
+      "nameZh": "白狼王",
+      "nameEn": "White Wolf King",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "自爆带人、流程中断",
+        "projectSkillBrief": "白天启用窗口自爆可带走另一存活玩家；非自爆无带人技能，守护/解药不挡，猎人/狼王可追枪",
+        "configurationDefaults": null,
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct_with_target"],
+      "windows": "狼队常规行动；允许白天窗口的自爆带人",
+      "requestStageIds": ["wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": ["white_wolf_king_self_destruct"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "death_action",
+        "motif": "白狼冠与断裂双链",
+        "mustDistinguish": [
+          "自爆本体／携带目标／主动不带人／目标真实死亡",
+          "非自爆死亡不带人；不画成普通刀或普通枪"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/white-wolf-king/profile.ts",
+          "line": 20
+        },
+        "skillBrief": {
+          "path": "backend/src/features/white-wolf-king/profile.ts",
+          "line": 25
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 76
+        },
+        "ruleCard": "docs/rules/awa-white-wolf-king-v1.md#white_wolf_king",
+        "featureDirectory": "backend/src/features/white-wolf-king",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "knight",
+      "nameZh": "骑士",
+      "nameEn": "Knight",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_knight"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "白天决斗",
+        "projectSkillBrief": "发言阶段启用窗口一次决斗；真实狼死且入夜，非狼则骑士死并遗言，继续白天",
+        "configurationDefaults": {
+          "enabledWindows": ["after_speeches"]
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["duel"],
+      "windows": "白天允许决斗窗口",
+      "requestStageIds": ["before_speeches", "between_speeches", "after_speeches"],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["knight_duel"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "duel",
+        "motif": "单剑与真假阵营封蜡",
+        "mustDistinguish": [
+          "决斗选择／验狼成功／误决好人导致本人死亡",
+          "命中狼后进入夜晚与失败后继续白天分开；真实生命提交另读"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/knight/profile.ts",
+          "line": 20
+        },
+        "skillBrief": {
+          "path": "backend/src/features/knight/profile.ts",
+          "line": 26
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 83
+        },
+        "ruleCard": "docs/rules/awa-knight-v1.md#knight",
+        "featureDirectory": "backend/src/features/knight",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "gravekeeper",
+      "nameZh": "守墓人",
+      "nameEn": "Gravekeeper",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "放逐后的信息反馈",
+        "projectSkillBrief": "从第二夜起被动获知上一日实际放逐主目标的阵营查验标签，不需要主动行动。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [],
+      "windows": "第二夜起反馈前一日实际主放逐目标",
+      "requestStageIds": [],
+      "nightHandlerIds": ["gravekeeper_feedback"],
+      "relatedEventIds": ["gravekeeper_reported"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "inspection_camp",
+        "motif": "墓碑与上一日封蜡",
+        "mustDistinguish": [
+          "没有有效放逐反馈／收到好狼标签",
+          "反馈属于前一日实际主放逐，不取原票最高目标或连锁死者"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/gravekeeper/profile.ts",
+          "line": 18
+        },
+        "skillBrief": {
+          "path": "backend/src/features/gravekeeper/profile.ts",
+          "line": 24
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 90
+        },
+        "ruleCard": "docs/rules/awa-gravekeeper-v1.md#gravekeeper",
+        "featureDirectory": "backend/src/features/gravekeeper",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "dreamer",
+      "nameZh": "摄梦人",
+      "nameEn": "Dreamer",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "持续关系、保护/伤害",
+        "projectSkillBrief": "每夜必须选择其它存活梦游者，免疫夜间普通伤害；连续两夜同目标或摄梦人夜间死亡导致梦亡。",
+        "configurationDefaults": {
+          "protectionPolicy": "awa_night_damage_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["dream"],
+      "windows": "夜间摄梦；重复摄梦和摄梦人夜死的后续伤害链",
+      "requestStageIds": ["dreamer"],
+      "nightHandlerIds": ["dreamer_action"],
+      "relatedEventIds": ["dream_applied", "dream_death"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": ["night_protection_resolved"]
+      },
+      "proposed": {
+        "familyId": "relation_link",
+        "motif": "梦网与双向虚线",
+        "mustDistinguish": [
+          "选择梦游者／梦保护／连续梦亡／摄梦人死亡牵连",
+          "梦标记、实际免伤、真实死亡各自独立"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/dreamer/profile.ts",
+          "line": 27
+        },
+        "skillBrief": {
+          "path": "backend/src/features/dreamer/profile.ts",
+          "line": 33
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 97
+        },
+        "ruleCard": "docs/rules/awa-dreamer-v1.md#dreamer",
+        "featureDirectory": "backend/src/features/dreamer",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "wolf_beauty",
+      "nameZh": "狼美人",
+      "nameEn": "Wolf Beauty",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_wolf_beauty"],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "魅惑、死亡牵连",
+        "projectSkillBrief": "狼队成员，可在刀后魅惑其它玩家；牵连死因按本局具名策略，无自爆/本人自刀。屠边条件下，最后一名活狼为狼美人，被实际放逐且魅惑实际带走最后一神或最后一民时狼胜；配置的胜利条件仍按先命中顺序判断。",
+        "configurationDefaults": {
+          "deathLinkPolicy": "awa_exile_poison_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "charm"],
+      "windows": "狼队行动后魅惑；规定死因的魅惑牵连结算",
+      "requestStageIds": ["wolf_discussion", "wolf_vote", "wolf_beauty"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "wolf_beauty_charm"],
+      "relatedEventIds": ["charm_applied", "charm_death", "charm_blocked"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "relation_link",
+        "motif": "玫瑰与单向血链",
+        "mustDistinguish": [
+          "魅惑关系／牵连被阻断／牵连造成死亡",
+          "魅惑不是直接刀；狼美人死亡不等于目标必死"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/wolf-beauty/profile.ts",
+          "line": 34
+        },
+        "skillBrief": {
+          "path": "backend/src/features/wolf-beauty/profile.ts",
+          "line": 39
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 104
+        },
+        "ruleCard": "docs/rules/awa-wolf-beauty-v1.md#wolf_beauty",
+        "featureDirectory": "backend/src/features/wolf-beauty",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "bear",
+      "nameZh": "熊",
+      "nameEn": "Bear",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "邻接的公开反馈",
+        "projectSkillBrief": "入夜按座位环跳过已出局玩家取左右邻居，有可感知狼人则次日咆哮；夜间不重算，熊出局则不咆哮。公告不揭熊或邻居编号。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [],
+      "windows": "夜间按存活座次环感知，次日黎明播报",
+      "requestStageIds": [],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["bear_roared"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "animal_signal",
+        "motif": "熊掌与声波",
+        "mustDistinguish": [
+          "咆哮／不咆哮／熊死亡无播报",
+          "不得从咆哮标出具体狼邻居；夜内变化不重算既有感知"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/bear/profile.ts",
+          "line": 17
+        },
+        "skillBrief": {
+          "path": "backend/src/features/bear/profile.ts",
+          "line": 24
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 111
+        },
+        "ruleCard": "docs/rules/awa-bear-v1.md#bear",
+        "featureDirectory": "backend/src/features/bear",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "hidden_wolf",
+      "nameZh": "隐狼",
+      "nameEn": "Hidden Wolf",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": ["awakened_hidden_wolf"],
+        "runtimeIdentityNote": "接刀和查验标签是现场状态，不是第二个已觉醒RoleId。"
+      },
+      "mechanism": {
+        "catalogSummary": "特殊互认、查验和接刀",
+        "projectSkillBrief": "狼阵营，单向知道其它狼ID，不夜聊、不自爆；实际成为唯一活狼时接刀。阵营查验遵循本局策略，具体角色查验和熊感知遵循接刀状态；骑士按真实阵营。",
+        "configurationDefaults": {
+          "campInspection": "awa_inheritance_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["kill_vote"],
+      "windows": "狼队单向认知；成为唯一活狼后的接刀",
+      "requestStageIds": ["wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": ["hidden_wolf_awakened"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "inheritance",
+        "motif": "半遮月徽与解封刀",
+        "mustDistinguish": [
+          "未接刀／接刀权限已开启",
+          "真实狼阵营、对外查验标签与熊感知状态分离；不补不存在的狼聊"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/hidden-wolf/profile.ts",
+          "line": 22
+        },
+        "skillBrief": {
+          "path": "backend/src/features/hidden-wolf/profile.ts",
+          "line": 28
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 118
+        },
+        "ruleCard": "docs/rules/awa-hidden-wolf-v1.md#hidden_wolf",
+        "featureDirectory": "backend/src/features/hidden-wolf",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "gargoyle",
+      "nameZh": "石像鬼",
+      "nameEn": "Gargoyle",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "独立狼、身份查验",
+        "projectSkillBrief": "AWA默认：独立狼，无相认/狼聊/自爆。每夜先查其它存活玩家具体角色，同实例不能self/重复；唯一活Wolf接刀后须结束本夜查验再刀，可自刀。",
+        "configurationDefaults": {
+          "inspectionPolicy": "awa_unique_required_v1"
+        },
+        "possibleNightAbilityIds": ["role_check"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["kill_vote", "inspect_role"],
+      "windows": "独立具体角色查验；唯一活狼时接刀",
+      "requestStageIds": ["role_inspection", "wolf_vote"],
+      "nightHandlerIds": ["role_inspection", "wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": ["gargoyle_awakened", "role_inspected"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "inspection_role",
+        "motif": "石翼与角色纹章",
+        "mustDistinguish": [
+          "具体角色结果／阵营结果不可混用",
+          "查验目标历史限次／跳过；独立查验与接刀分开"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/gargoyle/profile.ts",
+          "line": 27
+        },
+        "skillBrief": {
+          "path": "backend/src/features/gargoyle/profile.ts",
+          "line": 33
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 125
+        },
+        "ruleCard": "docs/rules/awa-gargoyle-v1.md#gargoyle",
+        "featureDirectory": "backend/src/features/gargoyle",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "psychic",
+      "nameZh": "通灵师",
+      "nameEn": "Spirit Seer",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "具体身份查验",
+        "projectSkillBrief": "AWA默认：好人神职，女巫后可查另一存活玩家的具体规则角色，可跨夜重验；也可无工具跳过，关闭本夜机会但不耗次数。",
+        "configurationDefaults": {
+          "inspectionPolicy": "awa_repeat_optional_v1"
+        },
+        "possibleNightAbilityIds": ["role_check"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["inspect_role"],
+      "windows": "女巫后可选具体角色查验",
+      "requestStageIds": ["psychic"],
+      "nightHandlerIds": ["psychic_inspection"],
+      "relatedEventIds": ["role_inspection_skipped", "role_inspected"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "inspection_role",
+        "motif": "灵视纹章与角色卡",
+        "mustDistinguish": ["具体角色结果／无查验动作", "跨夜可重复；未使用工具不能画成已付费查验"],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/psychic/profile.ts",
+          "line": 23
+        },
+        "skillBrief": {
+          "path": "backend/src/features/psychic/profile.ts",
+          "line": 30
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 132
+        },
+        "ruleCard": "docs/rules/awa-psychic-v1.md#psychic",
+        "featureDirectory": "backend/src/features/psychic",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "mirror_girl",
+      "nameZh": "魔镜少女",
+      "nameEn": "Mirror Girl",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "具体身份、查验限制",
+        "projectSkillBrief": "AWA默认：好人神职，每夜女巫后可查另一活人的具体角色；每份查验能力各自记录，整局不可重查已记编号，可跳过当夜而不花次数。",
+        "configurationDefaults": {
+          "inspectionPolicy": "awa_unique_optional_v1"
+        },
+        "possibleNightAbilityIds": ["role_check"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["inspect_role"],
+      "windows": "女巫后具体角色查验",
+      "requestStageIds": ["mirror_girl"],
+      "nightHandlerIds": ["mirror_inspection"],
+      "relatedEventIds": ["role_inspection_skipped", "role_inspected"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "inspection_role",
+        "motif": "镜面与角色卡",
+        "mustDistinguish": [
+          "具体角色查验／跳过／目标历史已用",
+          "同一能力实例不能重复目标，借用实例历史不可想当然共用"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/mirror-girl/profile.ts",
+          "line": 35
+        },
+        "skillBrief": {
+          "path": "backend/src/features/mirror-girl/profile.ts",
+          "line": 42
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 139
+        },
+        "ruleCard": "docs/rules/awa-mirror-girl-v1.md#mirror_girl",
+        "featureDirectory": "backend/src/features/mirror-girl",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "mechanical_wolf",
+      "nameZh": "机械狼",
+      "nameEn": "Mechanical Wolf",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "学习能力、查验显示角色、夜间模式与真实角色分离；学习不注册新RoleId。"
+      },
+      "mechanism": {
+        "catalogSummary": "复制技能、资源和接刀",
+        "projectSkillBrief": "独立狼；一次学习、次夜生效；每夜选择刀或技能，唯一活狼时接刀。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [
+        "kill_vote",
+        "mimic_role",
+        "mechanical_mode",
+        "mechanical_inspect",
+        "mechanical_poison",
+        "mechanical_guard",
+        "mechanical_attack",
+        "shoot"
+      ],
+      "windows": "一次学习次夜起有效；各夜刀或技能模式；独立狼接刀",
+      "requestStageIds": [
+        "mechanical_mode",
+        "mechanical_mimic",
+        "mechanical_skill",
+        "mechanical_attack",
+        "wolf_vote"
+      ],
+      "nightHandlerIds": [
+        "mechanical_mode",
+        "mechanical_mimic",
+        "mechanical_skill",
+        "mechanical_attack",
+        "wolf_discussion",
+        "wolf_kill_vote"
+      ],
+      "relatedEventIds": [
+        "death_ability_changed",
+        "ability_changed",
+        "mechanical_awakened",
+        "mechanical_mode_selected",
+        "mechanical_mimicked",
+        "mechanical_mimic_skipped",
+        "mechanical_skill_skipped",
+        "mechanical_poison_used",
+        "mechanical_guard_chosen",
+        "mechanical_attack_chosen",
+        "mechanical_poison_reflected",
+        "mechanical_shot",
+        "role_inspection_skipped",
+        "role_inspected"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved",
+          "potion_stock"
+        ]
+      },
+      "proposed": {
+        "familyId": "copy_resource",
+        "motif": "齿轮、复制卡槽与模式拨杆",
+        "mustDistinguish": [
+          "学习已支付／尚未激活／已激活／本夜刀或技能模式",
+          "复制身份信息不是变成该真实角色；复制库存与原角色库存独立",
+          "毒、守、查验、额外攻击、死亡枪使用各自图标，不以一个复制闪光代替"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/mechanical-wolf/profile.ts",
+          "line": 34
+        },
+        "skillBrief": {
+          "path": "backend/src/features/mechanical-wolf/profile.ts",
+          "line": 50
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 146
+        },
+        "ruleCard": "docs/rules/awa-mechanical-wolf-v1.md#mechanical_wolf",
+        "featureDirectory": "backend/src/features/mechanical-wolf",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "miracle_merchant",
+      "nameZh": "奇迹商人",
+      "nameEn": "Miracle Merchant",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "授予限次能力",
+        "projectSkillBrief": "好人神职，任意夜一次赠验/毒/守给另一活人；给真狼反噬，幸运技能当夜起一次。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": ["seer_check", "potion", "guard"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["bestow_ability"],
+      "windows": "夜间一次赠予；幸运儿同夜能力行动",
+      "requestStageIds": ["miracle_merchant", "lucky"],
+      "nightHandlerIds": ["miracle_merchant", "lucky_ability"],
+      "relatedEventIds": [
+        "death_ability_changed",
+        "ability_changed",
+        "lucky_ability_skipped",
+        "merchant_trade_committed",
+        "merchant_trade_skipped",
+        "merchant_trade_resolved"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "gift_resource",
+        "motif": "契约卷轴与一次性技能印",
+        "mustDistinguish": [
+          "赠予选择／交易结算／幸运儿能力使用／剩余次数",
+          "赠好人获得技能与赠狼商人反噬分开；交易不直接改变受赠者真实身份"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/miracle-merchant/profile.ts",
+          "line": 30
+        },
+        "skillBrief": {
+          "path": "backend/src/features/miracle-merchant/profile.ts",
+          "line": 37
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 153
+        },
+        "ruleCard": "docs/rules/awa-miracle-merchant-v1.md#miracle_merchant",
+        "featureDirectory": "backend/src/features/miracle-merchant",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "black_market_merchant",
+      "nameZh": "黑市商人",
+      "nameEn": "Black Market Merchant",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "技能交易、反噬",
+        "projectSkillBrief": "任意夜一次给另一活人查验、毒药或枪；主动礼物次夜生效，枪实际夜末激活；给狼不授能力且自己天亮不可挡反噬。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": ["seer_check", "potion"],
+        "possibleDeathAbilityIds": ["gun"]
+      },
+      "toolIds": ["black_market_trade"],
+      "windows": "一次交易；次夜激活主动能力，枪在实际夜末生效",
+      "requestStageIds": ["black_market_merchant", "black_market_recipient"],
+      "nightHandlerIds": ["black_market_merchant", "black_market_recipient"],
+      "relatedEventIds": [
+        "black_market_trade_skipped",
+        "black_market_trade_committed",
+        "black_market_trade_resolved",
+        "death_ability_changed",
+        "ability_changed"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "gift_resource",
+        "motif": "黑封契约与延迟开启的礼盒",
+        "mustDistinguish": [
+          "交易承诺／激活等待／技能可用／枪资格",
+          "赠狼不授技能且商人黎明反噬；不能沿用奇迹商人同夜时钟"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/black-market-merchant/profile.ts",
+          "line": 28
+        },
+        "skillBrief": {
+          "path": "backend/src/features/black-market-merchant/profile.ts",
+          "line": 35
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 160
+        },
+        "ruleCard": "docs/rules/awa-black-market-merchant-v1.md#black_market_merchant",
+        "featureDirectory": "backend/src/features/black-market-merchant",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "hybrid",
+      "nameZh": "混血儿",
+      "nameEn": "Hybrid",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "胜利归属跟随榜样选择时真实阵营，自身始终好人民边；不变RoleId。"
+      },
+      "mechanism": {
+        "catalogSummary": "榜样、独立胜利归属",
+        "projectSkillBrief": "首夜选择榜样，随其当时真实阵营获胜但不知道该阵营；自身始终计入好人民边，阵营查验始终验好。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["choose_exemplar"],
+      "windows": "首夜选择榜样并固定个人胜利归属",
+      "requestStageIds": ["hybrid"],
+      "nightHandlerIds": ["hybrid"],
+      "relatedEventIds": ["hybrid_exemplar_chosen", "hybrid_affiliation_resolved"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "affiliation",
+        "motif": "榜样徽章与隐藏胜利系带",
+        "mustDistinguish": [
+          "选择榜样／胜利归属固定",
+          "自身始终好人民边；不能把跟随狼获胜画成变狼或获得狼聊"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/hybrid/profile.ts",
+          "line": 30
+        },
+        "skillBrief": {
+          "path": "backend/src/features/hybrid/profile.ts",
+          "line": 37
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 167
+        },
+        "ruleCard": "docs/rules/awa-hybrid-v1.md#hybrid",
+        "featureDirectory": "backend/src/features/hybrid",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "thief",
+      "nameZh": "盗贼",
+      "nameEn": "Thief",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "首次身份选择可将真实Role更换为已声明的底牌RoleId；不新增盗贼形态RoleId。"
+      },
+      "mechanism": {
+        "catalogSummary": "额外底牌、初始身份选择",
+        "projectSkillBrief": "首夜查看两张额外底牌，可换一张；两张都是狼人时必须换牌。",
+        "configurationDefaults": {
+          "policy": "lui_meme_thief_two_extra_villagers_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["choose_thief_card"],
+      "windows": "首夜额外两张底牌选择",
+      "requestStageIds": ["thief"],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["thief_initial_deal", "thief_identity_chosen"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "identity_choice",
+        "motif": "两张底牌与锁扣",
+        "mustDistinguish": [
+          "发牌／选牌／身份更替／强制选狼条件",
+          "可不更换身份的选择语义按规则卡；不能凭卡面动画假造第三张牌"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/thief/profile.ts",
+          "line": 20
+        },
+        "skillBrief": {
+          "path": "backend/src/features/thief/profile.ts",
+          "line": 27
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 174
+        },
+        "ruleCard": "docs/rules/lui-meme-thief-v1.md",
+        "featureDirectory": "backend/src/features/thief",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "shapeshifter",
+      "nameZh": "千面人",
+      "nameEn": "Many-Faced One",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "首夜必须选择底牌角色，更换为已有RoleId；不新增千面人形态RoleId。"
+      },
+      "mechanism": {
+        "catalogSummary": "首夜必选身份、有狼强制狼槽",
+        "projectSkillBrief": "第一夜在其它技能前必选一张底牌；只要有普通狼牌就必须选狼。",
+        "configurationDefaults": {
+          "policy": "awa_netease_shapeshifter_two_extra_villagers_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["choose_shapeshifter_card"],
+      "windows": "首夜其他技能前必选身份",
+      "requestStageIds": ["shapeshifter"],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["shapeshifter_initial_deal", "shapeshifter_identity_chosen"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "identity_choice",
+        "motif": "两面面具与强制选择锁",
+        "mustDistinguish": [
+          "底牌展示／必选身份／有普通狼卡强制选狼",
+          "不能套用盗贼的可保留身份路径"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/shapeshifter/profile.ts",
+          "line": 26
+        },
+        "skillBrief": {
+          "path": "backend/src/features/shapeshifter/profile.ts",
+          "line": 33
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 181
+        },
+        "ruleCard": "docs/rules/awa-netease-shapeshifter-v1.md",
+        "featureDirectory": "backend/src/features/shapeshifter",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "lonely_girl",
+      "nameZh": "孤独少女",
+      "nameEn": "Lonely Girl",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "个人胜利归属固定跟随崇拜对象选择时阵营，自身好人民边；不是情侣或变狼。"
+      },
+      "mechanism": {
+        "catalogSummary": "崇拜对象、胜利归属",
+        "projectSkillBrief": "首夜先选择另一活人为崇拜对象，个人胜利跟随其选择时真实阵营；自身仍是好人民边，无狼互认、夜聊、刀或自爆。你不知道对象身份，对象不知道被崇拜。AWA策略固定胜利归属，死亡不撤销。",
+        "configurationDefaults": {
+          "policy": "awa_netease_lonely_girl_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["choose_admired_player"],
+      "windows": "首夜选崇拜对象并固定胜利归属",
+      "requestStageIds": ["lonely_girl"],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["lonely_girl_admired_chosen"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "affiliation",
+        "motif": "单向崇拜信物",
+        "mustDistinguish": [
+          "对象选择／固定胜利归属",
+          "不是情侣、不是变狼、对象不获通知；对象死亡不改变已固定归属"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/lonely-girl/profile.ts",
+          "line": 20
+        },
+        "skillBrief": {
+          "path": "backend/src/features/lonely-girl/profile.ts",
+          "line": 38
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 188
+        },
+        "ruleCard": "docs/rules/awa-netease-lonely-girl-v1.md",
+        "featureDirectory": "backend/src/features/lonely-girl",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "wild_child",
+      "nameZh": "野孩子",
+      "nameEn": "Wild Child",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "RoleId仍为wild_child；榜样实际淘汰改变当前Camp，下一夜才开放狼队权限。"
+      },
+      "mechanism": {
+        "catalogSummary": "榜样死亡、阵营变化",
+        "projectSkillBrief": "初始为好人民边，首夜必选榜样；榜样实际淘汰时若本人仍活则变狼，下一夜才互认、夜聊与投刀。不获榜样能力，不可自爆。",
+        "configurationDefaults": {
+          "policy": "awa_lui_meme_wild_child_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "choose_wild_model"],
+      "windows": "首夜选榜样；榜样实际淘汰时变狼，下一夜才参与狼队",
+      "requestStageIds": ["wild_child", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": [
+        "wild_child_model_chosen",
+        "wild_child_model_eliminated",
+        "wild_child_transformed",
+        "wild_child_pack_activated"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "inheritance",
+        "motif": "榜样肖像与翻转阵营徽",
+        "mustDistinguish": [
+          "榜样选择／榜样真实淘汰／阵营已变／次夜狼队权限激活",
+          "不复制榜样能力；变狼状态不是新增未声明RoleId，也不是自爆权限"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/wild-child/profile.ts",
+          "line": 24
+        },
+        "skillBrief": {
+          "path": "backend/src/features/wild-child/profile.ts",
+          "line": 42
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 195
+        },
+        "ruleCard": "docs/rules/awa-lui-meme-wild-child-v1.md",
+        "featureDirectory": "backend/src/features/wild-child",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "ghost_bride",
+      "nameZh": "鬼魂新娘",
+      "nameEn": "Ghost Bride",
+      "nominalCamp": "third_party",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "婚礼成员保留原身份资源，三人组成独立胜利组；新郎/证婚人为关系资格，不是新RoleId。"
+      },
+      "mechanism": {
+        "catalogSummary": "伴侣、第三方目标",
+        "projectSkillBrief": "墨尔本赛事AWA三方适配：首夜选择新郎，共同确认证婚人。保留原身份库存，婚礼三人独立胜利；情侣互认与私聊，一人死亡另一人殉情。普通单身狼清空后情侣继承刀，情侣均死后证婚人继承。",
+        "configurationDefaults": {
+          "policy": "awa_melbourne_ghost_bride_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [
+        "choose_bridegroom",
+        "choose_wedding_witness",
+        "speak_to_partner",
+        "wedding_kill_vote"
+      ],
+      "windows": "首夜婚礼组合；私聊、殉情、普通单身狼清空后的刀继承",
+      "requestStageIds": [
+        "ghost_bride_groom",
+        "ghost_bride_witness",
+        "ghost_bride_chat",
+        "ghost_bride_knife"
+      ],
+      "nightHandlerIds": [],
+      "relatedEventIds": [
+        "ghost_bride_pair_chosen",
+        "ghost_bride_group_chosen",
+        "ghost_bride_knife_captured",
+        "ghost_bride_witness_vote",
+        "ghost_bride_partner_chat",
+        "ghost_bride_knife_vote",
+        "ghost_bride_knife_resolved",
+        "ghost_bride_partner_death"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "relation_link",
+        "motif": "婚戒、三方纹章与继承刀",
+        "mustDistinguish": [
+          "新郎选择／证婚人确认／三人胜利组建立",
+          "情侣殉情与独立刀继承分开；继承者为情侣或证婚人需按真实事实",
+          "保留原身份资源不等于向全体公开原身份"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/ghost-bride/profile.ts",
+          "line": 26
+        },
+        "skillBrief": {
+          "path": "backend/src/features/ghost-bride/profile.ts",
+          "line": 42
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 202
+        },
+        "ruleCard": "docs/rules/awa-melbourne-ghost-bride-v1.md",
+        "featureDirectory": "backend/src/features/ghost-bride",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "cupid",
+      "nameZh": "丘比特",
+      "nameEn": "Cupid",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "情侣关系、胜利成员和死因另有规则；恋人不是新增RoleId。"
+      },
+      "mechanism": {
+        "catalogSummary": "情侣、殉情和目标变化",
+        "projectSkillBrief": "首夜连接两名情侣；一人死亡另一人殉情，殉情禁技能；按具名来源策略判胜。",
+        "configurationDefaults": {
+          "policy": "netease_2017_cupid_follows_lovers_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["choose_lovers"],
+      "windows": "首夜情侣选择；关系识别和死亡殉情",
+      "requestStageIds": ["cupid"],
+      "nightHandlerIds": ["cupid"],
+      "relatedEventIds": [
+        "cupid_lovers_chosen",
+        "lover_recognized",
+        "cupid_relation_resolved",
+        "lovers_death"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "relation_link",
+        "motif": "双箭与心结",
+        "mustDistinguish": [
+          "连结选择／互认／关系阵营与胜利政策",
+          "情侣死亡链禁止死亡技能，不能套用普通刀死开枪"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/cupid/profile.ts",
+          "line": 28
+        },
+        "skillBrief": {
+          "path": "backend/src/features/cupid/profile.ts",
+          "line": 35
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 209
+        },
+        "ruleCard": "docs/rules/sourced-cupid-v1.md#cupid",
+        "featureDirectory": "backend/src/features/cupid",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "cursed_fox",
+      "nameZh": "咒狐",
+      "nameEn": "Cursed Fox",
+      "nominalCamp": "third_party",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "特殊生存、查验和胜利",
+        "projectSkillBrief": "第三方独立目标；免普通狼刀，预言家或幸运儿查验导致出局，任一普通阵营全灭时存活则独胜",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [],
+      "windows": "被动刀免疫、被查验致死与独立胜利检查",
+      "requestStageIds": [],
+      "nightHandlerIds": [],
+      "relatedEventIds": ["game_over", "night_resolved", "additional_deaths", "seer_checked"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "independent_survival",
+        "motif": "狐火与月蚀环",
+        "mustDistinguish": [
+          "普通狼刀免疫／特定查验致死／其它致死",
+          "存活到普通阵营清空的独立胜利与好人胜利分开；验好标签不代表真实阵营"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/cursed-fox/profile.ts",
+          "line": 14
+        },
+        "skillBrief": {
+          "path": "backend/src/features/cursed-fox/profile.ts",
+          "line": 20
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 216
+        },
+        "ruleCard": "docs/rules/netease-cursed-fox-v1.md#cursed_fox",
+        "featureDirectory": "backend/src/features/cursed-fox",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "demon_hunter",
+      "nameZh": "猎魔人",
+      "nameEn": "Demon Hunter",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "夜间对决、伤害资格",
+        "projectSkillBrief": "网易角色规则的具名有限AWA板适配：从第二夜起每夜可选择另一名存活玩家或明确弃猎。目标为真实狼人则次日目标死亡；目标为好人则自己反噬死亡。免疫原生女巫毒药，守卫和救药不阻挡猎杀或反噬。不会向你反馈目标阵营或毒免结果。",
+        "configurationDefaults": {
+          "policy": "awa_netease_demon_hunter_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["demon_hunt"],
+      "windows": "第二夜起可选狩猎；黎明伤害结算",
+      "requestStageIds": ["demon_hunter"],
+      "nightHandlerIds": ["demon_hunter_action"],
+      "relatedEventIds": [
+        "demon_hunter_chosen",
+        "demon_hunter_cancelled",
+        "demon_hunter_poison_immune"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "duel",
+        "motif": "猎魔弩与反噬裂痕",
+        "mustDistinguish": [
+          "已选择狩猎／取消或被抑制／命中真狼／猎人反噬",
+          "原生女巫毒免疫单列；本人当时不获命中与阵营反馈，God影片可有明确视角标签"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/demon-hunter/profile.ts",
+          "line": 20
+        },
+        "skillBrief": {
+          "path": "backend/src/features/demon-hunter/profile.ts",
+          "line": 41
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 223
+        },
+        "ruleCard": "docs/rules/awa-netease-demon-hunter-v1.md",
+        "featureDirectory": "backend/src/features/demon-hunter",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "pure_white_girl",
+      "nameZh": "纯白之女",
+      "nameEn": "Pure White Girl",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "查验与伤害",
+        "projectSkillBrief": "好人神职。每夜查验另一名存活玩家的具体身份；第二夜起验到狼人还会在夜间统一结算时将其验杀，允许跨夜重复查验。",
+        "configurationDefaults": {
+          "policy": "awa_pure_white_night_v1",
+          "eliminationPriority": "awa_wolf_priority_v1"
+        },
+        "possibleNightAbilityIds": ["role_check"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["inspect_night_identity"],
+      "windows": "夜间具体角色查验；第二夜起查狼有后续查验伤害",
+      "requestStageIds": ["pure_white_girl"],
+      "nightHandlerIds": ["pure_white_inspection"],
+      "relatedEventIds": ["role_inspection_skipped", "role_inspected"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "inspection_role",
+        "motif": "白纹角色卡与查验刃",
+        "mustDistinguish": [
+          "角色结果／查验伤害待结算／实际死亡",
+          "查验动作不等于当场死亡；首夜与后续夜必须不同"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/pure-white/profile.ts",
+          "line": 56
+        },
+        "skillBrief": {
+          "path": "backend/src/features/pure-white/profile.ts",
+          "line": 65
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 230
+        },
+        "ruleCard": "docs/rules/awa-pure-white-night-v1.md",
+        "featureDirectory": "backend/src/features/pure-white",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "wolf_witch",
+      "nameZh": "狼巫",
+      "nameEn": "Wolf Witch",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "狼队身份查验",
+        "projectSkillBrief": "狼人阵营，参与狼聊及狼刀。每夜在纯白之女之后查验另一名存活非狼玩家的具体身份；第二夜起仅验到纯白之女时将其验杀。",
+        "configurationDefaults": {
+          "policy": "awa_pure_white_night_v1"
+        },
+        "possibleNightAbilityIds": ["role_check"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "inspect_night_identity"],
+      "windows": "狼队行动；纯白之后查非狼目标，第二夜起特定目标伤害",
+      "requestStageIds": ["wolf_discussion", "wolf_vote", "wolf_witch"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "wolf_witch_inspection"],
+      "relatedEventIds": ["role_inspection_skipped", "role_inspected"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "inspection_role",
+        "motif": "暗纹角色卡与宿敌刃",
+        "mustDistinguish": [
+          "普通具体角色查验／查到纯白触发伤害",
+          "查到任意好人并不都能杀；真实伤害落点与角色识别分开"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/pure-white/profile.ts",
+          "line": 92
+        },
+        "skillBrief": {
+          "path": "backend/src/features/pure-white/profile.ts",
+          "line": 100
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 237
+        },
+        "ruleCard": "docs/rules/awa-pure-white-night-v1.md",
+        "featureDirectory": "backend/src/features/pure-white",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "evil_knight",
+      "nameZh": "恶夜骑士",
+      "nameEn": "Dark Knight",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "夜间免疫、反伤",
+        "projectSkillBrief": "狼人阵营，参与狼聊与狼刀，不能自爆且不能成为狼刀目标。夜间免疫，并有整局一次验毒反伤。",
+        "configurationDefaults": {
+          "policy": "awa_evil_knight_v1",
+          "shotPolicy": "night_shot_immune"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote"],
+      "windows": "夜间被动免疫、查验或毒药反伤",
+      "requestStageIds": ["wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["evil_knight_frame", "wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": [
+        "night_resolved",
+        "additional_deaths",
+        "seer_checked",
+        "witch_potion_used"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "reflection",
+        "motif": "暗盾与一次反伤棱镜",
+        "mustDistinguish": [
+          "免疫／反伤资格尚存／反伤已支付／实际受伤对象",
+          "枪对免疫的政策可变；不把所有夜间枪都默认免疫"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/evil-knight/profile.ts",
+          "line": 20
+        },
+        "skillBrief": {
+          "path": "backend/src/features/evil-knight/profile.ts",
+          "line": 36
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 244
+        },
+        "ruleCard": "docs/rules/awa-evil-knight-v1.md",
+        "featureDirectory": "backend/src/features/evil-knight",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "red_moon_apostle",
+      "nameZh": "赤月使徒",
+      "nameEn": "Red Moon Apostle",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "自爆、封夜、特殊死亡",
+        "projectSkillBrief": "你是赤月使徒，属于狼人阵营。自爆后下一夜封锁好人技能；作为最后一名狼人被放逐时，延迟至下一天亮出局。",
+        "configurationDefaults": {
+          "policy": "awa_red_moon_demon_v1",
+          "lastWolfBlastPolicy": "ends_game"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct"],
+      "windows": "白天自爆封下一夜；末狼被放逐的延迟死亡",
+      "requestStageIds": ["wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": [
+        "red_moon_night_sealed",
+        "red_moon_exile_delayed",
+        "red_moon_delay_expired",
+        "wolf_self_destruct"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "suppression",
+        "motif": "赤月封印与延迟沙漏",
+        "mustDistinguish": [
+          "自爆封夜已排期／下一夜实际封印／封印过期",
+          "放逐提案／延迟至次日黎明／真实死亡，不能提前熄灭生命"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/red-moon/profile.ts",
+          "line": 21
+        },
+        "skillBrief": {
+          "path": "backend/src/features/red-moon/profile.ts",
+          "line": 37
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 251
+        },
+        "ruleCard": "docs/rules/awa-red-moon-demon-v1.md",
+        "featureDirectory": "backend/src/features/red-moon",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "alchemist",
+      "nameZh": "炼金魔女",
+      "nameEn": "Alchemist",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "刀口约束、特殊救人流程",
+        "projectSkillBrief": "你是炼金魔女，好人神职。未明之雾和法老之蛇各一次，可同夜使用。夜间先选三个不同存活号码圈住普通狼刀，可含自己和狼人；明确空过不消耗。还有蛇时，天亮后通常在发言结束时私下获知本夜原普通刀口并决定救治，仅首夜能自救；保护已挡刀仍可付药。蛇只去普通刀伤害，无法救狼鸦穿透刀或连续梦。仅本夜初你存活且蛇未用时，夜死才延迟到唯一救治后公布；否则按普通顺序。自爆中断时，自爆死亡及警徽先于救治，夜死和连锁完成后才判胜。",
+        "configurationDefaults": {
+          "policy": "awa_mist_raven_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["cast_mist", "use_snake"],
+      "windows": "夜间圈定三人；日间发言后蛇救治窗口",
+      "requestStageIds": ["alchemist_mist", "alchemist_snake"],
+      "nightHandlerIds": ["alchemist_mist"],
+      "relatedEventIds": [
+        "alchemist_mist_chosen",
+        "alchemist_mist_skipped",
+        "alchemist_snake_chosen",
+        "mist_knife_drawn"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": ["night_protection_resolved"]
+      },
+      "proposed": {
+        "familyId": "potion",
+        "motif": "三点雾笼与蛇杖",
+        "mustDistinguish": [
+          "雾圈选择／圈内抽刀／原刀口／蛇救治选择",
+          "蛇仅救普通狼刀，不救额外刀或连续梦亡；迟延夜死待救治不能先当已死"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/mist-raven/profile.ts",
+          "line": 59
+        },
+        "skillBrief": {
+          "path": "backend/src/features/mist-raven/profile.ts",
+          "line": 68
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 258
+        },
+        "ruleCard": "docs/rules/awa-mist-raven-twelve-v1.md",
+        "featureDirectory": "backend/src/features/mist-raven",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "raven_claw_wolf",
+      "nameZh": "狼鸦之爪",
+      "nameEn": "Raven-Claw Wolf",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "解封状态不是新增awakened_raven角色。"
+      },
+      "mechanism": {
+        "catalogSummary": "解封、特殊攻击",
+        "projectSkillBrief": "你是狼鸦之爪，狼人阵营。狼队知道你，封印时你不知道队友且不能狼聊或普通投刀；永远不能自爆。只在真实夜初活狼少于三人时永久解封，知道当刻仍存活队友，之后保留已知死队友，不补发此前死狼或狼聊。解封后参与狼聊和普通投刀，并可保留或使用一次独立额外刀；目标必须是其他存活原生命，圈外也可，穿透本板梦保护和蛇救治，仍可引起摄梦死亡牵连。",
+        "configurationDefaults": {
+          "policy": "awa_mist_raven_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "raven_knife"],
+      "windows": "真实夜初活狼少于三人永久解封；一次额外刀",
+      "requestStageIds": ["wolf_discussion", "wolf_vote", "raven_knife"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "raven_knife"],
+      "relatedEventIds": ["raven_unsealed", "raven_knife_chosen", "raven_knife_skipped"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "inheritance",
+        "motif": "封印鸦爪与第二柄短刃",
+        "mustDistinguish": [
+          "封印／永久解封／已知队友范围／普通刀票／额外刀",
+          "额外刀不受本板雾圈、梦保护、蛇救治限制；不等于所有保护都能穿透",
+          "解封不授自爆，不能补发之前狼聊或此前死狼信息"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/mist-raven/profile.ts",
+          "line": 183
+        },
+        "skillBrief": {
+          "path": "backend/src/features/mist-raven/profile.ts",
+          "line": 192
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 265
+        },
+        "ruleCard": "docs/rules/awa-mist-raven-twelve-v1.md",
+        "featureDirectory": "backend/src/features/mist-raven",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "radiant_count",
+      "nameZh": "流光伯爵",
+      "nameEn": "Radiant Count",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "保护范围和限制",
+        "projectSkillBrief": "你是流光伯爵，属于好人神职。从第二夜起，每夜可选择一名其他存活玩家给予流光庇护，也可明确放弃。庇护免疫该夜的狼刀、毒药及梦游伤害；不能自保，不能连续两夜庇护同一个人。若本夜被蚀日侍女吞噬，你没有原生庇护行动，天亮解除封禁；借用者的选择不会写回你的上一目标。被封禁的夜晚不算一次放弃。 借庇护继承原主上一目标及实际夜序，但不写回借用者的新选择；封禁期间未行动，隔过一夜恢复后可以再次选择原目标。",
+        "configurationDefaults": {
+          "policy": "awa_radiant_eclipse_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["cast_shelter"],
+      "windows": "第二夜起庇护其它存活者；抑制与借用时钟",
+      "requestStageIds": ["radiant_shelter"],
+      "nightHandlerIds": ["radiant_shelter"],
+      "relatedEventIds": [
+        "eclipse_native_suppressed",
+        "eclipse_native_restored",
+        "radiant_shelter_chosen"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": ["night_protection_resolved"]
+      },
+      "proposed": {
+        "familyId": "protection",
+        "motif": "流光帷幕与次夜禁重复印",
+        "mustDistinguish": [
+          "原生庇护／被吞噬而暂停／借用庇护",
+          "庇护目标、上次历史与借用副本需分开；不从庇护推出最终存活"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/radiant-eclipse/profile.ts",
+          "line": 72
+        },
+        "skillBrief": {
+          "path": "backend/src/features/radiant-eclipse/profile.ts",
+          "line": 79
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 272
+        },
+        "ruleCard": "docs/rules/awa-radiant-eclipse-twelve-v1.md",
+        "featureDirectory": "backend/src/features/radiant-eclipse",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "eclipse_maid",
+      "nameZh": "蚀日侍女",
+      "nameEn": "Eclipse Maid",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "借用当夜能力是临时租约及独立资源，不是换身份。"
+      },
+      "mechanism": {
+        "catalogSummary": "技能吞噬与临时失效",
+        "projectSkillBrief": "你是蚀日侍女，属于狼人阵营，与你的狼队共同胜负。你单向知道其他狼人身份，但他们不知道你；你不参与狼聊，不能自爆，只有在真实夜初其余狼人已全部出局时才有狼刀。从第二夜起，每夜可吞噬一名存活好人，也可明确放弃，不能连续两夜吞噬同一个人。被吞者当夜失去原生能力，你获得其当前可借能力并可在相应阶段使用。借用库存独立、不写回原主，不复制历史查验或提示；借药继承当时库存且每夜最多一瓶、不能自救，空库存不发借药行动。借梦的梦游及死亡牵连以你为施法者；借庇护不能保护你自己。吞伯爵或该夜最终受庇护的目标会触发独立流光反噬，但吞噬和借得技能仍有效；摄梦保护可以阻挡反噬，连续梦或梦主死亡的伤害仍另行结算。天亮借用授权结束。 借庇护按继承的上一目标及实际夜序判断连续，使用后不改写伯爵的记录。 借梦继承原主上一梦游目标及实际夜序；梦游可以连续选择同一目标并造成连续梦伤，但不能梦你自己。",
+        "configurationDefaults": {
+          "policy": "awa_radiant_eclipse_v1"
+        },
+        "possibleNightAbilityIds": ["shelter", "dream", "potion", "seer_check"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "swallow_skill"],
+      "windows": "第二夜起吞噬好人当夜能力；黎明关闭租约；唯一狼接刀",
+      "requestStageIds": ["eclipse_swallow", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "eclipse_swallow"],
+      "relatedEventIds": [
+        "eclipse_swallowed",
+        "eclipse_native_suppressed",
+        "eclipse_native_restored",
+        "eclipse_lease_closed",
+        "radiant_shelter_chosen"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved",
+          "potion_stock"
+        ]
+      },
+      "proposed": {
+        "familyId": "copy_resource",
+        "motif": "蚀日杯、封口与临时租约",
+        "mustDistinguish": [
+          "吞噬目标／原生技能抑制／借用资源副本／租约恢复",
+          "独立药量与使用限制不能复制历史；反噬与借到技能同时可能成立",
+          "无法证明的借用结果保持未知，不从角色名补出技能效果"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/radiant-eclipse/profile.ts",
+          "line": 137
+        },
+        "skillBrief": {
+          "path": "backend/src/features/radiant-eclipse/profile.ts",
+          "line": 144
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 279
+        },
+        "ruleCard": "docs/rules/awa-radiant-eclipse-twelve-v1.md",
+        "featureDirectory": "backend/src/features/radiant-eclipse",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "night_noble",
+      "nameZh": "夜之贵族",
+      "nameEn": "Night Noble",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "持续夜间状态",
+        "projectSkillBrief": "夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。",
+        "configurationDefaults": {
+          "wolfActionPolicy": "standard"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "choose_servant"],
+      "windows": "第二夜起选择仆从；契约持续至下夜并延迟通知",
+      "requestStageIds": ["night_noble", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "night_noble_action"],
+      "relatedEventIds": [
+        "noble_body_knife_committed",
+        "noble_body_native_damage_committed",
+        "noble_body_night_opened",
+        "noble_body_death_committed",
+        "noble_body_sources_committed",
+        "noble_servant_chosen",
+        "noble_contract_closed",
+        "noble_night_notified"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "relation_link",
+        "motif": "贵族契约与次夜回执",
+        "mustDistinguish": [
+          "选择仆从／契约有效／被狩猎解除／到期关闭并提出独立伤害",
+          "到期关闭不等于目标死亡，秘密之身可能阻断；贵族死亡不倒销已付契约",
+          "契约未到期不能再选；下一夜通知不是当前夜实际发生时点"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/noble-secret-body/profile.ts",
+          "line": 48
+        },
+        "skillBrief": {
+          "path": "backend/src/features/noble-secret-body/profile.ts",
+          "line": 55
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 286
+        },
+        "ruleCard": "docs/rules/awa-noble-secret-body-twelve-v1.md",
+        "featureDirectory": "backend/src/features/noble-secret-body",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/noble-secret-body.ts"]
+      }
+    },
+    {
+      "roleId": "fragrant_phantom",
+      "nameZh": "寻香魅影",
+      "nameEn": "Fragrant Phantom",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "绑定、牵连、接刀",
+        "projectSkillBrief": "你是寻香魅影，属于狼人阵营并共享狼人胜利，但始终不参加普通狼聊，也不能自爆。首夜随机获知一个原始普通狼号码，该知识在其死亡后仍保留；不会因此知道其它狼。只有其它三个原始狼在真实夜初已全部死亡时，你本夜才有普通狼刀权，夜中死亡不补发刀。首夜起，尚未触发时每夜可绑定两名不同存活玩家（可含自己）或明确空过。绑定覆盖当夜和接下来白天，下一真实夜初到期；空过不延续旧对。选择不消耗次数，整局真实死亡牵连只触发一次：一端出局时，另一原生命若尚未进入同波则追加死亡；两端已独立同波死亡时不追加死因，但仍消费。已付关系可在原施法者首次死亡后触发。仅因牵连出局的猎人不能开枪；独立合格死因不被覆盖。关系知情只随真实已公布死亡更新，不能用待公布信息发言。",
+        "configurationDefaults": {
+          "policy": "awa_fragrant_pair_seer_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["kill_vote", "bind_fragrant_pair"],
+      "windows": "首夜知一名原普通狼；每夜可绑双人直到触发；特定夜初继刀",
+      "requestStageIds": ["fragrant_bind", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "fragrant_bind"],
+      "relatedEventIds": [
+        "fragrant_night_opened",
+        "fragrant_wave_committed",
+        "fragrant_pair_chosen",
+        "fragrant_night_notified",
+        "fragrant_binding_expired",
+        "fragrant_link_triggered"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "relation_link",
+        "motif": "香雾双环与一次血契",
+        "mustDistinguish": [
+          "绑双人／过期／实际死亡触发／同波本已双死仍消耗",
+          "连结死亡不得覆盖原合法死因；已支付关系不因施法者死亡回滚",
+          "夜初接刀条件不是当前随时只剩一狼就立刻参与刀票"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/fragrant-pair-seer/profile.ts",
+          "line": 62
+        },
+        "skillBrief": {
+          "path": "backend/src/features/fragrant-pair-seer/profile.ts",
+          "line": 69
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 293
+        },
+        "ruleCard": "docs/rules/awa-fragrant-pair-seer-twelve-v1.md",
+        "featureDirectory": "backend/src/features/fragrant-pair-seer",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/fragrant-pair-seer.ts"]
+      }
+    },
+    {
+      "roleId": "nightmare",
+      "nameZh": "噩梦之影",
+      "nameEn": "Nightmare",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "恐惧、行动封锁",
+        "projectSkillBrief": "狼人阵营。每夜先恐惧一名玩家，使其当夜不能行动；恐惧狼人则整队不能袭击。首夜恐惧前不与狼队互认。",
+        "configurationDefaults": {
+          "policy": "awa_nightmare_dreamer_v1",
+          "fearActionPolicy": "optional",
+          "wolfActionPolicy": "standard"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "fear"],
+      "windows": "狼队行动前恐惧；首次恐惧前不互认",
+      "requestStageIds": ["nightmare_fear", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["nightmare_fear", "wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": ["nightmare_fear_committed"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "suppression",
+        "motif": "噩梦幕与整轮刀封条",
+        "mustDistinguish": [
+          "恐惧目标／技能被封／恐惧狼导致普通刀整体取消",
+          "禁用动作与玩家主动跳过分开；首用前后队伍认知不同"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/nightmare/profile.ts",
+          "line": 32
+        },
+        "skillBrief": {
+          "path": "backend/src/features/nightmare/profile.ts",
+          "line": 48
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 300
+        },
+        "ruleCard": "docs/rules/awa-nightmare-dreamer-v1.md",
+        "featureDirectory": "backend/src/features/nightmare",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "magician",
+      "nameZh": "魔术师",
+      "nameEn": "Magician",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "夜间技能目标映射",
+        "projectSkillBrief": "好人神职。每夜先选择两个不同的合法存活编号，交换它们当夜技能的生效目标；每个编号整局只能参与一次交换，可以选择自己，也可以明确弃用。交换不改变持久座位或身份。女巫仍获知原始刀口。",
+        "configurationDefaults": {
+          "policy": "awa_magician_wolf_king_v1",
+          "firstNight": 1,
+          "deathShotTargetPolicy": "original"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["swap_targets"],
+      "windows": "夜间一对目标技能效果映射",
+      "requestStageIds": ["magician_exchange"],
+      "nightHandlerIds": ["magician_exchange"],
+      "relatedEventIds": ["magician_exchange_committed"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "mapping",
+        "motif": "双向镜门与原目标虚线",
+        "mustDistinguish": [
+          "请求号码／交换映射／实际受术者",
+          "不是换公开座位、不是换真实身份；历史已用号码与跳过分开"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/magician/profile.ts",
+          "line": 26
+        },
+        "skillBrief": {
+          "path": "backend/src/features/magician/profile.ts",
+          "line": 47
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 307
+        },
+        "ruleCard": "docs/rules/awa-magician-wolf-king-v1.md",
+        "featureDirectory": "backend/src/features/magician",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "trickster",
+      "nameZh": "诡术师",
+      "nameEn": "Trickster",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "号码映射及公开结果",
+        "projectSkillBrief": "狼人。狼队讨论前，选择两个不同且从未用过的存活编号（可选自己），只交换随后白天最终有效的放逐结果。身份、座位和原票不变。每个编号整局用一次；可明确空过，但不能连续两夜主动空过。合法编号不足两个时由引擎跳过耗尽技能。与魔术师同对时双方效果抵消，已用编号不返还。提交后的效果不因自己正常死亡回滚；映射对象已死时不额外放逐任何人。",
+        "configurationDefaults": {
+          "policy": "awa_trickster_exile_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "swap_exile_targets"],
+      "windows": "夜间配对，影响下一日最终放逐落点",
+      "requestStageIds": ["trickster_exchange", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["trickster_exchange", "wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": [
+        "trickster_exchange_committed",
+        "trickster_exchange_skipped",
+        "exile_target_mapped"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "mapping",
+        "motif": "日间判决双门与票笺原位",
+        "mustDistinguish": [
+          "原始投票目标／票型原计数／最终放逐映射目标",
+          "不改选民原票、身份或座位；映射目标已死时无额外放逐",
+          "与魔术师同对抵消不退已支付号码"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/trickster/profile.ts",
+          "line": 30
+        },
+        "skillBrief": {
+          "path": "backend/src/features/trickster/profile.ts",
+          "line": 47
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 314
+        },
+        "ruleCard": "docs/rules/awa-trickster-exile-v1.md",
+        "featureDirectory": "backend/src/features/trickster",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "wolf_sorcerer",
+      "nameZh": "狼术师",
+      "nameEn": "Wolf Sorcerer",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "狼队目标/座位映射",
+        "projectSkillBrief": "狼人座位映射者。魔术师之后、狼队行动之前，明确选择两个不同的未用存活编号或空过。每个号码自己整局只能使用一次。你的换位交换魔术师换位之后的座位占用者；重叠配对形成有序循环，相同配对抵消效果但不退还双方资源。身份、公开座位、白天票面不变。首次合法行动开始前不获知队友，也不参加狼队行动。",
+        "configurationDefaults": {
+          "policy": "awa_wolf_sorcerer_seats_v1",
+          "firstNight": 2
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "swap_night_seats"],
+      "windows": "魔术师后狼队行动前的有序占位映射",
+      "requestStageIds": ["wolf_sorcerer_exchange", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["wolf_sorcerer_exchange", "wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": ["wolf_sorcerer_exchange_committed", "wolf_sorcerer_exchange_skipped"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "mapping",
+        "motif": "有序座位环与夜间转向门",
+        "mustDistinguish": [
+          "公开座次／夜间占位映射／实际目标",
+          "只映射夜间效果；不能动画成公开名册换人或修改白天票型",
+          "首次合法行动前后狼队认知权限、同对抵消与付费历史分离"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/wolf-sorcerer/profile.ts",
+          "line": 30
+        },
+        "skillBrief": {
+          "path": "backend/src/features/wolf-sorcerer/profile.ts",
+          "line": 47
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 321
+        },
+        "ruleCard": "docs/rules/awa-wolf-sorcerer-seats-v1.md",
+        "featureDirectory": "backend/src/features/wolf-sorcerer",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "order_prince",
+      "nameZh": "定序王子",
+      "nameEn": "Order Prince",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "限次重投与发言",
+        "projectSkillBrief": "好人神职。每天第一次放逐投票结束、放逐结算前，你可以翻牌发动一次重投；整局限一次。发动后先额外发言，再由当前合法选民重新投票；发言期间不可自爆。原票不再导致出局，警徽保留。首轮平票或全体弃票也可发动，PK 轮与重投轮不能再次发动。必须明确选择发动或不发动。",
+        "configurationDefaults": {
+          "policy": "awa_order_prince_first_ballot_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["reset_exile_vote"],
+      "windows": "每日第一轮放逐票后，游戏一次重置并额外发言重投",
+      "requestStageIds": ["order_prince_choice", "order_prince_speech", "order_prince_revote"],
+      "nightHandlerIds": [],
+      "relatedEventIds": [
+        "order_prince_choice_committed",
+        "order_prince_revote_started",
+        "day_speech",
+        "vote_cast",
+        "vote_summary"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "civic_ballot",
+        "motif": "王冠、撤销票匣与第二轮封条",
+        "mustDistinguish": [
+          "首轮原票／已废弃首轮结果／追加发言／新一轮票型",
+          "不是PK，不跨轮合并票数；重投平票、全弃票均保留原结算"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/order-prince/profile.ts",
+          "line": 23
+        },
+        "skillBrief": {
+          "path": "backend/src/features/order-prince/profile.ts",
+          "line": 43
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 328
+        },
+        "ruleCard": "docs/rules/awa-order-prince-first-ballot-v1.md",
+        "featureDirectory": "backend/src/features/order-prince",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "time_wolf_consort",
+      "nameZh": "蚀时狼妃",
+      "nameEn": "Time-Wolf Consort",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "反弹与封锁",
+        "projectSkillBrief": "狼人阵营。每夜在好人技能前封锁一名存活者（可选自己），不能连续两夜封锁同一人，也可明确空过。好人的查验、守护、毒药作用于封锁目标时反弹给施法者自己；解药、狼刀不反弹。仅实际反弹消费整局技能，下一夜才获知耗尽。原请求目标仍用于连续目标限制。",
+        "configurationDefaults": {
+          "policy": "awa_time_consort_reflection_v1",
+          "reflectionScope": "whole_night"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "lock_time"],
+      "windows": "夜间锁定；仅实际反射消耗整局一次能力",
+      "requestStageIds": ["time_consort_lock", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["time_consort_lock", "wolf_discussion", "wolf_kill_vote"],
+      "relatedEventIds": [
+        "time_consort_lock_committed",
+        "time_consort_lock_skipped",
+        "time_consort_reflected"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "reflection",
+        "motif": "时锁与回流棱镜",
+        "mustDistinguish": [
+          "选择时锁／未触发保留／实际反射已消费",
+          "反射查验、守护、毒，不反解药和狼刀；显示请求与最终施加对象"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/time-wolf-consort/profile.ts",
+          "line": 26
+        },
+        "skillBrief": {
+          "path": "backend/src/features/time-wolf-consort/profile.ts",
+          "line": 43
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 335
+        },
+        "ruleCard": "docs/rules/awa-time-consort-reflection-v1.md",
+        "featureDirectory": "backend/src/features/time-wolf-consort",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "day_scholar",
+      "nameZh": "白昼学者",
+      "nameEn": "Day Scholar",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "技能增幅/削弱",
+        "projectSkillBrief": "白昼学者属于好人阵营。从第二夜起，每夜可增强或削弱一名存活玩家，整局增强、削弱各一次，也可空过。你不知道另一位施法者的选择；同一好人被两次施法会在天亮死亡，原生夜间行动仍完成。",
+        "configurationDefaults": {
+          "policy": "awa_scholar_mentor_twelve_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["modify_skill", "bonus_action"],
+      "windows": "第二夜起增强、削弱各一次；追加行动顺序",
+      "requestStageIds": ["scholar_mentor_choice", "scholar_mentor_bonus"],
+      "nightHandlerIds": [
+        "scholar_mentor_choice",
+        "scholar_mentor_bonus_guard",
+        "scholar_mentor_bonus_kill",
+        "scholar_mentor_bonus_poison",
+        "scholar_mentor_bonus_check"
+      ],
+      "relatedEventIds": [
+        "modifier_choice_committed",
+        "modifier_choice_skipped",
+        "modifier_conflict_resolved",
+        "modifier_bonus_resolved"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "modifier",
+        "motif": "日纹增幅双刻度",
+        "mustDistinguish": [
+          "增强／削弱／跳过／额外技能行动／冲突结算",
+          "同一好人双施法可次晨死亡，但原生行动仍完成；不能把增强抽象成必定成功"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/scholar-mentor/profile.ts",
+          "line": 234
+        },
+        "skillBrief": {
+          "path": "backend/src/features/scholar-mentor/profile.ts",
+          "line": 234,
+          "note": "资料由贡献引用/展开继承，见导出与实际runtime资料；此处不伪造本文件不存在的字面值。"
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 342
+        },
+        "ruleCard": "docs/rules/awa-scholar-mentor-twelve-v1.md",
+        "featureDirectory": "backend/src/features/scholar-mentor",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "night_mentor",
+      "nameZh": "寂夜导师",
+      "nameEn": "Night Mentor",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "技能增幅/削弱",
+        "projectSkillBrief": "寂夜导师属于狼人阵营，其他狼人认识你，但你不认识狼队、不参与狼聊且不能自爆。仅当夜初只剩你一名狼人时获得刀权。从第二夜起，增强、削弱各可使用一次；两次施法都落在普通狼人时，两种效果取消，你在天亮死亡。",
+        "configurationDefaults": {
+          "policy": "awa_scholar_mentor_twelve_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "modify_skill", "bonus_action"],
+      "windows": "第二夜起增强削弱；孤狼夜初接刀",
+      "requestStageIds": ["scholar_mentor_choice", "scholar_mentor_bonus", "wolf_vote"],
+      "nightHandlerIds": [
+        "scholar_mentor_choice",
+        "scholar_mentor_bonus_guard",
+        "scholar_mentor_bonus_kill",
+        "scholar_mentor_bonus_poison",
+        "scholar_mentor_bonus_check",
+        "wolf_discussion",
+        "wolf_kill_vote"
+      ],
+      "relatedEventIds": [
+        "modifier_choice_committed",
+        "modifier_choice_skipped",
+        "modifier_conflict_resolved",
+        "modifier_bonus_resolved"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "modifier",
+        "motif": "夜纹削弱双刻度",
+        "mustDistinguish": [
+          "单向狼队认知／无狼聊／夜初独狼接刀",
+          "双施普通狼抵消与导师黎明死亡；不套用白昼学者冲突受害者"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/scholar-mentor/profile.ts",
+          "line": 235
+        },
+        "skillBrief": {
+          "path": "backend/src/features/scholar-mentor/profile.ts",
+          "line": 235,
+          "note": "资料由贡献引用/展开继承，见导出与实际runtime资料；此处不伪造本文件不存在的字面值。"
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 349
+        },
+        "ruleCard": "docs/rules/awa-scholar-mentor-twelve-v1.md",
+        "featureDirectory": "backend/src/features/scholar-mentor",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "debater",
+      "nameZh": "杠精",
+      "nameEn": "Debater",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "挑战、辩论、投票资格",
+        "projectSkillBrief": "整局一次翻牌开杠当前普通发言者；全体活人匿名表决，严格过半禁对方当日放逐票，否则禁自己。",
+        "configurationDefaults": {
+          "policy": "awa_melbourne_2026_speech_gap_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["challenge"],
+      "windows": "白天挑战当前普通发言者并发起匿名表决",
+      "requestStageIds": ["debate_challenge", "debate_speech", "debate_ballot"],
+      "nightHandlerIds": [],
+      "relatedEventIds": [
+        "debate_ballots_recorded",
+        "debater_revealed",
+        "debate_started",
+        "debate_speech",
+        "debate_resolved",
+        "debate_canceled"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "civic_ballot",
+        "motif": "交叉言框与匿名赞成票",
+        "mustDistinguish": [
+          "挑战揭示／双方辩论／匿名票型／严格过半结果",
+          "未过半失去自己放逐票，过半对方失票；不是放逐与生命变化"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/debater/profile.ts",
+          "line": 23
+        },
+        "skillBrief": {
+          "path": "backend/src/features/debater/profile.ts",
+          "line": 30
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 356
+        },
+        "ruleCard": "docs/rules/awa-melbourne-debater-v1.md#debater",
+        "featureDirectory": "backend/src/features/debater",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "silence_elder",
+      "nameZh": "禁言长老",
+      "nameEn": "Silencing Elder",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "表达权限与翻译",
+        "projectSkillBrief": "禁言长老：每夜必须选择一名存活玩家，可选本人、可连续重选；另可指定一名不同于目标的存活翻译，或不指定。目标次日放逐讨论及PK只能用动作表达，翻译可另行解读。警上竞选、遗言、狼聊、技能与投票不受限制；效果不顺延。",
+        "configurationDefaults": {
+          "policy": "awa_melbourne_gestures_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["silence", "gesture", "translate_silence"],
+      "windows": "每夜禁言对象与可选翻译；次日普通放逐发言与PK表达限制",
+      "requestStageIds": ["silence_elder", "silence_gesture", "silence_translation"],
+      "nightHandlerIds": ["silence_elder"],
+      "relatedEventIds": [
+        "silence_chosen",
+        "silence_announced",
+        "silence_gesture",
+        "silence_translated",
+        "silence_translation_declined",
+        "silence_expired"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "expression",
+        "motif": "封口封蜡、手势与独立译框",
+        "mustDistinguish": [
+          "普通语音受限／手势原文／翻译文本／拒绝翻译",
+          "不封警长竞选、遗言、狼聊、技能或投票；不把翻译当原玩家原话"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/silence-elder/profile.ts",
+          "line": 27
+        },
+        "skillBrief": {
+          "path": "backend/src/features/silence-elder/profile.ts",
+          "line": 34
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 363
+        },
+        "ruleCard": "docs/rules/awa-melbourne-silence-elder-v1.md#silence_elder",
+        "featureDirectory": "backend/src/features/silence-elder",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/silence-elder.ts"]
+      }
+    },
+    {
+      "roleId": "crow",
+      "nameZh": "乌鸦",
+      "nameEn": "Crow",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "额外放逐票",
+        "projectSkillBrief": "乌鸦：每夜秘密诅咒一名存活玩家，次日放逐额外被计一票。不能连续两夜选择同一目标；不影响警长票或狼刀。",
+        "configurationDefaults": {
+          "policy": "awa_netease_crow_v1",
+          "ballotPolicy": "initial_ballot_only",
+          "actionPolicy": "optional",
+          "selfTarget": false
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["curse_exile"],
+      "windows": "夜间诅咒；次日放逐票型增加一票",
+      "requestStageIds": ["crow_curse"],
+      "nightHandlerIds": ["crow_curse"],
+      "relatedEventIds": ["crow_curse_chosen", "crow_curse_applied", "vote_summary"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "civic_ballot",
+        "motif": "鸦羽与额外一票角标",
+        "mustDistinguish": [
+          "诅咒选择／原始玩家票／额外票来源／最终tally",
+          "额外票不是伪造选民、不是警长加权，不加到警长或狼刀票"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/crow/profile.ts",
+          "line": 23
+        },
+        "skillBrief": {
+          "path": "backend/src/features/crow/profile.ts",
+          "line": 30
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 370
+        },
+        "ruleCard": "docs/rules/awa-netease-crow-v1.md",
+        "featureDirectory": "backend/src/features/crow",
+        "sharedPayloadContracts": ["packages/game-contract/src/events.ts"]
+      }
+    },
+    {
+      "roleId": "white_cat",
+      "nameZh": "白猫",
+      "nameEn": "White Cat",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "延迟死亡",
+        "projectSkillBrief": "白猫是好人神职。首次致死会亮牌延寿，仍可投票和持有警徽；延迟至规定的下一放逐单位后真正死亡，反复受击不刷新期限。",
+        "configurationDefaults": {
+          "skippedVotePolicy": "awa_wait_for_actual_exile_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [],
+      "windows": "首次致死揭示，延迟至指定下一实际放逐单元后死亡",
+      "requestStageIds": [],
+      "nightHandlerIds": [],
+      "relatedEventIds": [
+        "animal_cat_revealed",
+        "animal_wave_prepared",
+        "animal_wave_committed",
+        "animal_cat_expiry_prepared",
+        "animal_unit_completed"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "delayed_life",
+        "motif": "九命猫纹与实际放逐单元沙漏",
+        "mustDistinguish": [
+          "首次致死被延后／仍有生命与投票权／实际到期死亡",
+          "重复伤害不延长；日期推进不等于实际放逐单元已经完成"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "line": 56
+        },
+        "skillBrief": {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "line": 61
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 377
+        },
+        "ruleCard": "docs/rules/awa-animal-dream-twelve-v1.md",
+        "featureDirectory": "backend/src/features/animal-dream",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/animal-dream.ts"]
+      }
+    },
+    {
+      "roleId": "fox_cub",
+      "nameZh": "子狐",
+      "nameEn": "Fox Cub",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "迷惑及目标交互",
+        "projectSkillBrief": "子狐是好人神职。次夜起整局一次迷惑任意原活人，可自选；null明确空过不耗次数。命中狼阵营取消整队当夜普通刀，命中狼美人另清魅惑。本人的反馈不透露命中或阵营。",
+        "configurationDefaults": {
+          "policy": "awa_animal_dream_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["fox_distract"],
+      "windows": "第二夜起一次迷惑；夜内普通刀与魅惑交互",
+      "requestStageIds": ["fox_distract"],
+      "nightHandlerIds": ["fox_distract"],
+      "relatedEventIds": [
+        "animal_night_opened",
+        "animal_fox_chosen",
+        "animal_fox_effect",
+        "animal_knife_notified",
+        "animal_beauty_notified",
+        "animal_wave_prepared",
+        "animal_wave_committed"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "suppression",
+        "motif": "狐尾迷雾与普通刀取消符",
+        "mustDistinguish": [
+          "已选择并消费／无目标不消费／命中真狼取消普通刀",
+          "本人反馈不泄漏是否命中和阵营；不取消所有独立额外伤害"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "line": 79
+        },
+        "skillBrief": {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "line": 84
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 384
+        },
+        "ruleCard": "docs/rules/awa-animal-dream-twelve-v1.md",
+        "featureDirectory": "backend/src/features/animal-dream",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/animal-dream.ts"]
+      }
+    },
+    {
+      "roleId": "pufferfish",
+      "nameZh": "河豚",
+      "nameEn": "Pufferfish",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "投票反击、特殊死亡",
+        "projectSkillBrief": "河豚是好人神职。最终放逐票后整局一次反击由引擎确定的全部原投票人；只决定activate，false不耗次数。真实刀死时另封锁当日狼美人牵连，主动库存和被动独立。",
+        "configurationDefaults": {
+          "ballotPolicy": "awa_final_ballot_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["puffer_retaliate"],
+      "windows": "最终放逐票后一次选择反击；实际刀死被动联动",
+      "requestStageIds": ["puffer_reaction"],
+      "nightHandlerIds": [],
+      "relatedEventIds": [
+        "animal_knife_notified",
+        "animal_beauty_notified",
+        "animal_puffer_revealed",
+        "animal_puffer_decided",
+        "animal_puffer_targets",
+        "animal_wave_prepared",
+        "animal_wave_committed"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "death_action",
+        "motif": "刺球与原选民反击线",
+        "mustDistinguish": [
+          "反击可用／主动放弃不消费／原始选民目标集／实际反伤",
+          "按原始选民确定目标，不能用最终tally补造投票者；主动与被动次数独立"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "line": 133
+        },
+        "skillBrief": {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "line": 138
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 391
+        },
+        "ruleCard": "docs/rules/awa-animal-dream-twelve-v1.md",
+        "featureDirectory": "backend/src/features/animal-dream",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/animal-dream.ts"]
+      }
+    },
+    {
+      "roleId": "warden",
+      "nameZh": "典狱长",
+      "nameEn": "Warden",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": null,
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "秘密交易/背叛决策",
+        "projectSkillBrief": "典狱长属于狼队。首夜不能交易；次夜起可指定两名不同的未参与存活玩家秘密博弈，可含自己，每人整局最多参与一次。普通双方交易免本夜夜刀、毒及梦伤；单背叛使交易者以交易死因出局；双背叛仅把双方各自已有的原生个人夜技能强制指向对方，团刀不变。自己入局则同选自己死、异选对方死。选择及结果秘密，不能获得对方选择。",
+        "configurationDefaults": {
+          "policy": "awa_melbourne_warden_v1",
+          "forcePolicy": "awa_warden_partner_native_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "warden_pair", "warden_decide"],
+      "windows": "第二夜起一次号码配对；两人秘密选择后的夜间结算",
+      "requestStageIds": ["warden_pair", "warden_decide", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "warden_pair"],
+      "relatedEventIds": [
+        "warden_pair_chosen",
+        "warden_partner_notified",
+        "warden_decision",
+        "warden_resolved"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "secret_decision",
+        "motif": "双人密函与交易背叛锁",
+        "mustDistinguish": [
+          "双方交易／单方背叛／双方背叛／典狱长本人入对的特殊分支",
+          "选择对彼此不可见，God影片需视角标签；普通刀、毒、梦免疫并非所有致死免疫",
+          "被迫转向本人才技能不应改整轮集体狼刀"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/warden/profile.ts",
+          "line": 27
+        },
+        "skillBrief": {
+          "path": "backend/src/features/warden/profile.ts",
+          "line": 32
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 398
+        },
+        "ruleCard": "docs/rules/awa-melbourne-warden-v1.md",
+        "featureDirectory": "backend/src/features/warden",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/warden.ts"]
+      }
+    },
+    {
+      "roleId": "awakened_idiot",
+      "nameZh": "觉醒愚者",
+      "nameEn": "Awakened Village Idiot",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "idiot",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "秘密之身/伤害替代",
+        "projectSkillBrief": "你有一份秘密之身。持有时每夜可选择存活玩家（含自己）或明确不指定；目标无有效夜伤时转护自己，只抵消一个有效来源。实际抵伤后身体耗尽，下一夜才统一告知是否耗身，不获知实际抵伤对象或来源。未耗身时免一次放逐，公开翻牌并发言，仍保留投票、竞选和警徽；下次可被放逐。连续目标限制依公开政策。",
+        "configurationDefaults": {
+          "protectionRepeatPolicy": "awa_nonconsecutive_nights_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["protect_secret_body"],
+      "windows": "夜间秘密之身与首次放逐时的身份揭示",
+      "requestStageIds": ["secret_body", "awakened_idiot_reveal_speech"],
+      "nightHandlerIds": ["secret_body_action"],
+      "relatedEventIds": [
+        "noble_body_knife_committed",
+        "noble_body_native_damage_committed",
+        "noble_body_night_opened",
+        "noble_body_death_committed",
+        "noble_body_sources_committed",
+        "secret_body_chosen",
+        "secret_body_blocked",
+        "secret_body_night_notified",
+        "secret_body_revealed",
+        "secret_body_reveal_speech"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": ["night_protection_resolved"]
+      },
+      "proposed": {
+        "familyId": "protection",
+        "motif": "秘密替身与公开面具",
+        "mustDistinguish": [
+          "秘密之身选择／无有效目标时自保／取消一次有效死因／次夜有限通知",
+          "未消耗秘密身的首次放逐豁免与普通白痴失权相反：本角色保留投票等权利"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/noble-secret-body/profile.ts",
+          "line": 121
+        },
+        "skillBrief": {
+          "path": "backend/src/features/noble-secret-body/profile.ts",
+          "line": 128
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 405
+        },
+        "ruleCard": "docs/rules/awa-noble-secret-body-twelve-v1.md",
+        "featureDirectory": "backend/src/features/noble-secret-body",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/noble-secret-body.ts"]
+      }
+    },
+    {
+      "roleId": "awakened_seer",
+      "nameZh": "觉醒预言家",
+      "nameEn": "Awakened Seer",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "seer",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "双目标信息",
+        "projectSkillBrief": "你是觉醒预言家，好人神职。首夜起每夜从存活候选中选择两个不同号码；允许含自己，也可跨夜重复目标或整对。至少两名候选时必须选择，不能空过、重复同号码或只交一个。唯一结果是这两人中是否至少有一个真实狼人（布尔值）；不返回狼人数量、哪个是狼、单体阵营或具体角色。仅你本人获知目标对和结果，目标和其它玩家不会收到。你可以结合自己的已知身份推理，但协议仍只有一个聚合结果。",
+        "configurationDefaults": {
+          "policy": "awa_fragrant_pair_seer_v1"
+        },
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["check_pair"],
+      "windows": "每夜两名不同存活目标的聚合查验",
+      "requestStageIds": ["pair_inspection"],
+      "nightHandlerIds": ["pair_inspection"],
+      "relatedEventIds": ["fragrant_pair_inspected"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "inspection_pair",
+        "motif": "双目标古镜共用一枚有狼封蜡",
+        "mustDistinguish": [
+          "两个目标一组／整组含狼或不含狼",
+          "不得标注哪人是狼、狼数量、单人阵营或具体角色"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/fragrant-pair-seer/profile.ts",
+          "line": 130
+        },
+        "skillBrief": {
+          "path": "backend/src/features/fragrant-pair-seer/profile.ts",
+          "line": 137
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 412
+        },
+        "ruleCard": "docs/rules/awa-fragrant-pair-seer-twelve-v1.md",
+        "featureDirectory": "backend/src/features/fragrant-pair-seer",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/fragrant-pair-seer.ts"]
+      }
+    },
+    {
+      "roleId": "awakened_wolf_king",
+      "nameZh": "觉醒狼王",
+      "nameEn": "Awakened Wolf King",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "wolf_king",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "多次死亡技能、能力转移",
+        "projectSkillBrief": "觉醒狼王属于狼队，拥有两枚独立狼爪。每夜可将一枚尚未使用的狼爪传给另一合法活队友，或明确不传；已传不返还。仅真实狼刀、放逐或枪击且全部死因均允许时，死亡后按原爪库存依次行动；毒、梦、自爆、决斗和未知死因禁爪。每爪可选活人或明确空枪，均消费；第一爪完整死亡连锁后才轮到下一爪。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "shoot", "bequeath_claw"],
+      "windows": "每夜转交一枚未用爪；真实死亡后的多枪逐链结算",
+      "requestStageIds": ["awakened_claw_bequest", "wolf_discussion", "wolf_vote", "death_shot"],
+      "nightHandlerIds": ["wolf_discussion", "wolf_kill_vote", "awakened_claw_bequest"],
+      "relatedEventIds": [
+        "death_shot_missed",
+        "death_ability_changed",
+        "death_shot_blocked",
+        "player_shot",
+        "awakened_claw_bequeathed",
+        "awakened_claw_spent",
+        "awakened_claws_expired"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "death_action",
+        "motif": "双爪库存与传承印",
+        "mustDistinguish": [
+          "独立两爪／赠予后不退款／逐枪支付／空枪消费",
+          "每枪完整死亡链结束后才下一枪；未知或禁止死因不授枪"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/awakened-wolf-king/profile.ts",
+          "line": 24
+        },
+        "skillBrief": {
+          "path": "backend/src/features/awakened-wolf-king/profile.ts",
+          "line": 29
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 419
+        },
+        "ruleCard": "docs/rules/awa-awakened-wolf-king-v1.md#awakened_wolf_king",
+        "featureDirectory": "backend/src/features/awakened-wolf-king",
+        "sharedPayloadContracts": [
+          "packages/game-contract/src/events.ts",
+          "packages/game-contract/src/facts/awakened-claws.ts"
+        ]
+      }
+    },
+    {
+      "roleId": "awakened_hidden_wolf",
+      "nameZh": "觉醒隐狼",
+      "nameEn": "Awakened Hidden Wolf",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "hidden_wolf",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "学习能力及查验角色标签不改本体RoleId；无另一个“学习后觉醒”角色。"
+      },
+      "mechanism": {
+        "catalogSummary": "复制、生效时机、独立狼",
+        "projectSkillBrief": "独立狼：一局一次模仿，实际夜末激活，唯一活狼后接刀，复制资源独立。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": ["role_check"],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": [
+        "kill_vote",
+        "awakened_mimic",
+        "awakened_poison",
+        "awakened_guard",
+        "awakened_attack",
+        "inspect_role",
+        "shoot"
+      ],
+      "windows": "一次学习，实际夜末激活；独狼接刀；独立技能资源",
+      "requestStageIds": ["awakened_mimic", "awakened_skill", "awakened_attack", "wolf_vote"],
+      "nightHandlerIds": [
+        "awakened_opening",
+        "awakened_mimic",
+        "awakened_skill",
+        "awakened_attack",
+        "awakened_activation",
+        "wolf_discussion",
+        "wolf_kill_vote"
+      ],
+      "relatedEventIds": [
+        "death_ability_changed",
+        "awakened_inherited",
+        "awakened_mimicked",
+        "awakened_mimic_skipped",
+        "awakened_ready",
+        "awakened_skill_skipped",
+        "awakened_poison_used",
+        "awakened_guard_chosen",
+        "awakened_attack_chosen",
+        "role_inspection_skipped",
+        "role_inspected",
+        "player_shot",
+        "awakened_guard_cycle_started"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved",
+          "potion_stock"
+        ]
+      },
+      "proposed": {
+        "familyId": "copy_resource",
+        "motif": "暗影复制卡槽与夜末激活灯",
+        "mustDistinguish": [
+          "学习提交／真实夜末激活／独立药守查枪／接刀",
+          "不与机械狼模式机制混同；真实角色、查验显示的学习角色与当前权限分离"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/awakened-hidden-wolf/profile.ts",
+          "line": 42
+        },
+        "skillBrief": {
+          "path": "backend/src/features/awakened-hidden-wolf/profile.ts",
+          "line": 58
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 426
+        },
+        "ruleCard": "docs/rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf",
+        "featureDirectory": "backend/src/features/awakened-hidden-wolf",
+        "sharedPayloadContracts": [
+          "packages/game-contract/src/events.ts",
+          "packages/game-contract/src/facts/awakened-guard.ts"
+        ]
+      }
+    },
+    {
+      "roleId": "awakened_wolf_beauty",
+      "nameZh": "觉醒狼美人",
+      "nameEn": "Awakened Wolf Beauty",
+      "nominalCamp": "wolf",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "wolf_beauty",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "替死/关系结算",
+        "projectSkillBrief": "觉醒狼美人属于狼队，可狼聊与刀票，不能自爆或自刀。狼刀后可魅惑另一活人；非空选择后隔一夜才能再选，旧关系在下个真实开夜到期。全局一次替死只在原目标仍活且本次来源允许时消费，自己保持原生命。夜间死亡发起的觉醒猎人巡猎禁本次替死；白天根巡猎允许替死。队友和目标不知道你的秘密选择。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["speak_to_wolves", "kill_vote", "self_destruct", "awakened_charm"],
+      "windows": "刀后魅惑，跨夜间隔；有限死因下的一次替死",
+      "requestStageIds": ["awakened_charm", "wolf_discussion", "wolf_vote"],
+      "nightHandlerIds": [
+        "wolf_discussion",
+        "wolf_kill_vote",
+        "awakened_beauty_prepare",
+        "awakened_charm"
+      ],
+      "relatedEventIds": [
+        "awakened_charm_chosen",
+        "awakened_beauty_replacement_paid",
+        "awakened_beauty_replaced"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": [
+          "wolf_knife_committed",
+          "wolf_knife_revoked",
+          "night_protection_resolved"
+        ]
+      },
+      "proposed": {
+        "familyId": "relation_link",
+        "motif": "血玫瑰替身环与一次护命印",
+        "mustDistinguish": [
+          "魅惑选择／替死资源支付／自身生命保留／目标是否真的死亡",
+          "夜根觉醒巡猎禁替死、昼根允许；不把目标保住后的替死写作成功杀死"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/awakened-wolf-beauty/profile.ts",
+          "line": 21
+        },
+        "skillBrief": {
+          "path": "backend/src/features/awakened-wolf-beauty/profile.ts",
+          "line": 26
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 433
+        },
+        "ruleCard": "docs/rules/awa-awakened-wolf-beauty-v1.md#awakened_wolf_beauty",
+        "featureDirectory": "backend/src/features/awakened-wolf-beauty",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/awakened-beauty.ts"]
+      }
+    },
+    {
+      "roleId": "awakened_witch",
+      "nameZh": "觉醒女巫",
+      "nameEn": "Awakened Witch",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "witch",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "多次调配、协助者秘密决策",
+        "projectSkillBrief": "觉醒女巫属于好人神职，有一瓶不可自救的解药和三次调毒机会。解药只救当晚基础狼刀；调毒依次需要1、2、3名新协助者，每人整局仅参与一次，不能选自己协助。发起即消耗次数与协助资格，否决也不返还。协助者秘密交流后一人一票，全部同意才产生毒；你不知道他们的发言、决定或结果，不能把调毒当作查验。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["awakened_brew", "brew_discuss", "brew_approve"],
+      "windows": "有限原十二人板：解药与三次递增助手酿毒机会",
+      "requestStageIds": ["awakened_witch", "brew_discussion", "brew_approval"],
+      "nightHandlerIds": ["awakened_witch"],
+      "relatedEventIds": [
+        "awakened_brew_chosen",
+        "brew_started",
+        "brew_discussion",
+        "brew_approval",
+        "brew_resolved"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "secret_decision",
+        "motif": "分级坩埚、协助席与秘密票",
+        "mustDistinguish": [
+          "解药／发起酿造／助手秘密讨论与全票同意／酿造结果",
+          "机会和助手在发起时消耗，否决不退；1/2/3名新助手与药瓶不同计量",
+          "女巫本人不知助手讨论、决定与结果，不当成查验；不能默认普通女巫双瓶UI"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/awakened-witch/profile.ts",
+          "line": 26
+        },
+        "skillBrief": {
+          "path": "backend/src/features/awakened-witch/profile.ts",
+          "line": 32
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 440
+        },
+        "ruleCard": "docs/rules/awa-awakened-witch-v1.md#awakened_witch",
+        "featureDirectory": "backend/src/features/awakened-witch",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/awakened-witch.ts"]
+      }
+    },
+    {
+      "roleId": "awakened_hunter",
+      "nameZh": "觉醒猎人",
+      "nameEn": "Awakened Hunter",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "hunter",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "巡猎及死亡动作",
+        "projectSkillBrief": "觉醒猎人属于好人神职，真实出局后可消费唯一巡猎单位，选择正序或逆序命中该方向最近的当前活狼，也可null明确放弃。毒死仍可巡猎；不使用普通shoot或自选目标。夜根巡猎禁本次目标特殊狼替死，白天根不禁；方向不向你提前暴露命中座位。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["patrol"],
+      "windows": "真实死亡后一次顺时针、逆时针或放弃巡猎",
+      "requestStageIds": ["awakened_patrol"],
+      "nightHandlerIds": ["awakened_patrol_bind"],
+      "relatedEventIds": ["awakened_patrol_paid", "awakened_patrol_resolved"],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "death_action",
+        "motif": "环形巡猎方向盘与狼踪",
+        "mustDistinguish": [
+          "方向选择／消耗／找到最近当前活狼／无命中",
+          "不是任意目标枪击；毒死仍可巡猎；不在行动前泄漏即将命中的狼"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/awakened-hunter/profile.ts",
+          "line": 22
+        },
+        "skillBrief": {
+          "path": "backend/src/features/awakened-hunter/profile.ts",
+          "line": 29
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 447
+        },
+        "ruleCard": "docs/rules/awa-awakened-hunter-v1.md#awakened_hunter",
+        "featureDirectory": "backend/src/features/awakened-hunter",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/awakened-patrol.ts"]
+      }
+    },
+    {
+      "roleId": "awakened_guard",
+      "nameZh": "觉醒守卫",
+      "nameEn": "Awakened Guard",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "guard",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "特殊保护",
+        "projectSkillBrief": "觉醒守卫属于好人神职。每个实际夜晚及随后白天共用一次全天保护，可保护自己，不能与上一实际周期保护同一座位；完整空过一周期可断开连守。夜晚或白天有限安全边界可选择保护、等待或整周期放弃。保护挡住本周期所有致死，包括毒、放逐、决斗和替死，但仅绑定原目标生命。夜选择保密；白天实际发动公开身份及目标。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["awakened_protect"],
+      "windows": "每个真实夜及其后白天一个保护周期；有限边界可等待或整周期放弃",
+      "requestStageIds": ["awakened_protection_night", "awakened_protection_day"],
+      "nightHandlerIds": ["awakened_guard_prepare", "awakened_protection"],
+      "relatedEventIds": [
+        "awakened_guard_chosen",
+        "awakened_guard_cycle_started",
+        "awakened_protection_chosen",
+        "awakened_protection_blocked",
+        "awakened_protection_revealed",
+        "awakened_protection_block_detail",
+        "awakened_protection_expired"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": ["night_protection_resolved"]
+      },
+      "proposed": {
+        "familyId": "protection",
+        "motif": "昼夜双色全因护罩",
+        "mustDistinguish": [
+          "保护／等待／整周期放弃／夜间秘密与白天公开",
+          "保护原生命并可阻断放逐、决斗、替死等致死，不套用普通盾仅夜刀规则",
+          "周期消耗、上一真实周期目标与放弃打断重复限制独立"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/awakened-guard/profile.ts",
+          "line": 21
+        },
+        "skillBrief": {
+          "path": "backend/src/features/awakened-guard/profile.ts",
+          "line": 27
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 454
+        },
+        "ruleCard": "docs/rules/awa-awakened-guard-v1.md#awakened_guard",
+        "featureDirectory": "backend/src/features/awakened-guard",
+        "sharedPayloadContracts": [
+          "packages/game-contract/src/events.ts",
+          "packages/game-contract/src/facts/awakened-guard.ts"
+        ]
+      }
+    },
+    {
+      "roleId": "awakened_knight",
+      "nameZh": "觉醒骑士",
+      "nameEn": "Awakened Knight",
+      "nominalCamp": "good",
+      "identityRelations": {
+        "declaredAwakenedVariantOf": "knight",
+        "declaredAwakenedVariants": [],
+        "runtimeIdentityNote": "名义阵营不自动授予当前狼队权限；当前生命、阵营、查验标签和胜利成员关系仍读实际记录。"
+      },
+      "mechanism": {
+        "catalogSummary": "连续决斗及特殊误中结算",
+        "projectSkillBrief": "觉醒骑士属于好人神职，可在普通放逐发言、PK和开票前的有限安全边界决斗另一活人。目标是狼则可在完整死亡连锁后继续决斗或结束入夜；目标是好人则双方各自接受致死，完成连锁后恢复未完成的原发言。同一座位整局只能尝试一次，盾或替死不返还资格。当前链实际死者的遗言推迟到链正常结束后依死亡顺序发表；失败不会自动结束链。",
+        "configurationDefaults": {},
+        "possibleNightAbilityIds": [],
+        "possibleDeathAbilityIds": []
+      },
+      "toolIds": ["awakened_duel"],
+      "windows": "白天普通、PK及票前有限边界；逐座一次决斗",
+      "requestStageIds": ["awakened_duel", "awakened_duel_continue"],
+      "nightHandlerIds": ["awakened_knight_prepare"],
+      "relatedEventIds": [
+        "awakened_duel_resolved",
+        "awakened_duel_committed",
+        "awakened_duel_chain_ended"
+      ],
+      "replayFacts": {
+        "alwaysConsult": ["life_committed"],
+        "conditionallyConsult": []
+      },
+      "proposed": {
+        "familyId": "duel",
+        "motif": "多次决斗刻痕与未完发言书签",
+        "mustDistinguish": [
+          "命中狼后链结算再决定继续或入夜／误决好人时双方致死提案",
+          "同一号码已付费即消耗，保护或替死不退款；失败不自动结束白天",
+          "连锁遗言延迟至正常结束按实际死亡序；保留未完发言游标"
+        ],
+        "existingAssetId": null
+      },
+      "sources": {
+        "profile": {
+          "path": "backend/src/features/awakened-knight/profile.ts",
+          "line": 21
+        },
+        "skillBrief": {
+          "path": "backend/src/features/awakened-knight/profile.ts",
+          "line": 27
+        },
+        "catalog": {
+          "path": "packages/game-catalog/src/index.ts",
+          "line": 461
+        },
+        "ruleCard": "docs/rules/awa-awakened-knight-v1.md#awakened_knight",
+        "featureDirectory": "backend/src/features/awakened-knight",
+        "sharedPayloadContracts": ["packages/game-contract/src/facts/awakened-duel.ts"]
+      }
+    }
+  ]
+}

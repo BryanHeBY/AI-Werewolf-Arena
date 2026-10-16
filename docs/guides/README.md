@@ -3,6 +3,7 @@
 - [本地运行与配置检查](run-locally.md)
 - [Pi 原生 Agent：配置、模型与内存边界](pi-agent.md)
 - [离线模拟、复盘与视频](offline-replay.md)
+- [视频美术与动效规范](video-art-direction.md)
 - [验证方法](validation.md)
 - [真实模型评测](release-evaluation.md)
 - [增加或修改机制](add-mechanism.md)

@@ -1,0 +1,536 @@
+<!doctype html>
+<!--
+职责：用项目既有环境与道具展示中央局部阅读衬的构图研究，支持昼夜、场景、资料缺省和整板对照。
+这里只展示待实现的排版方向；不读取归档、不推断规则、不代表生产视频已经采用此布局，全部人物与文字为编导示意。
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>中央衬底构图研究 · 非真实对局</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #10171d;
+        color: #e7e4da;
+        font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      }
+      .controls {
+        max-width: 1920px;
+        margin: auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        font-size: 14px;
+      }
+      .controls strong {
+        color: #e1cfaa;
+      }
+      select {
+        background: #1e2b34;
+        border: 1px solid #71808a;
+        color: #f4f1e8;
+        padding: 6px;
+        margin-left: 6px;
+      }
+      .note {
+        max-width: 1920px;
+        margin: auto;
+        padding: 0 24px 14px;
+        line-height: 1.6;
+        font-size: 14px;
+        color: #bfccd2;
+      }
+      #viewport {
+        position: relative;
+        width: 100%;
+        max-width: 1920px;
+        aspect-ratio: 16 / 9;
+        margin: auto;
+        overflow: hidden;
+      }
+      #canvas {
+        width: 1920px;
+        height: 1080px;
+        transform-origin: top left;
+        position: absolute;
+        overflow: hidden;
+        color: #efeade;
+        background: #131e28;
+      }
+      .environment {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 40%, transparent 15%, #02080d66 100%);
+      }
+      .header {
+        position: absolute;
+        left: 42px;
+        right: 42px;
+        top: 28px;
+        height: 66px;
+        display: flex;
+        align-items: baseline;
+        gap: 24px;
+        border-bottom: 1px solid #a5936c99;
+        text-shadow: 0 2px 5px #000;
+      }
+      h1 {
+        font-family: "Noto Serif SC", "Songti SC", serif;
+        font-size: 42px;
+        margin: 0;
+        font-weight: 650;
+        letter-spacing: 2px;
+      }
+      .header small {
+        font-size: 20px;
+        color: #e1d3b8;
+      }
+      .clock {
+        margin-left: auto;
+        font-size: 28px;
+      }
+      .seat {
+        position: absolute;
+        height: 134px;
+        background: linear-gradient(125deg, #162630ec, #08141cf0);
+        border: 1.5px solid #80765f;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 12px;
+        box-shadow: inset 0 0 0 3px #081018;
+      }
+      .seat.active {
+        border-color: #e1c58e;
+        box-shadow:
+          inset 0 0 0 3px #081018,
+          0 0 12px #c0a06b30;
+      }
+      .seat.right {
+        flex-direction: row-reverse;
+      }
+      .identity {
+        min-width: 0;
+        flex: 1;
+      }
+      .right .identity {
+        text-align: right;
+      }
+      .name {
+        font-size: 28px;
+        line-height: 1.4;
+        padding-block: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .model {
+        font-size: 22px;
+        line-height: 1.2;
+        color: #c0c9cd;
+        margin-top: 4px;
+      }
+      .avatar {
+        position: relative;
+        width: 77px;
+        height: 77px;
+        flex: 0 0 77px;
+        border: 2px solid #a5936c;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 25%, #35515a, #0a1820);
+        display: grid;
+        place-items: center;
+      }
+      .avatar svg {
+        width: 48px;
+        height: 48px;
+      }
+      .seat-number {
+        position: absolute;
+        bottom: -8px;
+        right: -6px;
+        min-width: 48px;
+        height: 48px;
+        padding: 0 5px;
+        display: grid;
+        place-items: center;
+        background: #141e24;
+        border: 1.5px solid #a5936c;
+        font-size: 40px;
+        font-variant-numeric: tabular-nums;
+      }
+      .role {
+        font-size: 26px;
+        line-height: 1.2;
+        margin-top: 4px;
+        color: #c9d5dc;
+      }
+      .seat.anonymous,
+      .seat.right.anonymous {
+        flex-direction: column;
+        gap: 6px;
+        justify-content: center;
+        padding: 9px;
+      }
+      .seat.anonymous .avatar {
+        width: 64px;
+        height: 64px;
+        flex-basis: 64px;
+      }
+      .seat.anonymous .role {
+        margin-top: 0;
+      }
+      .role.wolf {
+        color: #e6a1a3;
+      }
+      .stage {
+        position: absolute;
+        top: 139px;
+        bottom: 107px;
+      }
+      .plate {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        background: #081219dc;
+        padding: 9px 24px;
+        border-block: 1.5px solid #a5936c99;
+        font-size: 32px;
+        font-family: "Noto Serif SC", "Songti SC", serif;
+      }
+      .stage-title {
+        text-align: center;
+      }
+      .content {
+        position: absolute;
+        inset: 92px 0 0;
+      }
+      .reading {
+        background: #081219dc;
+        border-left: 2px solid #a5936c99;
+        padding: 26px 34px;
+      }
+      .speech {
+        position: absolute;
+        bottom: 30px;
+        left: 28px;
+        right: 28px;
+        min-height: 400px;
+      }
+      .speaker {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        margin-bottom: 21px;
+        font-size: 28px;
+        color: #e1cfaa;
+      }
+      .speaker small {
+        color: #c3ced2;
+        font-size: 20px;
+      }
+      .speech p {
+        font-size: 42px;
+        line-height: 1.45;
+        margin: 0;
+      }
+      .speech p + p {
+        margin-top: 16px;
+      }
+      .speech em {
+        font-style: normal;
+        font-weight: 650;
+        color: #f1bcad;
+      }
+      .page {
+        color: #c3ced2;
+        font-size: 20px;
+        margin-top: 22px;
+        text-align: right;
+      }
+      .skill {
+        height: 100%;
+        position: relative;
+      }
+      .prop-shadow {
+        position: absolute;
+        width: 560px;
+        height: 450px;
+        left: calc(50% - 280px);
+        top: 6px;
+        background: radial-gradient(ellipse, #07131b77, transparent 65%);
+      }
+      .mirror {
+        position: absolute;
+        width: 410px;
+        height: 410px;
+        object-fit: contain;
+        left: calc(50% - 205px);
+        top: -12px;
+        filter: drop-shadow(0 10px 14px #0009);
+      }
+      .action-actors {
+        position: absolute;
+        top: 160px;
+        left: 7%;
+        right: 7%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .actor {
+        font-size: 28px;
+        background: #081219d9;
+        border-bottom: 1px solid #a5936c;
+        padding: 12px 18px;
+      }
+      .result {
+        position: absolute;
+        bottom: 62px;
+        left: 14%;
+        right: 14%;
+        text-align: center;
+      }
+      .result strong {
+        display: inline-block;
+        background: #081219e6;
+        font-size: 38px;
+        padding: 16px 30px;
+        font-weight: 650;
+        border-bottom: 2px solid #9cb6c3;
+      }
+      .result small {
+        display: block;
+        color: #d3dce0;
+        font-size: 21px;
+        background: #081219d9;
+        padding: 12px;
+        margin-top: 6px;
+      }
+      .god {
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        bottom: 100px;
+      }
+      .god p {
+        margin: 0;
+        font-size: 38px;
+        line-height: 1.5;
+      }
+      .god small {
+        display: block;
+        margin-top: 15px;
+        color: #c5ced2;
+        font-size: 22px;
+      }
+      .ballots {
+        position: absolute;
+        bottom: 28px;
+        left: 3%;
+        right: 3%;
+        background: #081219ec;
+        padding: 26px 32px;
+      }
+      .ballot-row {
+        display: grid;
+        grid-template-columns: 80px 1fr 70px;
+        align-items: center;
+        gap: 22px;
+        padding: 15px 0;
+        border-bottom: 1px solid #77808055;
+        font-size: 29px;
+      }
+      .voters {
+        display: flex;
+        gap: 10px;
+      }
+      .voters span {
+        padding: 4px 11px;
+        border: 1px solid #908267;
+        color: #dedcd2;
+        font-size: 24px;
+        font-variant-numeric: tabular-nums;
+      }
+      .tally {
+        text-align: right;
+        color: #f1bcad;
+        font-variant-numeric: tabular-nums;
+      }
+      .ballot-end {
+        font-size: 30px;
+        margin: 24px 0 0;
+        color: #e4b3aa;
+      }
+      .ballot-note {
+        font-size: 20px;
+        color: #c3ced2;
+        margin-top: 15px;
+      }
+      .footer {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 24px;
+        background: #081219dc;
+        border-bottom: 1px solid #a5936c99;
+        font-size: 21px;
+        color: #d7d3c9;
+        white-space: nowrap;
+      }
+      /* 整板只近似旧式遮挡，不能冒充当前渲染器的逐像素截图。 */
+      #canvas[data-surface="panel"] .stage {
+        background: #091820de;
+        border: 1px solid #a5936c;
+      }
+      #canvas[data-surface="panel"][data-tone="day"] .stage {
+        background: #dce2e0f5;
+      }
+      #canvas[data-surface="panel"][data-tone="day"] .prop-shadow {
+        background: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <strong>中央衬底构图研究</strong>
+      <label
+        >环境<select id="tone">
+          <option value="night">夜晚</option>
+          <option value="day">白天</option>
+        </select></label
+      >
+      <label
+        >场景<select id="scene">
+          <option value="skill">技能结果</option>
+          <option value="speech">发言</option>
+          <option value="ballot">票型</option>
+          <option value="god">上帝播报</option>
+        </select></label
+      >
+      <label
+        >衬底<select id="surface">
+          <option value="local">局部衬底方案</option>
+          <option value="panel">整板遮挡对照（近似）</option>
+        </select></label
+      >
+      <label
+        >侧栏资料<select id="metadata">
+          <option value="show">姓名与模型</option>
+          <option value="hide">缺省／隐藏</option>
+        </select></label
+      >
+    </div>
+    <div class="note">
+      编导构图示意，非真实对局或生产效果。使用项目已有背景和中性古镜；新纹章、结果叠层与动作尚未制作。此处只比较背景露出、文字承托和布局，字体仍依赖本机。
+    </div>
+    <div id="viewport"><main id="canvas" aria-label="非真实对局的构图研究"></main></div>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const viewport = document.getElementById("viewport");
+      const keys = ["tone", "scene", "surface", "metadata"];
+      const controls = Object.fromEntries(keys.map((key) => [key, document.getElementById(key)]));
+      const params = new URLSearchParams(location.search);
+      for (const key of keys) {
+        const input = params.get(key);
+        if ([...controls[key].options].some((option) => option.value === input))
+          controls[key].value = input;
+      }
+      const roleNames = [
+        "狼人",
+        "预言家",
+        "平民",
+        "女巫",
+        "守卫",
+        "狼人",
+        "平民",
+        "猎人",
+        "狼人",
+        "平民",
+        "平民",
+        "平民",
+      ];
+      const names = [
+        "暮钟",
+        "观星者",
+        "渡鸦",
+        "雾灯",
+        "铁卫",
+        "夜行者",
+        "银松",
+        "旧枪",
+        "灰烬",
+        "秋铃",
+        "石阶",
+        "旅人",
+      ];
+      function roster(show) {
+        return names
+          .map((name, index) => {
+            const right = index >= 6;
+            const width = show ? 328 : 240;
+            const x = right ? 1920 - 42 - width : 42;
+            // LLM 徽记使用中性几何字母示意，与角色纹章分离，隐藏资料时不泄漏模型。
+            return `<div class="seat ${right ? "right" : ""} ${index === 1 ? "active" : ""} ${show ? "" : "anonymous"}" style="left:${x}px;top:${146 + (index % 6) * 139}px;width:${width}px">
+
+            <div class="avatar"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 43 14v20L24 45 5 34V14Z" fill="none" stroke="#99b8c1" stroke-width="2"/><path d="M14 29 24 12l10 17M18 23h12" fill="none" stroke="#d8e1df" stroke-width="2"/></svg><span class="seat-number">${index + 1}</span></div>
+            ${show ? `<div class="identity"><div class="name">${name}</div><div class="model">模型 ${String.fromCharCode(65 + index)}</div><div class="role ${roleNames[index] === "狼人" ? "wolf" : ""}">${roleNames[index]}</div></div>` : `<div class="role ${roleNames[index] === "狼人" ? "wolf" : ""}">${roleNames[index]}</div>`}</div>`;
+          })
+          .join("");
+      }
+      function content(scene) {
+        if (scene === "speech")
+          return `<div class="speech reading"><div class="speaker">2 号发言 <small>编导排版稿 · 非玩家原话</small></div><p>先看这一轮的票型：1 号和 4 号选择相同目标，但发言理由并不一致。</p><p>我希望下一位先解释<em>投票依据</em>，再讨论是否改票。这里展示长发言的局部阅读衬与稳定行宽。</p><div class="page">单页排版节选 · 非完整发言</div></div>`;
+        if (scene === "god")
+          return `<div class="god reading"><p>天亮了。请按当前记录查看夜间结算。</p><small>上帝播报示意 · 不从技能选择推断玩家死亡</small></div>`;
+        if (scene === "ballot")
+          return `<div class="ballots"><div class="speaker">第一轮放逐票型 <small>编导数据示意</small></div>${[
+            [7, [1, 2, 4, 8, 10, 11], 6],
+            [9, [3, 5, 6, 7], 4],
+            [4, [9], 1],
+          ]
+            .map(
+              ([target, voters, count]) =>
+                `<div class="ballot-row"><strong>${target}号</strong><div class="voters">${voters.map((voter) => `<span>${voter}</span>`).join("")}</div><span class="tally">${count}票</span></div>`,
+            )
+            .join(
+              "",
+            )}<div class="ballot-note">弃票：12 号 · 同轮记录合并展示，原始票仍可追溯</div><div class="ballot-end">结论区域：等待对应结算记录</div></div>`;
+        return `<div class="skill"><div class="prop-shadow"></div><img class="mirror" src="../src/video/assets/gothic/seer-mirror.png" alt="项目现有的中性古镜道具"/><div class="action-actors"><span class="actor">2 号 · 查验者</span><span class="actor">7 号 · 被查验者</span></div><div class="result"><strong>报告示意：好人阵营</strong><small>仅表示当时查验报告 · 不代表真实身份</small></div></div>`;
+      }
+      function render() {
+        const state = Object.fromEntries(keys.map((key) => [key, controls[key].value]));
+        canvas.dataset.tone = state.tone;
+        canvas.dataset.surface = state.surface;
+        canvas.dataset.scene = state.scene;
+        const edge = state.metadata === "show" ? 408 : 310;
+        const titles = {
+          skill: "查验 · 结果阅读段",
+          speech: "白天发言",
+          ballot: "放逐投票",
+          god: "上帝播报",
+        };
+        canvas.innerHTML = `<img class="environment" src="../src/video/assets/gothic/fog-${state.tone}.png" alt=""/><div class="vignette"></div><header class="header"><h1>狼人杀 · 冷雾议会</h1><small>构图研究 / 非真实对局</small><span class="clock">${state.tone === "night" ? "第一夜" : "第一日"}</span></header>${roster(state.metadata === "show")}<section class="stage" style="left:${edge}px;right:${edge}px"><div class="stage-title"><div class="plate">${titles[state.scene]}</div></div><div class="content">${content(state.scene)}</div></section><footer class="footer">${state.surface === "local" ? "局部衬底 · 保留环境" : "近似整板对照 · 非生产截图"} / 阅读期间画面静止</footer>`;
+      }
+      for (const control of Object.values(controls)) control.addEventListener("change", render);
+      new ResizeObserver(() => {
+        canvas.style.transform = `scale(${viewport.clientWidth / 1920})`;
+      }).observe(viewport);
+      render();
+    </script>
+  </body>
+</html>
