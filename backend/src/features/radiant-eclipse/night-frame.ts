@@ -5,6 +5,7 @@
  * 行动 permit 关闭与已付效果 current 分开，不以关闭请求恢复失效原体。规则见 docs/rules/awa-radiant-eclipse-twelve-v1.md。
  */
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT } from "../../domain/components/names";
 import { Role, Camp } from "../../domain/identity";
 import type { RoleComponent } from "../../domain/components/role";
@@ -136,7 +137,14 @@ function original(world: World, id: number): Original {
   const role = world.getComponent(id, COMPONENT.Role)!;
   const life = world.getComponent(id, COMPONENT.Alive)!;
   const identity = world.getComponent(id, COMPONENT.Identity);
-  if (!role || !life || !factoryLife(life) || !life.alive || aliveLifeVersion(life) === undefined)
+  if (
+    !role ||
+    !life ||
+    !factoryLife(life) ||
+    !life.alive ||
+    aliveLifeVersion(life) === undefined ||
+    !hasValidOptionalPlayerName(identity)
+  )
     throw new Error("radiant_original_invalid");
   const native = allNightAbilities(role).filter((a) => a.source.kind === "native");
   if (native.length > 1 || allNightAbilities(role).length !== native.length)
@@ -170,6 +178,7 @@ function current(world: World, p: Original, allowDeath = true): boolean {
     own(p.campComponent, "camp") !== p.camp ||
     own(p.role, "privateState") !== p.privateState ||
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
+    !hasValidOptionalPlayerName(p.identity) ||
     !identityKeys.every((k, i) => own(p.identity, k) === p.identityValues[i]) ||
     world.getComponent(p.id, COMPONENT.Camp) !== p.campComponent ||
     own(p.campComponent, "camp") !== p.camp ||

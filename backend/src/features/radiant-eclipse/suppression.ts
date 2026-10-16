@@ -8,6 +8,7 @@
 import type { EclipseSuppression } from "@ai-werewolf-arena/game-contract";
 
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT } from "../../domain/components/names";
 
 import {
@@ -102,7 +103,7 @@ export function openEclipseSuppression(
     [privateState, container, kind, state, source, roleKind, camp, ...identityValues].includes(
       invalid,
     ) ||
-    !identity
+    !hasValidOptionalPlayerName(identity)
   )
     throw new Error("eclipse_native_suppression_invalid");
   const marker: EclipseSuppression = { policy: RADIANT_ECLIPSE_POLICY, day };
@@ -155,6 +156,7 @@ export function openEclipseSuppression(
     own(source, "kind") === "native" &&
     own(source, "role") === roleKind &&
     world.getComponent(actorId, COMPONENT.Identity) === identity &&
+    hasValidOptionalPlayerName(identity) &&
     identityFields.every((key, index) => own(identity, key) === identityValues[index]);
   return {
     actorId,

@@ -13,6 +13,7 @@ import type {
   ModifierReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../domain";
 import {
   aliveLifeDescriptor,
@@ -37,7 +38,7 @@ interface OriginalPlayer {
   privateState: RoleComponent["privateState"];
   identity: unknown;
   seat: number;
-  name: string;
+  name: string | undefined;
   sessionId: string;
   life: AliveComponent;
   version: number;
@@ -150,6 +151,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
     ownData(p.identity, "id") !== p.id ||
     ownData(p.identity, "seat") !== p.seat ||
+    !hasValidOptionalPlayerName(p.identity) ||
     ownData(p.identity, "name") !== p.name ||
     ownData(p.identity, "sessionId") !== p.sessionId ||
     world.getComponent(p.id, COMPONENT.Alive) !== p.life
@@ -233,7 +235,8 @@ export function installScholarMentorBoard(world: World): void {
       !Number.isSafeInteger(seat) ||
       seat <= 0 ||
       seats.has(seat) ||
-      typeof name !== "string" ||
+      !hasValidOptionalPlayerName(identity) ||
+      (name !== undefined && typeof name !== "string") ||
       typeof sessionId !== "string"
     )
       throw new Error("scholar_mentor_original_roster_invalid");

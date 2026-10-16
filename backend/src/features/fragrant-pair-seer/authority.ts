@@ -8,6 +8,7 @@
 import type { PairSeerState, Pair } from "@ai-werewolf-arena/game-contract";
 
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import type { FragrantPlayerState } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import type { World } from "../../domain/world";
 import type { GameEvent } from "../../domain/events";
@@ -131,8 +132,8 @@ function capturePlayer(world: World, id: number): OriginalPlayer {
     own(identity, "id") !== id ||
     !Number.isSafeInteger(own(identity, "seat")) ||
     Number(own(identity, "seat")) < 1 ||
-    typeof own(identity, "name") !== "string" ||
-    !String(own(identity, "name")).trim() ||
+    !hasValidOptionalPlayerName(identity) ||
+    (own(identity, "name") !== undefined && !String(own(identity, "name")).trim()) ||
     typeof own(identity, "sessionId") !== "string" ||
     !String(own(identity, "sessionId")).trim() ||
     victoryJson !==

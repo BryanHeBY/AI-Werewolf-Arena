@@ -12,6 +12,7 @@ import {
 } from "../wolf-sorcerer/exchange-ports";
 import { matchingExchangePairs } from "../trickster/exchange-ports";
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT, type Camp, type RoleComponent, type World } from "../../domain";
 import {
   aliveLifeDescriptor,
@@ -34,7 +35,7 @@ interface OriginalPlayer {
   privateState: RoleComponent["privateState"];
   identity: unknown;
   seat: number;
-  name: string;
+  name: string | undefined;
   sessionId: string;
   life: AliveComponent;
   version: number;
@@ -69,6 +70,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
     ownData(p.identity, "id") !== p.id ||
     ownData(p.identity, "seat") !== p.seat ||
+    !hasValidOptionalPlayerName(p.identity) ||
     ownData(p.identity, "name") !== p.name ||
     ownData(p.identity, "sessionId") !== p.sessionId ||
     world.getComponent(p.id, COMPONENT.Alive) !== p.life
@@ -149,7 +151,8 @@ export function installMagicianBoard(world: World): void {
       !Number.isSafeInteger(seat) ||
       seat <= 0 ||
       seats.has(seat) ||
-      typeof name !== "string" ||
+      !hasValidOptionalPlayerName(identity) ||
+      (name !== undefined && typeof name !== "string") ||
       typeof sessionId !== "string"
     )
       throw new Error("magician_original_roster_invalid");

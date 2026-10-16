@@ -34,6 +34,9 @@ for (const boardId of [
   "six_player_mvp",
   "twelve_player_animal_dream_skip_final",
   "awa_netease_demon_hunter_6_side_v1",
+  "awa_magician_12_n1_original_v1",
+  "awa_noble_secret_body_12_standard_repeat_v1",
+  "awa_order_prince_12_v1",
 ]) {
   test(`${boardId}：无昵称完成模拟及严格复现，名字字段保持缺席`, async () => {
     const board = await loadBoardDefinition(

@@ -8,6 +8,7 @@
  */
 import { attachNightUnit, isNightUnit, nightUnitOf, type NightUnit } from "../../domain/night-unit";
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import type { World } from "../../domain/world";
@@ -130,8 +131,8 @@ function capture(world: World, id: number): OriginalPlayer {
     identityId !== id ||
     !Number.isSafeInteger(seat) ||
     (seat as number) < 1 ||
-    typeof name !== "string" ||
-    !name.trim() ||
+    !hasValidOptionalPlayerName(identity) ||
+    (name !== undefined && (typeof name !== "string" || !name.trim())) ||
     typeof sessionId !== "string" ||
     !sessionId.trim() ||
     !life ||
@@ -168,6 +169,7 @@ function playerCurrent(world: World, p: OriginalPlayer, living = false): boolean
     own(p.campComponent, "camp") !== p.camp ||
     own(p.role, "privateState") !== p.privateState ||
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
+    !hasValidOptionalPlayerName(p.identity) ||
     identityKeys.some((k, i) => own(p.identity, k) !== p.identityValues[i]) ||
     world.getComponent(p.id, COMPONENT.Camp) !== p.campComponent ||
     own(p.campComponent, "camp") !== p.camp ||

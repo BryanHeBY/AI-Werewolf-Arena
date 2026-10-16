@@ -6,6 +6,7 @@
  * 夜初 ravenChecked 先写再转换，后续失败不重开检查；不修补被替换的槽或重复保存库存。
  */
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT } from "../../domain/components/names";
 import {
   aliveLifeDescriptor,
@@ -77,7 +78,7 @@ export class MistCasterAuthority {
       !life.alive ||
       aliveLifeVersion(life) === undefined ||
       own(identity, "id") !== actorId ||
-      typeof own(identity, "name") !== "string" ||
+      !hasValidOptionalPlayerName(identity) ||
       typeof own(identity, "sessionId") !== "string" ||
       !Number.isSafeInteger(own(identity, "seat"))
     )
@@ -130,6 +131,7 @@ export class MistCasterAuthority {
       own(this.campComponent, "camp") !== this.camp ||
       own(this.role, "privateState") !== this.privateState ||
       this.world.getComponent(this.actorId, COMPONENT.Identity) !== this.identity ||
+      !hasValidOptionalPlayerName(this.identity) ||
       !["id", "seat", "name", "sessionId"].every(
         (k, i) => own(this.identity, k) === this.identityFields[i],
       ) ||

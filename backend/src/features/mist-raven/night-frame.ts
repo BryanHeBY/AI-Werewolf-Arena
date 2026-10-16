@@ -5,6 +5,7 @@
  * 只有匹配的原夜间对象可交付捕获伤害；复活不恢复旧许可，失败保留已付前缀，不补交付。
  */
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT } from "../../domain/components/names";
 import {
   aliveLifeDescriptor,
@@ -178,6 +179,7 @@ function originalCurrent(world: World, player: OriginalPlayer): boolean {
     world.getComponent(player.id, COMPONENT.Camp) === player.campComponent &&
     data(player.campComponent, "camp") === player.camp &&
     world.getComponent(player.id, COMPONENT.Identity) === player.identity &&
+    hasValidOptionalPlayerName(player.identity) &&
     ["id", "seat", "name", "sessionId"].every(
       (k, i) => data(player.identity, k) === player.identityFields[i],
     ) &&
@@ -230,7 +232,7 @@ export function installMistRavenBoard(world: World): void {
       aliveLifeVersion(life) === undefined ||
       data(campComponent, "camp") !== camp ||
       data(identity, "id") !== id ||
-      typeof data(identity, "name") !== "string" ||
+      !hasValidOptionalPlayerName(identity) ||
       typeof data(identity, "sessionId") !== "string" ||
       !Number.isSafeInteger(data(identity, "seat"))
     )

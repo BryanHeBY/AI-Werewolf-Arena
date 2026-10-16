@@ -6,6 +6,7 @@
  */
 import type { OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
+import { hasValidOptionalPlayerName } from "../../domain/entities/player";
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { aliveLifeDescriptor, aliveLifeVersion } from "../../domain/components/alive";
@@ -40,7 +41,7 @@ function identityValue(value: unknown): string {
   if (
     !Number.isSafeInteger(values[0]) ||
     !Number.isSafeInteger(values[1]) ||
-    typeof values[2] !== "string" ||
+    !hasValidOptionalPlayerName(value) ||
     typeof values[3] !== "string"
   )
     throw new Error("order_prince_identity_invalid");
