@@ -107,7 +107,7 @@ export function createAgentConsoleSink(
       }
       const status = output.status === "started" ? "start" : output.status;
       log(
-        `${transport === "llm" ? `[THINKING]${prefix}` : prefix}[tool] ${status} ${transport === "llm" ? `${view.label}: ` : ""}${view.body}${transport === "llm" ? `${output.args ? ` args=${JSON.stringify(output.args)}` : ""}${output.result !== undefined ? ` result=${typeof output.result === "string" ? output.result : JSON.stringify(output.result)}` : ""}` : ""}${output.diagnostic ? ` error=${JSON.stringify({ ...output.diagnostic, message: errorMessage(locale, output.diagnostic.code) })}` : ""}`,
+        `${transport === "llm" ? `[THINKING]${prefix}` : prefix}[tool] ${status} ${transport === "llm" ? `${view.label}: ` : ""}${view.body}${transport === "llm" && options.trace ? `${output.args ? ` args=${JSON.stringify(output.args)}` : ""}${output.result !== undefined ? ` result=${typeof output.result === "string" ? output.result : JSON.stringify(output.result)}` : ""}` : ""}${output.diagnostic ? ` error=${JSON.stringify({ ...output.diagnostic, message: errorMessage(locale, output.diagnostic.code) })}` : ""}`,
         view.tone,
       );
     } else if (output.type === "fallback") {

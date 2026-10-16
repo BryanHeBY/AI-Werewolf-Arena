@@ -274,9 +274,13 @@ test("三种传输的自爆警示即使关闭详细输出也可见，工具正�
   }
 });
 
-test("Pi 与 ACP 的普通工具结束输出保留原提交行动参数", () => {
+test("普通工具终端只显示名称和状态，三种传输的结构化事实仍保留参数", () => {
   const outputs: AgentOutputEvent[] = [],
-    args = { turn_id: "t1", action: "speak", arguments: { text: "真实提交" } };
+    args = {
+      turn_id: "t1",
+      action: "speak_to_wolves",
+      arguments: { text: "真实提交", end_chat: true },
+    };
   const pi = createPiOutputObserver({ transport: "pi", playerId: 8 }, (event) =>
     outputs.push(event),
   );
@@ -298,6 +302,23 @@ test("Pi 与 ACP 的普通工具结束输出保留原提交行动参数", () => 
     rawInput: args,
   });
   acp.update({ sessionUpdate: "tool_call_update", toolCallId: "one", status: "completed" });
+  outputs.push({
+    visibility: "private",
+    context: { transport: "llm", playerId: 8 },
+    output: {
+      type: "tool",
+      id: "one",
+      name: "submit_action",
+      status: "completed",
+      args,
+      result: JSON.stringify({
+        ok: true,
+        accepted: true,
+        action: "speak_to_wolves",
+        arguments: args.arguments,
+      }),
+    },
+  });
   const lines: string[] = [],
     display = createAgentConsoleSink({
       printThinking: true,
@@ -306,6 +327,27 @@ test("Pi 与 ACP 的普通工具结束输出保留原提交行动参数", () => 
       log: (line) => lines.push(line),
     });
   outputs.forEach(display);
-  expect(lines).toHaveLength(2);
-  expect(lines.every((line) => line.includes('speak {"text":"真实提交"}'))).toBe(true);
+  expect(lines).toHaveLength(3);
+  for (const line of lines) {
+    expect(line).toContain("completed");
+    expect(line).toContain("submit_action");
+    expect(line).toContain("工具调用完成");
+    expect(line).not.toContain("真实提交");
+    expect(line).not.toContain("speak_to_wolves");
+    expect(line).not.toContain("end_chat");
+    expect(line).not.toContain("args=");
+    expect(line).not.toContain("result=");
+  }
+  const completed = outputs.filter(
+    (event) => event.output.type === "tool" && event.output.status === "completed",
+  );
+  expect(
+    completed.every(
+      (event) =>
+        event.output.type === "tool" && JSON.stringify(event.output.args) === JSON.stringify(args),
+    ),
+  ).toBe(true);
+  const archived = agentOutputToDeltaMessages(outputs.map((event) => event.output));
+  expect(archived.filter((message) => message.kind === "tool_result")).toHaveLength(3);
+  expect(JSON.stringify(archived)).toContain("真实提交");
 });

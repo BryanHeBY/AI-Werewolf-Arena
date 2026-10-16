@@ -62,21 +62,12 @@ export function agentOutputPresentation(
           body: `${output.name} · ${confirmation.action}${confirmation.arguments ? ` ${JSON.stringify(confirmation.arguments)}` : ""}${confirmation.warning ? `\n${confirmation.warning}` : ""}`,
           tone: confirmation.status === "confirmation_required" ? "warn" : "ok",
         };
-      const wrapped = output.args?.arguments;
-      const envelope = output.args?.action
-        ? output.args
-        : wrapped && typeof wrapped === "object" && !Array.isArray(wrapped)
-          ? (wrapped as Record<string, unknown>)
-          : undefined;
-      const args = envelope?.arguments;
-      const action =
-        args && typeof args === "object" && !Array.isArray(args) ? envelope?.action : undefined;
       return {
         label: text(
           locale,
           output.status === "started" ? "runtime.tool_call" : "runtime.tool_result",
         ),
-        body: `${output.name} · ${text(locale, output.status === "started" ? "runtime.acp.start" : output.status === "completed" ? "runtime.acp.completed" : output.status === "failed" ? "runtime.acp.failed" : output.status === "error" ? "runtime.acp.error" : output.status === "pending" ? "runtime.acp.pending" : output.status === "updated" ? "runtime.tool_result" : "runtime.acp.in_progress")}${typeof action === "string" ? ` · ${action} ${JSON.stringify(args)}` : ""}`,
+        body: `${output.name} · ${text(locale, output.status === "started" ? "runtime.acp.start" : output.status === "completed" ? "runtime.acp.completed" : output.status === "failed" ? "runtime.acp.failed" : output.status === "error" ? "runtime.acp.error" : output.status === "pending" ? "runtime.acp.pending" : output.status === "updated" ? "runtime.tool_result" : "runtime.acp.in_progress")}`,
         tone:
           output.status === "failed" || output.status === "error" || output.diagnostic
             ? "warn"
