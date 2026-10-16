@@ -8,7 +8,7 @@ import {
   type RecordingEnvelope,
 } from "@ai-werewolf-arena/replay-contract";
 import { supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
-import { buildReplayFrame, FRAMES_PER_EVENT } from "../replay/replay-frame";
+import { buildReplayEventView } from "../replay/replay-event-view";
 import { buildPresentationReplay } from "../replay/replay-presentation";
 import { createReplaySnapshotIndex } from "../replay/replay-projection";
 import {
@@ -277,10 +277,7 @@ export function compileVideoPlan(
   const views = new Map<number, VideoEventView>();
   const viewAt = (index: number): VideoEventView => {
     if (!views.has(index))
-      views.set(
-        index,
-        buildReplayFrame(renderInput, Math.max(0, index) * FRAMES_PER_EVENT, snapshots[index]),
-      );
+      views.set(index, buildReplayEventView(renderInput, index, snapshots[index]));
     return views.get(index)!;
   };
   const eventIndexes = new Map(replay.events.map((event, index) => [event.seq, index]));

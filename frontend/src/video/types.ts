@@ -4,13 +4,13 @@
  * 自定义 React 组件注册表与可序列化计划分开，避免组件实现进入 JSON 渲染输入。
  */
 import type { ComponentType } from "react";
-import type { buildReplayFrame } from "../replay/replay-frame";
+import type { buildReplayEventView } from "../replay/replay-event-view";
 import type { ReplayDisplayOptions } from "../replay/replay-display";
 
 export type JsonValue =
   null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 export type JsonObject = { [key: string]: JsonValue };
-export type VideoEventView = ReturnType<typeof buildReplayFrame>;
+export type VideoEventView = ReturnType<typeof buildReplayEventView>;
 export interface VideoSourceIdentity {
   sessionId: string;
   fingerprint: string;
