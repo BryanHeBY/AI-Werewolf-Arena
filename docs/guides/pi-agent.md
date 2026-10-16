@@ -101,7 +101,3 @@ Pi 在需要时执行原生 token 刷新，并仅更新本次运行的内存凭�
 上面是 backend 的 `config.models` 内容。Pi 1.3 的 Codex simple 传输不会自动使用该采样字段，AWA 通过公开 `onPayload` 钩子将其映射到实际请求的 `service_tier`。旧 Codex 订阅端点拒绝字面值 `fast`，因此只在 `openai-codex-responses` 传输中将其转换为等价的 `priority`；[官方说明](https://developers.openai.com/api/docs/guides/fast-mode)确认这两个名称代表相同服务档位。未配置时不补该字段，其它传输保持原生行为。
 
 本地合成 HTTP 测试复现端点对 `fast` 的拒绝，核对两款模型都发送 `reasoning.effort: "medium"` 与 `service_tier: "priority"` 并正常完成响应。实际 fast 可用范围仍由[官方说明](https://learn.chatgpt.com/docs/agent-configuration/speed)和账户服务端决定，配置检查不验证账户权限。
-
-## 日常对局的思考等级
-
-公开 Pi Agent 示例统一使用 `defaultThinkingLevel: "low"`。本地 Codex、Claude Code 和 Pi 接入中已显式设置的推理等级也建议先用 `low`，缩短长思考占用；Pi 最终仍按模型原生能力映射等级。`printThinking` 只控制是否显示思考，不改变推理等级或请求期限。
