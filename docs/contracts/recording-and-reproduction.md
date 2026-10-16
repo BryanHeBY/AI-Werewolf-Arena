@@ -34,6 +34,10 @@ verifier按实际assembly原顺序追加贡献；board support保持独立的有
 
 God公开replay、私有manifest／reproduction及逐玩家档案的字段与身份分开。[档案兼容](archive-compatibility.md)列四类当前格式；完整原字段与原始prompt／thinking／tool内容不由文档整理或显示层再编码清洗。
 
+ACP 玩家轮次中的请求增量保存实际交给 `session.prompt` 的完整字符串，包括新增可见事件批次、回合 ID 和行动提示，不再只保留末尾的行动说明。长输入按单消息 8000 字符上限分片且不切断 Unicode 代理对，同轮 prompt 分片顺序拼接还原原文。新增 `prompt_dispatched` 审计标记区分已经调用会话输入端口与尚未开始的请求；它不证明远端已读取、模型已完成或行动已经生效。
+
+会话创建失败或输入前期限耗尽时，可以保留拟发送提示用于诊断，但实际请求增量为空，不伪造已经派发的模型输入。此改动沿用玩家 schema 2 的消息和审计字段，不改变公开事件、原始模型输出或复盘可见性。
+
 普通死亡后果由 `recording/verification/assembly.ts` 调用 `death-history/validate.ts` 独立审核；它不是运行许可或完整生命重演。
 
 ## Agent 输出分类
