@@ -1,6 +1,6 @@
 /**
  * 包级单元／类型契约测试验证不绑定语言的消息标识。
- * 独立预期为本轮之前的 1806 键顺序摘要、既有稳定锚点与本轮追加的提示与复盘交互文案；输入包括未知键和可序列化消息引用。
+ * 独立预期为本轮之前的 1806 键顺序摘要、既有稳定锚点与显式追加的提示、复盘及视频工作台文案；输入包括未知键和可序列化消息引用。
  * DTO 不按每个键约束参数，运行参数格式归 game-text；本文件不加载词典、展示器、World 或模型。
  */
 import { expect, test } from "bun:test";
@@ -47,6 +47,61 @@ const appendedReplayKeys = [
   "replay.video_unavailable",
 ] as const;
 
+const appendedVideoStudioKeys = [
+  "replay.appearance",
+  "replay.web_theme",
+  "replay.reduce_motion",
+  "replay.video_theme_independent",
+  "replay.details",
+  "replay.event_details",
+  "replay.players_tab",
+  "replay.timeline_tab",
+  "replay.private_tab",
+  "replay.appearance_tab",
+  "replay.previous_phase",
+  "replay.next_phase",
+  "replay.all_phases",
+  "video.game_title",
+  "video.god_view",
+  "video.alive",
+  "video.speaking",
+  "video.narrator",
+  "video.waiting",
+  "video.recorded",
+  "video.choice",
+  "video.committed",
+  "video.result",
+  "video.votes",
+  "video.abstentions",
+  "video.no_ballots",
+  "video.extra_votes",
+  "video.eliminated",
+  "video.page",
+  "video.inventory",
+  "video.show_names",
+  "video.show_models",
+  "video.show_avatars",
+  "video.anonymous",
+  "video.theme",
+  "video.revoked",
+  "theme.gothic_name",
+  "theme.minimal_name",
+  "video.phase_transition",
+  "video.no_target",
+  "video.knife_title",
+  "video.knife_body",
+  "video.knife_revoked_title",
+  "video.knife_revoked_body",
+  "video.stock_title",
+  "video.stock_body",
+  "video.protection_title",
+  "video.guard_heal_cancelled",
+  "video.guard_blocked",
+  "video.heal_blocked",
+  "video.death_title",
+  "video.death_body",
+] as const;
+
 test("existing message IDs retain their sequence and prompt additions append after established anchors", () => {
   expect(new Set(MESSAGE_IDS).size).toBe(MESSAGE_IDS.length);
   expect(
@@ -66,8 +121,9 @@ test("existing message IDs retain their sequence and prompt additions append aft
   expect(MESSAGE_IDS.slice(previousSequenceLength)).toEqual([
     ...appendedPromptKeys,
     ...appendedReplayKeys,
+    ...appendedVideoStudioKeys,
   ]);
-  for (const key of [...appendedPromptKeys, ...appendedReplayKeys])
+  for (const key of [...appendedPromptKeys, ...appendedReplayKeys, ...appendedVideoStudioKeys])
     expect(isMessageKey(key)).toBe(true);
 });
 
