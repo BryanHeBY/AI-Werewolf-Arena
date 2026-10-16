@@ -1,0 +1,234 @@
+/**
+ * 负责网页和视频共用的纯 JSON 主题定义、选项解析与插槽命名。输入为已登记主题 ID 及显式选项，输出独立的主题数据和 CSS 变量。
+ * 主题不读取浏览器偏好、不判断游戏阶段或玩家身份；网页持久化与 React 插槽实现由各宿主单独装配。
+ */
+export type ThemeId = "gothic-v1" | "minimal-v1";
+export type ThemeTone = "day" | "night";
+export type ThemeOptionValue = boolean | string | number;
+export type ThemeSlot = "background" | "frame" | "seatBadge" | "sceneHeading" | "transition";
+export type ThemeOptionDefinition =
+  { type: "boolean"; default: boolean } | { type: "choice"; default: string; values: string[] };
+export interface ThemePalette {
+  canvas: string;
+  panel: string;
+  paper: string;
+  ink: string;
+  text: string;
+  muted: string;
+  border: string;
+  accent: string;
+  accentText: string;
+  good: string;
+  wolf: string;
+  neutral: string;
+  danger: string;
+  success: string;
+}
+export interface ThemeDefinition {
+  id: ThemeId;
+  version: 1;
+  label: { "zh-CN": string; en: string };
+  palette: { day: ThemePalette; night: ThemePalette };
+  fonts: { body: string; heading: string; mono: string };
+  radii: { panel: number; card: number };
+  motion: { durationMs: number; cameraFrames: number };
+  options: Record<string, ThemeOptionDefinition>;
+  /** 值为注册键，组件进入宿主 bundle，永远不进入主题 JSON。 */
+  slots: Record<ThemeSlot, string>;
+}
+export interface ThemeSelection {
+  id: ThemeId;
+  options?: Record<string, ThemeOptionValue>;
+}
+export interface ResolvedTheme {
+  id: ThemeId;
+  definition: ThemeDefinition;
+  options: Record<string, ThemeOptionValue>;
+}
+export type ThemeSlotRegistry<T> = Readonly<Record<string, T>>;
+export const DEFAULT_WEB_THEME: ThemeId = "minimal-v1";
+export const DEFAULT_VIDEO_THEME: ThemeId = "gothic-v1";
+
+const mono = '"SFMono-Regular", Consolas, monospace';
+const sans = '"Noto Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif';
+const serif = '"Noto Serif SC", "Songti SC", "SimSun", Georgia, serif';
+const slots = (id: ThemeId): Record<ThemeSlot, string> => ({
+  background: `${id}/background`,
+  frame: `${id}/frame`,
+  seatBadge: `${id}/seatBadge`,
+  sceneHeading: `${id}/sceneHeading`,
+  transition: `${id}/transition`,
+});
+const gothicDay: ThemePalette = {
+  canvas: "#505b67",
+  panel: "#e3e7ea",
+  paper: "#eef0ef",
+  ink: "#20262b",
+  text: "#242a31",
+  muted: "#5c6871",
+  border: "#9ba7af",
+  accent: "#77343e",
+  accentText: "#f3efea",
+  good: "#35576b",
+  wolf: "#8f3d4a",
+  neutral: "#626b72",
+  danger: "#a44552",
+  success: "#45675f",
+};
+const gothicNight: ThemePalette = {
+  canvas: "#101723",
+  panel: "#1e2938",
+  paper: "#dbe1e4",
+  ink: "#252a30",
+  text: "#e4e9ed",
+  muted: "#b7b9bc",
+  border: "#657083",
+  accent: "#a9bfd0",
+  accentText: "#15202a",
+  good: "#8ab9cb",
+  wolf: "#df8790",
+  neutral: "#b6b1a6",
+  danger: "#f1a0a6",
+  success: "#a3c7a0",
+};
+const minimalDay: ThemePalette = {
+  canvas: "#f2f4f7",
+  panel: "#ffffff",
+  paper: "#ffffff",
+  ink: "#162131",
+  text: "#162131",
+  muted: "#526174",
+  border: "#cbd3df",
+  accent: "#274f85",
+  accentText: "#ffffff",
+  good: "#28627b",
+  wolf: "#a1374b",
+  neutral: "#677284",
+  danger: "#a72d44",
+  success: "#2d6c48",
+};
+const minimalNight: ThemePalette = {
+  canvas: "#111722",
+  panel: "#1b2533",
+  paper: "#edf0f4",
+  ink: "#172131",
+  text: "#edf1f6",
+  muted: "#b2bfcd",
+  border: "#48576c",
+  accent: "#9fc5ff",
+  accentText: "#12233b",
+  good: "#8bbfd7",
+  wolf: "#ed9aa6",
+  neutral: "#b2bfcd",
+  danger: "#ffabb7",
+  success: "#a0d6b6",
+};
+const definitions: Record<ThemeId, ThemeDefinition> = {
+  "gothic-v1": {
+    id: "gothic-v1",
+    version: 1,
+    label: { "zh-CN": "哥特冷雾", en: "Gothic mist" },
+    palette: { day: gothicDay, night: gothicNight },
+    fonts: { body: sans, heading: serif, mono },
+    radii: { panel: 8, card: 5 },
+    motion: { durationMs: 220, cameraFrames: 18 },
+    options: {
+      paperTexture: { type: "boolean", default: false },
+      ornamentalFrames: { type: "boolean", default: false },
+      waxSeals: { type: "boolean", default: false },
+    },
+    slots: slots("gothic-v1"),
+  },
+  "minimal-v1": {
+    id: "minimal-v1",
+    version: 1,
+    label: { "zh-CN": "简洁看板", en: "Minimal board" },
+    palette: { day: minimalDay, night: minimalNight },
+    fonts: { body: sans, heading: sans, mono },
+    radii: { panel: 14, card: 9 },
+    motion: { durationMs: 140, cameraFrames: 12 },
+    options: {
+      density: { type: "choice", default: "comfortable", values: ["comfortable", "compact"] },
+      highContrast: { type: "boolean", default: false },
+    },
+    slots: slots("minimal-v1"),
+  },
+};
+export const THEME_IDS: readonly ThemeId[] = ["gothic-v1", "minimal-v1"];
+function plain(value: unknown): value is Record<string, unknown> {
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    !Array.isArray(value) &&
+    (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null)
+  );
+}
+function fail(): never {
+  throw new Error("theme_selection_invalid");
+}
+export function parseThemeSelection(value: unknown): ThemeSelection {
+  if (!plain(value) || Object.keys(value).some((key) => !["id", "options"].includes(key))) fail();
+  for (const key of Object.keys(value))
+    if (!("value" in Object.getOwnPropertyDescriptor(value, key)!)) fail();
+  if (!Object.hasOwn(value, "id") || !THEME_IDS.includes(value.id as ThemeId)) fail();
+  const id = value.id as ThemeId;
+  if (value.options === undefined) return { id };
+  if (!plain(value.options)) fail();
+  const options: Record<string, ThemeOptionValue> = {};
+  for (const key of Object.keys(value.options)) {
+    const descriptor = Object.getOwnPropertyDescriptor(value.options, key)!;
+    const schema = Object.hasOwn(definitions[id].options, key)
+      ? definitions[id].options[key]
+      : undefined;
+    if (!schema || !("value" in descriptor)) fail();
+    const option = descriptor.value;
+    if (
+      schema.type === "boolean"
+        ? typeof option !== "boolean"
+        : typeof option !== "string" || !schema.values.includes(option)
+    )
+      fail();
+    options[key] = option;
+  }
+  return { id, options };
+}
+export function resolveTheme(
+  selection: ThemeSelection | ThemeId = DEFAULT_VIDEO_THEME,
+): ResolvedTheme {
+  const parsed = parseThemeSelection(typeof selection === "string" ? { id: selection } : selection);
+  const definition = structuredClone(definitions[parsed.id]);
+  const options = Object.fromEntries(
+    Object.entries(definition.options).map(([key, schema]) => [
+      key,
+      parsed.options?.[key] ?? schema.default,
+    ]),
+  );
+  return { id: parsed.id, definition, options };
+}
+export function themePalette(theme: ResolvedTheme, tone: ThemeTone): ThemePalette {
+  return theme.definition.palette[tone];
+}
+/** 插槽是可选增强；主题切换只选择注册项，不执行或把组件写入可序列化计划。 */
+export function getThemeSlot<T>(
+  registry: ThemeSlotRegistry<T>,
+  theme: ResolvedTheme,
+  slot: ThemeSlot,
+): T | undefined {
+  const key = theme.definition.slots[slot];
+  return Object.hasOwn(registry, key) ? registry[key] : undefined;
+}
+export function themeToCssVariables(
+  theme: ResolvedTheme,
+  tone: ThemeTone,
+): Record<`--awa-${string}`, string> {
+  const palette = themePalette(theme, tone);
+  return {
+    ...Object.fromEntries(Object.entries(palette).map(([key, value]) => [`--awa-${key}`, value])),
+    "--awa-font-body": theme.definition.fonts.body,
+    "--awa-font-heading": theme.definition.fonts.heading,
+    "--awa-font-mono": theme.definition.fonts.mono,
+    "--awa-radius-panel": `${theme.definition.radii.panel}px`,
+    "--awa-radius-card": `${theme.definition.radii.card}px`,
+    "--awa-motion-duration": `${theme.definition.motion.durationMs}ms`,
+  };
+}
