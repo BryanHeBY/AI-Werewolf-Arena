@@ -1,16 +1,32 @@
 /**
- * 负责复盘页面的加载状态与显示偏好入口。输入为加载结果和用户语言／时区选择，输出工作台或加载／错误／空白页面。
- * 默认语言随归档，用户显式选择优先；卸载后忽略迟到结果，不以页面状态修改归档或驱动游戏规则。
+ * 负责复盘页面的加载状态、浏览器文件切换和显示偏好入口。输入为本地端点或用户文件，输出工作台及可重试的加载状态。
+ * 用户语言优先于归档语言；每次读取都有独立代次，取消或迟到的旧读取不得覆盖新文件，不修改归档或驱动规则。
  */
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { text, renderMessage, type Locale } from "@ai-werewolf-arena/game-text";
-import { loadReplay, type ReplayLoadState } from "./replay/offline-replay";
-import { ReplayWorkspace } from "./replay/ReplayWorkspace";
+import {
+  loadReplay,
+  readOfflineReplay,
+  ReplayLoadError,
+  type ReplayLoadState,
+} from "./replay/offline-replay";
 import { ReplayDisplayControls } from "./replay/ReplayDisplayControls";
 import { DEFAULT_REPLAY_TIME_ZONE, type ReplayDisplayOptions } from "./replay/replay-display";
 
+// 空页和文件导入先可交互；Remotion 与工作台只在取得合法复盘后加载。
+const ReplayWorkspace = lazy(() =>
+  import("./replay/ReplayWorkspace").then((module) => ({ default: module.ReplayWorkspace })),
+);
+
+type ReplaySource = { kind: "server" } | { kind: "file"; file: File };
+
 function App() {
   const [state, setState] = useState<ReplayLoadState>({ status: "loading" });
+  const [request, setRequest] = useState<{ id: number; source: ReplaySource }>({
+    id: 0,
+    source: { kind: "server" },
+  });
+  const requestId = useRef(0);
   const [selectedLocale, setSelectedLocale] = useState<Locale | null>(null);
   const [timeZone, setTimeZone] = useState(DEFAULT_REPLAY_TIME_ZONE);
   // null 表示尚无用户覆盖；加载前使用中文，加载后才采用归档语言。
@@ -21,34 +37,97 @@ function App() {
     if (next.locale !== undefined) setSelectedLocale(next.locale);
     if (next.timeZone !== undefined) setTimeZone(next.timeZone);
   };
+  const requestReplay = (source: ReplaySource) => {
+    // 在事件回调里立即失效旧代次，覆盖 effect 尚未清理时已完成的文件读取。
+    const id = ++requestId.current;
+    setState({ status: "loading" });
+    setRequest({ id, source });
+  };
 
   useEffect(() => {
-    // 只阻止卸载后的状态写入；该标记不取消已经发起的读取。
     let active = true;
-    void loadReplay().then((value) => {
-      if (active) setState(value);
+    const controller = new AbortController();
+    const read = async (): Promise<ReplayLoadState> => {
+      if (request.source.kind === "server") return loadReplay(controller.signal);
+      try {
+        return { status: "ready", replay: await readOfflineReplay(request.source.file) };
+      } catch (error) {
+        return {
+          status: "error",
+          message:
+            error instanceof ReplayLoadError ? error.messageRef : { key: "replay.read_failed" },
+        };
+      }
+    };
+    void read().then((value) => {
+      if (active && request.id === requestId.current) setState(value);
     });
     return () => {
       active = false;
+      controller.abort();
     };
-  }, []);
+  }, [request]);
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
 
+  const fileControls = (
+    <div className="replay-file-controls">
+      <label className="text-button file-import">
+        {text(locale, state.status === "ready" ? "replay.switch_file" : "replay.open_file")}
+        <input
+          type="file"
+          accept=".json,application/json"
+          aria-label={text(locale, "replay.open_file")}
+          onChange={(event) => {
+            const file = event.currentTarget.files?.[0];
+            // 清空后仍可重新选择同一个文件，失败后无需刷新页面。
+            event.currentTarget.value = "";
+            if (file) requestReplay({ kind: "file", file });
+          }}
+        />
+      </label>
+      {state.status !== "loading" && (
+        <button type="button" className="text-button" onClick={() => requestReplay(request.source)}>
+          {text(locale, "replay.retry")}
+        </button>
+      )}
+      {request.source.kind === "file" && (
+        <span className="replay-file-name">{request.source.file.name}</span>
+      )}
+    </div>
+  );
+
   if (state.status === "ready")
     return (
-      <ReplayWorkspace replay={state.replay} display={display} onDisplayChange={onDisplayChange} />
+      <Suspense
+        fallback={
+          <main className="shell centered">
+            <section>
+              <p role="status">{text(locale, "replay.loading")}</p>
+              {fileControls}
+            </section>
+          </main>
+        }
+      >
+        <ReplayWorkspace
+          key={request.id}
+          replay={state.replay}
+          display={display}
+          onDisplayChange={onDisplayChange}
+          fileControls={fileControls}
+        />
+      </Suspense>
     );
   return (
     <main className="shell centered">
       <section className={state.status === "error" ? "load-error" : "empty-state"}>
         <ReplayDisplayControls display={display} onChange={onDisplayChange} />
-        {state.status === "loading" && <p>{text(locale, "replay.loading")}</p>}
+        {state.status === "loading" && <p role="status">{text(locale, "replay.loading")}</p>}
         {state.status === "error" && (
           <>
             <h1>{text(locale, "replay.load_error")}</h1>
-            <p>{renderMessage(locale, state.message)}</p>
+            <p role="alert">{renderMessage(locale, state.message)}</p>
           </>
         )}
         {state.status === "missing" && (
@@ -59,6 +138,7 @@ function App() {
             <code>bun run replay:dev -- --input /absolute/path/to/game.replay.json</code>
           </>
         )}
+        {fileControls}
       </section>
     </main>
   );

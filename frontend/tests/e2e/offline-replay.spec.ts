@@ -251,14 +251,16 @@ test("new replay locale is the default and raw names and speech remain unchanged
   await page.goto("/");
   await expect(page.getByLabel("Display language", { exact: true })).toHaveValue("en");
   await expect(page.locator(".current-event p")).toHaveText(
-    "Player 1 says: 我是绿茶 <b>raw</b> {actor}",
+    "Player 1·茶茶 {role} says: 我是绿茶 <b>raw</b> {actor}",
   );
   await expect(
-    page.getByRole("button", { name: "Player 1 · 茶茶 {role}", exact: true }),
+    page.getByRole("button", { name: "Player 1·茶茶 {role}", exact: true }),
   ).toBeVisible();
   await page.getByLabel("Display language", { exact: true }).selectOption("zh-CN");
-  await expect(page.locator(".current-event p")).toHaveText("1号发言：我是绿茶 <b>raw</b> {actor}");
-  await expect(page.getByRole("button", { name: "1号 · 茶茶 {role}", exact: true })).toBeVisible();
+  await expect(page.locator(".current-event p")).toHaveText(
+    "1号·茶茶 {role}发言：我是绿茶 <b>raw</b> {actor}",
+  );
+  await expect(page.getByRole("button", { name: "1号·茶茶 {role}", exact: true })).toBeVisible();
   expect(await page.locator(".current-event b").count()).toBe(0);
 });
 

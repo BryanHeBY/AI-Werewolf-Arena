@@ -11,7 +11,7 @@ import {
 } from "@ai-werewolf-arena/game-presentation";
 import { formatReplayTime, type ReplayDisplayOptions } from "./replay-display";
 import { ReplayDisplayControls } from "./ReplayDisplayControls";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState, type ReactNode } from "react";
 import { buildReplaySnapshot } from "./replay-projection";
 import { buildPresentationReplay } from "./replay-presentation";
 import {
@@ -26,18 +26,32 @@ import { PlayerSeats } from "./PlayerSeats";
 import { EventTimeline } from "./EventTimeline";
 import { PlayerAgentOutput } from "./PlayerAgentOutput";
 import { useReplayPlayback } from "./useReplayPlayback";
+import { compileVideoPlan } from "../video";
 
 export function ReplayWorkspace({
   replay,
   display,
   onDisplayChange,
+  fileControls,
 }: {
   replay: ReplayDocument;
   display: ReplayDisplayOptions;
   onDisplayChange: (next: Partial<ReplayDisplayOptions>) => void;
+  fileControls?: ReactNode;
 }) {
   const { locale } = display;
   const presentationReplay = useMemo(() => buildPresentationReplay(replay), [replay]);
+  const videoPlan = useMemo(
+    () => compileVideoPlan(replay, undefined, { locale, timeZone: display.timeZone }),
+    [replay, locale, display.timeZone],
+  );
+  const playbackTimeline = useMemo(
+    () => ({
+      starts: videoPlan.shots.map((shot) => shot.from),
+      durationInFrames: videoPlan.durationFrames,
+    }),
+    [videoPlan],
+  );
   const {
     playerRef,
     activeIndex,
@@ -48,22 +62,53 @@ export function ReplayWorkspace({
     seekToFrame,
     togglePlayback,
     toggleFullscreen,
-  } = useReplayPlayback(presentationReplay.events.length);
+  } = useReplayPlayback(presentationReplay.events.length, playbackTimeline);
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
-  const snapshot = buildReplaySnapshot(presentationReplay, activeIndex);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  // 帧更新只更新播放控件；席位投影、玩家名单与事件文案仅在事件／归档／语言边界重新计算。
+  const snapshot = useMemo(
+    () => buildReplaySnapshot(presentationReplay, activeIndex),
+    [presentationReplay, activeIndex],
+  );
   const activeEvent = presentationReplay.events[activeIndex] ?? null;
-  const playerIds = presentationReplay.players.map((player) => player.player_id);
-  const players = presentationReplay.players.map((player) => ({
-    id: player.player_id,
-    name: player.name,
-  }));
+  const playerIds = useMemo(
+    () => presentationReplay.players.map((player) => player.player_id),
+    [presentationReplay],
+  );
+  const players = useMemo(
+    () => presentationReplay.players.map((player) => ({ id: player.player_id, name: player.name })),
+    [presentationReplay],
+  );
+  const resultLabel = useMemo(() => replayResultLabel(replay, locale), [replay, locale]);
+  const currentLabel = useMemo(
+    () =>
+      activeEvent
+        ? eventLabel(activeEvent, locale, playerIds, players)
+        : text(locale, "replay.no_events"),
+    [activeEvent, locale, playerIds, players],
+  );
   // 焦点只筛时间线，不裁剪驱动画面／席位的完整展示事件；公开信息边界由加载文档决定。
-  const visibleEvents =
-    focusedPlayerId === null
-      ? presentationReplay.events
-      : presentationReplay.events.filter((event) =>
-          replayEventPlayerIds(event, playerIds).includes(focusedPlayerId),
-        );
+  const visibleEvents = useMemo(
+    () =>
+      focusedPlayerId === null
+        ? presentationReplay.events
+        : presentationReplay.events.filter((event) =>
+            replayEventPlayerIds(event, playerIds).includes(focusedPlayerId),
+          ),
+    [presentationReplay, focusedPlayerId, playerIds],
+  );
+  const toggleFocus = useCallback((playerId: number) => {
+    setFocusedPlayerId((current) => (current === playerId ? null : playerId));
+  }, []);
+  const clearFocus = useCallback(() => setFocusedPlayerId(null), []);
+  const jumpToVisibleEvent = useCallback(
+    (index: number) => {
+      // 时间线返回筛后下标；按同一事件引用找回完整展示数组位置，不以原始 seq 推算帧。
+      const event = visibleEvents[index];
+      if (event) jumpTo(presentationReplay.events.indexOf(event));
+    },
+    [visibleEvents, presentationReplay, jumpTo],
+  );
 
   return (
     <main className="shell">
@@ -79,10 +124,13 @@ export function ReplayWorkspace({
             })}
           </p>
         </div>
-        <ReplayDisplayControls display={display} onChange={onDisplayChange} />
+        <div className="workbench-controls">
+          <ReplayDisplayControls display={display} onChange={onDisplayChange} />
+          {fileControls}
+        </div>
         <div className="result-chip">
           <span>{text(locale, "replay.final_result")}</span>
-          <strong>{replayResultLabel(replay, locale)}</strong>
+          <strong>{resultLabel}</strong>
           <small>{resultReasonName(replay.result.reason, locale)}</small>
           {replay.result.decision && (
             <>
@@ -108,12 +156,15 @@ export function ReplayWorkspace({
 
       <section className="workspace">
         <ReplayStage
+          videoPlan={videoPlan}
           replay={presentationReplay}
           display={display}
           activeIndex={activeIndex}
           currentFrame={currentFrame}
           durationInFrames={durationInFrames}
           playing={playing}
+          playbackRate={playbackRate}
+          onPlaybackRateChange={setPlaybackRate}
           onSeekToFrame={seekToFrame}
           onToggleFullscreen={toggleFullscreen}
           playerRef={playerRef}
@@ -132,10 +183,8 @@ export function ReplayWorkspace({
               </span>
               <span>#{activeEvent?.seq ?? "—"}</span>
             </div>
-            <p>
-              {activeEvent
-                ? eventLabel(activeEvent, locale, playerIds, players)
-                : text(locale, "replay.no_events")}
+            <p tabIndex={0} aria-label={text(locale, "replay.current_event_text")}>
+              {currentLabel}
             </p>
             <div className="event-meta">
               <span>{activeEvent ? eventStageName(activeEvent, locale, playerIds) : "—"}</span>
@@ -146,9 +195,7 @@ export function ReplayWorkspace({
             players={snapshot.players}
             locale={locale}
             focusedPlayerId={focusedPlayerId}
-            onToggleFocus={(playerId) =>
-              setFocusedPlayerId((current) => (current === playerId ? null : playerId))
-            }
+            onToggleFocus={toggleFocus}
           />
         </aside>
       </section>
@@ -160,13 +207,8 @@ export function ReplayWorkspace({
         playerIds={playerIds}
         activeEventSeq={activeEvent?.seq ?? null}
         focusedPlayerId={focusedPlayerId}
-        onJumpTo={(index) => {
-          // 时间线返回筛后下标；按同一事件引用找回完整展示数组位置，再跳到对应帧。
-          const event = visibleEvents[index];
-          const originalIndex = presentationReplay.events.indexOf(event);
-          jumpTo(originalIndex);
-        }}
-        onClearFocus={() => setFocusedPlayerId(null)}
+        onJumpTo={jumpToVisibleEvent}
+        onClearFocus={clearFocus}
       />
       <PlayerAgentOutput key={replay.sessionId} locale={locale} />
     </main>

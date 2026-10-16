@@ -191,7 +191,7 @@ h2 {
 }
 .player-wrap > div {
   width: 100% !important;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--video-aspect-ratio, 16 / 9);
   height: auto !important;
 }
 .transport {
@@ -484,4 +484,187 @@ h2 {
 .result-chip {
   max-width: 420px;
   overflow-wrap: anywhere;
+}
+
+/* 工作台文件入口和时间线工具共享可读控件，导入始终保留在加载／错误页。 */
+.workbench-controls {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.replay-file-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.workbench-controls .replay-file-controls {
+  justify-content: flex-start;
+  margin-top: 0;
+}
+.file-import {
+  position: relative;
+  cursor: pointer;
+}
+.file-import input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.file-import:focus-within {
+  outline: 2px solid #e4c67d;
+  outline-offset: 3px;
+}
+.replay-file-name {
+  color: #aebdca;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.timeline-controls {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(132, 159, 186, 0.16);
+}
+.timeline-controls label {
+  display: grid;
+  gap: 6px;
+  color: #b5c3d5;
+  font-size: 12px;
+  min-width: 0;
+}
+.timeline-search {
+  flex: 1 1 220px;
+}
+.timeline-controls input,
+.timeline-controls select,
+.playback-rate select {
+  width: 100%;
+  min-width: 0;
+  color: #f6f0df;
+  background: #101b2a;
+  border: 1px solid #526174;
+  border-radius: 6px;
+  padding: 8px 9px;
+  font: inherit;
+}
+.timeline-controls [aria-pressed="true"] {
+  color: #f5d993;
+  border-color: #ad9055;
+}
+.timeline-count,
+.timeline-empty {
+  color: #9cabbc;
+  font-size: 12px;
+}
+.timeline-count {
+  padding-block: 9px;
+}
+.timeline-empty {
+  padding: 18px;
+}
+.timeline-list {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.event p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.current-event > p {
+  max-height: min(38vh, 320px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  scrollbar-gutter: stable;
+}
+.current-event > p:focus-visible {
+  outline: 2px solid #e4c67d;
+  outline-offset: -3px;
+}
+.transport {
+  align-items: center;
+  flex-wrap: wrap;
+}
+.playback-rate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #b5c3d5;
+  font-size: 12px;
+}
+.playback-rate select {
+  width: auto;
+}
+
+@media (min-width: 941px) {
+  .topbar {
+    flex-wrap: wrap;
+  }
+  .topbar > div:first-child {
+    flex: 1 1 320px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 940px) and (min-width: 621px) {
+  .side-stack {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+@media (max-width: 620px) {
+  .side-stack {
+    gap: 12px;
+  }
+  .seat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    padding: 9px;
+  }
+  .seat {
+    min-height: 90px;
+    padding-inline: 5px;
+  }
+  .current-event > p {
+    max-height: 250px;
+    font-size: 15px;
+  }
+  .player-wrap {
+    padding: 0;
+  }
+  .timeline-list {
+    max-height: 65vh;
+  }
+  .timeline-controls {
+    gap: 10px;
+    padding: 12px;
+  }
+  .timeline-controls label {
+    flex: 1 1 100%;
+  }
+  .empty-state,
+  .load-error {
+    width: 100%;
+    min-width: 0;
+    padding: 24px 18px;
+  }
+  .event-meta {
+    flex-wrap: wrap;
+  }
+  .topbar {
+    gap: 16px;
+  }
+  .topbar > div {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 }

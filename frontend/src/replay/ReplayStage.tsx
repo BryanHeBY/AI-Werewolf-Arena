@@ -7,7 +7,8 @@ import type { ReplayDisplayOptions } from "./replay-display";
 import { Player, type PlayerRef } from "@remotion/player";
 import { useMemo, type RefObject } from "react";
 import type { PresentationReplay } from "./replay-presentation";
-import { FRAMES_PER_EVENT, ReplayComposition } from "./ReplayComposition";
+import { ReplayComposition } from "./ReplayComposition";
+import type { VideoPlan } from "../video";
 
 interface ReplayStageProps {
   replay: PresentationReplay;
@@ -16,6 +17,9 @@ interface ReplayStageProps {
   currentFrame: number;
   durationInFrames: number;
   playing: boolean;
+  playbackRate?: number;
+  videoPlan?: VideoPlan;
+  onPlaybackRateChange?: (rate: number) => void;
   onSeekToFrame: (frame: number) => void;
   onToggleFullscreen: () => void;
   playerRef: RefObject<PlayerRef | null>;
@@ -29,6 +33,9 @@ export function ReplayStage({
   currentFrame,
   durationInFrames,
   playing,
+  playbackRate = 1,
+  videoPlan,
+  onPlaybackRateChange,
   onSeekToFrame,
   onToggleFullscreen,
   display,
@@ -39,8 +46,8 @@ export function ReplayStage({
   const eventCount = replay.events.length;
   // Remotion 会在 inputProps 引用变化时重建播放配置；无关帧状态更新不应更换这个对象。
   const inputProps = useMemo(
-    () => ({ replay, locale: display.locale, timeZone: display.timeZone }),
-    [replay, display.locale, display.timeZone],
+    () => ({ replay, locale: display.locale, timeZone: display.timeZone, plan: videoPlan }),
+    [replay, display.locale, display.timeZone, videoPlan],
   );
 
   return (
@@ -59,11 +66,12 @@ export function ReplayStage({
           ref={playerRef}
           component={ReplayComposition}
           inputProps={inputProps}
-          durationInFrames={Math.max(eventCount * FRAMES_PER_EVENT, 1)}
+          durationInFrames={durationInFrames}
           compositionWidth={1280}
           compositionHeight={720}
           fps={30}
           controls={false}
+          playbackRate={playbackRate}
           // 本画面没有音轨，初始静音以免音频设备启动阻塞首帧。
           initiallyMuted
           acknowledgeRemotionLicense
@@ -114,6 +122,22 @@ export function ReplayStage({
         <button type="button" onClick={onToggleFullscreen}>
           {text(display.locale, "replay.fullscreen")}
         </button>
+        {onPlaybackRateChange && (
+          <label className="playback-rate">
+            {text(display.locale, "replay.playback_rate")}
+            <select
+              aria-label={text(display.locale, "replay.playback_rate")}
+              value={playbackRate}
+              onChange={(event) => onPlaybackRateChange(Number(event.target.value))}
+            >
+              {[0.5, 1, 1.5, 2, 3].map((rate) => (
+                <option key={rate} value={rate}>
+                  {rate}×
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
       </nav>
     </article>
   );

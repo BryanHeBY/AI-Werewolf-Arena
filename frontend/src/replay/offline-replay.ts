@@ -58,9 +58,9 @@ export async function readOfflineReplay(file: File): Promise<ReplayDocument> {
       : new ReplayLoadError({ key: "replay.read_failed" });
   }
 }
-export async function loadReplay(): Promise<ReplayLoadState> {
+export async function loadReplay(signal?: AbortSignal): Promise<ReplayLoadState> {
   try {
-    const response = await fetch("/api/replay");
+    const response = await fetch("/api/replay", { signal });
     if (response.status === 404) return { status: "missing" };
     if (!response.ok)
       throw new ReplayLoadError({

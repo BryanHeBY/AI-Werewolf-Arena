@@ -1821,6 +1821,21 @@ export const MESSAGE_IDS = Object.freeze([
   "rules.ordinary_night_protection",
   "rules.lovers.netease",
   "rules.lovers.lui",
+  "replay.open_file",
+  "replay.switch_file",
+  "replay.retry",
+  "replay.current_event_text",
+  "replay.playback_rate",
+  "replay.search_events",
+  "replay.jump_chapter",
+  "replay.choose_chapter",
+  "replay.following",
+  "replay.resume_follow",
+  "replay.visible_events",
+  "replay.no_matching_events",
+  "replay.video_preview",
+  "replay.video_back",
+  "replay.video_unavailable",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

@@ -1,6 +1,6 @@
 /**
  * 包级单元／类型契约测试验证不绑定语言的消息标识。
- * 独立预期为本轮之前的 1806 键顺序摘要、既有稳定锚点与本轮追加的提示文案；输入包括未知键和可序列化消息引用。
+ * 独立预期为本轮之前的 1806 键顺序摘要、既有稳定锚点与本轮追加的提示与复盘交互文案；输入包括未知键和可序列化消息引用。
  * DTO 不按每个键约束参数，运行参数格式归 game-text；本文件不加载词典、展示器、World 或模型。
  */
 import { expect, test } from "bun:test";
@@ -29,6 +29,24 @@ const appendedPromptKeys = [
   "rules.lovers.lui",
 ] as const;
 
+const appendedReplayKeys = [
+  "replay.open_file",
+  "replay.switch_file",
+  "replay.retry",
+  "replay.current_event_text",
+  "replay.playback_rate",
+  "replay.search_events",
+  "replay.jump_chapter",
+  "replay.choose_chapter",
+  "replay.following",
+  "replay.resume_follow",
+  "replay.visible_events",
+  "replay.no_matching_events",
+  "replay.video_preview",
+  "replay.video_back",
+  "replay.video_unavailable",
+] as const;
+
 test("existing message IDs retain their sequence and prompt additions append after established anchors", () => {
   expect(new Set(MESSAGE_IDS).size).toBe(MESSAGE_IDS.length);
   expect(
@@ -45,8 +63,12 @@ test("existing message IDs retain their sequence and prompt additions append aft
   expect(MESSAGE_IDS[1796]).toBe("replay.agent_output");
   expect(MESSAGE_IDS[1804]).toBe("prompt.system.players");
   expect(MESSAGE_IDS[1805]).toBe("common.player_reference");
-  expect(MESSAGE_IDS.slice(previousSequenceLength)).toEqual([...appendedPromptKeys]);
-  for (const key of appendedPromptKeys) expect(isMessageKey(key)).toBe(true);
+  expect(MESSAGE_IDS.slice(previousSequenceLength)).toEqual([
+    ...appendedPromptKeys,
+    ...appendedReplayKeys,
+  ]);
+  for (const key of [...appendedPromptKeys, ...appendedReplayKeys])
+    expect(isMessageKey(key)).toBe(true);
 });
 
 test("the canonical registry is frozen and key validation grants no inherited object names", () => {
