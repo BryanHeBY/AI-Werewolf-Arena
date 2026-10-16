@@ -34,7 +34,7 @@ for (const variant of ["day1", "day2"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.getByTestId("composition-event")).toHaveText(label);
+        await expect(page.locator(".current-event > p")).toHaveText(label);
         await expect(page.locator("[data-composition-player]")).toHaveCount(12);
         const deadBefore = (
           await page.locator(".seat-grid .dead .seat-number").allTextContents()

@@ -1,7 +1,8 @@
 /**
  * 浏览器集成测试支持层负责把旧固定时长的采样位置转换为当前默认视频帧。输入为原复盘、旧帧及显示选项，输出可写入滑块的新帧。
  * 只复用编排起点，不从新计划生成角色、存活、字幕或胜者预期；事实断言仍由调用方的原始 seq、手写内容或旧纯投影持有。
- * 旧事件尾帧映射到新镜头尾帧，因此 before／reverse 边界保留原含义；其他采样保持局部偏移，不把原 seq 当数组下标。
+ * 旧事件尾帧映射到同一源 seq 状态区间末帧；新镜头可能在稍后的 settled 才揭晓另一事件，不能直接取整段末帧。
+ * 其他采样从该源事件的揭晓帧起保持局部偏移，不把原 seq 当数组下标；事实预期仍保留旧纯 reader／字面断言。
  */
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { compileVideoPlan, type VideoPlan } from "../../src/video";
@@ -45,13 +46,12 @@ export function replayBrowserFrame(
     presentation.events.length - 1,
   );
   const seq = presentation.events[index]!.seq;
-  const shot = plan.shots.find((item) => item.kind === "event" && item.eventSeq === seq);
+  const shot = plan.shots.find((item) => item.kind === "event" && item.sourceSeqs.includes(seq));
   if (!shot) throw new Error(`browser_legacy_sample_event_missing:${seq}`);
+  const cueIndex = shot.stateCues.findIndex((cue) => cue.throughSeq >= seq);
+  if (cueIndex < 0) throw new Error(`browser_legacy_sample_reveal_missing:${seq}`);
+  const start = shot.stateCues[cueIndex]!.frame;
+  const end = (shot.stateCues[cueIndex + 1]?.frame ?? shot.durationFrames) - 1;
   const offset = legacyFrame % FRAMES_PER_EVENT;
-  return (
-    shot.from +
-    (offset === FRAMES_PER_EVENT - 1
-      ? shot.durationFrames - 1
-      : Math.min(offset, shot.durationFrames - 1))
-  );
+  return shot.from + (offset === FRAMES_PER_EVENT - 1 ? end : Math.min(start + offset, end));
 }

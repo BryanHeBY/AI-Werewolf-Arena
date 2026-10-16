@@ -191,15 +191,20 @@ function fail(): never {
   throw new Error("theme_selection_invalid");
 }
 export function parseThemeSelection(value: unknown): ThemeSelection {
-  if (!plain(value) || Object.keys(value).some((key) => !["id", "options"].includes(key))) fail();
-  for (const key of Object.keys(value))
+  if (
+    !plain(value) ||
+    Object.getOwnPropertyNames(value).some((key) => !["id", "options"].includes(key))
+  )
+    fail();
+  // TS 项目也可传入对象；非枚举 accessor 不能绕过白名单后在读取 id 时执行。
+  for (const key of Object.getOwnPropertyNames(value))
     if (!("value" in Object.getOwnPropertyDescriptor(value, key)!)) fail();
   if (!Object.hasOwn(value, "id") || !THEME_IDS.includes(value.id as ThemeId)) fail();
   const id = value.id as ThemeId;
-  if (value.options === undefined) return { id };
+  if (!Object.hasOwn(value, "options") || value.options === undefined) return { id };
   if (!plain(value.options)) fail();
   const options: Record<string, ThemeOptionValue> = {};
-  for (const key of Object.keys(value.options)) {
+  for (const key of Object.getOwnPropertyNames(value.options)) {
     const descriptor = Object.getOwnPropertyDescriptor(value.options, key)!;
     const schema = Object.hasOwn(definitions[id].options, key)
       ? definitions[id].options[key]

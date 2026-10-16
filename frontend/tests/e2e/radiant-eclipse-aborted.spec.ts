@@ -40,7 +40,7 @@ for (const locale of ["en", "zh-CN"] as const)
         .locator(".timeline .event")
         .filter({ hasText: `#${e.seq} ·` })
         .click();
-      await expect(page.getByTestId("composition-event")).toHaveText(
+      await expect(page.locator(".current-event > p")).toHaveText(
         eventLabel(
           e,
           locale,

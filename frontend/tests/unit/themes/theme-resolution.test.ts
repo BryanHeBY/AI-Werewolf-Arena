@@ -43,6 +43,14 @@ test("theme-specific options reject cross-theme keys and getters before executio
   });
   expect(() => parseThemeSelection(value)).toThrow("theme_selection_invalid");
   expect(reads).toBe(0);
+  const hidden = Object.defineProperty({}, "id", {
+    get() {
+      reads++;
+      return "minimal-v1";
+    },
+  });
+  expect(() => parseThemeSelection(hidden)).toThrow("theme_selection_invalid");
+  expect(reads).toBe(0);
 });
 test("slots use explicit own registry entries and never inherited names", () => {
   const registry = { "gothic-v1/frame": "gothic-frame" };

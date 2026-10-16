@@ -32,7 +32,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
             })),
           );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.getByTestId("composition-event")).toHaveText(label);
+        await expect(page.locator(".current-event > p")).toHaveText(label);
         const dead = async () =>
           (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);
         expect(await dead()).toEqual([]);
@@ -49,7 +49,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
             })),
           );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-          await expect(page.getByTestId("composition-event")).toHaveText(label);
+          await expect(page.locator(".current-event > p")).toHaveText(label);
           expect(await dead()).toEqual([]);
         }
         const resolved = replay.events.find((e) => e.type === "night_resolved" && e.day === 1)!;

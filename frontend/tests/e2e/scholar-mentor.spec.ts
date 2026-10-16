@@ -31,7 +31,7 @@ for (const locale of ["zh-CN", "en"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.getByTestId("composition-event")).toHaveText(label);
+      await expect(page.locator(".current-event > p")).toHaveText(label);
     };
     const skipped = replay.events.find((e) => e.type === "modifier_choice_skipped")!;
     await show(skipped);
@@ -94,7 +94,7 @@ for (const variant of ["same-good", "both-wolves"] as const)
             })),
           );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-          await expect(page.getByTestId("composition-event")).toHaveText(label);
+          await expect(page.locator(".current-event > p")).toHaveText(label);
         };
         const conflict = replay.events.find((e) => e.type === "modifier_conflict_resolved")!;
         expect(conflict).toBeDefined();

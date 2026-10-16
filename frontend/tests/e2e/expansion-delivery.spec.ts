@@ -8,6 +8,7 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { createReplayRenderInput, buildReplayFrame } from "../../src/replay/replay-frame";
+import { playerLabel } from "@ai-werewolf-arena/game-presentation";
 const features = [
   ["crow", ["crow_curse_"]],
   ["silence-elder", ["silence_"]],
@@ -62,15 +63,36 @@ for (const [feature, prefixes] of features)
           },
           replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" }),
         );
+        const sourceEvent = input.replay.events[i]!;
+        // 乌鸦增票与紧邻票型共段揭晓；游标指汇总，但修正目标和权重仍按原事件逐项核验。
+        const summary =
+          sourceEvent.type === "crow_curse_applied"
+            ? replay.events.find(
+                (event) =>
+                  event.seq > sourceEvent.seq &&
+                  event.type === "vote_summary" &&
+                  event.day === sourceEvent.day &&
+                  event.phase === sourceEvent.phase,
+              )
+            : undefined;
         await expect(page.getByTestId("composition-event")).toHaveAttribute(
           "data-event-seq",
-          String(state.eventSeq),
+          String(summary?.seq ?? state.eventSeq),
         );
-        await expect(page.getByTestId("composition-event")).not.toContainText('{"policy"');
+        if (summary) {
+          const targetId = Number(sourceEvent.payload.targetId);
+          const target = replay.players.find((player) => player.player_id === targetId)!;
+          await expect(page.locator(`[data-event-seq="${sourceEvent.seq}"].event`)).toHaveCount(1);
+          await expect(page.locator("[data-scene-ballot]")).toContainText(
+            `${playerLabel({ id: targetId, name: target.name, seat: target.seat }, locale)} +${sourceEvent.payload.bonus}`,
+          );
+        }
+        await expect(page.locator(".current-event > p")).not.toContainText('{"policy"');
+        await expect(page.locator("[data-video-stage]")).not.toContainText('{"policy"');
         for (const p of state.players)
-          await expect(page.locator(`[data-composition-player="${p.playerId}"]`)).toHaveCSS(
-            "opacity",
-            p.alive ? "1" : p.isWinner ? "0.75" : "0.35",
+          await expect(page.locator(`[data-composition-player="${p.playerId}"]`)).toHaveAttribute(
+            "data-player-alive",
+            String(p.alive),
           );
       }
       if (["awakened-witch", "warden", "awakened-dark-stars", "awakened-knight"].includes(feature))

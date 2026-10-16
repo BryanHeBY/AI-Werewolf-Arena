@@ -50,7 +50,7 @@ for (const locale of ["en", "zh-CN"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.getByTestId("composition-event")).toHaveText(label);
+      await expect(page.locator(".current-event > p")).toHaveText(label);
       expect(
         (
           await page
@@ -63,9 +63,9 @@ for (const locale of ["en", "zh-CN"] as const)
       await expect(page.locator(`[data-composition-player="${holder}"]`)).toContainText(
         locale === "en" ? "Sheriff" : "警长",
       );
-      await expect(page.locator(`[data-composition-player="${holder}"]`)).toHaveCSS(
-        "opacity",
-        living ? "1" : "0.35",
+      await expect(page.locator(`[data-composition-player="${holder}"]`)).toHaveAttribute(
+        "data-player-alive",
+        String(living),
       );
       await expect(page.getByTestId("composition-winner")).toHaveCount(0);
     }

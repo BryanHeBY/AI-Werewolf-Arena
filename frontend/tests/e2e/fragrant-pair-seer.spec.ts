@@ -36,9 +36,9 @@ for (const locale of ["zh-CN", "en"] as const)
           replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" }),
         );
         for (const p of buildReplayFrame(input, frame).players)
-          await expect(page.locator(`[data-composition-player="${p.playerId}"]`)).toHaveCSS(
-            "opacity",
-            p.alive ? "1" : p.isWinner ? "0.75" : "0.35",
+          await expect(page.locator(`[data-composition-player="${p.playerId}"]`)).toHaveAttribute(
+            "data-player-alive",
+            String(p.alive),
           );
       }
     });

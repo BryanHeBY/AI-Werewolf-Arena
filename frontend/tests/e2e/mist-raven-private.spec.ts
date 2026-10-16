@@ -75,7 +75,7 @@ for (const actor of ["alchemist", "raven", "villager"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.getByTestId("composition-event")).toHaveText(label);
+      await expect(page.locator(".current-event > p")).toHaveText(label);
       for (const p of replay.players) {
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
           roleName(p.player_id === view.player_id ? view.role : "unknown", locale),

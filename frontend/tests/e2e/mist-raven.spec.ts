@@ -76,7 +76,7 @@ for (const variant of cases)
           .locator("[data-composition-player]")
           .evaluateAll((nodes) =>
             nodes
-              .filter((n) => Number((n as HTMLElement).style.opacity) < 1)
+              .filter((n) => n.getAttribute("data-player-alive") === "false")
               .map((n) => Number(n.getAttribute("data-composition-player"))),
           );
       const critical = replay.events.filter((e) =>

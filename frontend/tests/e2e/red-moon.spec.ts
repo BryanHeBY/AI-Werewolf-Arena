@@ -41,7 +41,7 @@ for (const mode of ["expire", "knife", "blast"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.getByTestId("composition-event")).toHaveText(label);
+        await expect(page.locator(".current-event > p")).toHaveText(label);
         if (e.type === "red_moon_exile_delayed") await expect(seat).not.toHaveClass(/dead/);
         else await expect(seat).toHaveClass(/dead/);
         if (e.type !== "red_moon_delay_expired")

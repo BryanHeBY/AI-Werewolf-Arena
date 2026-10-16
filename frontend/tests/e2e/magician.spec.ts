@@ -32,7 +32,7 @@ for (const policy of ["original", "exchanged"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.getByTestId("composition-event")).toHaveText(label);
+      await expect(page.locator(".current-event > p")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator("[data-composition-player]")).toHaveCount(12);
       await expect(page.getByTestId("composition-winner")).toHaveCount(0);
@@ -48,7 +48,7 @@ for (const policy of ["original", "exchanged"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: missLabel }).first().click();
-        await expect(page.getByTestId("composition-event")).toHaveText(missLabel);
+        await expect(page.locator(".current-event > p")).toHaveText(missLabel);
         await expect(page.locator(".seat-grid .dead")).toHaveCount(2);
       }
       await page.locator(".timeline .event").last().click();

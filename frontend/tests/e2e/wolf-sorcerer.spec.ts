@@ -35,7 +35,7 @@ for (const variant of ["overlap", "cancel", "disjoint"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.getByTestId("composition-event")).toHaveText(label);
+        await expect(page.locator(".current-event > p")).toHaveText(label);
         const dead = async () =>
           (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);
         expect(await dead()).toHaveLength(3);

@@ -39,7 +39,7 @@ for (const locale of ["en", "zh-CN"] as const)
       }),
     );
     const seat = page.locator(`[data-composition-player="${id}"]`);
-    await expect(seat).toHaveCSS("opacity", "1");
+    await expect(seat).toHaveAttribute("data-player-alive", "true");
     await expect(seat).toContainText(locale === "en" ? "Awakened Village Idiot" : "觉醒愚者");
     await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
     await expect(page.getByTestId("composition-winner")).toHaveCount(0);
@@ -240,7 +240,10 @@ for (const locale of ["en", "zh-CN"] as const)
         );
         if (e.type === "secret_body_revealed") {
           const id = Number(e.payload.actorId);
-          await expect(page.locator(`[data-composition-player="${id}"]`)).toHaveCSS("opacity", "1");
+          await expect(page.locator(`[data-composition-player="${id}"]`)).toHaveAttribute(
+            "data-player-alive",
+            "true",
+          );
           await expect(page.locator(`[data-composition-player="${id}"]`)).toContainText(
             locale === "en" ? "Sheriff" : "警长",
           );
@@ -319,11 +322,11 @@ for (const locale of ["en", "zh-CN"] as const)
         };
       await seek(i * 90 - 1);
       if (actor !== "body") await expect(seat).toContainText("unknown");
-      await expect(seat).toHaveCSS("opacity", "1");
+      await expect(seat).toHaveAttribute("data-player-alive", "true");
       await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
       await seek(i * 90 + 45);
       await expect(seat).toContainText(locale === "en" ? "Awakened Village Idiot" : "觉醒愚者");
-      await expect(seat).toHaveCSS("opacity", "1");
+      await expect(seat).toHaveAttribute("data-player-alive", "true");
       await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
       await seek(i * 90 - 1);
       if (actor !== "body") await expect(seat).toContainText("unknown");

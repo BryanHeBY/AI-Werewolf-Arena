@@ -245,6 +245,13 @@ test("phase controls use structural boundaries and detail tabs support keyboard 
   await page.keyboard.press("Home");
   await expect(page.getByLabel("搜索事件", { exact: true })).toBeVisible();
   await expect(page.getByRole("tabpanel")).toHaveCount(1);
+  await page.getByRole("tab", { name: "外观", exact: true }).click();
+  for (let index = 0; index < 3; index++)
+    await page.getByRole("button", { name: "下一阶段 →", exact: true }).click();
+  await page.getByRole("tab", { name: "事件", exact: true }).click();
+  await expect
+    .poll(() => page.locator(".timeline-list").evaluate((list) => list.scrollTop))
+    .toBeGreaterThan(0);
 });
 
 test("explicit seat and model metadata display without guessing a vendor or rewriting speech", async ({

@@ -19,6 +19,7 @@ interface EventTimelineProps {
   focusedPlayerId: number | null;
   onJumpTo: (index: number) => void;
   onClearFocus: () => void;
+  isVisible?: boolean;
 }
 const EMPTY_PLAYERS: readonly NamedPlayer[] = [];
 
@@ -31,6 +32,7 @@ export const EventTimeline = memo(function EventTimeline({
   focusedPlayerId,
   onJumpTo,
   onClearFocus,
+  isVisible = true,
 }: EventTimelineProps) {
   const [query, setQuery] = useState("");
   const [following, setFollowing] = useState(true);
@@ -78,13 +80,13 @@ export const EventTimeline = memo(function EventTimeline({
   useEffect(() => {
     const list = listRef.current;
     const active = activeRef.current;
-    if (!following || !list || !active) return;
+    if (!isVisible || !following || !list || !active) return;
     // 不用 scrollIntoView，避免播放时把整个页面拉回时间线。
     const listBox = list.getBoundingClientRect();
     const activeBox = active.getBoundingClientRect();
     if (activeBox.top < listBox.top) list.scrollTop -= listBox.top - activeBox.top;
     else if (activeBox.bottom > listBox.bottom) list.scrollTop += activeBox.bottom - listBox.bottom;
-  }, [activeEventSeq, following, visible]);
+  }, [activeEventSeq, following, visible, isVisible]);
 
   return (
     <section className="panel timeline">

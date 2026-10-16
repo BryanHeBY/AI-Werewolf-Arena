@@ -378,6 +378,7 @@ export function ReplayWorkspace({
                 focusedPlayerId={focusedPlayerId}
                 onJumpTo={jumpToVisibleEvent}
                 onClearFocus={clearFocus}
+                isVisible={detailsTab === "events"}
               />
             </div>
             <div
