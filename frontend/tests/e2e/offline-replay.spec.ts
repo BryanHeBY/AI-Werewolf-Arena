@@ -4,11 +4,12 @@
 import { withPlayerNames } from "../support/named-label-expectation";
 import { createPlayerText } from "@ai-werewolf-arena/game-presentation";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
-import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
+import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { lonelyGirlEventLabel, shapeshifterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { expect, test } from "@playwright/test";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readFileSync } from "node:fs";
+import { compileVideoPlan } from "../../src/video/compiler";
 const original = JSON.parse(
   readFileSync(frontendFixtureURL("frontend/tests/fixtures/sample.replay.json"), "utf8"),
 );
@@ -326,11 +327,22 @@ test("playing video keeps advancing while display language changes", async ({ pa
   await page.addInitScript(() => {
     AudioContext.prototype.resume = () => new Promise<void>(() => {});
   });
+  // 计划仅给真实事件边界坐标；把播放起点放在2号事件前1.5秒，避免把完整阅读时长当固定5秒。
+  // 预期仍独立锁定从原事件1实际播放至2，不能用 seek 直接跳过被验证的跨事件播放。
+  const plan = compileVideoPlan(readReplayDocument(original));
+  const secondEventFrame = plan.eventFrames["2"]![0]!.frame;
+  const startFrame = secondEventFrame - Math.ceil(plan.fps * 1.5);
+  expect(startFrame).toBeGreaterThanOrEqual(0);
+  await page.route("**/api/replay", (route) => route.fulfill({ json: original }));
   await page.goto("/");
+  const position = page.getByLabel("播放位置", { exact: true });
+  await position.fill(String(startFrame));
+  await expect(position).toHaveValue(String(startFrame));
+  await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "1");
+  await expect(page.locator(".current-event")).toHaveAttribute("data-source-seq", "1");
   await page.getByRole("button", { name: "播放", exact: true }).click();
   await expect(page.getByRole("button", { name: "暂停", exact: true })).toBeVisible();
-  const position = page.getByLabel("播放位置", { exact: true });
-  await expect.poll(async () => Number(await position.inputValue())).toBeGreaterThan(0);
+  await expect.poll(async () => Number(await position.inputValue())).toBeGreaterThan(startFrame);
   const beforeLocaleChange = Number(await position.inputValue());
   await page.getByLabel("显示语言", { exact: true }).selectOption("en");
   await expect(page.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
@@ -342,6 +354,7 @@ test("playing video keeps advancing while display language changes", async ({ pa
   await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "2", {
     timeout: 5000,
   });
+  await expect(page.locator(".current-event")).toHaveAttribute("data-source-seq", "2");
   await page.getByRole("button", { name: "Pause", exact: true }).click();
   await expect(page.getByRole("button", { name: "Play", exact: true })).toBeVisible();
 });

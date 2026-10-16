@@ -97,6 +97,8 @@ test("事实字段与数组访问器不能伪装为序列化数据", () => {
 });
 test("可选真实waveId兼容旧生命事实，显式畸形编号和额外字段仍拒绝", () => {
   const old = facts[4]!;
+  // 明确收窄到生命事实；其它事实分支不允许waveId，不能用整个联合的展开充当预期。
+  if (old.kind !== "life_committed") throw new Error("life_fixture_required");
   expect(readReplayFact(old)).toEqual(old);
   expect(readReplayFact({ ...old, waveId: 7 })).toEqual({ ...old, waveId: 7 });
   for (const waveId of [0, -1, 1.5, "1", null, undefined])
