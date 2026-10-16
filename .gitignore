@@ -67,6 +67,20 @@ coverage
 # local runtime configs (ignored)
 configs/
 
+# 本地认证与私钥导出
+/.aws/
+/.claude/
+/.pi/
+/auth.json
+/credentials.json
+/.credentials*
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
 # Browser test artifacts
 frontend/test-results/
 frontend/playwright-report/
