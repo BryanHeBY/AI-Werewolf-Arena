@@ -76,3 +76,28 @@ AWA 的 `record/<session>/players/player_*.json`、严格复现文件及调试�
 以上是结构占位；`expires` 必须换成真实凭据的有效毫秒时间戳，不能照抄示意值。`clientId` 是发行方返回的安装客户端 ID，原生刷新要求它非空；`scopes` 按本地 SDK 的申请范围列示，实际应保留原凭据返回的字段和范围，不能手工添加授权。该对象是 provider `openai` 的条目，不是整份 backends 文件；本接入不自动读取或转换 `~/.codex/auth.json`／`~/.pi/agent/auth.json`，也不启动交互登录。
 
 Pi 在需要时执行原生 token 刷新，并仅更新本次运行的内存凭据，不改写 `backends.json` 或源 auth JSON。关闭后刷新结果不会自动持久化；若服务轮换 refresh token，操作者需自行管理后续凭据，不能指望重启后原文件被自动更新。API key、access／refresh token 及个人配置不得提交到仓库。
+
+## 复用本地 Codex 登录与 fast
+
+已有 `~/.codex/auth.json` 的 ChatGPT 订阅登录应使用 Pi provider **`openai-codex`**。它与上一节的 `openai` OAuth 不同：原生凭据使用 `accountId`，从 Codex 的 `tokens.access_token`、`tokens.refresh_token`、`tokens.account_id` 导入，`expires` 使用 access token 的真实毫秒过期时间；不能把这组 token 当作普通 OpenAI API key。
+
+当前接入将凭据导入本地 `configs/runtime/backends.json`，不自动发现或改写 Codex 的认证文件。导入的是当时的凭据快照，Pi 后续刷新仍仅保存在内存；Codex 重新登录或凭据失效后需重新同步。
+
+原生 Settings 用 `defaultThinkingLevel: "medium"` 设置推理档位。fast 放在同一连接的原生模型覆盖中，例如：
+
+```json
+{
+  "providers": {
+    "openai-codex": {
+      "modelOverrides": {
+        "gpt-6-luna": { "samplingParams": { "service_tier": "fast" } },
+        "gpt-6.1-sol": { "samplingParams": { "service_tier": "fast" } }
+      }
+    }
+  }
+}
+```
+
+上面是 backend 的 `config.models` 内容。Pi 1.3 的 Codex simple 传输不会自动使用该采样字段，AWA 通过公开 `onPayload` 钩子将其映射到实际请求的 `service_tier`。旧 Codex 订阅端点拒绝字面值 `fast`，因此只在 `openai-codex-responses` 传输中将其转换为等价的 `priority`；[官方说明](https://developers.openai.com/api/docs/guides/fast-mode)确认这两个名称代表相同服务档位。未配置时不补该字段，其它传输保持原生行为。
+
+本地合成 HTTP 测试复现端点对 `fast` 的拒绝，核对两款模型都发送 `reasoning.effort: "medium"` 与 `service_tier: "priority"` 并正常完成响应。实际 fast 可用范围仍由[官方说明](https://learn.chatgpt.com/docs/agent-configuration/speed)和账户服务端决定，配置检查不验证账户权限。

@@ -67,6 +67,24 @@ export class PiSession {
     private readonly onClosed: () => void,
   ) {
     sdk.agent.toolExecution = "sequential";
+    const onPayload = sdk.agent.onPayload;
+    sdk.agent.onPayload = async (payload, model) => {
+      const body = (await onPayload?.(payload, model)) ?? payload;
+      // Pi 1.3 的 Codex simple 传输会丢掉 serviceTier；沿公开 payload 钩子读取原生模型参数。
+      // 仅补 Codex 的该字段，不更改其它协议正文，也不重新开放文件工具或扩展发现。
+      const tier =
+        model.api === "openai-codex-responses" ? model.samplingParams?.service_tier : undefined;
+      if (tier === undefined) return body;
+      if (
+        typeof tier !== "string" ||
+        !["auto", "default", "flex", "priority", "fast"].includes(tier)
+      )
+        throw new Error("pi_model_service_tier_invalid");
+      if (!body || typeof body !== "object" || Array.isArray(body))
+        throw new Error("pi_provider_payload_invalid");
+      // 旧 Codex 订阅端点不接受 fast 字面值；改用同一服务档位的 priority 别名。
+      return { ...body, service_tier: tier === "fast" ? "priority" : tier };
+    };
     const before = sdk.agent.beforeToolCall;
     sdk.agent.beforeToolCall = async (context, signal) => {
       const scope = this.scope;
