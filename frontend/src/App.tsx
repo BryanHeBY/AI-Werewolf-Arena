@@ -2,7 +2,7 @@
  * 负责复盘页面的加载状态、浏览器文件切换和显示偏好入口。输入为本地端点或用户文件，输出工作台及可重试的加载状态。
  * 用户语言优先于归档语言；每次读取都有独立代次，取消或迟到的旧读取不得覆盖新文件，不修改归档或驱动规则。
  */
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties } from "react";
 import { text, renderMessage, type Locale } from "@ai-werewolf-arena/game-text";
 import {
   loadReplay,
@@ -12,6 +12,8 @@ import {
 } from "./replay/offline-replay";
 import { ReplayDisplayControls } from "./replay/ReplayDisplayControls";
 import { DEFAULT_REPLAY_TIME_ZONE, type ReplayDisplayOptions } from "./replay/replay-display";
+import { themeToCssVariables } from "./themes";
+import { useWebAppearance } from "./themes/useWebAppearance";
 
 // 空页和文件导入先可交互；Remotion 与工作台只在取得合法复盘后加载。
 const ReplayWorkspace = lazy(() =>
@@ -21,6 +23,7 @@ const ReplayWorkspace = lazy(() =>
 type ReplaySource = { kind: "server" } | { kind: "file"; file: File };
 
 function App() {
+  const webAppearance = useWebAppearance();
   const [state, setState] = useState<ReplayLoadState>({ status: "loading" });
   const [request, setRequest] = useState<{ id: number; source: ReplaySource }>({
     id: 0,
@@ -98,8 +101,8 @@ function App() {
     </div>
   );
 
-  if (state.status === "ready")
-    return (
+  const content =
+    state.status === "ready" ? (
       <Suspense
         fallback={
           <main className="shell centered">
@@ -116,31 +119,41 @@ function App() {
           display={display}
           onDisplayChange={onDisplayChange}
           fileControls={fileControls}
+          webAppearance={webAppearance}
         />
       </Suspense>
+    ) : (
+      <main className="shell centered">
+        <section className={state.status === "error" ? "load-error" : "empty-state"}>
+          <ReplayDisplayControls display={display} onChange={onDisplayChange} />
+          {state.status === "loading" && <p role="status">{text(locale, "replay.loading")}</p>}
+          {state.status === "error" && (
+            <>
+              <h1>{text(locale, "replay.load_error")}</h1>
+              <p role="alert">{renderMessage(locale, state.message)}</p>
+            </>
+          )}
+          {state.status === "missing" && (
+            <>
+              <p className="eyebrow">{text(locale, "replay.workbench")}</p>
+              <h1>{text(locale, "replay.title")}</h1>
+              <p>{text(locale, "replay.empty")}</p>
+              <code>bun run replay:dev -- --input /absolute/path/to/game.replay.json</code>
+            </>
+          )}
+          {fileControls}
+        </section>
+      </main>
     );
   return (
-    <main className="shell centered">
-      <section className={state.status === "error" ? "load-error" : "empty-state"}>
-        <ReplayDisplayControls display={display} onChange={onDisplayChange} />
-        {state.status === "loading" && <p role="status">{text(locale, "replay.loading")}</p>}
-        {state.status === "error" && (
-          <>
-            <h1>{text(locale, "replay.load_error")}</h1>
-            <p role="alert">{renderMessage(locale, state.message)}</p>
-          </>
-        )}
-        {state.status === "missing" && (
-          <>
-            <p className="eyebrow">{text(locale, "replay.workbench")}</p>
-            <h1>{text(locale, "replay.title")}</h1>
-            <p>{text(locale, "replay.empty")}</p>
-            <code>bun run replay:dev -- --input /absolute/path/to/game.replay.json</code>
-          </>
-        )}
-        {fileControls}
-      </section>
-    </main>
+    <div
+      className="app-surface"
+      data-web-theme={webAppearance.theme.id}
+      data-reduced-motion={webAppearance.appearance.reduceMotion}
+      style={themeToCssVariables(webAppearance.theme, "day") as CSSProperties}
+    >
+      {content}
+    </div>
   );
 }
 export default App;

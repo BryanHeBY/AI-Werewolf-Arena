@@ -11,7 +11,7 @@ const marks: Record<AvatarKey, { letter: string; color: string; sides: number }>
   deepseek: { letter: "D", color: "#497ac2", sides: 5 },
   gemini: { letter: "G", color: "#7b64b4", sides: 4 },
   qwen: { letter: "Q", color: "#8a62ba", sides: 6 },
-  doubao: { letter: "豆", color: "#5a8a84", sides: 8 },
+  doubao: { letter: "D", color: "#5a8a84", sides: 8 },
   kimi: { letter: "K", color: "#647181", sides: 5 },
   glm: { letter: "G", color: "#5981ad", sides: 3 },
 };

@@ -2,7 +2,7 @@
  * 负责事件时间线的搜索、日／阶段导航与可暂停跟随。输入为已筛选事件和源 seq，输出文案及当前数组下标的跳转回调。
  * 文案在事件／语言变化时缓存；跟随只滚动列表内部，不抢页面滚动位置，不以源 seq 推算视频帧或更改归档事实。
  */
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, memo, useEffect, useMemo, useRef, useState } from "react";
 import { createPlayerText, type NamedPlayer } from "@ai-werewolf-arena/game-presentation";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
@@ -163,26 +163,39 @@ export const EventTimeline = memo(function EventTimeline({
         {visible.length === 0 && (
           <p className="timeline-empty">{text(locale, "replay.no_matching_events")}</p>
         )}
-        {visible.map(({ event, index, label, phase, stage }) => (
-          <button
-            type="button"
-            className={`event ${event.seq === activeEventSeq ? "active" : ""}`}
-            key={event.seq}
-            ref={event.seq === activeEventSeq ? activeRef : undefined}
-            aria-current={event.seq === activeEventSeq ? "step" : undefined}
-            onClick={() => onJumpTo(index)}
-          >
-            <span className="event-marker">D{event.day}</span>
-            <div>
-              <div className="event-head">
-                <span>
-                  #{event.seq} · {phase}
-                </span>
-                <span>{stage}</span>
+        {visible.map(({ event, index, label, phase, stage }, visibleIndex) => (
+          <Fragment key={event.seq}>
+            {(visibleIndex === 0 ||
+              visible[visibleIndex - 1]!.event.day !== event.day ||
+              visible[visibleIndex - 1]!.event.phase !== event.phase) && (
+              <h3
+                className="timeline-group-heading"
+                data-tone={event.phase === "night" ? "night" : "day"}
+              >
+                <span aria-hidden="true">{event.phase === "night" ? "☾" : "☼"}</span>
+                {text(locale, "replay.day_phase", { day: event.day, phase })}
+              </h3>
+            )}
+            <button
+              type="button"
+              className={`event ${event.seq === activeEventSeq ? "active" : ""}`}
+              data-event-seq={event.seq}
+              ref={event.seq === activeEventSeq ? activeRef : undefined}
+              aria-current={event.seq === activeEventSeq ? "step" : undefined}
+              onClick={() => onJumpTo(index)}
+            >
+              <span className="event-marker">D{event.day}</span>
+              <div>
+                <div className="event-head">
+                  <span>
+                    #{event.seq} · {phase}
+                  </span>
+                  <span>{stage}</span>
+                </div>
+                <p>{label}</p>
               </div>
-              <p>{label}</p>
-            </div>
-          </button>
+            </button>
+          </Fragment>
         ))}
       </div>
     </section>

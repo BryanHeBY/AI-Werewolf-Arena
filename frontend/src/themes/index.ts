@@ -1,11 +1,21 @@
 /**
  * 负责网页和视频共用的纯 JSON 主题定义、选项解析与插槽命名。输入为已登记主题 ID 及显式选项，输出独立的主题数据和 CSS 变量。
- * 主题不读取浏览器偏好、不判断游戏阶段或玩家身份；网页持久化与 React 插槽实现由各宿主单独装配。
+ * 消费者为网页工作台、视频编译器与场景宿主；主题不读取浏览器偏好、不判断游戏阶段或玩家身份，网页持久化与 React 插槽实现由各宿主单独装配。
  */
+import { text } from "@ai-werewolf-arena/game-text";
 export type ThemeId = "gothic-v1" | "minimal-v1";
 export type ThemeTone = "day" | "night";
 export type ThemeOptionValue = boolean | string | number;
-export type ThemeSlot = "background" | "frame" | "seatBadge" | "sceneHeading" | "transition";
+export type ThemeSlot =
+  | "background"
+  | "frame"
+  | "seatBadge"
+  | "sceneHeading"
+  | "transition"
+  | "playerCard"
+  | "speech"
+  | "ballot"
+  | "actionEffect";
 export type ThemeOptionDefinition =
   { type: "boolean"; default: boolean } | { type: "choice"; default: string; values: string[] };
 export interface ThemePalette {
@@ -58,6 +68,10 @@ const slots = (id: ThemeId): Record<ThemeSlot, string> => ({
   seatBadge: `${id}/seatBadge`,
   sceneHeading: `${id}/sceneHeading`,
   transition: `${id}/transition`,
+  playerCard: `${id}/playerCard`,
+  speech: `${id}/speech`,
+  ballot: `${id}/ballot`,
+  actionEffect: `${id}/actionEffect`,
 });
 const gothicDay: ThemePalette = {
   canvas: "#505b67",
@@ -127,7 +141,7 @@ const definitions: Record<ThemeId, ThemeDefinition> = {
   "gothic-v1": {
     id: "gothic-v1",
     version: 1,
-    label: { "zh-CN": "哥特冷雾", en: "Gothic mist" },
+    label: { "zh-CN": text("zh-CN", "theme.gothic_name"), en: text("en", "theme.gothic_name") },
     palette: { day: gothicDay, night: gothicNight },
     fonts: { body: sans, heading: serif, mono },
     radii: { panel: 8, card: 5 },
@@ -142,7 +156,7 @@ const definitions: Record<ThemeId, ThemeDefinition> = {
   "minimal-v1": {
     id: "minimal-v1",
     version: 1,
-    label: { "zh-CN": "简洁看板", en: "Minimal board" },
+    label: { "zh-CN": text("zh-CN", "theme.minimal_name"), en: text("en", "theme.minimal_name") },
     palette: { day: minimalDay, night: minimalNight },
     fonts: { body: sans, heading: sans, mono },
     radii: { panel: 14, card: 9 },

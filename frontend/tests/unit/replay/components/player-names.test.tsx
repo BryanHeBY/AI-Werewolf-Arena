@@ -12,6 +12,7 @@ import { PlayerSeats } from "../../../../src/replay/PlayerSeats";
 import { EventTimeline } from "../../../../src/replay/EventTimeline";
 import { createReplayRenderInput } from "../../../../src/replay/replay-frame";
 import { buildReplayFrame } from "../../../../src/replay/replay-frame";
+import { resolvePlayerPresentations } from "../../../../src/presentation";
 
 test("公开昵称在 Web 与帧投影一致，缺省不补名字，事件 payload 保持 ID", () => {
   const speech = "2号、{actor}号和Player 2都是我的发言";
@@ -71,4 +72,39 @@ test("公开昵称在 Web 与帧投影一致，缺省不补名字，事件 paylo
     expect(html).not.toContain("玩家2");
   }
   expect(JSON.stringify(replay)).toBe(before);
+});
+
+test("显式座次保持内部 ID 引用，匿名名册不回填源昵称或模型且不改变真实身份", () => {
+  const sources = [{ player_id: 41, seat: 2, name: "private-name", model: "private-model" }];
+  const profiles = resolvePlayerPresentations(sources, {
+    anonymous: true,
+    players: { "41": { avatarKey: "openai" } },
+  });
+  const html = renderToStaticMarkup(
+    <PlayerSeats
+      players={[
+        {
+          playerId: 41,
+          name: "private-name",
+          role: "unknown",
+          camp: "unknown",
+          alive: true,
+          isSheriff: false,
+          isWinner: false,
+        },
+      ]}
+      presentations={profiles}
+      locale="zh-CN"
+      focusedPlayerId={41}
+      onToggleFocus={() => {}}
+    />,
+  );
+  expect(html).toContain('aria-label="2号"');
+  expect(html).toContain('data-player-id="41"');
+  expect(html).toContain('data-seat="2"');
+  expect(html).toContain('data-avatar-key="neutral"');
+  expect(html).toContain('aria-pressed="true"');
+  expect(html).not.toContain("private-name");
+  expect(html).not.toContain("private-model");
+  expect(html).not.toContain('data-avatar-key="openai"');
 });

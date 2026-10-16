@@ -46,4 +46,6 @@ test("slots use explicit own registry entries and never inherited names", () => 
   const registry = { "gothic-v1/frame": "gothic-frame" };
   expect(getThemeSlot(registry, resolveTheme("gothic-v1"), "frame")).toBe("gothic-frame");
   expect(getThemeSlot(registry, resolveTheme("minimal-v1"), "frame")).toBeUndefined();
+  expect(resolveTheme("gothic-v1").definition.slots.actionEffect).toBe("gothic-v1/actionEffect");
+  expect(resolveTheme("minimal-v1").definition.slots.playerCard).toBe("minimal-v1/playerCard");
 });

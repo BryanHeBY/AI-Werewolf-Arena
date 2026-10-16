@@ -58,3 +58,4 @@ export function useWebAppearance() {
       setAppearance((current) => ({ ...current, reduceMotion })),
   };
 }
+export type WebAppearanceController = ReturnType<typeof useWebAppearance>;

@@ -11,8 +11,7 @@ import {
 } from "@ai-werewolf-arena/game-presentation";
 import { formatReplayTime, type ReplayDisplayOptions } from "./replay-display";
 import { ReplayDisplayControls } from "./ReplayDisplayControls";
-import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { buildReplaySnapshot } from "./replay-projection";
+import { useCallback, useId, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { buildPresentationReplay } from "./replay-presentation";
 import {
   replayResultLabel,
@@ -20,30 +19,46 @@ import {
   resultReasonName,
   eventStageName,
 } from "./replay-localization";
-import { eventLabel } from "./event-labels";
 import { ReplayStage } from "./ReplayStage";
 import { PlayerSeats } from "./PlayerSeats";
 import { EventTimeline } from "./EventTimeline";
 import { PlayerAgentOutput } from "./PlayerAgentOutput";
 import { useReplayPlayback } from "./useReplayPlayback";
-import { compileVideoPlan } from "../video";
+import { buildVideoFrame, compileVideoPlan, getVideoEventFrame } from "../video";
+import { presentationPlayers } from "../presentation";
+import { replayFrameNeighbours } from "./replay-video-navigation";
+import { AvatarMark } from "../presentation/AvatarMark";
+import { themeToCssVariables } from "../themes";
+import type { WebAppearanceController } from "../themes/useWebAppearance";
+import { WebAppearancePanel } from "../themes/WebAppearancePanel";
+import { playerLabel } from "@ai-werewolf-arena/game-presentation";
+import { campName, roleName } from "./replay-localization";
 
 export function ReplayWorkspace({
   replay,
   display,
   onDisplayChange,
   fileControls,
+  webAppearance,
 }: {
   replay: ReplayDocument;
   display: ReplayDisplayOptions;
   onDisplayChange: (next: Partial<ReplayDisplayOptions>) => void;
   fileControls?: ReactNode;
+  webAppearance: WebAppearanceController;
 }) {
   const { locale } = display;
-  const presentationReplay = useMemo(() => buildPresentationReplay(replay), [replay]);
   const videoPlan = useMemo(
     () => compileVideoPlan(replay, undefined, { locale, timeZone: display.timeZone }),
     [replay, locale, display.timeZone],
+  );
+  const presentationReplay = useMemo(
+    () => ({
+      ...buildPresentationReplay(replay),
+      // 聚合只压缩视频，不删除审计入口；被吸收的逐票 seq 仍跳到同一事实揭晓帧。
+      events: replay.events.filter((event) => getVideoEventFrame(videoPlan, event.seq) !== null),
+    }),
+    [replay, videoPlan],
   );
   const playbackTimeline = useMemo(
     () => ({
@@ -54,39 +69,73 @@ export function ReplayWorkspace({
   );
   const {
     playerRef,
-    activeIndex,
     currentFrame,
     durationInFrames,
     playing,
-    jumpTo,
     seekToFrame,
     togglePlayback,
     toggleFullscreen,
-  } = useReplayPlayback(presentationReplay.events.length, playbackTimeline);
+  } = useReplayPlayback(videoPlan.shots.length, playbackTimeline);
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
   const [playbackRate, setPlaybackRate] = useState(1);
-  // 帧更新只更新播放控件；席位投影、玩家名单与事件文案仅在事件／归档／语言边界重新计算。
-  const snapshot = useMemo(
-    () => buildReplaySnapshot(presentationReplay, activeIndex),
-    [presentationReplay, activeIndex],
+  const [detailsTab, setDetailsTab] = useState<"events" | "players" | "private" | "appearance">(
+    "events",
   );
-  const activeEvent = presentationReplay.events[activeIndex] ?? null;
+  const detailsId = useId();
+  const tabs = ["events", "players", "private", "appearance"] as const;
+  const tabKeys = {
+    events: "replay.timeline_tab",
+    players: "replay.players_tab",
+    private: "replay.private_tab",
+    appearance: "replay.appearance_tab",
+  } as const;
+  // 镜头数、原事件数和提交事实数独立；侧栏与名册读取和视频相同的揭晓快照，不能提前应用镜头最终状态。
+  const videoFrame = useMemo(
+    () => buildVideoFrame(videoPlan, currentFrame),
+    [videoPlan, currentFrame],
+  );
+  const currentView = videoFrame.currentView;
+  const snapshot = currentView.snapshot;
+  const activeEvent = snapshot.event;
+  const activeIndex = useMemo(
+    () =>
+      presentationReplay.events.reduce(
+        (current, event, index) => (event.seq <= videoFrame.sourceSeq ? index : current),
+        -1,
+      ),
+    [presentationReplay, videoFrame.sourceSeq],
+  );
+  const factRevealed = videoFrame.shot.sourceFacts.some((seq) => seq <= videoFrame.sourceFactSeq);
   const playerIds = useMemo(
     () => presentationReplay.players.map((player) => player.player_id),
     [presentationReplay],
   );
-  const players = useMemo(
-    () => presentationReplay.players.map((player) => ({ id: player.player_id, name: player.name })),
+  const playerProfiles = videoPlan.playersPresentation;
+  const players = useMemo(() => presentationPlayers(playerProfiles), [playerProfiles]);
+  const orderedPlayers = useMemo(
+    () =>
+      playerProfiles.flatMap((profile) =>
+        snapshot.players.filter((player) => player.playerId === profile.playerId),
+      ),
+    [playerProfiles, snapshot.players],
+  );
+  const chapters = useMemo(
+    () =>
+      presentationReplay.events.flatMap((event, index, events) => {
+        const previous = events[index - 1];
+        return !previous || previous.day !== event.day || previous.phase !== event.phase
+          ? [{ index, event }]
+          : [];
+      }),
     [presentationReplay],
   );
-  const resultLabel = useMemo(() => replayResultLabel(replay, locale), [replay, locale]);
-  const currentLabel = useMemo(
-    () =>
-      activeEvent
-        ? eventLabel(activeEvent, locale, playerIds, players)
-        : text(locale, "replay.no_events"),
-    [activeEvent, locale, playerIds, players],
+  const chapterIndex = chapters.reduce(
+    (current, chapter, index) => (chapter.index <= activeIndex ? index : current),
+    -1,
   );
+  const tone = snapshot.phase === "night" ? "night" : "day";
+  const resultLabel = useMemo(() => replayResultLabel(replay, locale), [replay, locale]);
+  const currentLabel = factRevealed ? videoFrame.scene.body : currentView.label;
   // 焦点只筛时间线，不裁剪驱动画面／席位的完整展示事件；公开信息边界由加载文档决定。
   const visibleEvents = useMemo(
     () =>
@@ -101,6 +150,35 @@ export function ReplayWorkspace({
     setFocusedPlayerId((current) => (current === playerId ? null : playerId));
   }, []);
   const clearFocus = useCallback(() => setFocusedPlayerId(null), []);
+  const jumpTo = useCallback(
+    (index: number) => {
+      const event = presentationReplay.events[index];
+      if (!event) return;
+      const frame = getVideoEventFrame(videoPlan, event.seq);
+      if (frame !== null) seekToFrame(frame);
+    },
+    [presentationReplay, videoPlan, seekToFrame],
+  );
+  const eventFrames = useMemo(
+    () =>
+      [
+        ...new Set(
+          presentationReplay.events.flatMap((event) => {
+            const frame = getVideoEventFrame(videoPlan, event.seq);
+            return frame === null ? [] : [frame];
+          }),
+        ),
+      ].sort((first, last) => first - last),
+    [presentationReplay, videoPlan],
+  );
+  const activeEventFrame = activeEvent ? getVideoEventFrame(videoPlan, activeEvent.seq) : null;
+  const navigation = replayFrameNeighbours(
+    eventFrames,
+    currentFrame,
+    videoFrame.shot.sourceFacts.length || videoFrame.shot.kind === "hold"
+      ? currentFrame
+      : (activeEventFrame ?? 0),
+  );
   const jumpToVisibleEvent = useCallback(
     (index: number) => {
       // 时间线返回筛后下标；按同一事件引用找回完整展示数组位置，不以原始 seq 推算帧。
@@ -111,7 +189,14 @@ export function ReplayWorkspace({
   );
 
   return (
-    <main className="shell">
+    <main
+      className="shell replay-workspace"
+      data-web-theme={webAppearance.theme.id}
+      data-tone={tone}
+      data-density={webAppearance.theme.options.density ?? "comfortable"}
+      data-high-contrast={webAppearance.theme.options.highContrast === true}
+      style={themeToCssVariables(webAppearance.theme, tone) as CSSProperties}
+    >
       <header className="topbar">
         <div>
           <p className="eyebrow">AI Werewolf Arena · {text(locale, "replay.single_game")}</p>
@@ -155,25 +240,64 @@ export function ReplayWorkspace({
       </header>
 
       <section className="workspace">
-        <ReplayStage
-          videoPlan={videoPlan}
-          replay={presentationReplay}
-          display={display}
-          activeIndex={activeIndex}
-          currentFrame={currentFrame}
-          durationInFrames={durationInFrames}
-          playing={playing}
-          playbackRate={playbackRate}
-          onPlaybackRateChange={setPlaybackRate}
-          onSeekToFrame={seekToFrame}
-          onToggleFullscreen={toggleFullscreen}
-          playerRef={playerRef}
-          onJumpTo={jumpTo}
-          onTogglePlayback={togglePlayback}
-        />
+        <div className="workspace-main">
+          <ReplayStage
+            videoPlan={videoPlan}
+            replay={presentationReplay}
+            display={display}
+            activeIndex={activeIndex}
+            currentFrame={currentFrame}
+            durationInFrames={durationInFrames}
+            playing={playing}
+            playbackRate={playbackRate}
+            onPlaybackRateChange={setPlaybackRate}
+            onSeekToFrame={seekToFrame}
+            onToggleFullscreen={toggleFullscreen}
+            playerRef={playerRef}
+            onJumpTo={jumpTo}
+            onTogglePlayback={togglePlayback}
+            previousEventFrame={navigation.previous}
+            nextEventFrame={navigation.next}
+          />
+          <nav className="phase-navigation" aria-label={text(locale, "replay.all_phases")}>
+            <button
+              type="button"
+              className="text-button"
+              disabled={chapterIndex <= 0}
+              onClick={() => jumpTo(chapters[chapterIndex - 1]!.index)}
+            >
+              ← {text(locale, "replay.previous_phase")}
+            </button>
+            <span className="phase-pill">
+              {text(locale, "replay.day_phase", {
+                day: snapshot.day,
+                phase: phaseName(snapshot.phase, locale),
+              })}
+            </span>
+            <button
+              type="button"
+              className="text-button"
+              disabled={chapterIndex >= chapters.length - 1}
+              onClick={() => jumpTo(chapters[chapterIndex + 1]!.index)}
+            >
+              {text(locale, "replay.next_phase")} →
+            </button>
+          </nav>
+          <PlayerSeats
+            players={orderedPlayers}
+            presentations={playerProfiles}
+            locale={locale}
+            focusedPlayerId={focusedPlayerId}
+            onToggleFocus={toggleFocus}
+          />
+        </div>
 
         <aside className="side-stack">
-          <section className="panel current-event">
+          <section
+            className="panel current-event"
+            data-source-seq={videoFrame.sourceSeq}
+            data-source-fact-seq={videoFrame.sourceFactSeq}
+          >
             <div className="panel-heading compact">
               <span className="phase-pill">
                 {text(locale, "replay.day_phase", {
@@ -181,36 +305,138 @@ export function ReplayWorkspace({
                   phase: phaseName(snapshot.phase, locale),
                 })}
               </span>
-              <span>#{activeEvent?.seq ?? "—"}</span>
+              <span>
+                #{activeEvent?.seq ?? "—"}
+                {factRevealed ? ` · F${videoFrame.sourceFactSeq}` : ""}
+              </span>
             </div>
             <p tabIndex={0} aria-label={text(locale, "replay.current_event_text")}>
               {currentLabel}
             </p>
             <div className="event-meta">
-              <span>{activeEvent ? eventStageName(activeEvent, locale, playerIds) : "—"}</span>
+              <span>
+                {factRevealed
+                  ? videoFrame.scene.title
+                  : activeEvent
+                    ? eventStageName(activeEvent, locale, playerIds)
+                    : "—"}
+              </span>
               <time>{formatReplayTime(activeEvent?.timestamp, display)}</time>
             </div>
           </section>
-          <PlayerSeats
-            players={snapshot.players}
-            locale={locale}
-            focusedPlayerId={focusedPlayerId}
-            onToggleFocus={toggleFocus}
-          />
+          <section className="details-panel" aria-label={text(locale, "replay.details")}>
+            <div
+              className="details-tabs"
+              role="tablist"
+              aria-label={text(locale, "replay.details")}
+            >
+              {tabs.map((tab, index) => (
+                <button
+                  key={tab}
+                  type="button"
+                  role="tab"
+                  id={`${detailsId}-${tab}-tab`}
+                  aria-controls={`${detailsId}-${tab}`}
+                  aria-selected={detailsTab === tab}
+                  tabIndex={detailsTab === tab ? 0 : -1}
+                  onClick={() => setDetailsTab(tab)}
+                  onKeyDown={(event) => {
+                    const next =
+                      event.key === "ArrowRight"
+                        ? (index + 1) % tabs.length
+                        : event.key === "ArrowLeft"
+                          ? (index + tabs.length - 1) % tabs.length
+                          : event.key === "Home"
+                            ? 0
+                            : event.key === "End"
+                              ? tabs.length - 1
+                              : null;
+                    if (next === null) return;
+                    event.preventDefault();
+                    const nextTab = tabs[next]!;
+                    setDetailsTab(nextTab);
+                    document.getElementById(`${detailsId}-${nextTab}-tab`)?.focus();
+                  }}
+                >
+                  {text(locale, tabKeys[tab])}
+                </button>
+              ))}
+            </div>
+            {/* 页签保持挂载，搜索、跟随和私有文件的本机状态不会因外观或切页而丢失。 */}
+            <div
+              role="tabpanel"
+              id={`${detailsId}-events`}
+              aria-labelledby={`${detailsId}-events-tab`}
+              hidden={detailsTab !== "events"}
+            >
+              <EventTimeline
+                players={players}
+                events={visibleEvents}
+                locale={locale}
+                playerIds={playerIds}
+                activeEventSeq={activeEvent?.seq ?? null}
+                focusedPlayerId={focusedPlayerId}
+                onJumpTo={jumpToVisibleEvent}
+                onClearFocus={clearFocus}
+              />
+            </div>
+            <div
+              role="tabpanel"
+              id={`${detailsId}-players`}
+              aria-labelledby={`${detailsId}-players-tab`}
+              hidden={detailsTab !== "players"}
+            >
+              <section className="panel roster-panel">
+                <h2>{text(locale, "replay.seats")}</h2>
+                <ul className="roster-list">
+                  {playerProfiles.map((profile) => {
+                    const state = snapshot.players.find(
+                      (player) => player.playerId === profile.playerId,
+                    )!;
+                    return (
+                      <li key={profile.playerId} data-player-id={profile.playerId}>
+                        <AvatarMark avatar={profile.avatar} size={32} />
+                        <div>
+                          <strong>
+                            {playerLabel(
+                              {
+                                id: profile.playerId,
+                                seat: profile.seat,
+                                name: profile.displayName,
+                              },
+                              locale,
+                            )}
+                          </strong>
+                          {profile.modelLabel && <small>{profile.modelLabel}</small>}
+                        </div>
+                        <span>
+                          {roleName(state.role, locale)} · {campName(state.camp, locale)}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            </div>
+            <div
+              role="tabpanel"
+              id={`${detailsId}-private`}
+              aria-labelledby={`${detailsId}-private-tab`}
+              hidden={detailsTab !== "private"}
+            >
+              <PlayerAgentOutput key={replay.sessionId} locale={locale} />
+            </div>
+            <div
+              role="tabpanel"
+              id={`${detailsId}-appearance`}
+              aria-labelledby={`${detailsId}-appearance-tab`}
+              hidden={detailsTab !== "appearance"}
+            >
+              <WebAppearancePanel locale={locale} controller={webAppearance} />
+            </div>
+          </section>
         </aside>
       </section>
-
-      <EventTimeline
-        players={players}
-        events={visibleEvents}
-        locale={locale}
-        playerIds={playerIds}
-        activeEventSeq={activeEvent?.seq ?? null}
-        focusedPlayerId={focusedPlayerId}
-        onJumpTo={jumpToVisibleEvent}
-        onClearFocus={clearFocus}
-      />
-      <PlayerAgentOutput key={replay.sessionId} locale={locale} />
     </main>
   );
 }
