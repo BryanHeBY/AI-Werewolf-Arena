@@ -14,7 +14,6 @@ import { loadBoardDefinition } from "../../../../src/app/config/load-board-defin
 import { convertLegacyBoard } from "../../../../src/app/config/migrate-board";
 import { checkConfig } from "../../../../src/app/cli/check-config";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-
 test("all public example boards round-trip through every registered contribution, including empty schemas", async () => {
   const root = path.resolve(import.meta.dir, "../../../../../configs.example");
   for (const file of await readdir(path.join(root, "boards"))) {
@@ -31,24 +30,39 @@ test("all public example boards round-trip through every registered contribution
       ).toEqual(value);
   }
 });
-
 test("normal loading never probes legacy fallbacks; explicit migration remains active", async () => {
   const root = await createTestTempDirectory("awa-closure-legacy-");
   const legacy = { boardSize: 6 };
   await mkdir(path.join(root, "runtime"));
   await mkdir(path.join(root, "games"));
   await writeFile(
-    path.join(root, "runtime/providers.json"),
+    path.join(root, "runtime/backends.json"),
     JSON.stringify({
-      default: "fake",
-      items: { fake: { type: "openai", apiKey: "synthetic-unused" } },
+      schemaVersion: 2,
+      items: {
+        fake: {
+          kind: "llm",
+          config: {
+            type: "openai",
+            apiKey: "synthetic-unused",
+          },
+        },
+      },
     }),
   );
   await writeFile(
     path.join(root, "runtime/agents.json"),
     JSON.stringify({
+      schemaVersion: 2,
       default: "fake",
-      items: { fake: { kind: "llm", provider: "fake", model: "unused" } },
+      items: {
+        fake: {
+          backend: "fake",
+          options: {
+            model: "unused",
+          },
+        },
+      },
     }),
   );
   await writeFile(

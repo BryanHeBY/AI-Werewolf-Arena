@@ -18,15 +18,30 @@ for (const [id, size] of [
       board = await loadBoardDefinition(root, id),
       game = JSON.parse(await readFile(path.join(root, `games/${id}.json`), "utf8"));
     const runtime = parseRuntimeConfig({
-      providers: {
-        default: "synthetic",
+      backends: {
+        schemaVersion: 2,
         items: {
-          synthetic: { type: "openai", apiKey: "synthetic-only", baseURL: "http://127.0.0.1/v1" },
+          synthetic: {
+            kind: "llm",
+            config: {
+              type: "openai",
+              apiKey: "synthetic-only",
+              baseURL: "http://127.0.0.1/v1",
+            },
+          },
         },
       },
       agents: {
+        schemaVersion: 2,
         default: "deepseek_v4_flash",
-        items: { deepseek_v4_flash: { kind: "llm", provider: "synthetic", model: "synthetic" } },
+        items: {
+          deepseek_v4_flash: {
+            backend: "synthetic",
+            options: {
+              model: "synthetic",
+            },
+          },
+        },
       },
       game,
     });

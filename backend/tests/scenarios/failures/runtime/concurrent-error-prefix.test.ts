@@ -3,6 +3,7 @@
  * 输入为受控行动回复、原可选文件失败与真实录制清理；输出由字面单次关闭计数、聚合错误身份和可复盘前缀核对。
  * 不用生产 oracle 重生接受行动，实际文件新封装仅在原输入读取位置解包。
  */
+import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
@@ -30,18 +31,20 @@ for (const diskFailure of [false, true])
         path.resolve(process.cwd(), "../configs.example"),
         "twelve_player_standard",
       );
-      const config = parseRuntimeConfig({
-        providers: {
-          default: "fake",
-          items: { fake: { type: "openai", apiKey: "synthetic-unused" } },
-        },
-        agents: {
-          default: "fake",
-          items: { fake: { kind: "llm", provider: "fake", model: "synthetic" } },
-        },
-        game: { board: "twelve_player_standard", seed: "runner-concurrent" },
-        debugSummary: { agent: { enabled: false } },
-      });
+      const config = parseRuntimeConfig(
+        runtimeConfigV2({
+          providers: {
+            default: "fake",
+            items: { fake: { type: "openai", apiKey: "synthetic-unused" } },
+          },
+          agents: {
+            default: "fake",
+            items: { fake: { kind: "llm", provider: "fake", model: "synthetic" } },
+          },
+          game: { board: "twelve_player_standard", seed: "runner-concurrent" },
+          debugSummary: { agent: { enabled: false } },
+        }),
+      );
       const setup = resolveGameSetup(
         config,
         {

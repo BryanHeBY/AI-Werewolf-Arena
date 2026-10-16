@@ -1,5 +1,5 @@
 /**
- * 从指定配置目录顺序读取 providers、agents、具名 game 与可选审计文件，输出已校验 RuntimeConfig。
+ * 从指定配置目录顺序读取 V2 backends、agents、具名 game 与可选审计文件，输出已校验 RuntimeConfig。
  * 本模块拥有文件读取和 JSON 错误转换；配置解析由 parseRuntimeConfig 执行，Agent／会话资源由运行装配持有。
  * 必填文件缺失和其它 I/O 失败直接传播；仅审计文件缺失可省略，不自动探测旧目录、加载 .env 或缓存配置。
  */
@@ -50,7 +50,7 @@ export async function loadRuntimeConfig(options: RuntimeConfigLoadOptions): Prom
   const configRoot = path.resolve(options.configDir);
   const runtimeDir = path.join(configRoot, "runtime");
   return parseRuntimeConfig({
-    providers: await readJsonFile(path.join(runtimeDir, "providers.json"), "providers"),
+    backends: await readJsonFile(path.join(runtimeDir, "backends.json"), "backends"),
     agents: await readJsonFile(path.join(runtimeDir, "agents.json"), "agents"),
     game: await readJsonFile(
       path.join(configRoot, "games", `${options.gameName}.json`),

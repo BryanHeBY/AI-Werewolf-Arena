@@ -40,6 +40,7 @@ export class PlayerRoundRecorder {
       requestId: `${day}-${phase}-${request.actorId}-${round}`,
       timestampMs: Date.now(),
       llmRequestMessages: [{ role: "user", content: prompt.userPrompt }],
+      ...(outcome.deltaMessages ? { deltaMessages: outcome.deltaMessages } : {}),
       promptSystem: prompt.systemPrompt,
       ...(round === 1
         ? {

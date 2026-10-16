@@ -1,10 +1,14 @@
 /**
- * 负责 providers、agents、game、可选 audit 及已解析运行配置的类型结构。输入／输出关系分别描述模型 API、ACP 进程、玩家覆盖与装配结果。
+ * 负责 V2 backends、agents、game、可选 audit 及已解析运行配置的类型结构。输入／输出关系分别描述模型 API、ACP 进程、玩家覆盖与装配结果。
  * 配置数据由读取／解析和 setup 所有者管理；此契约不加载文件或环境、不创建 Agent，也不拥有角色库存或全局缓存。
  */
 /** `openai` 同时覆盖 OpenRouter 等 Chat Completions 兼容网关。 */
 import type { Locale } from "@ai-werewolf-arena/game-contract";
-export type ProviderType = "openai" | "anthropic" | "acp";
+import type { SettingsManager } from "@earendil-works/pi-coding-agent";
+export type ProviderType = "openai" | "anthropic" | "acp" | "pi";
+
+/** 由已安装 Pi SDK 推导原生设置；AWA 不复制其字段表，也不加载原生设置文件。 */
+export type PiSettings = ReturnType<SettingsManager["getSettings"]>;
 export type GameBoard = string;
 export type ReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
 
@@ -30,7 +34,15 @@ export interface AcpProviderConfig {
   sessionConfigOptions: Record<string, string | boolean>;
 }
 
-export type ProviderConfig = LlmProviderConfig | AcpProviderConfig;
+/** Pi 连接描述是原生 models.json / auth.json 的内存对象，不提供文件路径或隐式 home 回退。 */
+export interface PiProviderConfig {
+  type: "pi";
+  models: Record<string, unknown>;
+  auth: Record<string, unknown>;
+  maxConcurrentRequests?: number;
+}
+
+export type ProviderConfig = LlmProviderConfig | AcpProviderConfig | PiProviderConfig;
 
 /** 提示配置只保存人格文本；实际注入由玩家提示策略统一执行，不授予游戏动作权限。 */
 export interface AgentPromptConfig {
@@ -57,9 +69,16 @@ export interface AcpAgentEntryConfig extends AgentPromptConfig {
   spawnArgs?: string[];
   sessionReuse?: "per_player";
   actionTransport?: "mcp";
+  sessionConfigOptions?: Record<string, string | boolean>;
 }
 
-export type AgentEntryConfig = LlmAgentEntryConfig | AcpAgentEntryConfig;
+export interface PiAgentEntryConfig extends AgentPromptConfig {
+  kind: "pi";
+  provider: string;
+  piSettings: PiSettings;
+}
+
+export type AgentEntryConfig = LlmAgentEntryConfig | AcpAgentEntryConfig | PiAgentEntryConfig;
 
 export interface ProvidersConfig {
   default: string;
@@ -129,7 +148,7 @@ export interface DebugSummaryConfig {
   agent?: DebugSummaryAgentConfig;
 }
 
-/** 唯一支持的运行时配置：providers、agents、一个具名 game 和可选 audit 配置。 */
+/** V2 公共文件归一后的运行输入；providers 是内部连接表的唯一副本，不再对应旧 providers.json。 */
 export interface RuntimeConfig {
   providers: ProvidersConfig;
   agents: AgentsConfig;
@@ -152,7 +171,8 @@ export interface ResolvedAgentRuntimeProfile extends AgentPromptConfig {
   name: string;
   providerName: string;
   provider: ProviderConfig;
-  kind: "llm" | "acp";
+  kind: "llm" | "acp" | "pi";
+  piSettings?: PiSettings;
   model?: string;
   temperature?: number;
   maxTokens?: number;

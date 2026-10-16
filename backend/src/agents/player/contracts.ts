@@ -1,9 +1,9 @@
 /**
- * 负责定义 SDK 与 ACP 共用的提示构建结果、重试轨迹和轮次记录数据。
+ * 负责定义 SDK、Pi 与 ACP 共用的提示构建结果、重试轨迹和轮次记录数据。
  * 提示／轮次编排器生产这些数据，记录器消费；此处只声明结构，不拥有会话、授权或领域提交。
  * 原始文案、工具参数与诊断保留输入含义；工具接受结果和最终游戏结算分别由各自所有者确认。
  */
-import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
+import type { ErrorDiagnostic, ReplayPlayerDeltaMessage } from "@ai-werewolf-arena/replay-contract";
 import { ToolCall } from "../../domain";
 import { ChatMessage } from "../../adapters/llm/transport";
 
@@ -42,6 +42,8 @@ export interface PlayerRetryTraceEntry {
 
 /** 轮次决策记录；actionMode 与 finalAction 描述返回选择，不表示已付款或生效。 */
 export interface PlayerRoundOutcome {
+  /** 传输原生块的显式记录；只保存本轮增量，不把完整会话历史复制成第二份状态。 */
+  deltaMessages?: ReplayPlayerDeltaMessage[];
   actionMode: "tool_call" | "none";
   toolCalls: Array<{
     id?: string;

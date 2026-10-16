@@ -1,6 +1,7 @@
 # 运行与维护指南
 
 - [本地运行与配置检查](run-locally.md)
+- [Pi 原生 Agent：配置、模型与内存边界](pi-agent.md)
 - [离线模拟、复盘与视频](offline-replay.md)
 - [验证方法](validation.md)
 - [发布候选真实模型评测提案](release-evaluation.md)

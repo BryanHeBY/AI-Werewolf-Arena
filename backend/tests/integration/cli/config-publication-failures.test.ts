@@ -104,7 +104,7 @@ test("configuration CLI preserves safe locations and never prints raw provider J
   const root = await createTestTempDirectory("awa-safe-check-");
   await fs.mkdir(path.join(root, "runtime"));
   await fs.writeFile(
-    path.join(root, "runtime/providers.json"),
+    path.join(root, "runtime/backends.json"),
     '{"key":"PRIVATE_SECRET_FRAGMENT",INVALID}',
   );
   const command = path.resolve(import.meta.dir, "../../../src/app/cli/check-config.ts");

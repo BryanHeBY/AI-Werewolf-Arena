@@ -16,22 +16,38 @@ import { fragrantPairSeerTwelveConfig as config } from "../../../../src/rulesets
 import { isFragrantPairSeerPreset } from "../../../../src/rulesets";
 import { Role, Camp } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
-
 const root = path.resolve(import.meta.dir, "../../../../.."),
   id = "awa_fragrant_pair_seer_12_v1";
-
 const raw = JSON.parse(readFileSync(root + "/configs.example/boards/" + id + ".json", "utf8"));
-
 test("public example load, roundtrip, game resolve and bootstrap agree", async () => {
   const resolved = await loadBoardDefinition(root + "/configs.example", id);
   expect(resolved.config).toEqual(config);
   expect(parseBoardDefinition(boardDefinitionFromConfig(id, config)).config).toEqual(config);
   const rt = parseRuntimeConfig({
     environment: {},
-    providers: { default: "fake", items: { fake: { type: "openai", apiKey: "synthetic-only" } } },
+    backends: {
+      schemaVersion: 2,
+      items: {
+        fake: {
+          kind: "llm",
+          config: {
+            type: "openai",
+            apiKey: "synthetic-only",
+          },
+        },
+      },
+    },
     agents: {
+      schemaVersion: 2,
       default: "deepseek_v4_flash",
-      items: { deepseek_v4_flash: { kind: "llm", provider: "fake", model: "fake" } },
+      items: {
+        deepseek_v4_flash: {
+          backend: "fake",
+          options: {
+            model: "fake",
+          },
+        },
+      },
     },
     game: JSON.parse(
       readFileSync(root + "/configs.example/games/twelve_player_fragrant_pair_seer.json", "utf8"),
@@ -54,7 +70,6 @@ test("public example load, roundtrip, game resolve and bootstrap agree", async (
     expect(Object.hasOwn(role, "camp")).toBe(false);
   }
 });
-
 test("alternate hunter policy rejected publicly and internally", () => {
   for (const deathActionPolicy of ["awa_knife_or_exile_v1", "awa_day_deaths_v1"]) {
     const r = structuredClone(raw);
@@ -69,7 +84,6 @@ test("alternate hunter policy rejected publicly and internally", () => {
     }).toThrow("fragrant_pair_seer_preset_invalid");
   }
 });
-
 test("both role policy contributions reject conflicts in either object order", () => {
   for (const bad of ["fragrant_phantom", "awakened_seer"])
     for (const reverse of [false, true]) {
@@ -86,7 +100,6 @@ test("both role policy contributions reject conflicts in either object order", (
     expect(parseBoardDefinition(r).config).toEqual(config);
   }
 });
-
 test("wrong native counts fail publicly and at bootstrap", () => {
   const r = structuredClone(raw);
   r.board.roleSetups.find((x: any) => x.role === "wolf").count = 2;

@@ -9,7 +9,6 @@ import { parseBoardDefinition } from "../../../../src/app/config/board-definitio
 import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
 import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
 import { KnightDuelWindow } from "../../../../src/domain";
-
 for (const [id, size] of [
   ["six_player_knight", 6],
   ["twelve_player_knight", 12],
@@ -19,15 +18,30 @@ for (const [id, size] of [
       board = await loadBoardDefinition(root, id);
     const game = JSON.parse(await readFile(path.join(root, `games/${id}.json`), "utf8"));
     const runtime = parseRuntimeConfig({
-      providers: {
-        default: "synthetic",
+      backends: {
+        schemaVersion: 2,
         items: {
-          synthetic: { type: "openai", apiKey: "synthetic-only", baseURL: "http://127.0.0.1/v1" },
+          synthetic: {
+            kind: "llm",
+            config: {
+              type: "openai",
+              apiKey: "synthetic-only",
+              baseURL: "http://127.0.0.1/v1",
+            },
+          },
         },
       },
       agents: {
+        schemaVersion: 2,
         default: "deepseek_v4_flash",
-        items: { deepseek_v4_flash: { kind: "llm", provider: "synthetic", model: "synthetic" } },
+        items: {
+          deepseek_v4_flash: {
+            backend: "synthetic",
+            options: {
+              model: "synthetic",
+            },
+          },
+        },
       },
       game,
     });

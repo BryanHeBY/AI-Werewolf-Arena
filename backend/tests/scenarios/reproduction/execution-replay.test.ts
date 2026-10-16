@@ -3,6 +3,7 @@
  * 输入为观察／脚本记录、并行／checkpoint／provider 注入失败及非法版本；输出由原事件、决定、操作、checkpoint 相等与精确首失败核对。
  * 不调用计费模型，不改写预期 fixture 或 Tape。
  */
+import { runtimeConfigV2 } from "../../support/builders/runtime-config-v2";
 import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { Role, WitchSelfHealRule } from "../../../src/domain";
@@ -150,24 +151,26 @@ for (const fault of ["transport", "malformed_action"] as const) {
   test(`${fault}: runner saves a partial failure and offline replay reaches the same engine state`, async () => {
     const root = await createTestTempDirectory("awa-recorded-failure-");
     const output = await createTestTempDirectory("awa-replayed-failure-");
-    const runtime = parseRuntimeConfig({
-      providers: {
-        default: "fake",
-        items: {
-          fake: {
-            type: "openai",
-            apiKey: "PRIVATE_AUTH_KEY",
-            baseURL: "https://user:PRIVATE_URL_PASSWORD@example.invalid",
+    const runtime = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: {
+          default: "fake",
+          items: {
+            fake: {
+              type: "openai",
+              apiKey: "PRIVATE_AUTH_KEY",
+              baseURL: "https://user:PRIVATE_URL_PASSWORD@example.invalid",
+            },
           },
         },
-      },
-      agents: {
-        default: "fake",
-        items: { fake: { kind: "llm", provider: "fake", model: "fake" } },
-      },
-      game: { seed: "record-failure" },
-      debugSummary: { agent: { enabled: false } },
-    });
+        agents: {
+          default: "fake",
+          items: { fake: { kind: "llm", provider: "fake", model: "fake" } },
+        },
+        game: { seed: "record-failure" },
+        debugSummary: { agent: { enabled: false } },
+      }),
+    );
     const setup = resolveGameSetup(runtime, {
       recordRootDir: root,
       maxDays: 30,
@@ -226,12 +229,17 @@ test("a parallel phase reproduces the first failure before cancellation of an ea
   const root = await createTestTempDirectory("awa-causal-record-");
   const output = await createTestTempDirectory("awa-causal-replay-");
   const board = await loadBoardDefinition(fixtures, "twelve_player_standard");
-  const runtime = parseRuntimeConfig({
-    providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
-    agents: { default: "fake", items: { fake: { kind: "llm", provider: "fake", model: "fake" } } },
-    game: { board: "twelve_player_standard", seed: "parallel-failure" },
-    debugSummary: { agent: { enabled: false } },
-  });
+  const runtime = parseRuntimeConfig(
+    runtimeConfigV2({
+      providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
+      agents: {
+        default: "fake",
+        items: { fake: { kind: "llm", provider: "fake", model: "fake" } },
+      },
+      game: { board: "twelve_player_standard", seed: "parallel-failure" },
+      debugSummary: { agent: { enabled: false } },
+    }),
+  );
   const setup = resolveGameSetup(
     runtime,
     { recordRootDir: root, maxDays: 30, maxRuntimeMs: 10000, streamEvents: false, color: false },
@@ -298,12 +306,17 @@ test("a parallel phase reproduces the first failure before cancellation of an ea
 
 test("a game and checkpoint failure keep both errors and cannot seal an incomplete trace", async () => {
   const root = await createTestTempDirectory("awa-checkpoint-failure-");
-  const runtime = parseRuntimeConfig({
-    providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
-    agents: { default: "fake", items: { fake: { kind: "llm", provider: "fake", model: "fake" } } },
-    game: { seed: "checkpoint-failure" },
-    debugSummary: { agent: { enabled: false } },
-  });
+  const runtime = parseRuntimeConfig(
+    runtimeConfigV2({
+      providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
+      agents: {
+        default: "fake",
+        items: { fake: { kind: "llm", provider: "fake", model: "fake" } },
+      },
+      game: { seed: "checkpoint-failure" },
+      debugSummary: { agent: { enabled: false } },
+    }),
+  );
   const setup = resolveGameSetup(runtime, {
     recordRootDir: root,
     maxDays: 30,
@@ -356,12 +369,17 @@ test("a game and checkpoint failure keep both errors and cannot seal an incomple
 test("a real runner deadline produces an explicitly partial timeout recording", async () => {
   const root = await createTestTempDirectory("awa-timeout-record-");
   const output = await createTestTempDirectory("awa-timeout-replay-");
-  const runtime = parseRuntimeConfig({
-    providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
-    agents: { default: "fake", items: { fake: { kind: "llm", provider: "fake", model: "fake" } } },
-    game: { seed: "timeout", maxRuntimeMs: 1 },
-    debugSummary: { agent: { enabled: false } },
-  });
+  const runtime = parseRuntimeConfig(
+    runtimeConfigV2({
+      providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
+      agents: {
+        default: "fake",
+        items: { fake: { kind: "llm", provider: "fake", model: "fake" } },
+      },
+      game: { seed: "timeout", maxRuntimeMs: 1 },
+      debugSummary: { agent: { enabled: false } },
+    }),
+  );
   const setup = resolveGameSetup(runtime, {
     recordRootDir: root,
     maxDays: 30,
@@ -423,15 +441,17 @@ for (const simultaneous of [false, true]) {
   test(`parallel vote retries preserve recorded opening boundaries (${simultaneous ? "all voters" : "one voter"})`, async () => {
     const root = await createTestTempDirectory("awa-vote-retry-record-");
     const output = await createTestTempDirectory("awa-vote-retry-replay-");
-    const runtime = parseRuntimeConfig({
-      providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
-      agents: {
-        default: "fake",
-        items: { fake: { kind: "llm", provider: "fake", model: "fake" } },
-      },
-      game: { seed: "parallel-retries" },
-      debugSummary: { agent: { enabled: false } },
-    });
+    const runtime = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: { default: "fake", items: { fake: { type: "openai", apiKey: "unused" } } },
+        agents: {
+          default: "fake",
+          items: { fake: { kind: "llm", provider: "fake", model: "fake" } },
+        },
+        game: { seed: "parallel-retries" },
+        debugSummary: { agent: { enabled: false } },
+      }),
+    );
     const setup = resolveGameSetup(runtime, {
       recordRootDir: root,
       maxDays: 30,

@@ -15,7 +15,7 @@ export interface LlmObserverOptions {
   colorizeLogs?: boolean;
   printLlmIo: boolean;
   printThinking: boolean;
-  transport?: "llm" | "acp";
+  transport?: "llm" | "acp" | "pi";
 }
 
 /** 终端观察与游戏决策分离；最近 80 条 trace 由本实例持有。 */
@@ -42,7 +42,11 @@ export class LlmObserver {
   prompt(messages: ChatMessage[], request: ActionRequest): void {
     if (!this.options.printLlmIo) return;
     const prefix = colorize(
-      this.options.transport === "acp" ? "[ACP_IO]" : "[LLM_IO]",
+      this.options.transport === "acp"
+        ? "[ACP_IO]"
+        : this.options.transport === "pi"
+          ? "[PI_IO]"
+          : "[LLM_IO]",
       "accent",
       this.colorizeLogs,
     );
@@ -63,7 +67,11 @@ export class LlmObserver {
   rawResponse(raw: string, request: ActionRequest): void {
     if (!this.options.printLlmIo) return;
     const prefix = colorize(
-      this.options.transport === "acp" ? "[ACP_IO]" : "[LLM_IO]",
+      this.options.transport === "acp"
+        ? "[ACP_IO]"
+        : this.options.transport === "pi"
+          ? "[PI_IO]"
+          : "[LLM_IO]",
       "accent",
       this.colorizeLogs,
     );
@@ -114,7 +122,12 @@ export class LlmObserver {
 
   // 只按原首 token 查展示 key，再按包含的机器标签选颜色；没有解码事件或改变原 line 的诊断含义。
   private decorate(line: string): string {
-    const prefix = this.options.transport === "acp" ? "[ACPActionProvider]" : "[LLMActionProvider]";
+    const prefix =
+      this.options.transport === "acp"
+        ? "[ACPActionProvider]"
+        : this.options.transport === "pi"
+          ? "[PiActionProvider]"
+          : "[LLMActionProvider]";
     const key = `runtime.trace.${line.split(" ", 1)[0]}` as MessageKey;
     if (Object.hasOwn(dictionaries[this.locale], key)) line = `${text(this.locale, key)} | ${line}`;
     if (!this.colorizeLogs) return `${prefix} ${line}`;

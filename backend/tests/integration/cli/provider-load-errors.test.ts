@@ -46,7 +46,7 @@ test("game CLI rejects invalid provider configuration without exposing JSON or a
   });
   const root = await createTestTempDirectory("awa-diagnostic-cli-");
   await fs.mkdir(path.join(root, "runtime"));
-  await fs.writeFile(path.join(root, "runtime/providers.json"), `{"key":"${secret}",INVALID}`);
+  await fs.writeFile(path.join(root, "runtime/backends.json"), `{"key":"${secret}",INVALID}`);
   const command = path.resolve(import.meta.dir, "../../../src/app/cli/run-game.ts");
   const child = Bun.spawn(
     [Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun", command, "--configs-dir", root],

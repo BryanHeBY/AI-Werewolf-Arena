@@ -14,10 +14,12 @@
 | `recording/reproduction`           | 严格格式、Trace、纯 checkpoint 格式／审计及来源身份    | 直接读取 World 的现场捕获装配、用公开回放替代精确执行 |
 | `app/checkpoint`                   | 现场 World／机制查询的五个 checkpoint 捕获与装配 owner | 重新推导规则、拥有第二份状态、承担独立归档校验        |
 | `recording/verification/<feature>` | 独立档案算术及因果校验                                 | 导入生产结算作oracle                                  |
-| `adapters`                         | LLM、ACP、文件系统、终端的外部边界                     | 更改领域授权或恢复关闭的回合                          |
+| `adapters`                         | LLM、Pi、ACP、文件系统、终端的外部边界                 | 更改领域授权或恢复关闭的回合                          |
 | `packages`                         | 明确的纯数据、语言、展示、目录与归档公共契约           | 反导backend运行owner                                  |
 
 这不是允许所有同层互导的名单。跨族只消费实际公开端口；私有 state／frame／authority 的形状相似不等于共同不变量。
+
+Pi 的模型／认证内存状态和会话句柄由 `adapters/pi` 持有；逐玩家游标、调度租约和行动选择窗口由 `agents/pi` 持有。两者不提交领域动作。完整对话与压缩摘要由原生 Pi 会话独占；AWA 的逐轮录制只追加实际输入、思考、回应和工具回执。审计创建独立会话，不复用玩家历史。
 
 ## 单一运行模块与公开面
 

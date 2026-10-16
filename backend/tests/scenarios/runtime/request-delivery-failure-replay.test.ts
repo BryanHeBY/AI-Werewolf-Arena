@@ -4,6 +4,7 @@
  * 字面 decision_failed 部分周期、库存不变／没有伪造夜间结果构成独立预期；精确重放另核对本局录制一致性，不依赖合成重放时钟。
  * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
+import { runtimeConfigV2 } from "../../support/builders/runtime-config-v2";
 import { expect, test, spyOn } from "bun:test";
 import path from "node:path";
 import { readdir } from "node:fs/promises";
@@ -26,18 +27,20 @@ test("revoked delivery on a real engine request records an error and reproduces 
       path.resolve(import.meta.dir, "../../../../configs.example"),
       "six_player_mvp",
     ),
-    runtime = parseRuntimeConfig({
-      providers: {
-        default: "synthetic",
-        items: { synthetic: { type: "openai", apiKey: "synthetic-only" } },
-      },
-      agents: {
-        default: "synthetic",
-        items: { synthetic: { kind: "llm", provider: "synthetic", model: "synthetic" } },
-      },
-      game: { board: "six_player_mvp", seed: "delivery-failure", locale: "en" },
-      debugSummary: { agent: { enabled: false } },
-    }),
+    runtime = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: {
+          default: "synthetic",
+          items: { synthetic: { type: "openai", apiKey: "synthetic-only" } },
+        },
+        agents: {
+          default: "synthetic",
+          items: { synthetic: { kind: "llm", provider: "synthetic", model: "synthetic" } },
+        },
+        game: { board: "six_player_mvp", seed: "delivery-failure", locale: "en" },
+        debugSummary: { agent: { enabled: false } },
+      }),
+    ),
     setup = resolveGameSetup(
       runtime,
       {

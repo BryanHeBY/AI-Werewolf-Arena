@@ -1,6 +1,7 @@
 /**
  * 故障场景测试：验证 held 回复期间录制失败，runner 取消仍保留已付款狼美人魅惑。输入为原工厂／录制注入及晚到或 null 回复；关系、没有消费式跳过及部分复盘相等为字面预期，不把取消改成花资源行动。
  */
+import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { PotionType } from "../../../../src/domain/identity";
@@ -44,18 +45,20 @@ for (const late of [null, { name: "charm", args: { target_id: null } }] as const
     const held = new Promise<ToolCall | null>((done) => {
       release = done;
     });
-    const config = parseRuntimeConfig({
-      providers: {
-        default: "fake",
-        items: { fake: { type: "openai", apiKey: "synthetic-unused" } },
-      },
-      agents: {
-        default: "fake",
-        items: { fake: { kind: "llm", provider: "fake", model: "synthetic" } },
-      },
-      game: { board: "six_player_charm_cancel", seed: "cancel-charm" },
-      debugSummary: { agent: { enabled: false } },
-    });
+    const config = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: {
+          default: "fake",
+          items: { fake: { type: "openai", apiKey: "synthetic-unused" } },
+        },
+        agents: {
+          default: "fake",
+          items: { fake: { kind: "llm", provider: "fake", model: "synthetic" } },
+        },
+        game: { board: "six_player_charm_cancel", seed: "cancel-charm" },
+        debugSummary: { agent: { enabled: false } },
+      }),
+    );
     const board = parseBoardDefinition(
       boardDefinitionFromConfig("six_player_charm_cancel", {
         ...sixPlayerMvpConfig,

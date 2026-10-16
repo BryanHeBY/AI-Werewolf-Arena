@@ -13,7 +13,6 @@ import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup"
 import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
 import { migrateBoards, migrateBoardSource } from "../../../../src/app/cli/migrate-configs";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-
 async function definition() {
   return JSON.parse(
     await readFile(
@@ -25,7 +24,6 @@ async function definition() {
     ),
   );
 }
-
 test("canonical boards reject nested misspellings, unknown roles and incomplete setup", async () => {
   const raw = await definition();
   raw.mechanisms.sheriff.voteWeigth = 2;
@@ -42,7 +40,6 @@ test("canonical boards reject nested misspellings, unknown roles and incomplete 
   raw.board.roleSetups[0].count = 3;
   expect(() => parseBoardDefinition(raw)).toThrow("board_config_role_count_mismatch");
 });
-
 test("parameters require the corresponding role and implemented semantics", async () => {
   const raw = await definition();
   raw.roles.guard = {};
@@ -59,7 +56,6 @@ test("parameters require the corresponding role and implemented semantics", asyn
     ActionWindow.OnDaybreak,
   ]);
 });
-
 test("boards require opposing camps before a game can start", async () => {
   const raw = await definition();
   raw.board.roleSetups = raw.board.roleSetups.filter(
@@ -70,7 +66,6 @@ test("boards require opposing camps before a game can start", async () => {
   raw.board.roleSetups = [{ role: "wolf", count: 8 }];
   expect(() => parseBoardDefinition(raw)).toThrow("board_config_requires_good_and_wolf");
 });
-
 test("legacy collections validate all fields and select a source independently of the new id", async () => {
   expect(() =>
     convertLegacyBoard(
@@ -99,7 +94,6 @@ test("legacy collections validate all fields and select a source independently o
     migrateBoardSource(root, "custom_twelve", source, "twelve_player_standard", true),
   ).rejects.toThrow("board_config_migration_target_exists");
 });
-
 test("migration reuses identical backups and refuses conflicting backups before any board write", async () => {
   const root = await createTestTempDirectory("awa-backup-retry-");
   await mkdir(path.join(root, "boards"));
@@ -118,7 +112,6 @@ test("migration reuses identical backups and refuses conflicting backups before 
   expect((await loadBoardDefinition(root, "six_player_mvp")).definition.version).toBe(2);
   expect((await loadBoardDefinition(root, "twelve_player_standard")).definition.version).toBe(2);
 });
-
 test("custom board ids load from one canonical file with matching metadata", async () => {
   const root = await createTestTempDirectory("awa-custom-board-");
   await mkdir(path.join(root, "boards"));
@@ -137,7 +130,6 @@ test("custom board ids load from one canonical file with matching metadata", asy
     "board_config_id_mismatch",
   );
 });
-
 test("legacy conversion preserves effective hooks and backup without touching runtime files", async () => {
   const root = await createTestTempDirectory("awa-board-migration-");
   await mkdir(path.join(root, "boards"));
@@ -171,7 +163,6 @@ test("legacy conversion preserves effective hooks and backup without touching ru
     "PRIVATE_PROVIDER_CONTENT",
   );
 });
-
 test("legacy files are refused by normal loading instead of silently falling back", async () => {
   const root = await createTestTempDirectory("awa-legacy-board-");
   await mkdir(path.join(root, "boards"));
@@ -184,26 +175,30 @@ test("legacy files are refused by normal loading instead of silently falling bac
   );
   await expect(loadBoardDefinition(root, "missing")).rejects.toThrow("board_config_file_missing");
 });
-
 test("game bindings and CLI number overrides are validated after board resolution", async () => {
   const input = {
-    providers: {
-      default: "local",
+    backends: {
+      schemaVersion: 2,
       items: {
         local: {
-          type: "openai",
-          apiKey: "PRIVATE_TEST_KEY",
-          baseURL: "https://private:password@example.test?key=SECRET_QUERY",
+          kind: "llm",
+          config: {
+            type: "openai",
+            apiKey: "PRIVATE_TEST_KEY",
+            baseURL: "https://private:password@example.test?key=SECRET_QUERY",
+          },
         },
       },
     },
     agents: {
+      schemaVersion: 2,
       default: "test",
       items: {
         test: {
-          kind: "llm",
-          provider: "local",
-          model: "test",
+          backend: "local",
+          options: {
+            model: "test",
+          },
           personalityPrompt: "PRIVATE_PROMPT",
         },
       },
@@ -234,7 +229,6 @@ test("game bindings and CLI number overrides are validated after board resolutio
     expect(report).not.toContain(secret);
   expect(report).toContain('"explicit"');
 });
-
 test("the public twelve-player window example loads through normal v2 setup with all four hooks", async () => {
   const root = path.resolve(process.cwd(), "../configs.example");
   const resolved = await loadBoardDefinition(root, "twelve_player_windows");
@@ -255,15 +249,30 @@ test("the public twelve-player window example loads through normal v2 setup with
     await readFile(path.join(root, "games/twelve_player_windows.json"), "utf8"),
   );
   const runtime = parseRuntimeConfig({
-    providers: {
-      default: "synthetic",
+    backends: {
+      schemaVersion: 2,
       items: {
-        synthetic: { type: "openai", apiKey: "synthetic-only", baseURL: "http://127.0.0.1:1/v1" },
+        synthetic: {
+          kind: "llm",
+          config: {
+            type: "openai",
+            apiKey: "synthetic-only",
+            baseURL: "http://127.0.0.1:1/v1",
+          },
+        },
       },
     },
     agents: {
+      schemaVersion: 2,
       default: "default",
-      items: { default: { kind: "llm", provider: "synthetic", model: "synthetic" } },
+      items: {
+        default: {
+          backend: "synthetic",
+          options: {
+            model: "synthetic",
+          },
+        },
+      },
     },
     game,
   });

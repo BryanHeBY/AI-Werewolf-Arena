@@ -33,22 +33,7 @@ test("每个公开board都有可解析game，全部game经两语正式装配且�
     for (const locale of ["zh-CN", "en"] as const) {
       const runtime = parseRuntimeConfig({
           environment: {},
-          providers: {
-            default: "openrouter",
-            items: {
-              openrouter: {
-                type: "openai",
-                apiKey: "synthetic-public-entry-no-network",
-                baseURL: "https://synthetic.invalid/v1",
-              },
-              acp_local: {
-                type: "acp",
-                transport: "stdio",
-                command: process.execPath,
-                args: ["not-executed"],
-              },
-            },
-          },
+          backends: read("runtime/backends.json"),
           agents,
           game: { ...game, locale, displayLocale: locale },
           debugSummary: { agent: { enabled: false } },

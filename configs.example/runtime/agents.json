@@ -1,18 +1,66 @@
 {
+  "schemaVersion": 2,
   "default": "deepseek_v4_flash",
   "items": {
     "deepseek_v4_flash": {
-      "kind": "llm",
-      "provider": "openrouter",
-      "model": "deepseek/deepseek-v4-flash",
-      "temperature": 0.2,
-      "maxTokens": 512
+      "backend": "openrouter",
+      "options": {
+        "model": "deepseek/deepseek-v4-flash",
+        "temperature": 0.2,
+        "maxTokens": 512
+      }
     },
     "acp_default": {
-      "kind": "acp",
-      "provider": "acp_local",
-      "sessionReuse": "per_player",
-      "actionTransport": "mcp"
+      "backend": "acp_local",
+      "options": {
+        "sessionReuse": "per_player",
+        "actionTransport": "mcp"
+      }
+    },
+    "pi_default": {
+      "backend": "pi_native",
+      "options": {
+        "defaultProvider": "openai",
+        "defaultModel": "gpt-6-luna",
+        "defaultThinkingLevel": "medium",
+        "cacheWarming": "off"
+      }
+    },
+    "pi_openai": {
+      "backend": "pi_native",
+      "options": {
+        "defaultProvider": "openai",
+        "defaultModel": "gpt-6-luna",
+        "defaultThinkingLevel": "medium",
+        "cacheWarming": "off"
+      }
+    },
+    "pi_anthropic": {
+      "backend": "pi_native",
+      "options": {
+        "defaultProvider": "anthropic",
+        "defaultModel": "claude-sonnet-5-5",
+        "defaultThinkingLevel": "medium",
+        "cacheWarming": "off"
+      }
+    },
+    "pi_glm": {
+      "backend": "pi_native",
+      "options": {
+        "defaultProvider": "zai-coding-cn",
+        "defaultModel": "glm-5.3-flash",
+        "defaultThinkingLevel": "medium",
+        "cacheWarming": "off"
+      }
+    },
+    "pi_kimi": {
+      "backend": "pi_native",
+      "options": {
+        "defaultProvider": "kimi-coding",
+        "defaultModel": "k3",
+        "defaultThinkingLevel": "medium",
+        "cacheWarming": "off"
+      }
     }
   }
 }

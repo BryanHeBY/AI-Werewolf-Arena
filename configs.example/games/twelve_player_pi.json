@@ -1,0 +1,53 @@
+{
+  "board": "twelve_player_standard",
+  "agent": "pi_default",
+  "players": {
+    "1": {
+      "agent": "pi_openai"
+    },
+    "2": {
+      "agent": "pi_anthropic"
+    },
+    "3": {
+      "agent": "pi_glm"
+    },
+    "4": {
+      "agent": "pi_kimi"
+    },
+    "5": {
+      "agent": "pi_openai"
+    },
+    "6": {
+      "agent": "pi_anthropic"
+    },
+    "7": {
+      "agent": "pi_glm"
+    },
+    "8": {
+      "agent": "pi_kimi"
+    },
+    "9": {
+      "agent": "pi_openai"
+    },
+    "10": {
+      "agent": "pi_anthropic"
+    },
+    "11": {
+      "agent": "pi_glm"
+    },
+    "12": {
+      "agent": "pi_kimi"
+    }
+  },
+  "maxDays": 30,
+  "maxRuntimeMs": 7200000,
+  "llmTimeoutMs": 90000,
+  "trace": false,
+  "printAllEvents": false,
+  "printChat": false,
+  "streamEvents": true,
+  "color": true,
+  "printLlmIo": false,
+  "printThinking": false,
+  "printPrivateEvents": false
+}

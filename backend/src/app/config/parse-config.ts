@@ -1,9 +1,10 @@
 /**
- * 负责 unknown 配置的字段校验、默认归一和环境值解析。输入为原配置及环境表，输出 providers／agents／game／audit 配置或原字段错误。
+ * 负责 V2 backends／agents 配置的字段校验、默认归一和环境值解析。输入为原配置及环境表，输出内部连接表／Agent／game／audit 配置或字段错误。
  * 本模块不读配置文件、不启动 Agent 或缓存结果；环境表可显式传入，省略时在解析调用中读取 process.env，执行资源由运行装配持有。
  */
 import type {
   AcpAgentEntryConfig,
+  PiSettings,
   AgentEntryConfig,
   AgentsConfig,
   DebugSummaryConfig,
@@ -101,12 +102,12 @@ function resolveEnvironmentValue(
   field: string,
   environment: NodeJS.ProcessEnv,
 ): string {
-  // 只解析整个值为 ${NAME} 的占位符；不插值字符串片段，缺失变量的错误只包含字段和变量名。
+  // 只解析整个值为 ${NAME} 的占位符；不插值字符串片段，缺失变量的错误只包含字段路径，不暴露变量名或值。
   const match = /^\$\{([A-Z][A-Z0-9_]*)\}$/.exec(value.trim());
   if (!match) return value;
   const resolved = environment[match[1]]?.trim();
   if (!resolved) {
-    throw new Error(`runtime_config_missing_environment_value: ${field} -> ${match[1]}`);
+    throw new Error(`runtime_config_missing_environment_value: ${field}`);
   }
   return resolved;
 }
@@ -147,231 +148,241 @@ function readSessionConfigOptions(value: unknown, field: string): Record<string,
   );
 }
 
-function normalizeProviderConfig(
+/** Pi 原生文档原样保留 JSON 结构，只递归解析完整环境占位；原生语义由 Pi adapter 校验。 */
+function readNativeObject(
+  value: unknown,
+  field: string,
+  environment: NodeJS.ProcessEnv,
+): Record<string, unknown> {
+  if (!isRecord(value)) throw new Error(`runtime_config_native_object_invalid: ${field}`);
+  function copy(raw: unknown, location: string): unknown {
+    if (typeof raw === "string") return resolveEnvironmentValue(raw, location, environment);
+    if (
+      raw === null ||
+      typeof raw === "boolean" ||
+      (typeof raw === "number" && Number.isFinite(raw))
+    )
+      return raw;
+    if (Array.isArray(raw)) return raw.map((item, index) => copy(item, `${location}.${index}`));
+    if (isRecord(raw))
+      return Object.fromEntries(
+        Object.entries(raw).map(([key, item]) => [key, copy(item, `${location}.${key}`)]),
+      );
+    throw new Error(`runtime_config_native_json_invalid: ${location}`);
+  }
+  return copy(value, field) as Record<string, unknown>;
+}
+
+function normalizeBackend(
   name: string,
   raw: unknown,
   environment: NodeJS.ProcessEnv,
 ): ProviderConfig {
-  if (!isRecord(raw)) {
-    throw new Error(`runtime_config_provider_invalid: ${name}`);
+  const field = `backends.items.${name}`;
+  if (!isRecord(raw)) throw new Error(`runtime_config_backend_invalid: ${field}`);
+  assertKnownKeys(raw, ["kind", "config", "limits"], field);
+  const kind = readRequiredString(raw.kind, `${field}.kind`);
+  if (!isRecord(raw.config))
+    throw new Error(`runtime_config_backend_config_invalid: ${field}.config`);
+  if (raw.limits !== undefined && !isRecord(raw.limits))
+    throw new Error(`runtime_config_backend_limits_invalid: ${field}.limits`);
+  if (isRecord(raw.limits))
+    assertKnownKeys(raw.limits, ["maxConcurrentRequests"], `${field}.limits`);
+  const maxConcurrentRequests = readOptionalPositiveInteger(
+    isRecord(raw.limits) ? raw.limits.maxConcurrentRequests : undefined,
+    `${field}.limits.maxConcurrentRequests`,
+  );
+  const config = raw.config,
+    configField = `${field}.config`;
+  if (kind === "pi") {
+    assertKnownKeys(config, ["models", "auth"], configField);
+    return {
+      type: "pi",
+      models: readNativeObject(config.models, `${configField}.models`, environment),
+      auth: readNativeObject(config.auth, `${configField}.auth`, environment),
+      maxConcurrentRequests,
+    };
   }
-  const type = readRequiredString(raw.type, `providers.items.${name}.type`);
-  // ACP 配置描述进程传输，LLM 配置描述模型网关；各分支独立拒绝不属于自己的字段。
-  if (type === "acp") {
+  if (kind === "acp") {
     assertKnownKeys(
-      raw,
-      [
-        "type",
-        "transport",
-        "command",
-        "args",
-        "env",
-        "cwd",
-        "initializeTimeoutMs",
-        "sessionConfigOptions",
-        "maxConcurrentRequests",
-      ],
-      `providers.items.${name}`,
+      config,
+      ["transport", "command", "args", "env", "cwd", "initializeTimeoutMs"],
+      configField,
     );
     const transport =
-      raw.transport === undefined
+      config.transport === undefined
         ? "stdio"
-        : readRequiredString(raw.transport, `providers.items.${name}.transport`);
-    if (transport !== "stdio") {
-      throw new Error(`runtime_config_acp_transport_unsupported: ${name}`);
-    }
+        : readRequiredString(config.transport, `${configField}.transport`);
+    if (transport !== "stdio")
+      throw new Error(`runtime_config_acp_transport_unsupported: ${configField}.transport`);
     return {
       type: "acp",
       transport,
-      command: readRequiredString(raw.command, `providers.items.${name}.command`),
-      args: readStringArray(raw.args, `providers.items.${name}.args`),
-      env: readEnvironment(raw.env, `providers.items.${name}.env`, environment),
-      cwd: readOptionalString(raw.cwd, `providers.items.${name}.cwd`),
+      command: readRequiredString(config.command, `${configField}.command`),
+      args: readStringArray(config.args, `${configField}.args`),
+      env: readEnvironment(config.env, `${configField}.env`, environment),
+      cwd: readOptionalString(config.cwd, `${configField}.cwd`),
       initializeTimeoutMs: readOptionalPositiveInteger(
-        raw.initializeTimeoutMs,
-        `providers.items.${name}.initializeTimeoutMs`,
+        config.initializeTimeoutMs,
+        `${configField}.initializeTimeoutMs`,
       ),
-      maxConcurrentRequests: readOptionalPositiveInteger(
-        raw.maxConcurrentRequests,
-        `providers.items.${name}.maxConcurrentRequests`,
-      ),
-      sessionConfigOptions: readSessionConfigOptions(
-        raw.sessionConfigOptions,
-        `providers.items.${name}.sessionConfigOptions`,
-      ),
+      maxConcurrentRequests,
+      sessionConfigOptions: {},
     };
   }
-  if (type !== "openai" && type !== "anthropic") {
-    throw new Error(`runtime_config_provider_type_unsupported: ${name}`);
-  }
-  assertKnownKeys(
-    raw,
-    ["type", "apiKey", "baseURL", "userAgent", "maxConcurrentRequests"],
-    `providers.items.${name}`,
-  );
+  if (kind !== "llm") throw new Error(`runtime_config_backend_kind_unsupported: ${field}.kind`);
+  assertKnownKeys(config, ["type", "apiKey", "baseURL", "userAgent"], configField);
+  const type = readRequiredString(config.type, `${configField}.type`);
+  if (type !== "openai" && type !== "anthropic")
+    throw new Error(`runtime_config_provider_type_unsupported: ${configField}.type`);
   return {
     type,
     apiKey: resolveEnvironmentValue(
-      readRequiredString(raw.apiKey, `providers.items.${name}.apiKey`),
-      `providers.items.${name}.apiKey`,
+      readRequiredString(config.apiKey, `${configField}.apiKey`),
+      `${configField}.apiKey`,
       environment,
     ),
-    baseURL: readOptionalString(raw.baseURL, `providers.items.${name}.baseURL`),
-    userAgent: readOptionalString(raw.userAgent, `providers.items.${name}.userAgent`),
-    maxConcurrentRequests: readOptionalPositiveInteger(
-      raw.maxConcurrentRequests,
-      `providers.items.${name}.maxConcurrentRequests`,
-    ),
+    baseURL:
+      config.baseURL === undefined
+        ? undefined
+        : resolveEnvironmentValue(
+            readRequiredString(config.baseURL, `${configField}.baseURL`),
+            `${configField}.baseURL`,
+            environment,
+          ),
+    userAgent: readOptionalString(config.userAgent, `${configField}.userAgent`),
+    maxConcurrentRequests,
   };
 }
 
-function normalizeProviders(raw: unknown, environment: NodeJS.ProcessEnv): ProvidersConfig {
-  if (!isRecord(raw)) throw new Error("runtime_config_invalid_providers");
-  assertKnownKeys(raw, ["default", "items"], "providers");
-  if (!isRecord(raw.items)) throw new Error("runtime_config_invalid_providers_items");
+function normalizeBackends(raw: unknown, environment: NodeJS.ProcessEnv): ProvidersConfig {
+  if (!isRecord(raw)) throw new Error("runtime_config_invalid_backends");
+  assertKnownKeys(raw, ["schemaVersion", "items"], "backends");
+  if (raw.schemaVersion !== 2)
+    throw new Error("runtime_config_schema_version_invalid: backends.schemaVersion");
+  if (!isRecord(raw.items)) throw new Error("runtime_config_invalid_backends_items");
   const items = Object.fromEntries(
-    Object.entries(raw.items).map(([name, provider]) => [
-      readRequiredString(name, "providers.items.key"),
-      normalizeProviderConfig(name, provider, environment),
+    Object.entries(raw.items).map(([name, value]) => [
+      readRequiredString(name, "backends.items.key"),
+      normalizeBackend(name, value, environment),
     ]),
-  ) as Record<string, ProviderConfig>;
-  if (Object.keys(items).length === 0) throw new Error("runtime_config_empty_providers_items");
-  const defaultName = readRequiredString(raw.default, "providers.default");
-  if (!items[defaultName])
-    throw new Error(`runtime_config_provider_default_not_found: ${defaultName}`);
-  return { default: defaultName, items };
+  );
+  const names = Object.keys(items);
+  if (!names.length) throw new Error("runtime_config_empty_backends_items");
+  // 公共 V2 没有 backend 默认值；内部旧字段仅用于装配完整性检查，Agent 一律显式引用。
+  return { default: names[0], items };
 }
 
-function normalizeAgentProfile(raw: Record<string, unknown>, name: string): LlmAgentEntryConfig {
+function normalizeAgentOptions(
+  options: Record<string, unknown>,
+  name: string,
+  backend: string,
+): LlmAgentEntryConfig {
+  const field = `agents.items.${name}.options`;
   assertKnownKeys(
-    raw,
-    [
-      "kind",
-      "provider",
-      "model",
-      "temperature",
-      "maxTokens",
-      "reasoningEffort",
-      "thinkingEnabled",
-      "personalityPrompt",
-    ],
-    `agents.items.${name}`,
+    options,
+    ["model", "temperature", "maxTokens", "reasoningEffort", "thinkingEnabled"],
+    field,
   );
-  const reasoningEffort =
-    raw.reasoningEffort === undefined
-      ? undefined
-      : readRequiredString(raw.reasoningEffort, `agents.items.${name}.reasoningEffort`);
+  const reasoningEffort = readOptionalString(options.reasoningEffort, `${field}.reasoningEffort`);
   if (
     reasoningEffort !== undefined &&
     !["none", "minimal", "low", "medium", "high", "xhigh"].includes(reasoningEffort)
-  ) {
-    throw new Error(`runtime_config_reasoning_effort_invalid: ${name}`);
-  }
+  )
+    throw new Error(`runtime_config_reasoning_effort_invalid: ${field}.reasoningEffort`);
   return {
     kind: "llm",
-    provider: readRequiredString(raw.provider, `agents.items.${name}.provider`),
-    model: readRequiredString(raw.model, `agents.items.${name}.model`),
-    temperature: readOptionalNumber(raw.temperature, `agents.items.${name}.temperature`),
-    maxTokens: readOptionalPositiveInteger(raw.maxTokens, `agents.items.${name}.maxTokens`),
+    provider: backend,
+    model: readRequiredString(options.model, `${field}.model`),
+    temperature: readOptionalNumber(options.temperature, `${field}.temperature`),
+    maxTokens: readOptionalPositiveInteger(options.maxTokens, `${field}.maxTokens`),
     reasoningEffort: reasoningEffort as ReasoningEffort | undefined,
-    thinkingEnabled: readOptionalBoolean(
-      raw.thinkingEnabled,
-      `agents.items.${name}.thinkingEnabled`,
-    ),
-    personalityPrompt: readOptionalString(
-      raw.personalityPrompt,
-      `agents.items.${name}.personalityPrompt`,
-    ),
+    thinkingEnabled: readOptionalBoolean(options.thinkingEnabled, `${field}.thinkingEnabled`),
   };
 }
 
-function normalizeAcpAgent(raw: Record<string, unknown>, name: string): AcpAgentEntryConfig {
+function normalizeAcpOptions(
+  options: Record<string, unknown>,
+  name: string,
+  backend: string,
+): AcpAgentEntryConfig {
+  const field = `agents.items.${name}.options`;
   assertKnownKeys(
-    raw,
-    ["kind", "provider", "spawnArgs", "sessionReuse", "actionTransport", "personalityPrompt"],
-    `agents.items.${name}`,
+    options,
+    ["spawnArgs", "sessionReuse", "actionTransport", "sessionConfigOptions"],
+    field,
   );
-  const sessionReuse =
-    raw.sessionReuse === undefined
-      ? undefined
-      : readRequiredString(raw.sessionReuse, `agents.items.${name}.sessionReuse`);
-  if (sessionReuse !== undefined && sessionReuse !== "per_player") {
-    throw new Error(`runtime_config_acp_session_reuse_invalid: ${name}`);
-  }
-  const actionTransport =
-    raw.actionTransport === undefined
-      ? undefined
-      : readRequiredString(raw.actionTransport, `agents.items.${name}.actionTransport`);
-  if (actionTransport !== undefined && actionTransport !== "mcp") {
-    throw new Error(`runtime_config_acp_action_transport_invalid: ${name}`);
-  }
+  const sessionReuse = readOptionalString(options.sessionReuse, `${field}.sessionReuse`);
+  if (sessionReuse !== undefined && sessionReuse !== "per_player")
+    throw new Error(`runtime_config_acp_session_reuse_invalid: ${field}.sessionReuse`);
+  const actionTransport = readOptionalString(options.actionTransport, `${field}.actionTransport`);
+  if (actionTransport !== undefined && actionTransport !== "mcp")
+    throw new Error(`runtime_config_acp_action_transport_invalid: ${field}.actionTransport`);
   return {
     kind: "acp",
-    provider: readRequiredString(raw.provider, `agents.items.${name}.provider`),
+    provider: backend,
     spawnArgs:
-      raw.spawnArgs === undefined
+      options.spawnArgs === undefined
         ? undefined
-        : readStringArray(raw.spawnArgs, `agents.items.${name}.spawnArgs`),
+        : readStringArray(options.spawnArgs, `${field}.spawnArgs`),
     sessionReuse: sessionReuse as AcpAgentEntryConfig["sessionReuse"],
     actionTransport: actionTransport as AcpAgentEntryConfig["actionTransport"],
-    personalityPrompt: readOptionalString(
-      raw.personalityPrompt,
-      `agents.items.${name}.personalityPrompt`,
+    sessionConfigOptions: readSessionConfigOptions(
+      options.sessionConfigOptions,
+      `${field}.sessionConfigOptions`,
     ),
   };
 }
 
-function normalizeAgents(raw: unknown, providers: ProvidersConfig): AgentsConfig {
+function normalizeAgents(
+  raw: unknown,
+  providers: ProvidersConfig,
+  environment: NodeJS.ProcessEnv,
+): AgentsConfig {
   if (!isRecord(raw)) throw new Error("runtime_config_invalid_agents");
-  assertKnownKeys(raw, ["default", "items"], "agents");
+  assertKnownKeys(raw, ["schemaVersion", "default", "items"], "agents");
+  if (raw.schemaVersion !== 2)
+    throw new Error("runtime_config_schema_version_invalid: agents.schemaVersion");
   if (!isRecord(raw.items)) throw new Error("runtime_config_invalid_agents_items");
   const items = Object.fromEntries(
     Object.entries(raw.items).map(([name, value]) => {
-      if (!isRecord(value)) throw new Error(`runtime_config_agent_invalid: ${name}`);
-      const kind = readRequiredString(value.kind, `agents.items.${name}.kind`);
-      const agent =
-        kind === "llm"
-          ? normalizeAgentProfile(value, name)
-          : kind === "acp"
-            ? normalizeAcpAgent(value, name)
-            : (() => {
-                throw new Error(`runtime_config_agent_kind_unsupported: ${name}`);
-              })();
-      const provider = providers.items[agent.provider];
-      if (!provider) {
-        throw new Error(
-          `runtime_config_agent_provider_not_found: agent=${name} provider=${agent.provider}`,
-        );
+      const field = `agents.items.${name}`;
+      readRequiredString(name, "agents.items.key");
+      if (!isRecord(value)) throw new Error(`runtime_config_agent_invalid: ${field}`);
+      assertKnownKeys(value, ["backend", "options", "personalityPrompt"], field);
+      const backend = readRequiredString(value.backend, `${field}.backend`);
+      if (!Object.hasOwn(providers.items, backend))
+        throw new Error(`runtime_config_agent_backend_not_found: ${field}.backend`);
+      const provider = providers.items[backend];
+      const options = value.options === undefined ? {} : value.options;
+      if (!isRecord(options))
+        throw new Error(`runtime_config_agent_options_invalid: ${field}.options`);
+      const agent: AgentEntryConfig =
+        provider.type === "pi"
+          ? {
+              kind: "pi",
+              provider: backend,
+              piSettings: readNativeObject(options, `${field}.options`, environment) as PiSettings,
+            }
+          : provider.type === "acp"
+            ? normalizeAcpOptions(options, name, backend)
+            : normalizeAgentOptions(options, name, backend);
+      agent.personalityPrompt = readOptionalString(
+        value.personalityPrompt,
+        `${field}.personalityPrompt`,
+      );
+      if (agent.kind === "llm" && provider.type === "anthropic") {
+        if (agent.thinkingEnabled && agent.temperature !== undefined)
+          throw new Error(`runtime_config_anthropic_thinking_temperature_unsupported: ${name}`);
+        if (agent.reasoningEffort && !["low", "medium", "high"].includes(agent.reasoningEffort))
+          throw new Error(`runtime_config_anthropic_reasoning_effort_invalid: ${name}`);
       }
-      // 先验证 Agent 与传输匹配，再验证本项目支持的供应商参数组合；此处不探测远端模型能力。
-      if (agent.kind === "acp" && provider.type !== "acp") {
-        throw new Error(`runtime_config_acp_agent_requires_acp_provider: ${name}`);
-      }
-      if (agent.kind === "llm" && provider.type === "acp") {
-        throw new Error(`runtime_config_llm_agent_requires_llm_provider: ${name}`);
-      }
-      if (
-        agent.kind === "llm" &&
-        provider.type === "anthropic" &&
-        agent.thinkingEnabled &&
-        agent.temperature !== undefined
-      ) {
-        throw new Error(`runtime_config_anthropic_thinking_temperature_unsupported: ${name}`);
-      }
-      if (
-        agent.kind === "llm" &&
-        provider.type === "anthropic" &&
-        agent.reasoningEffort &&
-        !["low", "medium", "high"].includes(agent.reasoningEffort)
-      ) {
-        throw new Error(`runtime_config_anthropic_reasoning_effort_invalid: ${name}`);
-      }
-      return [readRequiredString(name, "agents.items.key"), agent];
+      return [name, agent];
     }),
-  ) as Record<string, AgentEntryConfig>;
-  if (Object.keys(items).length === 0) throw new Error("runtime_config_empty_agents_items");
+  );
+  if (!Object.keys(items).length) throw new Error("runtime_config_empty_agents_items");
   const defaultName = readRequiredString(raw.default, "agents.default");
-  if (!items[defaultName])
+  if (!Object.hasOwn(items, defaultName))
     throw new Error(`runtime_config_agent_default_not_found: ${defaultName}`);
   return { default: defaultName, items };
 }
@@ -383,13 +394,14 @@ function normalizeGameAgentSelection(
 ): GameAgentSelection {
   if (typeof value === "string") {
     const agent = readRequiredString(value, field);
-    if (!agents.items[agent]) throw new Error(`runtime_config_agent_not_found: ${agent}`);
+    if (!Object.hasOwn(agents.items, agent))
+      throw new Error(`runtime_config_agent_not_found: ${agent}`);
     return agent;
   }
   if (!isRecord(value)) throw new Error(`runtime_config_agent_selection_invalid: ${field}`);
   assertKnownKeys(value, ["agent", "spawnArgs", "personalityPrompt"], field);
   const agent = readRequiredString(value.agent, `${field}.agent`);
-  const profile = agents.items[agent];
+  const profile = Object.hasOwn(agents.items, agent) ? agents.items[agent] : undefined;
   if (!profile) throw new Error(`runtime_config_agent_not_found: ${agent}`);
   const spawnArgs =
     value.spawnArgs === undefined
@@ -514,7 +526,7 @@ function normalizePlayers(
         name = entry.name; // 保留用户名字原文，不翻译或静默裁掉空白。
       }
       const agent = readOptionalString(entry.agent, `${field}.agent`);
-      if (agent && !agents.items[agent])
+      if (agent && !Object.hasOwn(agents.items, agent))
         throw new Error(`runtime_config_agent_not_found: ${agent}`);
       const spawnArgs =
         entry.spawnArgs === undefined
@@ -575,7 +587,7 @@ function normalizeDebugSummaryConfig(raw: unknown, agents: AgentsConfig): DebugS
     "debugSummary.agent",
   );
   const agentName = readOptionalString(raw.agent.agentName, "debugSummary.agent.agentName");
-  if (agentName && !agents.items[agentName]) {
+  if (agentName && !Object.hasOwn(agents.items, agentName)) {
     throw new Error(`runtime_config_agent_not_found: ${agentName}`);
   }
   return {
@@ -607,16 +619,16 @@ function normalizeDebugSummaryConfig(raw: unknown, agents: AgentsConfig): DebugS
 }
 
 export function parseRuntimeConfig(input: {
-  providers: unknown;
+  backends: unknown;
   agents: unknown;
   game: unknown;
   debugSummary?: unknown;
   environment?: NodeJS.ProcessEnv;
 }): RuntimeConfig {
-  // 按 provider→Agent→game→audit 的依赖顺序解析，引用错误沿原字段路径抛出；不自行执行 .env 加载。
+  // 按 backend→Agent→game→audit 的依赖顺序解析，引用错误沿原字段路径抛出；不自行执行 .env 加载。
   const environment = input.environment ?? process.env;
-  const providers = normalizeProviders(input.providers, environment);
-  const agents = normalizeAgents(input.agents, providers);
+  const providers = normalizeBackends(input.backends, environment);
+  const agents = normalizeAgents(input.agents, providers, environment);
   const game = normalizeGameConfig(input.game, agents);
   return {
     providers,

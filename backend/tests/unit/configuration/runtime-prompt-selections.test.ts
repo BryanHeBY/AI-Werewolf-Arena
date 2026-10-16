@@ -11,23 +11,26 @@ import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
 for (const kind of ["llm", "acp"] as const) {
   test(`${kind} preserves agent prompts and supports role/seat prompt overrides`, () => {
     const runtime = parseRuntimeConfig({
-      providers: {
-        default: "test_provider",
+      backends: {
+        schemaVersion: 2,
         items: {
-          test_provider:
-            kind === "llm"
-              ? { type: "openai", apiKey: "test-key" }
-              : { type: "acp", transport: "stdio", command: "test-acp" },
+          test_provider: {
+            kind,
+            config:
+              kind === "llm"
+                ? { type: "openai", apiKey: "test-key" }
+                : { transport: "stdio", command: "test-acp" },
+          },
         },
       },
       agents: {
+        schemaVersion: 2,
         default: "test_agent",
         items: {
           test_agent: {
-            kind,
-            provider: "test_provider",
+            backend: "test_provider",
             personalityPrompt: "默认风格",
-            ...(kind === "llm" ? { model: "test-model" } : { spawnArgs: ["--base"] }),
+            options: kind === "llm" ? { model: "test-model" } : { spawnArgs: ["--base"] },
           },
         },
       },
@@ -58,11 +61,11 @@ for (const kind of ["llm", "acp"] as const) {
 
 test("validates ACP prompt strings at agent and selection boundaries", () => {
   const input = {
-    providers: {
-      default: "acp",
-      items: { acp: { type: "acp", transport: "stdio", command: "test-acp" } },
+    backends: {
+      schemaVersion: 2,
+      items: { acp: { kind: "acp", config: { transport: "stdio", command: "test-acp" } } },
     },
-    agents: { default: "acp", items: { acp: { kind: "acp", provider: "acp" } } },
+    agents: { schemaVersion: 2, default: "acp", items: { acp: { backend: "acp", options: {} } } },
     game: { agent: "acp" },
   };
   expect(() =>

@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证共用 LLM／ACP 提示路径的玩家配置继承与覆盖。输入为 inert provider、明确席位／角色资料；捕获昵称和指令采用原字面预期，不调用模型。
  */
+import { runtimeConfigV2 } from "../../support/builders/runtime-config-v2";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -24,43 +25,45 @@ import type { AcpSessionFactory } from "../../../src/adapters/acp/session";
 
 for (const kind of ["llm", "acp"] as const) {
   test(`${kind}: seat and role configuration reaches actual identity and personality prompts`, async () => {
-    const runtime = parseRuntimeConfig({
-      providers: {
-        default: "test",
-        items: {
-          test:
-            kind === "llm"
-              ? { type: "openai", apiKey: "unused" }
-              : { type: "acp", command: "unused" },
-        },
-      },
-      agents: {
-        default: "main",
-        items: {
-          main: {
-            kind,
-            provider: "test",
-            ...(kind === "llm" ? { model: "unused" } : {}),
-            personalityPrompt: "INHERITED_STYLE",
-          },
-          other: {
-            kind,
-            provider: "test",
-            ...(kind === "llm" ? { model: "other" } : {}),
-            personalityPrompt: "OTHER_STYLE",
+    const runtime = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: {
+          default: "test",
+          items: {
+            test:
+              kind === "llm"
+                ? { type: "openai", apiKey: "unused" }
+                : { type: "acp", command: "unused" },
           },
         },
-      },
-      game: {
-        players: {
-          "1": { name: "Player One", personalityPrompt: "SEAT_STYLE" },
-          "2": { personalityPrompt: null },
-          "3": { agent: "other" },
-          "4": { name: "Player Four" },
+        agents: {
+          default: "main",
+          items: {
+            main: {
+              kind,
+              provider: "test",
+              ...(kind === "llm" ? { model: "unused" } : {}),
+              personalityPrompt: "INHERITED_STYLE",
+            },
+            other: {
+              kind,
+              provider: "test",
+              ...(kind === "llm" ? { model: "other" } : {}),
+              personalityPrompt: "OTHER_STYLE",
+            },
+          },
         },
-        roleAgents: { wolf: { agent: "main", personalityPrompt: "WOLF_STYLE" } },
-      },
-    });
+        game: {
+          players: {
+            "1": { name: "Player One", personalityPrompt: "SEAT_STYLE" },
+            "2": { personalityPrompt: null },
+            "3": { agent: "other" },
+            "4": { name: "Player Four" },
+          },
+          roleAgents: { wolf: { agent: "main", personalityPrompt: "WOLF_STYLE" } },
+        },
+      }),
+    );
     const setup = resolveGameSetup(runtime);
     const { world } = bootstrapGame(setup.boardConfig, {
       playerNames: Object.fromEntries(

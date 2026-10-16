@@ -3,6 +3,7 @@
  * 输入为原六人／十二人角色计划、传输路由、语言、并发局和自爆窗口矩阵；输出由手写终局／技能、私有 prompt 与逐局精确复现断言核对。
  * 原进程清理、配置和 fixture 不变；新封装经实际 canonical reader 消费，不改预期。
  */
+import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
@@ -263,18 +264,20 @@ async function runFixture(
       definition.mechanisms.selfDestruct.enabledWindows = [window];
       board = parseBoardDefinition(definition);
     }
-    const runtime = parseRuntimeConfig({
-      providers: { default: "actor-1", items: providers },
-      agents: { default: "actor-1", items: agents },
-      game: {
-        board: boardName,
-        locale,
-        displayLocale: locale === "en" ? "zh-CN" : "en",
-        seed: size === 6 ? "foundation-six:116" : "foundation-twelve:124680",
-        players,
-      },
-      debugSummary: { agent: { enabled: false } },
-    });
+    const runtime = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: { default: "actor-1", items: providers },
+        agents: { default: "actor-1", items: agents },
+        game: {
+          board: boardName,
+          locale,
+          displayLocale: locale === "en" ? "zh-CN" : "en",
+          seed: size === 6 ? "foundation-six:116" : "foundation-twelve:124680",
+          players,
+        },
+        debugSummary: { agent: { enabled: false } },
+      }),
+    );
     const setup = resolveGameSetup(
       runtime,
       {

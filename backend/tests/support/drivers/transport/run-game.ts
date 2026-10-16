@@ -3,6 +3,7 @@
  * 输出保留原驱动回调、轨迹、缓存和清理；新封装只在实际磁盘入口解包，预期由既有手写 oracle 持有。
  * 原传输／复盘／脚本行动生命周期不变，不引入计费模型或生产状态写入器。
  */
+import { runtimeConfigV2 } from "../../builders/runtime-config-v2";
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
@@ -321,18 +322,20 @@ export async function runTransportGame(
         agents[id] = { kind: "acp", provider: "acp", spawnArgs: [script] };
       }
     }
-    const runtime = parseRuntimeConfig({
-      providers: { default: "sdk", items: providers },
-      agents: { default: "actor-1", items: agents },
-      game: {
-        board: scenario.board.definition.id,
-        locale,
-        displayLocale: locale === "en" ? "zh-CN" : "en",
-        seed: scenario.seed,
-        players,
-      },
-      debugSummary: { agent: { enabled: false } },
-    });
+    const runtime = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: { default: "sdk", items: providers },
+        agents: { default: "actor-1", items: agents },
+        game: {
+          board: scenario.board.definition.id,
+          locale,
+          displayLocale: locale === "en" ? "zh-CN" : "en",
+          seed: scenario.seed,
+          players,
+        },
+        debugSummary: { agent: { enabled: false } },
+      }),
+    );
     let failureThrown = false;
     const result = await runGame(
       resolveGameSetup(

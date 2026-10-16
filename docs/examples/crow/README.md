@@ -15,7 +15,7 @@ cp -n configs.example/boards/awa_crow_12_*.json configs/boards/
 cp -n configs.example/games/twelve_player_crow_*.json configs/games/
 ```
 
-LLM 示例引用公开 Agent 名 `deepseek_v4_flash`；ACP 示例引用 `acp_default`。它们需在你现有 `runtime/agents.json` 中指向已配置的 Provider；若本地名称不同，只改对应 game 的 `agent` 引用。ACP 适配器和隔离启动器沿用本地已有接入。此处不复制 `runtime/providers.json`、不覆盖密钥、模型或认证，不需要在命令中传 API key。
+LLM 示例引用公开 Agent 名 `deepseek_v4_flash`；ACP 示例引用 `acp_default`。它们需在你现有 `runtime/agents.json` 中指向已配置的 Provider；若本地名称不同，只改对应 game 的 `agent` 引用。ACP 适配器和隔离启动器沿用本地已有接入。此处不复制 `runtime/backends.json`、不覆盖密钥、模型或认证，不需要在命令中传 API key。
 
 默认首轮政策的两语入口：
 

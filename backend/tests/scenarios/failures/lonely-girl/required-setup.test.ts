@@ -1,6 +1,7 @@
 /**
  * 场景测试验证 required-setup 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
+import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { promises as fs } from "node:fs";
@@ -23,18 +24,20 @@ for (const transport of ["sdk", "acp"] as const)
         const scenario = lonelyGirlScenario("wolf_alive", 6, locale),
           root = await createTestTempDirectory("awa-lonely_girl-failure-"),
           output = await createTestTempDirectory("awa-lonely_girl-failure-replay-");
-        const runtime = parseRuntimeConfig({
-          providers: {
-            default: "synthetic",
-            items: { synthetic: { type: "openai", apiKey: "synthetic-only" } },
-          },
-          agents: {
-            default: "synthetic",
-            items: { synthetic: { kind: "llm", provider: "synthetic", model: "synthetic" } },
-          },
-          game: { board: scenario.board.definition.id, seed: scenario.seed, locale },
-          debugSummary: { agent: { enabled: false } },
-        });
+        const runtime = parseRuntimeConfig(
+          runtimeConfigV2({
+            providers: {
+              default: "synthetic",
+              items: { synthetic: { type: "openai", apiKey: "synthetic-only" } },
+            },
+            agents: {
+              default: "synthetic",
+              items: { synthetic: { kind: "llm", provider: "synthetic", model: "synthetic" } },
+            },
+            game: { board: scenario.board.definition.id, seed: scenario.seed, locale },
+            debugSummary: { agent: { enabled: false } },
+          }),
+        );
         const setup = resolveGameSetup(
           runtime,
           {

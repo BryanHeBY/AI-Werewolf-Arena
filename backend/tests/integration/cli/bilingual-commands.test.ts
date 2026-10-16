@@ -6,7 +6,6 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { type Locale } from "@ai-werewolf-arena/game-text";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-
 async function command(file: string, args: string[]) {
   const child = Bun.spawn(
     [
@@ -23,24 +22,39 @@ async function command(file: string, args: string[]) {
   ]);
   return { stdout, stderr, code };
 }
-
 async function configFixture(locale: Locale) {
   const root = await createTestTempDirectory("awa-cli-locale-");
   await fs.mkdir(path.join(root, "runtime"));
   await fs.mkdir(path.join(root, "games"));
   await fs.mkdir(path.join(root, "boards"));
   await fs.writeFile(
-    path.join(root, "runtime/providers.json"),
+    path.join(root, "runtime/backends.json"),
     JSON.stringify({
-      default: "test",
-      items: { test: { type: "openai", apiKey: "credential-canary" } },
+      schemaVersion: 2,
+      items: {
+        test: {
+          kind: "llm",
+          config: {
+            type: "openai",
+            apiKey: "credential-canary",
+          },
+        },
+      },
     }),
   );
   await fs.writeFile(
     path.join(root, "runtime/agents.json"),
     JSON.stringify({
+      schemaVersion: 2,
       default: "test",
-      items: { test: { kind: "llm", provider: "test", model: "synthetic" } },
+      items: {
+        test: {
+          backend: "test",
+          options: {
+            model: "synthetic",
+          },
+        },
+      },
     }),
   );
   await fs.writeFile(
@@ -62,7 +76,6 @@ async function configFixture(locale: Locale) {
   );
   return root;
 }
-
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: actual config CLI displays structured prompt fallback and keeps private values out`, async () => {
     const root = await configFixture(locale);
@@ -96,7 +109,6 @@ for (const locale of ["zh-CN", "en"] as const)
       opposite === "en" ? "Configuration validation completed." : "配置检查完成。",
     );
   });
-
 test("actual command parse/load failures are bilingual safe JSON without uncaught stacks", async () => {
   for (const [file, args, expected] of [
     ["run-game.ts", ["--unknown", "private-token-canary"], "runtime_cli_option_unknown"],

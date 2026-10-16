@@ -98,9 +98,13 @@ export function resolveAgentProfileByName(
   agentName?: string,
 ): ResolvedAgentRuntimeProfile {
   const selected = agentName ?? runtime.agents.default;
-  const entry = runtime.agents.items[selected];
+  const entry = Object.hasOwn(runtime.agents.items, selected)
+    ? runtime.agents.items[selected]
+    : undefined;
   if (!entry) throw new Error(`runtime_config_agent_not_found: ${selected}`);
-  const provider = runtime.providers.items[entry.provider];
+  const provider = Object.hasOwn(runtime.providers.items, entry.provider)
+    ? runtime.providers.items[entry.provider]
+    : undefined;
   if (!provider)
     throw new Error(
       `runtime_config_agent_provider_not_found: agent=${selected} provider=${entry.provider}`,
@@ -109,7 +113,16 @@ export function resolveAgentProfileByName(
     return {
       name: selected,
       providerName: entry.provider,
-      provider,
+      provider:
+        provider.type === "acp"
+          ? {
+              ...provider,
+              sessionConfigOptions: {
+                ...provider.sessionConfigOptions,
+                ...entry.sessionConfigOptions,
+              },
+            }
+          : provider,
       kind: "acp",
       spawnArgs: entry.spawnArgs,
       sessionReuse: entry.sessionReuse,
@@ -117,6 +130,15 @@ export function resolveAgentProfileByName(
       personalityPrompt: entry.personalityPrompt,
     };
   }
+  if (entry.kind === "pi")
+    return {
+      name: selected,
+      providerName: entry.provider,
+      provider,
+      kind: "pi",
+      piSettings: entry.piSettings,
+      personalityPrompt: entry.personalityPrompt,
+    };
   return {
     name: selected,
     providerName: entry.provider,
@@ -162,8 +184,8 @@ export function resolveGameSetup(
   boardOverride: BoardOverride | ResolvedBoardDefinition | null = null,
 ): ResolvedGameSetup {
   if (
-    !runtime.providers.items[runtime.providers.default] ||
-    !runtime.agents.items[runtime.agents.default]
+    !Object.hasOwn(runtime.providers.items, runtime.providers.default) ||
+    !Object.hasOwn(runtime.agents.items, runtime.agents.default)
   ) {
     throw new Error("runtime_config_missing_provider_or_agent_defaults");
   }

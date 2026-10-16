@@ -13,7 +13,6 @@ import {
 import { configDiagnostic } from "../../../src/app/config/error-codes";
 import { checkConfig } from "../../../src/app/cli/check-config";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-
 const cases = [
   ["awa_mist_raven_12_v1", "mist_raven"],
   ["awa_trickster_12_v1", "trickster"],
@@ -28,7 +27,6 @@ const cases = [
   ["awa_netease_demon_hunter_12_side_v1", "demon_hunter"],
   ["awa_melbourne_ghost_bride_12_v1", "ghost_bride"],
 ] as const;
-
 for (const [id, preset] of cases) {
   test(`${preset}: config check and bootstrap reject the same unsupported combination`, async () => {
     const raw: BoardDefinition = JSON.parse(
@@ -50,21 +48,36 @@ for (const [id, preset] of cases) {
     } catch (error) {
       expect(configDiagnostic(error)).toEqual({ code, path: "board" });
     }
-
     const root = await createTestTempDirectory("awa-finite-preset-");
     for (const dir of ["runtime", "games", "boards"]) await mkdir(path.join(root, dir));
     await writeFile(
-      path.join(root, "runtime/providers.json"),
+      path.join(root, "runtime/backends.json"),
       JSON.stringify({
-        default: "fake",
-        items: { fake: { type: "openai", apiKey: "synthetic-unused" } },
+        schemaVersion: 2,
+        items: {
+          fake: {
+            kind: "llm",
+            config: {
+              type: "openai",
+              apiKey: "synthetic-unused",
+            },
+          },
+        },
       }),
     );
     await writeFile(
       path.join(root, "runtime/agents.json"),
       JSON.stringify({
+        schemaVersion: 2,
         default: "fake",
-        items: { fake: { kind: "llm", provider: "fake", model: "unused" } },
+        items: {
+          fake: {
+            backend: "fake",
+            options: {
+              model: "unused",
+            },
+          },
+        },
       }),
     );
     await writeFile(

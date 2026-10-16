@@ -1,6 +1,7 @@
 /**
  * Runner 集成测试以真实 runner、注入 selector／observer 和临时终止档案为输入，验证 runtime owner 排空后仍保留期限选择失败及已关闭 observer 的原错误。明确的排空调度器快照、非法期限下零开窗及已录主错／清理错为预期；不调用计费模型。
  */
+import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
@@ -12,18 +13,22 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 
 async function setup(maxRuntimeMs: number) {
   const root = await createTestTempDirectory("awa-run-dependencies-");
-  const runtime = parseRuntimeConfig({
-    providers: {
-      default: "local",
-      items: { local: { type: "openai", apiKey: "synthetic-only", baseURL: "http://127.0.0.1:1" } },
-    },
-    agents: {
-      default: "local",
-      items: { local: { kind: "llm", provider: "local", model: "unused" } },
-    },
-    game: { agent: "local" },
-    debugSummary: { agent: { enabled: false } },
-  });
+  const runtime = parseRuntimeConfig(
+    runtimeConfigV2({
+      providers: {
+        default: "local",
+        items: {
+          local: { type: "openai", apiKey: "synthetic-only", baseURL: "http://127.0.0.1:1" },
+        },
+      },
+      agents: {
+        default: "local",
+        items: { local: { kind: "llm", provider: "local", model: "unused" } },
+      },
+      game: { agent: "local" },
+      debugSummary: { agent: { enabled: false } },
+    }),
+  );
   return {
     root,
     game: resolveGameSetup(runtime, {

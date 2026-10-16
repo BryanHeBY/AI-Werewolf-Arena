@@ -10,22 +10,33 @@ import { COMPONENT, type IdentityComponent } from "../../../src/domain";
 import { readFile } from "node:fs/promises";
 import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import path from "node:path";
-
 const input = {
-  providers: { default: "test", items: { test: { type: "openai", apiKey: "private-key" } } },
-  agents: {
-    default: "test",
+  backends: {
+    schemaVersion: 2,
     items: {
       test: {
         kind: "llm",
-        provider: "test",
-        model: "test",
+        config: {
+          type: "openai",
+          apiKey: "private-key",
+        },
+      },
+    },
+  },
+  agents: {
+    schemaVersion: 2,
+    default: "test",
+    items: {
+      test: {
+        backend: "test",
+        options: {
+          model: "test",
+        },
         personalityPrompt: "default-private-personality",
       },
     },
   },
 };
-
 test("player names and personalities are independent of model selection", () => {
   const runtime = parseRuntimeConfig({
     ...input,
@@ -58,7 +69,6 @@ test("player names and personalities are independent of model selection", () => 
   expect(output).not.toContain("private English style");
   expect(output).not.toContain("default-private-personality");
 });
-
 test("locale, seed and conflicting legacy player bindings fail explicitly", () => {
   expect(() => parseRuntimeConfig({ ...input, game: { locale: "en-US" } })).toThrow(
     "runtime_config_locale_invalid",
@@ -82,7 +92,6 @@ test("locale, seed and conflicting legacy player bindings fail explicitly", () =
   );
   expect(english.context).toEqual({ locale: "en", displayLocale: "en", seed: "my-seed" });
 });
-
 test("normalized role defaults expose their source without exposing private prompts", async () => {
   const raw = JSON.parse(
     await readFile(

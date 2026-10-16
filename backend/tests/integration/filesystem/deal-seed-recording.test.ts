@@ -3,6 +3,7 @@
  * 输入为实际 runner、注入的 baseline 玩家／根 RNG 与原临时 manifest／replay 存储；输出由字面种子、路径、隐私及初始牌断言核对。
  * 不把这些持久化断言当作独立 RNG 或全部规则证明；来源 fixture 与原预期不变，新封装经 canonical reader 解包。
  */
+import { runtimeConfigV2 } from "../../support/builders/runtime-config-v2";
 import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
@@ -20,18 +21,20 @@ import { createTestTempDirectory } from "../../support/drivers/temp-directories"
 for (const seed of ["recorded-seed", undefined]) {
   test(`runner saves ${seed ? "configured" : "generated"} seed and reproduces the deal without publishing RNG metadata`, async () => {
     const root = await createTestTempDirectory("awa-runner-random-");
-    const runtime = parseRuntimeConfig({
-      providers: {
-        default: "unused",
-        items: { unused: { type: "openai", apiKey: "PRIVATE_AUTH_VALUE" } },
-      },
-      agents: {
-        default: "unused",
-        items: { unused: { kind: "llm", provider: "unused", model: "unused" } },
-      },
-      game: { ...(seed ? { seed } : {}), players: { "1": { name: "Player One" } } },
-      debugSummary: { agent: { enabled: false } },
-    });
+    const runtime = parseRuntimeConfig(
+      runtimeConfigV2({
+        providers: {
+          default: "unused",
+          items: { unused: { type: "openai", apiKey: "PRIVATE_AUTH_VALUE" } },
+        },
+        agents: {
+          default: "unused",
+          items: { unused: { kind: "llm", provider: "unused", model: "unused" } },
+        },
+        game: { ...(seed ? { seed } : {}), players: { "1": { name: "Player One" } } },
+        debugSummary: { agent: { enabled: false } },
+      }),
+    );
     const setup = resolveGameSetup(runtime, {
       recordRootDir: root,
       maxDays: 30,

@@ -6,7 +6,7 @@
 
 ## 当前架构
 
-- `backend/`：Bun + TypeScript 的对局引擎、LLM/ACP 调度、复盘落盘与导出 CLI。
+- `backend/`：Bun + TypeScript 的对局引擎、LLM/Pi/ACP 调度、复盘落盘与导出 CLI。
 - `frontend/`：React + Remotion Player 的离线复盘播放器；当前只读取导出的 `.replay.json` 文件。
 - `packages/replay-contract/`：前端播放器与后端导出器共享的复盘数据类型。
 - `packages/game-contract/`：稳定角色 ID、机器契约和纯数据读取；运行身份与规划资料分开。
@@ -17,11 +17,11 @@
 
 真实 Agent 对局由 backend 的 `run` 系列命令启动，并将事件和最终结果写入 `record/<session>/replay.json`；backend 的 `run:mock` 命令只运行本地基线机器人对局并打印结果。前端直接加载 `replay.json` 进行播放。当前没有在线观战或多租户在线服务；引擎按玩家投影信息，ACP 会话和工具权限独立隔离。
 
-运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`、`boards/<id>.json`，以及可选的 `runtime/debug_summary.json`。板子使用完整 `version: 2` 配置，正常运行不搜索旧路径或回退内置板子。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
+运行配置只接受固定文件结构：`runtime/backends.json`、`runtime/agents.json`、`games/<name>.json`、`boards/<id>.json`，以及可选的 `runtime/debug_summary.json`。板子使用完整 `version: 2` 配置，正常运行不搜索旧路径或回退内置板子。backends 与 agents 使用 `schemaVersion: 2`；Agent 显式引用 `backend`，类别由连接的 `kind: "llm" | "pi" | "acp"` 唯一决定，执行参数放 `options`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
 
 玩家名字和模型选择可分开配置：`players.<seat>.name`、可选 `agent` 与 `personalityPrompt`。人格可用原字符串或中文／英文字典，`null` 清除继承值。配置格式、阶段执行限制与迁移说明见 [配置契约](docs/contracts/configuration.md)。
 
-LLM 和 ACP Agent 均支持 `personalityPrompt`，统一追加到玩家的身份与规则提示中。可以在 `runtime/agents.json` 中设置默认风格，也可在对局的 `roleAgents`、`playerAgents` 对象中覆盖，无需重复定义模型或进程配置。例如：
+LLM、Pi 和 ACP Agent 均支持 `personalityPrompt`，统一追加到玩家的身份与规则提示中。可以在 `runtime/agents.json` 中设置默认风格，也可在对局的 `roleAgents`、`playerAgents` 对象中覆盖，无需重复定义模型或进程配置。例如：
 
 ```json
 {
@@ -44,15 +44,15 @@ LLM 和 ACP Agent 均支持 `personalityPrompt`，统一追加到玩家的身份
 
 选择优先级为序号配置 → 角色配置 → 对局默认 Agent。选中的配置没有填写 `personalityPrompt` 时，继承其引用 Agent 的提示词；填写时整体覆盖，不与角色或其他 Agent 的提示词拼接。身份、规则和工具约束仍由引擎生成，提示词通过共享的 `PlayerPromptPolicy` 注入，不放入 ACP 进程参数。
 
-LLM Agent 的 `reasoningEffort` 可选，通过 AI SDK 的 `providerOptions` 发送；OpenAI 兼容接口可选 `none`、`minimal`、`low`、`medium`、`high`、`xhigh`，Anthropic 只接受 `low`、`medium`、`high`，具体档位仍取决于模型。不填则不主动指定推理档位。`thinkingEnabled` 仅在显式设为 `true` 时生效：支持该能力的 Anthropic 模型使用 SDK 的自适应 thinking，OpenAI 兼容网关沿用 `extra_body.thinking` 扩展。Anthropic 自适应 thinking 不支持同时指定 `temperature`。`maxTokens` 与 provider 的 `maxConcurrentRequests` 必须是正整数。
+LLM Agent 的 `options.reasoningEffort` 可选，通过 AI SDK 的 `providerOptions` 发送；OpenAI 兼容接口可选 `none`、`minimal`、`low`、`medium`、`high`、`xhigh`，Anthropic 只接受 `low`、`medium`、`high`，具体档位仍取决于模型。不填则不主动指定推理档位。`options.thinkingEnabled` 仅在显式设为 `true` 时生效：支持该能力的 Anthropic 模型使用 SDK 的自适应 thinking，OpenAI 兼容网关沿用 `extra_body.thinking` 扩展。Anthropic 自适应 thinking 不支持同时指定 `temperature`。`options.maxTokens` 与 backend 的 `limits.maxConcurrentRequests` 必须是正整数。
 
-请求头的 `userAgent` 只从对应 provider 配置读取；未配置时使用 `AWA-Werewolf/1.0`。指定推理或 thinking 时不再自动补 `temperature`，如模型支持，可在 Agent 上显式设置。模型调用使用 AI SDK 自带的最多 3 次重试。
+请求头的 `userAgent` 只从对应 backend 的 `config` 读取；未配置时使用 `AWA-Werewolf/1.0`。指定推理或 thinking 时不再自动补 `temperature`，如模型支持，可在 Agent 的 `options` 上显式设置。LLM 调用使用 AI SDK 自带的最多 3 次重试；Pi 使用原生 retry 设置。
 
-provider 的 `maxConcurrentRequests` 约束单局内同时执行的玩家回合，名额在整个工具调用与行动重试结束后才释放；多个进程使用同一密钥时，请求数仍会叠加。模型未遵守必须调用工具的要求时，会进入最多 3 次行动重试；API 错误和超时仍按异常回退。LLM 的 `turn_id` 不匹配会返回期望值与收到值，并写入 `logic_ops.json`，便于核查被拒绝的调用。
+backend 的 `limits.maxConcurrentRequests` 约束单局内同时执行的玩家回合，名额在整个工具调用与行动重试结束后才释放；多个进程使用同一密钥时，请求数仍会叠加。模型未遵守必须调用工具的要求时，会进入最多 3 次行动重试；API 错误和超时仍按异常回退。LLM 的 `turn_id` 不匹配会返回期望值与收到值，并写入 `logic_ops.json`，便于核查被拒绝的调用。
 
 对局天数、超时、审计次数和并发数必须是正整数。审计的 `publicMaxItems` 与 `playerMaxItems` 至少为 60，`maxItems` 至少为 50；低于下限会在加载配置时明确报错。
 
-旧配置中的 `forceJsonResponse` 从未控制实际请求，`reasoningEnabled` 曾对所有 OpenAI 兼容接口默认启用推理参数；这两个字段现已移除。升级已有配置时删除它们，并在需要指定推理档位的 Agent 上填写 `reasoningEffort`。
+旧配置中的 `forceJsonResponse` 从未控制实际请求，`reasoningEnabled` 曾对所有 OpenAI 兼容接口默认启用推理参数；这两个字段现已移除。升级已有配置时删除它们，并在需要指定推理档位的 LLM Agent 的 `options` 中填写 `reasoningEffort`。
 
 对局异常时仍会关闭 Agent 并保存带有 `runtime_error` 结束原因的部分复盘；初始化或最终 `replay.json` 写入失败会使运行命令失败，而不是仅打印警告。若对局和收尾同时失败，调用方会收到包含两者的 `AggregateError`。
 
@@ -62,18 +62,23 @@ provider 的 `maxConcurrentRequests` 约束单局内同时执行的玩家回合�
 
 ACP 的初始化受 provider 的 `initializeTimeoutMs`（默认 45 秒）、当前回合超时和对局截止时间共同约束；超时会取消初始化并回收 Agent/MCP 资源，迟到建立的会话也会关闭。`maxConcurrentSessions` 过去未生效，现已移除并拒绝该配置字段；ACP 仍为每个玩家保留独立会话。
 
+Pi 原生 Agent 的四模型混用、六／十二人示例与内存／OAuth 边界见[接入指南](docs/guides/pi-agent.md)。
+
 ## 本地运行
 
 ```bash
 bun install
+# 仅首次创建本地 configs；已有配置请合并新增条目，不复制覆盖。
 cp -R configs.example configs
-# 在 configs/runtime/providers.json 中填入 OpenRouter API key。
+# 在 configs/runtime/backends.json 中填入 OpenRouter API key。
 
 # 使用 DeepSeek V4 Flash 跑六人或十二人对局
 bun run --cwd backend run:six
 bun run --cwd backend run:twelve
 
-# 已有旧板子先预览迁移，再加 --apply 转换并保留备份
+# 旧 runtime/providers + agents 先显式预览 V2 迁移，再加 --apply 应用
+bun run --cwd backend config:migrate --configs-dir ../configs --runtime
+# 已有旧板子单独预览迁移，再加 --apply 转换并保留备份
 bun run --cwd backend config:migrate --configs-dir ../configs
 # 脱敏检查配置，不调用模型
 bun run --cwd backend config:check --configs-dir ../configs --game-config-name twelve_player_standard

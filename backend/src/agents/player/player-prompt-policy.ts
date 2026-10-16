@@ -1,5 +1,5 @@
 /**
- * 负责 SDK／ACP 共用系统／回合模板、人设、工具协议提示与公开开局配比缓存的组织。
+ * 负责 SDK／Pi／ACP 共用系统／回合模板、人设、工具协议提示与公开开局配比缓存的组织。
  * 输入为原 World、请求与提示选项；输出为模板组合文本，机制状态／阶段说明交游戏观察 owner。
  * 查询 thunk 保留每次 World／语言／Catalog／板子 getter 时点，不提前调用人设或角色 renderer。
  * 开局人数先按原顺序写入，公开配比缓存仍唯一归此；来源选择与聚合交游戏观察 owner 直接填入。
@@ -52,7 +52,7 @@ export interface PlayerPromptPolicyOptions {
   boardConfig?: ReadonlyBoardConfig;
 }
 
-/** SDK／ACP 共用提示策略；传输适配器只选择其协议提示。 */
+/** SDK／Pi／ACP 共用提示策略；传输适配器只选择其协议提示。 */
 export class PlayerPromptPolicy {
   // 这里只缓存构造时公开配比与人数，不把其当作当前存活、已觉醒或可用库存；后续展示 callback 仍晚读。
   private readonly publicRoleCounts = new Map<Role, number>();

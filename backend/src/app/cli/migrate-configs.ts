@@ -1,8 +1,9 @@
 /**
- * 负责旧板子配置的预览、备份及文件发布。输入为显式迁移参数和本地旧文件，输出转换报告或原错误／清理错误集合。
+ * 负责旧板子及显式 runtime V2 配置的预览、备份及文件发布。输入为显式迁移参数和本地旧文件，输出转换报告或原错误／清理错误集合。
  * 仅 apply 才创建备份与写文件；逐份转换先完成再批量写，目标冲突、恢复及临时文件归本命令管理。
- * 配置解析政策归 convertLegacyBoard；不启动游戏、调用模型或迁移 provider／Agent 认证。
+ * 配置解析政策归 convertLegacyBoard；不启动游戏或调用模型；runtime 迁移仅重排已有认证字段，不读取私人目录或宿主环境。
  */
+import { convertLegacyRuntime, preflightRuntimeMigration } from "../config/migrate-runtime";
 import { resolveCliConfigDirectory } from "./config-directory";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
@@ -25,20 +26,34 @@ import { convertLegacyBoard, type MigrationWarningCode } from "../config/migrate
 import { CONFIG_ID_PATTERN } from "../config/board-definition";
 import type { BoardName } from "../../rulesets/presets/board-config-resolver";
 
-async function ensureBackup(file: string, original: string): Promise<void> {
+async function ensureBackup(
+  file: string,
+  original: string,
+  conflictCode = "board_config_migration_backup_conflict",
+): Promise<void> {
   // 固定备份名只独占创建；已存在时必须与本次原文相同，不能静默覆盖另一轮来源。
   const backup = `${file}.v1.bak`;
   try {
     await writeFile(backup, original, { flag: "wx", mode: 0o600 });
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
-    if ((await readFile(backup, "utf8")) !== original)
-      throw new Error("board_config_migration_backup_conflict");
+    if ((await readFile(backup, "utf8")) !== original) throw new Error(conflictCode);
   }
 }
 
+/** 记录实际发布前缀；即使后续临时文件清理失败，调用者也能恢复自己写入的目标。 */
+interface PublicationReceipt {
+  published: boolean;
+  temporary?: string;
+}
+
 /** 完整临时文件关闭后才发布；独占模式的目标冲突不删除别人创建的目标。 */
-async function publishBoard(file: string, content: string, exclusive = false): Promise<void> {
+async function publishBoard(
+  file: string,
+  content: string,
+  exclusive = false,
+  receipt?: PublicationReceipt,
+): Promise<void> {
   const temporary = `${file}.${randomUUID()}.tmp`;
   const mode = exclusive ? 0o600 : (await stat(file)).mode & 0o777;
   let owned = false;
@@ -47,12 +62,14 @@ async function publishBoard(file: string, content: string, exclusive = false): P
   try {
     handle = await open(temporary, "wx", mode);
     owned = true;
+    if (receipt) receipt.temporary = temporary;
     await handle.writeFile(content);
     await handle.close();
     handle = undefined;
     // 独占新目标用 link，替换已存在目标用 rename；两种写入保持各自原冲突政策。
     if (exclusive) await link(temporary, file);
     else await rename(temporary, file);
+    if (receipt) receipt.published = true;
   } catch (error) {
     failure = error;
   }
@@ -66,6 +83,7 @@ async function publishBoard(file: string, content: string, exclusive = false): P
   if (owned) {
     try {
       await unlink(temporary);
+      if (receipt) delete receipt.temporary;
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
         if (failure)
@@ -213,6 +231,137 @@ export async function migrateBoards(
   console.log(report);
 }
 
+/** 先完整预检，再备份及发布两个 V2 文件；任何中途失败恢复旧源，备份永不覆盖。 */
+export async function migrateRuntimeConfigs(configDir: string, apply: boolean): Promise<void> {
+  const root = path.resolve(configDir),
+    runtime = path.join(root, "runtime");
+  const providerFile = path.join(runtime, "providers.json"),
+    agentFile = path.join(runtime, "agents.json"),
+    backendFile = path.join(runtime, "backends.json");
+  try {
+    await access(backendFile);
+    throw new Error("runtime_config_migration_target_exists");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  const originals = await Promise.all([
+    readFile(providerFile, "utf8"),
+    readFile(agentFile, "utf8"),
+  ]);
+  function json(source: string, label: string): unknown {
+    try {
+      return JSON.parse(source);
+    } catch {
+      throw new Error(`runtime_config_json_invalid: ${label}`);
+    }
+  }
+  const converted = convertLegacyRuntime(
+    json(originals[0], "providers"),
+    json(originals[1], "agents"),
+  );
+  const games: unknown[] = [];
+  let filenames: string[] = [];
+  try {
+    filenames = (await readdir(path.join(root, "games")))
+      .filter((name) => name.endsWith(".json"))
+      .sort();
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  for (const filename of filenames)
+    games.push(
+      json(await readFile(path.join(root, "games", filename), "utf8"), `games.${filename}`),
+    );
+  let debugSummary: unknown;
+  try {
+    debugSummary = json(
+      await readFile(path.join(runtime, "debug_summary.json"), "utf8"),
+      "debugSummary",
+    );
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  preflightRuntimeMigration(converted, games, debugSummary);
+  if (apply) {
+    // 预检期间若源文件被修改，拒绝发布；不会用较早读取内容覆盖用户的新编辑。
+    if (
+      (await readFile(providerFile, "utf8")) !== originals[0] ||
+      (await readFile(agentFile, "utf8")) !== originals[1]
+    )
+      throw new Error("runtime_config_migration_source_changed");
+    await ensureBackup(providerFile, originals[0], "runtime_config_migration_backup_conflict");
+    await ensureBackup(agentFile, originals[1], "runtime_config_migration_backup_conflict");
+    const backendReceipt: PublicationReceipt = { published: false },
+      agentReceipt: PublicationReceipt = { published: false };
+    let providersRemoved = false;
+    try {
+      await publishBoard(
+        backendFile,
+        JSON.stringify(converted.backends, null, 2) + "\n",
+        true,
+        backendReceipt,
+      );
+      await publishBoard(
+        agentFile,
+        JSON.stringify(converted.agents, null, 2) + "\n",
+        false,
+        agentReceipt,
+      );
+      await unlink(providerFile);
+      providersRemoved = true;
+    } catch (error) {
+      const failures: unknown[] = [error];
+      if (agentReceipt.published)
+        try {
+          await publishBoard(agentFile, originals[1]);
+        } catch (rollback) {
+          failures.push(rollback);
+        }
+      if (providersRemoved)
+        try {
+          await publishBoard(providerFile, originals[0], true);
+        } catch (rollback) {
+          failures.push(rollback);
+        }
+      if (backendReceipt.published)
+        try {
+          await unlink(backendFile);
+        } catch (rollback) {
+          failures.push(rollback);
+        }
+      // 仅重清理本轮确已创建的临时文件；第一次清理错误仍保留，不能假报成功。
+      for (const receipt of [backendReceipt, agentReceipt])
+        if (receipt.temporary) {
+          try {
+            await unlink(receipt.temporary);
+          } catch (cleanup) {
+            if ((cleanup as NodeJS.ErrnoException).code !== "ENOENT") failures.push(cleanup);
+          }
+        }
+      if (failures.length > 1)
+        throw new AggregateError(failures, "runtime_config_migration_rollback_failed");
+      throw error;
+    }
+  }
+  // 报告只包含固定路径与数量，不包含名字、模型参数、进程命令或认证原文。
+  console.log(
+    JSON.stringify(
+      {
+        mode: apply ? "apply" : "preview",
+        schemaVersion: 2,
+        backends: Object.keys(converted.backends.items).length,
+        agents: Object.keys(converted.agents.items).length,
+        gamesChecked: games.length,
+        changed: ["runtime/backends.json", "runtime/agents.json"],
+        retired: ["runtime/providers.json"],
+        backups: ["runtime/providers.json.v1.bak", "runtime/agents.json.v1.bak"],
+      },
+      null,
+      2,
+    ),
+  );
+}
+
 export async function main(
   argv = process.argv.slice(2),
   display: CliDisplayContext = { locale: "zh-CN", explicit: false },
@@ -220,7 +369,12 @@ export async function main(
   const args = takeDisplayArguments(argv, display);
   const values: Record<string, string> = {};
   let apply = false;
+  let runtime = false;
   for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--runtime") {
+      runtime = true;
+      continue;
+    }
     if (args[i] === "--apply") {
       apply = true;
       continue;
@@ -241,16 +395,20 @@ export async function main(
     (values["--base"] && !values["--source"])
   )
     throw new Error("config_migration_usage");
-  const task = values["--source"]
-    ? migrateBoardSource(
-        configDir,
-        values["--board"],
-        values["--source"],
-        values["--base"] as BoardName | undefined,
-        apply,
-        display.locale,
-      )
-    : migrateBoards(configDir, apply, display.locale);
+  if (runtime && ["--source", "--board", "--base"].some((key) => values[key]))
+    throw new Error("config_migration_usage");
+  const task = runtime
+    ? migrateRuntimeConfigs(configDir, apply)
+    : values["--source"]
+      ? migrateBoardSource(
+          configDir,
+          values["--board"],
+          values["--source"],
+          values["--base"] as BoardName | undefined,
+          apply,
+          display.locale,
+        )
+      : migrateBoards(configDir, apply, display.locale);
   await task;
 }
 

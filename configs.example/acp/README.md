@@ -1,6 +1,6 @@
 # ACP 文件与环境隔离
 
-`runtime/providers.json`中的`your-acp-agent`只是接入占位符。ACP工具授权和玩家cwd都不是操作系统沙箱。需要文件隔离时，可将本目录的`run-bwrap-acp.sh`复制到操作者自己的工具目录，并在provider.command写该脚本的绝对路径，args填写已安装的ACP adaptor绝对路径及参数。无需覆盖现有runtime、认证或人格。
+`runtime/backends.json`中的`your-acp-agent`只是接入占位符。ACP工具授权和玩家cwd都不是操作系统沙箱。需要文件隔离时，可将本目录的`run-bwrap-acp.sh`复制到操作者自己的工具目录，并在`items.<backend>.config.command`写该脚本的绝对路径，args填写已安装的ACP adaptor绝对路径及参数。无需覆盖现有runtime、认证或人格。
 
 此模板针对Linux和已安装的`bwrap`：从空文件系统挂载系统运行库、DNS和证书；当前玩家workspace可写，私有HOME、CODEX_HOME及CLAUDE_CONFIG_DIR临时独立；宿主环境清空后只传明确列出的变量。workspace必须是独立玩家目录；模板拒绝显然过宽的根目录，但不会证明目录内部没有人为复制的God或同行文件。网络保留，以访问模型和后端127.0.0.1 MCP控制面，不构成网络出口隔离。
 

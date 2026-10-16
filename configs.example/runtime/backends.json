@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "items": {
+    "openrouter": {
+      "kind": "llm",
+      "config": {
+        "type": "openai",
+        "apiKey": "YOUR_OPENROUTER_API_KEY",
+        "baseURL": "https://openrouter.ai/api/v1",
+        "userAgent": "AWA-Werewolf/1.0"
+      },
+      "limits": {
+        "maxConcurrentRequests": 8
+      }
+    },
+    "acp_local": {
+      "kind": "acp",
+      "config": {
+        "transport": "stdio",
+        "command": "your-acp-agent",
+        "args": ["--acp"],
+        "env": {},
+        "initializeTimeoutMs": 45000
+      },
+      "limits": {
+        "maxConcurrentRequests": 2
+      }
+    },
+    "pi_native": {
+      "kind": "pi",
+      "config": {
+        "models": {
+          "providers": {}
+        },
+        "auth": {
+          "openai": {
+            "type": "api_key",
+            "key": "YOUR_PI_OPENAI_API_KEY"
+          },
+          "anthropic": {
+            "type": "api_key",
+            "key": "YOUR_PI_ANTHROPIC_API_KEY"
+          },
+          "zai-coding-cn": {
+            "type": "api_key",
+            "key": "YOUR_PI_ZAI_CODING_CN_API_KEY"
+          },
+          "kimi-coding": {
+            "type": "api_key",
+            "key": "YOUR_PI_KIMI_CODING_API_KEY"
+          }
+        }
+      },
+      "limits": {
+        "maxConcurrentRequests": 2
+      }
+    }
+  }
+}

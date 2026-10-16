@@ -200,7 +200,7 @@ export interface ReproductionMetadata {
     name: string;
     role: Role;
     camp: Camp;
-    agent?: { kind: "llm" | "acp"; name: string; model?: string };
+    agent?: { kind: "llm" | "acp" | "pi"; name: string; model?: string };
   }>;
 }
 export interface RecordedCheckpoint {
@@ -974,9 +974,22 @@ const schema2 = z.strictObject({
     .nullable(),
 });
 
-/** Tape3 只扩充明确的返回候选事实；旧字段与 outcome 仍复用原严格结构。 */
+/** Tape3 显式接纳 Pi 来源及返回候选；Tape2 的两种 Agent 来源与旧字段准入保持原样。 */
 const schema3 = schema2.extend({
   schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION),
+  metadata: schema2.shape.metadata.extend({
+    players: z
+      .array(
+        schema2.shape.metadata.shape.players.element.extend({
+          // 只在当前 Tape 扩充具名来源；不把未知 kind 当作 SDK，也不替历史档补造来源。
+          agent: schema2.shape.metadata.shape.players.element.shape.agent
+            .unwrap()
+            .extend({ kind: z.enum(["llm", "acp", "pi"]) })
+            .optional(),
+        }),
+      )
+      .min(1),
+  }),
   decisions: z.array(
     z.preprocess(
       (value, ctx) => {

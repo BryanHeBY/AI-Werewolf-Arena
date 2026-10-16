@@ -1,5 +1,5 @@
 /**
- * 负责按席位解析的 profile 与只读规则装配 LLM／ACP 玩家运行时。输入为原 World、板子视图及传输选项；输出为 provider、资源状态和原关闭操作。生产装配使用共同观察回退，不注入特权 Baseline；会话与进程由各 owner 关闭，本工厂不写规则、库存或游戏阶段。
+ * 负责按席位解析的 profile 与只读规则装配 LLM／Pi／ACP 玩家运行时。输入为原 World、板子视图及传输选项；输出为 provider、资源状态和原关闭操作。生产装配使用共同观察回退，不注入特权 Baseline；会话与进程由各 owner 关闭，本工厂不写规则、库存或游戏阶段。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
@@ -10,16 +10,19 @@ import { World } from "../domain/world";
 import { ActionProvider } from "../domain/model";
 import { AcpActionProvider, AcpProcessClient, LlmActionProvider } from "./agent-exports";
 import { AiSdkClient } from "../adapters/llm/ai-sdk-client";
+import { PiRuntime } from "../adapters/pi";
+import { PiActionProvider } from "../agents/pi/pi-action-provider";
 import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 
 export interface PlayerAgentRuntime {
-  kind: "llm" | "acp" | "mixed";
+  kind: "llm" | "acp" | "pi" | "mixed";
   provider: ActionProvider;
   close(): Promise<void>;
   readonly runtimeState: {
     closed: boolean;
     sdk?: LlmActionProvider["runtimeState"];
     acp?: AcpActionProvider["runtimeState"][];
+    pi?: PiActionProvider["runtimeState"][];
   };
 }
 
@@ -42,7 +45,7 @@ interface AcpUpdateObserver {
   flush?(): void;
 }
 
-/** 根据统一 profile 创建玩家运行时；调用方无需感知 SDK/ACP 构造细节。 */
+/** 根据统一 profile 创建玩家运行时；调用方无需感知 SDK／Pi／ACP 构造细节。 */
 export async function createPlayerAgentRuntime(
   options: PlayerAgentFactoryOptions,
 ): Promise<PlayerAgentRuntime> {
@@ -50,17 +53,27 @@ export async function createPlayerAgentRuntime(
     [...options.profilesByActor].map(([actor, profile]) => [actor, structuredClone(profile)]),
   );
   if (!profiles.size) throw new Error("runtime_config_player_profiles_empty");
-  const providerBindings = new Map<string, ResolvedAgentRuntimeProfile["provider"]>();
+  const providerBindings = new Map<string, object>();
   for (const profile of profiles.values()) {
+    // ACP 会话选项属于逐 Agent 设置，同一后端允许不同玩家选择不同模式。
+    const binding =
+      profile.provider.type === "acp"
+        ? Object.fromEntries(
+            Object.entries(profile.provider).filter(([key]) => key !== "sessionConfigOptions"),
+          )
+        : profile.provider;
     const previous = providerBindings.get(profile.providerName);
-    if (previous && !isDeepStrictEqual(previous, profile.provider))
+    if (previous && !isDeepStrictEqual(previous, binding))
       throw new Error("runtime_config_provider_binding_inconsistent");
-    providerBindings.set(profile.providerName, profile.provider);
+    providerBindings.set(profile.providerName, binding);
   }
   const sdkProfiles = new Map([...profiles].filter(([, profile]) => profile.kind === "llm"));
   const acpProfiles = new Map([...profiles].filter(([, profile]) => profile.kind === "acp"));
+  const piProfiles = new Map([...profiles].filter(([, profile]) => profile.kind === "pi"));
   const owned: PlayerAgentRuntime[] = [];
-  let sdk: PlayerAgentRuntime | undefined, acp: PlayerAgentRuntime | undefined;
+  let sdk: PlayerAgentRuntime | undefined,
+    acp: PlayerAgentRuntime | undefined,
+    pi: PlayerAgentRuntime | undefined;
   try {
     if (sdkProfiles.size) {
       sdk = createLlmRuntime({ ...options, profilesByActor: sdkProfiles });
@@ -69,6 +82,10 @@ export async function createPlayerAgentRuntime(
     if (acpProfiles.size) {
       acp = await createAcpRuntime({ ...options, profilesByActor: acpProfiles });
       owned.push(acp);
+    }
+    if (piProfiles.size) {
+      pi = await createPiRuntime({ ...options, profilesByActor: piProfiles });
+      owned.push(pi);
     }
   } catch (error) {
     // 只对已成功返回并登记到 owned 的运行时发起关闭；已收集的关闭拒绝与原初始化错误合并，不回滚目录等既有前缀。
@@ -82,12 +99,19 @@ export async function createPlayerAgentRuntime(
   }
   let closed = false;
   return {
-    kind: sdk && acp ? "mixed" : acp ? "acp" : "llm",
+    kind: owned.length > 1 ? "mixed" : pi ? "pi" : acp ? "acp" : "llm",
     provider: {
       getAction(request) {
         if (closed) return Promise.reject(new DOMException("player_runtime_closed", "AbortError"));
         const profile = profiles.get(request.actorId);
-        const runtime = profile?.kind === "llm" ? sdk : profile?.kind === "acp" ? acp : undefined;
+        const runtime =
+          profile?.kind === "llm"
+            ? sdk
+            : profile?.kind === "acp"
+              ? acp
+              : profile?.kind === "pi"
+                ? pi
+                : undefined;
         if (!runtime)
           return Promise.reject(
             new Error(`runtime_config_agent_profile_missing_for_actor:${request.actorId}`),
@@ -100,6 +124,7 @@ export async function createPlayerAgentRuntime(
         closed,
         ...(sdk ? { sdk: sdk.runtimeState.sdk } : {}),
         ...(acp ? { acp: acp.runtimeState.acp } : {}),
+        ...(pi ? { pi: pi.runtimeState.pi } : {}),
       };
     },
     async close() {
@@ -199,7 +224,11 @@ async function createAcpRuntime(options: PlayerAgentFactoryOptions): Promise<Pla
 function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntime {
   const clientByActor = new Map<number, AiSdkClient>();
   for (const [actorId, profile] of options.profilesByActor) {
-    if (profile.kind !== "llm" || profile.provider.type === "acp" || !profile.model) {
+    if (
+      profile.kind !== "llm" ||
+      (profile.provider.type !== "openai" && profile.provider.type !== "anthropic") ||
+      !profile.model
+    ) {
       throw new Error(`runtime_config_llm_profile_missing_for_actor:${actorId}`);
     }
     clientByActor.set(
@@ -237,7 +266,7 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
     requestConcurrencyScopeResolver: (request) => profileFor(request.actorId).providerName,
     maxConcurrentRequestsResolver: (request) => {
       const profile = profileFor(request.actorId);
-      return profile.provider.type === "acp" ? undefined : profile.provider.maxConcurrentRequests;
+      return profile.provider.maxConcurrentRequests;
     },
     personalityPromptResolver: (request) => profileFor(request.actorId).personalityPrompt,
     trace: options.trace,
@@ -255,6 +284,91 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
     close: () => provider.close(),
     get runtimeState() {
       return { closed: provider.runtimeState.closed, sdk: provider.runtimeState };
+    },
+  };
+}
+
+/** 每个 Pi backend 共享内存模型／认证运行时；玩家 transcript 仍由 provider 按席位独占。 */
+async function createPiRuntime(options: PlayerAgentFactoryOptions): Promise<PlayerAgentRuntime> {
+  const groups = new Map<string, Map<number, ResolvedAgentRuntimeProfile>>();
+  for (const [actor, profile] of options.profilesByActor) {
+    if (profile.kind !== "pi" || profile.provider.type !== "pi")
+      throw new Error("runtime_config_pi_profile_required");
+    const group =
+      groups.get(profile.providerName) ?? new Map<number, ResolvedAgentRuntimeProfile>();
+    group.set(actor, profile);
+    groups.set(profile.providerName, group);
+  }
+  const providers = new Map<string, PiActionProvider>();
+  try {
+    for (const [name, profiles] of groups) {
+      const first = profiles.values().next().value!;
+      if (first.provider.type !== "pi") throw new Error("runtime_config_pi_profile_required");
+      const runtime = await PiRuntime.create({
+        models: first.provider.models,
+        auth: first.provider.auth,
+      });
+      try {
+        providers.set(
+          name,
+          new PiActionProvider(options.world, {
+            runtime,
+            settingsResolver: (actorId) => ({ ...profiles.get(actorId)?.piSettings }),
+            personalityPromptResolver: (request) =>
+              profiles.get(request.actorId)?.personalityPrompt,
+            boardConfig: options.boardConfig,
+            maxConcurrentRequests: first.provider.maxConcurrentRequests,
+            turnTimeoutMs: options.llmTimeoutMs,
+            displayLocale: options.displayLocale,
+            printLlmIo: options.printLlmIo,
+            printThinking: options.printThinking,
+            trace: options.trace,
+            colorizeLogs: options.colorizeLogs,
+          }),
+        );
+      } catch (error) {
+        try {
+          await runtime.close();
+        } catch (cleanup) {
+          throw new AggregateError([error, cleanup], "pi_runtime_initialization_failed");
+        }
+        throw error;
+      }
+    }
+  } catch (error) {
+    const settled = await Promise.allSettled(
+      [...providers.values()].map((provider) => provider.close()),
+    );
+    const failures = settled.flatMap((item) => (item.status === "rejected" ? [item.reason] : []));
+    if (failures.length)
+      throw new AggregateError([error, ...failures], "pi_runtimes_initialization_failed");
+    throw error;
+  }
+  let closed = false;
+  return {
+    kind: "pi",
+    provider: {
+      getAction(request) {
+        if (closed) return Promise.reject(new DOMException("player_runtime_closed", "AbortError"));
+        const profile = options.profilesByActor.get(request.actorId);
+        const provider = profile && providers.get(profile.providerName);
+        if (!provider)
+          return Promise.reject(
+            new Error(`runtime_config_pi_profile_missing_for_actor:${request.actorId}`),
+          );
+        return provider.getAction(request);
+      },
+    },
+    get runtimeState() {
+      return { closed, pi: [...providers.values()].map((provider) => provider.runtimeState) };
+    },
+    async close() {
+      closed = true;
+      const settled = await Promise.allSettled(
+        [...providers.values()].map((provider) => provider.close()),
+      );
+      const failures = settled.flatMap((item) => (item.status === "rejected" ? [item.reason] : []));
+      if (failures.length) throw new AggregateError(failures, "pi_runtime_close_failed");
     },
   };
 }

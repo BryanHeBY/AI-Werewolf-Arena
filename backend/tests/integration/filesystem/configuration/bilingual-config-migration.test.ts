@@ -8,7 +8,6 @@ import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { migrateBoardSource, migrateBoards } from "../../../../src/app/cli/migrate-configs";
 import { MIGRATION_WARNING_CODES } from "../../../../src/app/config/migrate-board";
-
 test("all migration warning keys are bilingual and valid preview/apply reports are built before publication", async () => {
   for (const locale of ["zh-CN", "en"] as const) {
     for (const code of MIGRATION_WARNING_CODES)
@@ -67,7 +66,6 @@ test("all migration warning keys are bilingual and valid preview/apply reports a
     }
   }
 });
-
 test("bilingual party example resolves every named seat without missing-language fallback", async () => {
   const { parseRuntimeConfig } = await import("../../../../src/app/config/parse-config");
   const { resolveGameSetup } = await import("../../../../src/app/config/resolve-game-setup");
@@ -80,13 +78,27 @@ test("bilingual party example resolves every named seat without missing-language
   for (const locale of ["zh-CN", "en"] as const) {
     const setup = resolveGameSetup(
       parseRuntimeConfig({
-        providers: {
-          default: "synthetic",
-          items: { synthetic: { type: "acp", transport: "stdio", command: "synthetic-adapter" } },
+        backends: {
+          schemaVersion: 2,
+          items: {
+            synthetic: {
+              kind: "acp",
+              config: {
+                transport: "stdio",
+                command: "synthetic-adapter",
+              },
+            },
+          },
         },
         agents: {
+          schemaVersion: 2,
           default: "acp_default",
-          items: { acp_default: { kind: "acp", provider: "synthetic" } },
+          items: {
+            acp_default: {
+              backend: "synthetic",
+              options: {},
+            },
+          },
         },
         game: { ...game, locale },
       }),

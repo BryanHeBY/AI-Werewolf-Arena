@@ -68,7 +68,7 @@ const publicFeatureTarget = (file: string, kinds = ["index", "contracts", "ports
 };
 // 只列由旧 AI 层迁出的真实执行／传输入口；旧 game 的观察、展示和 repair 端口不属于此集合。
 const executionAgentSource = (file: string) =>
-  /^backend\/src\/(?:agents\/(?:acp|llm|player|providers|runtime|reporting)|audit\/agents)\//.test(
+  /^backend\/src\/(?:agents\/(?:acp|llm|pi|player|providers|runtime|reporting)|audit\/agents)\//.test(
     file,
   ) ||
   /^backend\/src\/agents\/(?:index|game-tool-protocol|visible-event-protocol)\.[cm]?ts$/.test(

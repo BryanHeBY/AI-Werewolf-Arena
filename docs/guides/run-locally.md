@@ -7,7 +7,8 @@
 ```bash
 bun install
 cp -R configs.example configs
-# 仅在本地configs/runtime/providers.json填认证并核对Agent配置。
+# 仅首次建立本地目录时复制；已有 configs 时不执行 cp。
+# 在 configs/runtime/backends.json 填认证，agents.json 配置 options。
 bun run --cwd backend config:check --configs-dir ../configs --game-config-name twelve_player_standard
 ```
 
@@ -21,20 +22,30 @@ bun run --cwd backend run:twelve
 bun run --cwd backend run:twelve:acp
 ```
 
-这三条会按本地配置启动真实Agent，可能有网络／模型费用或外部进程。运行前需确认本地配置及预算。先确认provider、并发／初始化预算、Agent命令和输出根，再由操作者主动运行。
+这三条会按本地配置启动真实Agent，可能有网络／模型费用或外部进程。运行前需确认本地配置及预算。先确认 backend、并发／初始化预算、Agent 命令和输出根，再由操作者主动运行。
 
-名字／人格与模型选择分开。选择优先级是席位→角色→默认；显式null清除人格，缺席继承，原字符串不翻译。不同玩家即使同provider也各有信息与工具权限，provider key不是整个机器的全局配额。
+名字／人格与模型选择分开。选择优先级是席位→角色→默认；显式null清除人格，缺席继承，原字符串不翻译。不同玩家即使同 backend 也各有信息与工具权限，backend key不是整个机器的全局配额。
 
 ## 旧配置显式迁移
 
 ```bash
+# 旧 runtime/providers + agents → schemaVersion 2；先预览
+bun run --cwd backend config:migrate --configs-dir ../configs --runtime
+# 核对预览后应用，两个旧文件各保留 .v1.bak，不覆写已有 backends.json
+bun run --cwd backend config:migrate --configs-dir ../configs --runtime --apply
+# 旧板子迁移是独立入口（不带 --runtime）
 bun run --cwd backend config:migrate --configs-dir ../configs
-# 核对预览后，操作者可加--apply；不复制examples覆盖本地认证。
 ```
 
 先校验再备份，目标独占发布。备份存在且字节不同应拒绝，不通过删除别人的文件或重试丢弃错误。完整参数仍以CLI帮助／实际parser为准。
 
 记录与关闭失败应保错误；初始化失败或必需replay写失败使命令失败，不能只看最后一行日志判成功。
+
+## Pi 原生 Agent
+
+公开模板包含 `pi_native` backend、`pi_default` 及 OpenAI／Anthropic／智谱／Kimi 四种 Agent。将 `backends.json` 的 `config.auth` 替换成自己的 Pi 原生认证对象，或用整值 `${ENV_NAME}` 注入认证字段；`config.models` 是 Pi 原生模型目录对象。`agents.json` 中修改 `pi_default.options.defaultProvider`、`defaultModel` 和 `defaultThinkingLevel`，再将需要的 game 的 `agent` 设为 `pi_default`。完整字段责任见[配置契约](../contracts/configuration.md)，四模型混用、思考记录、内存与 OAuth 边界见[Pi 原生接入](pi-agent.md)。
+
+Pi 与 `llm`／`acp` 可按席位或角色混用；公开模板的默认 Agent 保持原 LLM 示例。Pi 接入不读取宿主 `.pi` 中的认证或设置，模型访问仍使用真实网络与账户配额。仅 `config:check` 不启动模型。
 
 ## ACP 沙箱中的 MCP 依赖
 

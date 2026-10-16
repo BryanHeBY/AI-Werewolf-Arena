@@ -13,16 +13,13 @@ import {
 } from "../../../src/app/config/board-definition";
 import { configDiagnostic } from "../../../src/app/config/error-codes";
 import { checkConfig } from "../../../src/app/cli/check-config";
-
 const root = fileURLToPath(new URL("../../../../configs.example/boards", import.meta.url));
-
 const variants = [
   ["standard", "nonconsecutive", "awa_nonconsecutive_nights_v1"],
   ["standard", "repeat", "awa_repeat_v1"],
   ["no_blast_no_self_knife", "nonconsecutive", "awa_nonconsecutive_nights_v1"],
   ["no_blast_no_self_knife", "repeat", "awa_repeat_v1"],
 ] as const;
-
 for (const [wolf, suffix, body] of variants)
   test(`public actual CLI check / named diagnostic / no partial native installation ${wolf}/${suffix}`, async () => {
     const id = `awa_noble_secret_body_12_${wolf}_${suffix}_v1`,
@@ -36,17 +33,33 @@ for (const [wolf, suffix, body] of variants)
     try {
       for (const dir of ["runtime", "games", "boards"]) await mkdir(join(temp, dir));
       await writeFile(
-        join(temp, "runtime/providers.json"),
+        join(temp, "runtime/backends.json"),
         JSON.stringify({
-          default: "synthetic",
-          items: { synthetic: { type: "openai", apiKey: "synthetic-unused" } },
+          schemaVersion: 2,
+          items: {
+            synthetic: {
+              kind: "llm",
+              config: {
+                type: "openai",
+                apiKey: "synthetic-unused",
+              },
+            },
+          },
         }),
       );
       await writeFile(
         join(temp, "runtime/agents.json"),
         JSON.stringify({
+          schemaVersion: 2,
           default: "synthetic",
-          items: { synthetic: { kind: "llm", provider: "synthetic", model: "unused" } },
+          items: {
+            synthetic: {
+              backend: "synthetic",
+              options: {
+                model: "unused",
+              },
+            },
+          },
         }),
       );
       await writeFile(

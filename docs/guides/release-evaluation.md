@@ -18,7 +18,7 @@
 
 ## 独立配置
 
-在操作者选择的独立目录准备`runtime/providers.json`、`runtime/agents.json`、所选公开`boards/<id>.json`和`games/<name>.json`。只复制选定板／game，不读取或批量覆盖已有`configs/`。Provider认证只从专门授权的变量或单个只读认证文件获得；日志、God归档及其它玩家目录不挂进ACP沙箱。
+在操作者选择的独立目录准备`runtime/backends.json`、`runtime/agents.json`、所选公开`boards/<id>.json`和`games/<name>.json`。只复制选定板／game，不读取或批量覆盖已有`configs/`。Provider认证只从专门授权的变量或单个只读认证文件获得；日志、God归档及其它玩家目录不挂进ACP沙箱。
 
 实际SDK模型名称和URL、ACP可执行文件及版本、只读依赖与具名环境白名单、认证来源、14个seed、费用额度、单局限制及输出目录应形成一份执行清单。使用[公开隔离模板](../../configs.example/acp/README.md)的合成canary复核最终挂载；新增挂载不沿用模板已测结论。启动前先执行仅检查的入口：
 

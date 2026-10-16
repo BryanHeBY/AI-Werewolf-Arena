@@ -1,6 +1,7 @@
 /**
  * 集成测试驱动真实 runtime 传输、各自独立的原生／赠枪库存、录制及 MCP 清理，以字面实例、提示、文件和原身份断言核对赠枪不能借用另一库存。预期来自既有字面值及独立夹具；仅本地传输／录制，不启动计费模型。
  */
+import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -161,37 +162,39 @@ for (const locale of ["zh-CN", "en"] as const)
                 },
               })
             : undefined;
-        const config = parseRuntimeConfig({
-          providers: {
-            default: "provider",
-            items: {
-              provider:
-                transport === "llm"
-                  ? {
-                      type: "openai",
-                      apiKey: "synthetic-only",
-                      baseURL: `${server!.url.origin}/v1`,
-                    }
-                  : {
-                      type: "acp",
-                      transport: "stdio",
-                      command: process.execPath,
-                      args: [acpAdapterEntry("game")],
-                    },
+        const config = parseRuntimeConfig(
+          runtimeConfigV2({
+            providers: {
+              default: "provider",
+              items: {
+                provider:
+                  transport === "llm"
+                    ? {
+                        type: "openai",
+                        apiKey: "synthetic-only",
+                        baseURL: `${server!.url.origin}/v1`,
+                      }
+                    : {
+                        type: "acp",
+                        transport: "stdio",
+                        command: process.execPath,
+                        args: [acpAdapterEntry("game")],
+                      },
+              },
             },
-          },
-          agents: {
-            default: "actor",
-            items: {
-              actor:
-                transport === "llm"
-                  ? { kind: "llm", provider: "provider", model: "synthetic" }
-                  : { kind: "acp", provider: "provider", spawnArgs: [planFile] },
+            agents: {
+              default: "actor",
+              items: {
+                actor:
+                  transport === "llm"
+                    ? { kind: "llm", provider: "provider", model: "synthetic" }
+                    : { kind: "acp", provider: "provider", spawnArgs: [planFile] },
+              },
             },
-          },
-          game: { board: "synthetic", locale },
-          debugSummary: { agent: { enabled: false } },
-        });
+            game: { board: "synthetic", locale },
+            debugSummary: { agent: { enabled: false } },
+          }),
+        );
         const runtime = await createPlayerAgentRuntime({
           world: game.world,
           boardConfig: board,
