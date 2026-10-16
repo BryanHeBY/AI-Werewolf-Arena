@@ -62,7 +62,7 @@ fixture通过稳定origin／suite选择，loader根据manifest currentPath定位
 
 `script.theme = { id, options? }` 只接受该主题的白名单选项，未知主题、跨主题选项或错误值失败。`resolveTheme` 输出独立 JSON 数据；palette 区分画布文字 `canvasText/canvasMuted` 与面板文字 `text/muted`，不把浅色面板字直接用于深色背景。
 
-哥特模板的基础框体使用旧金属双线和角件，`ornamentalFrames` 进一步增加内框与中心饰件；白天为冷灰磨砂阅读面，夜间透出低对比雾景。`GothicArt` 独立拥有本地环境与无字技能道具，素材路径由两个 bundler 静态打包，不写入归档、身份或原文。图标头像保留LLM徽记，不强制替换成人物画像；背景、边框和技能道具仍可分别由主题插槽覆盖。
+哥特舞台默认透明；发言、票图和通知各用局部暗衬，日夜均保留骨白正文与可见雾景。名册使用薄旧金属线与少量角件，`ornamentalFrames` 可显式加饰。`GothicArt` 独立拥有本地环境与无字技能道具，素材路径由两个 bundler 静态打包，不写入归档、身份或原文。图标头像保留LLM徽记，不强制替换成人物画像；背景、边框和技能道具仍可分别由主题插槽覆盖。
 
 项目模块可独立具名导出 `themeSlots`，不要求同时有 `layers`。注册键固定为 `<themeId>/<slot>`：
 
@@ -100,7 +100,7 @@ export default defineVideoProject({
 
 ### 本地字体与素材固化
 
-`fonts` 是项目级 `{ family, src, weight? }[]`，接受本地路径或本地 file URL；HTTP(S)、data 字体、同 family／weight 重复项、额外字段与错误权重被拒绝。`weight` 缺省 normal，可用 bold、整百字重或前小后大的变量范围（例如 `400 700`）；normal／bold 规范化为400／700，family 去首尾空格并忽略大小写判重。字体族名应对应主题字体栈，如 `Noto Sans SC/Noto Serif SC`，或组件显式声明的 `fontFamily`。未提供时使用主题字体栈。
+`fonts` 是项目级 `{ family, src, weight? }[]`，接受本地路径或本地 file URL；HTTP(S)、data 字体、同 family／weight 重复项、额外字段与错误权重被拒绝。`weight` 缺省 normal，可用 bold、整百字重或前小后大的变量范围（例如 `400 700`）；normal／bold 规范化为400／700，family 去首尾空格并忽略大小写判重。字体族名应对应主题字体栈，如 `Noto Sans SC/Noto Serif SC`，或组件显式声明的 `fontFamily`。未提供时加载项目内置完整SC字库；项目同family定义显式替换对应内置定义，不能静默回退。固定版本、源提交和OFL许可见 `frontend/src/themes/fonts`。
 
 准备器捕获本地素材和字体字节，按SHA256内容摘要写入临时素材目录；plan 只引用 `assets/<digest>.<ext>`，绝对源路径只留在命令侧。准备后的源文件修改不会改变该次预览／导出的已捕获字节，源文件保持不写回；要采用新字节须重新准备。
 

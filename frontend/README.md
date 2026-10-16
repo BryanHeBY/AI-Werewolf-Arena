@@ -39,11 +39,11 @@ bun run --cwd frontend replay:render -- --input ../record/session_<id> --output 
 
 无脚本默认 `broadcast-v1`：12 人分双侧常驻名册，中央分发言、技能、票型、结算和阶段场景，日夜使用不同色板。已有脚本未声明 `layout` 时保持 `legacy-ellipse-v1`；旧 `createReplayRenderInput/buildReplayFrame` 保留90帧采样 API。新视频定位必须用原 seq 对应的揭晓帧，不能用 `index * 90`。聚合逐票明细仍可导航，姓名、身份与死亡在视频和工作台共用同一事实游标。
 
-双侧名册按整局已裁剪的展示资料分别定宽：某侧没有可显示的姓名或模型时，1920画幅下从328.32px收至216px，空间归还中央；空单卡不创建文字槽。死亡、镜头和事件切换不会改变列宽，箭头、高亮及自定义层共用实际席位坐标。
+双侧名册按整局已裁剪的展示资料分别定宽：某侧没有可显示的姓名或模型时，1920画幅下从328.32px收至240px，空间归还中央；空单卡不创建文字槽。死亡、镜头和事件切换不会改变列宽，箭头、高亮及自定义层共用实际席位坐标。
 
 ## 主题、展示资料与扩展
 
-主题为可序列化数据，`src/themes` 提供解析、色板、选项和 CSS 变量。两套主题均有日夜 token：
+主题为可序列化数据，`src/themes` 提供解析、色板、选项和 CSS 变量。两套主题均有日夜色板及 typography/surface/frame/connector/effect/motion token；`largeText` 和 `reducedMotion` 默认 false。旧版已编译主题缺少新token时纯函数补齐默认，保留已有颜色、字体和显式选项：
 
 | 主题                    | 风格与专用 options                                                                                                                      |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -58,14 +58,14 @@ bun run --cwd frontend replay:render -- --input ../record/session_<id> --output 
 
 `scene`、`emphasis`、`edits/factEdits`、镜头和图层支持单局微调。发言主张只作原话，技能、库存、狼刀、保护归因和死亡只消费结构化事件／提交事实；证据缺失时显示未知，不在前端重跑游戏规则。已准备的音轨和 `god/player:<id>` 说话者元数据可接入；TTS 服务尚未接入。
 
-哥特主题使用原创本地雾景、古镜和药瓶，结合代码绘制的旧金属框、铭牌和LLM图标圆章。图片不含文字、身份答案或库存；镜面保持中性，查验结果单独按事实揭晓。素材及内置 imagegen 的完整提示词见 [`src/video/assets/gothic/manifest.json`](src/video/assets/gothic/manifest.json)。`minimal-v1` 保持简洁模板；主题的 background/frame/actionEffect 插槽可替换相应美术层。
+哥特主题使用20张原创本地环境/道具素材，含血狼爪、古镜、药瓶、双剑、弩、枪、盾、契约及银/蚀报告印记；结合薄旧金属框、铭牌和LLM图标圆章。中央舞台透明，只在真实文字与票图背后铺局部衬底。图片不含文字、身份答案或库存；镜面保持中性，查验结果单独按事实揭晓。素材及内置 imagegen 的完整提示词见 [`src/video/assets/gothic/manifest.json`](src/video/assets/gothic/manifest.json)。`minimal-v1` 保持简洁模板；主题的 background/frame/actionEffect 插槽可替换相应美术层。
 
 ## 模块与验证
 
 - `main.tsx → App.tsx → replay/ReplayWorkspace.tsx`：文件状态与工作台；播放控制由 `useReplayPlayback` 拥有。
 - `offline-replay.ts`：公开 God 文档的读取与校验；`replay-projection.ts`：唯一事实投影和前缀索引。
-- `src/video`：编译 `VideoPlan`、语义场景、状态揭晓 cue 与共用 `VideoComposition`；长文分页，两语最大页数确定自动时长。
-- `src/presentation`：白名单展示资料与原创 SVG 徽记；`src/themes`：共用主题数据及独立网页偏好。
+- `src/video`：编译 `VideoPlan`、语义场景、状态揭晓 cue 与共用 `VideoComposition`；长文分页，按两语阅读预算及settled后完整停留编译自动时长；`captionPageRanges` 明确每页帧区间。
+- `src/presentation`：白名单展示资料、LLM头像徽记与64角色小纹章；`src/themes`：共用主题数据及独立网页偏好。
 - 私有档案只在浏览器显式导入，不自动发现其他玩家，不参与视频或授予 God 信息。角色视角舞台、公开脱敏、在线观战与 MP4 任务队列仍不属于当前范围。
 
 ```bash
@@ -76,3 +76,15 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium bun run --cwd frontend test:e2e
 ```
 
 缺省使用 Playwright 安装的浏览器。产物范围、事实边界与资源生命周期见[离线复盘指南](../docs/guides/offline-replay.md)。
+
+## 真实美术验收图库
+
+验收数据来自签入教学归档及明确标注“非真实对局”的边界用例，构造器在 `tests/support/art-gallery-cases.ts`。以下命令复用正式 `VideoComposition`，不生成概念截图：
+
+```bash
+bun run --cwd frontend scripts/render-art-gallery.ts --output /tmp/awa-gallery --browser /usr/bin/chromium
+# 精确选择并导出完整建立/揭晓/停稳过程（每镜头最多六秒的验收片段）
+bun run --cwd frontend scripts/render-art-gallery.ts --output /tmp/awa-motion --browser /usr/bin/chromium --ids knife-mapped,report-camp-wolf --motion
+```
+
+输出为PNG、可选MP4、索引与来源摘要。`--only` 按ID子串筛选，`--ids` 精确逗号列表；`--resume` 只续接同目录已有记录且保留每张原sourceDigest，不覆盖已有图。脚本拒绝重复case ID；空 `reviewedBy` 明确表示尚未人工验收，导出成功不代表美术通过。
