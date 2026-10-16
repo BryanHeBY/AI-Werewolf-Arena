@@ -390,11 +390,12 @@ export function compileVideoPlan(
     if (edit.caption !== undefined && typeof edit.caption !== "string") fail("caption_invalid");
     if (edit.caption !== undefined && edit.scene?.body === undefined) {
       base.body = edit.caption;
-      base.bodySource = "script";
     }
+    // 作者正文优先级显式保持一致；旧布局仅在没有覆盖时保留带事件前缀的标签。
     const body =
       edit.scene?.body ??
-      (layout === "broadcast-v1" || committedFact ? base.body : (edit.caption ?? view.label));
+      edit.caption ??
+      (layout === "broadcast-v1" || committedFact ? base.body : view.label);
     const captionPages = paginateVideoCaption(body);
     let captionOffset = 0;
     const captionPageOffsets = captionPages.map((page) => {
@@ -432,7 +433,7 @@ export function compileVideoPlan(
       (layout === "broadcast-v1" ||
         event?.type === "day_speech" ||
         edit.scene?.speaker !== undefined)
-        ? [{ speaker: automaticSpeaker, text: edit.scene?.body ?? base.body }]
+        ? [{ speaker: automaticSpeaker, text: edit.scene?.body ?? edit.caption ?? base.body }]
         : [];
     let speech = edit.speech ?? (kind === "event" ? automaticSpeech : []);
     const mediaDuration = Math.max(
@@ -451,6 +452,7 @@ export function compileVideoPlan(
       1,
     );
     const scene = compileScene(base, edit.scene, edit.emphasis, fps, durationFrames, playerIds);
+    if (edit.caption !== undefined || edit.scene?.body !== undefined) scene.bodySource = "script";
     if (
       layout === "broadcast-v1" &&
       (kind === "hold" || (!event && !committedFact)) &&
