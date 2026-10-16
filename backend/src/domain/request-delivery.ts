@@ -13,6 +13,8 @@ type AliasPropagation = (original: ActionRequest, alias: ActionRequest) => void;
 interface DeliveryMetadata {
   /** 查询是否可交付；具体原体、生命版本与永久撤权由机制的查询实现负责。 */
   current?: () => boolean;
+  /** 仅在 current 已拒绝后查询；期限失效仍是撤权，区别仅供机制收尾和诊断使用。 */
+  expired?: () => boolean;
   /** 将一次 Provider 返回关联到后续领域提交或关闭，不把返回动作当成提交成功。 */
   completion?: object;
   /** 回调身份是键；同一回调重登记只更新顺序，具体别名绑定仍由该机制执行。 */
@@ -23,22 +25,61 @@ interface DeliveryMetadata {
 const guards = new WeakMap<object, DeliveryMetadata>();
 /** 同一完成身份同时最多保留一个待结算回调；原请求和合法别名可共享该身份。 */
 const settlements = new WeakMap<object, (accepted: boolean) => void>();
+/** 只有真实机制窗口明确登记的完成身份允许按期满跳过；别名共享该身份，不复制请求字段。 */
+const skippableExpiries = new WeakSet<object>();
+/** 异常关联不读取外来 prototype/getter；仅本模块构造的期满异常拥有该标记。 */
+const expiryRequests = new WeakMap<object, ActionRequest>();
+
+/** 保留旧撤权 message；固定 code 区分期限耗尽，request 身份不进入录制或模型协议。 */
+export class ActionRequestDeliveryExpired extends Error {
+  readonly code = "action_request_delivery_expired";
+  readonly recoverable: boolean;
+  constructor(readonly request: ActionRequest) {
+    super("action_request_delivery_authority_revoked");
+    const completion = guards.get(request)?.completion;
+    this.recoverable = !!completion && skippableExpiries.has(completion);
+    expiryRequests.set(this, request);
+  }
+}
+
+/** 由已开放的机制选择期满收口政策；本登记不恢复行动权限，也不处理普通领域撤权。 */
+export function allowRequestExpirySkip(request: ActionRequest): void {
+  const completion = guards.get(request)?.completion;
+  if (!completion) throw new Error("action_request_delivery_completion_missing");
+  skippableExpiries.add(completion);
+}
+
+/** 合法期限别名与原请求共享完成身份；相同 JSON、actorId 或外来错误不能代替该关联。 */
+export function isRequestDeliveryExpired(
+  error: unknown,
+  request: ActionRequest,
+): error is ActionRequestDeliveryExpired {
+  if (!error || typeof error !== "object") return false;
+  const original = expiryRequests.get(error);
+  if (!original) return false;
+  if (original === request) return true;
+  const completion = guards.get(original)?.completion;
+  return completion !== undefined && completion === guards.get(request)?.completion;
+}
 /** 机制成功绑定后登记一次交付检查；保留此前已登记的别名路由。 */
 export function bindRequestDeliveryGuard(
   request: object,
   isCurrent: () => boolean,
   completion?: object,
+  expired?: () => boolean,
 ): void {
   const existing = guards.get(request);
   if (existing && "current" in existing)
     throw new Error("action_request_delivery_guard_already_bound");
-  guards.set(request, { ...existing, current: isCurrent, completion });
+  guards.set(request, { ...existing, current: isCurrent, completion, expired });
 }
 /** 无登记时不额外拒绝；有检查时必须严格返回 true，不能用真值替代机制确认。 */
 export function assertRequestDelivery(request: ActionRequest): void {
   const guard = guards.get(request);
-  if (guard && "current" in guard && guard.current!() !== true)
+  if (guard && "current" in guard && guard.current!() !== true) {
+    if (guard.expired?.() === true) throw new ActionRequestDeliveryExpired(request);
     throw new Error("action_request_delivery_authority_revoked");
+  }
 }
 /** 登记事务请求的延后通知；无完成身份则返回 false，由调用方执行原有即时通知政策。 */
 export function deferRequestDelivery(

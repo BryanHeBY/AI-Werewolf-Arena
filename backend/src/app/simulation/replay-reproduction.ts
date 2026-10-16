@@ -27,6 +27,7 @@ import {
   type ReproductionRecord,
 } from "../../recording/reproduction/format";
 import { normalizedRequest } from "../../recording/reproduction/trace";
+import { ActionRequestDeliveryExpired } from "../../domain/request-delivery";
 import { SessionRecordManager } from "../../recording/session/recorder";
 import { runWithSessionRecorder } from "../../recording/session/context";
 import { GameEventRecorder } from "../game-event-recorder";
@@ -81,6 +82,7 @@ class RecordedActions implements ActionProvider {
     number,
     {
       decision: RecordedDecision;
+      request: ActionRequest;
       resolve: (action: import("../../domain").ToolCall | null) => void;
       reject: (error: unknown) => void;
     }
@@ -135,7 +137,7 @@ class RecordedActions implements ActionProvider {
       );
     this.consumed.add(key);
     return new Promise((resolve, reject) => {
-      this.pending.set(decision!.settleOrder!, { decision: decision!, resolve, reject });
+      this.pending.set(decision!.settleOrder!, { decision: decision!, request, resolve, reject });
       this.scheduleSettlement();
     });
   }
@@ -146,18 +148,23 @@ class RecordedActions implements ActionProvider {
     queueMicrotask(() => {
       this.settlementScheduled = false;
       while (this.pending.has(this.nextSettlement) && this.boundaryOpened()) {
-        const { decision, resolve, reject } = this.pending.get(this.nextSettlement)!;
+        const { decision, request, resolve, reject } = this.pending.get(this.nextSettlement)!;
         this.pending.delete(this.nextSettlement++);
         if (decision.outcome.kind === "error") {
-          // 只有 Tape3 明确保存的已返回候选才能重交；缺席不能猜成 null 或伪造接受。
-          // 真正的领域检查和付款仍在原 stage 执行，外部安装故障不因此保证可以 exact 重现。
-          const candidate = decision.returnedCandidate;
-          if (Object.hasOwn(decision, "returnedCandidate") && candidate !== undefined)
-            resolve(structuredClone(candidate));
-          else {
-            const error = new Error("reproduction_recorded_decision_failed");
-            error.name = decision.outcome.name;
-            reject(error);
+          if (decision.outcome.code === "request_delivery_expired") {
+            // 录制已确认的操作性超时只撤回本请求；不重造真实时钟或给过期动作恢复权限。
+            reject(new ActionRequestDeliveryExpired(request));
+          } else {
+            // 只有 Tape3 明确保存的已返回候选才能重交；缺席不能猜成 null 或伪造接受。
+            // 真正的领域检查和付款仍在原 stage 执行，外部安装故障不因此保证可以 exact 重现。
+            const candidate = decision.returnedCandidate;
+            if (Object.hasOwn(decision, "returnedCandidate") && candidate !== undefined)
+              resolve(structuredClone(candidate));
+            else {
+              const error = new Error("reproduction_recorded_decision_failed");
+              error.name = decision.outcome.name;
+              reject(error);
+            }
           }
         } else if (decision.outcome.kind === "action")
           resolve(structuredClone(decision.outcome.action));

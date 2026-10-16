@@ -17,6 +17,8 @@ import type {
 } from "../../domain/model";
 import type { World } from "../../domain/world";
 import { RequestLease, type RequestLeaseTurn } from "../../domain/request-lease";
+import { allowRequestExpirySkip, isRequestDeliveryExpired } from "../../domain/request-delivery";
+import type { ActionRequest } from "../../domain/actions";
 import type { ToolGateway } from "../../engine/actions/tool-gateway";
 import type { LastWordsGrantContext, LastWordsMechanism } from "./last-words-mechanism";
 import {
@@ -141,9 +143,10 @@ export class LastWordsWindow {
       // 开放抛错仍发生在 try 外；开放成功后，所有 return／continue 与原异常都经过 finally。
       const permit = this.runtime.world.openDeathAction(deadId, "speak", phase, day, scopeCurrent);
       let delivery: RequestLeaseTurn | undefined;
+      let request: ActionRequest | undefined;
       let failed = false;
       try {
-        const request = requests.create({
+        request = requests.create({
           phase,
           actorId: deadId,
           allowedTools: ["speak"],
@@ -175,6 +178,8 @@ export class LastWordsWindow {
         leases.bind(requestScope, request);
         delivery = leases.openDelivery(requestScope, request);
         if (!delivery) return;
+        if (!ownedEntitlement && request.context.action_failure_policy !== "error")
+          allowRequestExpirySkip(request);
         // 先保原 provider callee／receiver，再准备新增调用口；最后守卫后只调用已准备函数，不能晚读 .apply。
         const getAction = actionProvider.getAction;
         const actionArguments: [typeof request] = [request];
@@ -220,6 +225,16 @@ export class LastWordsWindow {
         // 只以实际 push 正常返回确认完成；先终结租约再通知，true 回调晚错不撤事件或二次 false。
         delivery.complete();
       } catch (error) {
+        // 普通遗言的过期交付按原窗口期满路径收口；严格授词及其它撤权仍传播失败。
+        // 只识别绑定本次原请求的本地异常，不按外来 message 或相同 actorId 吞错。
+        if (
+          !ownedEntitlement &&
+          request &&
+          request.context.action_failure_policy !== "error" &&
+          isRequestDeliveryExpired(error, request) &&
+          error.recoverable
+        )
+          return;
         failed = true;
         throw error;
       } finally {

@@ -43,3 +43,11 @@ God公开replay、私有manifest／reproduction及逐玩家档案的字段与身
 工具仍映射为 `tool_call` 与 `tool_result`；原参数、候选接受信息、回执和白名单诊断沿既有字段保存。工具增量增加可选的 `call_id` 与有限枚举 `status` 元数据，用于关联真实开始／中间／完成状态；旧 reader 可忽略这些新增字段，旧档缺席时仍按原 `tool_call`／`tool_result` 解释，不补造进度。结构化记录不包含终端生成的 ANSI 或 HTML。
 
 自爆确认的首份警示与第二份确认是私有 `tool_result`，保留 `confirmation_id`、`status`、`accepted`、`applied` 和原参数以便排查文本与工具矛盾。首份提案不写成最终行动，不生成公开自爆事件；未确认时最终行动仍为 `null`。精确复现依赖最终领域行动，确认编号不成为领域参数或跨回合授权。
+
+### 可复现的交付期满
+
+严格 Tape3 的 error outcome 增加固定码 `request_delivery_expired`，记录器只在本地交付期满异常确实关联本请求或其合法期限别名时写入。不保存请求对象、运行时完成身份或原始异常；交付断言拒绝后没有 `returnedCandidate`，也不能同时伪造该字段。旧 Tape2 仍只接受原来的 `decision_failed`，历史档案不迁移、不补造超时原因。这是当前 Tape3 接受面的显式扩展，旧版 Tape3 reader 不保证识别新码；引擎来源核验仍按原契约执行。
+
+重放使用该固定事实向本轮实际请求交付相同的期满异常，不重造真实时钟、不恢复过期动作权限。普通遗言按机制登记的政策关闭后继续原阶段；严格请求保持失败。通用 Provider 错误、其它撤权和旧无精确原因的 error 继续走原失败重放路径。
+
+CLI 将已知期满归为 `request_timeout` 并显示固定 `action_request_delivery_expired`；其它交付撤权归为 `action_failed`，不再把它们误标成网络传输故障。诊断仍只输出白名单字段。

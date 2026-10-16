@@ -5,7 +5,7 @@
  * 后续失败不回滚已提交的动作，也不把可选摘要失败升级为对局失败。
  * Agent 与复现记录共用本局板子来源；maxDays 在原元数据读取处捕获，循环复用该值。
  */
-import { deriveBoundedRequest } from "../domain/request-delivery";
+import { deriveBoundedRequest, isRequestDeliveryExpired } from "../domain/request-delivery";
 import { animalOriginalAuditIds, animalOriginalAuditPlayer } from "../features/animal-dream/roster";
 import { aliveLifeDescriptor } from "../domain/components/alive";
 import { initialPlayerIdentity } from "../domain/initial-roster";
@@ -242,6 +242,8 @@ export async function runGame(
             },
             (error) => {
               inFlight.delete(tracked);
+              // 机制明确允许期满收口的请求仍交回原窗口关闭；不提前停掉整局和其它 Agent。
+              if (isRequestDeliveryExpired(error, request) && error.recoverable) throw error;
               if (error !== stopReason) actionFailures.push(error);
               // 保留记录器已写的决策前缀，再开始取消其它动作，保留原异常的因果先后。
               void closeRuntime();

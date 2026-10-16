@@ -388,3 +388,76 @@ test("last words guard the prepared publication and retain old errors before fal
   expect(completed.events).toHaveLength(1);
   expect(completed.game.world.activeDeathActionCount).toBe(0);
 });
+
+for (const strict of [false, true])
+  test(`遗言期满只按机制显式政策收口，严格=${strict}`, async () => {
+    const { ActionRequestDeliveryExpired } = await import("../../../src/domain/request-delivery");
+    const f = fixture();
+    class Requests extends GameActionRequestFactory {
+      override create(input: Parameters<GameActionRequestFactory["create"]>[0]) {
+        const request = super.create(input);
+        if (strict) request.context.action_failure_policy = "error";
+        return request;
+      }
+    }
+    const window = new LastWordsWindow({
+      requestFactory: Requests,
+      world: f.game.world,
+      events: f.events,
+      state: f.state,
+      toolGateway: new ToolGateway(),
+      lastWordsMechanism: getDefaultLastWordsMechanism(),
+    });
+    let observed: unknown;
+    const task = window.collect(
+      [5],
+      Phase.Day,
+      Phase.Voting,
+      { 5: [DeathCause.Exile] },
+      {
+        async getAction(request) {
+          const bounded = deriveBoundedRequest(request, Date.now() + 15);
+          await new Promise((resolve) => setTimeout(resolve, 25));
+          try {
+            assertRequestDelivery(bounded);
+          } catch (error) {
+            observed = error;
+            throw error;
+          }
+          return speak("must-not-publish");
+        },
+      },
+      {},
+    );
+    if (strict) await expect(task).rejects.toBeInstanceOf(ActionRequestDeliveryExpired);
+    else await task;
+    expect(observed).toBeInstanceOf(ActionRequestDeliveryExpired);
+    expect((observed as InstanceType<typeof ActionRequestDeliveryExpired>).recoverable).toBe(
+      !strict,
+    );
+    expect(f.events).toEqual([]);
+    expect(f.game.world.activeDeathActionCount).toBe(0);
+  });
+
+test("普通遗言也不吞掉同文案的外来异常或领域撤权", async () => {
+  const f = fixture();
+  const error = Object.assign(new Error("action_request_delivery_authority_revoked"), {
+    code: "action_request_delivery_expired",
+  });
+  await expect(
+    f.window.collect(
+      [5],
+      Phase.Day,
+      Phase.Voting,
+      { 5: [DeathCause.Exile] },
+      {
+        async getAction() {
+          throw error;
+        },
+      },
+      {},
+    ),
+  ).rejects.toBe(error);
+  expect(f.events).toEqual([]);
+  expect(f.game.world.activeDeathActionCount).toBe(0);
+});

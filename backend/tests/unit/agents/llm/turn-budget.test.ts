@@ -73,7 +73,7 @@ test("queue time belongs to the turn deadline: expired waiter is removed and nev
     const second = await provider.getAction(request(2, Date.now() + 30));
     expect(second).toBeNull();
     expect(started).toBe(1);
-    expect(fallback).toEqual([2]);
+    expect(fallback).toEqual([]);
     expect(provider.runtimeState.scheduler).toEqual({ closed: false, active: 1, queued: 0 });
   } finally {
     release();
@@ -111,7 +111,7 @@ test("required-action retries share one budget instead of resetting timeout for 
   expect(await provider.getAction(request(1))).toBeNull();
   expect(attempts).toBeGreaterThanOrEqual(1);
   expect(attempts).toBeLessThanOrEqual(2);
-  expect(fallbacks).toBe(1);
+  expect(fallbacks).toBe(0);
   expect(provider.runtimeState.turns).toBe(0);
   await provider.close();
 });

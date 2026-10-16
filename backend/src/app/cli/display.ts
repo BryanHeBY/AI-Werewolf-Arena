@@ -38,7 +38,22 @@ export function cliFailure(error: unknown, locale: Locale) {
   } catch {
     /* 无法透视的外来错误。 */
   }
-  const candidate = typeof message === "string" ? message.split(":", 1)[0] : "command_failed";
+  let fixedCode: unknown;
+  try {
+    fixedCode =
+      error && typeof error === "object"
+        ? Object.getOwnPropertyDescriptor(error, "code")?.value
+        : undefined;
+  } catch {
+    /* 外来访问器不参与公开错误码。 */
+  }
+  const candidate =
+    typeof fixedCode === "string" &&
+    COMMAND_ERROR_CODES.includes(fixedCode as (typeof COMMAND_ERROR_CODES)[number])
+      ? fixedCode
+      : typeof message === "string"
+        ? message.split(":", 1)[0]
+        : "command_failed";
   const code =
     configuration.code !== "config_check_failed"
       ? configuration.code

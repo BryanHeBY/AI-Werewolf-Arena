@@ -16,6 +16,7 @@ export async function awaitBeforeDeadline<T>(
   signal?: AbortSignal,
 ): Promise<T> {
   if (signal?.aborted) throw signal.reason;
+  if (deadlineAtMs !== undefined && deadlineAtMs <= Date.now()) throw new TurnDeadlineElapsed();
   // 外部中止和期限计时器共用单向控制器；首次 abort 的原因不会被后续中止覆盖。
   const controller = new AbortController();
   const abort = () => controller.abort(signal?.reason);
@@ -32,12 +33,15 @@ export async function awaitBeforeDeadline<T>(
       // start 延至微任务执行，并在调用前检查取消；本 helper 不承诺抢占同步 start 的执行。
       Promise.resolve().then(() => {
         controller.signal.throwIfAborted();
+        if (deadlineAtMs !== undefined && deadlineAtMs <= Date.now())
+          throw new TurnDeadlineElapsed();
         return start();
       }),
       controller.signal,
     );
     // 即使任务先兑现，也在返回前复核此等待是否已中止；结果本身不代表资源已被关闭。
     controller.signal.throwIfAborted();
+    if (deadlineAtMs !== undefined && deadlineAtMs <= Date.now()) throw new TurnDeadlineElapsed();
     return result;
   } finally {
     if (timer) clearTimeout(timer);

@@ -39,6 +39,8 @@ const internalCodes: Readonly<Record<string, ErrorDiagnosticCode>> = Object.free
   audit_acp_timeout: "request_timeout",
   acp_initialization_timeout: "request_timeout",
   request_deadline_elapsed: "request_timeout",
+  action_request_delivery_expired: "request_timeout",
+  action_request_delivery_authority_revoked: "action_failed",
   acp_initialization_aborted: "request_aborted",
   audit_acp_turn_closed: "request_aborted",
   audit_acp_executor_closed: "request_aborted",
@@ -104,6 +106,8 @@ export function describeError(error: unknown): ErrorDiagnostic {
       (typeof message === "string" && /^llm_request_timeout_\d+ms$/.test(message))
     )
       code = "request_timeout";
+    else if (typeof errno === "string" && Object.hasOwn(internalCodes, errno))
+      code = internalCodes[errno];
     else if (typeof message === "string" && Object.hasOwn(internalCodes, message))
       code = internalCodes[message];
     // 每层独立构造白名单候选；retryable 只是诊断资料，不在这里触发网络重试。

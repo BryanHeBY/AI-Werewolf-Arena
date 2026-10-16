@@ -47,7 +47,7 @@ import {
 import type { ObservedPlayerStrategy } from "../observation/player-observation";
 import { AgentBugReportService } from "../reporting/bug-report-service";
 import { ScopedRequestScheduler } from "../runtime/request-scheduler";
-import { awaitBeforeDeadline } from "../runtime/turn-deadline";
+import { awaitBeforeDeadline, TurnDeadlineElapsed } from "../runtime/turn-deadline";
 import { LlmObserver } from "../player/player-observer";
 import { PiPromptState } from "./pi-prompt-state";
 import { createPiOutputObserver } from "../../adapters/pi/pi-output";
@@ -376,7 +376,10 @@ export class PiActionProvider implements ActionProvider {
             if (action && getDefaultToolSpecRegistry().requiresConfirmation(action.name))
               action = null;
           } catch (error) {
-            if (this.closed || !signal.aborted) finishingErrors.push(error);
+            if (error instanceof TurnDeadlineElapsed) {
+              action = null;
+              fallbackReason = "deadline_skip";
+            } else if (this.closed || !signal.aborted) finishingErrors.push(error);
           }
         }
         try {

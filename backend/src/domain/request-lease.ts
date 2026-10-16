@@ -125,6 +125,8 @@ interface LeaseTurn<Owner, Binding> {
   pin?: FieldPin;
   originalDeadline?: unknown;
   deadline: number | null;
+  /** 只由真实期限检查置位；字段／领域失效不伪装为普通超时。 */
+  expired: boolean;
   closed: boolean;
   settled: boolean;
   opened: boolean;
@@ -414,6 +416,7 @@ export class RequestLease<Owner, Scope, Binding> {
         completion: {},
         aliases: new Set(),
         deadline: null,
+        expired: false,
       },
       retired: false,
       deadline: undefined,
@@ -463,9 +466,13 @@ export class RequestLease<Owner, Scope, Binding> {
         !this.matches(owner, turn.original, turn.binding) ||
         !samePinnedFields(turn.original, turn.pin!) ||
         !Object.is(turn.original.deadlineAtMs, turn.originalDeadline) ||
-        !this.domainCurrent(owner, turn.binding) ||
-        (turn.deadline !== null && turn.deadline <= Date.now())
+        !this.domainCurrent(owner, turn.binding)
       ) {
+        turn.closed = true;
+        return;
+      }
+      if (turn.deadline !== null && turn.deadline <= Date.now()) {
+        turn.expired = true;
         turn.closed = true;
         return;
       }
@@ -494,6 +501,7 @@ export class RequestLease<Owner, Scope, Binding> {
         turn.original,
         () => this.scope(owner, turn.original) !== undefined,
         turn.completion,
+        () => turn.expired,
       );
       turn.opened = true;
       for (const alias of turn.aliases) this.bindDelivery(turn, alias);
@@ -506,6 +514,7 @@ export class RequestLease<Owner, Scope, Binding> {
       request,
       () => this.scope(turn.owner, request) !== undefined,
       turn.completion,
+      () => turn.expired,
     );
   }
 

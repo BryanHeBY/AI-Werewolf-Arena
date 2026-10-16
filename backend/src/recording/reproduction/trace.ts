@@ -10,7 +10,11 @@ import { Camp, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
 import type { ActionProvider } from "../../domain/actions";
-import { assertRequestDelivery, deferRequestDelivery } from "../../domain/request-delivery";
+import {
+  isRequestDeliveryExpired,
+  assertRequestDelivery,
+  deferRequestDelivery,
+} from "../../domain/request-delivery";
 import {
   REPRODUCTION_SCHEMA_VERSION,
   parseReproductionRecord,
@@ -157,7 +161,13 @@ export class ReproductionTrace {
       // 同步 settle 的通知也在此 try 内：通知抛错后写 error 并再次增加结算计数，再通知。
       // deferred 回调在未来调用时才执行，异常不会回到本 try；保留原边界与已写前缀。
       // 传输错误文本可能含认证凭证；只保留可复现的失败信息，原始消息不入档。
-      entry.outcome = { kind: "error", code: "decision_failed", name: recordedErrorName(error) };
+      entry.outcome = {
+        kind: "error",
+        code: isRequestDeliveryExpired(error, request)
+          ? "request_delivery_expired"
+          : "decision_failed",
+        name: recordedErrorName(error),
+      };
       entry.settleOrder = ++this.settled;
       this.onChange();
       throw error;

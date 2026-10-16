@@ -315,3 +315,30 @@ test("audit input accepts only validated diagnostic facts and omits legacy raw e
     expect(guardedPlayer.timeline[0].retry_trace[0].diagnostic).toBeUndefined();
   }
 });
+
+test("交付期限和领域撤权有独立的安全分类，CLI 保留固定码", async () => {
+  const { ActionRequestDeliveryExpired } = await import("../../../src/domain/request-delivery");
+  const { cliFailure } = await import("../../../src/app/cli/display");
+  const expiry = new ActionRequestDeliveryExpired(
+    {} as import("../../../src/domain").ActionRequest,
+  );
+  expect(describeError(expiry)).toEqual({ code: "request_timeout" });
+  expect(describeError(new Error("action_request_delivery_authority_revoked"))).toEqual({
+    code: "action_failed",
+  });
+  for (const locale of ["zh-CN", "en"] as const) {
+    expect(cliFailure(expiry, locale)).toMatchObject({
+      code: "action_request_delivery_expired",
+      diagnostic: { code: "request_timeout" },
+    });
+    expect(
+      cliFailure(new Error("action_request_delivery_authority_revoked"), locale),
+    ).toMatchObject({
+      code: "action_request_delivery_authority_revoked",
+      diagnostic: { code: "action_failed" },
+    });
+    expect(
+      JSON.stringify(cliFailure(Object.assign(new Error(secret), { code: secret }), locale)),
+    ).not.toContain(secret);
+  }
+});

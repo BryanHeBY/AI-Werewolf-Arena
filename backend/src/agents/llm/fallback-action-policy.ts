@@ -34,7 +34,7 @@ export class FallbackActionPolicy {
     reason: FallbackReason,
     signal?: AbortSignal,
   ): Promise<ToolCall | null> {
-    // 本地同步策略仍可在耗尽期限时立即返回；异步回退不获得新预算，也不能跨过关闭继续执行。
+    // 同步策略也须在原绝对期限内开始和交付；回退不获得新预算，不能跨过关闭继续执行。
     const candidate = allowsActionFallback(request)
       ? await awaitBeforeDeadline(
           () => this.provider.getAction(request),

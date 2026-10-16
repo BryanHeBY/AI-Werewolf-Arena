@@ -251,7 +251,11 @@ export interface RecordedDecision {
   outcome:
     | { kind: "pending" }
     | { kind: "action"; action: ToolCall | null }
-    | { kind: "error"; code: "decision_failed"; name: RecordedErrorName };
+    | {
+        kind: "error";
+        code: "decision_failed" | "request_delivery_expired";
+        name: RecordedErrorName;
+      };
 }
 /** 序列化事件证据；历史 audience 可缺省，不代表运行时行动许可。 */
 export interface RecordedGameEvent {
@@ -1008,6 +1012,18 @@ const schema3 = schema2.extend({
       },
       schema2.shape.decisions.element
         .extend({
+          outcome: z.discriminatedUnion("kind", [
+            z.strictObject({ kind: z.literal("pending") }),
+            z.strictObject({
+              kind: z.literal("action"),
+              action: z.strictObject({ name: z.enum(TOOL_NAMES), args: jsonObject }).nullable(),
+            }),
+            z.strictObject({
+              kind: z.literal("error"),
+              code: z.enum(["decision_failed", "request_delivery_expired"]),
+              name: z.enum(ERROR_NAMES),
+            }),
+          ]),
           returnedCandidate: z
             .strictObject({ name: z.enum(TOOL_NAMES), args: jsonObject })
             .nullable()
@@ -1016,7 +1032,9 @@ const schema3 = schema2.extend({
         .superRefine((decision, ctx) => {
           if (
             Object.hasOwn(decision, "returnedCandidate") &&
-            (decision.outcome.kind !== "error" || decision.outcome.name !== "Error")
+            (decision.outcome.kind !== "error" ||
+              decision.outcome.name !== "Error" ||
+              decision.outcome.code !== "decision_failed")
           )
             ctx.addIssue({ code: "custom", message: "reproduction_returned_candidate_invalid" });
         }),

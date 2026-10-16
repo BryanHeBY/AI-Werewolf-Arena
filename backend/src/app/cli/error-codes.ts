@@ -3,6 +3,8 @@
  * 仅列已有代码，不按前缀接纳任意异常文字；实际白名单匹配与双语文案由 CLI 显示边界完成。
  */
 export const COMMAND_ERROR_CODES = [
+  "action_request_delivery_expired",
+  "action_request_delivery_authority_revoked",
   "config_migration_usage",
   "reproduction_causal_order_invalid",
   "reproduction_checkpoint_mismatch",

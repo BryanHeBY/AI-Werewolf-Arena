@@ -32,3 +32,13 @@ Animal／Fragrant／Noble等已有复杂协议按自己的正式同意／alias�
 Tape3重放只在error且自身明确带候选时重交该事实，让原stage继续校验、重试和付款；旧缺字段仍在Provider点抛原记录错误。Cupid／Hybrid独立核验从最后一次决定读取已知候选，显式null／错工具／坏目标不能被CP或更早选择遮蔽；候选与合法部分付款前缀分别审核。此修补针对已存在的Hybrid三次未付重试消费者，不保证任意外部安装故障的exact replay。
 
 实际owner：`domain/request-lease.ts`、`domain/request-delivery.ts`及每族真实window；SDK／ACP只消费完成端口，不夹入另一套付款判定。
+
+## 期限耗尽与普通遗言收口
+
+`RequestLease` 保留最早绝对期限和单调关闭规则，另外标记本次关闭是否确由期限耗尽触发。字段、原生命、阶段或领域失效优先按原顺序检查，不得因为同时超过期限就伪装成可恢复超时。
+
+普通 `LastWordsWindow` 在开放真实交付窗口后，按完成身份登记“期满跳过”；严格授词／`action_failure_policy=error` 不登记。合法期限别名共享完成身份，因此 runner 绑定的请求与机制原请求可以识别同一份期满拒绝；相同 JSON、席位编号或外来异常字符串不产生此关联。
+
+交付断言仍拒绝期满结果，固定错误码为 `action_request_delivery_expired`，旧 `message` 保持 `action_request_delivery_authority_revoked`。runner 只把明确可恢复且绑定本请求的期满异常交还机制，不提前关闭全局 Agent；普通遗言窗口不发表迟到文字，按原期满路径关闭许可与交付。其它撤权、严格请求、正文和清理异常仍保持失败语义。
+
+回退也必须在原绝对期限内启动与交付。`awaitBeforeDeadline` 在调用前、微任务执行前和结果返回前复核期限，不能依靠 `setTimeout(0)` 尚未执行就生成迟到候选。期限已经耗尽时跳过回退，不延长预算；玩家档案中的最终行动为 `null`。

@@ -11,6 +11,7 @@ import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp
 import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 import {
   bindRequestDeliveryGuard,
+  ActionRequestDeliveryExpired,
   settleRequestDelivery,
   assertRequestDelivery,
   Role,
@@ -337,4 +338,66 @@ test("returned candidate: legacy Tape2 keeps one version precheck read and the o
   });
   expect(() => parseReproductionRecord(changesVersion)).toThrow("reproduction_record_invalid");
   expect(reads).toBe(2);
+});
+
+test("期限拒绝保留 Tape3 的明确原因，旧 Tape2 不接纳新码且不补造候选", async () => {
+  const { trace, request } = fixture();
+  bindRequestDeliveryGuard(
+    request,
+    () => false,
+    undefined,
+    () => true,
+  );
+  await expect(trace.decide(request, { getAction: async () => null })).rejects.toBeInstanceOf(
+    ActionRequestDeliveryExpired,
+  );
+  const record = trace.build();
+  expect(record.decisions[0]!.outcome).toEqual({
+    kind: "error",
+    code: "request_delivery_expired",
+    name: "Error",
+  });
+  expect(Object.hasOwn(record.decisions[0]!, "returnedCandidate")).toBe(false);
+  expect(parseReproductionRecord(record).decisions[0]!.outcome).toEqual(
+    record.decisions[0]!.outcome,
+  );
+  const old = structuredClone(record);
+  old.schemaVersion = 2;
+  expect(() => parseReproductionRecord(old)).toThrow();
+  const forged = structuredClone(record);
+  forged.decisions[0]!.returnedCandidate = null;
+  expect(() => parseReproductionRecord(forged)).toThrow();
+});
+
+test("允许期满跳过只跟随真实完成身份，期限别名可关联，JSON 副本不能借用", async () => {
+  const { allowRequestExpirySkip, isRequestDeliveryExpired } =
+    await import("../../../src/domain/request-delivery");
+  const { request } = fixture(),
+    alias = { ...request },
+    completion = {};
+  bindRequestDeliveryGuard(
+    request,
+    () => false,
+    completion,
+    () => true,
+  );
+  allowRequestExpirySkip(request);
+  bindRequestDeliveryGuard(
+    alias,
+    () => false,
+    completion,
+    () => true,
+  );
+  let error: unknown;
+  try {
+    assertRequestDelivery(alias);
+  } catch (failure) {
+    error = failure;
+  }
+  expect(isRequestDeliveryExpired(error, request)).toBe(true);
+  expect(isRequestDeliveryExpired(error, structuredClone(request))).toBe(false);
+  expect((error as ActionRequestDeliveryExpired).recoverable).toBe(true);
+  expect(() => allowRequestExpirySkip(structuredClone(request))).toThrow(
+    "action_request_delivery_completion_missing",
+  );
 });
