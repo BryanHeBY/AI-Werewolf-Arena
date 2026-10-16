@@ -3,6 +3,7 @@
  * 输入是公开两语真实归档；逐帧视图作UI接线对照，角色规则另由独立引擎判例核验。
  * 本测试不执行模型或读取个人记录；God档含隐藏身份，不能当玩家授权导出。
  */
+import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -50,14 +51,17 @@ for (const [feature, prefixes] of features)
       for (const i of [...indices, ...[...indices].reverse().slice(0, 3)]) {
         const frame = i * 90 + 45,
           state = buildReplayFrame(input, frame);
-        await slider.evaluate((el, value) => {
-          Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
-            el,
-            String(value),
-          );
-          el.dispatchEvent(new Event("input", { bubbles: true }));
-          el.dispatchEvent(new Event("change", { bubbles: true }));
-        }, frame);
+        await slider.evaluate(
+          (el, value) => {
+            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
+              el,
+              String(value),
+            );
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            el.dispatchEvent(new Event("change", { bubbles: true }));
+          },
+          replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" }),
+        );
         await expect(page.getByTestId("composition-event")).toHaveAttribute(
           "data-event-seq",
           String(state.eventSeq),

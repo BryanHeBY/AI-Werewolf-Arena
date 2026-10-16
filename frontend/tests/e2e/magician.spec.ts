@@ -22,7 +22,15 @@ for (const policy of ["original", "exchanged"] as const)
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const exchange = replay.events.find((e) => e.type === "magician_exchange_committed")!;
-      const label = eventLabel(exchange, locale);
+      const label = eventLabel(
+        exchange,
+        locale,
+        replay.players.map((p: { player_id: number }) => p.player_id),
+        replay.players.map((p: { player_id: number; name?: string }) => ({
+          id: p.player_id,
+          name: p.name,
+        })),
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
@@ -30,7 +38,15 @@ for (const policy of ["original", "exchanged"] as const)
       await expect(page.getByTestId("composition-winner")).toHaveCount(0);
       if (policy === "exchanged") {
         const miss = replay.events.find((e) => e.type === "death_shot_missed")!;
-        const missLabel = eventLabel(miss, locale);
+        const missLabel = eventLabel(
+          miss,
+          locale,
+          replay.players.map((p: { player_id: number }) => p.player_id),
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        );
         await page.locator(".timeline .event").filter({ hasText: missLabel }).first().click();
         await expect(page.getByTestId("composition-event")).toHaveText(missLabel);
         await expect(page.locator(".seat-grid .dead")).toHaveCount(2);

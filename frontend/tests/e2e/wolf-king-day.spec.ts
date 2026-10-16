@@ -29,7 +29,15 @@ for (const mapping of ["original", "exchanged"] as const)
         await page.goto("/");
         const exchange = replay.events.find((e) => e.type === "magician_exchange_committed")!;
         const select = async (event: typeof exchange) => {
-          const label = eventLabel(event, locale);
+          const label = eventLabel(
+            event,
+            locale,
+            replay.players.map((p: { player_id: number }) => p.player_id),
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
           await expect(page.getByTestId("composition-event")).toHaveText(label);
         };

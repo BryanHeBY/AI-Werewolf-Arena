@@ -22,7 +22,15 @@ for (const variant of ["mapped", "cancel", "pk"] as const)
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");
         const mapped = replay.events.find((e) => e.type === "exile_target_mapped")!;
-        const label = eventLabel(mapped, locale);
+        const label = eventLabel(
+          mapped,
+          locale,
+          replay.players.map((p: { player_id: number }) => p.player_id),
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
         await expect(page.getByTestId("composition-event")).toHaveText(label);
         const dead = async () =>
@@ -35,7 +43,17 @@ for (const variant of ["mapped", "cancel", "pk"] as const)
         expect(out.payload.target).toBe(mapped.payload.effectiveId);
         await page
           .locator(".timeline .event")
-          .filter({ hasText: eventLabel(out, locale) })
+          .filter({
+            hasText: eventLabel(
+              out,
+              locale,
+              replay.players.map((p: { player_id: number }) => p.player_id),
+              replay.players.map((p: { player_id: number; name?: string }) => ({
+                id: p.player_id,
+                name: p.name,
+              })),
+            ),
+          })
           .first()
           .click();
         expect(await dead()).toContain(out.payload.target);
@@ -44,7 +62,17 @@ for (const variant of ["mapped", "cancel", "pk"] as const)
         )!;
         await page
           .locator(".timeline .event")
-          .filter({ hasText: eventLabel(missed, locale) })
+          .filter({
+            hasText: eventLabel(
+              missed,
+              locale,
+              replay.players.map((p: { player_id: number }) => p.player_id),
+              replay.players.map((p: { player_id: number; name?: string }) => ({
+                id: p.player_id,
+                name: p.name,
+              })),
+            ),
+          })
           .first()
           .click();
         expect(await dead()).toHaveLength(4);

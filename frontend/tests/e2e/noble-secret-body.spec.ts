@@ -3,6 +3,8 @@
  * 输入为失败翻牌、次夜通知及警徽事件；输出检查各帧披露、仍存活的公开身份和授权最小画面。
  * 原字面预期与归档事件保留，不在测试重算隐匿规则或暴露其他玩家私有身份。
  */
+import { expectReplayCaption } from "../support/replay-caption-expectation";
+import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -31,7 +33,10 @@ for (const locale of ["en", "zh-CN"] as const)
         el.dispatchEvent(new Event("input", { bubbles: true }));
         el.dispatchEvent(new Event("change", { bubbles: true }));
       },
-      (input.replay.events.length - 1) * 90 + 89,
+      replayBrowserFrame(replay, (input.replay.events.length - 1) * 90 + 89, {
+        locale,
+        timeZone: "UTC",
+      }),
     );
     const seat = page.locator(`[data-composition-player="${id}"]`);
     await expect(seat).toHaveCSS("opacity", "1");
@@ -101,14 +106,24 @@ for (const locale of ["en", "zh-CN"] as const)
             el.dispatchEvent(new Event("input", { bubbles: true }));
             el.dispatchEvent(new Event("change", { bubbles: true }));
           },
-          i * 90 + 45,
+          replayBrowserFrame(replay, i * 90 + 45, { locale, timeZone: "UTC" }),
         );
-        await expect(page.getByTestId("composition-event")).toHaveText(
-          eventLabel(
-            e,
-            locale,
-            replay.players.map((p) => p.player_id),
-          ),
+        await expectReplayCaption(
+          page,
+          replay,
+          {
+            seq: e.seq,
+            text: eventLabel(
+              e,
+              locale,
+              replay.players.map((p) => p.player_id),
+              replay.players.map((p: { player_id: number; name?: string }) => ({
+                id: p.player_id,
+                name: p.name,
+              })),
+            ),
+          },
+          { locale, timeZone: "UTC" },
         );
       }
       await slider.evaluate(
@@ -120,14 +135,28 @@ for (const locale of ["en", "zh-CN"] as const)
           el.dispatchEvent(new Event("input", { bubbles: true }));
           el.dispatchEvent(new Event("change", { bubbles: true }));
         },
-        input.replay.events.findIndex((e) => e.seq === n3.seq) * 90 + 45,
-      );
-      await expect(page.getByTestId("composition-event")).toHaveText(
-        eventLabel(
-          n3,
-          locale,
-          replay.players.map((p) => p.player_id),
+        replayBrowserFrame(
+          replay,
+          input.replay.events.findIndex((e) => e.seq === n3.seq) * 90 + 45,
+          { locale, timeZone: "UTC" },
         ),
+      );
+      await expectReplayCaption(
+        page,
+        replay,
+        {
+          seq: n3.seq,
+          text: eventLabel(
+            n3,
+            locale,
+            replay.players.map((p) => p.player_id),
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          ),
+        },
+        { locale, timeZone: "UTC" },
       );
     });
 for (const locale of ["en", "zh-CN"] as const)
@@ -153,15 +182,20 @@ for (const locale of ["en", "zh-CN"] as const)
         },
         seek = async (frame: number) => {
           const slider = page.locator('.frame-control input[type="range"]');
-          await slider.evaluate((el, value) => {
-            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
-              el,
-              String(value),
-            );
-            el.dispatchEvent(new Event("input", { bubbles: true }));
-            el.dispatchEvent(new Event("change", { bubbles: true }));
-          }, frame);
-          await expect(slider).toHaveValue(String(frame));
+          await slider.evaluate(
+            (el, value) => {
+              Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
+                el,
+                String(value),
+              );
+              el.dispatchEvent(new Event("input", { bubbles: true }));
+              el.dispatchEvent(new Event("change", { bubbles: true }));
+            },
+            replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" }),
+          );
+          await expect(slider).toHaveValue(
+            String(replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" })),
+          );
         };
       const critical = replay.events.filter((e) =>
         [
@@ -180,12 +214,22 @@ for (const locale of ["en", "zh-CN"] as const)
           .locator(".timeline .event")
           .filter({ hasText: `#${e.seq} ·` })
           .click();
-        await expect(page.getByTestId("composition-event")).toHaveText(
-          eventLabel(
-            e,
-            locale,
-            replay.players.map((p) => p.player_id),
-          ),
+        await expectReplayCaption(
+          page,
+          replay,
+          {
+            seq: e.seq,
+            text: eventLabel(
+              e,
+              locale,
+              replay.players.map((p) => p.player_id),
+              replay.players.map((p: { player_id: number; name?: string }) => ({
+                id: p.player_id,
+                name: p.name,
+              })),
+            ),
+          },
+          { locale, timeZone: "UTC" },
         );
         expect(await dead()).toEqual(expected(replay.events.findIndex((x) => x.seq === e.seq)));
         const i = input.replay.events.findIndex((x) => x.seq === e.seq);
@@ -258,15 +302,20 @@ for (const locale of ["en", "zh-CN"] as const)
       const slider = page.locator('.frame-control input[type="range"]'),
         seat = page.locator(`[data-composition-player="${id}"]`),
         seek = async (frame: number) => {
-          await slider.evaluate((el, value) => {
-            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
-              el,
-              String(value),
-            );
-            el.dispatchEvent(new Event("input", { bubbles: true }));
-            el.dispatchEvent(new Event("change", { bubbles: true }));
-          }, frame);
-          await expect(slider).toHaveValue(String(frame));
+          await slider.evaluate(
+            (el, value) => {
+              Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
+                el,
+                String(value),
+              );
+              el.dispatchEvent(new Event("input", { bubbles: true }));
+              el.dispatchEvent(new Event("change", { bubbles: true }));
+            },
+            replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" }),
+          );
+          await expect(slider).toHaveValue(
+            String(replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" })),
+          );
         };
       await seek(i * 90 - 1);
       if (actor !== "body") await expect(seat).toContainText("unknown");

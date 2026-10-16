@@ -25,7 +25,15 @@ for (const variant of ["overlap", "cancel", "disjoint"] as const)
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");
         const chosen = replay.events.find((e) => e.type === "wolf_sorcerer_exchange_committed")!;
-        const label = eventLabel(chosen, locale);
+        const label = eventLabel(
+          chosen,
+          locale,
+          replay.players.map((p: { player_id: number }) => p.player_id),
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
         await expect(page.getByTestId("composition-event")).toHaveText(label);
         const dead = async () =>
@@ -36,7 +44,17 @@ for (const variant of ["overlap", "cancel", "disjoint"] as const)
         const resolved = replay.events.find((e) => e.type === "night_resolved" && e.day === 2)!;
         await page
           .locator(".timeline .event")
-          .filter({ hasText: eventLabel(resolved, locale) })
+          .filter({
+            hasText: eventLabel(
+              resolved,
+              locale,
+              replay.players.map((p: { player_id: number }) => p.player_id),
+              replay.players.map((p: { player_id: number; name?: string }) => ({
+                id: p.player_id,
+                name: p.name,
+              })),
+            ),
+          })
           .first()
           .click();
         expect(await dead()).toHaveLength(4);
@@ -44,7 +62,17 @@ for (const variant of ["overlap", "cancel", "disjoint"] as const)
         const shot = replay.events.find((e) => e.type === "hunter_shot")!;
         await page
           .locator(".timeline .event")
-          .filter({ hasText: eventLabel(shot, locale) })
+          .filter({
+            hasText: eventLabel(
+              shot,
+              locale,
+              replay.players.map((p: { player_id: number }) => p.player_id),
+              replay.players.map((p: { player_id: number; name?: string }) => ({
+                id: p.player_id,
+                name: p.name,
+              })),
+            ),
+          })
           .first()
           .click();
         expect(await dead()).toHaveLength(5);

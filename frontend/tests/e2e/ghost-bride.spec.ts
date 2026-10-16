@@ -1,6 +1,7 @@
 /**
  * 浏览器集成测试读取鬼新娘全知／本人视角 fixture，覆盖伴侣、见证者与终夜结果。归档和 checkpoint 字段提供原生身份、私有婚姻、死亡和两语三阵营胜者的预期；浏览器只渲染已结算记录，不解析婚姻规则或重新判胜。
  */
+import { createPlayerText } from "@ai-werewolf-arena/game-presentation";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -17,7 +18,17 @@ for (const kind of ["good", "wolf", "pair", "witness"])
       const replay = read(`ghost-bride-${kind}.replay.json`);
       replay.meta.locale = locale;
       const group = replay.events.find((e: any) => e.type === "ghost_bride_group_chosen"),
-        label = ghostBrideEventLabel(group.type, group.payload, locale)!;
+        label = ghostBrideEventLabel(
+          group.type,
+          group.payload,
+          locale,
+          createPlayerText(
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          ),
+        )!;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       await page.locator(".timeline .event").filter({ hasText: label }).click();
@@ -119,6 +130,10 @@ for (const actor of ["bride", "groom", "witness", "pack"])
         event,
         locale,
         god.players.map((p: any) => p.player_id),
+        replay.players.map((p: { player_id: number; name?: string }) => ({
+          id: p.player_id,
+          name: p.name,
+        })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);

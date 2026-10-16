@@ -40,7 +40,15 @@ for (const locale of ["en", "zh-CN"] as const)
       [snake, 5, true],
       [blast, 10, false],
     ] as const) {
-      const label = eventLabel(e, locale);
+      const label = eventLabel(
+        e,
+        locale,
+        r.players.map((p: { player_id: number }) => p.player_id),
+        r.players.map((p: { player_id: number; name?: string }) => ({
+          id: p.player_id,
+          name: p.name,
+        })),
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       expect(

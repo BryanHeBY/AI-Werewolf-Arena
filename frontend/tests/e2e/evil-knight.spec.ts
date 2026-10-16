@@ -21,7 +21,15 @@ for (const kind of ["night_immune_wolf", "shot_bypass_good", "day_shot_good"] as
         ),
       );
       const report = replay.events.find((e) => e.type === "seer_checked")!;
-      const label = eventLabel(report, locale);
+      const label = eventLabel(
+        report,
+        locale,
+        replay.players.map((p: { player_id: number }) => p.player_id),
+        replay.players.map((p: { player_id: number; name?: string }) => ({
+          id: p.player_id,
+          name: p.name,
+        })),
+      );
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();

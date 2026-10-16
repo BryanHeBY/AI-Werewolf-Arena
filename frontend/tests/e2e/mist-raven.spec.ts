@@ -2,6 +2,8 @@
  * 浏览器集成测试负责正向跳转并回看雾鸦连带死亡、救援／保护及手动结局归档。
  * 输入为两语 replay/checkpoint；输出按事件前缀和原席位预期检查夜报、死亡、警徽及终局时点，不重演机制规则。
  */
+import { expectReplayCaption } from "../support/replay-caption-expectation";
+import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -54,15 +56,20 @@ for (const variant of cases)
       const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" });
       const seek = async (frame: number) => {
         const slider = page.locator('.frame-control input[type="range"]');
-        await slider.evaluate((el, value) => {
-          Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
-            el,
-            String(value),
-          );
-          el.dispatchEvent(new Event("input", { bubbles: true }));
-          el.dispatchEvent(new Event("change", { bubbles: true }));
-        }, frame);
-        await expect(slider).toHaveValue(String(frame));
+        await slider.evaluate(
+          (el, value) => {
+            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
+              el,
+              String(value),
+            );
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            el.dispatchEvent(new Event("change", { bubbles: true }));
+          },
+          replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" }),
+        );
+        await expect(slider).toHaveValue(
+          String(replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" })),
+        );
       };
       const compositionDead = async () =>
         page
@@ -84,16 +91,34 @@ for (const variant of cases)
         ].includes(e.type),
       );
       for (const e of critical) {
-        const label = eventLabel(e, locale);
+        const label = eventLabel(
+          e,
+          locale,
+          replay.players.map((p: { player_id: number }) => p.player_id),
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.getByTestId("composition-event")).toHaveText(label);
+        await expectReplayCaption(
+          page,
+          replay,
+          { seq: e.seq, text: label },
+          { locale, timeZone: "UTC" },
+        );
         expect(await dead()).toEqual(expected(replay.events.findIndex((x) => x.seq === e.seq)));
         expect(await compositionDead()).toEqual(
           expected(replay.events.findIndex((x) => x.seq === e.seq)),
         );
         const frameIndex = input.replay.events.findIndex((x) => x.seq === e.seq);
         await seek(frameIndex * 90 + 45);
-        await expect(page.getByTestId("composition-event")).toHaveText(label);
+        await expectReplayCaption(
+          page,
+          replay,
+          { seq: e.seq, text: label },
+          { locale, timeZone: "UTC" },
+        );
         expect(await compositionDead()).toEqual(
           expected(replay.events.findIndex((x) => x.seq === e.seq)),
         );

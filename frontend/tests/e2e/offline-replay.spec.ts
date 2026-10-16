@@ -1,6 +1,8 @@
 /**
  * 浏览器集成测试通过工作台验证复盘加载、播放、拖动、席位筛选、语言与时区。输入为录制角色归档和显式畸形／修改字面量；预期检查事件时点、身份可见性、错误与终局胜者，不调用模型或游戏引擎。
  */
+import { withPlayerNames } from "../support/named-label-expectation";
+import { createPlayerText } from "@ai-werewolf-arena/game-presentation";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { lonelyGirlEventLabel, shapeshifterEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -27,20 +29,23 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label =
+      const label = withPlayerNames(
         locale === "en"
           ? backlash
             ? "God Black Market result: player 7 to player 1, Inspection, night 1: Backlash proposal."
             : "Black Market choice: player 7 offered Gun to player 9 on night 1."
           : backlash
             ? "【上帝黑市结果】第1夜7号对1号的查验：反噬提案。"
-            : "【黑市选择】第1夜7号给9号猎枪。";
+            : "【黑市选择】第1夜7号给9号猎枪。",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
-        name: locale === "en" ? "Player 7 · Seat 7" : "7号 · Seat 7",
+        name: locale === "en" ? "Player 7·Seat 7" : "7号·Seat 7",
         exact: true,
       });
       await expect(actor).toContainText(locale === "en" ? "Black Market Merchant" : "黑市商人");
@@ -72,21 +77,28 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const armed =
+      const armed = withPlayerNames(
         locale === "en"
           ? "Player 2: gifted gun gift-gun:1, Armed."
-          : "2号：赠枪gift-gun:1，已激活。";
+          : "2号：赠枪gift-gun:1，已激活。",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: armed }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(armed);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
-        name: locale === "en" ? "Player 2 · Seat 2" : "2号 · Seat 2",
+        name: locale === "en" ? "Player 2·Seat 2" : "2号·Seat 2",
         exact: true,
       });
       await expect(actor).toContainText(locale === "en" ? "Hunter" : "猎人");
       const target = first === "wolf" ? 3 : 1,
-        shot = locale === "en" ? `Player 2 shoots player ${target}` : `2号开枪带走${target}号`;
+        shot = withPlayerNames(
+          locale === "en" ? `Player 2 shoots player ${target}` : `2号开枪带走${target}号`,
+          replay.players,
+          locale,
+        );
       await page.locator(".timeline .event").filter({ hasText: shot }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(shot);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(3);
@@ -118,7 +130,7 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label =
+      const label = withPlayerNames(
         kind === "twelve"
           ? locale === "en"
             ? "Player 1 shoots player 8"
@@ -129,20 +141,23 @@ for (const locale of ["zh-CN", "en"] as const)
               : "觉醒守护：1号第2夜选择6。"
             : locale === "en"
               ? "Awakened extra knife: player 1 chose 6 on night 3."
-              : "觉醒额外刀：1号第3夜选择6。";
+              : "觉醒额外刀：1号第3夜选择6。",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
-        name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+        name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
         exact: true,
       });
       await expect(actor).toContainText(locale === "en" ? "Awakened Hidden Wolf" : "觉醒隐狼");
       const victim = page.getByRole("button", {
         name:
           locale === "en"
-            ? `Player ${kind === "twelve" ? 8 : 6} · Seat ${kind === "twelve" ? 8 : 6}`
-            : `${kind === "twelve" ? 8 : 6}号 · Seat ${kind === "twelve" ? 8 : 6}`,
+            ? `Player ${kind === "twelve" ? 8 : 6}·Seat ${kind === "twelve" ? 8 : 6}`
+            : `${kind === "twelve" ? 8 : 6}号·Seat ${kind === "twelve" ? 8 : 6}`,
         exact: true,
       });
       if (kind === "twelve") await expect(victim).toHaveClass(/dead/);
@@ -162,7 +177,7 @@ for (const locale of ["zh-CN", "en"] as const)
         await expect(actor).toHaveClass(/winner/);
         await expect(
           page.getByRole("button", {
-            name: locale === "en" ? "Player 2 · Seat 2" : "2号 · Seat 2",
+            name: locale === "en" ? "Player 2·Seat 2" : "2号·Seat 2",
             exact: true,
           }),
         ).toHaveClass(/dead/);
@@ -183,13 +198,17 @@ for (const locale of ["zh-CN", "en"] as const)
     shot.payload = { actorId: 7, targetId: 2 };
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
-    const label = locale === "en" ? "Player 7 shoots player 2" : "7号开枪带走2号";
+    const label = withPlayerNames(
+      locale === "en" ? "Player 7 shoots player 2" : "7号开枪带走2号",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(label);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(4);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
     const victim = page.getByRole("button", {
-      name: locale === "en" ? "Player 2 · Seat 2" : "2号 · Seat 2",
+      name: locale === "en" ? "Player 2·Seat 2" : "2号·Seat 2",
       exact: true,
     });
     await expect(victim).toHaveClass(/dead/);
@@ -374,7 +393,7 @@ for (const locale of ["zh-CN", "en"] as const)
     );
     await expect(
       page.getByRole("button", {
-        name: locale === "en" ? "Player 1 · 原名<Alpha>" : "1号 · 原名<Alpha>",
+        name: locale === "en" ? "Player 1·原名<Alpha>" : "1号·原名<Alpha>",
         exact: true,
       }),
     ).toHaveClass(/dead.*winner-seat/);
@@ -428,8 +447,16 @@ for (const locale of ["zh-CN", "en"] as const)
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
-    const king = locale === "en" ? "Wolf King 1 shoots player 2" : "1号狼王开枪带走2号";
-    const hunter = locale === "en" ? "Hunter 2 shoots player 3" : "2号猎人开枪带走3号";
+    const king = withPlayerNames(
+      locale === "en" ? "Wolf King 1 shoots player 2" : "1号狼王开枪带走2号",
+      replay.players,
+      locale,
+    );
+    const hunter = withPlayerNames(
+      locale === "en" ? "Hunter 2 shoots player 3" : "2号猎人开枪带走3号",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: king }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(king);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(3); // 夜间死者为 5，放逐者为 1，枪击死者为 2。
@@ -455,15 +482,22 @@ for (const locale of ["zh-CN", "en"] as const)
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
-    const blast =
+    const blast = withPlayerNames(
       locale === "en"
         ? "White Wolf King 1 self-destructs and takes player 4"
-        : "1号白狼王自爆并带走4号";
+        : "1号白狼王自爆并带走4号",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: blast }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(blast);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(3);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
-    const shot = locale === "en" ? "Hunter 4 shoots player 2" : "4号猎人开枪带走2号";
+    const shot = withPlayerNames(
+      locale === "en" ? "Hunter 4 shoots player 2" : "4号猎人开枪带走2号",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: shot }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(shot);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(4);
@@ -487,13 +521,17 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const duel = miss
-        ? locale === "en"
-          ? "Knight 1 duels player 4; the non-wolf target survives and the Knight dies"
-          : "1号骑士决斗4号，目标非狼存活，骑士出局"
-        : locale === "en"
-          ? "Knight 1 duels player 2; the wolf target dies"
-          : "1号骑士决斗2号，目标为狼并出局";
+      const duel = withPlayerNames(
+        miss
+          ? locale === "en"
+            ? "Knight 1 duels player 4; the non-wolf target survives and the Knight dies"
+            : "1号骑士决斗4号，目标非狼存活，骑士出局"
+          : locale === "en"
+            ? "Knight 1 duels player 2; the wolf target dies"
+            : "1号骑士决斗2号，目标为狼并出局",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: duel }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(duel);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(2);
@@ -502,8 +540,8 @@ for (const locale of ["zh-CN", "en"] as const)
         page.getByRole("button", {
           name:
             locale === "en"
-              ? `Player ${miss ? 1 : 2} · Seat ${miss ? 1 : 2}`
-              : `${miss ? 1 : 2}号 · Seat ${miss ? 1 : 2}`,
+              ? `Player ${miss ? 1 : 2}·Seat ${miss ? 1 : 2}`
+              : `${miss ? 1 : 2}号·Seat ${miss ? 1 : 2}`,
           exact: true,
         }),
       ).toHaveClass(/dead/);
@@ -511,8 +549,8 @@ for (const locale of ["zh-CN", "en"] as const)
         page.getByRole("button", {
           name:
             locale === "en"
-              ? `Player ${miss ? 4 : 1} · Seat ${miss ? 4 : 1}`
-              : `${miss ? 4 : 1}号 · Seat ${miss ? 4 : 1}`,
+              ? `Player ${miss ? 4 : 1}·Seat ${miss ? 4 : 1}`
+              : `${miss ? 4 : 1}号·Seat ${miss ? 4 : 1}`,
           exact: true,
         }),
       ).not.toHaveClass(/dead/);
@@ -531,18 +569,24 @@ for (const locale of ["zh-CN", "en"] as const)
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
-    const first =
+    const first = withPlayerNames(
       locale === "en"
         ? "Gravekeeper 8 learns on night 2 that player 1, exiled on day 1, has camp label Werewolves"
-        : "8号守墓人在第2夜获知第1日放逐1号的阵营标签：狼人";
+        : "8号守墓人在第2夜获知第1日放逐1号的阵营标签：狼人",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: first }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(first);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(1);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
-    const second =
+    const second = withPlayerNames(
       locale === "en"
         ? "Gravekeeper 8 learns on night 3 that player 5, exiled on day 2, has camp label Good"
-        : "8号守墓人在第3夜获知第2日放逐5号的阵营标签：好人";
+        : "8号守墓人在第3夜获知第2日放逐5号的阵营标签：好人",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: second }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(second);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(5);
@@ -573,14 +617,17 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const text =
+      const text = withPlayerNames(
         kind === "gun_blocked"
           ? locale === "en"
             ? "Player 4 shoots at player 5; night protection blocks the shot"
             : "4号向5号开枪，夜间保护使枪击落空"
           : locale === "en"
             ? "Additional deaths: Player 5"
-            : "追加死亡：5号";
+            : "追加死亡：5号",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: text }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(text);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(kind === "gun_blocked" ? 1 : 3);
@@ -605,13 +652,17 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const text = special
-        ? locale === "en"
-          ? "Additional deaths: Player 2"
-          : "追加死亡：2号"
-        : locale === "en"
-          ? "Dream protection blocks Wolf Beauty 1's night charm death of player 5"
-          : "1号对5号的夜间魅惑牵连被梦保护阻止";
+      const text = withPlayerNames(
+        special
+          ? locale === "en"
+            ? "Additional deaths: Player 2"
+            : "追加死亡：2号"
+          : locale === "en"
+            ? "Dream protection blocks Wolf Beauty 1's night charm death of player 5"
+            : "1号对5号的夜间魅惑牵连被梦保护阻止",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: text }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(text);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(special ? 3 : 2);
@@ -629,7 +680,7 @@ for (const locale of ["zh-CN", "en"] as const)
       if (special)
         await expect(
           page.getByRole("button", {
-            name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+            name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
             exact: true,
           }),
         ).toHaveClass(/dead/);
@@ -672,7 +723,7 @@ for (const locale of ["zh-CN", "en"] as const)
       if (badge)
         await expect(
           page.getByRole("button", {
-            name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+            name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
             exact: true,
           }),
         ).toHaveClass(/dead/);
@@ -694,17 +745,20 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label =
+      const label = withPlayerNames(
         locale === "en"
           ? `Hidden Wolf 1 inherits the knife on day ${large ? 2 : 1}`
-          : `1号隐狼在第${large ? 2 : 1}天获得刀权`;
+          : `1号隐狼在第${large ? 2 : 1}天获得刀权`,
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 4 : 1);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       await expect(
         page.getByRole("button", {
-          name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+          name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
           exact: true,
         }),
       ).not.toHaveClass(/dead/);
@@ -720,7 +774,7 @@ for (const locale of ["zh-CN", "en"] as const)
       await expect(page.getByTestId("composition-winner")).toHaveCount(large ? 8 : 4);
       await expect(
         page.getByRole("button", {
-          name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+          name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
           exact: true,
         }),
       ).toHaveClass(/dead/);
@@ -742,17 +796,20 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label =
+      const label = withPlayerNames(
         locale === "en"
           ? `Gargoyle 1 inherits the knife on day ${large ? 2 : 1}`
-          : `1号石像鬼在第${large ? 2 : 1}天获得刀权`;
+          : `1号石像鬼在第${large ? 2 : 1}天获得刀权`,
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 4 : 1);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       await expect(
         page.getByRole("button", {
-          name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+          name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
           exact: true,
         }),
       ).not.toHaveClass(/dead/);
@@ -768,7 +825,7 @@ for (const locale of ["zh-CN", "en"] as const)
       await expect(page.getByTestId("composition-winner")).toHaveCount(large ? 8 : 4);
       await expect(
         page.getByRole("button", {
-          name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+          name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
           exact: true,
         }),
       ).toHaveClass(/dead/);
@@ -786,8 +843,11 @@ for (const locale of ["zh-CN", "en"] as const)
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
-    const label =
-      locale === "en" ? "Player 1 inspects player 5's role: Seer" : "1号查验5号的具体角色：预言家";
+    const label = withPlayerNames(
+      locale === "en" ? "Player 1 inspects player 5's role: Seer" : "1号查验5号的具体角色：预言家",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(label);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
@@ -809,13 +869,17 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label = large
-        ? locale === "en"
-          ? "Player 5 inspects player 1's role: Werewolf"
-          : "5号查验1号的具体角色：狼人"
-        : locale === "en"
-          ? "Player 3 ends the inspection opportunity on night 2: Passed"
-          : "3号在第2夜结束查验机会：主动跳过";
+      const label = withPlayerNames(
+        large
+          ? locale === "en"
+            ? "Player 5 inspects player 1's role: Werewolf"
+            : "5号查验1号的具体角色：狼人"
+          : locale === "en"
+            ? "Player 3 ends the inspection opportunity on night 2: Passed"
+            : "3号在第2夜结束查验机会：主动跳过",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).last().click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 5 : 1);
@@ -848,19 +912,23 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label = large
-        ? locale === "en"
-          ? "Mechanical Wolf shot: player 1 hit player 8."
-          : "【机械狼开枪】1号命中8号。"
-        : locale === "en"
-          ? "Mechanical reflection: on night 2, player 1 shielded player 3; poison returned to original caster 4."
-          : "【机械反毒】第2夜，1号保护3号，毒返回原施毒者4号。";
+      const label = withPlayerNames(
+        large
+          ? locale === "en"
+            ? "Mechanical Wolf shot: player 1 hit player 8."
+            : "【机械狼开枪】1号命中8号。"
+          : locale === "en"
+            ? "Mechanical reflection: on night 2, player 1 shielded player 3; poison returned to original caster 4."
+            : "【机械反毒】第2夜，1号保护3号，毒返回原施毒者4号。",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 8 : 1);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
-        name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+        name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
         exact: true,
       });
       await expect(actor).toContainText(locale === "en" ? "Mechanical Wolf" : "机械狼");
@@ -892,13 +960,17 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label = large
-        ? locale === "en"
-          ? "Player 5 checks player 2: Werewolves"
-          : "5号查验2号：狼人"
-        : locale === "en"
-          ? "God trade result: player 3 to player 1, Inspection, night 1: Backlash proposal."
-          : "【上帝交易结果】第1夜3号对1号的查验：反噬提案。";
+      const label = withPlayerNames(
+        large
+          ? locale === "en"
+            ? "Player 5 checks player 2: Werewolves"
+            : "5号查验2号：狼人"
+          : locale === "en"
+            ? "God trade result: player 3 to player 1, Inspection, night 1: Backlash proposal."
+            : "【上帝交易结果】第1夜3号对1号的查验：反噬提案。",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
@@ -906,8 +978,8 @@ for (const locale of ["zh-CN", "en"] as const)
       const actor = page.getByRole("button", {
         name:
           locale === "en"
-            ? `Player ${large ? 8 : 3} · Seat ${large ? 8 : 3}`
-            : `${large ? 8 : 3}号 · Seat ${large ? 8 : 3}`,
+            ? `Player ${large ? 8 : 3}·Seat ${large ? 8 : 3}`
+            : `${large ? 8 : 3}号·Seat ${large ? 8 : 3}`,
         exact: true,
       });
       await expect(actor).toContainText(locale === "en" ? "Miracle Merchant" : "奇迹商人");
@@ -940,16 +1012,19 @@ for (const locale of ["zh-CN", "en"] as const)
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const id = large ? 8 : 3,
-        label =
+        label = withPlayerNames(
           locale === "en"
             ? `God victory affiliation: player ${id} chose player 1 on night 1; frozen affiliation: Werewolves.`
-            : `【上帝胜利归属】${id}号第1夜选择1号，冻结胜利归属：狼人。`;
+            : `【上帝胜利归属】${id}号第1夜选择1号，冻结胜利归属：狼人。`,
+          replay.players,
+          locale,
+        );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
-        name: locale === "en" ? `Player ${id} · Seat ${id}` : `${id}号 · Seat ${id}`,
+        name: locale === "en" ? `Player ${id}·Seat ${id}` : `${id}号·Seat ${id}`,
         exact: true,
       });
       await expect(actor).toContainText(locale === "en" ? "Hybrid" : "混血儿");
@@ -991,20 +1066,24 @@ for (const locale of ["zh-CN", "en"] as const)
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label = large
-        ? locale === "en"
-          ? "Player 5 inspects player 8's role: Guard"
-          : "5号查验8号的具体角色：守卫"
-        : locale === "en"
-          ? "Player 3 ends the inspection opportunity on night 6: No eligible living targets"
-          : "3号在第6夜结束查验机会：没有可查验的存活目标";
+      const label = withPlayerNames(
+        large
+          ? locale === "en"
+            ? "Player 5 inspects player 8's role: Guard"
+            : "5号查验8号的具体角色：守卫"
+          : locale === "en"
+            ? "Player 3 ends the inspection opportunity on night 6: No eligible living targets"
+            : "3号在第6夜结束查验机会：没有可查验的存活目标",
+        replay.players,
+        locale,
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 5 : 0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const id = large ? 5 : 3,
         actor = page.getByRole("button", {
-          name: locale === "en" ? `Player ${id} · Seat ${id}` : `${id}号 · Seat ${id}`,
+          name: locale === "en" ? `Player ${id}·Seat ${id}` : `${id}号·Seat ${id}`,
           exact: true,
         });
       await expect(actor).toContainText(locale === "en" ? "Mirror Girl" : "魔镜少女");
@@ -1055,14 +1134,20 @@ for (const locale of ["zh-CN", "en"] as const)
     }));
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
-    const first =
-      locale === "en" ? "Sheriff PK begins: Player 1, Player 2." : "警长PK开始：1号、2号。";
+    const first = withPlayerNames(
+      locale === "en" ? "Sheriff PK begins: Player 1, Player 2." : "警长PK开始：1号、2号。",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: first }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(first);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
     await expect(page.locator(".seat-grid .sheriff")).toHaveCount(0);
-    const third =
-      locale === "en" ? "Exile PK begins: Player 1, Player 2." : "放逐PK开始：1号、2号。";
+    const third = withPlayerNames(
+      locale === "en" ? "Exile PK begins: Player 1, Player 2." : "放逐PK开始：1号、2号。",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: third }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(third);
     await expect(page.locator(".seat-grid .sheriff")).toHaveCount(1);
@@ -1113,8 +1198,11 @@ for (const locale of ["zh-CN", "en"] as const)
     const marker = locale === "en" ? "Revealed: Hunter" : "已翻牌：猎人";
     await expect(target).not.toContainText(marker);
     await expect(target).toHaveClass(/alive/);
-    const label =
-      locale === "en" ? "Player 2 revealed their role card: Hunter" : "2号公开身份牌：猎人";
+    const label = withPlayerNames(
+      locale === "en" ? "Player 2 revealed their role card: Hunter" : "2号公开身份牌：猎人",
+      replay.players,
+      locale,
+    );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(label);
     await expect(target).toContainText(marker);
@@ -1141,7 +1229,7 @@ for (const locale of ["zh-CN", "en"] as const)
       await expect(page.locator(".seat-grid .winner")).toHaveCount(kind === "dream" ? 1 : 4);
       await expect(page.getByTestId("composition-winner")).toHaveCount(kind === "dream" ? 1 : 4);
       const fox = page.getByRole("button", {
-        name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+        name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
         exact: true,
       });
       if (kind === "dream") {
@@ -1188,7 +1276,7 @@ for (const locale of ["zh-CN", "en"] as const)
       await expect(page.locator(".seat-grid .winner")).toHaveCount(count);
       await expect(page.getByTestId("composition-winner")).toHaveCount(count);
       const cupid = page.getByRole("button", {
-        name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+        name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
         exact: true,
       });
       if (kind === "mixed_netease") {
@@ -1237,7 +1325,7 @@ for (const size of [6, 12])
         await page.goto("/");
         await page.locator(".timeline .event").nth(index).click();
         const seat = page.getByRole("button", {
-          name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+          name: locale === "en" ? `Player ${actor}·Seat ${actor}` : `${actor}号·Seat ${actor}`,
           exact: true,
         });
         await expect(seat).not.toHaveClass(/dead/);
@@ -1285,8 +1373,9 @@ for (const size of [6, 12])
         await expect(page.getByTestId("composition-caption")).toContainText(
           locale === "en" ? "Anonymous wall" : "匿名墙",
         );
+        // 非空纸条仍保留用户原文；空列表采用共享的“无／None”语义，不泄露原始 JSON 表示。
         await expect(page.getByTestId("composition-caption")).toContainText(
-          mode === "write" ? "[God] secret 💌" : "[]",
+          mode === "write" ? "[God] secret 💌" : locale === "en" ? "None" : "无",
         );
         await expect(page.getByTestId("composition-caption")).not.toContainText("actorId");
         const exile = replay.events.find((e: { type: string }) => e.type === "voted_out").payload
@@ -1295,8 +1384,8 @@ for (const size of [6, 12])
           const seat = page.getByRole("button", {
             name:
               locale === "en"
-                ? `Player ${player.player_id} · Seat ${player.player_id}`
-                : `${player.player_id}号 · Seat ${player.player_id}`,
+                ? `Player ${player.player_id}·Seat ${player.player_id}`
+                : `${player.player_id}号·Seat ${player.player_id}`,
             exact: true,
           });
           if (player.player_id === exile) await expect(seat).toHaveClass(/dead/);
@@ -1329,7 +1418,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-keep"])
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const seat = page.getByRole("button", {
-        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        name: locale === "en" ? `Player ${actor}·Seat ${actor}` : `${actor}号·Seat ${actor}`,
         exact: true,
       });
       await expect(seat).toContainText(locale === "en" ? "Thief" : "盗贼");
@@ -1375,7 +1464,7 @@ for (const name of ["6-wolf_exile", "6-hunter_chain", "12-good_knife", "6-same_w
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const seat = page.getByRole("button", {
-        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        name: locale === "en" ? `Player ${actor}·Seat ${actor}` : `${actor}号·Seat ${actor}`,
         exact: true,
       });
       await expect(seat).toContainText(locale === "en" ? "Wild Child" : "野孩子");
@@ -1390,6 +1479,12 @@ for (const name of ["6-wolf_exile", "6-hunter_chain", "12-good_knife", "6-same_w
         "wild_child_transformed",
         replay.events[index].payload,
         locale,
+        createPlayerText(
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        ),
       )!;
       await page.locator(".timeline .event").filter({ hasText: selectedLabel }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(selectedLabel);
@@ -1432,11 +1527,21 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const seat = page.getByRole("button", {
-        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        name: locale === "en" ? `Player ${actor}·Seat ${actor}` : `${actor}号·Seat ${actor}`,
         exact: true,
       });
       await expect(seat).toContainText(locale === "en" ? "Many-Faced One" : "千面人");
-      const selectedLabel = shapeshifterEventLabel(event.type, event.payload, locale)!;
+      const selectedLabel = shapeshifterEventLabel(
+        event.type,
+        event.payload,
+        locale,
+        createPlayerText(
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        ),
+      )!;
       await page.locator(".timeline .event").filter({ hasText: selectedLabel }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(selectedLabel);
       const labels: Record<string, [string, string]> = {
@@ -1519,11 +1624,21 @@ for (const name of ["6-seer", "12-one1"])
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const seat = page.getByRole("button", {
-        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        name: locale === "en" ? `Player ${actor}·Seat ${actor}` : `${actor}号·Seat ${actor}`,
         exact: true,
       });
       await expect(seat).toContainText(locale === "en" ? "Many-Faced One" : "千面人");
-      const label = shapeshifterEventLabel(event.type, event.payload, locale)!;
+      const label = shapeshifterEventLabel(
+        event.type,
+        event.payload,
+        locale,
+        createPlayerText(
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        ),
+      )!;
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(seat).toContainText(
@@ -1556,11 +1671,21 @@ for (const name of ["6-good_dead", "6-hunter_chain", "6-wolf_needs_girl", "12-wo
       replay.meta.locale = locale;
       const event = replay.events.find((e: any) => e.type === "lonely_girl_admired_chosen"),
         actor = event.payload.actorId,
-        label = lonelyGirlEventLabel(event.type, event.payload, locale)!;
+        label = lonelyGirlEventLabel(
+          event.type,
+          event.payload,
+          locale,
+          createPlayerText(
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          ),
+        )!;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const seat = page.getByRole("button", {
-        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        name: locale === "en" ? `Player ${actor}·Seat ${actor}` : `${actor}号·Seat ${actor}`,
         exact: true,
       });
       await page.locator(".timeline .event").filter({ hasText: label }).click();
@@ -1649,7 +1774,17 @@ for (const name of ["6-good_dead", "12-wolf_win"])
       expect(Object.hasOwn(event.payload, "camp")).toBe(false);
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
-      const label = lonelyGirlEventLabel(event.type, event.payload, locale)!;
+      const label = lonelyGirlEventLabel(
+        event.type,
+        event.payload,
+        locale,
+        createPlayerText(
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        ),
+      )!;
       await page.locator(".timeline .event").filter({ hasText: label }).click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(

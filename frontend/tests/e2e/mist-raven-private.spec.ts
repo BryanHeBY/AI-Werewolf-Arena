@@ -3,6 +3,7 @@
  * 输出以手写零死亡／无胜者和未知他人身份预期核对跳转、倒看；字幕与现行展示函数对照。
  * 只纳入玩家已导出事件，不加入 God 私有知识，也不是 UI 直接导入私有文件。
  */
+import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -64,7 +65,15 @@ for (const actor of ["alchemist", "raven", "villager"] as const)
             ? "raven_unsealed"
             : "night_resolved";
       const event = replay.events.find((e) => e.type === type && e.day === 2)!;
-      const label = eventLabel(event, locale);
+      const label = eventLabel(
+        event,
+        locale,
+        replay.players.map((p: { player_id: number }) => p.player_id),
+        replay.players.map((p: { player_id: number; name?: string }) => ({
+          id: p.player_id,
+          name: p.name,
+        })),
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
       for (const p of replay.players) {
@@ -79,15 +88,20 @@ for (const actor of ["alchemist", "raven", "villager"] as const)
       const index = input.replay.events.findIndex((e) => e.seq === event.seq);
       const slider = page.locator('.frame-control input[type="range"]');
       for (const frame of [index * 90 + 45, index * 90 - 1, 0]) {
-        await slider.evaluate((el, value) => {
-          Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
-            el,
-            String(value),
-          );
-          el.dispatchEvent(new Event("input", { bubbles: true }));
-          el.dispatchEvent(new Event("change", { bubbles: true }));
-        }, frame);
-        await expect(slider).toHaveValue(String(frame));
+        await slider.evaluate(
+          (el, value) => {
+            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
+              el,
+              String(value),
+            );
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            el.dispatchEvent(new Event("change", { bubbles: true }));
+          },
+          replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" }),
+        );
+        await expect(slider).toHaveValue(
+          String(replayBrowserFrame(replay, frame, { locale, timeZone: "UTC" })),
+        );
         await expect(page.getByTestId("composition-event")).toHaveAttribute(
           "data-event-seq",
           String(input.replay.events[Math.floor(frame / 90)]!.seq),

@@ -20,7 +20,15 @@ for (const locale of ["zh-CN", "en"] as const)
       ),
     );
     const fear = replay.events.find((e) => e.type === "nightmare_fear_committed")!;
-    const label = eventLabel(fear, locale);
+    const label = eventLabel(
+      fear,
+      locale,
+      replay.players.map((p: { player_id: number }) => p.player_id),
+      replay.players.map((p: { player_id: number; name?: string }) => ({
+        id: p.player_id,
+        name: p.name,
+      })),
+    );
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
     await page.locator(".timeline .event").filter({ hasText: label }).first().click();

@@ -24,7 +24,15 @@ for (const variant of ["day1", "day2"] as const)
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");
         const reset = replay.events.find((e) => e.type === "order_prince_revote_started")!;
-        const label = eventLabel(reset, locale);
+        const label = eventLabel(
+          reset,
+          locale,
+          replay.players.map((p: { player_id: number }) => p.player_id),
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
         await expect(page.getByTestId("composition-event")).toHaveText(label);
         await expect(page.locator("[data-composition-player]")).toHaveCount(12);

@@ -21,7 +21,15 @@ for (const size of [6, 12])
           cp = read(`checkpoints/${key}.json`);
         replay.meta.locale = locale;
         const chosen = replay.events.find((e: any) => e.type === "demon_hunter_chosen"),
-          label = eventLabel(chosen, locale);
+          label = eventLabel(
+            chosen,
+            locale,
+            replay.players.map((p: { player_id: number }) => p.player_id),
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          );
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");
         await page.locator(".timeline .event").filter({ hasText: label }).click();
@@ -82,7 +90,15 @@ for (const locale of ["zh-CN", "en"] as const)
     };
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
-    const label = eventLabel(event, locale);
+    const label = eventLabel(
+      event,
+      locale,
+      replay.players.map((p: { player_id: number }) => p.player_id),
+      replay.players.map((p: { player_id: number; name?: string }) => ({
+        id: p.player_id,
+        name: p.name,
+      })),
+    );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
     await expect(page.getByTestId("composition-event")).toHaveText(label);
     for (const p of replay.players.filter((p: any) => p.player_id !== view.player_id))

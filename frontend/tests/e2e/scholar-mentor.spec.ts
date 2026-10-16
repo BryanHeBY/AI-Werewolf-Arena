@@ -21,7 +21,15 @@ for (const locale of ["zh-CN", "en"] as const)
     const dead = async () =>
       (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);
     const show = async (e: (typeof replay.events)[number]) => {
-      const label = eventLabel(e, locale);
+      const label = eventLabel(
+        e,
+        locale,
+        replay.players.map((p: { player_id: number }) => p.player_id),
+        replay.players.map((p: { player_id: number; name?: string }) => ({
+          id: p.player_id,
+          name: p.name,
+        })),
+      );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
       await expect(page.getByTestId("composition-event")).toHaveText(label);
     };
@@ -76,7 +84,15 @@ for (const variant of ["same-good", "both-wolves"] as const)
         const dead = async () =>
           (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);
         const show = async (e: (typeof replay.events)[number]) => {
-          const label = eventLabel(e, locale);
+          const label = eventLabel(
+            e,
+            locale,
+            replay.players.map((p: { player_id: number }) => p.player_id),
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
           await expect(page.getByTestId("composition-event")).toHaveText(label);
         };

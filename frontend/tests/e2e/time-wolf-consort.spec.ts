@@ -22,7 +22,15 @@ for (const scope of ["whole_night", "first_effect"] as const)
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");
         const lock = replay.events.find((e) => e.type === "time_consort_lock_committed")!,
-          label = eventLabel(lock, locale);
+          label = eventLabel(
+            lock,
+            locale,
+            replay.players.map((p: { player_id: number }) => p.player_id),
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
         await expect(page.getByTestId("composition-event")).toHaveText(label);
         const dead = async () =>
@@ -31,7 +39,15 @@ for (const scope of ["whole_night", "first_effect"] as const)
         const reflected = replay.events.filter((e) => e.type === "time_consort_reflected");
         expect(reflected).toHaveLength(scope === "whole_night" ? 3 : 1);
         for (const e of reflected) {
-          const label = eventLabel(e, locale);
+          const label = eventLabel(
+            e,
+            locale,
+            replay.players.map((p: { player_id: number }) => p.player_id),
+            replay.players.map((p: { player_id: number; name?: string }) => ({
+              id: p.player_id,
+              name: p.name,
+            })),
+          );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
           await expect(page.getByTestId("composition-event")).toHaveText(label);
           expect(await dead()).toEqual([]);
@@ -39,7 +55,17 @@ for (const scope of ["whole_night", "first_effect"] as const)
         const resolved = replay.events.find((e) => e.type === "night_resolved" && e.day === 1)!;
         await page
           .locator(".timeline .event")
-          .filter({ hasText: eventLabel(resolved, locale) })
+          .filter({
+            hasText: eventLabel(
+              resolved,
+              locale,
+              replay.players.map((p: { player_id: number }) => p.player_id),
+              replay.players.map((p: { player_id: number; name?: string }) => ({
+                id: p.player_id,
+                name: p.name,
+              })),
+            ),
+          })
           .first()
           .click();
         expect(await dead()).toHaveLength(2);

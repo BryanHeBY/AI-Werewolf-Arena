@@ -9,7 +9,7 @@ export function withPlayerNames(
 ): string {
   const names = new Map(players.map((player) => [player.player_id, player.name]));
   return literal.replace(
-    /([Pp]layer |Wolf Beauty |Gargoyle |Hidden Wolf |original caster |选择|chose )(\d+)(?:号)?|(\d+)号(?:玩家)?/g,
+    /([Pp]layer |White Wolf King |Wolf King |Wolf Beauty |Gargoyle |Hidden Wolf |Hunter |Knight |Gravekeeper |original caster |选择|chose )(\d+)(?:号)?|(\d+)号(?:玩家)?/g,
     (original, prefix: string | undefined, english: string, chinese: string) => {
       const id = Number(english ?? chinese),
         name = names.get(id);

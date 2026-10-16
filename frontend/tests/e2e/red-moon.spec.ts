@@ -23,8 +23,7 @@ for (const mode of ["expire", "knife", "blast"] as const)
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const seat = page.getByRole("button", {
-        name:
-          locale === "en" ? "Player " + actor + " · Seat " + actor : actor + "号 · Seat " + actor,
+        name: locale === "en" ? "Player " + actor + "·Seat " + actor : actor + "号·Seat " + actor,
         exact: true,
       });
       for (const e of replay.events.filter((e) =>
@@ -32,7 +31,15 @@ for (const mode of ["expire", "knife", "blast"] as const)
           e.type,
         ),
       )) {
-        const label = eventLabel(e, locale);
+        const label = eventLabel(
+          e,
+          locale,
+          replay.players.map((p: { player_id: number }) => p.player_id),
+          replay.players.map((p: { player_id: number; name?: string }) => ({
+            id: p.player_id,
+            name: p.name,
+          })),
+        );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
         await expect(page.getByTestId("composition-event")).toHaveText(label);
         if (e.type === "red_moon_exile_delayed") await expect(seat).not.toHaveClass(/dead/);
