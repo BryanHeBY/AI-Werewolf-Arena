@@ -16,12 +16,16 @@ import {
   type ReplayDisplayOptions,
 } from "./replay-display";
 import { buildPresentationReplay, type PresentationReplay } from "./replay-presentation";
-import { buildReplaySnapshot } from "./replay-projection";
+import { buildReplaySnapshot, type ReplaySnapshot } from "./replay-projection";
 import { eventLabel } from "./event-labels";
 import { phaseName, roleName, eventStageName } from "./replay-localization";
+import { compileVideoPlan, getVideoSourceIdentity, type VideoPlan } from "../video";
 
 export const FRAMES_PER_EVENT = 90;
-export type ReplayRenderInput = ReplayDisplayOptions & { replay: PresentationReplay };
+export type ReplayRenderInput = ReplayDisplayOptions & {
+  replay: PresentationReplay;
+  plan?: VideoPlan;
+};
 /** 离线画面输入不依赖工作台焦点、播放状态、运行时钟或宿主时区；直接新封装也必须核对展示声明。 */
 export function createReplayRenderInput(
   replay: ReplayDocument | RecordingEnvelope<ReplayDocument>,
@@ -40,14 +44,30 @@ export function createReplayRenderInput(
     replay: buildPresentationReplay(canonical),
     locale: options.locale,
     timeZone: options.timeZone,
+    // 旧逐帧 API 保留90帧采样合同；工作台与新导出直接使用自动可读时长的通用计划。
+    plan: compileVideoPlan(
+      canonical,
+      {
+        source: getVideoSourceIdentity(canonical),
+        edits: buildPresentationReplay(canonical).events.map((event) => ({
+          anchor: { seq: event.seq, type: event.type },
+          durationFrames: FRAMES_PER_EVENT,
+        })),
+      },
+      options,
+    ),
   };
 }
-export function buildReplayFrame(input: ReplayRenderInput, frame: number) {
+export function buildReplayFrame(
+  input: ReplayRenderInput,
+  frame: number,
+  capturedSnapshot?: ReplaySnapshot,
+) {
   validateReplayDisplay(input);
   if (!Number.isSafeInteger(frame) || frame < 0) throw new Error("replay_frame_invalid");
   const { replay, locale } = input;
   const eventIndex = Math.min(Math.floor(frame / FRAMES_PER_EVENT), replay.events.length - 1);
-  const snapshot = buildReplaySnapshot(replay, eventIndex);
+  const snapshot = capturedSnapshot ?? buildReplaySnapshot(replay, eventIndex);
   const event = snapshot.event;
   return {
     eventIndex,

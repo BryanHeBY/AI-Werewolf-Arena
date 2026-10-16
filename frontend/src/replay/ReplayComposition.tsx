@@ -1,169 +1,55 @@
 /**
- * 负责播放器与离线渲染共用的帧画面。输入为已构建复盘显示参数和帧号，输出席位布局、事件字幕及终局标记。
- * 画面只消费纯帧投影，不读取工作台焦点、运行时钟或外部游戏状态；身份披露不在此补推。
+ * 负责将旧复盘逐帧入口接入通用视频画面。输入为已有展示 DTO 或显式视频计划，输出同一镜头、字幕与席位组件。
+ * 旧 DTO 的90帧采样继续兼容；原归档锚点与变长时序由 canonical 视频计划持有，本适配器不重算规则。
  */
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { buildReplayFrame, FRAMES_PER_EVENT, type ReplayRenderInput } from "./replay-frame";
+import { useMemo } from "react";
+import { useCurrentFrame } from "remotion";
+import { compileVideoPlan, getVideoSourceIdentity, VideoFrame } from "../video";
+import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { FRAMES_PER_EVENT, type ReplayRenderInput } from "./replay-frame";
 export { FRAMES_PER_EVENT } from "./replay-frame";
+
+/** 仅兼容手工构造的旧展示输入；重编号只供内部采样，源 seq 在画面 DTO 中保留。 */
+function legacyPlan(input: ReplayRenderInput) {
+  if (input.plan) return input.plan;
+  const { kind: _kind, sourceSchemaVersion, sourcePerspective, ...content } = input.replay;
+  const canonical: ReplayDocument = {
+    ...content,
+    schemaVersion: sourceSchemaVersion,
+    perspective: sourcePerspective,
+    events: content.events.map((event, index) => ({ ...event, seq: index + 1 })),
+  };
+  const plan = compileVideoPlan(
+    canonical,
+    {
+      source: getVideoSourceIdentity(canonical),
+      edits: canonical.events.map((event) => ({
+        anchor: { seq: event.seq, type: event.type },
+        durationFrames: FRAMES_PER_EVENT,
+      })),
+    },
+    input,
+  );
+  for (const shot of plan.shots) {
+    const original = input.replay.events[shot.eventIndex];
+    if (!original) continue;
+    shot.eventSeq = original.seq;
+    shot.view.eventSeq = original.seq;
+    if (shot.view.snapshot.event) shot.view.snapshot.event.seq = original.seq;
+  }
+  return plan;
+}
 
 export function ReplayComposition(input: ReplayRenderInput) {
   const frame = useCurrentFrame();
-  return <ReplayFrame input={input} frame={frame} />;
+  const plan = useMemo(
+    () => legacyPlan(input),
+    [input.plan, input.replay, input.locale, input.timeZone],
+  );
+  return <VideoFrame plan={plan} frame={frame} />;
 }
 
-/** 播放器与离线 composition 使用同一帧视图；直接传帧号也经过同一投影。 */
+/** 测试与旧调用方可直接采样帧；画面仍由通用渲染组件持有。 */
 export function ReplayFrame({ input, frame }: { input: ReplayRenderInput; frame: number }) {
-  const view = buildReplayFrame(input, frame);
-  // 封盘结果有较长字幕与胜者行，因此只调整席位布局，为下方结果保留空间。
-  const seatCenter = view.snapshot.decision ? 33 : 38;
-  const seatRadius = view.snapshot.decision ? 17 : 21;
-  // 字幕透明度取事件内相对帧，不依赖播放是否暂停或用户前后跳转。
-  const fade = interpolate(frame % FRAMES_PER_EVENT, [0, 10, 72, 90], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  return (
-    <AbsoluteFill
-      style={{
-        background: "radial-gradient(circle at 50% 45%, #263d58 0, #101b2a 42%, #060a11 100%)",
-        color: "#f6f0df",
-        fontFamily: "Inter, ui-sans-serif, system-ui",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          inset: 32,
-          border: "1px solid rgba(224,188,111,.25)",
-          borderRadius: 28,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 58,
-          left: 72,
-          color: "#e4c67d",
-          fontSize: 19,
-          fontWeight: 700,
-          letterSpacing: 4,
-        }}
-      >
-        AI WEREWOLF ARENA
-      </div>
-      <div
-        data-testid="composition-phase"
-        style={{ position: "absolute", top: 56, right: 72, color: "#a9b8cb", fontSize: 20 }}
-      >
-        {view.dayPhase}
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: `${seatCenter}%`,
-          width: 430,
-          height: 250,
-          transform: "translate(-50%, -50%)",
-          borderRadius: "50%",
-          border: "1px solid rgba(228,198,125,.5)",
-          background: "radial-gradient(ellipse, #24384b, #101923 70%)",
-          boxShadow: "0 0 70px rgba(228,198,125,.1)",
-        }}
-      />
-      {view.players.map((player, index) => {
-        const angle = (Math.PI * 2 * index) / view.players.length - Math.PI / 2;
-        const left = 50 + Math.cos(angle) * 38;
-        const top = seatCenter + Math.sin(angle) * seatRadius;
-        // 密集圆桌的文字沿左右外侧错开，长角色名不伸入相邻号码圆环；不改变圆环或席位顺序。
-        const labelOffset = view.players.length >= 10 ? Math.cos(angle) * 20 : 0;
-        return (
-          <div
-            key={player.playerId}
-            data-composition-player={player.playerId}
-            data-testid={player.isWinner ? "composition-winner" : undefined}
-            style={{
-              position: "absolute",
-              left: `${left}%`,
-              top: `${top}%`,
-              transform: "translate(-50%, -50%)",
-              width: 114,
-              textAlign: "center",
-              opacity: player.alive ? 1 : player.isWinner ? 0.75 : 0.35,
-            }}
-          >
-            <div
-              style={{
-                width: 48,
-                height: 48,
-                margin: "0 auto 7px",
-                display: "grid",
-                placeItems: "center",
-                borderRadius: "50%",
-                border: `2px solid ${player.camp === "wolf" ? "#df7771" : "#75bbd7"}`,
-                background: "#0d1620",
-                fontSize: 22,
-                fontWeight: 800,
-              }}
-            >
-              {player.playerId}
-            </div>
-            <div style={{ transform: `translateX(${labelOffset}px)` }}>
-              {player.name && (
-                <div style={{ fontSize: 14, overflowWrap: "anywhere" }}>{player.name}</div>
-              )}
-              <div style={{ fontSize: 15, fontWeight: 700 }}>
-                {player.roleLabel}
-                {player.sheriffLabel ? ` · ${player.sheriffLabel}` : ""}
-              </div>
-              {player.isWinner && (
-                <div style={{ color: "#e4c67d", fontSize: 14 }}>{view.winnerLabel}</div>
-              )}
-            </div>
-          </div>
-        );
-      })}
-      <div
-        data-testid="composition-caption"
-        style={{
-          position: "absolute",
-          left: 92,
-          right: 92,
-          bottom: 62,
-          padding: "20px 24px",
-          borderRadius: 16,
-          background: "rgba(6,10,17,.82)",
-          border: "1px solid rgba(231,216,179,.14)",
-          opacity: fade,
-        }}
-      >
-        <div style={{ color: "#e4c67d", fontSize: 14, letterSpacing: 2, marginBottom: 8 }}>
-          {view.stage} · {view.time}
-        </div>
-        <div
-          data-testid="composition-event"
-          data-event-seq={view.eventSeq ?? ""}
-          style={{
-            fontSize: 27,
-            lineHeight: 1.35,
-            fontWeight: 650,
-            whiteSpace: "pre-wrap",
-            overflowWrap: "anywhere",
-          }}
-        >
-          {view.label}
-        </div>
-        {view.victory && (
-          <div
-            data-testid="composition-victory"
-            style={{ marginTop: 8, color: "#e4c67d", fontSize: 18 }}
-          >
-            {view.victory}
-          </div>
-        )}
-      </div>
-    </AbsoluteFill>
-  );
+  return <VideoFrame plan={legacyPlan(input)} frame={frame} />;
 }
