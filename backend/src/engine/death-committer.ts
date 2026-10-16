@@ -5,7 +5,7 @@
  * 本所有者不收集死亡波、遗言、枪击选择或警徽决定，不切换阶段，也不执行枪的最终过期。
  * 写入与记录失败均保留原先已提交的前缀，不回滚或提前发布已结算账本条目。
  */
-import { hasReplayFacts, recordReplayFact } from "../domain/replay-fact-log";
+import { hasReplayFacts, recordReplayLifeCommit } from "../domain/replay-fact-log";
 import {
   DeathCommitReceipt,
   committedDeathEntry,
@@ -14,6 +14,7 @@ import {
   type DeathWavePlan,
   hasDeathWaveOriginalLives,
   assertDeathWaveOriginalLife,
+  replayDeathWaveIdentity,
 } from "./death-wave";
 import { getSessionRecorder } from "../recording/session/context";
 import { isRoleId } from "@ai-werewolf-arena/game-contract";
@@ -102,13 +103,17 @@ export class DeathCommitter {
         aliveLifeVersion(alive) !== beforeVersion &&
         hasReplayFacts(this.context.events)
       )
-        recordReplayFact(this.context.events, {
-          kind: "life_committed",
-          day: this.context.state.day,
-          playerId: id,
-          alive: false,
-          causes: [...(sources[id] ?? [])],
-        });
+        recordReplayLifeCommit(
+          this.context.events,
+          {
+            kind: "life_committed",
+            day: this.context.state.day,
+            playerId: id,
+            alive: false,
+            causes: [...(sources[id] ?? [])],
+          },
+          replayDeathWaveIdentity(committedWave),
+        );
       if (firstSettlement && isAnimalDreamBoard(this.context.world)) {
         if (
           (sources[id] ?? []).includes(DeathCause.WolfKill) &&

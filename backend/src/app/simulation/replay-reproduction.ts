@@ -482,12 +482,30 @@ export async function replayReproduction(
         "reproduction_events_mismatch",
       );
       // 声明过新覆盖的 Tape 必须逐条重现同一事实流；旧档缺省不伪造历史事实。
-      if (record.factCoverage)
+      if (record.factCoverage) {
+        const actual = replayFactLog(context.phaseManager.getEvents());
+        // 历史Tape未记录waveId时只忽略这项新增元数据；有明确编号仍严格核对，生命/死因/双游标从不降级。
+        const comparable = actual && {
+          ...actual,
+          facts: actual.facts.map((fact, index) => {
+            const expected = record.facts?.[index];
+            if (
+              fact.kind === "life_committed" &&
+              expected?.kind === "life_committed" &&
+              expected.waveId === undefined
+            ) {
+              const { waveId: _waveId, ...historical } = fact;
+              return historical;
+            }
+            return fact;
+          }),
+        };
         requireMatch(
-          stableJson(replayFactLog(context.phaseManager.getEvents())) ===
+          stableJson(comparable) ===
             stableJson({ factCoverage: record.factCoverage, facts: record.facts }),
           "reproduction_facts_mismatch",
         );
+      }
     } catch (error) {
       failures.push(error);
     } finally {

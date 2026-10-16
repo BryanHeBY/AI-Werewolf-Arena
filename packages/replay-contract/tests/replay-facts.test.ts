@@ -95,3 +95,11 @@ test("事实字段与数组访问器不能伪装为序列化数据", () => {
   expect(readReplayFact(unsafe)).toBeNull();
   expect(reads).toBe(0);
 });
+test("可选真实waveId兼容旧生命事实，显式畸形编号和额外字段仍拒绝", () => {
+  const old = facts[4]!;
+  expect(readReplayFact(old)).toEqual(old);
+  expect(readReplayFact({ ...old, waveId: 7 })).toEqual({ ...old, waveId: 7 });
+  for (const waveId of [0, -1, 1.5, "1", null, undefined])
+    expect(readReplayFact({ ...old, waveId })).toBeNull();
+  expect(readReplayFact({ ...facts[0], waveId: 1 })).toBeNull();
+});

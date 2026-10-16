@@ -39,7 +39,15 @@ export type ReplayFactPayload =
       interaction: "wolf_attack_blocked";
       protection: "guard" | "heal";
     }
-  | { kind: "life_committed"; day: number; playerId: number; alive: false; causes: string[] };
+  | {
+      kind: "life_committed";
+      day: number;
+      playerId: number;
+      alive: false;
+      causes: string[];
+      /** 真实DeathWaveUnit在本局首次提交时的稳定编号；缺省表示旧档或没有唯一波证据。 */
+      waveId?: number;
+    };
 
 export type ReplayFact = ReplayFactPayload & { seq: number; afterSeq: number };
 /** 只有完整采用 DeathCommitter 的新局声明该覆盖；空 facts 仍明确表示尚无死亡提交。 */
@@ -144,6 +152,10 @@ export function readReplayFact(value: unknown): ReplayFact | null {
           return null;
         v.causes = causes;
         keys = ["playerId", "alive", "causes"];
+        if (Object.hasOwn(v, "waveId")) {
+          if (!positive(v.waveId)) return null;
+          keys.push("waveId");
+        }
         break;
       }
       default:

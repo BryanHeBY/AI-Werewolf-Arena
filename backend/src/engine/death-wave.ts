@@ -43,6 +43,7 @@ export interface DeathWaveUnit {
   readonly actionPhase: Phase | undefined;
   readonly execution: DeathExecutionContext | undefined;
 }
+const openedWaveIdentities = new WeakMap<DeathWaveUnit, symbol>();
 
 export function openDeathWave(
   kind: DeathWaveUnit["kind"],
@@ -50,7 +51,10 @@ export function openDeathWave(
   actionPhase?: Phase,
   execution?: DeathExecutionContext,
 ): DeathWaveUnit {
-  return Object.freeze({ id: Symbol("death_wave"), kind, day, actionPhase, execution });
+  const identity = Symbol("death_wave"),
+    unit = Object.freeze({ id: identity, kind, day, actionPhase, execution });
+  openedWaveIdentities.set(unit, identity);
+  return unit;
 }
 
 /** 来源集合可继续由结算器按原位置扩展；只读接口不冻结 live 原体或调用方数组。 */
@@ -66,6 +70,13 @@ export interface DeathWavePlan {
 }
 // 仅真实plan可显式安装末端原生命检查；旧plan不读取任何新字段或新增World查询。
 const plans = new WeakSet<DeathWavePlan>();
+/** 只读工厂已捕获的唯一真实波；不执行外来plan/unit访问器，不把legacy调用批次伪装成规则波。 */
+export function replayDeathWaveIdentity(plan: DeathWavePlan): symbol | undefined {
+  if (!plans.has(plan) || plan.units.length !== 1) return undefined;
+  const unit = plan.units[0]!;
+  const identity = openedWaveIdentities.get(unit);
+  return identity !== undefined && unit.kind !== "legacy" ? identity : undefined;
+}
 const ownedLives = new WeakMap<
   DeathWavePlan,
   {

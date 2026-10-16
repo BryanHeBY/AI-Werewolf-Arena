@@ -176,7 +176,16 @@ for (const guarded of [false, true])
         .map(({ seq, afterSeq, ...fact }) => fact),
     ).toEqual(
       guarded
-        ? [{ kind: "life_committed", day: 1, playerId: 4, alive: false, causes: ["wolf_kill"] }]
+        ? [
+            {
+              kind: "life_committed",
+              day: 1,
+              playerId: 4,
+              alive: false,
+              causes: ["wolf_kill"],
+              waveId: 1,
+            },
+          ]
         : [],
     );
     expect(replay.events.map((e) => e.seq)).toEqual(
@@ -197,4 +206,20 @@ for (const guarded of [false, true])
     await expect(
       replayReproduction(forged, await createTestTempDirectory("awa-fact-forged-replay-")),
     ).rejects.toThrow("reproduction_facts_mismatch");
+    if (guarded) {
+      // 新档明确wave编号必须逐值重现；历史缺该可选字段只失去波证据，不失去生命/死因精确比对。
+      const oldTape = structuredClone(tape);
+      for (const fact of oldTape.facts ?? [])
+        if (fact.kind === "life_committed") delete fact.waveId;
+      expect(
+        (await replayReproduction(oldTape, await createTestTempDirectory("awa-legacy-life-wave-")))
+          .snapshot,
+      ).toEqual(game.phaseManager.getSnapshot());
+      const changedWave = structuredClone(tape);
+      const life = changedWave.facts!.find((f) => f.kind === "life_committed")!;
+      if (life.kind === "life_committed") life.waveId = 99;
+      await expect(
+        replayReproduction(changedWave, await createTestTempDirectory("awa-forged-life-wave-")),
+      ).rejects.toThrow("reproduction_facts_mismatch");
+    }
   });
