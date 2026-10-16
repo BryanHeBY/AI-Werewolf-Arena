@@ -8,6 +8,8 @@ import type { VideoScript } from "./video";
 export interface VideoProjectDefinition {
   input: string;
   script?: VideoScript;
+  /** 本地字体随项目固定并与素材一起准备；不从浏览器系统偏好推断视频字体。 */
+  fonts?: Array<{ family: string; src: string; weight?: string }>;
 }
 
 export function defineVideoProject(project: VideoProjectDefinition): VideoProjectDefinition {

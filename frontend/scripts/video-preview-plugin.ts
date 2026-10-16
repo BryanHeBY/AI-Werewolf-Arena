@@ -50,6 +50,11 @@ export function videoPreviewPlugin(): Plugin {
         ".webp": "image/webp",
         ".svg": "image/svg+xml",
         ".mp4": "video/mp4",
+        ".woff2": "font/woff2",
+        ".woff": "font/woff",
+        ".ttf": "font/ttf",
+        ".otf": "font/otf",
+        ".ttc": "font/collection",
       };
       response.setHeader("content-type", mime[path.extname(file)] ?? "application/octet-stream");
       const stream = createReadStream(file);
@@ -85,8 +90,8 @@ export function videoPreviewPlugin(): Plugin {
     load(source) {
       if (source !== resolved) return;
       return projectPath
-        ? `import * as project from ${JSON.stringify(projectPath)}; export default project.layers ?? {};`
-        : "export default {};";
+        ? `import * as project from ${JSON.stringify(projectPath)}; export const themeSlots = project.themeSlots ?? {}; export default project.layers ?? {};`
+        : "export const themeSlots = {}; export default {};";
     },
     configureServer(server) {
       install(server.middlewares);

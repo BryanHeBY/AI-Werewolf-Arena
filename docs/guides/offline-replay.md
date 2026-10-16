@@ -122,7 +122,9 @@ presentation: {
 
 ### 语义场景、重点与事实边界
 
-`scene` 可明确覆盖 `kind/title/body/speaker/actorId/targetIds/cues`；场景种类为 `speech/action/ballot/settlement/phase/fallback`。正文明确改写后标记为 script 来源，不更改源归档；`emphasis: [{ text, occurrence? }]` 只强调正文的精确片段，重复次数从0开始，不猜测同义词、发言主张或目标。重点定位跨字幕页仍按原正文切片。
+`scene` 可明确覆盖 `kind/title/body/speaker/actorId/targetIds/cues`；场景种类为 `speech/action/ballot/settlement/phase/fallback`。正文取值优先级为 `scene.body → caption → 默认正文`，显式空字符串也生效；明确改写后标记为 script 来源，不更改源归档。查验等场景统一显示该正文的当前分页，不额外追加未经分页的原报告；原报告仍保留在场景数据中。
+
+`emphasis: [{ text, occurrence? }]` 可直接强调默认正文，也可强调作者替换的正文；只匹配精确片段，重复次数从0开始，不猜测同义词、发言主张或目标。重点定位跨字幕页仍按原正文切片；票型与库存场景同样保留作者文字和重点，票数与库存事实不因此改变。
 
 `cues` 使用镜头局部帧 `establish → travel → impact → settled`，按非降序落在镜头时长内；真实席位快照在相应揭晓帧切换。相机聚焦名单也是明确的关键帧数据，台词中提到玩家不会自动移动镜头。
 

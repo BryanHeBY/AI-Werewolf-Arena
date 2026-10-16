@@ -30,8 +30,8 @@ export async function writeVideoEntry(prepared: PreparedVideo, directory: string
   const root = path.resolve(import.meta.dir, "../src/video-root.tsx");
   const remotion = path.resolve(import.meta.dir, "../node_modules/remotion");
   const custom =
-    prepared.projectPath && prepared.layerNames.length
-      ? `import * as authored from ${JSON.stringify(prepared.projectPath)};\nregisterRoot(createVideoRoot(authored.layers));\n`
+    prepared.projectPath && (prepared.layerNames.length || prepared.themeSlotNames?.length)
+      ? `import * as authored from ${JSON.stringify(prepared.projectPath)};\nregisterRoot(createVideoRoot(authored.layers, authored.themeSlots));\n`
       : "registerRoot(createVideoRoot());\n";
   await writeFile(
     entry,

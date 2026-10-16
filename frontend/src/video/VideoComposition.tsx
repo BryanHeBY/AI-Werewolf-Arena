@@ -7,16 +7,27 @@ import type { CSSProperties } from "react";
 import { audioCueVolume, buildVideoFrame, resolveVideoMediaSource } from "./frame";
 import type { VideoLayerRegistry, VideoPlan } from "./types";
 import { VideoLayers } from "./VideoLayers";
+import { BroadcastVideoFrame } from "./BroadcastVideoFrame";
+import type { VideoThemeSlotRegistry } from "./theme-renderers";
+import { VideoFonts } from "./VideoFonts";
 
 export interface VideoCompositionProps {
   plan: VideoPlan;
   layerRegistry?: VideoLayerRegistry;
   mediaBaseUrl?: string;
+  themeSlots?: VideoThemeSlotRegistry;
 }
 export function VideoComposition(props: VideoCompositionProps) {
   const frame = useCurrentFrame();
   return (
     <>
+      {props.plan.fonts?.length ? (
+        <VideoFonts
+          key={JSON.stringify(props.plan.fonts)}
+          fonts={props.plan.fonts}
+          mediaBaseUrl={props.mediaBaseUrl}
+        />
+      ) : null}
       <VideoFrame {...props} frame={frame} />
       <VideoAudio plan={props.plan} mediaBaseUrl={props.mediaBaseUrl} />
     </>
@@ -36,14 +47,21 @@ export function VideoAudio({ plan, mediaBaseUrl }: { plan: VideoPlan; mediaBaseU
     );
   });
 }
-export function VideoFrame({
+export function VideoFrame(props: VideoCompositionProps & { frame: number }) {
+  return props.plan.layout === "broadcast-v1" ? (
+    <BroadcastVideoFrame {...props} />
+  ) : (
+    <LegacyVideoFrame {...props} />
+  );
+}
+function LegacyVideoFrame({
   plan,
   frame,
   layerRegistry,
   mediaBaseUrl,
 }: VideoCompositionProps & { frame: number }) {
   const view = buildVideoFrame(plan, frame);
-  const event = view.shot.view;
+  const event = view.currentView;
   const scale = Math.min(plan.width / 1280, plan.height / 720);
   const dense = event.players.length >= 10;
   const textStyle: CSSProperties = { overflowWrap: "anywhere", overflow: "hidden" };
@@ -119,6 +137,7 @@ export function VideoFrame({
             <div
               key={player.playerId}
               data-composition-player={player.playerId}
+              data-player-alive={player.alive ? "true" : "false"}
               data-testid={player.isWinner ? "composition-winner" : undefined}
               style={{
                 position: "absolute",

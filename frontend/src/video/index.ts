@@ -9,3 +9,4 @@ export * from "./captions";
 export * from "./layout";
 export * from "./frame";
 export * from "./VideoComposition";
+export type { VideoThemeSlotProps, VideoThemeSlotRegistry } from "./theme-renderers";

@@ -62,7 +62,10 @@ export async function previewVideo(
           ...process.env,
           AWA_REPLAY_INPUT: prepared.sourcePath,
           AWA_VIDEO_PLAN_DIR: directory,
-          AWA_VIDEO_PROJECT_ENTRY: prepared.layerNames.length ? prepared.projectPath : undefined,
+          AWA_VIDEO_PROJECT_ENTRY:
+            prepared.layerNames.length || prepared.themeSlotNames?.length
+              ? prepared.projectPath
+              : undefined,
         },
       },
     );

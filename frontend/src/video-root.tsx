@@ -5,6 +5,7 @@
 import { Composition } from "remotion";
 import { compileVideoPlan, VideoComposition } from "./video";
 import type { ComponentProps } from "react";
+import type { VideoThemeSlotRegistry } from "./video/theme-renderers";
 
 type Registry = ComponentProps<typeof VideoComposition>["layerRegistry"];
 const empty = compileVideoPlan({
@@ -17,9 +18,14 @@ const empty = compileVideoPlan({
   events: [],
 });
 
-export function createVideoRoot(layerRegistry?: Registry) {
+export function createVideoRoot(layerRegistry?: Registry, themeSlots?: VideoThemeSlotRegistry) {
   const Component = ({ plan }: { plan: typeof empty }) => (
-    <VideoComposition plan={plan} layerRegistry={layerRegistry} mediaBaseUrl="./public/" />
+    <VideoComposition
+      plan={plan}
+      layerRegistry={layerRegistry}
+      themeSlots={themeSlots}
+      mediaBaseUrl="./public/"
+    />
   );
   const Root = () => (
     <Composition

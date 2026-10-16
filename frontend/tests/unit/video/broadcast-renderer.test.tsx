@@ -1,0 +1,265 @@
+/**
+ * 单元组件测试负责验证广播渲染的事实揭晓、匿名资料、完整票型与主题扩展。输入为独立手写回放和显式帧，输出原文及状态标记的字面断言。
+ * 不以像素颜色代替生命事实，不从渲染结果生成预期，不调用浏览器、模型或游戏规则。
+ */
+import { expect, test } from "bun:test";
+import { renderToStaticMarkup } from "react-dom/server";
+import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { VideoFrame } from "../../../src/video/VideoComposition";
+import { compileVideoPlan } from "../../../src/video/compiler";
+import { getVideoSourceIdentity } from "../../../src/video/source";
+import { buildVideoFrame } from "../../../src/video/frame";
+import type { VideoScript } from "../../../src/video/types";
+import type { VideoThemeSlotRegistry } from "../../../src/video/theme-renderers";
+
+function replay(events: Array<Pick<ReplayEvent, "type" | "payload">>): ReplayDocument {
+  return {
+    schemaVersion: 2,
+    sessionId: "renderer",
+    perspective: "god",
+    meta: { board: "renderer", locale: "zh-CN", startedAt: "start", endedAt: "end" },
+    result: { winner: null, reason: null },
+    players: Array.from({ length: 12 }, (_, i) => ({
+      player_id: i + 1,
+      name: `Original ${i + 1}`,
+      model: `Model ${i + 1}`,
+      role: i === 0 ? "wolf" : "villager",
+      camp: i === 0 ? "wolf" : "good",
+    })),
+    events: events.map((event, i) => ({
+      seq: i + 1,
+      timestamp: "2026-10-17T00:00:00Z",
+      day: 1,
+      phase: "day",
+      ...event,
+    })),
+  };
+}
+function plan(document: ReplayDocument, options: Omit<VideoScript, "source"> = {}) {
+  return compileVideoPlan(document, {
+    source: getVideoSourceIdentity(document),
+    layout: "broadcast-v1",
+    ...options,
+  });
+}
+test("anonymous profiles omit system names and models while raw speech and explicit emphasis remain", () => {
+  const document = replay([
+    { type: "day_speech", payload: { actorId: 2, text: "我声称1号是狼人。" } },
+  ]);
+  const video = plan(document, {
+    presentation: { anonymous: true },
+    edits: [{ anchor: { seq: 1, type: "day_speech" }, emphasis: [{ text: "我声称" }] }],
+  });
+  const html = renderToStaticMarkup(<VideoFrame plan={video} frame={0} />);
+  expect(html).not.toContain("Original");
+  expect(html).not.toContain("Model");
+  expect(html).toContain("我声称");
+  expect(html).toContain("1号是狼人。");
+  expect(html).toContain("<mark");
+  expect(video.shots[0]!.scene.targetIds).toEqual([]);
+  expect(buildVideoFrame(video, 0).currentView.players[0]!.alive).toBe(true);
+});
+test("all twelve recorded targets and voter sources remain represented in a dense ballot grid", () => {
+  const votes = Array.from({ length: 12 }, (_, i) => ({
+    actorId: i + 1,
+    targetId: i + 1,
+    weight: 1,
+    abstain: false,
+  }));
+  const document = replay([
+    {
+      type: "vote_summary",
+      payload: {
+        votes,
+        tally: Object.fromEntries(votes.map((v) => [v.targetId, 1])),
+        target: null,
+        round: 1,
+      },
+    },
+  ]);
+  const video = plan(document);
+  expect(renderToStaticMarkup(<VideoFrame plan={video} frame={0} />)).not.toContain(
+    "data-ballot-target",
+  );
+  const html = renderToStaticMarkup(<VideoFrame plan={video} frame={24} />);
+  for (let id = 1; id <= 12; id++) expect(html).toContain(`data-ballot-target="${id}"`);
+  expect(html).toContain("grid-template-columns:minmax(0,1fr) minmax(0,1fr)");
+  expect(html.match(/data-player-alive="true"/g)).toHaveLength(12);
+});
+test("repeated subtitle pages highlight only the exact occurrence selected by the script", () => {
+  const document = replay([
+    { type: "day_speech", payload: { actorId: 2, text: "甲".repeat(250) } },
+  ]);
+  const video = plan(document, {
+    edits: [
+      { anchor: { seq: 1, type: "day_speech" }, emphasis: [{ text: "甲", occurrence: 120 }] },
+    ],
+  });
+  const shot = video.shots[0]!;
+  const secondPage = Math.ceil(shot.durationFrames / shot.captionPages.length);
+  expect(renderToStaticMarkup(<VideoFrame plan={video} frame={0} />)).not.toContain("<mark");
+  expect(renderToStaticMarkup(<VideoFrame plan={video} frame={secondPage} />)).toContain("<mark");
+});
+test("theme slots receive current state and identical prepared asset base without serializing components", () => {
+  const document = replay([{ type: "day_speech", payload: { actorId: 2, text: "Words." } }]);
+  const video = plan(document);
+  const slots: VideoThemeSlotRegistry = {
+    "gothic-v1/frame": ({ mediaBaseUrl, view }) => (
+      <span data-custom-base={mediaBaseUrl} data-custom-source={view.sourceSeq}>
+        CUSTOM SLOT
+      </span>
+    ),
+  };
+  const html = renderToStaticMarkup(
+    <VideoFrame plan={video} frame={0} themeSlots={slots} mediaBaseUrl="/api/video/" />,
+  );
+  expect(html).toContain('data-custom-base="/api/video/"');
+  expect(html).toContain("CUSTOM SLOT");
+  expect(JSON.parse(JSON.stringify(video))).toEqual(video);
+  expect(JSON.stringify(video)).not.toContain("CUSTOM SLOT");
+});
+test("theme-specific options affect the default renderer and explicit camera focus keeps all HUD seats", () => {
+  const document = replay([{ type: "day_speech", payload: { actorId: 2, text: "Words." } }]);
+  const video = plan(document, {
+    theme: { id: "gothic-v1", options: { ornamentalFrames: true, paperTexture: true } },
+    edits: [
+      {
+        anchor: { seq: 1, type: "day_speech" },
+        camera: [{ frame: 0, target: { playerIds: [12] }, zoom: 1.5 }],
+      },
+    ],
+  });
+  const html = renderToStaticMarkup(<VideoFrame plan={video} frame={0} />);
+  expect(html).toContain("data-theme-ornamental-frame");
+  expect(html).toContain("repeating-linear-gradient");
+  expect(html).toContain('data-video-focus="12"');
+  expect(html.match(/data-composition-player=/g)).toHaveLength(12);
+});
+
+test("authored ballot and inventory text remains visible with precise emphasis and unchanged facts", () => {
+  const document = replay([
+    {
+      type: "vote_summary",
+      payload: {
+        votes: [{ actorId: 1, targetId: 2, abstain: false, weight: 1 }],
+        tally: { 2: 1 },
+        target: 2,
+      },
+    },
+  ]);
+  const ballot = plan(document, {
+    edits: [
+      {
+        anchor: { seq: 1, type: "vote_summary" },
+        caption: "EDITORIAL BALLOT",
+        emphasis: [{ text: "EDITORIAL" }],
+      },
+    ],
+  });
+  const ballotHtml = renderToStaticMarkup(<VideoFrame plan={ballot} frame={24} />);
+  expect(ballotHtml).toContain("data-scene-editorial");
+  expect(ballotHtml).toContain("EDITORIAL");
+  expect(ballotHtml).toContain(" BALLOT");
+  expect(ballotHtml).toContain("<mark");
+  expect(ballotHtml).toContain('data-ballot-target="2"');
+  const stockDocument = replay([]);
+  stockDocument.factCoverage = { committedDeaths: 1 };
+  stockDocument.facts = [
+    {
+      seq: 1,
+      afterSeq: 0,
+      day: 1,
+      kind: "potion_stock",
+      actorId: 2,
+      abilityId: "potion-2",
+      heal: 0,
+      poison: 1,
+    },
+  ];
+  const inventory = plan(stockDocument, {
+    factEdits: [
+      {
+        anchor: { seq: 1, kind: "potion_stock" },
+        caption: "EDITORIAL STOCK",
+        emphasis: [{ text: "STOCK" }],
+      },
+    ],
+  });
+  const stockHtml = renderToStaticMarkup(<VideoFrame plan={inventory} frame={24} />);
+  expect(stockHtml).toContain("EDITORIAL ");
+  expect(stockHtml).toContain("STOCK");
+  expect(stockHtml).toContain("<mark");
+  expect(inventory.shots[0]!.scene.stock).toEqual({
+    actorId: 2,
+    abilityId: "potion-2",
+    heal: 0,
+    poison: 1,
+  });
+});
+
+test("emphasis alone can annotate original ballot and stock prose without replacing the caption", () => {
+  const document = replay([
+    {
+      type: "vote_summary",
+      payload: {
+        votes: [{ actorId: 1, targetId: 2, abstain: false, weight: 1 }],
+        tally: { 2: 1 },
+        target: 2,
+      },
+    },
+  ]);
+  const ballot = plan(document, {
+    edits: [{ anchor: { seq: 1, type: "vote_summary" }, emphasis: [{ text: "2号" }] }],
+  });
+  const ballotHtml = renderToStaticMarkup(<VideoFrame plan={ballot} frame={24} />);
+  expect(ballot.shots[0]!.scene.bodySource).toBe("event");
+  expect(ballotHtml).toContain("data-scene-editorial");
+  expect(ballotHtml).toContain("<mark");
+  expect(ballotHtml).toContain('data-ballot-target="2"');
+
+  const stockDocument = replay([]);
+  stockDocument.factCoverage = { committedDeaths: 1 };
+  stockDocument.facts = [
+    {
+      seq: 1,
+      afterSeq: 0,
+      day: 1,
+      kind: "potion_stock",
+      actorId: 2,
+      abilityId: "potion-2",
+      heal: 0,
+      poison: 1,
+    },
+  ];
+  const inventory = plan(stockDocument, {
+    factEdits: [{ anchor: { seq: 1, kind: "potion_stock" }, emphasis: [{ text: "解药" }] }],
+  });
+  const stockHtml = renderToStaticMarkup(<VideoFrame plan={inventory} frame={24} />);
+  expect(inventory.shots[0]!.scene.bodySource).toBe("event");
+  expect(stockHtml).toContain("<mark");
+  expect(stockHtml).toContain("解药");
+  expect(stockHtml).toContain("毒药 1");
+});
+
+test("inspection prose uses only its caption page and authored replacement does not append the original report", () => {
+  const document = replay([
+    { type: "seer_checked", payload: { actorId: 2, targetId: 1, result: "wolf" } },
+  ]);
+  document.players[1]!.name = "Long source player name ".repeat(30);
+  const video = plan(document);
+  const shot = video.shots[0]!;
+  expect(shot.captionPages.length).toBeGreaterThan(1);
+  const html = renderToStaticMarkup(<VideoFrame plan={video} frame={24} />);
+  // 查验原报告必须服从同一分页；不能再把完整结果塞入第二个文本区域。
+  expect(html).not.toContain(shot.scene.action!.result!);
+  expect(html).toContain(buildVideoFrame(video, 24).caption);
+  const authored = plan(document, {
+    edits: [
+      { anchor: { seq: 1, type: "seer_checked" }, caption: "Edited inspection announcement" },
+    ],
+  });
+  const authoredHtml = renderToStaticMarkup(<VideoFrame plan={authored} frame={24} />);
+  expect(authoredHtml).toContain("Edited inspection announcement");
+  expect(authoredHtml).not.toContain(shot.scene.action!.result!);
+  expect(authored.shots[0]!.scene.action!.result).toBe(shot.scene.action!.result);
+});

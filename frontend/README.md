@@ -21,8 +21,9 @@ bun run --cwd frontend replay:dev -- --input ../record/session_<id>
 ```bash
 # 自动编排广播版，查看来源指纹、原事件与镜头帧区间
 bun run --cwd frontend video:inspect -- --input ../record/session_<id>/replay.json
-# 哥特广播版示例：语义场景、精确重点和主题插槽
+# 哥特广播版示例：真实十二人回放、语义场景、精确重点和镜头
 bun run --cwd frontend video:preview -- --project videos/gothic-demo/project.tsx
+bun run --cwd frontend video:render -- --project videos/gothic-demo/project.tsx --output /tmp/gothic-demo.mp4 --browser /usr/bin/chromium
 # 既有椭圆桌示例保持兼容：推近、图层、自定义 TSX/SVG 与回顾
 bun run --cwd frontend video:preview -- --project videos/example/project.tsx
 bun run --cwd frontend video:render -- --project videos/example/project.tsx --output /tmp/example.png --frame 230 --browser /usr/bin/chromium

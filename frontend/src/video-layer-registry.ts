@@ -3,5 +3,7 @@
  * 显式单局预览由 Vite 选择项目模块；组件不从计划 JSON 恢复，本模块不读取磁盘或修改事实。
  */
 import type { VideoLayerRegistry } from "./video";
+import type { VideoThemeSlotRegistry } from "./video/theme-renderers";
 const layers: VideoLayerRegistry = {};
+export const themeSlots: VideoThemeSlotRegistry = {};
 export default layers;

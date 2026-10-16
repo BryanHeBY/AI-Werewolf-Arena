@@ -8,7 +8,8 @@ import { Player } from "@remotion/player";
 import { text } from "@ai-werewolf-arena/game-text";
 import { VideoComposition, type VideoPlan } from "./video";
 import { useReplayPlayback } from "./replay/useReplayPlayback";
-import layerRegistry from "./video-layer-registry";
+import layerRegistry, { themeSlots } from "./video-layer-registry";
+import { DEFAULT_WEB_THEME, resolveTheme, themeToCssVariables } from "./themes";
 import "./style.css";
 
 function VideoPreview() {
@@ -52,6 +53,7 @@ function VideoPreview() {
             layerRegistry: layerRegistry as ComponentProps<
               typeof VideoComposition
             >["layerRegistry"],
+            themeSlots,
             mediaBaseUrl: new URL("/api/video/", window.location.href).href,
           }
         : undefined,
@@ -60,7 +62,10 @@ function VideoPreview() {
   const locale = plan?.display.locale ?? "zh-CN";
   if (!plan || !inputProps)
     return (
-      <main className="shell centered">
+      <main
+        className="shell centered"
+        style={themeToCssVariables(resolveTheme(DEFAULT_WEB_THEME), "day") as CSSProperties}
+      >
         <section className="panel" style={{ padding: 24 }}>
           <h1>{text(locale, "replay.video_preview")}</h1>
           <p role={error ? "alert" : undefined}>
@@ -71,7 +76,10 @@ function VideoPreview() {
       </main>
     );
   return (
-    <main className="shell">
+    <main
+      className="shell"
+      style={themeToCssVariables(resolveTheme(DEFAULT_WEB_THEME), "day") as CSSProperties}
+    >
       <header className="topbar">
         <div>
           <h1>{text(locale, "replay.video_preview")}</h1>
