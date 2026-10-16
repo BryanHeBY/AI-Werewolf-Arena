@@ -27,6 +27,151 @@
       "file": "poison-vial.png",
       "prompt": "Asset type: square isolated skill prop on GENUINELY TRANSPARENT background. Use case: stylized-concept. Create a production raster asset for an ORIGINAL medieval gothic werewolf-game broadcast renderer, NOT a UI mockup. Restrained painterly realism, tactile aged iron and worn brass, desaturated slate blue, bone highlights and muted crimson. Gothic medieval village tragedy with a faint precision-craft feel, not cyberpunk. Absolutely no text, letters, numerals, logos, watermark, border frames, people, player cards or interface. High quality material and volumetric light, quiet composition, not a flat line icon. One old apothecary poison flask, narrow faceted smoky dark glass, muted crimson-purple liquid, dark cork and aged bronze wire neck, a tiny sculpted skull-shaped metal clasp without text. Fine realistic edge lighting and slightly ominous attached wisps. Restrained material rendering, no gore, no human, no neon, no medical cross, no label. Object fills 78 percent of image, entire stopper and base visible, centered, transparent alpha outside the prop, no rectangular background or floor.",
       "transparent": true
+    },
+    {
+      "id": "blood-wolf-claw",
+      "file": "blood-wolf-claw.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. Three forceful diagonal curved WEREWOLF CLAW SLASHES as one compact isolated effect motif, dark BLOOD CRIMSON ragged tears with a very faint wolf-head negative-space silhouette formed between the three gouges, wet red edges, black-red iron-like shadowed depth, a few restrained attached red flecks. Predatory sinister gothic horror, elegant readable silhouette. No severed body or hand, no skin surface, no glowing magic circle, no white wireframe wolf head. The three slash wounds themselves are the object, the surroundings are transparent.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "59700067df499d0e85f51065686253395f0925868a75960bfe70a3cdfe5c3fde",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "dueling-blades",
+      "file": "dueling-blades.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. Two short medieval knight swords crossing in a decisive X, physically convincing worn silver steel blades and dark iron guards with restrained brass inlay, a tiny crimson leather wrap, compact ceremonial duel weapon arrangement. Only swords, no shield, no result symbol, no flame, no blood spray. Clear full tips and handles, tactile metal, hard glint at crossing.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "9d05a07a65a666a13920c7da4e5aa615e557d547e4b3cbfe8cadf8b0069001da",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "iron-ward",
+      "file": "iron-ward.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. One substantial medieval heater shield, blackened aged iron with cold silver raised rim, worn brass rivets and one small central astrolabe boss, restrained engraved radial craft lines. Neutral protective prop, no check mark, no plus, no cross, no glowing orb, no letters or animal face; full shield silhouette, slight three-quarter tilt, weighty dark gothic craftsmanship.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "aabb25c881bec07309eee481443c00c8db4dcfc8bee0c084697b1ac6810a088b",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "flintlock",
+      "file": "flintlock.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. One compact late-medieval fantasy hand cannon / early flintlock pistol pointing to the right, a short thick blued-steel barrel, engraved aged-brass action, dark crimson leather wrapped wood grip angled down left. Weighty handcrafted silhouette, not modern firearm, no muzzle flash or smoke, no victim, no bullets in flight. Whole barrel and grip visible.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "5a9b277d76c41b66309049d32433024b157a6966a77858a6a827dc946e4551a7",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "oath-contract",
+      "file": "oath-contract.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. One small curled medieval oath contract, a single blank grey-ivory parchment fragment held at lower center by a dark crimson wax seal and short frayed crimson cord. Paper is ONLY the isolated prop, not a UI panel. Restrained blackened iron corner clasp and aged-brass seal setting. Absolutely blank paper, no handwritten lines, letters, symbols of victory or identity, no glow. Compact clear silhouette.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "d4e89bbc88e64dd11e2f91b35a58568f2c573e42e7bd4c541b95517c09388d81",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "bond-rings",
+      "file": "bond-rings.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. Two distinct aged iron oath rings side by side at a slight angle, joined by one short crimson silk thread tied between them, restrained worn brass inlaid dots and gothic leaf etching. Balanced compact arrangement on transparent background, no hearts, no arrows, no love lettering, no glowing spell circle, no severed chain. Neutral relation token that does not imply death or success.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "4c1001a12e9fc8a6534d9e91f010e8adfc7623d18decd109a0b402ecdc7ef525",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "mapping-gates",
+      "file": "mapping-gates.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. A compact matched pair of narrow gothic arched mirror gateways, freestanding frames of blackened iron with worn brass bevels, one angled left and one angled right, smoky neutral silver glass interiors, short stone-free metal bases, a restrained short strand of cold mist between them. Both entire silhouettes visible. No faces, animals, reflected people, identity cards, arrows or figures, no magic circle. Neutral tool for target mapping, not identity swapping.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "a97b4f8ac8de9190932c3a0b7926f93dc740538fbb889a5da30f2aadbe362f5f",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "clock-lock",
+      "file": "clock-lock.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. One compact medieval brass hourglass enclosed in a dark iron astrolabe cage, pale desaturated silver sand visible in both glass chambers, small precise gears and a tiny winding key on its right, balanced three-quarter silhouette, no clock face numbers, no letters, no glowing time portal, no arrows. Neutral delay and reflection artifact, not a result or expiration state.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "35b8df20a2c5e5f5201a4019368d8418f4024987ef8435332c4cd801501a6c4e",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "sealed-grimoire",
+      "file": "sealed-grimoire.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. One closed compact black leather medieval grimoire, diagonally tilted, tactile worn spine, blackened iron corner protectors and restrained brass clasps, a single unmarked crimson wax seal across the latch, faint geometric mechanical craft etching in the brass only. Whole book visible with clean silhouette. No text, eyes, skull, cross or open pages, no light emerging, no identity or victory symbol. Neutral stored ability / secret resource artifact.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "8ad635d98d286895687c99602680200aa53c7a7ba0bbde797b0ec1881cb8ef68",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "judgement-seal",
+      "file": "judgement-seal.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. A large deep dark crimson medieval wax seal medallion, uneven tactile wax edge set against a small backing of dark iron, impressed relief of balanced simple heraldic scales with two empty bowls, aged brass rim, a short crimson ribbon below. No checkmark, cross, X, letters or numerals, no skull or animal, no paper background. Neutral judgement and election token, not a prewritten verdict.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "2c2a732fcef5d450cc34648d969cb539372b69ff0737c30c8d2cd13ebef4ffae",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "raven-quill",
+      "file": "raven-quill.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. One long dark raven feather quill angled diagonally, a fine aged brass nib and small blackened iron inkwell beside its lower end, restrained pale silver highlights on layered feather barbs and a tiny crimson thread around nib. Compact full silhouette, no written paper, no text, no bird, no flying debris, no magic circle. Neutral speech and record artifact.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "a7eef84e97a33170962cf6ebc37402bb0293ddadc14f3f0f3e123ebcde996ca8",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
+    },
+    {
+      "id": "beast-totem",
+      "file": "beast-totem.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production game prop, square, on genuinely transparent alpha background. Original restrained medieval gothic werewolf broadcast art, tactile painterly realism, blackened aged iron and worn brass, bone edge highlights, desaturated slate blue, restrained dark crimson. Upper-left cool cinematic light, consistent three-quarter view with clear silhouette, entire object visible within 82 percent canvas with empty alpha margin. No text, letters, numbers, UI, logos, watermark, people, floor or opaque rectangle, no cartoon, no flat vector icon, no neon, no elaborate background. Material matches antique bronze divination mirror and hand-blown alchemy flasks. One neutral medieval animal omen talisman: a small dark aged iron disk set in worn brass, one natural pale bone claw and one smooth unmarked pale stone tied with crimson leather at the bottom. Fine restrained gothic leaf etching, no recognizable bear or fox or wolf face, no skull, no role icon, no writing. Clear full compact silhouette. Neutral passive-signal relic, not a specific creature or revealed answer.",
+      "transparent": true,
+      "kind": "prop",
+      "status": "reviewed",
+      "sha256": "347b7ef0c65bd83434222563dbab49346fe50ea265921810438433adc2aed22e",
+      "dimensions": [1254, 1254],
+      "lightDirection": "upper-left",
+      "safeArea": "透明边界；按道具轮廓contain，不覆盖文字"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-17"
 }
