@@ -14,6 +14,23 @@ test("缺省、重名与中英文都保持编号可辨识，昵称不翻译", ()
   expect(playerLabel({ id: 9, name: "沈砚舟" }, "en")).toBe("Player 9·沈砚舟");
 });
 
+test("独立座次同时用于系统模板和玩家标签，内部ID及发言原文不变", () => {
+  const players = [
+    { id: 42, seat: 3 },
+    { id: 77, seat: 9, name: "星烛" },
+  ];
+  const named = createPlayerText(players);
+  expect(playerLabel(players[0])).toBe("3号");
+  expect(playerLabel(players[1], "en")).toBe("Player 9·星烛");
+  const speech = "42号和Player 77只是原始发言。";
+  expect(named("zh-CN", "replay.day_speech", { actor: 42, speech })).toBe(`3号发言：${speech}`);
+  expect(named("en", "replay.check", { actor: 42, target: 77, camp: "Wolf" })).toBe(
+    "Player 3 checks Player 9·星烛: Wolf",
+  );
+  expect(named("zh-CN", "replay.night", { day: 42 })).toContain("42");
+  expect(players[0].id).toBe(42);
+});
+
 test("模板替换只扫描一次，玩家原文与昵称中的占位符都原样保留", () => {
   const named = createPlayerText([{ id: 8, name: "沈{target}舟" }]);
   const speech = "8号说 Player 8，{actor}号与1号都只是原文。";

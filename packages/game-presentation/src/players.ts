@@ -6,10 +6,13 @@ import type { Locale, PublicPlayerIdentity } from "@ai-werewolf-arena/game-contr
 import { dictionaries, text } from "@ai-werewolf-arena/game-text";
 
 export type PlayerText = typeof text;
-export type NamedPlayer = Pick<PublicPlayerIdentity, "id" | "name">;
+/** 内部 ID 负责引用，seat 只负责展示；旧档省略座次时继续显示原编号。 */
+export type NamedPlayer = Pick<PublicPlayerIdentity, "id" | "name"> & {
+  seat?: PublicPlayerIdentity["seat"];
+};
 
 export function playerLabel(player: NamedPlayer, locale: Locale = "zh-CN"): string {
-  const number = text(locale, "common.player", { id: player.id });
+  const number = text(locale, "common.player", { id: player.seat ?? player.id });
   return player.name ? `${number}·${player.name}` : number;
 }
 
@@ -49,7 +52,9 @@ const playerIdMessages = new Set([
 /** 保留 text 的严格参数校验与缺省输出；显式传入名单，不使用跨局可变的全局展示状态。 */
 export function createPlayerText(players: readonly NamedPlayer[] = []): PlayerText {
   const names = new Map(
-    players.filter((player) => player.name).map((player) => [player.id, player]),
+    players
+      .filter((player) => player.name || (player.seat !== undefined && player.seat !== player.id))
+      .map((player) => [player.id, player]),
   );
   return (locale, key, parameters = {}) => {
     const original = text(locale, key, parameters);
