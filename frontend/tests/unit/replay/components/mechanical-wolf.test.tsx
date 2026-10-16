@@ -2,6 +2,7 @@
  * 单元组件测试验证机械狼学习、反毒、守护失败和枪击归档。输入为真实 fixture、两语及畸形字段／getter；
  * 输出以字面事实、死亡／胜者名单检查选择与真实死亡分离、原角色保留及纯帧／markup，不运行学习、反射或模型。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -53,9 +54,13 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(eventLabel(event, locale)).toBe(expected);
       const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
         frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-      expect(buildReplayFrame(input, frame).label).toBe(expected);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(expected, input.replay.players, locale),
+      );
       const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-      expect(markup).toContain(expected.replaceAll("'", "&#x27;"));
+      expect(markup).toContain(
+        withPlayerNames(expected, input.replay.players, locale).replaceAll("'", "&#x27;"),
+      );
       expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       expect(raw).toEqual(before);
     });

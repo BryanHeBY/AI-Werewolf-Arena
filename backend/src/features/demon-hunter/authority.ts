@@ -108,7 +108,7 @@ interface Participant extends DemonParticipantStateData {
     | (DemonCheckpointAuditData & {
         identity: object;
         seat: number;
-        name: string;
+        name?: string;
         marks: StatusMarksComponent;
       })
     | null;
@@ -209,6 +209,10 @@ function captureDemonCheckpointMetadata(world: World, id: number): Participant["
     marks = world.getComponent(id, COMPONENT.StatusMarks);
   const seat = ownDemonData(identity, "seat"),
     name = ownDemonData(identity, "name"),
+    nameField =
+      identity && !types.isProxy(identity)
+        ? Object.getOwnPropertyDescriptor(identity, "name")
+        : undefined,
     badgeJson = demonBadgeJson(badge),
     voteJson = demonVoteJson(vote);
   if (
@@ -218,7 +222,12 @@ function captureDemonCheckpointMetadata(world: World, id: number): Participant["
     !marks ||
     !Number.isSafeInteger(seat) ||
     (seat as number) < 1 ||
-    typeof name !== "string" ||
+    (name !== undefined && typeof name !== "string") ||
+    // 允许真正缺席；访问器、继承值与显式非字符串不能伪装成“未取名”。
+    (nameField
+      ? !("value" in nameField) || name === undefined
+      : Object.getPrototypeOf(identity) !== Object.prototype &&
+        Object.getPrototypeOf(identity) !== null) ||
     !badgeJson ||
     !voteJson ||
     !Object.values(StatusMark).every((mark) => statusMarkSnapshot(marks, mark))
@@ -1262,11 +1271,17 @@ export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
     const cp = p.checkpoint;
     if (!cp) throw new Error("demon_hunter_checkpoint_metadata_missing");
     const currentBadge = demonBadgeJson(cp.badge),
-      currentVote = demonVoteJson(cp.vote);
+      currentVote = demonVoteJson(cp.vote),
+      nameField = Object.getOwnPropertyDescriptor(cp.identity, "name");
     const originalMetadata =
       world.getComponent(p.id, COMPONENT.Identity) === cp.identity &&
       ownDemonData(cp.identity, "seat") === cp.seat &&
-      ownDemonData(cp.identity, "name") === cp.name &&
+      // 原来没有昵称，也不能把后来安装的 getter 当作同一个 undefined 值。
+      (cp.name === undefined
+        ? !nameField &&
+          (Object.getPrototypeOf(cp.identity) === Object.prototype ||
+            Object.getPrototypeOf(cp.identity) === null)
+        : !!nameField && "value" in nameField && nameField.value === cp.name) &&
       world.getComponent(p.id, COMPONENT.Badge) === cp.badge &&
       world.getComponent(p.id, COMPONENT.VotingRight) === cp.vote &&
       world.getComponent(p.id, COMPONENT.StatusMarks) === cp.marks;

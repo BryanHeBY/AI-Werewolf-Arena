@@ -1,6 +1,7 @@
 /**
  * 负责双端复制、赠予、枪及特殊能力事件的展示映射。输入是事件类型、公开契约读取的数据和语言；输出为原事件标签或原未知回退。复制与付款、效果生效及玩家信息授权不属于展示层，库存和原始用户文本保持。
  */
+import { type PlayerText } from "../players";
 import {
   AWAKENED_EVENT_TYPES,
   readAwakenedEventFact,
@@ -20,9 +21,14 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/black-market";
 import type { MessageKey } from "@ai-werewolf-arena/game-contract";
 import { type Locale } from "@ai-werewolf-arena/game-contract";
-import { text, roleName } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, roleName } from "@ai-werewolf-arena/game-text";
 
-export function awakenedEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function awakenedEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   if (!(AWAKENED_EVENT_TYPES as readonly string[]).includes(type)) return null;
   const unknown = () => text(locale, "replay.unknown");
   const fact = readAwakenedEventFact(type, payload);
@@ -76,6 +82,7 @@ export function mechanicalEventLabel(
   type: string,
   payload: unknown,
   locale: Locale,
+  text: PlayerText = defaultText,
 ): string | null {
   if (!(MECHANICAL_EVENT_TYPES as readonly string[]).includes(type)) return null;
   const unknown = () => text(locale, "replay.unknown");
@@ -140,7 +147,12 @@ export function mechanicalEventLabel(
   }
 }
 
-export function merchantEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function merchantEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   if (
     !["merchant_trade_committed", "merchant_trade_skipped", "merchant_trade_resolved"].includes(
       type,
@@ -184,6 +196,7 @@ export function deathAbilityEventLabel(
   type: string,
   payload: unknown,
   locale: Locale,
+  text: PlayerText = defaultText,
 ): string | null {
   if (type !== "death_ability_changed") return null;
   const unknown = () => text(locale, "replay.unknown");
@@ -200,6 +213,7 @@ export function blackMarketEventLabel(
   type: string,
   payload: unknown,
   locale: Locale,
+  text: PlayerText = defaultText,
 ): string | null {
   if (
     ![

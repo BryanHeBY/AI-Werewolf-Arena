@@ -2,13 +2,15 @@
  * 负责觉醒狼美人的选择、God付款与公开替死结果标签。输入惰性载荷及语言，输出自然文案或null。
  * 一次付款不等于真实死亡，公开结果也不补写生命；受众和真正死亡由调用方的各自契约负责。
  */
+import { type PlayerText } from "../players";
 import { readAwakenedBeautyFact } from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
-import { text, term, type Locale } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { deathCauses } from "./fact-details";
 export function awakenedBeautyEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const f = readAwakenedBeautyFact(type, payload);
   if (!f) return null;
@@ -30,7 +32,7 @@ export function awakenedBeautyEventLabel(
         actor: f.payload.actorId,
         day: f.payload.day,
         target: f.payload.targetId,
-        causes: deathCauses(f.payload.preventedCauses, locale),
+        causes: deathCauses(f.payload.preventedCauses, locale, text),
         phase: term("phase", f.payload.phase, locale),
         root: term("phase", f.payload.rootPhase, locale),
       });

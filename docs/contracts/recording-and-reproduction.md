@@ -38,6 +38,16 @@ God公开replay、私有manifest／reproduction及逐玩家档案的字段与身
 
 ## Agent 输出分类
 
+### 玩家昵称
+
+昵称是可选的公开身份数据。manifest、God replay 和独立 player schema 2 文件保留显式 `name`，未配置时省略；旧文件缺席时仅显示编号，旧文件已有的名字保持原文。事件、行动目标和工具参数继续保存 ID，不为展示把昵称重复写入每个 payload。
+
+当前 Tape3 的玩家元数据与 checkpoint 允许 `name` 缺席，严格复现沿元数据重建相同的字段缺席。历史 Tape2 仍要求原有姓名字段；本次没有把无昵称新档伪装为 Tape2。旧的 Tape3 reader 不保证接受新的无昵称档案；source／lock／规则身份检查维持原要求。
+
+`game-presentation` 的 `playerLabel` 和 `createPlayerText` 供终端与 Web 共用。展示器显式接收本局公开名单，在已选词典模板的玩家参数位置补姓名，保留没有昵称时的原文案；日期、次数与技能 ID 不视为玩家 ID。姓名、玩家发言、思考和工具原文只插入一次，不通过整行正则替换修改，也不把 ANSI／HTML 写回结构化档案。
+
+### 模型与工具输出
+
 `AgentOutput` 是 LLM／ACP／Pi、终端、录制与 Web 共用的纯数据观察契约。归档继续使用 player schema 2：思考与消息分别写入 `assistant_output` 的既有可选 `name` 字段（`thinking`／`message`）；没有明确分类的 SDK／历史输出保持 `output`。文本按 8000 字符分片并保护 UTF-16 代理对，不通过终端显示开关裁剪私有原文。
 
 工具仍映射为 `tool_call` 与 `tool_result`；原参数、候选接受信息、回执和白名单诊断沿既有字段保存。工具增量增加可选的 `call_id` 与有限枚举 `status` 元数据，用于关联真实开始／中间／完成状态；旧 reader 可忽略这些新增字段，旧档缺席时仍按原 `tool_call`／`tool_result` 解释，不补造进度。结构化记录不包含终端生成的 ANSI 或 HTML。

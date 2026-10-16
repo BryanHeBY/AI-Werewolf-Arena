@@ -2,6 +2,7 @@
  * 单元组件测试验证魔镜少女跳过、目标耗尽、具体报告与警徽链归档。
  * 输入为真实 fixture 和两语帧号；输出以手写报告／席位／胜者预期检查查验不杀人、死亡与警徽随后独立发表，另核静态 markup，不运行查验规则。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -41,9 +42,11 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(eventLabel(event, locale)).toBe(label);
       const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
         frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-      expect(buildReplayFrame(input, frame).label).toBe(label);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-      expect(markup).toContain(label);
+      expect(markup).toContain(withPlayerNames(label, input.replay.players, locale));
       expect(markup).toContain(locale === "en" ? "Mirror Girl" : "魔镜少女");
       expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       expect(raw).toEqual(before);

@@ -24,7 +24,10 @@ const roles = [
 ];
 function base() {
   const board = animalInternalConfig() as unknown as BoardConfig,
-    g = bootstrapGame(board, { fixedRoles: roles }),
+    g = bootstrapGame(board, {
+      fixedRoles: roles,
+      playerNames: Object.fromEntries(roles.map((_, i) => [i + 1, `Player ${i + 1}`])),
+    }),
     events = g.phaseManager.getEvents(),
     cp = captureCheckpoint(g.world, g.phaseManager.getSnapshot(), 0, true, events.length);
   const record: any = {

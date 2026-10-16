@@ -1,6 +1,7 @@
 /**
  * 负责双端关系、身份选择和社交事件的展示映射。输入为事件类型、已进入展示边界的纯数据和语言；输出保留原安全读取、未知事件回退和用户原文。告知、关系生效和死亡提交属于领域，这里不重新判定受众或修改事实。
  */
+import { type PlayerText } from "../players";
 import { readHybridEventFact } from "@ai-werewolf-arena/game-contract/facts/hybrid";
 import type { MessageKey } from "@ai-werewolf-arena/game-contract";
 import {
@@ -22,10 +23,15 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/cupid";
 import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import { readGhostBrideEventFact } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { text, term, roleName } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, term, roleName } from "@ai-werewolf-arena/game-text";
 import { deathCauses, factList } from "./fact-details";
 
-export function hybridEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function hybridEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   if (type !== "hybrid_exemplar_chosen" && type !== "hybrid_affiliation_resolved") return null;
   const unknown = () => text(locale, "replay.unknown");
   const fact = readHybridEventFact(type, payload);
@@ -39,7 +45,12 @@ export function hybridEventLabel(type: string, payload: unknown, locale: Locale)
   });
 }
 
-export function cupidEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function cupidEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   if (!(CUPID_EVENT_TYPES as readonly string[]).includes(type)) return null;
   const p = readCupidEventFact(type, payload);
   if (!p) return text(locale, "replay.unknown");
@@ -63,7 +74,12 @@ export function cupidEventLabel(type: string, payload: unknown, locale: Locale):
   });
 }
 
-export function debateEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function debateEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   if (!(DEBATE_EVENT_TYPES as readonly string[]).includes(type)) return null;
   const p = readDebateEventFact(type, payload);
   if (!p) return text(locale, "replay.unknown");
@@ -88,7 +104,12 @@ export function debateEventLabel(type: string, payload: unknown, locale: Locale)
   });
 }
 
-export function wallEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function wallEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   const p = readWallEventFact(type, payload);
   if (!p) return null;
   if (type === "wall_notes_started") return text(locale, "console.wall.start");
@@ -128,7 +149,12 @@ export function wallEventLabel(type: string, payload: unknown, locale: Locale): 
   });
 }
 
-export function thiefEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function thiefEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   const p = readThiefEventFact(type, payload);
   if (!p) return null;
   if (type === "thief_initial_deal")
@@ -136,6 +162,7 @@ export function thiefEventLabel(type: string, payload: unknown, locale: Locale):
       roles: factList(
         (p.roles as RoleId[]).map((role) => roleName(role, locale)),
         locale,
+        text,
       ),
       size: p.boardSize as number,
     });
@@ -148,7 +175,12 @@ export function thiefEventLabel(type: string, payload: unknown, locale: Locale):
   });
 }
 
-export function wildChildEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+export function wildChildEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string | null {
   const p = readWildChildEventFact(type, payload) ?? readWildChildPlayerFact(type, payload);
   if (!p) return null;
   if (type === "wild_child_model_chosen")
@@ -160,7 +192,7 @@ export function wildChildEventLabel(type: string, payload: unknown, locale: Loca
     return text(locale, "console.wild_child.death", {
       actor: p.actorId as number,
       target: p.targetId as number,
-      causes: deathCauses(p.sources as string[], locale),
+      causes: deathCauses(p.sources as string[], locale, text),
     });
   if (type === "wild_child_transformed")
     return text(locale, "console.wild_child.transform", {
@@ -177,6 +209,7 @@ export function shapeshifterEventLabel(
   type: string,
   payload: unknown,
   locale: Locale,
+  text: PlayerText = defaultText,
 ): string | null {
   const p = readShapeshifterEventFact(type, payload);
   if (!p) return null;
@@ -185,6 +218,7 @@ export function shapeshifterEventLabel(
       roles: factList(
         (p.roles as RoleId[]).map((role) => roleName(role, locale)),
         locale,
+        text,
       ),
       size: p.boardSize as number,
     });
@@ -200,6 +234,7 @@ export function lonelyGirlEventLabel(
   type: string,
   payload: unknown,
   locale: Locale,
+  text: PlayerText = defaultText,
 ): string | null {
   const p = readLonelyGirlEventFact(type, payload);
   return p
@@ -215,6 +250,7 @@ export function ghostBrideEventLabel(
   type: string,
   payload: unknown,
   locale: Locale,
+  text: PlayerText = defaultText,
 ): string | null {
   const p = readGhostBrideEventFact(type, payload);
   if (!p) return null;
@@ -230,7 +266,9 @@ export function ghostBrideEventLabel(
     day: Number(p.day),
     body: String(p.text ?? ""),
     owner: p.owner ? text(locale, `wedding.owner.${p.owner}` as MessageKey) : none,
-    actors: Array.isArray(p.actorIds) ? p.actorIds.join(", ") : none,
+    actors: Array.isArray(p.actorIds)
+      ? p.actorIds.map((id) => text(locale, "common.player_reference", { id })).join(", ")
+      : none,
   };
   const names: Record<string, string[]> = {
     ghost_bride_pair_chosen: ["bride", "groom"],

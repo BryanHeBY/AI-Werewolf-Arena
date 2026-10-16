@@ -3,14 +3,16 @@
  * 输出为共享自然语言标签或拒绝null；输入须通过原事实 reader；候选死亡与实际死亡分别描述，白猫延期不等于死亡。
  * 子狐命中只在 God 事实内描述，个人刀权通知不补充封刀来源；受众筛选仍归调用方。
  */
+import { type PlayerText } from "../players";
 import { readAnimalDreamFact } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
-import { text, term, type Locale } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { deathDetails, factList, factPlayer, factPlayers, nightChoice } from "./fact-details";
 
 export function animalDreamEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const fact = readAnimalDreamFact(type, payload);
   if (!fact) return null;
@@ -25,7 +27,7 @@ export function animalDreamEventLabel(
       return text(locale, "event.animal_fox_chosen", {
         actor: p.actorId,
         day: p.day,
-        target: factPlayer(p.targetId, locale),
+        target: factPlayer(p.targetId, locale, text),
       });
     }
     case "animal_fox_effect": {
@@ -57,7 +59,7 @@ export function animalDreamEventLabel(
       return text(locale, "event.animal_beauty_notified", {
         actor: p.actorId,
         day: p.day,
-        target: factPlayer(p.targetId, locale),
+        target: factPlayer(p.targetId, locale, text),
         charm: text(
           locale,
           p.charmAllowed ? "console.animal.available" : "console.animal.unavailable",
@@ -68,8 +70,9 @@ export function animalDreamEventLabel(
         ),
         last: p.lastActedDay ?? text(locale, "common.none"),
         history: factList(
-          p.history.map((choice) => nightChoice(choice, locale)),
+          p.history.map((choice) => nightChoice(choice, locale, text)),
           locale,
+          text,
         ),
       });
     }
@@ -87,7 +90,7 @@ export function animalDreamEventLabel(
         actor: p.actorId,
         day: p.day,
         round: p.round,
-        targets: factPlayers(p.targetIds, locale),
+        targets: factPlayers(p.targetIds, locale, text),
       });
     }
     case "animal_wave_prepared": {
@@ -95,8 +98,8 @@ export function animalDreamEventLabel(
       return text(locale, "event.animal_wave_prepared", {
         day: p.day,
         phase: term("phase", p.phase, locale),
-        proposed: factPlayers(p.proposedIds, locale),
-        cat: factPlayer(p.blockedCatId, locale),
+        proposed: factPlayers(p.proposedIds, locale, text),
+        cat: factPlayer(p.blockedCatId, locale, text),
       });
     }
     case "animal_wave_committed": {
@@ -104,7 +107,7 @@ export function animalDreamEventLabel(
       return text(locale, "event.animal_wave_committed", {
         day: p.day,
         phase: term("phase", p.phase, locale),
-        deaths: deathDetails(p.deaths, p.deathSources, locale),
+        deaths: deathDetails(p.deaths, p.deathSources, locale, text),
       });
     }
     case "animal_cat_expiry_prepared": {

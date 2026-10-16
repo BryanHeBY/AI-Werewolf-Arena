@@ -163,6 +163,7 @@ for (const locale of ["en", "zh-CN"] as const)
               e,
               locale,
               god.players.map((p) => p.player_id),
+              input.replay.players.map((p) => ({ id: p.player_id, name: p.name })),
             ),
           );
           expect(

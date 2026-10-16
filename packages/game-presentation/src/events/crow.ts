@@ -3,12 +3,14 @@
  * 事实读器先严格校验，终端、Agent与Web共用标签；受众由调用方保留，不以展示结果扩大可见性。
  * 本模块不读取World、状态或票权，也不重算诅咒或修改用户数据。
  */
+import { type PlayerText } from "../players";
 import { readCrowFact, type Locale } from "@ai-werewolf-arena/game-contract";
-import { text } from "@ai-werewolf-arena/game-text";
+import { text as defaultText } from "@ai-werewolf-arena/game-text";
 export function crowEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const fact = readCrowFact(type, payload);
   if (!fact) return null;

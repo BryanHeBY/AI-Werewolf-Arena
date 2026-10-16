@@ -16,7 +16,7 @@ import type {
   PiPromptResult,
   PiSessionOptions,
 } from "../../../../src/adapters/pi";
-import { Phase, type ActionRequest, type ToolCall } from "../../../../src/domain";
+import { COMPONENT, Phase, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import type { SessionRecordManager } from "../../../../src/recording/session/recorder";
 import type { ReplayRecordPlayerRoundInput } from "../../../../src/recording/contracts";
@@ -126,6 +126,22 @@ async function submit(
 }
 
 describe("Pi 玩家行动窗口", () => {
+  test("Pi 原生会话收到与其它传输相同的公开名册，未取名玩家只提供编号与座位", async () => {
+    const f = setup(async (_input, options) => {
+      await submit(options);
+    });
+    f.game.world.getComponent(2, COMPONENT.Identity)!.name = "苏茶茶";
+    try {
+      await f.run(request());
+      const system = f.configurations[0]!.systemPrompt;
+      expect(system).toContain('{"id":1,"seat":1}');
+      expect(system).toContain('{"id":2,"seat":2,"name":"苏茶茶"}');
+      expect(system).toContain("工具行动必须使用玩家 ID");
+      expect(system).not.toContain("PRIVATE_PERSONALITY_2");
+    } finally {
+      await f.provider.close();
+    }
+  });
   test("共用工具协议；回执仅选择且 applied:false，过期turn和第二次提交不能写入", async () => {
     const receipts: unknown[] = [];
     const f = setup(async (_input, options) => {

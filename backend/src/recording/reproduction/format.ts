@@ -197,7 +197,7 @@ export interface ReproductionMetadata {
   faultPlan?: FaultPlan;
   players: Array<{
     id: number;
-    name: string;
+    name?: string;
     role: Role;
     camp: Camp;
     agent?: { kind: "llm" | "acp" | "pi"; name: string; model?: string };
@@ -525,7 +525,7 @@ const schema2 = z.strictObject({
       .array(
         z.strictObject({
           id: positive,
-          name: z.string(),
+          name: z.string().optional(),
           role: z.enum(Role),
           camp: z.enum(Camp),
           agent: z
@@ -1057,6 +1057,15 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   const parsed = selected.safeParse(value);
   if (!parsed.success) throw new Error("reproduction_record_invalid");
   const result = parsed.data as unknown as ReproductionRecord;
+  // 昵称缺席只扩展当前 Tape3；历史 Tape2 的玩家姓名仍保持原必填约束。
+  if (
+    version === 2 &&
+    (result.metadata.players.some((player) => typeof player.name !== "string") ||
+      result.checkpoints.some((checkpoint) =>
+        checkpoint.players.some((player) => typeof player.name !== "string"),
+      ))
+  )
+    throw new Error("reproduction_record_invalid");
   verifyReproductionMechanisms(result);
   return result;
 }

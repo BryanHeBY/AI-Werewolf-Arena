@@ -2,6 +2,7 @@
  * 单元组件测试验证恶夜骑士两语查验和枪政策归档。输入为 replay、checkpoint 及十二份玩家档；
  * 输出检查查验不提前伤害、本人报告受众、终局席位／胜者及静态帧。字面数量与归档对照分别保留，不运行游戏或模型。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -63,9 +64,13 @@ for (const kind of kinds)
         if (locale === "en") expect(label).not.toMatch(/[\u3400-\u9fff]/);
         const frame =
           input.replay.events.findIndex((e) => e.seq === report.seq) * FRAMES_PER_EVENT + 10;
-        expect(buildReplayFrame(input, frame).label).toBe(label);
+        expect(buildReplayFrame(input, frame).label).toBe(
+          withPlayerNames(label, input.replay.players, locale),
+        );
         const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-        expect(markup).toContain(label.replaceAll("'", "&#x27;"));
+        expect(markup).toContain(
+          withPlayerNames(label, input.replay.players, locale).replaceAll("'", "&#x27;"),
+        );
         expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       }
       expect(views).toHaveLength(12);

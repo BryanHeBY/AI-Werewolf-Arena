@@ -156,6 +156,7 @@ test("canonical observation freezing retains nullable knowledge and detaches eve
   const original: PlayerObservation = {
     request: f.request,
     identity: { role: Role.Villager, camp: Camp.Good },
+    players: [],
     knownAliveIds: [1, 2],
     teammateIds: [],
     currentWolfActions: { canChat: false, canVoteForKill: false },

@@ -11,7 +11,8 @@ import { EntityId } from "../model";
 export interface IdentityComponent {
   id: EntityId;
   seat: number;
-  name: string;
+  /** 只保存显式昵称；缺省标签由展示层根据编号与语言生成。 */
+  name?: string;
   sessionId: string;
 }
 
@@ -21,12 +22,12 @@ export interface IdentityComponent {
 export function createIdentityComponent(
   id: EntityId,
   seat: number,
-  name: string,
+  name?: string,
 ): IdentityComponent {
   return {
     id,
     seat,
-    name,
+    ...(name !== undefined ? { name } : {}),
     // 同实体编号产生同样的记录标识；不要把这个字符串用作真实会话权限。
     sessionId: `player_${id}`,
   };

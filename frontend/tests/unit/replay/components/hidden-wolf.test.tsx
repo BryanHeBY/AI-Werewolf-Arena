@@ -2,6 +2,7 @@
  * 单元组件测试验证隐狼继承归档。输入为六／十二人 fixture 和两语帧号；
  * 输出以字面继承事实及胜者名单检查继承不改身份／生命、后续真实死亡独立发生，并核纯帧与数据不变，不运行继承规则。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -37,9 +38,11 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(eventLabel(event, locale)).toBe(label);
       const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
         frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-      expect(buildReplayFrame(input, frame).label).toBe(label);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-      expect(markup).toContain(label);
+      expect(markup).toContain(withPlayerNames(label, input.replay.players, locale));
       expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       const final = buildReplaySnapshot(replay, replay.events.length - 1);
       expect(final.players.find((p) => p.playerId === 1)!.alive).toBe(false);

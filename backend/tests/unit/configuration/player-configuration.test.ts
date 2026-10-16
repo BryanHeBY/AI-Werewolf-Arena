@@ -64,10 +64,23 @@ test("player names and personalities are independent of model selection", () => 
     playerNames: { "1": setup.players["1"].name! },
   });
   expect(world.getComponent(1, COMPONENT.Identity)?.name).toBe(" 苏茶茶 ");
+  expect(Object.hasOwn(world.getComponent(2, COMPONENT.Identity)!, "name")).toBe(false);
   const output = JSON.stringify(describeResolvedSetup(setup));
   expect(output).not.toContain("private seat style");
   expect(output).not.toContain("private English style");
   expect(output).not.toContain("default-private-personality");
+});
+test("昵称可以重名，但空白、超长和控制字符会被拒绝", () => {
+  for (const name of ["", "  ", "a".repeat(121), "茶\n茶", "\u001b[31m茶茶", "茶\u2028茶"]) {
+    expect(() => parseRuntimeConfig({ ...input, game: { players: { "1": { name } } } })).toThrow(
+      "runtime_config_player_name_invalid",
+    );
+  }
+  const runtime = parseRuntimeConfig({
+    ...input,
+    game: { players: { "1": { name: "茶茶" }, "2": { name: "茶茶" } } },
+  });
+  expect(resolveGameSetup(runtime).players["2"].name).toBe("茶茶");
 });
 test("locale, seed and conflicting legacy player bindings fail explicitly", () => {
   expect(() => parseRuntimeConfig({ ...input, game: { locale: "en-US" } })).toThrow(

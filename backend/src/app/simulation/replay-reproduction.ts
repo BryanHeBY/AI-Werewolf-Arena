@@ -3,6 +3,7 @@
  * 输出为原生执行的事件／操作／checkpoint 与精确差异；真实 source、lock 和 RNG 身份必须先匹配。
  * 记录请求规范化由轨迹模块提供；本执行器保留自己的消费、等待、游标与清理，不创建兼容来源或改写原归档。
  */
+import { publicPlayerRoster } from "../../domain/public-player-roster";
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { reproductionIdentitiesMatch } from "../../recording/archive-identity";
 import { initialPlayerIdentity } from "../../domain/initial-roster";
@@ -336,7 +337,9 @@ export async function replayReproduction(
         }
       : {}),
     playerNames: Object.fromEntries(
-      record.metadata.players.map((player) => [String(player.id), player.name]),
+      record.metadata.players.flatMap((player) =>
+        player.name !== undefined ? [[String(player.id), player.name]] : [],
+      ),
     ),
   });
   requireMatch(
@@ -391,6 +394,7 @@ export async function replayReproduction(
   );
   const manager = await SessionRecordManager.create(
     {
+      players: publicPlayerRoster(context.world),
       sessionId: `reproduction-${crypto.randomUUID()}`,
       board: record.metadata.boardId,
       locale: context.world.locale,

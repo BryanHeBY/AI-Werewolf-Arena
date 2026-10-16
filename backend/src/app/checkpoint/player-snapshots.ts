@@ -30,6 +30,7 @@ import {
   projectLonelyGirlAuditPlayer,
 } from "../../features/lonely-girl/lifecycle";
 import { projectWallNote } from "../../features/wall-notes/authority";
+import { publicPlayerIdentity } from "../../domain/public-player-roster";
 
 /** 同一调用按原权威优先级编码；数据可供归档核验，不能替代运行时原体或库存许可。 */
 export function capturePlayerContributions(
@@ -71,9 +72,7 @@ export function capturePlayerContributions(
           }
         : undefined;
       return {
-        id,
-        seat: identity.seat,
-        name: identity.name,
+        ...publicPlayerIdentity(id, identity),
         role: (original?.scope.roleId as RoleComponent["role"]) ?? audit?.role ?? role.role,
         camp:
           original?.scope.campValue ?? audit?.camp ?? world.getComponent(id, COMPONENT.Camp)!.camp,

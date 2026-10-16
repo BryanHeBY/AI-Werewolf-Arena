@@ -11,7 +11,7 @@ import {
   type Locale,
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
-import { outcomeLabel } from "@ai-werewolf-arena/game-presentation";
+import { createPlayerText, outcomeLabel } from "@ai-werewolf-arena/game-presentation";
 
 export { type Locale };
 export function roleName(role: string, locale: Locale = "zh-CN"): string {
@@ -72,7 +72,11 @@ export function resultReasonName(reason: string | null, locale: Locale = "zh-CN"
 }
 
 export function replayResultLabel(replay: ReplayDocument, locale: Locale): string {
-  if (replay.result.decision) return outcomeLabel(replay.result.decision.outcome, locale);
+  const playerText = createPlayerText(
+    replay.players.map((player) => ({ id: player.player_id, name: player.name })),
+  );
+  if (replay.result.decision)
+    return outcomeLabel(replay.result.decision.outcome, locale, playerText);
   const playerIds = replay.players.map((player) => player.player_id);
   const facts = replay.events.map((event) => readReplayEvent(event, playerIds));
   for (let index = replay.events.length - 1; index >= 0; index--) {
@@ -82,7 +86,8 @@ export function replayResultLabel(replay: ReplayDocument, locale: Locale): strin
     if (type !== "game_over") continue;
     if (!fact) return text(locale, "replay.unknown");
     const victory = fact.effects.find((effect) => effect.kind === "victory");
-    if (victory?.kind === "victory") return outcomeLabel(victory.decision.outcome, locale);
+    if (victory?.kind === "victory")
+      return outcomeLabel(victory.decision.outcome, locale, playerText);
   }
   if (replay.result.winner) return campName(replay.result.winner, locale);
   const ended =

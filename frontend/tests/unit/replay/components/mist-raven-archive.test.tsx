@@ -230,7 +230,14 @@ for (const { kind, variant } of [
         )) {
           const i = input.replay.events.findIndex((x) => x.seq === e.seq),
             f = buildReplayFrame(input, i * 90 + 45);
-          expect(f.label).toBe(eventLabel(e, locale));
+          expect(f.label).toBe(
+            eventLabel(
+              e,
+              locale,
+              undefined,
+              input.replay.players.map((p) => ({ id: p.player_id, name: p.name })),
+            ),
+          );
           expect(
             f.snapshot.players
               .filter((p) => p.playerId !== view.player_id)

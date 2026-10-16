@@ -179,7 +179,7 @@ test("all base role identities, rules, private state and stages are bilingual an
   ).toContain("player 1's alignment is Werewolves");
 });
 
-test("new default names follow game locale while explicit names resembling defaults remain raw", () => {
+test("missing nicknames remain absent while explicit default-looking names remain raw", () => {
   for (const locale of ["zh-CN", "en"] as const) {
     const game = bootstrapGame(board, { locale, fixedRoles: roles, playerNames: { "1": "玩家1" } });
     const catalog = getDefaultRoleCatalog();
@@ -198,8 +198,10 @@ test("new default names follow game locale while explicit names resembling defau
       supportsDebugReporting: false,
     }).systemPrompt;
     expect(custom).toContain("玩家1");
-    expect(generated).toContain(locale === "en" ? "Your nickname is Player 2" : "你的昵称是玩家2");
-    if (locale === "en") expect(generated).not.toMatch(/[\u4e00-\u9fff]/);
+    expect(generated).not.toContain(locale === "en" ? "Your nickname is" : "你的昵称是");
+    expect(generated).toContain('{"id":2,"seat":2}');
+    expect(generated).toContain('{"id":1,"seat":1,"name":"玩家1"}');
+    if (locale === "en") expect(generated).toContain("Public player roster");
   }
 });
 

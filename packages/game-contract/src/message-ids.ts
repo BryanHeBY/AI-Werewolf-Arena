@@ -1807,6 +1807,8 @@ export const MESSAGE_IDS = Object.freeze([
   "replay.agent_thinking",
   "replay.agent_io",
   "replay.agent_empty",
+  "prompt.system.players",
+  "common.player_reference",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

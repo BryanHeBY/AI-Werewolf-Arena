@@ -9,6 +9,7 @@ import type { MessageDefinition } from "./definition";
 export const definition = {
   owner: "common",
   parameters: {
+    "common.player_reference": ["id"],
     "common.unused": [],
     "common.used": [],
     "event.night_choice": ["day", "target"],
@@ -80,6 +81,7 @@ export const definition = {
 } as const satisfies MessageDefinition;
 
 export const zhCN = {
+  "common.player_reference": "{id}",
   "common.unused": "未使用",
   "common.used": "已使用",
   "event.night_choice": "第{day}夜选择{target}",
@@ -150,6 +152,7 @@ export const zhCN = {
 } as const satisfies Record<keyof typeof definition.parameters, string>;
 
 export const en = {
+  "common.player_reference": "{id}",
   "common.unused": "unused",
   "common.used": "used",
   "event.night_choice": "Night {day}: chose {target}",

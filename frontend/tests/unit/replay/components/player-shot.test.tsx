@@ -2,6 +2,7 @@
  * 单元组件测试验证中性 player_shot 与原归档猎人枪的展示差异。输入保原目标和两语帧号；
  * 输出对照旧死亡投影，并以独立字面字幕核对不宣称枪主身份，另核静态 markup 和旧归档未改，不执行死亡 hook。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -41,8 +42,12 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(eventLabel(event, locale)).toBe(label);
     const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" });
     const frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-    expect(buildReplayFrame(input, frame).label).toBe(label);
-    expect(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />)).toContain(label);
+    expect(buildReplayFrame(input, frame).label).toBe(
+      withPlayerNames(label, input.replay.players, locale),
+    );
+    expect(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />)).toContain(
+      withPlayerNames(label, input.replay.players, locale),
+    );
     expect(old.events[oldIndex]).toMatchObject(before);
     expect(eventLabel(old.events[oldIndex], locale)).toBe(
       locale === "en" ? "Hunter 7 shoots player 2" : "7号猎人开枪带走2号",

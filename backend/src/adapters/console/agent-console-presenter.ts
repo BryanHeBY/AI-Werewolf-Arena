@@ -11,6 +11,8 @@ import {
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
 import {
+  playerLabel,
+  type NamedPlayer,
   agentOutputPresentation,
   agentActionConfirmation,
   isAgentOutputVisible,
@@ -21,7 +23,12 @@ import { colorize, isAnsiEnabled } from "../../utils/ansi";
 import type { ConsoleLog } from "./console-presenter";
 
 export function createAgentConsoleSink(
-  options: AgentOutputDisplayOptions & { locale?: Locale; color?: boolean; log?: ConsoleLog },
+  options: AgentOutputDisplayOptions & {
+    locale?: Locale;
+    color?: boolean;
+    log?: ConsoleLog;
+    players?: readonly NamedPlayer[];
+  },
 ): AgentOutputSink {
   const locale = options.locale ?? "zh-CN";
   const enabled = isAnsiEnabled(options.color);
@@ -29,6 +36,7 @@ export function createAgentConsoleSink(
     options.log ?? ((line, tone = "info") => console.log(colorize(line, tone, enabled)));
   // ACP 的结果正文可能晚于 completed 到达；按本局的确认编号去重，避免原生通知与引擎留底重复警示。
   const confirmations = new Set<string>();
+  const names = new Map(options.players?.map((player) => [player.id, player]));
   return ({ context, output }) => {
     if (!isAgentOutputVisible(output, options)) return;
     // 参数／内容补充留给档案和 Web，不把一次调用重新打印成另一条终端结果。
@@ -42,8 +50,9 @@ export function createAgentConsoleSink(
     )
       return;
     const { transport, playerId, phase } = context;
-    const prefix = `[${transport}][${playerId ?? "-"}]`;
-    const marker = `player=${playerId ?? "-"} phase=${phase ?? "unknown"}`;
+    const player = playerId === undefined ? undefined : names.get(playerId);
+    const prefix = `[${transport}][${player?.name ? playerLabel(player, locale) : (playerId ?? "-")}]`;
+    const marker = `player=${playerId ?? "-"}${player?.name ? ` name=${JSON.stringify(player.name)}` : ""} phase=${phase ?? "unknown"}`;
     const view = agentOutputPresentation(output, locale);
     if (output.type === "prompt") {
       const io = `[${transport.toUpperCase()}_IO]`;

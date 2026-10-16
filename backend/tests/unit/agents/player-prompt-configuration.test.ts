@@ -157,6 +157,16 @@ for (const kind of ["llm", "acp"] as const) {
       expect(prompts.get(4)).toContain("Player Four");
       expect(prompts.get(4)).toContain("WOLF_STYLE");
       expect(prompts.get(5)).toContain("INHERITED_STYLE");
+      for (const system of prompts.values()) {
+        const line = system.split("\n").find((line) => line.startsWith("公开玩家名册："))!;
+        const roster = JSON.parse(line.slice("公开玩家名册：".length).split("。编号与昵称对应")[0]);
+        expect(roster[0]).toEqual({ id: 1, seat: 1, name: "Player One" });
+        expect(roster[1]).toEqual({ id: 2, seat: 2 });
+        expect(roster[3]).toEqual({ id: 4, seat: 4, name: "Player Four" });
+        expect(Object.keys(roster[0]).sort()).toEqual(["id", "name", "seat"]);
+        expect(line).not.toContain("STYLE");
+        expect(line).toContain("工具行动必须使用玩家 ID");
+      }
     } finally {
       if (provider instanceof AcpActionProvider) await provider.close();
     }

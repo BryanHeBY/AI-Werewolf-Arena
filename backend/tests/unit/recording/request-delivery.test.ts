@@ -26,6 +26,7 @@ function fixture() {
       Array<Role>(count).fill(role),
     ),
     game = bootstrapGame(sixPlayerMvpConfig, {
+      playerNames: Object.fromEntries(deck.map((_, i) => [i + 1, `Player ${i + 1}`])),
       fixedRoles: deck,
       random: createRandom("delivery-boundary"),
     }),

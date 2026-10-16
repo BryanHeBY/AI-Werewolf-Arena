@@ -10,6 +10,7 @@ import type { MessageDefinition } from "./definition";
 export const definition = {
   owner: "agents",
   parameters: {
+    "prompt.system.players": ["players"],
     "prompt.status.animal": ["state"],
     "prompt.config.body_nonconsecutive": [],
     "prompt.config.body_repeat": [],
@@ -134,6 +135,8 @@ export const definition = {
 } as const satisfies MessageDefinition;
 
 export const zhCN = {
+  "prompt.system.players":
+    "公开玩家名册：{players}。编号与昵称对应，允许用昵称交流；工具行动必须使用玩家 ID。",
   "prompt.status.animal": "你的已公布动物角色知情：{state}。尚未公布的后台效果不是玩家知识。",
   "prompt.config.body_nonconsecutive":
     "秘密之身不能连续两夜主动指定同一人；明确null打断连续，自动自护不改主动目标。",
@@ -172,7 +175,7 @@ export const zhCN = {
   "prompt.system.goal":
     "你的唯一目标是帮助你所在阵营赢得本局。请基于自己可见的信息自由判断、博弈、试探和调整策略，不要为了迎合多数意见而放弃独立判断。",
   "prompt.system.language": "你必须使用中文进行思考和表达。",
-  "prompt.system.name": "你的昵称是{name}。称呼其他玩家时仍使用座位编号，避免混淆。",
+  "prompt.system.name": "你的昵称是{name}。可以用编号或昵称交流；提交行动始终使用玩家 ID。",
   "prompt.system.teammates":
     "本会话建立时，规则告知你的队友（不含你自己）的编号：{teammates}。后续授权名单以每轮行动提示为准。“无”仅表示没有额外公开给你的队友身份，不表示你的阵营中只有你一人。",
   "prompt.system.ids":
@@ -302,6 +305,8 @@ export const zhCN = {
 } as const satisfies Record<keyof typeof definition.parameters, string>;
 
 export const en = {
+  "prompt.system.players":
+    "Public player roster: {players}. Nicknames may be used in conversation; actions must use player IDs.",
   "prompt.status.animal":
     "Your published animal-role knowledge: {state}. Unpublished backend effects are not player knowledge.",
   "prompt.config.body_nonconsecutive":
@@ -346,7 +351,7 @@ export const en = {
     "Your goal is to help your team win this game. Use information visible to you to judge, negotiate, probe and adjust your strategy. Keep your own judgment even when the majority disagrees.",
   "prompt.system.language": "Use English for your reasoning and expression.",
   "prompt.system.name":
-    "Your nickname is {name}. Refer to other players by seat number to avoid confusion.",
+    "Your nickname is {name}. Use numbers or nicknames in conversation; always submit actions using player IDs.",
   "prompt.system.teammates":
     "Teammates whose identities are revealed when this session is established, excluding yourself: {teammates}. Use each turn's action prompt for updated authorization. None means no additional teammate identity is revealed, not that you are the only member of your team.",
   "prompt.system.ids":

@@ -122,7 +122,7 @@ export function beginGameReproduction(
         const profile = options.profiles?.get(player.id);
         return {
           id: player.id,
-          name: player.name,
+          ...(player.name !== undefined ? { name: player.name } : {}),
           role: player.role,
           camp: player.camp,
           ...(profile

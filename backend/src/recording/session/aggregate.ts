@@ -333,10 +333,12 @@ export class ReplaySessionAggregate {
   private ensurePlayerView(playerId: number, role: string, camp: string): ReplayPlayerView {
     const existing = this.playerViews.get(playerId);
     if (existing) return existing;
+    const name = this.sessionMeta.players?.find((player) => player.id === playerId)?.name;
     const view: ReplayPlayerView = {
       schemaVersion: 2,
       ...(this.sessionMeta.locale === undefined ? {} : { locale: this.sessionMeta.locale }),
       player_id: playerId,
+      ...(name !== undefined ? { name } : {}),
       role,
       camp,
       timeline: [],
@@ -352,6 +354,7 @@ export class ReplaySessionAggregate {
       schemaVersion: 2,
       ...(this.sessionMeta.locale === undefined ? {} : { locale: this.sessionMeta.locale }),
       player_id: view.player_id,
+      ...(view.name !== undefined ? { name: view.name } : {}),
       role: view.role,
       camp: view.camp,
       ...(initialPrompt ? { initial_prompt: initialPrompt } : {}),

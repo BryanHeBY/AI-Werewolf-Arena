@@ -320,7 +320,7 @@ export function consumeDemonHunterParticipantData(
 /** 原 complete／metadata检查已执行；各字段逐次解码，生命与委托读取只在原属性位置调用。 */
 export function projectDemonParticipantCheckpoint(
   p: DemonParticipantStateData & { readonly id: number; readonly kind: Role; readonly camp: Camp },
-  cp: DemonCheckpointAuditData & { readonly seat: number; readonly name: string },
+  cp: DemonCheckpointAuditData & { readonly seat: number; readonly name?: string },
   marks: ReadonlyArray<readonly [StatusMark, StatusMarkSnapshot | null]>,
   readAlive: () => boolean,
   readDelegated: () => DemonDelegatedPrivateData,
@@ -328,7 +328,7 @@ export function projectDemonParticipantCheckpoint(
   return {
     id: p.id,
     seat: cp.seat,
-    name: cp.name,
+    ...(cp.name !== undefined ? { name: cp.name } : {}),
     role: p.kind,
     camp: p.camp,
     alive: readAlive(),

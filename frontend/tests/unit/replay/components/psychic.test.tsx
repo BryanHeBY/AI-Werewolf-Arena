@@ -2,6 +2,7 @@
  * 单元组件测试验证通灵师跳过和重复查验归档。输入为六／十二人 fixture、两语及未知原因变体；
  * 输出以手写事实／胜者预期检查报告不改席位、未知原因不伪造查验，并核纯帧／markup 和输入不变，不运行查验规则。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -49,9 +50,13 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(eventLabel(event, locale)).toBe(label);
       const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
         frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-      expect(buildReplayFrame(input, frame).label).toBe(label);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-      expect(markup).toContain(label.replaceAll("'", "&#x27;"));
+      expect(markup).toContain(
+        withPlayerNames(label, input.replay.players, locale).replaceAll("'", "&#x27;"),
+      );
       expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       const final = buildReplaySnapshot(replay, replay.events.length - 1);
       expect(final.players.filter((p) => p.isWinner).map((p) => p.playerId)).toEqual(

@@ -2,6 +2,11 @@
  * 负责前端复盘事件标签的分派与普通事件文案。输入为复盘事件、语言与原玩家名单；输出为经原事件 reader 校验后的标签或未知回退。共享机制标签由 game-presentation 生成，不引入后端 World，不扩大玩家视角或修改事件。
  */
 import {
+  type PlayerText,
+  createPlayerText,
+  type NamedPlayer,
+} from "@ai-werewolf-arena/game-presentation";
+import {
   awakenedGuardEventLabel,
   awakenedDuelEventLabel,
 } from "@ai-werewolf-arena/game-presentation";
@@ -41,7 +46,12 @@ import {
   readVictoryResult,
 } from "@ai-werewolf-arena/replay-contract";
 import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
-import { text, term, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import {
+  text as defaultText,
+  term,
+  type Locale,
+  type MessageKey,
+} from "@ai-werewolf-arena/game-text";
 import {
   inspectionLabel,
   outcomeLabel,
@@ -62,90 +72,93 @@ export function eventLabel(
   event: ReplayEvent,
   locale: Locale = "zh-CN",
   playerIds?: readonly number[],
+  roster: readonly NamedPlayer[] = [],
 ): string {
+  const text = createPlayerText(roster);
   const fact = readReplayEvent(event, playerIds);
   if (!fact) return text(locale, "replay.unknown");
   event = fact.event;
   const p = event.payload;
-  const warden = wardenEventLabel(event.type, p, locale);
+  const warden = wardenEventLabel(event.type, p, locale, text);
   if (warden !== null) return warden;
-  const beauty = awakenedBeautyEventLabel(event.type, p, locale);
+  const beauty = awakenedBeautyEventLabel(event.type, p, locale, text);
   if (beauty !== null) return beauty;
-  const patrol = awakenedPatrolEventLabel(event.type, p, locale);
+  const patrol = awakenedPatrolEventLabel(event.type, p, locale, text);
   if (patrol !== null) return patrol;
-  const protection = awakenedGuardEventLabel(event.type, p, locale);
+  const protection = awakenedGuardEventLabel(event.type, p, locale, text);
   if (protection !== null) return protection;
-  const duel = awakenedDuelEventLabel(event.type, p, locale);
+  const duel = awakenedDuelEventLabel(event.type, p, locale, text);
   if (duel !== null) return duel;
-  const brew = awakenedWitchEventLabel(event.type, p, locale);
+  const brew = awakenedWitchEventLabel(event.type, p, locale, text);
   if (brew !== null) return brew;
-  const claws = awakenedClawEventLabel(event.type, p, locale);
+  const claws = awakenedClawEventLabel(event.type, p, locale, text);
   if (claws !== null) return claws;
-  const silence = silenceElderEventLabel(event.type, p, locale);
+  const silence = silenceElderEventLabel(event.type, p, locale, text);
   if (silence !== null) return silence;
-  const crow = crowEventLabel(event.type, p, locale);
+  const crow = crowEventLabel(event.type, p, locale, text);
   if (crow !== null) return crow;
-  const animal = animalDreamEventLabel(event.type, p, locale);
+  const animal = animalDreamEventLabel(event.type, p, locale, text);
   if (animal !== null) return animal;
-  const fragrant = fragrantPairEventLabel(event.type, p, locale);
+  const fragrant = fragrantPairEventLabel(event.type, p, locale, text);
   if (fragrant !== null) return fragrant;
-  const noble = nobleSecretBodyEventLabel(event.type, p, locale);
+  const noble = nobleSecretBodyEventLabel(event.type, p, locale, text);
   if (noble !== null) return noble;
-  const radiant = radiantEclipseEventLabel(event.type, p, locale);
+  const radiant = radiantEclipseEventLabel(event.type, p, locale, text);
   if (radiant !== null) return radiant;
-  const mist = mistRavenEventLabel(event.type, p, locale);
+  const mist = mistRavenEventLabel(event.type, p, locale, text);
   if (mist !== null) return mist;
-  const prince = orderPrinceEventLabel(event.type, p, locale);
+  const prince = orderPrinceEventLabel(event.type, p, locale, text);
   if (prince !== null) return prince;
-  const trickster = tricksterEventLabel(event.type, p, locale);
+  const trickster = tricksterEventLabel(event.type, p, locale, text);
   if (trickster !== null) return trickster;
-  const modifier = scholarMentorEventLabel(event.type, p, locale);
+  const modifier = scholarMentorEventLabel(event.type, p, locale, text);
   if (modifier !== null) return modifier;
-  const consort = timeConsortEventLabel(event.type, p, locale);
+  const consort = timeConsortEventLabel(event.type, p, locale, text);
   if (consort !== null) return consort;
-  const sorcerer = wolfSorcererEventLabel(event.type, p, locale);
+  const sorcerer = wolfSorcererEventLabel(event.type, p, locale, text);
   if (sorcerer !== null) return sorcerer;
-  const magician = magicianEventLabel(event.type, p, locale);
+  const magician = magicianEventLabel(event.type, p, locale, text);
   if (magician !== null) return magician;
-  const redMoon = redMoonEventLabel(event.type, p, locale);
+  const redMoon = redMoonEventLabel(event.type, p, locale, text);
   if (redMoon !== null) return redMoon;
-  const black = blackMarketEventLabel(event.type, p, locale);
+  const black = blackMarketEventLabel(event.type, p, locale, text);
   if (black !== null) return black;
-  const deathAbility = deathAbilityEventLabel(event.type, p, locale);
+  const deathAbility = deathAbilityEventLabel(event.type, p, locale, text);
   if (deathAbility !== null) return deathAbility;
-  const awakened = awakenedEventLabel(event.type, p, locale);
+  const awakened = awakenedEventLabel(event.type, p, locale, text);
   if (awakened !== null) return awakened;
-  const nightmare = nightmareEventLabel(event.type, p, locale);
+  const nightmare = nightmareEventLabel(event.type, p, locale, text);
   if (nightmare !== null) return nightmare;
-  const demon = demonHunterEventLabel(event.type, p, locale);
+  const demon = demonHunterEventLabel(event.type, p, locale, text);
   if (demon !== null) return demon;
-  const wedding = ghostBrideEventLabel(event.type, p, locale);
+  const wedding = ghostBrideEventLabel(event.type, p, locale, text);
   if (wedding !== null) return wedding;
-  const lonely = lonelyGirlEventLabel(event.type, p, locale);
+  const lonely = lonelyGirlEventLabel(event.type, p, locale, text);
   if (lonely) return lonely;
-  const wild = wildChildEventLabel(event.type, p, locale);
+  const wild = wildChildEventLabel(event.type, p, locale, text);
   if (wild !== null) return wild;
-  const shape = shapeshifterEventLabel(event.type, p, locale);
+  const shape = shapeshifterEventLabel(event.type, p, locale, text);
   if (shape !== null) return shape;
-  const thief = thiefEventLabel(event.type, p, locale);
+  const thief = thiefEventLabel(event.type, p, locale, text);
   if (thief !== null) return thief;
-  const wall = wallEventLabel(event.type, p, locale);
+  const wall = wallEventLabel(event.type, p, locale, text);
   if (wall !== null) return wall;
-  const debate = debateEventLabel(event.type, p, locale);
+  const debate = debateEventLabel(event.type, p, locale, text);
   if (debate !== null) return debate;
-  const cupid = cupidEventLabel(event.type, p, locale);
+  const cupid = cupidEventLabel(event.type, p, locale, text);
   if (cupid !== null) return cupid;
-  const hybrid = hybridEventLabel(event.type, p, locale);
+  const hybrid = hybridEventLabel(event.type, p, locale, text);
   if (hybrid !== null) return hybrid;
-  const merchant = merchantEventLabel(event.type, p, locale);
+  const merchant = merchantEventLabel(event.type, p, locale, text);
   if (merchant !== null) return merchant;
-  const mechanical = mechanicalEventLabel(event.type, p, locale);
+  const mechanical = mechanicalEventLabel(event.type, p, locale, text);
   if (mechanical !== null) return mechanical;
   const t = (key: MessageKey, params?: Record<string, string | number>) =>
     text(locale, key, params);
   const actor = numberValue(p.actorId);
   const target = numberValue(p.targetId);
-  const players = (value: unknown) => numberList(value, locale) || t("replay.none");
+  const players = (value: unknown) =>
+    numberList(value, locale, undefined, text) || t("replay.none");
   switch (event.type) {
     case "player_role_revealed":
       return t("console.role_revealed", {
@@ -177,7 +190,11 @@ export function eventLabel(
     case "role_inspected": {
       const result = readInspectionResult(p.result);
       return result?.kind === "role"
-        ? t("console.role_inspected", { actor, target, result: inspectionLabel(result, locale) })
+        ? t("console.role_inspected", {
+            actor,
+            target,
+            result: inspectionLabel(result, locale, text),
+          })
         : t("replay.unknown");
     }
     case "hidden_wolf_awakened":
@@ -202,7 +219,9 @@ export function eventLabel(
         ? t("console.charm.blocked", { actor, target })
         : t("replay.unknown");
     case "additional_deaths":
-      return t("console.additional_deaths", { players: numberList(p.deaths, locale) });
+      return t("console.additional_deaths", {
+        players: numberList(p.deaths, locale, undefined, text),
+      });
     case "dream_applied":
       return typeof p.consecutive === "boolean"
         ? t("console.dream.applied", {
@@ -235,7 +254,7 @@ export function eventLabel(
             target: report.targetId,
             exileDay: report.exileDay,
             receivedDay: report.receivedDay,
-            result: inspectionLabel(report.result, locale),
+            result: inspectionLabel(report.result, locale, text),
           })
         : t("replay.unknown");
     }
@@ -254,7 +273,7 @@ export function eventLabel(
       });
     }
     case "god_private_game_info":
-      return t("replay.lineup", { players: formatRoleLineup(p.players, locale) });
+      return t("replay.lineup", { players: formatRoleLineup(p.players, locale, text) });
     case "phase_changed": {
       const phase = stringValue(p.phase) || event.phase;
       if (phase === "night" || phase === "day") return t(`replay.${phase}`, { day: event.day });
@@ -263,7 +282,7 @@ export function eventLabel(
       return t("replay.enter_phase", { phase: phaseName(phase, locale) });
     }
     case "wolf_tactical_order":
-      return t("replay.wolf_order", { order: numberList(p.order, locale, " → ") });
+      return t("replay.wolf_order", { order: numberList(p.order, locale, " → ", text) });
     case "wolf_discussion":
       return t("replay.wolf_speech", { actor, speech: stringValue(p.text) });
     case "wolf_discussion_ended":
@@ -278,7 +297,7 @@ export function eventLabel(
         : t("replay.guard", { actor, target });
     case "seer_checked": {
       const result = readSeerInspectionResult(p);
-      const label = result ? inspectionLabel(result, locale) : t("common.unknown");
+      const label = result ? inspectionLabel(result, locale, text) : t("common.unknown");
       return t("replay.check", { actor, target, camp: label });
     }
     case "witch_potion_used":
@@ -301,10 +320,10 @@ export function eventLabel(
     case "sheriff_candidates_finalized":
       return t("replay.candidates", { players: players(p.candidates) });
     case "sheriff_vote_cast":
-      return voteLabel(p, t("replay.sheriff_vote_label"), locale);
+      return voteLabel(p, t("replay.sheriff_vote_label"), locale, text);
     case "sheriff_vote_summary":
       return t("replay.sheriff_votes", {
-        votes: voteLineup(p.votes, locale),
+        votes: voteLineup(p.votes, locale, text),
         result:
           p.winnerId == null
             ? t("replay.no_sheriff")
@@ -327,13 +346,13 @@ export function eventLabel(
     case "day_speech":
       return t("replay.day_speech", { actor, speech: stringValue(p.text) });
     case "night_resolved":
-      return numberList(p.deaths, locale)
+      return numberList(p.deaths, locale, undefined, text)
         ? t("replay.deaths", { players: players(p.deaths) })
         : t("replay.peace");
     case "vote_cast":
-      return voteLabel(p, t("replay.exile_vote_label"), locale);
+      return voteLabel(p, t("replay.exile_vote_label"), locale, text);
     case "vote_summary":
-      return t("replay.votes", { votes: voteLineup(p.votes, locale) });
+      return t("replay.votes", { votes: voteLineup(p.votes, locale, text) });
     case "voted_out":
       return t("replay.exile", { actor: numberValue(p.target) });
     case "idiot_revealed":
@@ -367,7 +386,7 @@ export function eventLabel(
       if (Object.hasOwn(p, "outcome") || Object.hasOwn(p, "decidedAt")) {
         try {
           const result = readVictoryResult(p, playerIds);
-          return `${t("victory.finished", { result: outcomeLabel(result.outcome, locale), reason: resultReasonName(result.reason, locale) })} · ${outcomeWinnersLabel(result.outcome, locale)}`;
+          return `${t("victory.finished", { result: outcomeLabel(result.outcome, locale, text), reason: resultReasonName(result.reason, locale) })} · ${outcomeWinnersLabel(result.outcome, locale, text)}`;
         } catch {
           return t("replay.unknown");
         }
@@ -393,6 +412,7 @@ function numberList(
   value: unknown,
   locale: Locale,
   separator = locale === "zh-CN" ? "、" : ", ",
+  text: PlayerText = defaultText,
 ): string {
   return Array.isArray(value)
     ? value
@@ -401,7 +421,12 @@ function numberList(
         .join(separator)
     : "";
 }
-function voteLabel(p: Record<string, unknown>, label: string, locale: Locale): string {
+function voteLabel(
+  p: Record<string, unknown>,
+  label: string,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string {
   const actor = numberValue(p.actorId);
   if (p.abstain === true || p.targetId == null)
     return text(locale, "replay.vote_skip", { actor, label });
@@ -411,7 +436,7 @@ function voteLabel(p: Record<string, unknown>, label: string, locale: Locale): s
       : "";
   return text(locale, "replay.vote", { actor, label, target: numberValue(p.targetId), weight });
 }
-function voteLineup(value: unknown, locale: Locale): string {
+function voteLineup(value: unknown, locale: Locale, text: PlayerText = defaultText): string {
   if (!Array.isArray(value) || !value.length) return text(locale, "replay.none");
   return value
     .map((item) => {
@@ -428,7 +453,7 @@ function voteLineup(value: unknown, locale: Locale): string {
     })
     .join(locale === "zh-CN" ? "，" : ", ");
 }
-function formatRoleLineup(value: unknown, locale: Locale): string {
+function formatRoleLineup(value: unknown, locale: Locale, text: PlayerText = defaultText): string {
   if (!Array.isArray(value)) return text(locale, "replay.unknown");
   return value
     .map((item) => {

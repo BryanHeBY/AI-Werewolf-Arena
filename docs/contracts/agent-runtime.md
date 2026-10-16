@@ -1,5 +1,13 @@
 # Agent回合预算、取消与资源
 
+## 公开玩家名册
+
+LLM／ACP／Pi 共用 `PlayerPromptPolicy`：系统提示提供全体玩家的 `{ id, seat, name? }` JSON 名册，观察 DTO 的 `players` 提供同一公开资料。未取名的玩家不附 `name`；自己的私有身份与队友知识仍独立投影。名册不携带隐藏角色、阵营、人格提示或模型接入配置，不因死亡删去玩家或附带尚未公布的生命状态。
+
+玩家可以用编号或昵称交流，工具行动始终使用 ID。名册由身份组件显式列举字段，捕获后与 World 脱离；三种传输不能自行补全其他玩家的私有信息。
+
+## 回合执行
+
 LLM／Pi／ACP的选择只通过同一ActionRequest及完成端口交给领域。回合绝对deadline取请求期限与provider预算中更早者；排队、初始化、工具循环和required-action retry共用，不因重试刷新。
 
 provider内scheduler按明确provider ID共享限额，跨provider独立；不宣称控制同密钥别名或多进程的全局并发。关闭拒新工作、取消并等待本owner操作和lease释放；逻辑active／queued归零不等于任意注入传输物理资源已释放。

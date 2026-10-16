@@ -2,6 +2,7 @@
  * 单元组件测试验证狼美人梦保护与末神归档。输入为真实 fixture、两语和 null／未知原因变体；
  * 输出以字面死亡／胜者预期检查受保护生命、已死胜者及纯帧／markup，保原输入，不执行魅惑或判胜规则。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -44,11 +45,13 @@ for (const locale of ["zh-CN", "en"] as const)
           input.replay.events.findIndex((event) => event.seq === replay.events[index].seq) *
             FRAMES_PER_EVENT +
           10;
-      expect(buildReplayFrame(input, frame).label).toBe(label);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
       expect(markup).toContain(
         special
-          ? label
+          ? withPlayerNames(label, input.replay.players, locale)
           : locale === "en"
             ? "Dream protection blocks Wolf Beauty"
             : "夜间魅惑牵连被梦保护阻止",

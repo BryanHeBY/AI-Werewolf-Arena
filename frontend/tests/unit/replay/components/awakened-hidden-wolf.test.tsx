@@ -1,6 +1,7 @@
 /**
  * 组件单元测试验证觉醒隐狼的复盘展示。输入为既有录制／字面量数据、事件游标、语言和帧设置；输出断言席位、时间线与渲染画面。手写可见性、状态及不变归档构成预期，不运行真实游戏或模型传输。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
@@ -38,9 +39,11 @@ for (const locale of ["zh-CN", "en"] as const) {
         frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
       const label = eventLabel(event, locale);
       expect(label).toContain(locale === "en" ? "Hunter" : "猎人");
-      expect(buildReplayFrame(input, frame).label).toBe(label);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       expect(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />)).toContain(
-        label.replaceAll("'", "&#x27;"),
+        withPlayerNames(label, input.replay.players, locale).replaceAll("'", "&#x27;"),
       );
     }
     expect(raw).toEqual(before);

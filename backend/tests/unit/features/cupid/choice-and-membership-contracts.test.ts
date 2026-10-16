@@ -418,6 +418,7 @@ test("restricted-observation final gun with no living targets deliberately passe
   const action = await new ObservedBot({ next: () => 0.5 }, "active").decide({
     request,
     identity: { role: Role.Hunter, camp: Camp.Good },
+    players: [],
     knownAliveIds: [],
     teammateIds: [],
     currentWolfActions: { canChat: false, canVoteForKill: false },

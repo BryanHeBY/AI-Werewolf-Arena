@@ -185,6 +185,7 @@ test("受限bot只用显式魅惑候选，巡猎只选方向不获取狼位", as
   const observation = {
     request: base,
     self: { playerId: 3, role: Role.Wolf, camp: "wolf" },
+    players: [],
     knownAliveIds: [3, 8, 9],
     teammateIds: [9],
     abilities: [],

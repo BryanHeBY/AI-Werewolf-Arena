@@ -88,6 +88,7 @@ import { getHybridState, projectHybridState } from "../../features/hybrid/ports"
 import { getMerchantState, projectMerchantState } from "../../features/miracle-merchant/state";
 import { projectEclipseState } from "../../features/radiant-eclipse/ports";
 import { COMPONENT } from "../../domain/components/names";
+import { publicPlayerRoster } from "../../domain/public-player-roster";
 import { Camp, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { allNightAbilities } from "../../rulesets/mechanism-api";
 import { projectNightAbility } from "./night-ability-projection";
@@ -397,6 +398,7 @@ export function capturePlayerObservation(
     ...context
   } = request.context;
   return freezeObservation({
+    players: publicPlayerRoster(queries.world()),
     request: { ...request, context },
     identity: {
       ...(role

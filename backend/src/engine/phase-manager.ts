@@ -211,7 +211,7 @@ export class PhaseManager {
           return {
             id,
             seat: identity?.seat ?? id,
-            name: identity?.name ?? text(this.world.locale, "common.player_name", { id }),
+            ...(identity?.name !== undefined ? { name: identity.name } : {}),
             role: role?.role ?? "unknown",
             camp: (role && this.world.getComponent(id, COMPONENT.Camp)?.camp) ?? "unknown",
           };

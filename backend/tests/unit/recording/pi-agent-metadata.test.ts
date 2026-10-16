@@ -32,6 +32,9 @@ function archive(
   },
 ) {
   const game = bootstrapGame(sixPlayerMvpConfig, {
+    playerNames: Object.fromEntries(
+      Array.from({ length: 6 }, (_, i) => [i + 1, `Player ${i + 1}`]),
+    ),
     random: createRandom("pi-metadata-zero-cycle"),
     locale: "en",
   });
@@ -70,6 +73,22 @@ function archive(
     }),
   };
 }
+
+test("无昵称只扩展 Tape3，旧 Tape2 仍要求玩家元数据和 checkpoint 的姓名", () => {
+  const { record } = archive("llm");
+  const absent = structuredClone(record);
+  for (const player of absent.metadata.players) delete player.name;
+  for (const checkpoint of absent.checkpoints)
+    for (const player of checkpoint.players) delete player.name;
+  expect(
+    parseReproductionRecord(absent).metadata.players.every(
+      (player) => !Object.hasOwn(player, "name"),
+    ),
+  ).toBe(true);
+  expect(() => parseReproductionRecord({ ...absent, schemaVersion: 2 })).toThrow(
+    "reproduction_record_invalid",
+  );
+});
 
 test("Tape3 appends Pi metadata and detaches the exact source without normalizing legacy kinds", () => {
   for (const kind of ["llm", "acp", "pi"] as const) {

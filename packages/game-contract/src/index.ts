@@ -14,6 +14,7 @@ export {
   WitchSelfHealRule,
 } from "./identity";
 export type { EntityId, TieBreakerStrategy } from "./identity";
+export type { PublicPlayerIdentity } from "./players";
 export { ROLE_IDS, PLANNED_ROLE_IDS, isRoleId } from "./role-ids";
 export type { RoleId } from "./role-ids";
 export { LOCALES, isLocale } from "./locale";

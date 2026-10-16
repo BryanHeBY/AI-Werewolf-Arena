@@ -2,6 +2,7 @@
  * 单元组件测试验证纯白之女／狼巫的真实查验归档。输入为好人／狼人目标样本和两语帧号；
  * 输出检查报告只增知识不提前死亡，按字面人数核对终局及已死阵营胜者，并核纯帧／markup 和数据不变，不执行查验规则。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -35,9 +36,13 @@ for (const locale of ["zh-CN", "en"] as const)
         if (locale === "en") expect(label).not.toMatch(/[\u3400-\u9fff]/);
         const frame =
           input.replay.events.findIndex((e) => e.seq === report.seq) * FRAMES_PER_EVENT + 10;
-        expect(buildReplayFrame(input, frame).label).toBe(label);
+        expect(buildReplayFrame(input, frame).label).toBe(
+          withPlayerNames(label, input.replay.players, locale),
+        );
         const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-        expect(markup).toContain(label.replaceAll("'", "&#x27;"));
+        expect(markup).toContain(
+          withPlayerNames(label, input.replay.players, locale).replaceAll("'", "&#x27;"),
+        );
         expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       }
       const final = buildReplaySnapshot(replay, replay.events.length - 1);

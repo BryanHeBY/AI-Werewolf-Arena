@@ -29,7 +29,12 @@ for (const locale of ["zh-CN", "en"] as const) {
           input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
           frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
         expect(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />)).toContain(
-          eventLabel(event, locale),
+          eventLabel(
+            event,
+            locale,
+            undefined,
+            replay.players.map((p) => ({ id: p.player_id, name: p.name })),
+          ),
         );
       }
       expect(buildReplaySnapshot(replay, 0).players[6]).toMatchObject({

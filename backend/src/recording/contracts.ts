@@ -126,6 +126,8 @@ import type {
 
 /** 对局会话元信息。 */
 export interface ReplaySessionMeta {
+  /** 仅保存公开身份资料，供独立玩家档案标注昵称。 */
+  players?: readonly import("@ai-werewolf-arena/game-contract").PublicPlayerIdentity[];
   locale?: Locale;
   random?: RandomMetadata;
   sessionId: string;

@@ -2,13 +2,15 @@
  * 负责觉醒决斗尝试、真实结算及链尾的共享双语标签。输入惰性事实/语言，输出自然说明或null。
  * committed只确认分支和已付尝试，resolved的actual deaths来自真实提交回执；链尾不自行flush遗言或判胜。
  */
+import { type PlayerText } from "../players";
 import { readAwakenedDuelFact } from "@ai-werewolf-arena/game-contract/facts/awakened-duel";
-import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, type Locale } from "@ai-werewolf-arena/game-text";
 import { factPlayers } from "./fact-details";
 export function awakenedDuelEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const f = readAwakenedDuelFact(type, payload);
   if (!f) return null;
@@ -23,7 +25,7 @@ export function awakenedDuelEventLabel(
       actor: f.payload.actorId,
       day: f.payload.day,
       target: f.payload.targetId,
-      deaths: factPlayers(f.payload.deaths, locale),
+      deaths: factPlayers(f.payload.deaths, locale, text),
     });
   return text(
     locale,

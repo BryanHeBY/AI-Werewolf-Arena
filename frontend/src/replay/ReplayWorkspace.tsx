@@ -4,7 +4,11 @@
 import { replayEventPlayerIds } from "./replay-event-reader";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { text } from "@ai-werewolf-arena/game-text";
-import { outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-presentation";
+import {
+  createPlayerText,
+  outcomeWinnersLabel,
+  victoryPointLabel,
+} from "@ai-werewolf-arena/game-presentation";
 import { formatReplayTime, type ReplayDisplayOptions } from "./replay-display";
 import { ReplayDisplayControls } from "./ReplayDisplayControls";
 import { useMemo, useState } from "react";
@@ -49,6 +53,10 @@ export function ReplayWorkspace({
   const snapshot = buildReplaySnapshot(presentationReplay, activeIndex);
   const activeEvent = presentationReplay.events[activeIndex] ?? null;
   const playerIds = presentationReplay.players.map((player) => player.player_id);
+  const players = presentationReplay.players.map((player) => ({
+    id: player.player_id,
+    name: player.name,
+  }));
   // 焦点只筛时间线，不裁剪驱动画面／席位的完整展示事件；公开信息边界由加载文档决定。
   const visibleEvents =
     focusedPlayerId === null
@@ -78,7 +86,13 @@ export function ReplayWorkspace({
           <small>{resultReasonName(replay.result.reason, locale)}</small>
           {replay.result.decision && (
             <>
-              <small>{outcomeWinnersLabel(replay.result.decision.outcome, locale)}</small>
+              <small>
+                {outcomeWinnersLabel(
+                  replay.result.decision.outcome,
+                  locale,
+                  createPlayerText(players),
+                )}
+              </small>
               <small>{victoryPointLabel(replay.result.decision.decidedAt, locale)}</small>
               {replay.result.decision.reason !== replay.result.reason && (
                 <small>
@@ -120,7 +134,7 @@ export function ReplayWorkspace({
             </div>
             <p>
               {activeEvent
-                ? eventLabel(activeEvent, locale, playerIds)
+                ? eventLabel(activeEvent, locale, playerIds, players)
                 : text(locale, "replay.no_events")}
             </p>
             <div className="event-meta">
@@ -140,6 +154,7 @@ export function ReplayWorkspace({
       </section>
 
       <EventTimeline
+        players={players}
         events={visibleEvents}
         locale={locale}
         playerIds={playerIds}

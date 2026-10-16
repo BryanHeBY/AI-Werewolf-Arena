@@ -1,6 +1,7 @@
 /**
  * 组件单元测试验证赠枪的复盘展示。输入为既有录制／字面量数据、事件游标、语言和帧设置；输出断言席位、时间线与渲染画面。手写可见性、状态及不变归档构成预期，不运行真实游戏或模型传输。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -36,7 +37,9 @@ for (const locale of ["zh-CN", "en"] as const)
           input.replay.events.findIndex((e) => e.seq === replay.events[arm].seq) *
             FRAMES_PER_EVENT +
           10;
-      expect(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />)).toContain(label);
+      expect(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />)).toContain(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       const native = replay.events.findIndex((e) => e.type === "hunter_shot"),
         gift = replay.events.findIndex((e) => e.type === "player_shot"),
         terminal = replay.events.findIndex((e) => e.type === "game_over");

@@ -39,7 +39,6 @@ import { installInitialRoster } from "../domain/initial-roster";
 import { installShapeshifterDeal } from "../features/shapeshifter/deal";
 import { installThiefDeal } from "../features/thief/deal";
 import { supportsWallRoles } from "../features/wall-notes/authority";
-import { text } from "@ai-werewolf-arena/game-text";
 
 import { COMPONENT } from "../domain/components/names";
 import type { RoleComponent } from "../domain/components/role";
@@ -79,7 +78,7 @@ export interface BootstrapResult {
 
 export interface BootstrapOptions {
   locale?: Locale;
-  playerNames?: Readonly<Record<string, string>>;
+  playerNames?: Readonly<Record<string, string | undefined>>;
   random?: RandomSource;
   /** 仅供 controller fixture：明确牌堆仍按原数量严格验证。 */
   fixedRoles?: readonly Role[];
@@ -172,12 +171,7 @@ function createPlayers(
     world.addComponent(
       entityId,
       COMPONENT.Identity,
-      createIdentityComponent(
-        entityId,
-        seat,
-        options.playerNames?.[String(seat)] ??
-          text(world.locale, "common.player_name", { id: seat }),
-      ),
+      createIdentityComponent(entityId, seat, options.playerNames?.[String(seat)]),
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
     world.addComponent(entityId, COMPONENT.Camp, initialCamp);

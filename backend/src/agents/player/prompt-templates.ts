@@ -10,6 +10,7 @@ import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
 /** 调用方提供的身份与人设文本；role 是原显示字符串，不在这里据其重新判断阵营。 */
 export interface SystemPromptInput {
+  players?: readonly import("@ai-werewolf-arena/game-contract").PublicPlayerIdentity[];
   locale?: Locale;
   actorId: number;
   role: string;
@@ -65,6 +66,9 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     text(locale, "prompt.system.goal"),
     text(locale, "prompt.system.language"),
     ...(input.playerName ? [text(locale, "prompt.system.name", { name: input.playerName })] : []),
+    ...(input.players
+      ? [text(locale, "prompt.system.players", { players: JSON.stringify(input.players) })]
+      : []),
     text(locale, "prompt.system.teammates", {
       teammates: input.teammateIds.join(", ") || text(locale, "common.none"),
     }),

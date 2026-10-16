@@ -1,6 +1,7 @@
 /**
  * 负责双端夜间机制事件的展示映射。输入是事件类型、契约 reader 接收的纯数据和语言；输出为两语自然文案，保持名单／死因顺序与未知回退。Node 入站的 Proxy 拒绝仍属于后端，浏览器 reader 不承诺任意外来对象零 trap；此处不执行夜间规则或发布事实。
  */
+import { type PlayerText } from "../players";
 import type { MessageKey } from "@ai-werewolf-arena/game-contract";
 import { readNobleSecretBodyFact } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { readFragrantPairFact } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
@@ -46,13 +47,14 @@ import {
   readDeathShotMissFact,
 } from "@ai-werewolf-arena/game-contract/facts/magician";
 import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
-import { text } from "@ai-werewolf-arena/game-text";
+import { text as defaultText } from "@ai-werewolf-arena/game-text";
 import { deathCauses, deathDetails, factList, factPlayer, factPlayers } from "./fact-details";
 
 export function demonHunterEventLabel(
   type: string,
   payload: unknown,
   locale: Locale,
+  text: PlayerText = defaultText,
 ): string | null {
   const full = readDemonHunterEventFact(type, payload),
     own = readDemonHunterPlayerFact(type, payload);
@@ -88,6 +90,7 @@ export function nightmareEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const full = readNightmareFearFact(type, payload);
   const own = readNightmareOwnFearFact(type, payload);
@@ -103,6 +106,7 @@ export function redMoonEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const next = readRedMoonNextNightFact(type, payload);
   if (next)
@@ -124,6 +128,7 @@ export function magicianEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const miss = readDeathShotMissFact(type, payload);
   if (miss) return text(locale, "console.shot.missed", { actor: miss.actorId });
@@ -131,7 +136,9 @@ export function magicianEventLabel(
     own = readMagicianOwnExchangeFact(type, payload),
     fact = full ?? own;
   if (!fact) return null;
-  const pair = fact.pair ? fact.pair.join(", ") : text(locale, "console.magician.pass");
+  const pair = fact.pair
+    ? fact.pair.map((id) => text(locale, "common.player_reference", { id })).join(", ")
+    : text(locale, "console.magician.pass");
   return full
     ? text(locale, "console.magician.exchange", { actor: full.actorId, day: full.day, pair })
     : text(locale, "console.magician.own", { day: fact.day, pair });
@@ -141,6 +148,7 @@ export function orderPrinceEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   if (type === "order_prince_choice_committed") {
     const fact = readOrderPrinceChoiceFact(type, payload);
@@ -165,6 +173,7 @@ export function tricksterEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   if (type === "trickster_exchange_committed") {
     const f = readTricksterExchangeFact(type, payload);
@@ -172,7 +181,9 @@ export function tricksterEventLabel(
       ? text(locale, "event.trickster_exchange_committed", {
           actor: f.actorId,
           day: f.day,
-          pair: f.pair ? f.pair.join(", ") : text(locale, "console.magician.pass"),
+          pair: f.pair
+            ? f.pair.map((id) => text(locale, "common.player_reference", { id })).join(", ")
+            : text(locale, "console.magician.pass"),
         })
       : text(locale, "replay.unknown");
   }
@@ -204,6 +215,7 @@ export function wolfSorcererEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   if (type === "wolf_sorcerer_exchange_committed") {
     const f = readWolfSorcererExchangeFact(type, payload);
@@ -211,7 +223,9 @@ export function wolfSorcererEventLabel(
       ? text(locale, "event.wolf_sorcerer_exchange_committed", {
           actor: f.actorId,
           day: f.day,
-          pair: f.pair ? f.pair.join(", ") : text(locale, "console.magician.pass"),
+          pair: f.pair
+            ? f.pair.map((id) => text(locale, "common.player_reference", { id })).join(", ")
+            : text(locale, "console.magician.pass"),
         })
       : text(locale, "replay.unknown");
   }
@@ -236,6 +250,7 @@ export function timeConsortEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   if (type === "time_consort_lock_committed") {
     const f = readTimeConsortChoiceFact(type, payload);
@@ -286,6 +301,7 @@ export function scholarMentorEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   if (type === "modifier_choice_committed") {
     const f = readModifierChoiceFact(type, payload);
@@ -363,6 +379,7 @@ export function mistRavenEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const fact = readMistRavenFact(type, payload);
   if (!fact) return null;
@@ -370,19 +387,26 @@ export function mistRavenEventLabel(
   if ("candidates" in fact)
     return text(locale, key, {
       day: fact.day,
-      candidates: fact.candidates.join(", ") || text(locale, "common.none"),
+      candidates:
+        fact.candidates.map((id) => text(locale, "common.player_reference", { id })).join(", ") ||
+        text(locale, "common.none"),
       target: fact.targetId ?? text(locale, "common.none"),
     });
   const common = { day: fact.day, actor: fact.actorId };
   if ("targetIds" in fact)
     return text(locale, key, {
       ...common,
-      targets: fact.targetIds?.join(", ") ?? text(locale, "common.none"),
+      targets:
+        fact.targetIds?.map((id) => text(locale, "common.player_reference", { id })).join(", ") ??
+        text(locale, "common.none"),
     });
   if ("knownTeammateIds" in fact)
     return text(locale, key, {
       ...common,
-      teammates: fact.knownTeammateIds.join(", ") || text(locale, "common.none"),
+      teammates:
+        fact.knownTeammateIds
+          .map((id) => text(locale, "common.player_reference", { id }))
+          .join(", ") || text(locale, "common.none"),
     });
   if ("reason" in fact)
     return text(locale, key, {
@@ -396,6 +420,7 @@ export function radiantEclipseEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const fact = readRadiantEclipseFact(type, payload);
   if (!fact) return null;
@@ -425,6 +450,7 @@ export function nobleSecretBodyEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const f = readNobleSecretBodyFact(type, payload);
   if (!f) return null;
@@ -437,17 +463,22 @@ export function nobleSecretBodyEventLabel(
   if ("deathSources" in f)
     return text(locale, key, {
       day: f.day,
-      deaths: deathDetails(f.deaths, f.deathSources, locale),
+      deaths: deathDetails(f.deaths, f.deathSources, locale, text),
       blocked:
         f.blocked === null
           ? text(locale, "common.none")
-          : deathDetails([f.blocked.targetId], { [f.blocked.targetId]: [f.blocked.cause] }, locale),
+          : deathDetails(
+              [f.blocked.targetId],
+              { [f.blocked.targetId]: [f.blocked.cause] },
+              locale,
+              text,
+            ),
     });
   if ("causes" in f)
     return text(locale, key, {
       actor: f.actorId,
       day: f.day,
-      causes: deathCauses(f.causes, locale),
+      causes: deathCauses(f.causes, locale, text),
     });
 
   if (type === "secret_body_revealed") return text(locale, key, { actor: f.actorId });
@@ -466,7 +497,7 @@ export function nobleSecretBodyEventLabel(
         f.contracts.map((contract) => {
           const status = text(locale, `noble.contract.${contract.status.kind}`);
           return text(locale, "noble.contract.summary", {
-            target: factPlayer(contract.targetId, locale),
+            target: factPlayer(contract.targetId, locale, text),
             created: contract.createdNight,
             expires: contract.expiresNight,
             status:
@@ -476,6 +507,7 @@ export function nobleSecretBodyEventLabel(
           });
         }),
         locale,
+        text,
       ),
     });
   if ("status" in f)
@@ -490,7 +522,7 @@ export function nobleSecretBodyEventLabel(
       actor: f.actorId,
       day: f.day,
       target: f.targetId,
-      cause: deathCauses([f.cause], locale),
+      cause: deathCauses([f.cause], locale, text),
     });
   return text(locale, key, {
     actor: f.actorId,
@@ -503,6 +535,7 @@ export function fragrantPairEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const f = readFragrantPairFact(type, payload);
   if (!f) return null;
@@ -512,12 +545,12 @@ export function fragrantPairEventLabel(
     return text(locale, "event.fragrant_wave_committed", {
       actor: f.actorId,
       day: f.day,
-      deaths: deathDetails(f.deaths, f.deathSources, locale),
+      deaths: deathDetails(f.deaths, f.deathSources, locale, text),
     });
   if ("known" in f)
     return text(locale, "event.fragrant_night_notified", {
       ...base,
-      wolf: factPlayer(f.known.knownWolfId, locale),
+      wolf: factPlayer(f.known.knownWolfId, locale, text),
       choice:
         f.known.lastChoice === null
           ? text(locale, "common.none")
@@ -526,7 +559,7 @@ export function fragrantPairEventLabel(
               target:
                 f.known.lastChoice.pairIds === null
                   ? text(locale, "fragrant.choice.pass")
-                  : factPlayers(f.known.lastChoice.pairIds, locale),
+                  : factPlayers(f.known.lastChoice.pairIds, locale, text),
             }),
       used: text(locale, f.known.used ? "common.used" : "common.unused"),
       notices: factList(
@@ -540,6 +573,7 @@ export function fragrantPairEventLabel(
           }),
         ),
         locale,
+        text,
       ),
     });
   if ("containsWerewolf" in f)
@@ -566,6 +600,8 @@ export function fragrantPairEventLabel(
     });
   return text(locale, "event.fragrant_pair_chosen", {
     ...base,
-    targets: f.pairIds?.join(", ") ?? text(locale, "fragrant.choice.pass"),
+    targets:
+      f.pairIds?.map((id) => text(locale, "common.player_reference", { id })).join(", ") ??
+      text(locale, "fragrant.choice.pass"),
   });
 }

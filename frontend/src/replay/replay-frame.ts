@@ -69,6 +69,7 @@ export function buildReplayFrame(input: ReplayRenderInput, frame: number) {
           event,
           locale,
           replay.players.map((player) => player.player_id),
+          replay.players.map((player) => ({ id: player.player_id, name: player.name })),
         )
       : text(locale, "replay.no_events"),
     time: formatReplayTime(event?.timestamp, input),

@@ -21,6 +21,7 @@ import { collectPlayerInitialPublicCounts } from "../observation/player-initial-
 import { renderMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
 
 import { COMPONENT } from "../../domain/components/names";
+import { publicPlayerRoster } from "../../domain/public-player-roster";
 import { RoleComponent } from "../../domain/components/role";
 import { ActionRequest, EntityId, Role, ToolName } from "../../domain";
 import { getActionRequestStage } from "../../domain/action-request-context";
@@ -101,6 +102,7 @@ export class PlayerPromptPolicy {
       : undefined;
     return {
       systemPrompt: buildSystemPrompt({
+        players: publicPlayerRoster(this.world),
         locale: this.locale,
         actorId: request.actorId,
         role: role ? this.options.roleCatalog.label(role.role, this.locale) : "unknown",

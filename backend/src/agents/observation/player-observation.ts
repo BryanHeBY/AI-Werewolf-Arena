@@ -37,6 +37,8 @@ import type { PlayerDeathGun } from "@ai-werewolf-arena/game-contract/player-sta
 /** 玩家决策端口只携带已投影事实和自己的知识，不提供 World。 */
 export interface PlayerObservation {
   request: ActionRequest;
+  /** 全体玩家的公开身份资料；与自身角色／队友知识分别捕获。 */
+  players: import("@ai-werewolf-arena/game-contract").PublicPlayerIdentity[];
   identity: { role?: Role; camp?: Camp; name?: string };
   knownAliveIds: number[];
   teammateIds: number[];

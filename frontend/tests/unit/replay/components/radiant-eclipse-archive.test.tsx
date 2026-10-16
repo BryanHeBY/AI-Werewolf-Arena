@@ -150,7 +150,14 @@ for (const locale of ["en", "zh-CN"] as const)
         )) {
           const index = input.replay.events.findIndex((x) => x.seq === e.seq),
             f = buildReplayFrame(input, index * 90 + 45);
-          expect(f.label).toBe(eventLabel(e, locale));
+          expect(f.label).toBe(
+            eventLabel(
+              e,
+              locale,
+              undefined,
+              input.replay.players.map((p) => ({ id: p.player_id, name: p.name })),
+            ),
+          );
           expect(
             f.snapshot.players
               .filter((p) => p.playerId !== view.player_id)

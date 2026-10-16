@@ -8,6 +8,8 @@ import { createAcpOutputObserver } from "../acp/acp-output";
 import { createAgentConsoleSink } from "./agent-console-presenter";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import {
+  createPlayerText,
+  type NamedPlayer,
   outcomeLabel,
   outcomeWinnersLabel,
   victoryPointLabel,
@@ -19,10 +21,15 @@ import { colorize, isAnsiEnabled } from "../../utils/ansi";
 export type ConsoleTone = "muted" | "info" | "ok" | "warn" | "error" | "accent" | "god";
 export type ConsoleLog = (text: string, tone?: ConsoleTone) => void;
 
-export function toChatLines(events: readonly GameEvent[], locale: Locale = "zh-CN"): string[] {
+export function toChatLines(
+  events: readonly GameEvent[],
+  locale: Locale = "zh-CN",
+  players: readonly NamedPlayer[] = [],
+): string[] {
   const registry = getDefaultScriptEventRenderRegistry();
+  const text = createPlayerText(players);
   return events.flatMap((event) => {
-    const line = registry.toChatLine(event, locale);
+    const line = registry.toChatLine(event, locale, text);
     return line ? [line] : [];
   });
 }
@@ -47,10 +54,12 @@ export function presentStreamEvents(
   printPrivateEvents: boolean,
   log: ConsoleLog,
   locale: Locale = "zh-CN",
+  players: readonly NamedPlayer[] = [],
 ): void {
   const registry = getDefaultScriptEventRenderRegistry();
+  const text = createPlayerText(players);
   for (const event of events) {
-    for (const render of registry.toLiveRender(event, printPrivateEvents, locale)) {
+    for (const render of registry.toLiveRender(event, printPrivateEvents, locale, text)) {
       const tone =
         render.kind === "chat"
           ? "accent"
@@ -76,6 +85,7 @@ export function presentStreamEvents(
 }
 
 export function presentGameResult(input: {
+  players?: readonly NamedPlayer[];
   locale?: Locale;
   board: string;
   snapshot: RuntimeSnapshot;
@@ -98,13 +108,13 @@ export function presentGameResult(input: {
   if (snapshot.result) {
     const locale = input.locale ?? "zh-CN";
     log(
-      `[result] ${outcomeLabel(snapshot.result.outcome, locale)} · ${outcomeWinnersLabel(snapshot.result.outcome, locale)} · ${victoryPointLabel(snapshot.result.decidedAt, locale)}`,
+      `[result] ${outcomeLabel(snapshot.result.outcome, locale, createPlayerText(input.players))} · ${outcomeWinnersLabel(snapshot.result.outcome, locale, createPlayerText(input.players))} · ${victoryPointLabel(snapshot.result.decidedAt, locale)}`,
       "ok",
     );
   }
   if (input.printAllEvents) console.log(JSON.stringify(events, null, 2));
   if (input.printChat && !input.streamEvents) {
-    for (const line of toChatLines(events, input.locale)) console.log(line);
+    for (const line of toChatLines(events, input.locale, input.players)) console.log(line);
   }
 }
 

@@ -3,12 +3,14 @@
  * 严格事实读器先裁定字段；动作与译文按原文保留，文本不会重建许可或被当作引擎确认事实。
  * 终端和Web共用标签，受众过滤仍由调用方拥有，不读取World、库存或目标私有状态。
  */
+import { type PlayerText } from "../players";
 import { readSilenceElderFact } from "@ai-werewolf-arena/game-contract/facts/silence-elder";
-import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, type Locale } from "@ai-werewolf-arena/game-text";
 export function silenceElderEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const f = readSilenceElderFact(type, payload);
   if (!f) return null;

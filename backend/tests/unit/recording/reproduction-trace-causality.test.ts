@@ -181,7 +181,7 @@ test("checkpoint count mismatch writes nothing and notification failure retains 
   expect(() => trace.checkpoint(checkpoint, [])).toThrow(original);
   expect(notices).toBe(1);
   checkpoint.players[0]!.name = "caller mutation";
-  expect(trace.build().checkpoints[0]!.players[0]!.name).toBe("玩家1");
+  expect(trace.build().checkpoints[0]!.players[0]!.name).toBeUndefined();
 });
 test("final invalid refusal precedes pending and ordered failures retain only safe names", async () => {
   let fail = true;

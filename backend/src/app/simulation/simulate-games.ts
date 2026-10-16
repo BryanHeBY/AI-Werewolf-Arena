@@ -2,6 +2,7 @@
  * 负责用明确种子与 provider 装配执行模拟批次。输入为板子／运行选项和各独立对局，输出原报告、分支计数与录制证据。
  * 特权 baseline 不是玩家知识 oracle，也不作为独立规则预期；每局 RNG 顺序保持，受限观察与录制使用同一绑定规则。
  */
+import { publicPlayerRoster } from "../../domain/public-player-roster";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../bootstrap";
 import {
@@ -176,6 +177,7 @@ export async function simulateGames(
     };
     const manager = await SessionRecordManager.create(
       {
+        players: publicPlayerRoster(context.world),
         sessionId: `simulation-${batchId}-${index}`,
         board: board.definition.id,
         locale: context.world.locale,

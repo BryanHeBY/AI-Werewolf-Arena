@@ -40,7 +40,14 @@ for (const locale of ["zh-CN", "en"] as const)
           input.replay.events.findIndex((item) => item.seq === event.seq) * FRAMES_PER_EVENT,
         );
         expect(frame.stage).toBe(stage);
-        expect(frame.label).toBe(eventLabel(event, locale, ids));
+        expect(frame.label).toBe(
+          eventLabel(
+            event,
+            locale,
+            ids,
+            input.replay.players.map((p) => ({ id: p.player_id, name: p.name })),
+          ),
+        );
         const markup = renderToStaticMarkup(
           <EventTimeline
             events={[event]}

@@ -2,6 +2,7 @@
  * 负责展示投影后的席位、存活与胜者标记。输入为当前玩家视图和焦点，输出席位按钮及选择回调。
  * 角色／公开身份区分沿用输入，组件不从事件补全隐藏身份或以焦点授予额外信息。
  */
+import { playerLabel } from "@ai-werewolf-arena/game-presentation";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayPlayerState } from "./replay-projection";
 import { campName, roleName } from "./replay-localization";
@@ -31,7 +32,7 @@ export function PlayerSeats({ players, locale, focusedPlayerId, onToggleFocus }:
           <button
             type="button"
             key={player.playerId}
-            aria-label={`${text(locale, "replay.player", { id: player.playerId })}${player.name ? ` · ${player.name}` : ""}`}
+            aria-label={playerLabel({ id: player.playerId, name: player.name }, locale)}
             className={`seat ${player.alive ? "alive" : "dead"} ${player.isWinner ? "winner-seat" : ""} ${player.camp} ${focusedPlayerId === player.playerId ? "focused" : ""}`}
             onClick={() => onToggleFocus(player.playerId)}
           >

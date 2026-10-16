@@ -521,7 +521,12 @@ function normalizePlayers(
       assertKnownKeys(entry, ["name", "agent", "spawnArgs", "personalityPrompt"], field);
       let name: string | undefined;
       if (entry.name !== undefined) {
-        if (typeof entry.name !== "string" || !entry.name.trim() || entry.name.length > 120)
+        if (
+          typeof entry.name !== "string" ||
+          !entry.name.trim() ||
+          entry.name.length > 120 ||
+          /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/.test(entry.name)
+        )
           throw new Error(`runtime_config_player_name_invalid: ${field}.name`);
         name = entry.name; // 保留用户名字原文，不翻译或静默裁掉空白。
       }

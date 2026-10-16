@@ -1,6 +1,7 @@
 /**
  * 负责按事件类型装配脚本和终端的展示贡献。输入为事件、私有输出选项与语言；输出为原聊天行和分类文本。保留各贡献的读取、受众与分派顺序，不提交行动、改写事实或重算历史阵营。事件文案消费共享展示 owner，自定义贡献仍保留原接口。
  */
+import { type PlayerText } from "@ai-werewolf-arena/game-presentation";
 import {
   awakenedGuardEventLabel,
   awakenedDuelEventLabel,
@@ -48,7 +49,7 @@ import { wildChildEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { thiefEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
-import { text, roleName, type Locale } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, roleName, type Locale } from "@ai-werewolf-arena/game-text";
 import {
   wallEventLabel,
   blackMarketEventLabel,
@@ -94,6 +95,7 @@ function resultLabel(
   payload: unknown,
   locale: Locale,
   key: "console.judge.result" | "console.live.result",
+  text: PlayerText = defaultText,
 ): string {
   if (
     payload &&
@@ -102,7 +104,7 @@ function resultLabel(
   ) {
     try {
       const decision = readVictoryResult(payload);
-      return `${text(locale, "victory.finished", { result: outcomeLabel(decision.outcome, locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(decision.reason, locale) })} · ${outcomeWinnersLabel(decision.outcome, locale)} · ${victoryPointLabel(decision.decidedAt, locale)}`;
+      return `${text(locale, "victory.finished", { result: outcomeLabel(decision.outcome, locale, text), reason: getDefaultTextLocalizationRegistry().gameOverReason(decision.reason, locale) })} · ${outcomeWinnersLabel(decision.outcome, locale, text)} · ${victoryPointLabel(decision.decidedAt, locale, text)}`;
     } catch {
       return text(locale, "replay.unknown");
     }
@@ -114,7 +116,11 @@ function resultLabel(
   });
 }
 
-function gravekeeperLabel(payload: unknown, locale: Locale): string {
+function gravekeeperLabel(
+  payload: unknown,
+  locale: Locale,
+  text: PlayerText = defaultText,
+): string {
   const report = readGravekeeperFeedback(payload);
   return report
     ? text(locale, "console.gravekeeper.report", {
@@ -122,44 +128,52 @@ function gravekeeperLabel(payload: unknown, locale: Locale): string {
         target: report.targetId,
         exileDay: report.exileDay,
         receivedDay: report.receivedDay,
-        result: inspectionLabel(report.result, locale),
+        result: inspectionLabel(report.result, locale, text),
       })
     : text(locale, "replay.unknown");
 }
 
 const CHAT_HANDLERS: ScriptChatLineHandlers = {
-  day_speech: (event, locale = "zh-CN") =>
+  day_speech: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.chat.day", { actor: event.payload.actorId, speech: event.payload.text }),
   ...WOLF_SCRIPT_CHAT_HANDLERS,
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
-  player_role_revealed: (event, locale = "zh-CN") =>
+  player_role_revealed: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.role_revealed", {
       actor: event.payload.playerId,
       role: roleName(event.payload.role, locale),
     }),
-  sheriff_pk_started: (event, locale = "zh-CN") =>
-    text(locale, "console.pk.sheriff", { players: event.payload.candidates.join(", ") }),
-  exile_pk_started: (event, locale = "zh-CN") =>
-    text(locale, "console.pk.exile", { players: event.payload.candidates.join(", ") }),
-  player_shot: (event, locale = "zh-CN") =>
+  sheriff_pk_started: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    text(locale, "console.pk.sheriff", {
+      players: event.payload.candidates
+        .map((id) => text(locale, "common.player_reference", { id }))
+        .join(", "),
+    }),
+  exile_pk_started: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    text(locale, "console.pk.exile", {
+      players: event.payload.candidates
+        .map((id) => text(locale, "common.player_reference", { id }))
+        .join(", "),
+    }),
+  player_shot: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.player_shot", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
     }),
-  lucky_ability_skipped: (event, locale = "zh-CN") =>
+  lucky_ability_skipped: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.lucky.skipped", {
       actor: event.payload.actorId,
       day: event.payload.day,
       ability: event.payload.abilityId,
     }),
-  gargoyle_awakened: (event, locale = "zh-CN") =>
+  gargoyle_awakened: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.gargoyle.awakened", {
       actor: event.payload.actorId,
       day: event.payload.day,
     }),
-  role_inspection_skipped: (event, locale = "zh-CN") =>
+  role_inspection_skipped: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.role_inspection.skipped", {
       actor: event.payload.actorId,
       day: event.payload.day,
@@ -168,48 +182,52 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
         event.payload.reason === "passed" ? "inspection.skip.passed" : "inspection.skip.no_targets",
       ),
     }),
-  role_inspected: (event, locale = "zh-CN") =>
+  role_inspected: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.role_inspected", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
-      result: inspectionLabel(event.payload.result, locale),
+      result: inspectionLabel(event.payload.result, locale, text),
     }),
-  hidden_wolf_awakened: (event, locale = "zh-CN") =>
+  hidden_wolf_awakened: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.hidden_wolf.awakened", {
       actor: event.payload.actorId,
       day: event.payload.day,
     }),
-  bear_roared: (event, locale = "zh-CN") =>
+  bear_roared: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.bear.report", {
       day: event.payload.day,
       result: text(locale, event.payload.roared ? "bear.roar" : "bear.quiet"),
     }),
-  charm_applied: (event, locale = "zh-CN") =>
+  charm_applied: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.charm.applied", {
       actor: event.payload.actorId,
       target: event.payload.targetId ?? text(locale, "common.none"),
       day: event.payload.day,
     }),
-  charm_death: (event, locale = "zh-CN") =>
+  charm_death: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.charm.death", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
     }),
-  charm_blocked: (event, locale = "zh-CN") =>
+  charm_blocked: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.charm.blocked", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
     }),
-  additional_deaths: (event, locale = "zh-CN") =>
-    text(locale, "console.additional_deaths", { players: event.payload.deaths.join(", ") }),
-  dream_applied: (event, locale = "zh-CN") =>
+  additional_deaths: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    text(locale, "console.additional_deaths", {
+      players: event.payload.deaths
+        .map((id) => text(locale, "common.player_reference", { id }))
+        .join(", "),
+    }),
+  dream_applied: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.dream.applied", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
       day: event.payload.day,
       consecutive: text(locale, event.payload.consecutive ? "common.yes" : "common.no"),
     }),
-  dream_death: (event, locale = "zh-CN") =>
+  dream_death: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.dream.death", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
@@ -221,13 +239,14 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
           : "console.dream.linked",
       ),
     }),
-  death_shot_blocked: (event, locale = "zh-CN") =>
+  death_shot_blocked: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.shot.blocked", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
     }),
-  gravekeeper_reported: (event, locale = "zh-CN") => gravekeeperLabel(event.payload, locale),
-  phase_changed: (event, locale = "zh-CN") => {
+  gravekeeper_reported: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    gravekeeperLabel(event.payload, locale, text),
+  phase_changed: (event, locale = "zh-CN", text: PlayerText = defaultText) => {
     const p = event.payload;
     if (p.phase === "night") return text(locale, "console.judge.night", { day: p.day });
     if (p.phase === "day") return text(locale, "console.judge.day", { day: p.day });
@@ -243,11 +262,15 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
     }
     return null;
   },
-  night_resolved: (event, locale = "zh-CN") =>
+  night_resolved: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     event.payload.deaths.length
-      ? text(locale, "console.judge.deaths", { deaths: event.payload.deaths.join(", ") })
+      ? text(locale, "console.judge.deaths", {
+          deaths: event.payload.deaths
+            .map((id) => text(locale, "common.player_reference", { id }))
+            .join(", "),
+        })
       : text(locale, "console.judge.peace"),
-  vote_summary: (event, locale = "zh-CN") =>
+  vote_summary: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.judge.votes", {
       votes: event.payload.votes
         .map((item) => {
@@ -261,36 +284,36 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
         })
         .join(", "),
     }),
-  voted_out: (event, locale = "zh-CN") =>
+  voted_out: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.judge.exile", { target: event.payload.target }),
-  sheriff_badge_transferred: (event, locale = "zh-CN") =>
+  sheriff_badge_transferred: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.judge.badge_transfer", {
       from: event.payload.fromId,
       to: event.payload.toId,
     }),
-  sheriff_badge_destroyed: (event, locale = "zh-CN") =>
+  sheriff_badge_destroyed: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.judge.badge_destroy", { target: event.payload.targetId }),
-  wolf_self_destruct: (event, locale = "zh-CN") =>
+  wolf_self_destruct: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.judge.blast", { actor: event.payload.wolfId }),
-  white_wolf_king_self_destruct: (event, locale = "zh-CN") =>
+  white_wolf_king_self_destruct: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     event.payload.targetId === null
       ? text(locale, "console.white_wolf_king.blast_none", { actor: event.payload.actorId })
       : text(locale, "console.white_wolf_king.blast", {
           actor: event.payload.actorId,
           target: event.payload.targetId,
         }),
-  knight_duel: (event, locale = "zh-CN") =>
+  knight_duel: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, event.payload.result === "wolf" ? "console.knight.wolf" : "console.knight.miss", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
     }),
-  wolf_king_shot: (event, locale = "zh-CN") =>
+  wolf_king_shot: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
     text(locale, "console.judge.wolf_king_shot", {
       actor: event.payload.actorId,
       target: event.payload.targetId,
     }),
-  game_over: (event, locale = "zh-CN") =>
-    resultLabel(event.payload, locale, "console.judge.result"),
+  game_over: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    resultLabel(event.payload, locale, "console.judge.result", text),
   ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS,
   ...IDIOT_SCRIPT_JUDGE_HANDLERS,
   ...HUNTER_SCRIPT_JUDGE_HANDLERS,
@@ -337,20 +360,28 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
-  sheriff_pk_started: (event, _private, locale = "zh-CN") => [
+  sheriff_pk_started: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "god",
-      text: text(locale, "console.pk.sheriff", { players: event.payload.candidates.join(", ") }),
+      text: text(locale, "console.pk.sheriff", {
+        players: event.payload.candidates
+          .map((id) => text(locale, "common.player_reference", { id }))
+          .join(", "),
+      }),
     },
   ],
-  exile_pk_started: (event, _private, locale = "zh-CN") => [
+  exile_pk_started: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "god",
-      text: text(locale, "console.pk.exile", { players: event.payload.candidates.join(", ") }),
+      text: text(locale, "console.pk.exile", {
+        players: event.payload.candidates
+          .map((id) => text(locale, "common.player_reference", { id }))
+          .join(", "),
+      }),
     },
   ],
 
-  player_shot: (event, _private, locale = "zh-CN") => [
+  player_shot: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "action",
       text: text(locale, "console.player_shot", {
@@ -359,7 +390,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       }),
     },
   ],
-  gargoyle_awakened: (event, privateEvents, locale = "zh-CN") =>
+  gargoyle_awakened: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -371,7 +402,12 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  role_inspection_skipped: (event, privateEvents, locale = "zh-CN") =>
+  role_inspection_skipped: (
+    event,
+    privateEvents,
+    locale = "zh-CN",
+    text: PlayerText = defaultText,
+  ) =>
     privateEvents
       ? [
           {
@@ -389,7 +425,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  role_inspected: (event, privateEvents, locale = "zh-CN") =>
+  role_inspected: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -397,12 +433,12 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
             text: text(locale, "console.role_inspected", {
               actor: event.payload.actorId,
               target: event.payload.targetId,
-              result: inspectionLabel(event.payload.result, locale),
+              result: inspectionLabel(event.payload.result, locale, text),
             }),
           },
         ]
       : [],
-  hidden_wolf_awakened: (event, privateEvents, locale = "zh-CN") =>
+  hidden_wolf_awakened: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -414,7 +450,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  bear_roared: (event, _private, locale = "zh-CN") => [
+  bear_roared: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "system",
       text: text(locale, "console.bear.report", {
@@ -423,7 +459,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       }),
     },
   ],
-  charm_applied: (event, privateEvents, locale = "zh-CN") =>
+  charm_applied: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -436,7 +472,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  charm_death: (event, privateEvents, locale = "zh-CN") =>
+  charm_death: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -448,7 +484,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  charm_blocked: (event, privateEvents, locale = "zh-CN") =>
+  charm_blocked: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -460,13 +496,17 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  additional_deaths: (event, _private, locale = "zh-CN") => [
+  additional_deaths: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "system",
-      text: text(locale, "console.additional_deaths", { players: event.payload.deaths.join(", ") }),
+      text: text(locale, "console.additional_deaths", {
+        players: event.payload.deaths
+          .map((id) => text(locale, "common.player_reference", { id }))
+          .join(", "),
+      }),
     },
   ],
-  dream_applied: (event, privateEvents, locale = "zh-CN") =>
+  dream_applied: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -480,7 +520,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  dream_death: (event, privateEvents, locale = "zh-CN") =>
+  dream_death: (event, privateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     privateEvents
       ? [
           {
@@ -499,7 +539,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  death_shot_blocked: (event, _private, locale = "zh-CN") => [
+  death_shot_blocked: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "system",
       text: text(locale, "console.shot.blocked", {
@@ -508,13 +548,30 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       }),
     },
   ],
-  gravekeeper_reported: (event, printPrivateEvents, locale = "zh-CN") =>
-    printPrivateEvents ? [{ kind: "private", text: gravekeeperLabel(event.payload, locale) }] : [],
-  death_ability_changed: (event, printPrivateEvents, locale = "zh-CN") =>
+  gravekeeper_reported: (
+    event,
+    printPrivateEvents,
+    locale = "zh-CN",
+    text: PlayerText = defaultText,
+  ) =>
     printPrivateEvents
-      ? [{ kind: "private", text: deathAbilityEventLabel(event.type, event.payload, locale)! }]
+      ? [{ kind: "private", text: gravekeeperLabel(event.payload, locale, text) }]
       : [],
-  ability_changed: (event, printPrivateEvents, locale = "zh-CN") =>
+  death_ability_changed: (
+    event,
+    printPrivateEvents,
+    locale = "zh-CN",
+    text: PlayerText = defaultText,
+  ) =>
+    printPrivateEvents
+      ? [
+          {
+            kind: "private",
+            text: deathAbilityEventLabel(event.type, event.payload, locale, text)!,
+          },
+        ]
+      : [],
+  ability_changed: (event, printPrivateEvents, locale = "zh-CN", text: PlayerText = defaultText) =>
     printPrivateEvents
       ? [
           {
@@ -528,7 +585,12 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  god_private_game_info: (event, printPrivateEvents, locale = "zh-CN") =>
+  god_private_game_info: (
+    event,
+    printPrivateEvents,
+    locale = "zh-CN",
+    text: PlayerText = defaultText,
+  ) =>
     printPrivateEvents
       ? [
           {
@@ -537,14 +599,14 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
               roles: event.payload.players
                 .map(
                   (item) =>
-                    `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`,
+                    `${text(locale, "common.player_reference", { id: item.id })}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`,
                 )
                 .join(", "),
             }),
           },
         ]
       : [],
-  day_speech: (event, _private, locale = "zh-CN") => [
+  day_speech: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "system",
       text: text(locale, "console.live.day", {
@@ -553,7 +615,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       }),
     },
   ],
-  wolf_king_shot: (event, _private, locale = "zh-CN") => [
+  wolf_king_shot: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "system",
       text: text(locale, "console.judge.wolf_king_shot", {
@@ -562,7 +624,12 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       }),
     },
   ],
-  white_wolf_king_self_destruct: (event, _private, locale = "zh-CN") => [
+  white_wolf_king_self_destruct: (
+    event,
+    _private,
+    locale = "zh-CN",
+    text: PlayerText = defaultText,
+  ) => [
     {
       kind: "system",
       text:
@@ -574,7 +641,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
             }),
     },
   ],
-  knight_duel: (event, _private, locale = "zh-CN") => [
+  knight_duel: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
     {
       kind: "system",
       text: text(
@@ -584,8 +651,8 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       ),
     },
   ],
-  game_over: (event, _private, locale = "zh-CN") => [
-    { kind: "god", text: resultLabel(event.payload, locale, "console.live.result") },
+  game_over: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
+    { kind: "god", text: resultLabel(event.payload, locale, "console.live.result", text) },
   ],
   ...WOLF_SCRIPT_LIVE_HANDLERS,
   ...SEER_SCRIPT_LIVE_HANDLERS,
@@ -597,91 +664,107 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
 
 /** 脚本渲染注册表。 */
 export class ScriptEventRenderRegistry {
-  toChatLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+  toChatLine(
+    event: GameEvent,
+    locale: Locale = "zh-CN",
+    text: PlayerText = defaultText,
+  ): string | null {
     const handler = CHAT_HANDLERS[event.type];
     return handler
-      ? (handler as (event: GameEvent, locale: Locale) => string | null)(event, locale)
+      ? (handler as (event: GameEvent, locale: Locale, text?: PlayerText) => string | null)(
+          event,
+          locale,
+          text,
+        )
       : null;
   }
 
-  toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
-    const animal = animalDreamEventLabel(event.type, event.payload, locale);
+  toJudgeLine(
+    event: GameEvent,
+    locale: Locale = "zh-CN",
+    text: PlayerText = defaultText,
+  ): string | null {
+    const animal = animalDreamEventLabel(event.type, event.payload, locale, text);
     if (animal !== null) return animal;
-    const fragrant = fragrantPairEventLabel(event.type, event.payload, locale);
+    const fragrant = fragrantPairEventLabel(event.type, event.payload, locale, text);
     if (fragrant !== null) return fragrant;
-    const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale);
+    const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale, text);
     if (noble !== null) return noble;
-    const radiant = radiantEclipseEventLabel(event.type, event.payload, locale);
+    const radiant = radiantEclipseEventLabel(event.type, event.payload, locale, text);
     if (radiant !== null) return radiant;
-    const mist = mistRavenEventLabel(event.type, event.payload, locale);
+    const mist = mistRavenEventLabel(event.type, event.payload, locale, text);
     if (mist !== null) return mist;
-    const modifier = scholarMentorEventLabel(event.type, event.payload, locale);
+    const modifier = scholarMentorEventLabel(event.type, event.payload, locale, text);
     if (modifier !== null) return modifier;
-    const consort = timeConsortEventLabel(event.type, event.payload, locale);
+    const consort = timeConsortEventLabel(event.type, event.payload, locale, text);
     if (consort !== null) return consort;
-    const sorcerer = wolfSorcererEventLabel(event.type, event.payload, locale);
+    const sorcerer = wolfSorcererEventLabel(event.type, event.payload, locale, text);
     if (sorcerer !== null) return sorcerer;
-    const trickster = tricksterEventLabel(event.type, event.payload, locale);
+    const trickster = tricksterEventLabel(event.type, event.payload, locale, text);
     if (trickster !== null) return trickster;
-    const prince = orderPrinceEventLabel(event.type, event.payload, locale);
+    const prince = orderPrinceEventLabel(event.type, event.payload, locale, text);
     if (prince !== null) return prince;
-    const magician = magicianEventLabel(event.type, event.payload, locale);
+    const magician = magicianEventLabel(event.type, event.payload, locale, text);
     if (magician !== null) return magician;
-    const redMoon = redMoonEventLabel(event.type, event.payload, locale);
+    const redMoon = redMoonEventLabel(event.type, event.payload, locale, text);
     if (redMoon !== null) return redMoon;
-    const warden = wardenEventLabel(event.type, event.payload, locale);
+    const warden = wardenEventLabel(event.type, event.payload, locale, text);
     if (warden !== null) return warden;
-    const beauty = awakenedBeautyEventLabel(event.type, event.payload, locale);
+    const beauty = awakenedBeautyEventLabel(event.type, event.payload, locale, text);
     if (beauty !== null) return beauty;
-    const patrol = awakenedPatrolEventLabel(event.type, event.payload, locale);
+    const patrol = awakenedPatrolEventLabel(event.type, event.payload, locale, text);
     if (patrol !== null) return patrol;
-    const protection = awakenedGuardEventLabel(event.type, event.payload, locale);
+    const protection = awakenedGuardEventLabel(event.type, event.payload, locale, text);
     if (protection !== null) return protection;
-    const duel = awakenedDuelEventLabel(event.type, event.payload, locale);
+    const duel = awakenedDuelEventLabel(event.type, event.payload, locale, text);
     if (duel !== null) return duel;
-    const brew = awakenedWitchEventLabel(event.type, event.payload, locale);
+    const brew = awakenedWitchEventLabel(event.type, event.payload, locale, text);
     if (brew !== null) return brew;
-    const claws = awakenedClawEventLabel(event.type, event.payload, locale);
+    const claws = awakenedClawEventLabel(event.type, event.payload, locale, text);
     if (claws !== null) return claws;
-    const silence = silenceElderEventLabel(event.type, event.payload, locale);
+    const silence = silenceElderEventLabel(event.type, event.payload, locale, text);
     if (silence !== null) return silence;
-    const crow = crowEventLabel(event.type, event.payload, locale);
+    const crow = crowEventLabel(event.type, event.payload, locale, text);
     if (crow !== null) return crow;
-    const nightmare = nightmareEventLabel(event.type, event.payload, locale);
+    const nightmare = nightmareEventLabel(event.type, event.payload, locale, text);
     if (nightmare !== null) return nightmare;
-    const demon = demonHunterEventLabel(event.type, event.payload, locale);
+    const demon = demonHunterEventLabel(event.type, event.payload, locale, text);
     if (demon !== null) return demon;
-    const wedding = ghostBrideEventLabel(event.type, event.payload, locale);
+    const wedding = ghostBrideEventLabel(event.type, event.payload, locale, text);
     if (wedding !== null) return wedding;
-    const lonely = lonelyGirlEventLabel(event.type, event.payload, locale);
+    const lonely = lonelyGirlEventLabel(event.type, event.payload, locale, text);
     if (lonely) return lonely;
-    const wild = wildChildEventLabel(event.type, event.payload, locale);
+    const wild = wildChildEventLabel(event.type, event.payload, locale, text);
     if (wild !== null) return wild;
-    const shape = shapeshifterEventLabel(event.type, event.payload, locale);
+    const shape = shapeshifterEventLabel(event.type, event.payload, locale, text);
     if (shape !== null) return shape;
-    const thief = thiefEventLabel(event.type, event.payload, locale);
+    const thief = thiefEventLabel(event.type, event.payload, locale, text);
     if (thief !== null) return thief;
-    const black = blackMarketEventLabel(event.type, event.payload, locale);
+    const black = blackMarketEventLabel(event.type, event.payload, locale, text);
     if (black !== null) return black;
-    const deathAbility = deathAbilityEventLabel(event.type, event.payload, locale);
+    const deathAbility = deathAbilityEventLabel(event.type, event.payload, locale, text);
     if (deathAbility !== null) return deathAbility;
-    const awakened = awakenedEventLabel(event.type, event.payload, locale);
+    const awakened = awakenedEventLabel(event.type, event.payload, locale, text);
     if (awakened !== null) return awakened;
-    const wall = wallEventLabel(event.type, event.payload, locale);
+    const wall = wallEventLabel(event.type, event.payload, locale, text);
     if (wall !== null) return wall;
-    const debate = debateEventLabel(event.type, event.payload, locale);
+    const debate = debateEventLabel(event.type, event.payload, locale, text);
     if (debate !== null) return debate;
-    const cupid = cupidEventLabel(event.type, event.payload, locale);
+    const cupid = cupidEventLabel(event.type, event.payload, locale, text);
     if (cupid !== null) return cupid;
-    const hybrid = hybridEventLabel(event.type, event.payload, locale);
+    const hybrid = hybridEventLabel(event.type, event.payload, locale, text);
     if (hybrid !== null) return hybrid;
-    const merchant = merchantEventLabel(event.type, event.payload, locale);
+    const merchant = merchantEventLabel(event.type, event.payload, locale, text);
     if (merchant !== null) return merchant;
-    const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
+    const mechanical = mechanicalEventLabel(event.type, event.payload, locale, text);
     if (mechanical !== null) return mechanical;
     const handler = JUDGE_HANDLERS[event.type];
     return handler
-      ? (handler as (event: GameEvent, locale: Locale) => string | null)(event, locale)
+      ? (handler as (event: GameEvent, locale: Locale, text?: PlayerText) => string | null)(
+          event,
+          locale,
+          text,
+        )
       : null;
   }
 
@@ -697,8 +780,9 @@ export class ScriptEventRenderRegistry {
     event: GameEvent,
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
+    text: PlayerText = defaultText,
   ): ScriptLiveRender[] {
-    const animal = animalDreamEventLabel(event.type, event.payload, locale);
+    const animal = animalDreamEventLabel(event.type, event.payload, locale, text);
     if (animal !== null) {
       const visibility = animalDreamFactAudience(event.type as AnimalDreamEventType);
       // 文案与复盘共用；终端只附加分类和私有开关，不扩大事实受众。
@@ -708,7 +792,7 @@ export class ScriptEventRenderRegistry {
           ? [{ kind: visibility === "actor" ? "private" : "god", text: animal }]
           : [];
     }
-    const fragrant = fragrantPairEventLabel(event.type, event.payload, locale);
+    const fragrant = fragrantPairEventLabel(event.type, event.payload, locale, text);
     if (fragrant !== null)
       return printPrivateEvents
         ? [
@@ -718,7 +802,7 @@ export class ScriptEventRenderRegistry {
             },
           ]
         : [];
-    const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale);
+    const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale, text);
     if (noble !== null) {
       const visibility = nobleSecretBodyVisibility(event.type);
       return visibility === "public"
@@ -727,48 +811,48 @@ export class ScriptEventRenderRegistry {
           ? [{ kind: visibility === "actor" ? "private" : "god", text: noble }]
           : [];
     }
-    const radiant = radiantEclipseEventLabel(event.type, event.payload, locale);
+    const radiant = radiantEclipseEventLabel(event.type, event.payload, locale, text);
     if (radiant !== null) return printPrivateEvents ? [{ kind: "god", text: radiant }] : [];
-    const mist = mistRavenEventLabel(event.type, event.payload, locale);
+    const mist = mistRavenEventLabel(event.type, event.payload, locale, text);
     if (mist !== null) return printPrivateEvents ? [{ kind: "god", text: mist }] : [];
-    const modifier = scholarMentorEventLabel(event.type, event.payload, locale);
+    const modifier = scholarMentorEventLabel(event.type, event.payload, locale, text);
     if (modifier !== null) return printPrivateEvents ? [{ kind: "god", text: modifier }] : [];
-    const consort = timeConsortEventLabel(event.type, event.payload, locale);
+    const consort = timeConsortEventLabel(event.type, event.payload, locale, text);
     if (consort !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "time_consort_reflected" ? "god" : "private", text: consort }]
         : [];
-    const sorcerer = wolfSorcererEventLabel(event.type, event.payload, locale);
+    const sorcerer = wolfSorcererEventLabel(event.type, event.payload, locale, text);
     if (sorcerer !== null) return printPrivateEvents ? [{ kind: "private", text: sorcerer }] : [];
-    const trickster = tricksterEventLabel(event.type, event.payload, locale);
+    const trickster = tricksterEventLabel(event.type, event.payload, locale, text);
     if (trickster !== null)
       return event.type === "exile_target_mapped"
         ? [{ kind: "system", text: trickster }]
         : printPrivateEvents
           ? [{ kind: "private", text: trickster }]
           : [];
-    const prince = orderPrinceEventLabel(event.type, event.payload, locale);
+    const prince = orderPrinceEventLabel(event.type, event.payload, locale, text);
     if (prince !== null)
       return event.type === "order_prince_choice_committed"
         ? printPrivateEvents
           ? [{ kind: "god", text: prince }]
           : []
         : [{ kind: "system", text: prince }];
-    const magician = magicianEventLabel(event.type, event.payload, locale);
+    const magician = magicianEventLabel(event.type, event.payload, locale, text);
     if (magician !== null)
       return event.type === "death_shot_missed"
         ? [{ kind: "system", text: magician }]
         : printPrivateEvents
           ? [{ kind: "god", text: magician }]
           : [];
-    const nightmare = nightmareEventLabel(event.type, event.payload, locale);
+    const nightmare = nightmareEventLabel(event.type, event.payload, locale, text);
     if (nightmare !== null) return printPrivateEvents ? [{ kind: "god", text: nightmare }] : [];
-    const warden = wardenEventLabel(event.type, event.payload, locale);
+    const warden = wardenEventLabel(event.type, event.payload, locale, text);
     if (warden !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "warden_resolved" ? "god" : "private", text: warden }]
         : [];
-    const beauty = awakenedBeautyEventLabel(event.type, event.payload, locale);
+    const beauty = awakenedBeautyEventLabel(event.type, event.payload, locale, text);
     if (beauty !== null)
       return event.type === "awakened_beauty_replaced"
         ? [{ kind: "system", text: beauty }]
@@ -780,14 +864,14 @@ export class ScriptEventRenderRegistry {
               },
             ]
           : [];
-    const patrol = awakenedPatrolEventLabel(event.type, event.payload, locale);
+    const patrol = awakenedPatrolEventLabel(event.type, event.payload, locale, text);
     if (patrol !== null)
       return event.type === "awakened_patrol_resolved"
         ? [{ kind: "system", text: patrol }]
         : printPrivateEvents
           ? [{ kind: "private", text: patrol }]
           : [];
-    const protection = awakenedGuardEventLabel(event.type, event.payload, locale);
+    const protection = awakenedGuardEventLabel(event.type, event.payload, locale, text);
     if (protection !== null) {
       const f = readAwakenedGuardFact(event.type, event.payload)!,
         audience = awakenedGuardFactAudience(f);
@@ -797,19 +881,19 @@ export class ScriptEventRenderRegistry {
           ? [{ kind: audience.length ? "private" : "god", text: protection }]
           : [];
     }
-    const duel = awakenedDuelEventLabel(event.type, event.payload, locale);
+    const duel = awakenedDuelEventLabel(event.type, event.payload, locale, text);
     if (duel !== null) return [{ kind: "system", text: duel }];
-    const brew = awakenedWitchEventLabel(event.type, event.payload, locale);
+    const brew = awakenedWitchEventLabel(event.type, event.payload, locale, text);
     if (brew !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "brew_resolved" ? "god" : "private", text: brew }]
         : [];
-    const claws = awakenedClawEventLabel(event.type, event.payload, locale);
+    const claws = awakenedClawEventLabel(event.type, event.payload, locale, text);
     if (claws !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "awakened_claws_expired" ? "god" : "private", text: claws }]
         : [];
-    const silence = silenceElderEventLabel(event.type, event.payload, locale);
+    const silence = silenceElderEventLabel(event.type, event.payload, locale, text);
     if (silence !== null) {
       const type = SILENCE_ELDER_EVENT_TYPES.find((type) => type === event.type)!;
       const audience = silenceElderFactAudience(type);
@@ -819,40 +903,40 @@ export class ScriptEventRenderRegistry {
           ? [{ kind: audience === "actor" ? "private" : "god", text: silence }]
           : [];
     }
-    const crow = crowEventLabel(event.type, event.payload, locale);
+    const crow = crowEventLabel(event.type, event.payload, locale, text);
     if (crow !== null)
       return event.type === "crow_curse_applied"
         ? [{ kind: "system", text: crow }]
         : printPrivateEvents
           ? [{ kind: "private", text: crow }]
           : [];
-    const demon = demonHunterEventLabel(event.type, event.payload, locale);
+    const demon = demonHunterEventLabel(event.type, event.payload, locale, text);
     if (demon !== null) return printPrivateEvents ? [{ kind: "god", text: demon }] : [];
-    const wedding = ghostBrideEventLabel(event.type, event.payload, locale);
+    const wedding = ghostBrideEventLabel(event.type, event.payload, locale, text);
     if (wedding !== null) return printPrivateEvents ? [{ kind: "god", text: wedding }] : [];
-    const lonely = lonelyGirlEventLabel(event.type, event.payload, locale);
+    const lonely = lonelyGirlEventLabel(event.type, event.payload, locale, text);
     if (lonely) return printPrivateEvents ? [{ kind: "god", text: lonely }] : [];
-    const wild = wildChildEventLabel(event.type, event.payload, locale);
+    const wild = wildChildEventLabel(event.type, event.payload, locale, text);
     if (wild !== null) return printPrivateEvents ? [{ kind: "god", text: wild }] : [];
-    const shape = shapeshifterEventLabel(event.type, event.payload, locale);
+    const shape = shapeshifterEventLabel(event.type, event.payload, locale, text);
     if (shape !== null) return printPrivateEvents ? [{ kind: "god", text: shape }] : [];
-    const thief = thiefEventLabel(event.type, event.payload, locale);
+    const thief = thiefEventLabel(event.type, event.payload, locale, text);
     if (thief !== null) return printPrivateEvents ? [{ kind: "god", text: thief }] : [];
-    const wall = wallEventLabel(event.type, event.payload, locale);
+    const wall = wallEventLabel(event.type, event.payload, locale, text);
     if (wall !== null)
       return ["wall_note_changed", "wall_note_order_recorded"].includes(event.type)
         ? printPrivateEvents
           ? [{ kind: "god", text: wall }]
           : []
         : [{ kind: "system", text: wall }];
-    const debate = debateEventLabel(event.type, event.payload, locale);
+    const debate = debateEventLabel(event.type, event.payload, locale, text);
     if (debate !== null)
       return event.type === "debate_ballots_recorded"
         ? printPrivateEvents
           ? [{ kind: "god", text: debate }]
           : []
         : [{ kind: "system", text: debate }];
-    const cupid = cupidEventLabel(event.type, event.payload, locale);
+    const cupid = cupidEventLabel(event.type, event.payload, locale, text);
     if (cupid !== null)
       return printPrivateEvents
         ? [
@@ -864,19 +948,19 @@ export class ScriptEventRenderRegistry {
             },
           ]
         : [];
-    const black = blackMarketEventLabel(event.type, event.payload, locale);
+    const black = blackMarketEventLabel(event.type, event.payload, locale, text);
     if (black !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "black_market_trade_resolved" ? "god" : "private", text: black }]
         : [];
-    const awakened = awakenedEventLabel(event.type, event.payload, locale);
+    const awakened = awakenedEventLabel(event.type, event.payload, locale, text);
     if (awakened !== null) return printPrivateEvents ? [{ kind: "private", text: awakened }] : [];
-    const hybrid = hybridEventLabel(event.type, event.payload, locale);
+    const hybrid = hybridEventLabel(event.type, event.payload, locale, text);
     if (hybrid !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "hybrid_affiliation_resolved" ? "god" : "private", text: hybrid }]
         : [];
-    const merchant = merchantEventLabel(event.type, event.payload, locale);
+    const merchant = merchantEventLabel(event.type, event.payload, locale, text);
     if (merchant !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "merchant_trade_resolved" ? "god" : "private", text: merchant }]
@@ -894,7 +978,7 @@ export class ScriptEventRenderRegistry {
             },
           ]
         : [];
-    const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
+    const mechanical = mechanicalEventLabel(event.type, event.payload, locale, text);
     if (mechanical !== null) {
       if (event.type === "mechanical_shot") return [{ kind: "action", text: mechanical }];
       return printPrivateEvents
@@ -913,13 +997,14 @@ export class ScriptEventRenderRegistry {
           event: GameEvent,
           printPrivateEvents: boolean,
           locale: Locale,
+          text?: PlayerText,
         ) => ScriptLiveRender[] | null
-      )(event, printPrivateEvents, locale);
+      )(event, printPrivateEvents, locale, text);
       if (rendered) {
         return rendered;
       }
     }
-    const judge = this.toJudgeLine(event, locale);
+    const judge = this.toJudgeLine(event, locale, text);
     if (judge) {
       return [{ kind: "god", text: text(locale, "console.live.god", { line: judge }) }];
     }

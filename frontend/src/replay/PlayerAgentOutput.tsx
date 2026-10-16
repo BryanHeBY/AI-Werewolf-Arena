@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import {
   agentOutputPresentation,
+  playerLabel,
   isAgentOutputVisible,
   type AgentOutputDisplayOptions,
 } from "@ai-werewolf-arena/game-presentation";
@@ -31,7 +32,7 @@ export function PlayerAgentOutputView({
     .filter((turn) => turn.outputs.length);
   return (
     <div className="agent-output-turns">
-      <h3>{text(locale, "replay.player", { id: view.player_id })}</h3>
+      <h3>{playerLabel({ id: view.player_id, name: view.name }, locale)}</h3>
       {turns.length === 0 && <p>{text(locale, "replay.agent_empty")}</p>}
       {turns.map((turn) => (
         <details key={turn.seq}>

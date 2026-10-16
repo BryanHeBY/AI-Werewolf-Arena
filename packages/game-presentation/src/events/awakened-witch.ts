@@ -3,12 +3,14 @@
  * 消费、协助者自己的票和God最终提案分开表述；不把已发起或某票同意说成真实死亡。
  * 本模块不推断历史受众、不查询身份，不翻译讨论原文；调用方仍须按历史受众隔离。
  */
+import { type PlayerText } from "../players";
 import { readAwakenedWitchFact } from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
-import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, type Locale } from "@ai-werewolf-arena/game-text";
 export function awakenedWitchEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const fact = readAwakenedWitchFact(type, payload);
   if (!fact) return null;
@@ -25,7 +27,9 @@ export function awakenedWitchEventLabel(
         });
       return text(locale, "event.awakened_brew_poison", {
         actor: p.actorId,
-        assistants: p.assistantIds.join(", "),
+        assistants: p.assistantIds
+          .map((id) => text(locale, "common.player_reference", { id }))
+          .join(", "),
         day: p.day,
         ordinal: p.ordinal!,
         target: p.targetId!,
@@ -33,7 +37,9 @@ export function awakenedWitchEventLabel(
     }
     case "brew_started":
       return text(locale, "event.brew_started", {
-        assistants: fact.payload.assistantIds.join(", "),
+        assistants: fact.payload.assistantIds
+          .map((id) => text(locale, "common.player_reference", { id }))
+          .join(", "),
         day: fact.payload.day,
         ordinal: fact.payload.ordinal,
         target: fact.payload.targetId,

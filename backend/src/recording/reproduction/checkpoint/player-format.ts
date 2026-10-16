@@ -18,7 +18,7 @@ import { readVictoryAffiliations } from "@ai-werewolf-arena/replay-contract";
 export interface RecordedPlayerState {
   id: number;
   seat: number;
-  name: string;
+  name?: string;
   role: Role;
   camp: Camp;
   alive: boolean;
@@ -57,7 +57,7 @@ export function createRecordedPlayerSchema(
       .strictObject({
         id: positive,
         seat: positive,
-        name: z.string(),
+        name: z.string().optional(),
         role: z.enum(Role),
         camp: z.enum(Camp),
         alive: z.boolean(),

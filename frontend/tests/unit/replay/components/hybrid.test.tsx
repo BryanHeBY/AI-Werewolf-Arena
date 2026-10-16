@@ -2,6 +2,7 @@
  * 单元组件测试验证混血儿私有选择与冻结胜利归属归档。输入为真实 fixture、两语和畸形字段／getter；
  * 输出以字面席位／胜者名单检查角色阵营不随归属改变、已死成员仍可获胜及安全拒绝，并核纯帧，不运行对局或模型。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -47,7 +48,9 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(eventLabel(event, locale)).toBe(label);
       const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
         frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-      expect(buildReplayFrame(input, frame).label).toBe(label);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       expect(buildReplayFrame(input, frame).stage).toBe(
         resolved
           ? locale === "en"
@@ -58,7 +61,7 @@ for (const locale of ["zh-CN", "en"] as const)
             : "榜样选择",
       );
       const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-      expect(markup).toContain(label);
+      expect(markup).toContain(withPlayerNames(label, input.replay.players, locale));
       expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       expect(raw).toEqual(before);
     });

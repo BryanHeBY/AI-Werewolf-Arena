@@ -67,6 +67,7 @@ export type ReplayPlayerTimelineEntry = ReplayPlayerEventEntry | ReplayPlayerTur
 
 /** 玩家视角复盘结构。 */
 export interface ReplayPlayerView {
+  name?: string;
   schemaVersion?: 2;
   locale?: Locale;
   player_id: number;
@@ -97,6 +98,7 @@ function assertPlayerShape(value: unknown): asserts value is ReplayPlayerView {
     "player.player_id",
   );
   assertField(typeof value.role === "string", "player.role");
+  assertField(value.name === undefined || typeof value.name === "string", "player.name");
   assertField(typeof value.camp === "string", "player.camp");
   assertField(value.locale === undefined || isLocale(value.locale), "player.locale");
   assertField(Array.isArray(value.timeline), "player.timeline");

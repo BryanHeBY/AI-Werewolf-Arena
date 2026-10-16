@@ -9,6 +9,7 @@ import { deriveBoundedRequest, isRequestDeliveryExpired } from "../domain/reques
 import { animalOriginalAuditIds, animalOriginalAuditPlayer } from "../features/animal-dream/roster";
 import { aliveLifeDescriptor } from "../domain/components/alive";
 import { initialPlayerIdentity } from "../domain/initial-roster";
+import { publicPlayerRoster } from "../domain/public-player-roster";
 import { initialIdentityDeal } from "../features/initial-identity/deal";
 import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error-diagnostic";
@@ -137,10 +138,12 @@ export async function runGame(
     ...(dependencies.faultPlan !== undefined ? { faultPlan: dependencies.faultPlan } : {}),
   });
   const profilesByActor = selectPlayerProfiles(context.world, setup);
+  const players = publicPlayerRoster(context.world);
   const sessionId = buildSessionId();
   const recordRoot = setup.options.recordRootDir ?? resolveDefaultRecordRoot();
   const replayManager = await SessionRecordManager.create(
     {
+      players,
       sessionId,
       locale: setup.context.locale,
       board: setup.options.board,
@@ -168,7 +171,13 @@ export async function runGame(
     const flushEvents = () => {
       const delta = eventRecorder.flush(context.phaseManager.getEvents());
       if (options.streamEvents)
-        presentStreamEvents(delta, options.printPrivateEvents, log, setup.context.displayLocale);
+        presentStreamEvents(
+          delta,
+          options.printPrivateEvents,
+          log,
+          setup.context.displayLocale,
+          players,
+        );
     };
     let agentRuntime: PlayerAgentRuntime | undefined;
     let heartbeat: NodeJS.Timeout | undefined;
@@ -216,6 +225,7 @@ export async function runGame(
         printLlmIo: options.printLlmIo,
         printThinking: options.printThinking,
         outputSink: createAgentConsoleSink({
+          players,
           log,
           locale: setup.context.displayLocale,
           trace: options.trace,
@@ -405,6 +415,7 @@ export async function runGame(
     const snapshot = context.phaseManager.getSnapshot();
     const events = context.phaseManager.getEvents();
     presentGameResult({
+      players,
       locale: setup.context.displayLocale,
       board: options.board,
       snapshot,
@@ -446,7 +457,7 @@ function replayPlayers(world: World) {
         role: original.scope.roleId,
         camp: original.scope.campValue,
         alive: aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life),
-        name: identity.name,
+        ...(identity.name !== undefined ? { name: identity.name } : {}),
       };
     });
   // 原名单／开局牌组是历史数据；仅普通fallback在原字段位置查询当前Camp。

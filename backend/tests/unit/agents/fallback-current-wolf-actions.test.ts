@@ -49,6 +49,7 @@ function dto(
   return freezeObservation({
     request: request(allowedTools),
     identity: { role: Role.Wolf, camp: Camp.Wolf },
+    players: [],
     knownAliveIds: [1, 2, 3],
     teammateIds: [2],
     currentWolfActions: { canChat, canVoteForKill },

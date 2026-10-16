@@ -49,11 +49,11 @@ export interface SheriffVoteRecord {
   abstain: boolean;
 }
 
-/** 上帝私有信息保原 string 字段宽度；其中 role／camp 是记录数据，不是现场组件或当前授权。 */
+/** 上帝私有资料保留可选昵称；role／camp 是记录数据，不是现场组件或当前授权。 */
 export interface PrivatePlayerInfo {
   id: EntityId;
   seat: number;
-  name: string;
+  name?: string;
   role: string;
   camp: string;
 }

@@ -2,6 +2,7 @@
  * 单元组件测试验证石像鬼继承和具体角色查验归档。输入为六／十二人 fixture、两语和帧号；
  * 输出以字面事实、存活／胜者预期检查继承不改身份生命、查验不等阵营结果及纯帧／markup，不运行继承或查验规则。
  */
+import { withPlayerNames } from "../../../support/named-label-expectation";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -37,9 +38,11 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(eventLabel(event, locale)).toBe(label);
       const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
         frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-      expect(buildReplayFrame(input, frame).label).toBe(label);
+      expect(buildReplayFrame(input, frame).label).toBe(
+        withPlayerNames(label, input.replay.players, locale),
+      );
       const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
-      expect(markup).toContain(label);
+      expect(markup).toContain(withPlayerNames(label, input.replay.players, locale));
       expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
       const final = buildReplaySnapshot(replay, replay.events.length - 1);
       expect(final.players.find((p) => p.playerId === 1)!.alive).toBe(false);
@@ -63,9 +66,11 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(eventLabel(event, locale)).toBe(label);
     const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" }),
       frame = input.replay.events.findIndex((e) => e.seq === event.seq) * FRAMES_PER_EVENT + 10;
-    expect(buildReplayFrame(input, frame).label).toBe(label);
+    expect(buildReplayFrame(input, frame).label).toBe(
+      withPlayerNames(label, input.replay.players, locale),
+    );
     expect(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />)).toContain(
-      label.replaceAll("'", "&#x27;"),
+      withPlayerNames(label, input.replay.players, locale).replaceAll("'", "&#x27;"),
     );
     expect(
       eventLabel(

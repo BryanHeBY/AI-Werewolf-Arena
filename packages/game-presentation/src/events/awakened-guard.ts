@@ -2,13 +2,15 @@
  * 负责全天保护、自爆声明和实际回执的共享双语标签。输入严格惰性事实/语言，输出自然文字或null。
  * 私有决定、God细因与中性公开阻挡不混同；自爆声明只说明发动，真实death列表由已提交回执表达。
  */
+import { type PlayerText } from "../players";
 import { readAwakenedGuardFact } from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
-import { text, term, type Locale } from "@ai-werewolf-arena/game-text";
+import { text as defaultText, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { deathCauses, factPlayers } from "./fact-details";
 export function awakenedGuardEventLabel(
   type: string,
   payload: unknown,
   locale: Locale = "zh-CN",
+  text: PlayerText = defaultText,
 ): string | null {
   const f = readAwakenedGuardFact(type, payload);
   if (!f) return null;
@@ -23,7 +25,7 @@ export function awakenedGuardEventLabel(
       return text(locale, "event.awakened_self_destruct_resolved", {
         actor: f.payload.actorId,
         day: f.payload.day,
-        deaths: factPlayers(f.payload.deaths, locale),
+        deaths: factPlayers(f.payload.deaths, locale, text),
         window: term("stage", f.payload.window, locale),
       });
     case "awakened_guard_cycle_started":
@@ -62,7 +64,7 @@ export function awakenedGuardEventLabel(
         actor: f.payload.actorId,
         day: f.payload.day,
         target: f.payload.targetId,
-        causes: deathCauses(f.payload.causes, locale),
+        causes: deathCauses(f.payload.causes, locale, text),
         phase: term("phase", f.payload.phase, locale),
         root: term("phase", f.payload.rootPhase, locale),
       });

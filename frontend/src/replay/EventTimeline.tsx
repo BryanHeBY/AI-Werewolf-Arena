@@ -2,6 +2,7 @@
  * 负责渲染调用方提供的事件时间线。输入为已筛选事件、源 seq、焦点及显示语言，输出标签和跳转回调。
  * 回调索引属于当前传入数组，不是源事件 seq；组件不重排归档、计算游戏状态或执行权限过滤。
  */
+import { createPlayerText, type NamedPlayer } from "@ai-werewolf-arena/game-presentation";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { eventLabel } from "./event-labels";
@@ -10,6 +11,7 @@ import { phaseName, eventStageName } from "./replay-localization";
 /** activeEventSeq 用源序号高亮，onJumpTo 用当前列表下标；筛选后的映射归工作台。 */
 interface EventTimelineProps {
   events: ReplayEvent[];
+  players?: readonly NamedPlayer[];
   locale: Locale;
   playerIds: readonly number[];
   activeEventSeq: number | null;
@@ -20,6 +22,7 @@ interface EventTimelineProps {
 
 export function EventTimeline({
   events,
+  players = [],
   locale,
   playerIds,
   activeEventSeq,
@@ -35,7 +38,9 @@ export function EventTimeline({
           <h2>
             {focusedPlayerId === null
               ? text(locale, "replay.timeline")
-              : text(locale, "replay.player_timeline", { id: focusedPlayerId })}
+              : createPlayerText(players)(locale, "replay.player_timeline", {
+                  id: focusedPlayerId,
+                })}
           </h2>
         </div>
         {focusedPlayerId !== null && (
@@ -60,7 +65,7 @@ export function EventTimeline({
                 </span>
                 <span>{eventStageName(event, locale, playerIds)}</span>
               </div>
-              <p>{eventLabel(event, locale, playerIds)}</p>
+              <p>{eventLabel(event, locale, playerIds, players)}</p>
             </div>
           </button>
         ))}

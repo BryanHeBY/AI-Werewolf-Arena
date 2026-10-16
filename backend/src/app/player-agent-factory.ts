@@ -6,6 +6,7 @@ import type { Locale } from "@ai-werewolf-arena/game-text";
 import type { AgentOutputSink } from "@ai-werewolf-arena/replay-contract";
 import { createAcpOutputObserver } from "../adapters/acp/acp-output";
 import { createAgentConsoleSink } from "../adapters/console/agent-console-presenter";
+import { publicPlayerRoster } from "../domain/public-player-roster";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { isDeepStrictEqual } from "node:util";
@@ -58,6 +59,7 @@ export async function createPlayerAgentRuntime(
     outputSink:
       options.outputSink ??
       createAgentConsoleSink({
+        players: publicPlayerRoster(options.world),
         trace: options.trace,
         printThinking: options.printThinking,
         printLlmIo: options.printLlmIo,

@@ -3,6 +3,7 @@
  * 输出约束聊天／裁判／阶段行和分类文本。类型按注册事件收窄 payload，不运行分派、校验事实真实性或授予受众。
  */
 import type { Locale } from "@ai-werewolf-arena/game-text";
+import type { PlayerText } from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：脚本回放与终端渲染相关契约。 */
 import type { GameEvent } from "../../domain/model";
 
@@ -17,7 +18,11 @@ export interface ScriptLiveRender {
 
 /** 每个 handler 的事件实参按它所注册的 type 收窄，不把别族 payload 混作同一结构。 */
 type ScriptEventHandlers<T> = {
-  [K in GameEvent["type"]]?: (event: Extract<GameEvent, { type: K }>, locale?: Locale) => T;
+  [K in GameEvent["type"]]?: (
+    event: Extract<GameEvent, { type: K }>,
+    locale?: Locale,
+    text?: PlayerText,
+  ) => T;
 };
 
 export type ScriptChatLineHandlers = ScriptEventHandlers<string | null>;
@@ -28,5 +33,6 @@ export type ScriptLiveRenderHandlers = {
     event: Extract<GameEvent, { type: K }>,
     printPrivateEvents: boolean,
     locale?: Locale,
+    text?: PlayerText,
   ) => ScriptLiveRender[] | null;
 };

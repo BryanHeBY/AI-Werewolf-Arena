@@ -96,8 +96,8 @@ function capture(world: World, id: number): AnimalOriginalPlayer {
     !Number.isSafeInteger(seat) ||
     seat < 1 ||
     seat > 12 ||
-    typeof name !== "string" ||
-    !name.trim() ||
+    (name !== undefined && typeof name !== "string") ||
+    (typeof name === "string" && !name.trim()) ||
     typeof sessionId !== "string" ||
     !sessionId.trim() ||
     victoryJson === null ||
