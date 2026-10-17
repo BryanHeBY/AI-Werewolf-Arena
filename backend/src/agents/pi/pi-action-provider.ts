@@ -6,12 +6,7 @@
  */
 import { toolFailure, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import {
-  agentOutputToDeltaMessages,
-  type AgentOutput,
-  type AgentOutputSink,
-  type ReplayPlayerDeltaMessage,
-} from "@ai-werewolf-arena/replay-contract";
+import { type AgentOutputSink } from "@ai-werewolf-arena/replay-contract";
 import type { PiPromptOptions, PiPromptResult, PiSessionOptions } from "../../adapters/pi";
 import type { ToolInvocation } from "../../adapters/llm/transport";
 import { PlayerRoundRecorder } from "../../app/player-round-recorder";
@@ -50,7 +45,7 @@ import { ScopedRequestScheduler } from "../runtime/request-scheduler";
 import { awaitBeforeDeadline, TurnDeadlineElapsed } from "../runtime/turn-deadline";
 import { LlmObserver } from "../player/player-observer";
 import { PiPromptState } from "./pi-prompt-state";
-import { createPiOutputObserver } from "../../adapters/pi/pi-output";
+import { PiRoundRecording } from "./pi-round-recording";
 
 /** 只依赖传输窄端口；测试可注入合成会话，不能取得领域写权。 */
 export interface PiPlayerSession {
@@ -234,11 +229,10 @@ export class PiActionProvider implements ActionProvider {
     let primary: unknown;
     let failed = false;
     let protocolRejected = false;
-    const traces: Array<{ input: string; trace: PiPromptResult<ToolCall> }> = [];
     const cleanupErrors: unknown[] = [];
     const finishingErrors: unknown[] = [];
     const calls: PlayerRoundOutcome["toolCalls"] = [];
-    const presenter = createPiOutputObserver(
+    const transcript = new PiRoundRecording(
       { transport: "pi", ...this.observer.context(request) },
       ({ output, context }) => this.observer.emit(output, context),
     );
@@ -273,10 +267,11 @@ export class PiActionProvider implements ActionProvider {
             request,
           );
           attempted = true;
+          transcript.begin(input);
           await owned.session.prompt<ToolCall>(input, {
             signal,
             maxSteps: 8,
-            onEvent: (event) => presenter.update(event),
+            onEvent: (event) => transcript.update(event),
             onToolCall: async (invocation) => {
               const handled = this.handleTool(request, turn!, invocation, signal);
               const receipt =
@@ -314,7 +309,7 @@ export class PiActionProvider implements ActionProvider {
           });
         } finally {
           // prompt 的失败也保留真实前缀；不依赖是否显示思考，不把上一次历史重复写入本轮。
-          if (attempted) traces.push({ input, trace: owned.session.takeTrace<ToolCall>() });
+          if (attempted) transcript.finish(owned.session.takeTrace<ToolCall>());
         }
         signal.throwIfAborted();
         if (
@@ -333,7 +328,7 @@ export class PiActionProvider implements ActionProvider {
       turn?.close();
       signal.removeEventListener("abort", revoke);
       try {
-        presenter.flush();
+        transcript.flush();
       } catch (error) {
         primary = failed
           ? new AggregateError([primary, error], "pi_turn_and_display_failed")
@@ -407,7 +402,7 @@ export class PiActionProvider implements ActionProvider {
       }
       prompt ??=
         owned?.prompts.build(request) ?? new PiPromptState(this.policy, request).build(request);
-      const deltaMessages = this.recordMessages(traces, calls);
+      const deltaMessages = transcript.messages(calls);
       deltaMessages.push({
         role: "meta",
         kind: "action_summary",
@@ -426,18 +421,12 @@ export class PiActionProvider implements ActionProvider {
         deltaMessages.push({ role: "meta", kind: "fallback", content: fallbackReason });
       try {
         this.recorder.record(request, prompt, {
-          inputs: traces.map(({ input }) => ({
-            mode: "session_delta",
-            messages: [{ role: "user", content: input }],
-          })),
+          inputs: transcript.inputs,
           actionMode: action ? "tool_call" : "none",
           toolCalls: calls,
           finalAction: action,
           deltaMessages,
-          thinkingText: traces
-            .map(({ trace }) => trace.thinkingText)
-            .filter(Boolean)
-            .join("\n"),
+          thinkingText: transcript.thinkingText,
           ...(fallbackReason
             ? {
                 fallback: {
@@ -513,78 +502,6 @@ export class PiActionProvider implements ActionProvider {
         ? { finalAction: turn.action!, stop: true }
         : { stop: !!turn.outcome.failureCode }),
     };
-  }
-
-  private recordMessages(
-    traces: Array<{ input: string; trace: PiPromptResult<ToolCall> }>,
-    calls: PlayerRoundOutcome["toolCalls"],
-  ): ReplayPlayerDeltaMessage[] {
-    const messages: ReplayPlayerDeltaMessage[] = [];
-    const add = (
-      role: "user" | "assistant",
-      kind: "prompt" | "retry_prompt" | "assistant_output",
-      content: string,
-      name?: string,
-    ) => {
-      // 沿用既有8000字符单项上限，长块切分而不截掉尾部；原Pi transcript不经过此展示编码。
-      for (let offset = 0; offset < content.length;) {
-        let end = Math.min(offset + 8000, content.length);
-        if (end < content.length && /[\uD800-\uDBFF]/.test(content[end - 1]!)) end--;
-        messages.push({
-          role,
-          kind,
-          content: content.slice(offset, end),
-          ...(name ? { name } : {}),
-        });
-        offset = end;
-      }
-    };
-    const recordedCalls = new Set<string>();
-    for (const [attempt, { input, trace }] of traces.entries()) {
-      add("user", attempt === 0 ? "prompt" : "retry_prompt", input);
-      // 与实时终端消费同一个原生增量转换；合成传输没有事件时才使用已确认的原文汇总。
-      const outputs: AgentOutput[] = [];
-      const normalizer = createPiOutputObserver({ transport: "pi" }, (event) =>
-        outputs.push(event.output),
-      );
-      for (const event of trace.events) normalizer.update(event);
-      normalizer.flush();
-      if (!outputs.some((output) => output.type === "text")) {
-        if (trace.thinkingText)
-          outputs.unshift({ type: "text", channel: "thinking", text: trace.thinkingText });
-        if (trace.assistantText)
-          outputs.push({ type: "text", channel: "message", text: trace.assistantText });
-      }
-      for (const output of outputs) {
-        if (output.type !== "tool" || !output.id) continue;
-        const call = calls.find((call) => call.id === output.id);
-        if (!call) continue;
-        recordedCalls.add(output.id);
-        if (output.status === "started") {
-          output.args = call.args;
-          output.accepted = call.accepted;
-        } else if (output.status === "completed" || output.status === "failed")
-          output.result = call.result;
-      }
-      messages.push(...agentOutputToDeltaMessages(outputs));
-    }
-    for (const call of calls) {
-      if (call.id && recordedCalls.has(call.id)) continue;
-      messages.push(
-        ...agentOutputToDeltaMessages([
-          {
-            type: "tool",
-            id: call.id,
-            name: call.name,
-            status: "started",
-            args: call.args,
-            accepted: call.accepted,
-          },
-          { type: "tool", id: call.id, name: call.name, status: "completed", result: call.result },
-        ]),
-      );
-    }
-    return messages;
   }
 
   private closedResult(request: ActionRequest): null {

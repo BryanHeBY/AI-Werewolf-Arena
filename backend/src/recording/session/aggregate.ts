@@ -8,6 +8,7 @@ import {
   type ReplayFactLog,
   assertReplayPlayerView,
   agentOutputToDeltaMessages,
+  PLAYER_RECORD_TEXT_LIMIT,
   type AgentOutput,
   readVictoryResult,
   type CanonicalReplayPlayerView,
@@ -35,7 +36,6 @@ import {
 } from "../contracts";
 
 const THINKING_MAX_CHARS = 4000;
-const LLM_MESSAGE_MAX_CHARS = 8000;
 
 function toIso(timestampMs: number): string {
   return new Date(timestampMs).toISOString();
@@ -60,7 +60,7 @@ function normalizeRequestMessages(
   if (!messages?.length) return undefined;
   return messages.map((message) => ({
     role: message.role,
-    content: message.content.slice(0, LLM_MESSAGE_MAX_CHARS),
+    content: message.content.slice(0, PLAYER_RECORD_TEXT_LIMIT),
     ...(message.tool_call_id ? { tool_call_id: message.tool_call_id } : {}),
   }));
 }
@@ -71,7 +71,7 @@ function normalizeDeltaMessages(
 ): ReplayPlayerDeltaMessage[] {
   return (messages ?? []).map((message) => ({
     ...message,
-    ...(message.content ? { content: message.content.slice(0, LLM_MESSAGE_MAX_CHARS) } : {}),
+    ...(message.content ? { content: message.content.slice(0, PLAYER_RECORD_TEXT_LIMIT) } : {}),
     ...(message.args !== undefined
       ? { args: safeReplayJson(message.args) as Record<string, unknown> }
       : {}),

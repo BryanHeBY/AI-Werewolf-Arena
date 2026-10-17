@@ -12,7 +12,7 @@ import { getActionRequestDay, getActionRequestStage } from "../domain/action-req
 import type { World } from "../domain/world";
 import { getSessionRecorder } from "../recording/session/context";
 import type { BuiltPlayerPrompt, PlayerRoundOutcome } from "../agents/player/contracts";
-import type { AgentOutput } from "@ai-werewolf-arena/replay-contract";
+import { splitPlayerRecordText, type AgentOutput } from "@ai-werewolf-arena/replay-contract";
 import type { PlayerPromptMessage } from "../agents/player/contracts";
 
 /**
@@ -20,18 +20,9 @@ import type { PlayerPromptMessage } from "../agents/player/contracts";
  * 没有派发的轮次保留空输入，不把拟发送提示补成真实请求。
  */
 function recordedRequestChunks(messages: readonly PlayerPromptMessage[]): PlayerPromptMessage[] {
-  return messages.flatMap((message) => {
-    const chunks: PlayerPromptMessage[] = [];
-    for (let offset = 0; offset < message.content.length;) {
-      let end = Math.min(offset + 8000, message.content.length);
-      const last = message.content.charCodeAt(end - 1);
-      const next = message.content.charCodeAt(end);
-      if (last >= 0xd800 && last <= 0xdbff && next >= 0xdc00 && next <= 0xdfff) end--;
-      chunks.push({ ...message, content: message.content.slice(offset, end) });
-      offset = end;
-    }
-    return chunks.length ? chunks : [{ ...message }];
-  });
+  return messages.flatMap((message) =>
+    splitPlayerRecordText(message.content).map((content) => ({ ...message, content })),
+  );
 }
 
 /** 唯一拥有本适配实例的玩家计数；记录失败保留已递增前缀，不另建第二份计数账本。 */

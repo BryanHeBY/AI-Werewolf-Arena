@@ -244,6 +244,7 @@ export * from "./player-record";
 
 export * from "./error-diagnostic";
 export * from "./agent-output";
+export * from "./player-text-chunks";
 
 export * from "./archive-envelope";
 

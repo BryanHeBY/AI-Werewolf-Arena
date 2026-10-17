@@ -40,6 +40,8 @@ ACP 玩家轮次中的请求增量保存实际交给 `session.prompt` 的完整�
 
 三种后端在内部把提示内容与派发证据分开：SDK 在调用工具循环客户端前捕获完整消息，每次重试各记一份；ACP、Pi 记录交给原生会话的本轮增量。空派发集合表示尚未调用传输入口，不从拟发送正文回填。审计字段 `input_dispatches/input_modes` 声明次数及 `full_messages/session_delta` 模式；它们不证明远端已经收到。SDK 的历史窗口有明确起止与总数，原生会话仅声明历史所有者，不填虚假的零长度窗口。此记录不承诺捕获 SDK 内部每个网络步骤或工具循环自动追加的消息。
 
+玩家输入和模型正文共用 `replay-contract` 的 `splitPlayerRecordText`，按同一 8000 UTF-16 单元限制分片。Pi 的本轮录制器在实时归一时先保留输出，再交展示；完成时只补读原生轨迹中没有通知的事件。工具接受回执仍以宿主留底为准，显示异常不会删除已收集正文或工具事实。完整 transcript 始终由 Pi 内存会话拥有。
+
 普通死亡后果由 `recording/verification/assembly.ts` 调用 `death-history/validate.ts` 独立审核；它不是运行许可或完整生命重演。
 
 ## Agent 输出分类

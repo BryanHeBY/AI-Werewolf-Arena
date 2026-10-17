@@ -5,6 +5,7 @@
  */
 import type { ErrorDiagnostic } from "./error-diagnostic";
 import type { ReplayPlayerDeltaMessage } from "./player-record";
+import { splitPlayerRecordText } from "./player-text-chunks";
 
 export type AgentTransport = "llm" | "acp" | "pi";
 export const AGENT_TOOL_STATUSES = Object.freeze([
@@ -127,16 +128,13 @@ export function agentOutputToDeltaMessages(
   const messages: ReplayPlayerDeltaMessage[] = [];
   for (const output of outputs) {
     if (output.type === "text") {
-      for (let offset = 0; offset < output.text.length;) {
-        let end = Math.min(offset + 8000, output.text.length);
-        if (end < output.text.length && /[\uD800-\uDBFF]/.test(output.text[end - 1]!)) end--;
+      for (const content of output.text ? splitPlayerRecordText(output.text) : []) {
         messages.push({
           role: "assistant",
           kind: "assistant_output",
           name: output.channel,
-          content: output.text.slice(offset, end),
+          content,
         });
-        offset = end;
       }
     } else if (output.type === "tool") {
       const finished = ["completed", "failed", "error"].includes(output.status);
