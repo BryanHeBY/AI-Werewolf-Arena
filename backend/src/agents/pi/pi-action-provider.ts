@@ -474,7 +474,12 @@ export class PiActionProvider implements ActionProvider {
         ? toolFailure(this.world.locale, "turn_not_open_or_session_invalid")
         : turn.authorize(invocation.args.turn_id, invocation.name);
     if (invocation.name === "get_game_schema" && !this.closed && !signal.aborted)
-      return { toolResult: gameToolProtocol(this.world.locale).schema };
+      return {
+        toolResult: gameToolProtocol(
+          this.world.locale,
+          getDefaultToolSpecRegistry().parameterSchemas(),
+        ).schema,
+      };
     if (refusal) return { toolResult: refusal, stop: !!turn.outcome.failureCode };
     if (invocation.name === "report_bug")
       return {

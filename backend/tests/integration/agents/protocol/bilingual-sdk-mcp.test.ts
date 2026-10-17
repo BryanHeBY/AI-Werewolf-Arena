@@ -20,6 +20,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { Phase, type ActionRequest } from "../../../../src/domain";
 import { errorMessage } from "@ai-werewolf-arena/game-text";
+import { getDefaultToolSpecRegistry } from "../../../../src/engine/actions/tool-spec-registry";
 
 const request: ActionRequest = {
   actorId: 1,
@@ -67,7 +68,10 @@ test("real game/audit MCP subprocesses preserve simultaneous task locales and au
             new StdioClientTransport({ command: config.command, args: config.args, env }),
           );
           const listed = await client.listTools();
-          const protocol = kind === "game" ? gameToolProtocol(locale) : auditToolProtocol(locale);
+          const protocol =
+            kind === "game"
+              ? gameToolProtocol(locale, getDefaultToolSpecRegistry().parameterSchemas())
+              : auditToolProtocol(locale);
           for (const tool of listed.tools) {
             const spec = protocol.specs.find((spec) => spec.name === tool.name)!;
             expect(tool.description).toBe(spec.description);

@@ -11,6 +11,7 @@ import {
   RoleCatalog,
   getDefaultRoleCatalog,
   ToolValidationRuleRegistry,
+  getDefaultToolSpecRegistry,
 } from "../../rulesets/mechanism-api";
 import { ActionReception } from "../../engine/actions/action-reception";
 import { ActionTurn, type ActionReceipt } from "../../agents/player/action-turn";
@@ -167,7 +168,7 @@ export class AcpTurnRegistry {
   }
 
   getSchema(): typeof WEREWOLF_GAME_TOOL_SCHEMA {
-    return gameToolProtocol(this.locale).schema;
+    return gameToolProtocol(this.locale, getDefaultToolSpecRegistry().parameterSchemas()).schema;
   }
 
   submitAction(sessionId: string, input: McpSubmitActionParams): McpBridgeResult {

@@ -44,7 +44,7 @@ export class SdkGameToolLoop {
     repairRegistry: ToolCallRepairRegistry,
     private readonly promptSession: PlayerPromptSession,
     private readonly observer: PlayerOutputObserver,
-    toolSpecRegistry: ToolSpecRegistry = getDefaultToolSpecRegistry(),
+    private readonly toolSpecRegistry: ToolSpecRegistry = getDefaultToolSpecRegistry(),
     validationRules: ToolValidationRuleRegistry = getDefaultToolValidationRuleRegistry(),
     private readonly outputRecorder = new LlmOutputRecorder(observer),
   ) {
@@ -90,7 +90,10 @@ export class SdkGameToolLoop {
     try {
       if (controller.signal.aborted) throw controller.signal.reason;
       const constraints = resolveTurnConstraints(request);
-      const protocol = gameToolProtocol(this.world.locale);
+      const protocol = gameToolProtocol(
+        this.world.locale,
+        this.toolSpecRegistry.parameterSchemas(),
+      );
       // 先调用 SDK 启动工具循环，随后才创建本层计时器；中止关闭选择窗口并发出信号，外层等待结束不等于底层任务已退出。
       onDispatch?.(messages);
       const loop = client.runToolLoop<ToolCall>(

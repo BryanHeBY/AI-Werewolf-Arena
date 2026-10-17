@@ -253,7 +253,8 @@ describe("LlmActionProvider prompts", () => {
           expect(system).toContain("狼人交流阶段");
           expect(system).toContain("不会在本阶段完成刀人");
           expect(system).toContain("end_chat=true");
-          expect(user).toContain('speak_to_wolves args: {"text":"...","end_chat":true|false}');
+          expect(user).toContain('"speak_to_wolves":{"type":"object"');
+          expect(user).toContain('"required":["text","end_chat"]');
         },
       ),
       {

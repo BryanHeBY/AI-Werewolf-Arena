@@ -12,6 +12,8 @@ import { taskLocale } from "../../../../src/adapters/acp/task-locale";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import type { Locale } from "@ai-werewolf-arena/game-text";
+import { getDefaultToolSpecRegistry } from "../../../../src/engine/actions/tool-spec-registry";
+import { z } from "zod";
 
 function withoutDescriptions(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(withoutDescriptions);
@@ -23,6 +25,24 @@ function withoutDescriptions(value: unknown): unknown {
     );
   return value;
 }
+
+test("静态查询与当前行动说明共用模型 schema，不发布旧格式或可写登记引用", () => {
+  const registry = getDefaultToolSpecRegistry();
+  const schemas = registry.parameterSchemas(["use_potion"]);
+  expect(Object.keys(schemas)).toEqual(["use_potion"]);
+  expect(schemas.use_potion).not.toHaveProperty("legacyParameters");
+  const parse = z.fromJSONSchema(schemas.use_potion!);
+  expect(parse.safeParse({ potion_type: "none" }).success).toBe(true);
+  expect(parse.safeParse({ potion_type: "heal" }).success).toBe(false);
+  const full = registry.parameterSchemas();
+  const world = bootstrapGame(sixPlayerMvpConfig).world;
+  expect(new AcpTurnRegistry(world).getSchema()).toEqual(
+    gameToolProtocol(world.locale, full).schema,
+  );
+  expect(JSON.stringify(gameToolProtocol("en", full).schema)).not.toMatch(/[\u4e00-\u9fff]/);
+  schemas.use_potion!.anyOf = [];
+  expect(registry.parameterSchemas(["use_potion"]).use_potion!.anyOf).not.toEqual([]);
+});
 
 test("locale changes every protocol and nested parameter description without changing constraints", () => {
   for (const build of [gameToolProtocol, auditToolProtocol]) {

@@ -8,7 +8,10 @@ import type { ToolSchema } from "../adapters/llm/transport";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
 /** 两种传输复用同一结构定义，避免参数 schema 与说明各自漂移。 */
-export function gameToolProtocol(locale: Locale = "zh-CN") {
+export function gameToolProtocol(
+  locale: Locale = "zh-CN",
+  actionSchemas?: Record<string, Record<string, unknown>>,
+) {
   const schemaError = text(locale, "error.schema_input");
   const inputs = {
     get_game_schema: z.object({}, { error: schemaError }),
@@ -61,6 +64,8 @@ export function gameToolProtocol(locale: Locale = "zh-CN") {
       submit_action: text(locale, "schema.game.static_submit"),
       report_bug: text(locale, "schema.game.static_report"),
     },
+    // 与行动接收器共用的公开参数定义；只作知识查询，不证明当前回合允许使用。
+    ...(actionSchemas ? { actions: actionSchemas } : {}),
   };
   const descriptions = {
     get_game_schema: text(locale, "schema.game.query"),

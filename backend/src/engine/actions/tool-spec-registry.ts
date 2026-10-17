@@ -50,11 +50,22 @@ export class ToolSpecRegistry {
     return this.specByName.get(name);
   }
 
+  /** 模型只取得静态参数的独立副本；不导出旧格式、库存、隐藏目标或运行授权。 */
+  parameterSchemas(names: readonly ToolName[] = [...this.specByName.keys()]) {
+    return Object.fromEntries(
+      names.flatMap((name) => {
+        const spec = this.specByName.get(name);
+        return spec ? [[name, structuredClone(spec.parameters)]] : [];
+      }),
+    ) as Record<string, Record<string, unknown>>;
+  }
+
   /** 自动回退没有模型的第二次确认，不能选择声明了确认要求的行动。 */
   requiresConfirmation(name: ToolName): boolean {
     return this.specByName.get(name)?.confirmation !== undefined;
   }
 
+  /** 兼容既有调用方；新的模型说明使用 parameterSchemas，避免简写丢失字段关系。 */
   getArgHint(name: ToolName): string | null {
     return this.specByName.get(name)?.argHint ?? null;
   }

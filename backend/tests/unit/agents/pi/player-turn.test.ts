@@ -21,6 +21,7 @@ import { runWithSessionRecorder } from "../../../../src/recording/session/contex
 import type { SessionRecordManager } from "../../../../src/recording/session/recorder";
 import type { ReplayRecordPlayerRoundInput } from "../../../../src/recording/contracts";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getDefaultToolSpecRegistry } from "../../../../src/engine/actions/tool-spec-registry";
 
 const emptyTrace = (): PiPromptResult<ToolCall> => ({
   finalAction: null,
@@ -126,6 +127,28 @@ async function submit(
 }
 
 describe("Pi 玩家行动窗口", () => {
+  test("Pi 收到当前行动的完整 schema，查询也提供同一来源的参数定义", async () => {
+    const f = setup(async (input, options) => {
+      expect(input).toContain('"speak":{"type":"object"');
+      expect(input).not.toContain("speak args:");
+      const queried = await options.onToolCall({
+        id: "schema",
+        name: "get_game_schema",
+        args: {},
+        rawArgs: "{}",
+      });
+      expect(queried.toolResult).toHaveProperty(
+        "actions",
+        getDefaultToolSpecRegistry().parameterSchemas(),
+      );
+      await submit(options);
+    });
+    try {
+      expect(await f.run(request())).toEqual({ name: "speak", args: { text: "合法发言" } });
+    } finally {
+      await f.provider.close();
+    }
+  });
   test("Pi 原生会话收到与其它传输相同的公开名册，未取名玩家只提供编号与座位", async () => {
     const f = setup(async (_input, options) => {
       await submit(options);

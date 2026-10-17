@@ -8,6 +8,8 @@ import { RoleComponent } from "../../../../src/domain/components/role";
 import { Phase } from "../../../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import type { ChatModelClient } from "../../../../src/adapters/llm/transport";
+import { getDefaultToolSpecRegistry } from "../../../../src/engine/actions/tool-spec-registry";
 import {
   REQUIRED_ACTION_CONSTRAINTS,
   ToolLoopClient,
@@ -17,6 +19,47 @@ import {
 } from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider protocol", () => {
+  test("SDK 本轮说明和协议查询提供同一份完整参数 schema", async () => {
+    const client: ChatModelClient = {
+      async chat() {
+        return "";
+      },
+      async runToolLoop(_messages, _tools, callbacks) {
+        expect(_messages.some((message) => message.content.includes('"vote":{"anyOf":'))).toBe(
+          true,
+        );
+        const result = await callbacks.onToolCall({
+          id: "schema",
+          name: "get_game_schema",
+          args: {},
+          rawArgs: "{}",
+        });
+        expect(result.toolResult).toHaveProperty(
+          "actions",
+          getDefaultToolSpecRegistry().parameterSchemas(),
+        );
+        return { finalAction: null, assistantText: "" };
+      },
+    };
+    const provider = new LlmActionProvider(bootstrapGame(sixPlayerMvpConfig).world, client, {
+      privilegedFallbackProvider: new FallbackProvider(null),
+    });
+    try {
+      await provider.getAction({
+        phase: Phase.Voting,
+        actorId: 1,
+        allowedTools: ["vote"],
+        context: {
+          day: 1,
+          stage: "voting",
+          visible_events: [],
+          turn_constraints: { min_valid_actions: 0 },
+        },
+      });
+    } finally {
+      await provider.close();
+    }
+  });
   test("accepts a native tool callback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(

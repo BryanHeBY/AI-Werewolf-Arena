@@ -254,11 +254,9 @@ export class PlayerPromptPolicy {
     return knownWolfTeammates(this.world, actorId, this.options.roleCatalog);
   }
 
-  /** registry 提示按输入工具顺序取得并去掉假值；文本不是工具注册、schema 校验或现场许可。 */
+  /** 从接收器共用的登记表生成本轮结构定义，避免手写参数简写遗漏分支关系。 */
   private toolArgHints(allowedTools: ToolName[]): string {
-    const hints = allowedTools
-      .map((tool) => this.options.toolSpecRegistry.getArgHint(tool))
-      .filter((hint): hint is string => Boolean(hint));
-    return hints.join("; ") || text(this.locale, "common.none");
+    const schemas = this.options.toolSpecRegistry.parameterSchemas(allowedTools);
+    return Object.keys(schemas).length ? JSON.stringify(schemas) : text(this.locale, "common.none");
   }
 }

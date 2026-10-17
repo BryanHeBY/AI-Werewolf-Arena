@@ -1,5 +1,15 @@
 # 请求、别名与领域完成
 
+## 模型参数与旧调用兼容
+
+`ToolSpec.parameters` 声明新模型应提交的参数形状。弃权与目标、模式与附属字段通过完整对象分支表达；确认动作只声明 `confirm:true`，迷雾目标声明去重。当前目标、存活、库存、权限与付款仍由机制规则判断，静态 schema 不授予这些能力。
+
+确有旧格式的工具由自身同时声明 `legacyParameters`，接收器接受新旧结构后继续沿原修复和领域校验处理。旧格式不是绕过领域规则的许可。`use_potion` 的新无目标表达是 `{"potion_type":"none"}`；接收边界将它转成既有领域 ToolCall 的本人占位形态，避免改写事件及归档格式。这个内部占位不表示自救，也不消耗药剂。旧调用中的原目标保持原值与原规则，不批量清空或迁写旧档。
+
+模型本轮参数说明及 `get_game_schema.actions` 从同一登记表生成，只发布新参数定义。LLM、Pi 和 ACP 共用该来源；通用 `submit_action` 包装继续接收结构化 `arguments`，实际回合允许集合与领域资格仍在接收器检查。
+
+历史档案 reader 不使用当前模型 schema 重新筛选旧行动。格式读取和 Web 播放维持原兼容；严格执行仍需匹配真实构建身份，不能通过放宽 schema 或改写 sourceHash 绕过跨构建限制。
+
 ## 数据和运行权分离
 
 ActionRequest的数据属于共享契约；World、Role、生命版本、库存、来源和真正lease仍是后端运行对象。context中的相同ID、allowedTools、MessageRef或已复制feed不产生权限，不能由DTO重新构造绑定。summary／retry原字符串覆盖与MessageRef保各自优先级，空串能明确清除内置提示。
