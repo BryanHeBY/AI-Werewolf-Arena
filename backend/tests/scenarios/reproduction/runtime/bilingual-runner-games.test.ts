@@ -59,6 +59,12 @@ async function runFixture(
   window?: ActionWindow,
 ) {
   const root = await createTestTempDirectory("awa-full-transport-");
+  // 十二人计划包含需要二次确认的自爆，使用当前协议驱动；冻结的旧六人夹具不处理确认回执。
+  // 两者仍消费同一手写行动计划和原隐私 oracle，不改历史夹具字节或游戏结果预期。
+  const acpEntry =
+    window || size === 12
+      ? path.resolve("tests/support/drivers/agents/expansion-game-agent.ts")
+      : acpAdapterEntry("game");
   const plans = window
       ? selfDestructTransportPlan(window)
       : foundationTransportPlan(size, alternate),
@@ -200,11 +206,7 @@ async function runFixture(
         type: "acp",
         transport: "stdio",
         command: process.execPath,
-        args: [
-          window
-            ? path.resolve("tests/support/drivers/agents/expansion-game-agent.ts")
-            : acpAdapterEntry("game"),
-        ],
+        args: [acpEntry],
         maxConcurrentRequests: 2,
       };
     }
@@ -228,11 +230,7 @@ async function runFixture(
           type: "acp",
           transport: "stdio",
           command: process.execPath,
-          args: [
-            window
-              ? path.resolve("tests/support/drivers/agents/expansion-game-agent.ts")
-              : acpAdapterEntry("game"),
-          ],
+          args: [acpEntry],
           env: { AWA_TEST_PLAN_FILE: file },
         };
         agents[id] =
@@ -432,9 +430,11 @@ async function runFixture(
             (message: any) => message.kind === "fallback" || message.kind === "request_error",
           ),
         ).toBe(false);
-        const prompt = round.delta_messages.find(
-          (message: any) => message.role === "user" && message.kind === "prompt",
-        )?.content;
+        // SDK 先录制 user/prompt 形式的可见事件 JSON，再录制本回合行动提示；
+        // 按消息顺序取最后一条用户提示，随后仍独立严格核对动作标记，不能把首条事件当提示。
+        const prompt = round.delta_messages
+          .filter((message: any) => message.role === "user" && message.kind === "prompt")
+          .at(-1)?.content;
         expect(prompt).toContain(locale === "en" ? "[Action prompt]" : "[行动提示]");
       }
     }
