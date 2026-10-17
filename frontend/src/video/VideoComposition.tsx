@@ -5,7 +5,12 @@
 import { AbsoluteFill, Audio, Sequence, useCurrentFrame } from "remotion";
 import { useMemo, type CSSProperties } from "react";
 import { normalizeResolvedTheme, resolveTheme } from "../themes";
-import { audioCueVolume, buildVideoFrame, resolveVideoMediaSource } from "./frame";
+import {
+  audioCueVolume,
+  buildVideoFrame,
+  resolveVideoMediaSource,
+  type VideoFrameView,
+} from "./frame";
 import type { VideoLayerRegistry, VideoPlan } from "./types";
 import { VideoLayers } from "./VideoLayers";
 import { BroadcastVideoFrame } from "./BroadcastVideoFrame";
@@ -52,19 +57,19 @@ export function VideoFrame(props: VideoCompositionProps & { frame: number }) {
     () => ({ ...props.plan, theme: normalizeResolvedTheme(props.plan.theme ?? resolveTheme()) }),
     [props.plan],
   );
+  const view = buildVideoFrame(plan, props.frame);
   return plan.layout === "broadcast-v1" ? (
-    <BroadcastVideoFrame {...props} plan={plan} />
+    <BroadcastVideoFrame {...props} plan={plan} view={view} />
   ) : (
-    <LegacyVideoFrame {...props} plan={plan} />
+    <LegacyVideoFrame {...props} plan={plan} view={view} />
   );
 }
 function LegacyVideoFrame({
   plan,
-  frame,
+  view,
   layerRegistry,
   mediaBaseUrl,
-}: VideoCompositionProps & { frame: number }) {
-  const view = buildVideoFrame(plan, frame);
+}: VideoCompositionProps & { view: VideoFrameView }) {
   const event = view.currentView;
   const scale = Math.min(plan.width / 1280, plan.height / 720);
   const dense = event.players.length >= 10;
