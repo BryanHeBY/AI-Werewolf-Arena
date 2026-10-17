@@ -8,3 +8,5 @@ export { compileVideoPlan, defineVideoScript, type VideoCustomProps } from "../c
 export * from "../captions";
 export * from "../layout";
 export * from "../frame";
+export { auditVideoReplay } from "./audit";
+export { classifyVideoScene } from "../scene-classification";

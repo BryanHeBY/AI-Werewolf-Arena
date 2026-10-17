@@ -16,6 +16,7 @@
     "video:render": "bun scripts/render-video.ts",
     "video:preview": "bun scripts/preview-video.ts",
     "video:inspect": "bun scripts/inspect-video.ts",
+    "video:audit": "bun --no-env-file scripts/audit-video.ts",
     "lint": "eslint . --max-warnings=0",
     "test:unit": "bun test tests/unit",
     "test:integration": "bun test tests/integration",

@@ -80,6 +80,7 @@ test("pure event view and video compiler never depend on the legacy video assemb
     "video/plan/index.ts",
     "../scripts/prepare-video.ts",
     "../scripts/inspect-video.ts",
+    "../scripts/audit-video.ts",
   ]) {
     const graph = dependencies(entry);
     expect(graph.files).not.toContain("replay/replay-frame.ts");

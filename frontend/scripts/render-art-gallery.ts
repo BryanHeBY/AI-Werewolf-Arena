@@ -7,9 +7,11 @@ import { parseArgs } from "node:util";
 import { mkdir, mkdtemp, rm, writeFile, lstat, readFile } from "node:fs/promises";
 import { bundle } from "@remotion/bundler";
 import { openBrowser, selectComposition, renderStill, renderMedia } from "@remotion/renderer";
-import { createHash } from "node:crypto";
 import { createArtGalleryCases } from "../tests/support/art-gallery-cases";
 import { writeVideoEntry } from "./render-video-artifact";
+import { createRecordedGalleryCases } from "./recorded-gallery-cases";
+import { createRepairGalleryCases } from "./repair-gallery-cases";
+import { videoGallerySource } from "./gallery-source";
 
 const { values } = parseArgs({
   args: process.argv.slice(2),
@@ -21,13 +23,28 @@ const { values } = parseArgs({
     ids: { type: "string" },
     motion: { type: "boolean", default: false },
     resume: { type: "boolean", default: false },
+    input: { type: "string" },
+    locale: { type: "string" },
+    repairs: { type: "boolean", default: false },
   },
 });
 if (!values.output) throw new Error("art_gallery_output_required");
 const output = path.resolve(values.output);
 await mkdir(output, { recursive: true });
 const selectedIds = values.ids ? new Set(values.ids.split(",")) : undefined;
-const cases = (await createArtGalleryCases()).filter(
+if (values.locale && !["zh-CN", "en"].includes(values.locale))
+  throw new Error("art_gallery_locale_invalid");
+if (values.input && values.repairs) throw new Error("art_gallery_source_conflict");
+const cases = (
+  values.input
+    ? await createRecordedGalleryCases(
+        path.resolve(values.input),
+        values.locale as "zh-CN" | "en" | undefined,
+      )
+    : values.repairs
+      ? createRepairGalleryCases()
+      : await createArtGalleryCases()
+).filter(
   (c) => (!values.only || c.id.includes(values.only!)) && (!selectedIds || selectedIds.has(c.id)),
 );
 if (selectedIds && cases.length !== selectedIds.size) throw new Error("art_gallery_unknown_id");
@@ -52,18 +69,12 @@ const temporary = await mkdtemp(path.join(output, ".art-gallery-"));
 let browser: Awaited<ReturnType<typeof openBrowser>> | undefined;
 const errors: unknown[] = [];
 // 源码摘要在bundle前计算，人工复查能确认图片确实来自同一份实现；不把git提交号等同于工作区内容。
-const sourceHash = createHash("sha256");
-const sourceFiles: string[] = [];
-for await (const file of new Bun.Glob("{src,scripts}/**/*.{ts,tsx,css,json}").scan({
-  cwd: path.resolve(import.meta.dir, ".."),
-  absolute: true,
-}))
-  sourceFiles.push(file);
-for (const file of sourceFiles.sort()) {
-  sourceHash.update(path.relative(path.resolve(import.meta.dir, ".."), file));
-  sourceHash.update(new Uint8Array(await Bun.file(file).arrayBuffer()));
-}
-const sourceDigest = sourceHash.digest("hex");
+const { sourceDigest, sourceFileCount } = await videoGallerySource(
+  path.resolve(import.meta.dir, ".."),
+  ["game-contract", "game-catalog", "game-text", "game-presentation", "replay-contract"].map(
+    (name) => path.resolve(import.meta.dir, "../../packages", name, "src"),
+  ),
+);
 try {
   const publicDir = path.join(temporary, "public");
   await mkdir(publicDir);
@@ -136,6 +147,7 @@ try {
             "Records actual rendered PNGs and manual review; empty reviewedBy means unreviewed.",
           createdAt: new Date().toISOString(),
           sourceDigest,
+          sourceFileCount,
           cases: records,
         },
         null,

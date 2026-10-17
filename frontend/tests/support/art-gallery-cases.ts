@@ -16,7 +16,7 @@ import type { AvatarKey } from "../../src/presentation";
 export interface ArtGalleryCase {
   id: string;
   provenance: string;
-  sourceKind: "teaching" | "review_fixture";
+  sourceKind: "teaching" | "review_fixture" | "recorded";
   plan: VideoPlan;
   frame: number;
 }
