@@ -672,8 +672,9 @@ test("external ordinary G02 guard follows its own instance while mechanical nigh
   expect(game.state.learned?.skill).toEqual({ kind: "inspection", history: [] });
   expect(game.world.getAliveEntityIds()).toEqual([1, 3, 4, 5]);
   expect(game.role.role).toBe(Role.MechanicalWolf);
+  // 核对现有公开角色提示仍声明外置能力独立，沿用游戏文案而非内部 G02 实例术语。
   expect(renderRolePrompt(game.role, "en")).toContain(
-    "External ordinary G02 abilities follow this turn's bound instance rules independently",
+    "Separately granted ordinary abilities follow their own turn rules and are not restricted by mechanical mode.",
   );
 });
 
