@@ -83,8 +83,9 @@ for (const [feature, prefixes] of features)
           const targetId = Number(sourceEvent.payload.targetId);
           const target = replay.players.find((player) => player.player_id === targetId)!;
           await expect(page.locator(`[data-event-seq="${sourceEvent.seq}"].event`)).toHaveCount(1);
+          // 票图按座次标注增票；姓名属于名册资料，不重复拼入票型目标。
           await expect(page.locator("[data-scene-ballot]")).toContainText(
-            `${playerLabel({ id: targetId, name: target.name, seat: target.seat }, locale)} +${sourceEvent.payload.bonus}`,
+            `${playerLabel({ id: targetId, seat: target.seat }, locale)} +${sourceEvent.payload.bonus}`,
           );
         }
         await expect(page.locator(".current-event > p")).not.toContainText('{"policy"');
