@@ -610,12 +610,7 @@ export class AcpActionProvider implements ActionProvider {
       ? ((input.action.args ?? {}) as Record<string, unknown>)
       : undefined;
     // 初始化失败或开始前超时时仍可保留拟发送提示用于诊断，但不能伪造一条已派发请求。
-    const requestMessages: BuiltPlayerPrompt["messages"] = built.dispatched
-      ? [{ role: "user", content: built.prompt }]
-      : [];
     const prompt: BuiltPlayerPrompt = {
-      messages: [{ role: "system", content: systemPrompt }, ...requestMessages],
-      requestMessages,
       systemPrompt,
       // 保存真正发给 ACP 的本轮增量，包括事件批次和 turn_id，不能只存其中的行动提示。
       userPrompt: built.prompt,
@@ -623,15 +618,16 @@ export class AcpActionProvider implements ActionProvider {
       isInitialRound: false,
       eventCursorBefore: built.eventCursorBefore,
       eventCursorAfter: built.eventCursorAfter,
-      contextWindowStart: 0,
-      contextWindowEnd: 0,
-      contextWindowTotal: 0,
+      context: { kind: "native_session", transport: "acp" },
       turnId: built.turnId,
       auditMetadata: [
         `transport=acp_mcp;turn_id=${built.turnId};prompt_dispatched=${built.dispatched};event_cursor=${built.eventCursorBefore}->${built.eventCursorAfter};elapsed_ms=${input.elapsedMs}`,
       ],
     };
     const outcome: PlayerRoundOutcome = {
+      inputs: built.dispatched
+        ? [{ mode: "session_delta", messages: [{ role: "user", content: built.prompt }] }]
+        : [],
       agentOutputs: input.auditTrace?.outputs ?? [
         ...(input.auditTrace?.thoughts ?? []).map((thought) => ({
           type: "text" as const,

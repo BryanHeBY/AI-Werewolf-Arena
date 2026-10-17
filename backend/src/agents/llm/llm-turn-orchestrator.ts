@@ -17,7 +17,12 @@ import {
   FallbackReason,
 } from "./fallback-action-policy";
 import { LlmObserver } from "../player/player-observer";
-import { BuiltPlayerPrompt, PlayerRoundOutcome, PlayerRetryTraceEntry } from "../player/contracts";
+import type {
+  BuiltLlmPlayerPrompt,
+  PlayerInputDispatch,
+  PlayerRoundOutcome,
+  PlayerRetryTraceEntry,
+} from "../player/contracts";
 import { ChatMessage, ChatModelClient } from "../../adapters/llm/transport";
 import { PlayerPromptSession } from "./player-prompt-session";
 import { PlayerRoundRecorder } from "../../app/player-round-recorder";
@@ -40,6 +45,12 @@ interface LlmTurnOrchestratorOptions {
   fallbackPolicy: FallbackActionPolicy;
   recorder: PlayerRoundRecorder;
   observer: LlmObserver;
+}
+
+/** 本轮输入证据与拟发送提示分开持有；排队失败保留空派发集合。 */
+interface LlmTurnRecord {
+  prompt: BuiltLlmPlayerPrompt;
+  inputs: PlayerInputDispatch[];
 }
 
 interface NativeAttempt {
@@ -139,27 +150,28 @@ export class LlmTurnOrchestrator {
     const role = this.options.world.getComponent(request.actorId, COMPONENT.Role);
     const client = this.options.clientResolver?.(request, role) ?? this.options.defaultClient;
     const prompt = this.options.promptSession.build(request);
+    const record: LlmTurnRecord = { prompt, inputs: [] };
     this.options.observer.trace(
-      `context_window player=${request.actorId} phase=${request.phase} start=${prompt.contextWindowStart} end=${prompt.contextWindowEnd} total=${prompt.contextWindowTotal}`,
+      `context_window player=${request.actorId} phase=${request.phase} start=${prompt.context.start} end=${prompt.context.end} total=${prompt.context.total}`,
     );
     let release: (() => void) | undefined;
     try {
       release = await this.options.scheduler.acquire(request, role, signal);
       if (this.closed) return this.closedResult(request);
       if (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0) {
-        return this.finishWithFallback(request, prompt, "deadline_skip");
+        return this.finishWithFallback(request, record, "deadline_skip");
       }
       this.options.observer.trace(
         `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${this.effectiveTimeout(request.deadlineAtMs)}`,
       );
       this.options.observer.prompt(prompt.messages, request);
-      const action = await this.runNative(client, request, prompt, startedAt, signal);
+      const action = await this.runNative(client, request, record, startedAt, signal);
       if (
         !this.closed &&
         request.context.action_failure_policy === "error" &&
         (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0)
       ) {
-        return this.finishWithFallback(request, prompt, "deadline_skip", {
+        return this.finishWithFallback(request, record, "deadline_skip", {
           retryTrace: [
             {
               attempt: 0,
@@ -182,7 +194,7 @@ export class LlmTurnOrchestrator {
       );
       return this.finishWithFallback(
         request,
-        prompt,
+        record,
         diagnostic.code === "request_timeout" ? "deadline_skip" : "runtime_error",
       );
     } finally {
@@ -194,10 +206,11 @@ export class LlmTurnOrchestrator {
   private async runNative(
     client: ChatModelClient,
     request: ActionRequest,
-    prompt: BuiltPlayerPrompt,
+    record: LlmTurnRecord,
     startedAt: number,
     signal: AbortSignal,
   ): Promise<ToolCall | null> {
+    const { prompt } = record;
     const retryTrace: PlayerRetryTraceEntry[] = [];
     // 每次尝试使用同一 bounded 请求的剩余期限；迟到结果在原检查点复核关闭／错误策略。
     const attempt = async (messages: ChatMessage[]): Promise<NativeAttempt> => {
@@ -218,6 +231,11 @@ export class LlmTurnOrchestrator {
           timeoutMs,
           prompt.turnId,
           signal,
+          (sent) =>
+            record.inputs.push({
+              mode: "full_messages",
+              messages: sent.map((message) => ({ ...message })),
+            }),
         );
         if (
           request.context.action_failure_policy === "error" &&
@@ -248,7 +266,7 @@ export class LlmTurnOrchestrator {
     const first = await attempt(prompt.messages);
     if (this.closed) return this.closedResult(request);
     if (first.deadlineExceeded)
-      return this.finishWithFallback(request, prompt, "deadline_skip", {
+      return this.finishWithFallback(request, record, "deadline_skip", {
         ...(request.context.action_failure_policy === "error"
           ? {
               retryTrace: [
@@ -272,7 +290,7 @@ export class LlmTurnOrchestrator {
       });
       return this.finishWithFallback(
         request,
-        prompt,
+        record,
         first.refusalReason ? "model_declined_required_action" : "runtime_error",
         {
           thinkingText: first.assistantText,
@@ -281,14 +299,15 @@ export class LlmTurnOrchestrator {
       );
     }
     if (first.action)
-      return this.finishWithAction(request, prompt, first.action, startedAt, {
+      return this.finishWithAction(request, record, first.action, startedAt, {
         thinkingText: first.assistantText,
       });
     if (!this.requiresAction(request)) {
       this.options.observer.trace(
         `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
       );
-      this.options.recorder.record(request, prompt, {
+      this.options.recorder.record(request, record.prompt, {
+        inputs: record.inputs,
         actionMode: "none",
         toolCalls: [],
         thinkingText: first.assistantText,
@@ -334,7 +353,7 @@ export class LlmTurnOrchestrator {
       if (result.deadlineExceeded) {
         trace.reason = result.diagnostic?.code;
         trace.diagnostic = result.diagnostic;
-        return this.finishWithFallback(request, prompt, "deadline_skip", {
+        return this.finishWithFallback(request, record, "deadline_skip", {
           thinkingText: result.assistantText,
           retryTrace,
         });
@@ -345,7 +364,7 @@ export class LlmTurnOrchestrator {
         trace.diagnostic = result.diagnostic;
         return this.finishWithFallback(
           request,
-          prompt,
+          record,
           result.refusalReason ? "model_declined_required_action" : "runtime_error",
           {
             thinkingText: result.assistantText,
@@ -354,14 +373,14 @@ export class LlmTurnOrchestrator {
         );
       }
       if (result.action) {
-        return this.finishWithAction(request, prompt, result.action, startedAt, {
+        return this.finishWithAction(request, record, result.action, startedAt, {
           thinkingText: result.assistantText,
           retryTrace,
           retryAttempt: attemptNumber,
         });
       }
     }
-    return this.finishWithFallback(request, prompt, "model_declined_required_action", {
+    return this.finishWithFallback(request, record, "model_declined_required_action", {
       thinkingText: retryTrace.at(-1)?.assistantText,
       retryTrace,
     });
@@ -369,7 +388,7 @@ export class LlmTurnOrchestrator {
 
   private async finishWithAction(
     request: ActionRequest,
-    prompt: BuiltPlayerPrompt,
+    record: LlmTurnRecord,
     action: ToolCall,
     startedAt: number,
     extras: {
@@ -383,7 +402,8 @@ export class LlmTurnOrchestrator {
       `${extras.retryAttempt ? "request_ok_retry" : "request_ok"} player=${request.actorId} phase=${request.phase}${extras.retryAttempt ? ` attempt=${extras.retryAttempt}/3` : ""} action=${action.name} args=${JSON.stringify((action as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,
     );
     if (this.closed) return this.closedResult(request);
-    this.options.recorder.record(request, prompt, {
+    this.options.recorder.record(request, record.prompt, {
+      inputs: record.inputs,
       actionMode: "tool_call",
       toolCalls: this.toToolCalls(action),
       finalAction: action,
@@ -395,7 +415,7 @@ export class LlmTurnOrchestrator {
 
   private async finishWithFallback(
     request: ActionRequest,
-    prompt: BuiltPlayerPrompt,
+    record: LlmTurnRecord,
     reason: FallbackReason,
     extras: Pick<PlayerRoundOutcome, "thinkingText" | "retryTrace"> = {},
   ): Promise<ToolCall | null> {
@@ -414,7 +434,8 @@ export class LlmTurnOrchestrator {
       reason = "deadline_skip";
     }
     if (this.closed) return this.closedResult(request);
-    this.options.recorder.record(request, prompt, {
+    this.options.recorder.record(request, record.prompt, {
+      inputs: record.inputs,
       actionMode: action ? "tool_call" : "none",
       toolCalls: this.toToolCalls(action),
       finalAction: action,

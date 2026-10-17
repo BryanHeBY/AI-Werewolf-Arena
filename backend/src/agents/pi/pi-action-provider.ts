@@ -426,6 +426,10 @@ export class PiActionProvider implements ActionProvider {
         deltaMessages.push({ role: "meta", kind: "fallback", content: fallbackReason });
       try {
         this.recorder.record(request, prompt, {
+          inputs: traces.map(({ input }) => ({
+            mode: "session_delta",
+            messages: [{ role: "user", content: input }],
+          })),
           actionMode: action ? "tool_call" : "none",
           toolCalls: calls,
           finalAction: action,

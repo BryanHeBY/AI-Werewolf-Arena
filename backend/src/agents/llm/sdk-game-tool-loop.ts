@@ -72,6 +72,7 @@ export class SdkGameToolLoop {
     timeoutMs: number,
     turnId: string,
     signal?: AbortSignal,
+    onDispatch?: (messages: ChatMessage[]) => void,
   ): Promise<ToolLoopActionResult> {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
@@ -88,6 +89,7 @@ export class SdkGameToolLoop {
       const constraints = resolveTurnConstraints(request);
       const protocol = gameToolProtocol(this.world.locale);
       // 先调用 SDK 启动工具循环，随后才创建本层计时器；中止关闭选择窗口并发出信号，外层等待结束不等于底层任务已退出。
+      onDispatch?.(messages);
       const loop = client.runToolLoop<ToolCall>(
         messages,
         protocol.specs,

@@ -7,7 +7,7 @@
 import { text } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../domain";
 import { encodePlayerVisibleEvent, parsePlayerVisibleEvents } from "../visible-event-protocol";
-import { BuiltPlayerPrompt } from "../player/contracts";
+import type { BuiltLlmPlayerPrompt } from "../player/contracts";
 import { ChatMessage } from "../../adapters/llm/transport";
 import { PlayerPromptPolicy } from "../player/player-prompt-policy";
 import {
@@ -33,7 +33,7 @@ export class PlayerPromptSession {
 
   constructor(private readonly options: PlayerPromptSessionOptions) {}
 
-  build(request: ActionRequest): BuiltPlayerPrompt {
+  build(request: ActionRequest): BuiltLlmPlayerPrompt {
     const eventDelta = this.ingestVisibleEvents(request);
     const fullHistory = [...(this.histories.get(request.actorId) ?? [])];
     const contextWindow = this.selectHistoryWindow(fullHistory);
@@ -81,9 +81,12 @@ export class PlayerPromptSession {
       isInitialRound,
       eventCursorBefore: eventDelta.cursorBefore,
       eventCursorAfter: eventDelta.cursorAfter,
-      contextWindowStart: contextWindow.start,
-      contextWindowEnd: contextWindow.end,
-      contextWindowTotal: contextWindow.total,
+      context: {
+        kind: "history_window",
+        start: contextWindow.start,
+        end: contextWindow.end,
+        total: contextWindow.total,
+      },
       turnId,
     };
   }

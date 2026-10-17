@@ -52,16 +52,20 @@ for (const locale of ["zh-CN", "en"] as const)
         {
           systemPrompt: "Original 系统",
           userPrompt: "Original 当前提示",
-          messages: [],
           isInitialRound: true,
           eventCursorBefore: 0,
           eventCursorAfter: 0,
-          contextWindowStart: 0,
-          contextWindowEnd: 0,
-          contextWindowTotal: 0,
+          context: { kind: "history_window", start: 0, end: 0, total: 0 },
           turnId: "t1",
         },
-        { actionMode: "none", toolCalls: [], thinkingText: "Original 思考" },
+        {
+          inputs: [
+            { mode: "full_messages", messages: [{ role: "user", content: "Original 当前提示" }] },
+          ],
+          actionMode: "none",
+          toolCalls: [],
+          thinkingText: "Original 思考",
+        },
       );
       await manager.finalize({
         endedAtIso: "2026-10-08T00:01:00.000Z",

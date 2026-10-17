@@ -50,8 +50,10 @@ test("ACP round recording retains the exact event batch and turn input actually 
     for (const [index, call] of record.mock.calls.entries()) {
       const prompt = call[1];
       expect(prompt.userPrompt).toBe(sent[index]);
-      expect(prompt.messages.at(-1)?.content).toBe(sent[index]);
-      expect(prompt.requestMessages).toEqual([{ role: "user", content: sent[index] }]);
+      expect(call[2].inputs).toEqual([
+        { mode: "session_delta", messages: [{ role: "user", content: sent[index] }] },
+      ]);
+      expect(prompt.context).toEqual({ kind: "native_session", transport: "acp" });
     }
     expect(record).toHaveBeenCalledTimes(2);
   } finally {
@@ -85,8 +87,7 @@ for (const failure of ["create", "expired"] as const)
       expect(creates).toBe(failure === "create" ? 1 : 0);
       expect(record).toHaveBeenCalledTimes(1);
       const prompt = record.mock.calls[0]![1];
-      expect(prompt.requestMessages).toEqual([]);
-      expect(prompt.messages.filter((message) => message.role === "user")).toEqual([]);
+      expect(record.mock.calls[0]![2].inputs).toEqual([]);
       expect(prompt.auditMetadata?.join(" ")).toContain("prompt_dispatched=false");
     } finally {
       await provider.close();

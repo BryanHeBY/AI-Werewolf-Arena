@@ -242,6 +242,7 @@ describe("Pi 玩家行动窗口", () => {
       await expect(f.run(request())).rejects.toThrow("action_turn_failed");
       expect(f.sessions[0]!.inputs).toHaveLength(1);
       expect(f.records).toHaveLength(2);
+      expect(f.records[1]!.llmRequestMessages).toEqual([]);
       expect(f.records[1]!.deltaMessages!.filter((row) => row.name === "thinking")).toEqual([]);
       expect(f.records[1]!.deltaMessages!.some((row) => row.kind === "request_error")).toBe(true);
     } finally {

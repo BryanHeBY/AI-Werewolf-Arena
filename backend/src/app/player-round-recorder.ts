@@ -13,15 +13,15 @@ import type { World } from "../domain/world";
 import { getSessionRecorder } from "../recording/session/context";
 import type { BuiltPlayerPrompt, PlayerRoundOutcome } from "../agents/player/contracts";
 import type { AgentOutput } from "@ai-werewolf-arena/replay-contract";
-import type { ChatMessage } from "../adapters/llm/transport";
+import type { PlayerPromptMessage } from "../agents/player/contracts";
 
 /**
  * 实际输入增量按玩家档案的单消息上限分片，拼接保持原字符串且不切断 Unicode 代理对。
- * 旧录制输入仍走原路径；显式空数组保持空，不把拟发送提示补成真实请求。
+ * 没有派发的轮次保留空输入，不把拟发送提示补成真实请求。
  */
-function recordedRequestChunks(messages: readonly ChatMessage[]): ChatMessage[] {
+function recordedRequestChunks(messages: readonly PlayerPromptMessage[]): PlayerPromptMessage[] {
   return messages.flatMap((message) => {
-    const chunks: ChatMessage[] = [];
+    const chunks: PlayerPromptMessage[] = [];
     for (let offset = 0; offset < message.content.length;) {
       let end = Math.min(offset + 8000, message.content.length);
       const last = message.content.charCodeAt(end - 1);
@@ -64,9 +64,7 @@ export class PlayerRoundRecorder {
       stage,
       requestId: `${day}-${phase}-${request.actorId}-${round}`,
       timestampMs: Date.now(),
-      llmRequestMessages: prompt.requestMessages
-        ? recordedRequestChunks(prompt.requestMessages)
-        : [{ role: "user", content: prompt.userPrompt }],
+      llmRequestMessages: recordedRequestChunks(outcome.inputs.flatMap((input) => input.messages)),
       ...(outcome.deltaMessages ? { deltaMessages: outcome.deltaMessages } : {}),
       ...(outcome.agentOutputs || outputs?.length
         ? { agentOutputs: outcome.agentOutputs ?? outputs }
@@ -78,8 +76,13 @@ export class PlayerRoundRecorder {
             initialBoardInfo: prompt.boardInfoPrompt,
           }
         : {}),
-      promptUserDelta: prompt.auditMetadata ?? [
-        `context_window=${prompt.contextWindowStart}-${prompt.contextWindowEnd}/${prompt.contextWindowTotal};event_cursor=${prompt.eventCursorBefore}->${prompt.eventCursorAfter}`,
+      promptUserDelta: [
+        ...(prompt.auditMetadata ?? [
+          prompt.context.kind === "history_window"
+            ? `context_window=${prompt.context.start}-${prompt.context.end}/${prompt.context.total};event_cursor=${prompt.eventCursorBefore}->${prompt.eventCursorAfter}`
+            : `history_owner=${prompt.context.transport};event_cursor=${prompt.eventCursorBefore}->${prompt.eventCursorAfter}`,
+        ]),
+        `input_dispatches=${outcome.inputs.length};input_modes=${[...new Set(outcome.inputs.map((input) => input.mode))].join(",")}`,
       ],
       retryTrace: outcome.retryTrace,
       thinkingText: outcome.thinkingText,

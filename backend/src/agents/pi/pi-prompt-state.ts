@@ -43,10 +43,6 @@ export class PiPromptState {
     // 追加输入的尝试已发生即推进游标；失败会退役此会话，不把旧游标移交给新实例。
     this.cursor = after;
     return {
-      messages: [
-        { role: "system", content: this.systemPrompt },
-        { role: "user", content: userPrompt },
-      ],
       systemPrompt: this.systemPrompt,
       userPrompt,
       boardInfoPrompt: this.initial.boardInfoPrompt,
@@ -54,9 +50,7 @@ export class PiPromptState {
       isInitialRound: this.nextTurn === 1,
       eventCursorBefore: before,
       eventCursorAfter: after,
-      contextWindowStart: 0,
-      contextWindowEnd: 0,
-      contextWindowTotal: 0,
+      context: { kind: "native_session", transport: "pi" },
       turnId,
       auditMetadata: [
         `transport=pi;turn_id=${turnId};event_cursor=${before}->${after};history_owner=pi`,
