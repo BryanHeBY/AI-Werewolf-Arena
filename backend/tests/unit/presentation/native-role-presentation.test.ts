@@ -174,6 +174,118 @@ test("Guard formatting failure happens before its late private-state read", () =
   expect(reads).toEqual(["private"]);
 });
 
+test("Seer keeps its state read before formatting instead of borrowing the Guard failure order", () => {
+  const failure = new Error("original_seer_read"),
+    reads: string[] = [],
+    role = createRoleComponent(Role.Seer);
+  Object.defineProperty(role, "privateState", {
+    get() {
+      reads.push("private");
+      throw failure;
+    },
+  });
+  expect(() =>
+    captureNativeRolePresentation("seer", role, "unknown" as Locale, undefined, currentCamp),
+  ).toThrow(failure);
+  expect(reads).toEqual(["private"]);
+});
+
+test("Witch formats native stock before reading disclosure and never prefetches the potion policy", () => {
+  const role = createRoleComponent(Role.Witch),
+    reads: string[] = [],
+    failure = new Error("late_disclosure_read");
+  getDefaultRoleCatalog().applyRuntime(role, { locale: "en", initialCamp, currentCamp });
+  const state = getWitchState(role)!;
+  Object.defineProperties(state, {
+    heal: { get: () => (reads.push("heal"), 2) },
+    poison: { get: () => (reads.push("poison"), 3) },
+    knifeVisibility: {
+      get() {
+        reads.push("knife");
+        throw failure;
+      },
+    },
+    potionPolicy: {
+      get() {
+        reads.push("potion");
+        throw new Error("unused_potion_policy");
+      },
+    },
+  });
+  expect(() =>
+    captureNativeRolePresentation("witch", role, "unknown" as Locale, undefined, currentCamp),
+  ).toThrow("i18n_locale_invalid");
+  expect(reads).toEqual(["heal", "poison"]);
+  reads.length = 0;
+  expect(() => captureNativeRolePresentation("witch", role, "en", undefined, currentCamp)).toThrow(
+    failure,
+  );
+  expect(reads).toEqual(["heal", "poison", "knife"]);
+});
+
+test("dispatch does not execute an unused camp source and Wild Child calls it at each actual field read", () => {
+  const reads: string[] = [],
+    failure = new Error("original_current_camp_read"),
+    role = createRoleComponent(Role.WildChild),
+    source = () => {
+      reads.push("camp");
+      throw failure;
+    };
+  expect(captureNativeRolePresentation("wolf", role, "en", undefined, source)).toBe(
+    "Your role is Werewolf. You may join night tactics and the collective kill vote.",
+  );
+  expect(reads).toEqual([]);
+  // 原 camp 字段在语言格式化之前读取；重复显示仍晚调用同一 source，不保存初始阵营或读取结果。
+  for (const locale of ["unknown" as Locale, "en"] as const)
+    expect(() =>
+      captureNativeRolePresentation("wild_child", role, locale, undefined, source),
+    ).toThrow(failure);
+  expect(reads).toEqual(["camp", "camp"]);
+  expect(() =>
+    captureNativeRolePresentation("wild_child", role, "en", undefined, () => undefined),
+  ).toThrow("role_current_camp_missing");
+});
+
+test("Ghost Bride locates the original Role through late World methods with their original receiver", () => {
+  const world = new World("en"),
+    role = createRoleComponent(Role.GhostBride),
+    reads: string[] = [];
+  Object.defineProperties(world, {
+    entityIds: {
+      get() {
+        reads.push("entityIds:get");
+        return function (this: World) {
+          expect(this).toBe(world);
+          reads.push("entityIds:call");
+          return [11, 7];
+        };
+      },
+    },
+    getComponent: {
+      get() {
+        reads.push("getComponent:get");
+        return function (this: World, id: number, name: string) {
+          expect(this).toBe(world);
+          expect(name).toBe("RoleComponent");
+          reads.push(`getComponent:call:${id}`);
+          return id === 7 ? role : undefined;
+        };
+      },
+    },
+  });
+  expect(captureNativeRolePresentation("ghost_bride", role, "en", world, currentCamp)).toBe(
+    "Your Ghost Bride opening resource: null. Groom and Witness retain their native roles and stocks without disclosing them to you.",
+  );
+  expect(reads).toEqual([
+    "entityIds:get",
+    "entityIds:call",
+    "getComponent:get",
+    "getComponent:call:11",
+    "getComponent:get",
+    "getComponent:call:7",
+  ]);
+});
+
 test("legacy custom fallback does not read an unused native descriptor getter", () => {
   const reads: string[] = [],
     role = createRoleComponent(Role.Villager, "en");

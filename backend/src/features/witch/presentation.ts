@@ -1,6 +1,7 @@
 /**
- * 负责本机制的公开政策和当前请求提示；输入只读配置、已授权请求及语言查询，输出双语说明。
- * 不读取 World 或重新推导目标，保持原字段读取顺序；提示不授予技能或行动权限。
+ * 负责本机制原生角色提示的逐片段捕获及既有公开政策／请求展示贡献。输入为原角色组件、语言、原 World 引用和未执行的当前阵营 source；输出仍由共享展示包格式化。
+ * 只读取本机制已授权的原生状态，不用赠予／借用能力替换原文，不复制库存或缓存结果；字段、callee／receiver、格式化及异常的先后保持原查询点。
+ * 公开政策与请求贡献保留各自原输入，捕获不授予行动权限、扩大受众或替代状态 owner。
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
@@ -67,3 +68,32 @@ export function renderWitchBoardRules(config: ReadonlyBoardConfig, locale: Local
       ]
     : [];
 }
+import { type RoleComponent } from "../../domain/components/role";
+import { type World } from "../../domain/world";
+import { getWitchState } from "./ports";
+import { formatNativeRoleMessage as nativeText } from "@ai-werewolf-arena/game-presentation";
+
+// 女巫先读取 heal／poison 并完成库存文案，之后才分别查询刀口及用药政策；不得提前收齐状态。
+export const captureWitchPresentation = (
+  roleComp: RoleComponent,
+  locale: Locale = "zh-CN",
+  world?: World,
+): string =>
+  nativeText(locale, "role.witch.state", {
+    heal: getWitchState(roleComp)?.heal ?? 0,
+    poison: getWitchState(roleComp)?.poison ?? 0,
+  }) +
+  " " +
+  nativeText(
+    locale,
+    getWitchState(roleComp)?.knifeVisibility === "awa_always_v1"
+      ? "role.witch.knife_always"
+      : "role.witch.knife_with_heal",
+  ) +
+  " " +
+  nativeText(
+    locale,
+    getWitchState(roleComp)?.potionPolicy === "awa_both_native_experimental_v1"
+      ? "role.witch.potions_both"
+      : "role.witch.potions_one",
+  );
