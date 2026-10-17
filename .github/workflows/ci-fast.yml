@@ -35,6 +35,9 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          # 冻结夹具校验与工具测试会读取历史提交；其它组继续浅克隆以减少传输。
+          # 使用字符串 '0'，避免数值 0 被 || 当作假值而意外回退到深度 1。
+          fetch-depth: ${{ (matrix.suite == 'quality' || matrix.suite == 'shared') && '0' || '1' }}
           persist-credentials: false
       - uses: ./.github/actions/setup
       - name: Run fast gate
