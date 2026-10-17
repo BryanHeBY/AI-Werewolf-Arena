@@ -4,6 +4,26 @@
  */
 import { getRoleCrest } from "./role-crests";
 
+/** 同一登记的核心刻痕同时用于小盾章和材质身份章，不另造第二份角色图形表。 */
+export function RoleGlyph({ role, color = "currentColor" }: { role: string; color?: string }) {
+  const crest = getRoleCrest(role);
+  if (!crest) return null;
+  return (
+    <g
+      color={color}
+      stroke="currentColor"
+      fill="none"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={crest.motif} />
+      {crest.detail && <path d={crest.detail} strokeWidth="1" />}
+      {crest.awakened && <path d="M6 21L8 20M18 21L16 20" strokeWidth="1.5" />}
+    </g>
+  );
+}
+
 export function RoleCrest({
   role,
   size = 24,
@@ -39,12 +59,10 @@ export function RoleCrest({
         strokeWidth=".7"
       />
       <path d="M4 13V3H19" stroke="currentColor" strokeOpacity=".22" strokeWidth=".6" />
-      <g stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d={crest?.motif ?? "M12 7L17 12L12 18L7 12ZM10 12H14"} />
-        {crest?.detail && <path d={crest.detail} strokeWidth="1" />}
-      </g>
-      {crest?.awakened && (
-        <path d="M6 21L8 20M18 21L16 20" stroke="currentColor" strokeWidth="1.5" />
+      {crest ? (
+        <RoleGlyph role={role} />
+      ) : (
+        <path d="M12 7L17 12L12 18L7 12ZM10 12H14" stroke="currentColor" strokeWidth="1.4" />
       )}
     </svg>
   );

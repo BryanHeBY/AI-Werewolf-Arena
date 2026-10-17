@@ -18,13 +18,13 @@ test("legacy IDs remain original numbers and private extras cannot promote role 
   ];
   const before = structuredClone(sources);
   expect(resolvePlayerPresentations(sources)).toEqual([
-    { playerId: 3, seat: 3, avatar: { kind: "symbol", key: "neutral" } },
+    { playerId: 3, seat: 3, avatar: { kind: "auto" } },
     {
       playerId: 9,
       seat: 9,
       displayName: "原名 {actor}",
       modelLabel: "explicit-model",
-      avatar: { kind: "symbol", key: "neutral" },
+      avatar: { kind: "auto" },
     },
   ]);
   expect(sources).toEqual(before);
@@ -53,8 +53,8 @@ test("explicit seat and public labels resolve once while hiding omits actual fie
       players: { "10": { modelLabel: "Secret", avatarKey: "deepseek" } },
     }),
   ).toEqual([
-    { playerId: 20, seat: 1, avatar: { kind: "symbol", key: "neutral" } },
-    { playerId: 10, seat: 2, avatar: { kind: "symbol", key: "neutral" } },
+    { playerId: 20, seat: 1, avatar: { kind: "auto" } },
+    { playerId: 10, seat: 2, avatar: { kind: "auto" } },
   ]);
 });
 test("duplicate seats, unknown IDs and unauthorized presentation fields fail", () => {

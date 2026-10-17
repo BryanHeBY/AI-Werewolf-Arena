@@ -15,6 +15,14 @@ export interface SceneCaption {
   readonly pageIndex: number;
   readonly pages: readonly string[];
   readonly scheduled: boolean;
+  /** 新广播全文阅读的纯帧进度；旧计划缺省时保持原字幕页与偏移。 */
+  readonly reading?: {
+    readonly progress: number;
+    readonly scrollProgress: number;
+    readonly active: boolean;
+  };
+  /** 只来自已裁剪展示资料，保护换行而不推断原话意图或身份。 */
+  readonly protectedTerms?: readonly string[];
 }
 export interface SceneMetrics {
   readonly scale: number;
@@ -31,6 +39,7 @@ export interface SceneAppearance {
   readonly surface: ReturnType<typeof themeSurface>;
   readonly gothic: boolean;
   readonly night: boolean;
+  readonly visibleRoles?: Readonly<Record<number, string>>;
 }
 /** 中央场景只接本段渲染资料，不持有整局计划或能够改变游标的回调。 */
 export interface SceneRenderProps {

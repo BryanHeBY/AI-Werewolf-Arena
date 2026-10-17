@@ -60,6 +60,8 @@ export function PlayerMedallion({
             size={size * 0.72}
             media={media}
             mediaBaseUrl={mediaBaseUrl}
+            visibleRole={appearance.visibleRoles?.[id]}
+            themeId={theme.id}
           />
         }
       </div>

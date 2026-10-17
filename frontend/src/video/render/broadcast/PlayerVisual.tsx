@@ -3,7 +3,8 @@
  * 不从角色、昵称推模型，也不读取原归档；缺少素材沿用中性头像回退。
  */
 import { playerLabel } from "@ai-werewolf-arena/game-presentation";
-import { AvatarMark } from "../../../presentation/AvatarMark";
+import { IdentityAvatar } from "../../../presentation/IdentityAvatar";
+import type { ThemeId } from "../../../themes";
 import type { ResolvedPlayerPresentation } from "../../../presentation";
 import { resolveVideoMediaSource } from "../../frame";
 import type { VideoPlan } from "../../types";
@@ -27,25 +28,31 @@ export function PlayerAvatar({
   size,
   media,
   mediaBaseUrl,
+  visibleRole,
+  themeId,
 }: {
   player: ResolvedPlayerPresentation | undefined;
   size: number;
   media: VideoPlan["media"];
   mediaBaseUrl?: string;
+  visibleRole?: string;
+  themeId?: ThemeId;
 }) {
-  if (!player) return null;
-  if (player.avatar.kind === "asset") {
-    const id = player.avatar.assetId;
+  const avatar = player?.avatar ?? { kind: "auto" as const };
+  let assetSource: string | undefined;
+  if (avatar.kind === "asset") {
+    const id = avatar.assetId;
     const asset = media.find((item) => item.id === id && item.kind === "image");
-    if (asset)
-      return (
-        <VideoImage
-          src={resolveVideoMediaSource(asset.src, mediaBaseUrl)}
-          width={size}
-          height={size}
-          style={{ objectFit: "contain" }}
-        />
-      );
+    if (asset) assetSource = resolveVideoMediaSource(asset.src, mediaBaseUrl);
   }
-  return <AvatarMark avatar={player.avatar} size={size} />;
+  return (
+    <IdentityAvatar
+      avatar={avatar}
+      size={size}
+      visibleRole={visibleRole}
+      themeId={themeId}
+      assetSource={assetSource}
+      renderImage={(props) => <VideoImage {...props} />}
+    />
+  );
 }

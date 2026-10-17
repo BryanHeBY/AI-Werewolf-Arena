@@ -283,9 +283,15 @@ test("explicit seat and model metadata display without guessing a vendor or rewr
   await expect(page.getByRole("button", { name: "2号·甲", exact: true })).toContainText(
     "OpenAI explicit model",
   );
-  await expect(page.locator('.seat[data-player-id="7"] [data-avatar-key="neutral"]')).toHaveCount(
-    1,
-  );
+  const modelSeat = page.locator('.seat[data-player-id="7"]');
+  // 缺省头像只读当前已许可身份；模型原文含OpenAI也不能据此猜供应商图标。
+  const automatic = modelSeat.locator('[data-avatar-auto="villager"]');
+  await expect(automatic).toHaveCount(1);
+  await expect(
+    automatic.locator('[data-role-crest="villager"], [data-identity-role="villager"]'),
+  ).toHaveCount(1);
+  await expect(modelSeat.locator('[data-avatar-key="openai"]')).toHaveCount(0);
+  await expect(modelSeat.locator("[data-avatar-key]")).toHaveCount(0);
   await expect(page.getByLabel("当前事件全文", { exact: true })).toHaveText(
     "2号·甲发言：7号、{actor}号与Player 7是原始发言。",
   );

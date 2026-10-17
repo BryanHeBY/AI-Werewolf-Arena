@@ -7,7 +7,10 @@ import { playerLabel } from "@ai-werewolf-arena/game-presentation";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayPlayerState } from "./replay-projection";
 import { campName, roleName } from "./replay-localization";
-import { AvatarMark } from "../presentation/AvatarMark";
+import { IdentityAvatar } from "../presentation/IdentityAvatar";
+import { EliminatedStamp } from "../presentation/EliminatedStamp";
+import { visibleIdentityRole } from "../presentation";
+import type { ThemeId } from "../themes";
 import { RoleCrest } from "../presentation/RoleCrest";
 import type { ResolvedPlayerPresentation } from "../presentation";
 
@@ -17,6 +20,9 @@ interface PlayerSeatsProps {
   focusedPlayerId: number | null;
   onToggleFocus: (playerId: number) => void;
   presentations?: readonly ResolvedPlayerPresentation[];
+  themeId?: ThemeId;
+  /** 仅由宿主已准备 image 媒体建立的映射；组件不读取原档路径或自行下载。 */
+  avatarSources?: Readonly<Record<string, string>>;
 }
 
 export const PlayerSeats = memo(function PlayerSeats({
@@ -25,6 +31,8 @@ export const PlayerSeats = memo(function PlayerSeats({
   focusedPlayerId,
   onToggleFocus,
   presentations,
+  themeId = "minimal-v1",
+  avatarSources,
 }: PlayerSeatsProps) {
   // 存活统计只取当前帧投影；终局胜者与存活是两个独立标记。
   const aliveCount = players.filter((player) => player.alive).length;
@@ -43,7 +51,20 @@ export const PlayerSeats = memo(function PlayerSeats({
           const profile = presentations?.find((item) => item.playerId === player.playerId);
           const name = presentations ? profile?.displayName : player.name;
           const seat = profile?.seat ?? player.playerId;
-          const roleLabel = roleName(player.role, locale);
+          const visibleRole = visibleIdentityRole(player);
+          const roleLabel =
+            visibleRole === "unknown"
+              ? text(locale, "replay.unknown")
+              : roleName(visibleRole, locale);
+          const avatar = profile?.avatar ?? { kind: "auto" as const };
+          const assetField =
+            avatar.kind === "asset" && avatarSources
+              ? Object.getOwnPropertyDescriptor(avatarSources, avatar.assetId)
+              : undefined;
+          const assetSource =
+            assetField && "value" in assetField && typeof assetField.value === "string"
+              ? assetField.value
+              : undefined;
           return (
             <button
               type="button"
@@ -58,11 +79,14 @@ export const PlayerSeats = memo(function PlayerSeats({
             >
               <span className="seat-identity">
                 <span className="seat-number">{seat}</span>
-                <AvatarMark
-                  avatar={profile?.avatar ?? { kind: "symbol", key: "neutral" }}
-                  size={24}
+                <IdentityAvatar
+                  avatar={avatar}
+                  visibleRole={visibleRole}
+                  themeId={themeId}
+                  assetSource={assetSource}
+                  size={32}
                 />
-                <RoleCrest role={player.role} size={24} />
+                {avatar.kind !== "auto" && <RoleCrest role={visibleRole} size={24} />}
               </span>
               {player.isSheriff && (
                 <span className="sheriff">{text(locale, "replay.sheriff_short")}</span>
@@ -90,6 +114,13 @@ export const PlayerSeats = memo(function PlayerSeats({
                     role: roleName(player.publicRole, locale),
                   })}
                 </small>
+              )}
+              {!player.alive && (
+                <EliminatedStamp
+                  label={text(locale, "video.eliminated")}
+                  width={112}
+                  themeId={themeId}
+                />
               )}
             </button>
           );

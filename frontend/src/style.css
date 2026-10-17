@@ -287,7 +287,9 @@ input[type="search"] {
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
   white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: strict;
 }
 .current-event > p:focus-visible {
   outline-offset: -3px;
@@ -334,14 +336,15 @@ input[type="search"] {
 .seat.good {
   box-shadow: inset 0 2px 0 var(--awa-good);
 }
-/* 死亡降低头像装饰的存在感，编号、角色、公开翻牌和获胜标记持续可读。 */
-.seat.dead .seat-identity [data-avatar-key] {
-  opacity: 0.3;
-  filter: grayscale(1);
+/* 已提交出局使用整卡去色与斜章；保留完整可读性、选择操作和独立胜者徽章。 */
+.seat.dead {
+  filter: grayscale(1) brightness(0.8);
+}
+.seat [data-eliminated-stamp] {
+  max-width: 90%;
 }
 .seat.dead .seat-number {
-  text-decoration: line-through;
-  text-decoration-thickness: 1px;
+  color: var(--awa-text);
 }
 .seat-identity {
   display: flex;
@@ -390,7 +393,8 @@ input[type="search"] {
 }
 .seat-role > span {
   min-width: 0;
-  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 .seat-model {
   line-height: 1.4;
@@ -549,7 +553,9 @@ input[type="search"] {
   -webkit-box-orient: vertical;
   overflow: hidden;
   white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: strict;
   margin: 5px 0 0;
   font-size: 12px;
   line-height: 1.6;

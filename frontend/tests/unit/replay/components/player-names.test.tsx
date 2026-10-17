@@ -102,7 +102,7 @@ test("显式座次保持内部 ID 引用，匿名名册不回填源昵称或模�
   expect(html).toContain('aria-label="2号"');
   expect(html).toContain('data-player-id="41"');
   expect(html).toContain('data-seat="2"');
-  expect(html).toContain('data-avatar-key="neutral"');
+  expect(html).toContain('data-avatar-auto="unknown"');
   expect(html).toContain('aria-pressed="true"');
   expect(html).not.toContain("private-name");
   expect(html).not.toContain("private-model");

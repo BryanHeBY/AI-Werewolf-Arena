@@ -4,6 +4,9 @@
  */
 import { text } from "@ai-werewolf-arena/game-text";
 import { RoleCrest } from "../../../presentation/RoleCrest";
+import { visibleIdentityRole } from "../../../presentation";
+import { EliminatedStamp } from "../../../presentation/EliminatedStamp";
+import { VideoImage } from "../../VideoImage";
 import type { ResolvedPlayerPresentation } from "../../../presentation";
 import { GothicMetalFrame } from "../../GothicArt";
 import type { VideoFrameView } from "../../frame";
@@ -50,18 +53,40 @@ export function RosterHud({
       {players.map((player) => {
         const seat = seats.find((item) => item.playerId === player.playerId)!;
         const identity = profile(player.playerId);
+        const visibleRole = visibleIdentityRole(player);
+        const roleLabel =
+          visibleRole === "unknown" ? text(locale, "replay.unknown") : player.roleLabel;
+        const mirrored =
+          seat.x >
+          (Math.min(...seats.map((item) => item.x)) + Math.max(...seats.map((item) => item.x))) / 2;
         const hasMetadata = Boolean(identity?.displayName?.trim() || identity?.modelLabel?.trim());
         const active =
           focusPlayerIds.includes(player.playerId) ||
           scene.actorId === player.playerId ||
           scene.visual?.actorId === player.playerId ||
           scene.participantIds?.includes(player.playerId);
-        const target =
+        const requested =
           (layout !== "ballot" || revealed) &&
           (scene.visual?.requestedTargetIds ?? scene.targetIds).includes(player.playerId);
+        // 实际落点只有揭晓后才可高亮；明确空落点不借请求目标回填。
+        const effective =
+          revealed &&
+          scene.visual?.effectiveTargetKnown === true &&
+          scene.visual.effectiveTargetIds.includes(player.playerId);
+        const target = requested || effective;
         const accent =
           active || target ? (gothic ? tokens.frame.light : palette.accent) : tokens.frame.color;
-        const avatarSize = (hasMetadata ? 54 : locale === "en" ? 64 : 76) * scale;
+        const hiddenAvatar = identity?.avatar.kind === "none";
+        const requestedAvatar =
+          (hiddenAvatar ? 34 : hasMetadata ? 54 : locale === "en" ? 64 : 76) * scale;
+        // 紧凑英文名册为两行完整身份留高；不靠裁末行或缩整局HUD规避溢出。
+        const avatarSize =
+          !hiddenAvatar && !hasMetadata && locale === "en"
+            ? Math.min(
+                requestedAvatar,
+                Math.max(34 * scale, seat.height - (8 + t.roleEn * 2.7) * scale),
+              )
+            : requestedAvatar;
         const roleColor =
           player.camp === "wolf" ? cards.wolf : player.camp === "good" ? cards.good : cards.neutral;
         const portrait = (
@@ -74,8 +99,8 @@ export function RosterHud({
               display: "grid",
               placeItems: "center",
               borderRadius: "50%",
-              border: `${tokens.frame.width * scale}px solid ${accent}`,
-              background: alpha(cards.canvas, 0.9),
+              border: hiddenAvatar ? undefined : `${tokens.frame.width * scale}px solid ${accent}`,
+              background: hiddenAvatar ? undefined : alpha(cards.canvas, 0.9),
               filter: player.alive ? undefined : "grayscale(1)",
             }}
           >
@@ -85,6 +110,8 @@ export function RosterHud({
                 size={avatarSize * 0.86}
                 media={media}
                 mediaBaseUrl={mediaBaseUrl}
+                visibleRole={visibleRole}
+                themeId={theme.id}
               />
             }
             {renderSlot(
@@ -92,9 +119,14 @@ export function RosterHud({
               <span
                 style={{
                   position: "absolute",
-                  bottom: hasMetadata ? -9 * scale : undefined,
-                  top: hasMetadata ? undefined : 4 * scale,
-                  left: (hasMetadata ? -7 : -42) * scale,
+                  bottom: hiddenAvatar ? undefined : hasMetadata ? -9 * scale : undefined,
+                  top: hiddenAvatar ? 0 : hasMetadata ? undefined : 4 * scale,
+                  left: hiddenAvatar ? 0 : mirrored ? undefined : (hasMetadata ? -7 : -42) * scale,
+                  right: hiddenAvatar
+                    ? undefined
+                    : mirrored
+                      ? (hasMetadata ? -7 : -42) * scale
+                      : undefined,
                   minWidth: 34 * scale,
                   height: 34 * scale,
                   display: "grid",
@@ -115,19 +147,19 @@ export function RosterHud({
         );
         const role = (
           <div
-            title={player.roleLabel}
+            title={roleLabel}
             data-role-label
             style={{
               ...quiet,
               ...twoLines,
               color: roleColor,
               fontSize: (locale === "en" ? t.roleEn : t.roleZh) * scale,
-              lineHeight: 1.2,
+              lineHeight: 1.35,
               fontWeight: 600,
-              maxHeight: (locale === "en" ? t.roleEn : t.roleZh) * 2.4 * scale,
+              maxHeight: (locale === "en" ? t.roleEn : t.roleZh) * 2.7 * scale,
             }}
           >
-            {player.roleLabel}
+            {roleLabel}
           </div>
         );
         return (
@@ -136,6 +168,9 @@ export function RosterHud({
             data-composition-player={player.playerId}
             data-player-alive={player.alive ? "true" : "false"}
             data-player-seat={identity?.seat ?? player.playerId}
+            data-roster-side={mirrored ? "right" : "left"}
+            data-requested-target={requested ? "true" : undefined}
+            data-effective-target={effective ? "true" : undefined}
             data-testid={player.isWinner ? "composition-winner" : undefined}
             style={{
               position: "absolute",
@@ -146,7 +181,10 @@ export function RosterHud({
               boxSizing: "border-box",
               background: alpha(cards.panel, surface.cardOpacity),
               border: `${(active || target ? tokens.frame.activeWidth : tokens.frame.width) * scale}px solid ${accent}`,
+              borderStyle: requested && !effective && !active ? "dashed" : "solid",
               color: cards.text,
+              // 整卡去色，身份和编号仍保有对比；不以低透明度假装死亡，也不因获胜重新着色。
+              filter: player.alive ? undefined : "grayscale(1) brightness(0.78)",
               overflow: "hidden",
               borderRadius: gothic ? 2 * scale : theme.definition.radii.card * scale,
             }}
@@ -167,6 +205,7 @@ export function RosterHud({
                 <div
                   style={{
                     display: "flex",
+                    flexDirection: mirrored ? "row-reverse" : "row",
                     alignItems: "center",
                     justifyContent: hasMetadata ? undefined : "center",
                     gap: 18 * scale,
@@ -174,9 +213,14 @@ export function RosterHud({
                   }}
                 >
                   {portrait}
-                  <RoleCrest role={player.role} size={24 * scale} color={roleColor} />
+                  {(identity?.avatar.kind ?? "auto") !== "auto" && (
+                    <RoleCrest role={visibleRole} size={24 * scale} color={roleColor} />
+                  )}
                   {hasMetadata && (
-                    <div data-player-metadata style={{ ...quiet, flex: 1 }}>
+                    <div
+                      data-player-metadata
+                      style={{ ...quiet, flex: 1, textAlign: mirrored ? "right" : "left" }}
+                    >
                       {identity?.displayName?.trim() && (
                         <div
                           title={identity.displayName}
@@ -235,26 +279,36 @@ export function RosterHud({
               />
             )}
             {!player.alive && (
+              <EliminatedStamp
+                label={text(locale, "video.eliminated")}
+                width={seat.width * 0.72}
+                themeId={theme.id}
+                mirrored={mirrored}
+                renderImage={(props) => <VideoImage {...props} />}
+              />
+            )}
+            {player.isWinner && (
               <span
+                data-roster-winner
                 style={{
                   position: "absolute",
-                  right: 4 * scale,
                   bottom: 2 * scale,
-                  color: cards.wolf,
+                  right: mirrored ? undefined : 4 * scale,
+                  left: mirrored ? 4 * scale : undefined,
+                  fontSize: 18 * scale,
                   background: cards.canvas,
-                  fontSize: 20 * scale,
-                  borderBottom: `${2 * scale}px solid ${cards.wolf}`,
-                  padding: `0 ${4 * scale}px`,
+                  color: cards.canvasText,
                 }}
               >
-                {text(locale, "video.eliminated")}
+                {text(locale, "victory.winner_badge")}
               </span>
             )}
             {player.isSheriff && (
               <span
                 style={{
                   position: "absolute",
-                  right: 4 * scale,
+                  right: mirrored ? undefined : 4 * scale,
+                  left: mirrored ? 4 * scale : undefined,
                   top: 2 * scale,
                   color: cards.canvasText,
                   background: cards.canvas,

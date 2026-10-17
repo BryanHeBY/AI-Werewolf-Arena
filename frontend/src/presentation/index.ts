@@ -2,6 +2,7 @@
  * 负责从复盘编号与显式展示配置解析稳定玩家名册。输入只读取编号、座次和可选名称，输出纯 JSON 的座次、展示名、模型标签及头像引用。
  * 消费者为网页席位、视频计划和统一系统文案；角色、阵营、发言和私有接入配置不进入本 API，缺省沿用原编号，匿名不会从模型、昵称或发言反推头像。
  */
+export { visibleIdentityRole } from "./role-crests";
 export const AVATAR_KEYS = [
   "neutral",
   "openai",
@@ -15,7 +16,10 @@ export const AVATAR_KEYS = [
 ] as const;
 export type AvatarKey = (typeof AVATAR_KEYS)[number];
 export type PlayerAvatar =
-  { kind: "symbol"; key: AvatarKey } | { kind: "asset"; assetId: string } | { kind: "none" };
+  | { kind: "auto" }
+  | { kind: "symbol"; key: AvatarKey }
+  | { kind: "asset"; assetId: string }
+  | { kind: "none" };
 export interface PlayerPresentationOverride {
   seat?: number;
   displayName?: string;
@@ -160,13 +164,18 @@ export function resolvePlayerPresentations(
     const showName = !anonymous && config.showNames !== false && override.showName !== false;
     const showModel = !anonymous && config.showModels !== false && override.showModel !== false;
     const showAvatar = config.showAvatars !== false && override.showAvatar !== false;
+    // 仅新编译的缺省保存 auto；显式 neutral 与旧计划不会被渲染器猜成角色头像。匿名先移除代理身份。
     const avatar: PlayerAvatar = !showAvatar
       ? { kind: "none" }
       : anonymous
-        ? { kind: "symbol", key: "neutral" }
+        ? override.avatarKey === "neutral"
+          ? { kind: "symbol", key: "neutral" }
+          : { kind: "auto" }
         : override.avatarAssetId
           ? { kind: "asset", assetId: override.avatarAssetId }
-          : { kind: "symbol", key: override.avatarKey ?? "neutral" };
+          : override.avatarKey
+            ? { kind: "symbol", key: override.avatarKey }
+            : { kind: "auto" };
     return {
       playerId,
       seat,

@@ -33,6 +33,10 @@ const motifs = {
   secret_decision: "M5 7H19V18H5ZM5 7L12 13L19 7M10 15H14",
 } as const;
 export type RoleCrestFamily = keyof typeof motifs;
+/** 简约技能图复用既有语义刻痕，不携带任何本体角色 ID。 */
+export function roleFamilyMotif(family: RoleCrestFamily): string {
+  return motifs[family];
+}
 export interface RoleCrestDefinition {
   family: RoleCrestFamily;
   motif: string;
@@ -116,4 +120,10 @@ export const ROLE_CRESTS = {
 
 export function getRoleCrest(role: string): RoleCrestDefinition | null {
   return Object.hasOwn(ROLE_CRESTS, role) ? ROLE_CRESTS[role as RoleId] : null;
+}
+
+/** 仅消费当前投影已披露身份；未知底牌只接受已公开翻牌，不读取原归档或未来角色。 */
+export function visibleIdentityRole(player: { role: string; publicRole?: string }): string {
+  const role = player.role === "unknown" ? player.publicRole : player.role;
+  return role && getRoleCrest(role) ? role : "unknown";
 }
