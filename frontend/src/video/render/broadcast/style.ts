@@ -5,7 +5,12 @@
 import type { CSSProperties } from "react";
 import type { SceneAppearance } from "./contracts";
 
-export const quiet: CSSProperties = { minWidth: 0, overflowWrap: "anywhere" };
+// 长单词只在确实超宽时兜底拆分；正常正文的角色／座次由SceneText保护，不能全局逐字强断。
+export const quiet: CSSProperties = {
+  minWidth: 0,
+  overflowWrap: "break-word",
+  wordBreak: "normal",
+};
 export const twoLines: CSSProperties = {
   display: "-webkit-box",
   WebkitLineClamp: 2,

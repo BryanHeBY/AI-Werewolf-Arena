@@ -9,29 +9,12 @@ import { sceneMotion } from "./scene-motion";
 import { sceneArt } from "../themes/gothic/scene-art";
 import { GothicHeroArt } from "../themes/gothic/HeroArt";
 import { GothicHeroOverlays } from "../themes/gothic/HeroOverlays";
+import { MinimalSkillGlyph } from "../themes/minimal/SkillGlyph";
 export { sceneArt } from "../themes/gothic/scene-art";
 
-/** 未知事件用小型记事牌；不是大眼睛、狼头或含义不明的菱形英雄图。 */
-export function RecordMark({ size, color }: { size: number; color: string }) {
-  return (
-    <svg
-      data-neutral-record
-      width={size}
-      height={size}
-      viewBox="0 0 80 80"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M20 10H56L63 17V70H17V10Z"
-        fill={color}
-        fillOpacity=".08"
-        stroke={color}
-        strokeWidth="2"
-      />
-      <path d="M56 10V18H63M27 29H53M27 40H53M27 51H46" stroke={color} strokeWidth="2" />
-    </svg>
-  );
+/** 兼容旧导出但不再画无信息文件图；未知／notice由宿主保留全文和诊断。 */
+export function RecordMark(_props: { size: number; color: string }) {
+  return null;
 }
 
 export function SceneHero({
@@ -49,13 +32,15 @@ export function SceneHero({
   gothic: boolean;
   color: string;
 }) {
-  const art = sceneArt(scene);
   const motion = sceneMotion(frame, scene.cues, {
     reduced: theme.options.reducedMotion === true,
     enterDistance:
       (theme.definition.motion.enterDistance * size) / theme.definition.effect.heroSize,
     impactOpacity: theme.definition.motion.impactOpacity,
   });
+  // 胜利与报告道具须服从同一揭晓许可，不能在镜头建立时借未来typed结果提前选图。
+  const art = sceneArt(scene, { revealed: motion.revealed });
+  if (art === "record") return null;
   const intent = scene.visual;
   const report = intent?.report;
   const reportCamp =
@@ -102,12 +87,10 @@ export function SceneHero({
           clipPath: claw ? `inset(0 ${(1 - slash) * 100}% 0 0)` : undefined,
         }}
       >
-        {gothic && art !== "record" ? (
+        {gothic ? (
           <GothicHeroArt art={art} intent={intent} size={size} revealed={motion.revealed} />
         ) : (
-          <div style={{ display: "grid", placeItems: "center", height: "100%" }}>
-            <RecordMark size={Math.min(size * 0.36, 100)} color={color} />
-          </div>
+          <MinimalSkillGlyph intent={intent} size={size} color={color} revealed={motion.revealed} />
         )}
       </div>
       {motion.impactOpacity > 0 && (
@@ -123,13 +106,15 @@ export function SceneHero({
           }}
         />
       )}
-      <GothicHeroOverlays
-        intent={intent}
-        size={size}
-        revealed={motion.revealed}
-        color={color}
-        reportColor={reportColor}
-      />
+      {gothic && (
+        <GothicHeroOverlays
+          intent={intent}
+          size={size}
+          revealed={motion.revealed}
+          color={color}
+          reportColor={reportColor}
+        />
+      )}
     </div>
   );
 }

@@ -11,6 +11,7 @@ import type { PlayerPresentationConfig, ResolvedPlayerPresentation } from "../pr
 import type { ReplayFact } from "@ai-werewolf-arena/replay-contract";
 import type { GameOutcome, RoleId } from "@ai-werewolf-arena/game-contract";
 import type { VideoFrameView } from "./frame";
+import type { SceneContent } from "../presentation/scene-content";
 import type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
 export type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
 
@@ -99,8 +100,10 @@ export interface VideoVisualIntent {
   /** branch是本条报告/尝试分支，不是从当前生命或真实角色推断；resolved可只有已记录死者。 */
   duel?: { branch?: "wolf" | "not_wolf" | "good"; chain?: number; recordedDeaths?: number[] };
   dialogue?: {
-    kind: "speech" | "private" | "collaboration" | "translation" | "gesture" | "revealed";
+    kind:
+      "speech" | "private" | "collaboration" | "translation" | "gesture" | "revealed" | "end_chat";
     originalSpeakerId?: number;
+    round?: number;
   };
   /** 只有真实生命提交或旧档明确死亡事件可提供；不是技能命中目标。 */
   life?: {
@@ -135,9 +138,12 @@ export interface VideoScene {
   actorId?: number;
   targetIds: number[];
   participantIds?: number[];
+  content?: SceneContent;
+  /** 库存是已记录资源上下文，不代表当轮可用；缺证据或多实例歧义保持 unknown。 */
+  inventory?: { before: PotionInventoryState; after: PotionInventoryState; revealFrame: number };
   stock?: { actorId: number; abilityId: string; heal: number; poison: number };
   /** 同段后续记录的独立结果；揭晓不替代life_committed的生命提交。 */
-  resolution?: { text: string; targetId?: number; revealFrame: number };
+  resolution?: { text: string; targetId?: number; revealFrame: number; reading?: VideoReading };
   /** 内建旧场景及已准备计划的展示兼容字段；本地化 result 不供选材或事实推断，结构化报告归 visual。 */
   action?: {
     kind:
@@ -298,6 +304,28 @@ export interface CompiledSpeechCue extends SpeechCue {
   from: number;
   durationFrames: number;
 }
+/** 仅消费已记录的库存事实，不按角色初始值或用药事件推减数量。 */
+export type PotionInventoryState =
+  | { status: "unknown"; actorId: number; abilityId?: string }
+  | {
+      status: "known";
+      actorId: number;
+      abilityId: string;
+      heal: number;
+      poison: number;
+      sourceFactSeq: number;
+      afterSeq: number;
+      day: number;
+    };
+/** 新全文阅读的确定性时钟；旧计划缺省时继续使用 captionPageRanges。 */
+export interface VideoReading {
+  version: 1;
+  mode: "flow";
+  from: number;
+  durationFrames: number;
+  headHoldFrames: number;
+  tailHoldFrames: number;
+}
 export interface VideoShot {
   id: string;
   kind: "event" | "hold";
@@ -312,6 +340,7 @@ export interface VideoShot {
   captionPageOffsets: number[];
   /** 自动阅读保首屏落定后足额静止；旧计划缺省时仍走整段均分页兼容。 */
   captionPageRanges?: Array<{ from: number; durationFrames: number }>;
+  reading?: VideoReading;
   camera: CameraKeyframe[];
   layers: PlannedVideoLayer[];
   speech: CompiledSpeechCue[];

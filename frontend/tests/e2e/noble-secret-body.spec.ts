@@ -7,6 +7,7 @@ import { expectReplayCaption } from "../support/replay-caption-expectation";
 import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";
+import { text } from "@ai-werewolf-arena/game-text";
 import { readFileSync } from "node:fs";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { createReplayRenderInput } from "../../src/replay/replay-frame";
@@ -321,7 +322,7 @@ for (const locale of ["en", "zh-CN"] as const)
           );
         };
       await seek(i * 90 - 1);
-      if (actor !== "body") await expect(seat).toContainText("unknown");
+      if (actor !== "body") await expect(seat).toContainText(text(locale, "replay.unknown"));
       await expect(seat).toHaveAttribute("data-player-alive", "true");
       await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
       await seek(i * 90 + 45);
@@ -329,7 +330,7 @@ for (const locale of ["en", "zh-CN"] as const)
       await expect(seat).toHaveAttribute("data-player-alive", "true");
       await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
       await seek(i * 90 - 1);
-      if (actor !== "body") await expect(seat).toContainText("unknown");
+      if (actor !== "body") await expect(seat).toContainText(text(locale, "replay.unknown"));
       expect(
         replay.events.some(
           (e) =>

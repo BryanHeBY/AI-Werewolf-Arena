@@ -5,7 +5,7 @@
 import type { ReplayDocument, ReplayFact } from "@ai-werewolf-arena/replay-contract";
 import { buildReplayEventView, type ReplayEventViewInput } from "../../replay/replay-event-view";
 import { createReplayCursorIndex } from "../../replay/replay-projection";
-import type { EventAnchor, VideoEventView, VideoShot } from "../types";
+import type { EventAnchor, PotionInventoryState, VideoEventView, VideoShot } from "../types";
 import { fail } from "./validation";
 
 export interface VideoSourceCursor {
@@ -20,6 +20,42 @@ export function createVideoSourceIndex(replay: ReplayDocument, renderInput: Repl
   for (const fact of facts) factCounts[fact.afterSeq] = fact.seq;
   for (let seq = 1; seq < factCounts.length; seq++)
     factCounts[seq] = Math.max(factCounts[seq]!, factCounts[seq - 1]!);
+  // 资源索引只复制God事实值，不推减库存或判断行动许可；逐帧不重扫事实历史。
+  const inventoryPrefixes: Map<string, Extract<PotionInventoryState, { status: "known" }>>[] = [
+    new Map(),
+  ];
+  for (const fact of facts) {
+    const previous = inventoryPrefixes.at(-1)!;
+    const next = fact.kind === "potion_stock" ? new Map(previous) : previous;
+    if (fact.kind === "potion_stock")
+      next.set(`${fact.actorId}:${fact.abilityId}`, {
+        status: "known",
+        actorId: fact.actorId,
+        abilityId: fact.abilityId,
+        heal: fact.heal,
+        poison: fact.poison,
+        sourceFactSeq: fact.seq,
+        afterSeq: fact.afterSeq,
+        day: fact.day,
+      });
+    inventoryPrefixes.push(next);
+  }
+  function inventoryAt(
+    throughFactSeq: number,
+    actorId: number,
+    abilityId?: string,
+  ): PotionInventoryState {
+    const states = [
+      ...(inventoryPrefixes[throughFactSeq] ?? inventoryPrefixes[0]!).values(),
+    ].filter(
+      (state) =>
+        state.actorId === actorId && (abilityId === undefined || state.abilityId === abilityId),
+    );
+    // 未标abilityId且存在多个实例时不能把库存相加，也不能猜原生或复制实例。
+    return states.length === 1
+      ? { ...states[0]! }
+      : { status: "unknown", actorId, ...(abilityId === undefined ? {} : { abilityId }) };
+  }
   const views = new Map<string, VideoEventView>();
   const eventIndexes = new Map(replay.events.map((event, index) => [event.seq, index]));
   const factsAfter = new Map<number, ReplayFact[]>();
@@ -55,7 +91,7 @@ export function createVideoSourceIndex(replay: ReplayDocument, renderInput: Repl
       fail(`anchor_mismatch:${anchor?.seq}`);
     return index;
   }
-  return { replay, facts, factsAfter, factSeqAt, cursorAt, viewAt, anchorIndex };
+  return { replay, facts, factsAfter, factSeqAt, cursorAt, viewAt, anchorIndex, inventoryAt };
 }
 export type VideoSourceIndex = ReturnType<typeof createVideoSourceIndex>;
 

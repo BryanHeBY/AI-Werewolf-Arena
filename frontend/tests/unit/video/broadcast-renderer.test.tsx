@@ -12,6 +12,17 @@ import { buildVideoFrame } from "../../../src/video/frame";
 import type { VideoScript } from "../../../src/video/types";
 import type { VideoThemeSlotRegistry } from "../../../src/video/theme-renderers";
 
+// 检查真实渲染文本而非HTML字串连续性；词法保护span不能掩盖丢字或署名错误。
+function renderedText(markup: string) {
+  return markup
+    .replace(/<[^>]*>/g, "")
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 function replay(events: Array<Pick<ReplayEvent, "type" | "payload">>): ReplayDocument {
   return {
     schemaVersion: 2,
@@ -53,8 +64,8 @@ test("anonymous profiles omit system names and models while raw speech and expli
   const html = renderToStaticMarkup(<VideoFrame plan={video} frame={0} />);
   expect(html).not.toContain("Original");
   expect(html).not.toContain("Model");
-  expect(html).toContain("我声称");
-  expect(html).toContain("1号是狼人。");
+  expect(renderedText(html)).toContain("我声称");
+  expect(renderedText(html)).toContain("1号是狼人。");
   expect(html).toContain("<mark");
   expect(video.shots[0]!.scene.targetIds).toEqual([]);
   expect(buildVideoFrame(video, 0).currentView.players[0]!.alive).toBe(true);
@@ -183,7 +194,7 @@ test("authored ballot and inventory text remains visible with precise emphasis a
   const ballotHtml = renderToStaticMarkup(<VideoFrame plan={ballot} frame={24} />);
   expect(ballotHtml).toContain("data-scene-editorial");
   expect(ballotHtml).toContain("EDITORIAL");
-  expect(ballotHtml).toContain(" BALLOT");
+  expect(renderedText(ballotHtml)).toContain("EDITORIAL BALLOT");
   expect(ballotHtml).toContain("<mark");
   expect(ballotHtml).toContain('data-ballot-target="2"');
   const stockDocument = replay([]);
@@ -210,7 +221,7 @@ test("authored ballot and inventory text remains visible with precise emphasis a
     ],
   });
   const stockHtml = renderToStaticMarkup(<VideoFrame plan={inventory} frame={24} />);
-  expect(stockHtml).toContain("EDITORIAL ");
+  expect(renderedText(stockHtml)).toContain("EDITORIAL ");
   expect(stockHtml).toContain("STOCK");
   expect(stockHtml).toContain("<mark");
   expect(inventory.shots[0]!.scene.stock).toEqual({
@@ -261,8 +272,8 @@ test("emphasis alone can annotate original ballot and stock prose without replac
   const stockHtml = renderToStaticMarkup(<VideoFrame plan={inventory} frame={24} />);
   expect(inventory.shots[0]!.scene.bodySource).toBe("event");
   expect(stockHtml).toContain("<mark");
-  expect(stockHtml).toContain("解药");
-  expect(stockHtml).toContain("毒药 1");
+  expect(renderedText(stockHtml)).toContain("解药");
+  expect(renderedText(stockHtml)).toContain("毒药 1");
 });
 
 test("inspection prose uses only its caption page and authored replacement does not append the original report", () => {
@@ -270,7 +281,7 @@ test("inspection prose uses only its caption page and authored replacement does 
     { type: "seer_checked", payload: { actorId: 2, targetId: 1, result: "wolf" } },
   ]);
   document.players[1]!.name = "Long source player name ".repeat(30);
-  const video = plan(document);
+  const video = plan(document, { captionPageFrames: 90 });
   const shot = video.shots[0]!;
   expect(shot.captionPages.length).toBeGreaterThan(1);
   const html = renderToStaticMarkup(<VideoFrame plan={video} frame={24} />);
@@ -283,7 +294,7 @@ test("inspection prose uses only its caption page and authored replacement does 
     ],
   });
   const authoredHtml = renderToStaticMarkup(<VideoFrame plan={authored} frame={24} />);
-  expect(authoredHtml).toContain("Edited inspection announcement");
+  expect(renderedText(authoredHtml)).toContain("Edited inspection announcement");
   expect(authoredHtml).not.toContain(shot.scene.action!.result!);
   expect(authored.shots[0]!.scene.action!.result).toBe(shot.scene.action!.result);
 });

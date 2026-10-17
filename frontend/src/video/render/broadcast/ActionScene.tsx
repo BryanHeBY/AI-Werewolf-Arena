@@ -2,11 +2,14 @@
  * 负责行动场景的世界图形、来源目标小章与固定结果文字。输入为typed意图、有限帧及中央矩阵，输出原有行动DOM与图层位置。
  * requested/effective/recipient分别只读；唯一world容器只变换图形，不移动正文或名册，不补命中、死亡或库存。
  */
+import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
+import { presentationPlayers } from "../../../presentation";
 import { AbsoluteFill } from "remotion";
 import { SceneHero, SceneConnector } from "../../SceneVisual";
 import { PlayerMedallion } from "./PlayerMedallion";
 import { text } from "@ai-werewolf-arena/game-text";
 import { SceneText } from "./SceneText";
+import { ReadingViewport } from "./ReadingViewport";
 import { quiet, alpha, textRows, localSurface } from "./style";
 import type { SceneRenderProps, RenderThemeSlot } from "./contracts";
 import { playerLabels } from "./PlayerVisual";
@@ -57,9 +60,19 @@ export function ActionScene({
   const resultHeight =
     rows * bodySize * lineHeight +
     ((scene.stock ? 130 : 90) + (visual?.effectSourceId !== undefined ? 34 : 0)) * scale;
-  const bodyTop = Math.max(
-    110 * scale,
-    Math.min(stage.height * 0.585, stage.height - resultHeight - 24 * scale),
+  const bodyTop = caption.reading
+    ? stage.height * 0.43
+    : Math.max(
+        110 * scale,
+        Math.min(stage.height * 0.585, stage.height - resultHeight - 24 * scale),
+      );
+  // 全文的实际高度只影响阅读窗位移；不能把英雄压成小图或把正文推出stage。
+  const resultMaxHeight = stage.height - bodyTop - 24 * scale;
+  const auxiliaryHeight =
+    (52 + (visual?.effectSourceId !== undefined ? 38 : 0) + (scene.inventory ? 48 : 0)) * scale;
+  const readingMaxHeight = Math.max(
+    bodySize * lineHeight * 2,
+    resultMaxHeight - 40 * scale - auxiliaryHeight,
   );
   const size = Math.min(tokens.effect.heroSize * scale, stage.width * 0.4, bodyTop - 80 * scale);
   const color =
@@ -67,7 +80,9 @@ export function ActionScene({
       ? gothic
         ? "#c48186"
         : palette.wolf
-      : tokens.frame.light;
+      : gothic
+        ? tokens.frame.light
+        : palette.accent;
   return (
     <>
       {/* 唯一world容器应用中央矩阵一次；正文、结果、HUD永远是它的兄弟。 */}
@@ -217,10 +232,12 @@ export function ActionScene({
           width: readingWidth,
           padding: `${20 * scale}px ${28 * scale}px`,
           boxSizing: "border-box",
+          maxHeight: caption.reading ? resultMaxHeight : undefined,
+          overflow: "hidden",
         }}
       >
         <div
-          data-scene-result
+          data-scene-result={!revealed || !caption.reading ? true : undefined}
           style={{
             ...quiet,
             fontSize: bodySize,
@@ -231,11 +248,24 @@ export function ActionScene({
           }}
         >
           {revealed ? (
-            <SceneText
-              caption={caption}
-              emphasis={scene.emphasis}
-              accent={gothic ? "#efb4a8" : palette.wolf}
-            />
+            caption.reading ? (
+              <ReadingViewport
+                caption={caption}
+                emphasis={scene.emphasis}
+                accent={gothic ? "#efb4a8" : palette.wolf}
+                kind="result"
+                fontSize={bodySize}
+                lineHeight={lineHeight}
+                textAlign="center"
+                maxHeight={readingMaxHeight}
+              />
+            ) : (
+              <SceneText
+                caption={caption}
+                emphasis={scene.emphasis}
+                accent={gothic ? "#efb4a8" : palette.wolf}
+              />
+            )
           ) : (
             text(locale, "video.waiting")
           )}
@@ -294,7 +324,23 @@ export function ActionScene({
             {text(locale, "video.effect_source")} · {seatLabel(visual.effectSourceId)}
           </div>
         )}
-        {revealed && scene.stock && scene.bodySource === "script" && (
+        {revealed &&
+          scene.inventory &&
+          scene.content &&
+          (!scene.stock || scene.bodySource === "script") && (
+            <div
+              data-action-inventory
+              style={{ fontSize: t.aux * scale, color: mutedInk, marginTop: 14 * scale }}
+            >
+              <SceneContentBlocks
+                content={scene.content}
+                locale={locale}
+                players={presentationPlayers(players)}
+                kinds={["inventory"]}
+              />
+            </div>
+          )}
+        {revealed && !scene.inventory && scene.stock && scene.bodySource === "script" && (
           <div
             data-scene-stock
             data-stock-ability={scene.stock.abilityId}

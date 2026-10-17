@@ -616,8 +616,8 @@ export const VIDEO_EVENT_VISUAL_ROUTES = {
     process: "notice",
   },
   wolf_discussion_ended: {
-    family: "pack_attack",
-    template: "pack_attack/compact_notice",
+    family: "player_dialogue",
+    template: "player_dialogue/speech_page",
     process: "notice",
   },
   wolf_discussion: {

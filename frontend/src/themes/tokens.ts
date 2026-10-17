@@ -7,6 +7,9 @@ export interface ThemeTypography {
   referenceHeight: number;
   bodyZh: number;
   bodyEn: number;
+  /** 发言密度单独控制，不把技能结果／上帝公告一起缩小。 */
+  speechBodyZh: number;
+  speechBodyEn: number;
   bodyLarge: number;
   chapter: number;
   title: number;
@@ -102,8 +105,10 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
     typography: {
       referenceWidth: 1920,
       referenceHeight: 1080,
-      bodyZh: 42,
-      bodyEn: 38,
+      bodyZh: 32,
+      bodyEn: 30,
+      speechBodyZh: 26,
+      speechBodyEn: 24,
       bodyLarge: 48,
       chapter: 56,
       title: 44,
@@ -119,7 +124,7 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
       lineHeightZh: 1.45,
       lineHeightEn: 1.4,
       readingMinWidth: 960,
-      readingMaxWidth: 1100,
+      readingMaxWidth: 1280,
       webBody: 14,
       webName: 13,
       webRole: 13,
@@ -133,7 +138,7 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
       ballotOpacity: 0.92,
       cardOpacity: 0.92,
       heroOpacity: 0.24,
-      readingMaxHeightRatio: 0.65,
+      readingMaxHeightRatio: 0.8,
       palette: { day, night },
     },
     frame: {

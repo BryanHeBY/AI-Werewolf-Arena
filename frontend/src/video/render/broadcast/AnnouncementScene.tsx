@@ -1,13 +1,16 @@
 /**
- * 负责阶段、终局、生命结算与普通记录的公告版式。输入为宿主已选layout、局部帧和字幕，输出原有局部阅读衬与静态标记。
- * 本层仅选择排版，不将普通notice升级成技能或生命事实；揭晓继续使用原cue。
+ * 负责阶段、生命结算与普通上帝记录的紧凑公告阅读面。输入为宿主分类、局部帧及全文，输出按内容居中的局部衬与必要身份行。
+ * 普通播报不画文件图，不把notice升级成技能或生命事实；正文只在原impact后挂载，未知原因由宿主诊断保留。
  */
-import { SceneHero, RecordMark } from "../../SceneVisual";
+import { SceneHero } from "../../SceneVisual";
 import { PhaseSigil } from "../../GothicArt";
 import { text } from "@ai-werewolf-arena/game-text";
 import { SceneText } from "./SceneText";
+import { ReadingViewport } from "./ReadingViewport";
 import { quiet, localSurface } from "./style";
 import type { SceneRenderProps } from "./contracts";
+import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
+import type { ResolvedPlayerPresentation } from "../../../presentation";
 
 import type { BroadcastSceneLayout } from "./contracts";
 export function AnnouncementScene({
@@ -18,38 +21,44 @@ export function AnnouncementScene({
   appearance,
   locale,
   layout,
-}: SceneRenderProps & { layout: BroadcastSceneLayout }) {
+  players = [],
+}: SceneRenderProps & {
+  layout: BroadcastSceneLayout;
+  players?: readonly ResolvedPlayerPresentation[];
+}) {
   const { scale, stage, readingWidth, bodySize, lineHeight, padding } = metrics;
   const { theme, surface, gothic, palette, night } = appearance;
   const tokens = theme.definition;
   const revealed = localFrame >= scene.cues.impact;
 
-  const end = layout === "end",
-    phase = layout === "phase",
-    settlement = layout === "settlement",
-    compact = layout === "notice";
-  const maxLength = Math.max(1, ...caption.pages.map((page) => page.length));
-  const rows = Math.ceil(maxLength / Math.max(1, readingWidth / bodySize));
-  const height = Math.max(
-    stage.height * 0.21,
-    Math.min(stage.height * (settlement ? 0.48 : 0.32), rows * bodySize * lineHeight + padding * 2),
+  const phase = layout === "phase",
+    settlement = layout === "settlement";
+  const safeTop = 150 * scale,
+    safeBottom = 32 * scale;
+  const available = Math.max(0, stage.height - safeTop - safeBottom);
+  const artSize = settlement ? 150 * scale : 0;
+  const maxHeight = Math.max(
+    0,
+    Math.min(stage.height * surface.readingMaxHeightRatio, available) -
+      (artSize ? artSize + 20 * scale : 0),
   );
-  const artSize = (end ? 330 : phase ? 54 : settlement ? 170 : 80) * scale;
-  // 普通记录没有大动作：标记与正文组成同一居中组，不把小图留在上空、正文压到脚边。
-  const compactTop = Math.max(90 * scale, (stage.height - height - artSize - 24 * scale) / 2);
   return (
-    <>
-      <div
-        data-announcement-art
-        style={{
-          position: "absolute",
-          top: compact ? compactTop : end ? "12%" : "22%",
-          left: (stage.width - artSize) / 2,
-        }}
-      >
-        {phase ? (
-          <PhaseSigil night={night} size={artSize} />
-        ) : end || settlement ? (
+    <div
+      style={{
+        position: "absolute",
+        top: safeTop,
+        left: (stage.width - readingWidth) / 2,
+        width: readingWidth,
+        height: available,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 20 * scale,
+      }}
+    >
+      {settlement && (
+        <div data-announcement-art style={{ flexShrink: 0 }}>
           <SceneHero
             scene={scene}
             frame={localFrame}
@@ -58,48 +67,89 @@ export function AnnouncementScene({
             gothic={gothic}
             color={tokens.frame.light}
           />
-        ) : (
-          <RecordMark size={artSize} color={tokens.frame.color} />
-        )}
-      </div>
+        </div>
+      )}
       <div
         data-surface={layout}
         style={{
           ...localSurface(appearance, scale, surface.resultOpacity),
-          position: "absolute",
-          top: compact ? compactTop + artSize + 24 * scale : undefined,
-          bottom: compact ? undefined : (end ? 30 : 90) * scale,
-          left: (stage.width - readingWidth) / 2,
           width: readingWidth,
-          minHeight: height,
+          minHeight: 0,
+          maxHeight,
           padding,
           boxSizing: "border-box",
-          display: "grid",
-          placeItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          gap: 16 * scale,
+          overflow: "hidden",
         }}
       >
         <div
-          data-scene-announcement
+          data-announcement-identity
           style={{
-            ...quiet,
-            fontSize: bodySize,
-            lineHeight,
-            whiteSpace: "pre-wrap",
-            textAlign: "center",
-            textWrap: "balance",
+            display: "flex",
+            alignItems: "center",
+            gap: 12 * scale,
+            color: surface.readingMuted,
+            fontSize: tokens.typography.aux * scale,
+            flexShrink: 0,
           }}
         >
-          {revealed ? (
-            <SceneText
-              caption={caption}
-              emphasis={scene.emphasis}
-              accent={gothic ? "#efb4a8" : palette.wolf}
-            />
-          ) : (
-            text(locale, "video.waiting")
-          )}
+          {phase && <PhaseSigil night={night} size={28 * scale} />}
+          {text(locale, "video.narrator")}
         </div>
+        {revealed && caption.reading ? (
+          <ReadingViewport
+            caption={caption}
+            emphasis={scene.emphasis}
+            accent={gothic ? "#efb4a8" : palette.wolf}
+            kind="announcement"
+            fontSize={bodySize}
+            lineHeight={lineHeight}
+          />
+        ) : (
+          <div
+            data-scene-announcement
+            style={{
+              ...quiet,
+              fontSize: bodySize,
+              lineHeight,
+              whiteSpace: "pre-wrap",
+              textAlign: "left",
+            }}
+          >
+            {revealed ? (
+              <SceneText
+                caption={caption}
+                emphasis={scene.emphasis}
+                accent={gothic ? "#efb4a8" : palette.wolf}
+              />
+            ) : (
+              text(locale, "video.waiting")
+            )}
+          </div>
+        )}
+        {revealed && scene.content?.blocks.some((block) => block.kind === "inventory") && (
+          <div
+            style={{
+              color: surface.readingMuted,
+              fontSize: tokens.typography.aux * scale,
+              flexShrink: 0,
+            }}
+          >
+            <SceneContentBlocks
+              content={scene.content}
+              locale={locale}
+              kinds={["inventory"]}
+              players={players.map((player) => ({
+                id: player.playerId,
+                seat: player.seat,
+                name: player.displayName,
+              }))}
+            />
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }

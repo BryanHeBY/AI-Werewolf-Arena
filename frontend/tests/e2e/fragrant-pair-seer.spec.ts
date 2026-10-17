@@ -4,6 +4,7 @@
  */
 import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { test, expect } from "@playwright/test";
+import { text } from "@ai-werewolf-arena/game-text";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { fragrantNames, loadFragrant, fragrantPrivateReplay } from "../support/fragrant-replay";
 import { createReplayRenderInput, buildReplayFrame } from "../../src/replay/replay-frame";
@@ -75,7 +76,7 @@ for (const locale of ["zh-CN", "en"] as const)
         for (const p of state.players)
           if (p.playerId !== own)
             await expect(page.locator(`[data-composition-player="${p.playerId}"]`)).toContainText(
-              "unknown",
+              text(locale, "replay.unknown"),
             );
       }
       expect(

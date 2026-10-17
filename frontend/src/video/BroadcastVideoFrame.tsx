@@ -23,6 +23,9 @@ import { SpeechScene } from "./render/broadcast/SpeechScene";
 import { BallotScene } from "./render/broadcast/BallotScene";
 import { ActionScene } from "./render/broadcast/ActionScene";
 import { AnnouncementScene } from "./render/broadcast/AnnouncementScene";
+import { EndScene } from "./render/broadcast/EndScene";
+import { visibleIdentityRole } from "../presentation";
+import { classifyVideoScene } from "./scene-classification";
 import { CaptionCounter } from "./render/broadcast/SceneText";
 import { playerLabels } from "./render/broadcast/PlayerVisual";
 import { quiet, twoLines, alpha } from "./render/broadcast/style";
@@ -71,6 +74,13 @@ export function BroadcastVideoFrame({
   const speechActor =
     scene.bodySource === "event" && scene.visual?.dialogue ? scene.visual.actorId : scene.actorId;
   const roster = plan.playersPresentation;
+  const protectedTerms = useMemo(
+    () =>
+      roster.flatMap((player) =>
+        [player.displayName, player.modelLabel].filter((value): value is string => Boolean(value)),
+      ),
+    [roster],
+  );
   const { label } = playerLabels(roster, locale);
   const slotProps: VideoThemeSlotProps = { plan, view, theme, palette, mediaBaseUrl };
   const slot = (key: ThemeSlot, fallback: ReactNode, playerId?: number) => {
@@ -93,7 +103,13 @@ export function BroadcastVideoFrame({
     (theme.options.largeText === true ? t.bodyLarge : locale === "en" ? t.bodyEn : t.bodyZh) *
     scale;
   const lineHeight = locale === "en" ? t.lineHeightEn : t.lineHeightZh;
-  const appearance = { theme, palette, cards, surface, gothic, night };
+  const visibleRoles = Object.fromEntries(
+    current.players.flatMap((player) => {
+      const role = visibleIdentityRole(player);
+      return role ? [[player.playerId, role]] : [];
+    }),
+  );
+  const appearance = { theme, palette, cards, surface, gothic, night, visibleRoles };
   const metrics = { scale, stage, readingWidth, bodySize, lineHeight, padding };
   const caption = {
     text: view.caption,
@@ -101,6 +117,8 @@ export function BroadcastVideoFrame({
     pageIndex: view.captionPageIndex,
     pages: view.shot.captionPages,
     scheduled: Boolean(view.shot.captionPageRanges),
+    reading: view.reading,
+    protectedTerms,
   };
   const sceneProps = { scene, caption, localFrame: view.localFrame, metrics, appearance, locale };
   const content =
@@ -125,8 +143,10 @@ export function BroadcastVideoFrame({
         stageTransform={view.stageTransform}
         renderSlot={slot}
       />
+    ) : layout === "end" ? (
+      <EndScene {...sceneProps} players={roster} />
     ) : (
-      <AnnouncementScene {...sceneProps} layout={layout} />
+      <AnnouncementScene {...sceneProps} layout={layout} players={roster} />
     );
   const focus = view.focusPlayerIds.filter((id) => !(layout === "speech" && id === scene.actorId));
 
@@ -136,6 +156,13 @@ export function BroadcastVideoFrame({
       data-video-layout="broadcast-v1"
       data-theme={theme.id}
       data-state-seq={view.sourceSeq}
+      data-visual-family={scene.visual?.family}
+      data-visual-template={scene.visual?.template}
+      data-visual-process={scene.visual?.process}
+      data-source-events={view.shot.sourceSeqs.join(",")}
+      data-source-facts={view.shot.sourceFacts.join(",")}
+      data-scene-treatment={classifyVideoScene(scene, theme.id).treatment}
+      data-fallback-reason={scene.visual?.fallbackReason}
       style={{
         fontFamily: theme.definition.fonts.body,
         lineHeight: 1.2,

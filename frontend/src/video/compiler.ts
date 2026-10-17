@@ -9,6 +9,8 @@ import {
   type ReplayFact,
 } from "@ai-werewolf-arena/replay-contract";
 import { supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
+import { sceneContent } from "../presentation/scene-content";
+import { replayDisplayRoster } from "../replay/replay-display-roster";
 import { buildPresentationReplay } from "../replay/replay-presentation";
 import { presentationPlayers, resolvePlayerPresentations } from "../presentation";
 import { resolveTheme } from "../themes";
@@ -17,6 +19,7 @@ import {
   validateReplayDisplay,
   type ReplayDisplayOptions,
 } from "../replay/replay-display";
+import { committedLifeReport } from "./plan/life-report";
 import { createVideoRecordReader } from "./plan/records";
 import { createVideoSourceIndex, selectVideoShotSource } from "./plan/source-index";
 import { fail, integer, nonempty } from "./plan/validation";
@@ -45,8 +48,13 @@ export function compileVideoPlan(
   const archive = readReplayArchive(input);
   if (archive.identities && !supportsGamePresentation(archive.identities.presentation))
     fail("unsupported_presentation");
-  const replay = archive.replay;
-  const source = getVideoSourceIdentity(replay);
+  // 指纹始终来自原档；进行中录制的开局名册仅作为只读展示输入，不回写原档。
+  const source = getVideoSourceIdentity(archive.replay);
+  const roster = replayDisplayRoster(archive.replay);
+  const replay =
+    roster.source === "recorded_initialization"
+      ? { ...archive.replay, players: roster.players }
+      : archive.replay;
   if (
     script &&
     (script.source?.sessionId !== source.sessionId ||
@@ -126,6 +134,7 @@ export function compileVideoPlan(
   const shots: VideoShot[] = [];
   const shotAudio: AudioCue[] = [];
   let cursor = 0;
+  const absorbedFactSeqs = new Set<number>();
   function append(
     index: number,
     id: string,
@@ -133,8 +142,14 @@ export function compileVideoPlan(
     edit: ShotOptions = {},
     sourceIndexes = [index],
     committedFacts: ReplayFact[] = [],
+    reportFacts: Extract<ReplayFact, { kind: "life_committed" }>[] = [],
   ) {
     const selected = selectVideoShotSource(sourceIndex, index, kind, sourceIndexes, committedFacts);
+    if (reportFacts.length) {
+      const after = sourceIndex.cursorAt(selected.endIndex, reportFacts.at(-1)!.seq);
+      selected.after = after;
+      selected.view = sourceIndex.viewAt(after);
+    }
     const { committedFact, event, view, sourceEvents } = selected;
     const content = prepareVideoShotContent(selected, edit, {
       locale: options.locale,
@@ -142,6 +157,15 @@ export function compileVideoPlan(
       playerIds,
       names,
       readRecord,
+      pendingLifeReport:
+        layout === "broadcast-v1" &&
+        replay.factCoverage?.committedDeaths === 1 &&
+        !committedFact &&
+        reportFacts.length === 0 &&
+        Array.isArray(event?.payload.deaths) &&
+        event.payload.deaths.some(
+          (id) => view.players.find((player) => player.playerId === id)?.alive !== false,
+        ),
     });
     const timing = scheduleVideoShot(content, edit, {
       fps,
@@ -163,7 +187,7 @@ export function compileVideoPlan(
       scene.visual = structuredClone(base.visual);
       scene.visual.source = {
         eventSeqs: committedFact ? [] : sourceEvents.map((item) => item.seq),
-        factSeqs: committedFacts.map((fact) => fact.seq),
+        factSeqs: [...committedFacts, ...reportFacts].map((fact) => fact.seq),
       };
       if (committedFacts.length > 1 && scene.visual.life) {
         scene.visual.effectiveTargetIds = [...base.targetIds];
@@ -180,6 +204,51 @@ export function compileVideoPlan(
         };
       }
     }
+    if (reportFacts.length && scene.visual) {
+      const playerIds = reportFacts.map((fact) => fact.playerId);
+      scene.visual.life = {
+        playerIds,
+        committed: true,
+        causes: Object.fromEntries(reportFacts.map((fact) => [fact.playerId, [...fact.causes]])),
+        ...(reportFacts[0]!.waveId === undefined ? {} : { waveId: reportFacts[0]!.waveId }),
+      };
+      scene.visual.effectiveTargetIds = [...playerIds];
+      scene.visual.effectiveTargetKnown = true;
+    }
+    if (committedFact?.kind === "potion_stock")
+      scene.inventory = {
+        before: sourceIndex.inventoryAt(
+          committedFact.seq - 1,
+          committedFact.actorId,
+          committedFact.abilityId,
+        ),
+        after: sourceIndex.inventoryAt(
+          committedFact.seq,
+          committedFact.actorId,
+          committedFact.abilityId,
+        ),
+        revealFrame: scene.cues.impact,
+      };
+    const safeEvent = readRecord(event).record?.event;
+    if (
+      !committedFact &&
+      safeEvent &&
+      ["witch_potion_used", "witch_potion_skipped"].includes(safeEvent.type) &&
+      typeof safeEvent.payload.actorId === "number"
+    ) {
+      const actorId = safeEvent.payload.actorId;
+      const abilityId =
+        typeof safeEvent.payload.abilityId === "string" ? safeEvent.payload.abilityId : undefined;
+      // 扣库事实可能紧挨在动作事件之前。事前数值排除该前缀全部新捕获，避免将扣后值冒充扣前；无证据宁可unknown。
+      const before = sourceIndex.inventoryAt(
+        index === 0 ? 0 : sourceIndex.factSeqAt(index - 1),
+        actorId,
+        abilityId,
+      );
+      const after = sourceIndex.inventoryAt(selected.after.throughFactSeq, actorId, abilityId);
+      scene.inventory = { before, after, revealFrame: scene.cues.impact };
+    }
+    scene.content = sceneContent(scene);
     const compiledVoice = compileSpeechTrack(speech, {
       id,
       shotFrom: cursor,
@@ -202,13 +271,14 @@ export function compileVideoPlan(
       eventSeq: committedFact ? null : (event?.seq ?? null),
       view,
       captionPages,
+      ...(timing.reading ? { reading: timing.reading } : {}),
       captionPageOffsets,
       ...(captionPageRanges ? { captionPageRanges } : {}),
       camera: compileCamera(edit.camera, durationFrames, playerIds),
       layers: compileLayers(edit.layers, durationFrames, playerIds),
       speech: compiledVoice.speech,
       sourceSeqs: committedFact ? [] : sourceEvents.map((item) => item.seq),
-      sourceFacts: committedFacts.map((fact) => fact.seq),
+      sourceFacts: [...committedFacts, ...reportFacts].map((fact) => fact.seq),
       scene,
       stateCues,
     });
@@ -238,6 +308,7 @@ export function compileVideoPlan(
     const pending = factsAfter.get(afterSeq) ?? [];
     for (let index = 0; index < pending.length; index++) {
       const fact = pending[index]!;
+      if (absorbedFactSeqs.has(fact.seq)) continue;
       const batch = [fact];
       // 只有同一前缀且owner明确标为同wave的死亡同时揭晓；afterSeq相同本身不是同波证据。
       // 旧档缺waveId或跨原事件前缀时保守逐条陈述提交，不宣称各条属于不同真实死亡波。
@@ -254,6 +325,27 @@ export function compileVideoPlan(
       )
         batch.push(pending[++index]!);
       const edit = factEdits.get(fact.seq);
+      // 库存捕获属于状态而非一次行动。默认广播不额外念库存，显式导演fact锚点仍可独立成段。
+      if (layout === "broadcast-v1" && fact.kind === "potion_stock" && !edit) {
+        const previous = shots.at(-1);
+        const lastState = previous?.stateCues.at(-1);
+        // partial可能停在库存捕获后、没有下一动作：在同一前缀的末帧消费静默状态，不能吞掉事实游标。
+        // 只连续推进一条stock；不跨过被导演跳过的其他fact，也不提前提交生命或改变镜头长度。
+        if (
+          previous &&
+          lastState?.throughSeq === afterSeq &&
+          lastState.throughFactSeq === fact.seq - 1
+        ) {
+          const context = sourceIndex.cursorAt(afterSeq - 1, fact.seq);
+          previous.stateCues.push({
+            frame: previous.durationFrames - 1,
+            throughSeq: afterSeq,
+            throughFactSeq: fact.seq,
+            view: sourceIndex.viewAt(context),
+          });
+        }
+        continue;
+      }
       if (!edit?.skip) append(afterSeq - 1, `fact:${fact.seq}`, "event", edit, [], batch);
     }
   }
@@ -266,13 +358,47 @@ export function compileVideoPlan(
     const edit = edits.get(primaryIndex);
     const incompleteVote =
       layout === "broadcast-v1" && ["vote_cast", "sheriff_vote_cast"].includes(primary.type);
-    if (!consumed.has(index) && !edit?.skip && (visible.has(primary.seq) || edit || incompleteVote))
-      append(primaryIndex, `event:${primary.seq}`, "event", edit, group?.indexes ?? [index]);
+    if (
+      !consumed.has(index) &&
+      !edit?.skip &&
+      (visible.has(primary.seq) || edit || incompleteVote)
+    ) {
+      const pending = factsAfter.get(primary.seq) ?? [];
+      const reportFacts = committedLifeReport(
+        primary,
+        pending,
+        layout === "broadcast-v1" &&
+          replay.factCoverage?.committedDeaths === 1 &&
+          !edit &&
+          !holds.has(primaryIndex) &&
+          pending.every((fact) => !factEdits.has(fact.seq)) &&
+          Boolean(readRecord(primary).record),
+      );
+      append(
+        primaryIndex,
+        `event:${primary.seq}`,
+        "event",
+        edit,
+        group?.indexes ?? [index],
+        [],
+        reportFacts,
+      );
+      for (const fact of reportFacts) absorbedFactSeqs.add(fact.seq);
+    }
     appendFacts(event.seq);
     for (const hold of holds.get(index) ?? [])
       append(hold.stateAt ? anchorIndex(hold.stateAt) : index, `hold:${hold.id}`, "hold", hold);
   }
   if (!replay.events.length && !facts.length) append(-1, "empty", "event");
+  // 仅库存的进行中档案也可预览初始状态；不把库存伪装成一次上帝行动或补出对局事件。
+  if (
+    !shots.length &&
+    !replay.events.length &&
+    facts.length &&
+    facts.every((fact) => fact.kind === "potion_stock") &&
+    !factEdits.size
+  )
+    append(-1, "context", "event", {}, []);
   if (!shots.length) fail("timeline_empty");
   const audio = compileAudio([...(script?.audio ?? []), ...shotAudio], media, cursor, playerIds);
   const eventFrames: VideoPlan["eventFrames"] = {};

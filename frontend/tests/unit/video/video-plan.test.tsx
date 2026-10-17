@@ -21,6 +21,17 @@ import {
   type VideoScript,
 } from "../../../src/video";
 
+// 检查真实渲染文本而非HTML字串连续性；词法保护span不能掩盖丢字或署名错误。
+function renderedText(markup: string) {
+  return markup
+    .replace(/<[^>]*>/g, "")
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 function fixture(count = 6): ReplayDocument {
   const events: Omit<ReplayEvent, "seq" | "timestamp" | "day" | "phase">[] = [
     { type: "phase_changed", payload: { phase: "night" } },
@@ -174,7 +185,7 @@ test("source guards catch a changed archive and anchors reject accidental type d
   expect(getVideoSourceIdentity(reordered)).toEqual(getVideoSourceIdentity(replay));
 });
 
-test("long speeches paginate without clipping and locale does not shift scene boundaries", () => {
+test("long speeches retain full source text for frame scrolling and locale does not shift scene boundaries", () => {
   const replay = fixture(12);
   replay.events[3].payload.text = "这段内容用于验证长发言的安全字幕区域。".repeat(60);
   const zh = compileVideoPlan(replay, undefined, { locale: "zh-CN", timeZone: "UTC" });
@@ -185,11 +196,8 @@ test("long speeches paginate without clipping and locale does not shift scene bo
   expect(zh.source).toEqual(en.source);
   const shot = zh.shots.find((item) => item.eventSeq === 4)!;
   expect(shot.durationFrames).toBeGreaterThan(90);
-  expect(shot.captionPages.length).toBeGreaterThan(8);
-  for (const page of shot.captionPages) {
-    expect(page.split("\n").length).toBeLessThanOrEqual(3);
-    expect(Array.from(page).length).toBeLessThanOrEqual(130);
-  }
+  expect(shot.captionPages).toEqual([replay.events[3].payload.text as string]);
+  expect(shot.reading?.mode).toBe("flow");
   // 广播发言模板把说话者放在标题区，字幕分页仅承载原话，不能重复塞入“某号发言”前缀。
   expect(shot.captionPages.join("")).toBe(replay.events[3].payload.text as string);
   const start = buildVideoFrame(zh, shot.from);
@@ -198,10 +206,10 @@ test("long speeches paginate without clipping and locale does not shift scene bo
   expect(end.captionPageIndex).toBe(shot.captionPages.length - 1);
   const markup = renderToStaticMarkup(<VideoFrame plan={zh} frame={shot.from} />);
   expect(markup).toContain('data-scene-speech="true"');
-  expect(markup).toContain(shot.captionPages[0]!);
+  expect(renderedText(markup)).toContain(shot.captionPages[0]!);
   expect(markup).toContain('data-caption-page="0"');
   expect(markup).toContain('data-event-seq="4"');
-  expect(markup).not.toContain(replay.events[3].payload.text as string);
+  expect(end.reading?.scrollProgress).toBe(1);
 });
 
 test("six and twelve seats stay inside the scene and outside the caption safe area", () => {

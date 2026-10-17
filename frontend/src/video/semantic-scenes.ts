@@ -162,6 +162,12 @@ export function eventScene(
     return { ...scene, kind: "speech", body: p.text, speaker: `player:${actorId}`, actorId };
   }
   if (
+    event.type === "wolf_discussion_ended" &&
+    typeof p.reason === "string" &&
+    actorId !== undefined
+  )
+    return { ...scene, kind: "speech", body: p.reason, speaker: `player:${actorId}`, actorId };
+  if (
     event.type === "silence_gesture" &&
     typeof p.description === "string" &&
     actorId !== undefined

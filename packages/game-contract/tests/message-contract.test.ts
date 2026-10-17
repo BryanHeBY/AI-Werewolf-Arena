@@ -116,6 +116,13 @@ const appendedVideoStudioKeys = [
   "video.effect_source",
   "video.setup",
   "video.ballots_unavailable",
+  "video.inventory_before",
+  "video.inventory_after",
+  "video.inventory_unknown",
+  "video.primary_result",
+  "video.additional_result",
+  "video.end_chat",
+  "video.life_report_pending",
 ] as const;
 
 test("existing message IDs retain their sequence and prompt additions append after established anchors", () => {

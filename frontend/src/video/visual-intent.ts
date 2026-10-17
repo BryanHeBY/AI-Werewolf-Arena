@@ -158,6 +158,9 @@ export function visualIntentFromRecord(
     case "debate_speech":
       intent.dialogue = { kind: "speech" };
       break;
+    case "wolf_discussion_ended":
+      intent.dialogue = { kind: "end_chat" };
+      break;
     case "brew_discussion":
       intent.dialogue = { kind: "collaboration" };
       break;
@@ -175,6 +178,10 @@ export function visualIntentFromRecord(
       // actor是翻译者，target是原表达者；不得把翻译文本改署名为原作者。
       intent.requestedTargetIds = ids(p.targetId);
       intent.dialogue = { kind: "translation", originalSpeakerId: Number(p.targetId) };
+      break;
+    case "witch_potion_skipped":
+      // skip载荷的target是收到的刀口上下文，不是用药请求；不能把未行动高亮为选中目标。
+      intent.requestedTargetIds = [];
       break;
     case "witch_potion_used":
       if (p.potionType === "heal" || p.potionType === "poison") intent.potion = p.potionType;
@@ -241,6 +248,14 @@ export function visualIntentFromRecord(
       };
       break;
     }
+  }
+  if (intent.dialogue) {
+    delete intent.fallbackReason;
+    if (
+      (event.type === "wolf_discussion" || event.type === "wolf_discussion_ended") &&
+      typeof p.round === "number"
+    )
+      intent.dialogue.round = p.round;
   }
   return intent;
 }

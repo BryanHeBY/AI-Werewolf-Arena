@@ -27,12 +27,10 @@ export function VideoComposition(props: VideoCompositionProps) {
   const frame = useCurrentFrame();
   return (
     <>
-      <VideoFonts
-        key={JSON.stringify(props.plan.fonts ?? [])}
-        fonts={props.plan.fonts}
-        mediaBaseUrl={props.mediaBaseUrl}
-      />
-      <VideoFrame {...props} frame={frame} />
+      <VideoFonts fonts={props.plan.fonts} mediaBaseUrl={props.mediaBaseUrl}>
+        {/* 正文只在同一批实际字体加载后挂载，首次量高不能使用宿主回退字形。 */}
+        <VideoFrame {...props} frame={frame} />
+      </VideoFonts>
       <VideoAudio plan={props.plan} mediaBaseUrl={props.mediaBaseUrl} />
     </>
   );

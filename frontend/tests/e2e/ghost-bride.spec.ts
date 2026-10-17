@@ -4,6 +4,7 @@
 import { createPlayerText } from "@ai-werewolf-arena/game-presentation";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
+import { text } from "@ai-werewolf-arena/game-text";
 import { readFileSync } from "node:fs";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -139,7 +140,7 @@ for (const actor of ["bride", "groom", "witness", "pack"])
       await expect(page.locator(".current-event > p")).toHaveText(label);
       for (const p of replay.players.filter((p: any) => p.player_id !== view.player_id))
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
-          "unknown",
+          text(locale, "replay.unknown"),
         );
     });
 

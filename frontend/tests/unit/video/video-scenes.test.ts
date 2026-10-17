@@ -92,15 +92,25 @@ test("broadcast merges only the recorded ballot window and preserves raw weighte
   expect(shot.scene.resolution).toEqual({
     text: "3号·真实姓名3被放逐出局",
     targetId: 3,
-    // 英文中性票型总述9词+句末停顿=93帧，落定40后读完，再揭示放逐。
-    revealFrame: 133,
+    // 简短总述不代表票表信息已读完：原逐票/权重/姓名预算356帧，落定40后再独立揭示放逐。
+    revealFrame: 396,
+    reading: {
+      version: 1,
+      mode: "flow",
+      from: 396,
+      durationFrames: 90,
+      headHoldFrames: 30,
+      tailHoldFrames: 30,
+    },
   });
-  expect(buildVideoFrame(plan, shot.from + 132).currentView.players[2]!.alive).toBe(true);
-  expect(buildVideoFrame(plan, shot.from + 133).currentView.players[2]!.alive).toBe(false);
-  expect(getVideoEventFrame(plan, 7)).toBe(shot.from + 133);
+  expect(buildVideoFrame(plan, shot.from + 395).resolutionReading?.active).toBe(false);
+  expect(buildVideoFrame(plan, shot.from + 396).resolutionReading?.scrollProgress).toBe(0);
+  expect(buildVideoFrame(plan, shot.from + 395).currentView.players[2]!.alive).toBe(true);
+  expect(buildVideoFrame(plan, shot.from + 396).currentView.players[2]!.alive).toBe(false);
+  expect(getVideoEventFrame(plan, 7)).toBe(shot.from + 396);
   expect(shot.speech.map((cue) => [cue.speaker, cue.from, cue.durationFrames])).toEqual([
-    ["god", 24, 109],
-    ["god", 133, shot.durationFrames - 133],
+    ["god", 24, 372],
+    ["god", 396, shot.durationFrames - 396],
   ]);
   expect(JSON.parse(JSON.stringify(plan))).toEqual(plan);
 });
@@ -229,14 +239,10 @@ test("God life coverage delays proposal deaths until exact independent fact and 
       ],
     }),
   );
-  expect(plan.shots[0]!.id).toBe("fact:1");
-  expect(plan.shots[0]!.scene.stock).toEqual({
-    actorId: 5,
-    abilityId: "witch.potion",
-    heal: 1,
-    poison: 1,
-  });
-  expect(buildVideoFrame(plan, 23).currentView.snapshot.day).toBe(0);
+  // 初始库存仍在事实前缀中，但不再单独打断开局播报；life事实依然逐帧生效。
+  expect(plan.shots[0]!.id).toBe("event:1");
+  expect(plan.shots.some((shot) => shot.id === "fact:1")).toBe(false);
+  expect(buildVideoFrame(plan, 24).sourceFactSeq).toBe(1);
   expect(buildVideoFrame(plan, 24).currentView.snapshot.day).toBe(1);
   const proposal = plan.shots.find((shot) => shot.id === "event:7")!;
   expect(buildVideoFrame(plan, proposal.from + 89).currentView.players[2]!.alive).toBe(true);
@@ -356,7 +362,9 @@ test("independent knife and protection facts keep their scope, while an explicit
   });
   expect(protection.view.players[2]!.alive).toBe(true);
   expect(protection.view.players[3]!.alive).toBe(true);
-  const deaths = plan.shots.find((shot) => shot.id === "fact:3")!;
+  // 已有同前缀同wave的完整提交与夜报同镜头揭晓，不重复播一遍死亡。
+  const deaths = plan.shots.find((shot) => shot.id === "event:2")!;
+  expect(deaths.sourceSeqs).toEqual([2]);
   expect(deaths.sourceFacts).toEqual([3, 4]);
   expect(deaths.scene.targetIds).toEqual([3, 4]);
   expect(deaths.scene.visual?.effectiveTargetIds).toEqual([3, 4]);
@@ -478,7 +486,7 @@ test("knife revocation is explicit and a new covered ballot paragraph cannot com
   });
   const ballot = plan.shots.find((shot) => shot.id === "event:6")!;
   expect(ballot.sourceSeqs).toEqual([2, 3, 4, 5, 6, 7]);
-  expect(ballot.scene.resolution?.revealFrame).toBe(133);
+  expect(ballot.scene.resolution?.revealFrame).toBe(396);
   expect(
     buildVideoFrame(plan, ballot.from + ballot.durationFrames - 1).currentView.players[2]!.alive,
   ).toBe(true);

@@ -2,6 +2,7 @@
  * 负责将已校验视觉意图映射为哥特主题道具。输入为typed scene，输出既有素材标识或中性记录回退。
  * 仅选择美术，不按台词、事件名前缀或当前身份猜技能，也不将道具当作效果或权限证据。
  */
+import { outcomeEmblem } from "../../presentation/scene-content";
 import type { VideoScene, VideoVisualFamily } from "../../video/types";
 import type { GothicArtId } from "../../video/GothicArt";
 const familyArt: Record<VideoVisualFamily, GothicArtId> = {
@@ -38,9 +39,19 @@ const familyArt: Record<VideoVisualFamily, GothicArtId> = {
   suppression: "clock-lock",
 };
 /** 显式子型选择，不能根据事件名的前后缀或玩家台词猜技能。 */
-export function sceneArt(scene: VideoScene): GothicArtId | "potion-pair" | "record" {
+export type VictoryArtId = `victory-${Exclude<ReturnType<typeof outcomeEmblem>, "unknown">}`;
+export function sceneArt(
+  scene: VideoScene,
+  options: { revealed?: boolean } = {},
+): GothicArtId | VictoryArtId | "potion-pair" | "record" {
   const intent = scene.visual;
   if (!intent || intent.fallbackReason) return "record";
+  if (intent.family === "game_result") {
+    // 镜头携带终态不代表当前帧已经揭晓；未显式获准时始终使用中性封印。
+    if (!options.revealed) return "judgement-seal";
+    const emblem = outcomeEmblem(intent.victory?.outcome, intent.victory?.winner);
+    return emblem === "unknown" ? "judgement-seal" : `victory-${emblem}`;
+  }
   // 明示工具属于本次行动形式，不能被狼群／复制等机制家族默认图覆盖；也不据此补原生技能来源。
   if (intent.deathTool)
     return (

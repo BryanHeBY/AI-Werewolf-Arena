@@ -7,6 +7,7 @@ import {
   videoCaptionBudget,
   estimateVideoReadFrames,
   scheduleVideoCaptionPages,
+  scheduleVideoReading,
 } from "../captions";
 import { compileScene } from "../semantic-scenes";
 import type { MediaAsset, ShotOptions, SpeechCue, VideoLayoutId, VideoShot } from "../types";
@@ -45,6 +46,12 @@ export function scheduleVideoShot(
     playerIds,
   } = options;
   const { base, body, otherBody, resolution } = content;
+  // 全文流只属于新广播自动时钟；显式作者时长/分页和hold继续原连续切片契约。
+  const automaticReading =
+    layout === "broadcast-v1" &&
+    !explicitPageClock &&
+    edit.durationFrames === undefined &&
+    kind !== "hold";
   // 显式时长/分页及hold保原作者切片；新广播自动模板才采用新的真实字号预算。
   const budget = videoCaptionBudget(
     edit.durationFrames !== undefined || explicitPageClock ? "legacy-ellipse-v1" : layout,
@@ -57,14 +64,14 @@ export function scheduleVideoShot(
       budget.maxLines,
       layout === "broadcast-v1" && edit.durationFrames === undefined && !explicitPageClock,
     );
-  const captionPages = paginate(body);
+  const captionPages = automaticReading ? [body] : paginate(body);
   let captionOffset = 0;
   const captionPageOffsets = captionPages.map((page) => {
     const offset = captionOffset;
     captionOffset += page.length;
     return offset;
   });
-  const otherPages = paginate(otherBody);
+  const otherPages = automaticReading ? [otherBody] : paginate(otherBody);
   const pageCount = Math.max(captionPages.length, otherPages.length);
   const automaticSpeaker = edit.scene?.speaker ?? base.speaker;
   const automaticSpeech: SpeechCue[] =
@@ -83,8 +90,6 @@ export function scheduleVideoShot(
           0),
     ),
   );
-  const automaticReading =
-    layout === "broadcast-v1" && !explicitPageClock && edit.durationFrames === undefined;
   // 纯记录没有发动/命中动画，默认立即可读；作者任一显式时钟仍完全优先，未知事件不套此快速预设。
   const compactNotice =
     automaticReading &&
@@ -97,6 +102,10 @@ export function scheduleVideoShot(
   const readingDuration = Math.max(
     readFrames.reduce((a, b) => a + b, 0),
     otherReadFrames.reduce((a, b) => a + b, 0),
+    content.structuredReadText ? estimateVideoReadFrames(content.structuredReadText, fps) : 0,
+    content.otherStructuredReadText
+      ? estimateVideoReadFrames(content.otherStructuredReadText, fps)
+      : 0,
   );
   const hasResolution = resolution !== undefined;
   const resolutionReadFrames = resolution
@@ -201,7 +210,25 @@ export function scheduleVideoShot(
         readFrames,
       )
     : undefined;
+  const readingEnd = scene.resolution?.revealFrame ?? durationFrames;
+  const readingFrom = finalKind === "speech" ? 0 : scene.cues.impact;
+  const reading = automaticReading
+    ? scheduleVideoReading(
+        readingFrom,
+        readingEnd,
+        finalKind === "speech" ? 0 : scene.cues.settled,
+        fps,
+      )
+    : undefined;
+  if (automaticReading && scene.resolution)
+    scene.resolution.reading = scheduleVideoReading(
+      scene.resolution.revealFrame,
+      durationFrames,
+      scene.resolution.revealFrame,
+      fps,
+    );
   return {
+    reading,
     scene,
     durationFrames,
     captionPages,

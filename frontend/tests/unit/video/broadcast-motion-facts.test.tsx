@@ -21,6 +21,17 @@ import type {
   VideoVisualReport,
 } from "../../../src/video/types";
 
+// 检查真实渲染文本而非HTML字串连续性；词法保护span不能掩盖丢字或署名错误。
+function renderedText(markup: string) {
+  return markup
+    .replace(/<[^>]*>/g, "")
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 const cues = { establish: 0, travel: 8, impact: 24, settled: 40 };
 const source = { eventSeqs: [1], factSeqs: [] };
 function intent(extra: Partial<VideoVisualIntent> = {}): VideoVisualIntent {
@@ -445,7 +456,7 @@ test("an actor-only editorial note never relabels recorded speech or its footer 
   const html = renderToStaticMarkup(<VideoFrame plan={plan} frame={0} />);
   expect(html).toContain('data-speech-speaker="2"');
   expect(html).toContain('data-editorial-actor="12"');
-  expect(html).toContain("这是二号的原话。");
+  expect(renderedText(html)).toContain("这是二号的原话。");
   const footer = html.match(/data-testid="composition-event"[^>]*>([^<]*)<\/span>/)?.[1];
   expect(footer).toBe("当前发言 · 2号");
   expect(footer).not.toContain("12号");
@@ -467,18 +478,16 @@ test("inventory prose and pre-impact waiting each appear once without hiding aut
     },
   ];
   const plan = video(doc);
-  const before = renderToStaticMarkup(<VideoFrame plan={plan} frame={23} />);
-  const after = renderToStaticMarkup(<VideoFrame plan={plan} frame={24} />);
-  expect(before.match(/等待结果揭晓/g)).toHaveLength(1);
-  expect(before).not.toContain("解药 0");
-  expect(after.match(/解药 0/g)).toHaveLength(1);
-  expect(after.match(/毒药 1/g)).toHaveLength(1);
-  expect(after).not.toContain("data-scene-stock");
+  // 仅库存状态的进行中归档仍可预览，不再伪装成主动用药或单独的库存播报。
+  expect(plan.shots.map((shot) => shot.id)).toEqual(["context"]);
+  const initial = renderToStaticMarkup(<VideoFrame plan={plan} frame={0} />);
+  expect(initial).not.toContain("解药 0");
+  expect(initial).not.toContain("data-scene-stock");
   const authored = video(doc, {
     factEdits: [{ anchor: { seq: 1, kind: "potion_stock" }, caption: "作者的独立说明" }],
   });
   const edited = renderToStaticMarkup(<VideoFrame plan={authored} frame={24} />);
-  expect(edited).toContain("作者的独立说明");
+  expect(renderedText(edited)).toContain("作者的独立说明");
   expect(edited).toContain('data-stock-ability="witch-potions"');
   expect(edited).toContain("解药 0 · 毒药 1");
 });
@@ -588,9 +597,9 @@ test("an independently handwritten old prepared theme renders through VideoFrame
   );
   expect(html.includes("Archived Body")).toBe(true);
   expect(direct.includes("Archived Body")).toBe(true);
-  expect(direct.includes("Archived words.")).toBe(true);
-  expect(html.includes("Archived words.")).toBe(true);
-  expect(html.includes("font-size:42px")).toBe(true);
+  expect(renderedText(direct).includes("Archived words.")).toBe(true);
+  expect(renderedText(html).includes("Archived words.")).toBe(true);
+  expect(html.includes("font-size:26px")).toBe(true);
   expect(layers.includes("OLD LAYER")).toBe(true);
   expect(layers.includes("color:#efeade")).toBe(true);
   expect(JSON.stringify(plan)).toBe(before);

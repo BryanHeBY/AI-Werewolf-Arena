@@ -11,6 +11,7 @@ import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/rep
 import { createReplayRenderInput } from "../../src/replay/replay-frame";
 import { eventLabel } from "../../src/replay/event-labels";
 import { roleName } from "../../src/replay/replay-localization";
+import { text } from "@ai-werewolf-arena/game-text";
 for (const actor of ["alchemist", "raven", "villager"] as const)
   for (const locale of ["en", "zh-CN"] as const)
     test(`Mist actual owner minimal movie input and rewind/${actor}/${locale}`, async ({
@@ -78,7 +79,9 @@ for (const actor of ["alchemist", "raven", "villager"] as const)
       await expect(page.locator(".current-event > p")).toHaveText(label);
       for (const p of replay.players) {
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
-          roleName(p.player_id === view.player_id ? view.role : "unknown", locale),
+          p.player_id === view.player_id
+            ? roleName(view.role, locale)
+            : text(locale, "replay.unknown"),
         );
       }
       if (actor !== "alchemist")

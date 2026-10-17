@@ -2,7 +2,7 @@
  * 负责将长字幕按保守字宽预算分页。输入为原文字串、行宽与行数，输出原文的连续切片，拼接后与原文一致。
  * 行宽只用于计算页边界，浏览器自然换行；原有换行保留，分页不依赖字体测量，预览与导出使用同一结果。
  */
-import type { VideoLayoutId, VideoScene } from "./types";
+import type { VideoLayoutId, VideoScene, VideoReading } from "./types";
 
 /** 广播结果正文从揭晓后开始分页；玩家发言和旧布局沿用整段时钟，供纯帧与导航共用。 */
 export function videoCaptionRange(
@@ -102,4 +102,40 @@ export function paginateVideoCaption(
   }
   if (page || !pages.length) pages.push(page);
   return pages;
+}
+
+/** 阅读位移只由帧与预编译区间计算；实际字高只影响距离，暂停、倒看及导出不累计滚动。 */
+export function videoReadingProgress(reading: VideoReading, frame: number) {
+  const age = frame - reading.from;
+  const clamp = (value: number) => Math.max(0, Math.min(1, value));
+  const scrollFrames = Math.max(
+    1,
+    reading.durationFrames - reading.headHoldFrames - reading.tailHoldFrames,
+  );
+  return {
+    progress: clamp(age / Math.max(1, reading.durationFrames)),
+    scrollProgress: clamp((age - reading.headHoldFrames) / scrollFrames),
+    active: age >= 0 && age < reading.durationFrames,
+  };
+}
+
+/** 主段和后续结果共用全文时钟工厂；头尾各最多占三分之一以保留连续滚动区间，长稿保留头尾三秒，绝不拉长作者镜头。 */
+export function scheduleVideoReading(
+  from: number,
+  end: number,
+  settled: number,
+  fps: number,
+): VideoReading {
+  const durationFrames = end - from;
+  return {
+    version: 1,
+    mode: "flow",
+    from,
+    durationFrames,
+    headHoldFrames: Math.min(
+      Math.floor(durationFrames / 3),
+      Math.max(0, settled - from) + Math.round(fps * 3),
+    ),
+    tailHoldFrames: Math.min(Math.round(fps * 3), Math.floor(durationFrames / 3)),
+  };
 }

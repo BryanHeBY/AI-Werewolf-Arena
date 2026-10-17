@@ -2,8 +2,8 @@
  * 负责镜头双语内容与导演正文优先级。输入为已选出处、共享记录解释和显式覆盖，输出场景基底、两语正文及独立结果文本。
  * 不安排帧、不从字幕推断结果；原始视觉语义与作者标注分别保留。
  */
-import type { Locale } from "@ai-werewolf-arena/game-text";
-import type { NamedPlayer } from "@ai-werewolf-arena/game-presentation";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { playerLabel, type NamedPlayer } from "@ai-werewolf-arena/game-presentation";
 import { eventLabelFromRecord } from "../../replay/event-labels";
 import { eventScene, factScene } from "../semantic-scenes";
 import type { ShotOptions, VideoLayoutId } from "../types";
@@ -20,6 +20,7 @@ export function prepareVideoShotContent(
     playerIds: number[];
     names: readonly NamedPlayer[];
     readRecord: VideoRecordReader;
+    pendingLifeReport?: boolean;
   },
 ) {
   const { event, committedFact, committedFacts, sourceEvents, view, primaryView, resolutionEvent } =
@@ -44,6 +45,22 @@ export function prepareVideoShotContent(
       fact.kind === "life_committed" ? [fact.playerId] : [],
     );
   }
+  const pendingLifeBody = (language: Locale) =>
+    options.pendingLifeReport &&
+    event &&
+    ["night_resolved", "additional_deaths"].includes(event.type) &&
+    readRecord(event).record &&
+    Array.isArray(event.payload.deaths) &&
+    event.payload.deaths.length
+      ? text(language, "video.life_report_pending", {
+          players: event.payload.deaths
+            .map((id) =>
+              playerLabel(names.find((player) => player.id === id) ?? { id: Number(id) }, language),
+            )
+            .join(" / "),
+        })
+      : undefined;
+  base.body = pendingLifeBody(locale) ?? base.body;
   if (edit.caption !== undefined && typeof edit.caption !== "string") fail("caption_invalid");
   if (edit.caption !== undefined && edit.scene?.body === undefined) base.body = edit.caption;
   const body =
@@ -66,6 +83,7 @@ export function prepareVideoShotContent(
     otherScene.body = committedFacts
       .map((fact) => factScene(fact, otherLocale, names).body)
       .join("\n");
+  otherScene.body = pendingLifeBody(otherLocale) ?? otherScene.body;
   const otherBody =
     edit.scene?.body ??
     edit.caption ??
@@ -81,6 +99,9 @@ export function prepareVideoShotContent(
         targetId: Number(resolutionEvent.payload.target),
       }
     : undefined;
-  return { base, body, otherBody, resolution };
+  // 票型字段由图表绘制，简短总述不等于全部信息的阅读量；只借原已本地化标签作预算，不再重复画或播它。
+  const structuredReadText = base.ballot && event ? label(event, locale) : undefined;
+  const otherStructuredReadText = base.ballot && event ? label(event, otherLocale) : undefined;
+  return { base, body, otherBody, resolution, structuredReadText, otherStructuredReadText };
 }
 export type VideoShotContent = ReturnType<typeof prepareVideoShotContent>;

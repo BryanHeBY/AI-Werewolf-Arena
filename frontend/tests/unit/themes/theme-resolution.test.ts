@@ -44,8 +44,10 @@ test("shared visual tokens preserve the agreed output baseline and separate Web 
   expect(gothic.definition.typography).toMatchObject({
     referenceWidth: 1920,
     referenceHeight: 1080,
-    bodyZh: 42,
-    bodyEn: 38,
+    bodyZh: 32,
+    bodyEn: 30,
+    speechBodyZh: 26,
+    speechBodyEn: 24,
     bodyLarge: 48,
   });
   expect(gothic.definition.motion.standard).toEqual({
@@ -55,6 +57,8 @@ test("shared visual tokens preserve the agreed output baseline and separate Web 
     settled: 40,
   });
   expect(gothic.definition.surface.stage).toBe("transparent");
+  expect(gothic.definition.surface.readingMaxHeightRatio).toBe(0.8);
+  expect(gothic.definition.typography.readingMaxWidth).toBe(1280);
   expect(themeSurface(gothic, "day").readingText).toBe("#efeade");
   expect(themeSurface(gothic, "night").readingText).toBe("#efeade");
   expect(themeSurface(resolveTheme("minimal-v1"), "day").readingText).toBe("#162131");
@@ -127,8 +131,10 @@ test("a handwritten old compiled theme keeps authored appearance while new token
   expect(resolved.definition.slots.background).toBe("archive/background");
   expect(resolved.definition.slots.frame).toBe("archive/frame");
   expect(resolved.definition.slots.actionEffect).toBe("gothic-v1/actionEffect");
-  expect(resolved.definition.typography.bodyZh).toBe(42);
-  expect(resolved.definition.surface.readingMaxHeightRatio).toBe(0.65);
+  expect(resolved.definition.typography.bodyZh).toBe(32);
+  expect(resolved.definition.typography.speechBodyZh).toBe(26);
+  expect(resolved.definition.typography.speechBodyEn).toBe(24);
+  expect(resolved.definition.surface.readingMaxHeightRatio).toBe(0.8);
   expect(resolved.definition.frame.width).toBe(1.5);
   expect(resolved.definition.connector.choiceDash).toEqual([6, 6]);
   expect(resolved.definition.effect.heroSize).toBe(410);
@@ -148,12 +154,17 @@ test("a handwritten old compiled theme keeps authored appearance while new token
     ...old,
     definition: {
       ...old.definition,
-      typography: { bodyZh: 47 },
+      typography: { bodyZh: 47, speechBodyZh: 31 },
       surface: { palette: { night: { readingText: "#abcabc" } } },
       motion: { durationMs: 321, standard: { travel: 12 } },
     },
   } as unknown as ResolvedTheme);
-  expect(partial.definition.typography).toMatchObject({ bodyZh: 47, bodyEn: 38 });
+  expect(partial.definition.typography).toMatchObject({
+    bodyZh: 47,
+    bodyEn: 30,
+    speechBodyZh: 31,
+    speechBodyEn: 24,
+  });
   expect(partial.definition.surface.palette.night).toMatchObject({
     readingText: "#abcabc",
     readingColor: "#081219",

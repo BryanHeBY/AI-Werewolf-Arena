@@ -3,12 +3,19 @@
  * 缓存仅属于本次归档与名单；不按跨局 seq 缓存，不读取真实角色，不赋予视觉意图状态提交权。
  */
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readReplayEvent, type ReadReplayEvent } from "../../replay/replay-event-reader";
+import {
+  readReplayEvent,
+  readReplayEventEnvelope,
+  type ReadReplayEvent,
+} from "../../replay/replay-event-reader";
+import { VIDEO_EVENT_VISUAL_ROUTES } from "../visual-routes";
 import { visualIntentFromRecord } from "../visual-intent";
 import type { VideoScene, VideoVisualIntent } from "../types";
 
 export interface VideoEventInterpretation {
   readonly record: ReadReplayEvent | null;
+  readonly readerStatus:
+    "known" | "unrecognized" | "invalid_envelope" | "invalid_payload" | "no_event";
   readonly visual: VideoVisualIntent;
   /** 旧场景/作者脚本仍使用的展示主体；与 visual 的真实行动主体分别保留。 */
   readonly actorId?: number;
@@ -45,6 +52,7 @@ export function interpretVideoEvent(
 ): VideoEventInterpretation {
   const record = event ? readReplayEvent(event, playerIds) : null;
   const visual = visualIntentFromRecord(event, record);
+  const envelope = record?.event ?? (event ? readReplayEventEnvelope(event) : null);
   const safe = record?.event;
   const p = safe?.payload;
   const actorId =
@@ -56,6 +64,15 @@ export function interpretVideoEvent(
           ? p.playerId
           : undefined;
   return {
+    readerStatus: !event
+      ? "no_event"
+      : !envelope
+        ? "invalid_envelope"
+        : !Object.hasOwn(VIDEO_EVENT_VISUAL_ROUTES, envelope.type)
+          ? "unrecognized"
+          : record
+            ? "known"
+            : "invalid_payload",
     record,
     visual,
     actorId,

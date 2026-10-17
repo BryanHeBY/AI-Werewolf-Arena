@@ -7,6 +7,7 @@ import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { lonelyGirlEventLabel, shapeshifterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { expect, test } from "@playwright/test";
+import { text } from "@ai-werewolf-arena/game-text";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readFileSync } from "node:fs";
 import { compileVideoPlan } from "../../src/video/compiler";
@@ -1665,7 +1666,7 @@ for (const name of ["6-seer", "12-one1"])
       await expect(seat).not.toHaveClass(/dead/);
       for (const p of replay.players.filter((p: any) => p.player_id !== actor))
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
-          "unknown",
+          text(locale, "replay.unknown"),
         );
     });
 
@@ -1804,6 +1805,6 @@ for (const name of ["6-good_dead", "12-wolf_win"])
       );
       for (const p of replay.players.filter((p: any) => p.player_id !== actor))
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
-          "unknown",
+          text(locale, "replay.unknown"),
         );
     });

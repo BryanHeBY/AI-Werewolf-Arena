@@ -4,7 +4,7 @@
  */
 import { cameraTargetPose, createVideoLayout, type CameraPose, type VideoLayout } from "./layout";
 import type { CameraKeyframe, PlannedAudioCue, VideoPlan, VideoShot } from "./types";
-import { videoCaptionRange } from "./captions";
+import { videoReadingProgress, videoCaptionRange } from "./captions";
 
 function cameraAt(
   keys: CameraKeyframe[],
@@ -120,6 +120,10 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     /** 当前关键帧明确选定的中央人物，插值阶段仍保持来源关键帧目标；HUD几何不随此名单移动。 */
     focusPlayerIds,
     activeLayers,
+    reading: shot.reading ? videoReadingProgress(shot.reading, localFrame) : undefined,
+    resolutionReading: shot.scene.resolution?.reading
+      ? videoReadingProgress(shot.scene.resolution.reading, localFrame)
+      : undefined,
     captionPageIndex,
     captionRange,
     captionPageRanges: shot.captionPageRanges,

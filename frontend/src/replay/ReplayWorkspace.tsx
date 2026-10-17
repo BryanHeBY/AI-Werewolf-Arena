@@ -1,6 +1,9 @@
 /**
  * 负责复盘工作台的文件状态、席位筛选、播放与显示交互。输入为加载的复盘及用户选项；输出为阶段画面、时间线与控制区。实际画面仍由 frame 和纯投影形成，工作台状态不授予游戏行动或更改归档事实。
  */
+import { SceneContentBlocks } from "../presentation/SceneContentBlocks";
+import { resolveVideoMediaSource } from "../video/frame";
+import { replayDisplayRoster } from "./replay-display-roster";
 import { replayEventPlayerIds } from "./replay-event-reader";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -54,7 +57,7 @@ export function ReplayWorkspace({
   );
   const presentationReplay = useMemo(
     () => ({
-      ...buildPresentationReplay(replay),
+      ...buildPresentationReplay({ ...replay, players: replayDisplayRoster(replay).players }),
       // 聚合只压缩视频，不删除审计入口；被吸收的逐票 seq 仍跳到同一事实揭晓帧。
       events: replay.events.filter((event) => getVideoEventFrame(videoPlan, event.seq) !== null),
     }),
@@ -111,6 +114,16 @@ export function ReplayWorkspace({
     [presentationReplay],
   );
   const playerProfiles = videoPlan.playersPresentation;
+  const avatarSources = useMemo(
+    () =>
+      Object.fromEntries(
+        videoPlan.media
+          .filter((asset) => asset.kind === "image")
+          .map((asset) => [asset.id, resolveVideoMediaSource(asset.src)]),
+      ),
+    [videoPlan.media],
+  );
+  const sceneRevealed = videoFrame.localFrame >= videoFrame.scene.cues.impact;
   const players = useMemo(() => presentationPlayers(playerProfiles), [playerProfiles]);
   const orderedPlayers = useMemo(
     () =>
@@ -286,6 +299,8 @@ export function ReplayWorkspace({
           <PlayerSeats
             players={orderedPlayers}
             presentations={playerProfiles}
+            themeId={webAppearance.theme.id}
+            avatarSources={avatarSources}
             locale={locale}
             focusedPlayerId={focusedPlayerId}
             onToggleFocus={toggleFocus}
@@ -313,6 +328,16 @@ export function ReplayWorkspace({
             <p tabIndex={0} aria-label={text(locale, "replay.current_event_text")}>
               {currentLabel}
             </p>
+            {sceneRevealed && videoFrame.scene.content && (
+              <div data-current-structured-content>
+                <SceneContentBlocks
+                  content={videoFrame.scene.content}
+                  locale={locale}
+                  players={players}
+                  kinds={["action", "ballot", "report", "inventory", "outcome"]}
+                />
+              </div>
+            )}
             <div className="event-meta">
               <span>
                 {factRevealed

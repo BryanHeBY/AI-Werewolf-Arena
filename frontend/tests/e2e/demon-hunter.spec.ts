@@ -5,6 +5,7 @@
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
+import { text } from "@ai-werewolf-arena/game-text";
 import { readFileSync } from "node:fs";
 import { eventLabel } from "../../src/replay/event-labels";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
@@ -103,7 +104,7 @@ for (const locale of ["zh-CN", "en"] as const)
     await expect(page.locator(".current-event > p")).toHaveText(label);
     for (const p of replay.players.filter((p: any) => p.player_id !== view.player_id))
       await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
-        "unknown",
+        text(locale, "replay.unknown"),
       );
     await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
   });
