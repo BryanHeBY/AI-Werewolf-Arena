@@ -5,8 +5,13 @@
 import type { ReplayEvent, ReplayFact } from "@ai-werewolf-arena/replay-contract";
 import { playerLabel } from "@ai-werewolf-arena/game-presentation";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
-import { readReplayEvent } from "../replay/replay-event-reader";
-import { eventVisualIntent, factVisualIntent } from "./visual-intent";
+import { factVisualIntent } from "./visual-intent";
+import {
+  createVideoRecordReader,
+  interpretVideoEvent,
+  type VideoRecordReader,
+  type VideoEventInterpretation,
+} from "./plan/records";
 import type {
   VideoScene,
   VideoSceneCues,
@@ -58,15 +63,13 @@ export function semanticEventGroups(
   playerIds: number[],
   barriers: Set<number>,
   explicitAnchors = barriers,
+  readRecord: VideoRecordReader = createVideoRecordReader(playerIds),
 ) {
   const groups = new Map<number, { indexes: number[]; primary: number }>();
   const consumed = new Set<number>();
   for (let index = 0; index < events.length; index++) {
     const event = events[index]!;
-    if (
-      !["vote_summary", "sheriff_vote_summary"].includes(event.type) ||
-      !readReplayEvent(event, playerIds)
-    )
+    if (!["vote_summary", "sheriff_vote_summary"].includes(event.type) || !readRecord(event).record)
       continue;
     const castType = event.type === "vote_summary" ? "vote_cast" : "sheriff_vote_cast";
     const indexes = [index];
@@ -77,7 +80,7 @@ export function semanticEventGroups(
         item.day !== event.day ||
         item.phase !== event.phase ||
         ballotStage(item) !== ballotStage(event) ||
-        !readReplayEvent(item, playerIds)
+        !readRecord(item).record
       )
         break;
       if (
@@ -105,7 +108,7 @@ export function semanticEventGroups(
       next.payload.target === event.payload.target &&
       !barriers.has(index) &&
       !explicitAnchors.has(index + 1) &&
-      readReplayEvent(next, playerIds)
+      readRecord(next).record
     )
       indexes.push(index + 1);
     // 单个summary仍是独立节点；没有summary的旧逐票记录不伪造complete或最终落点。
@@ -122,6 +125,7 @@ export function eventScene(
   stage: string,
   playerIds: number[],
   locale: Locale,
+  interpretation: VideoEventInterpretation = interpretVideoEvent(event, playerIds),
 ): VideoScene {
   const scene: VideoScene = {
     kind: "fallback",
@@ -132,21 +136,15 @@ export function eventScene(
     speaker: "god",
     emphasis: [],
     cues: { establish: 0, travel: 0, impact: 0, settled: 0 },
-    visual: eventVisualIntent(event, playerIds),
+    // 缓存解释只读；场景及导演适配始终持有自己的视觉数据副本。
+    visual: structuredClone(interpretation.visual),
   };
   if (!event) return scene;
-  const fact = readReplayEvent(event, playerIds);
+  const fact = interpretation.record;
   if (!fact) return scene;
-  const p = fact.event.payload;
-  const actorId =
-    typeof p.actorId === "number"
-      ? p.actorId
-      : event.type === "hunter_shot" && typeof p.hunterId === "number"
-        ? p.hunterId
-        : typeof p.playerId === "number"
-          ? p.playerId
-          : undefined;
-  const targets = typeof p.targetId === "number" ? [p.targetId] : [];
+  event = fact.event;
+  const p = event.payload;
+  const { actorId, targetIds: targets } = interpretation;
   if (
     [
       "day_speech",
@@ -199,54 +197,24 @@ export function eventScene(
       speaker: "god",
     };
   }
-  if (event.type === "wolf_kill_vote_cast")
+  if (interpretation.action) {
+    const action = structuredClone(interpretation.action);
+    if (action.kind === "inspect") action.result = label;
     return {
       ...scene,
       kind: "action",
-      actorId,
-      targetIds: targets,
-      action: { kind: "wolf-vote", status: "choice" },
-      ballot: ballot(event),
+      ...(event.type === "voted_out" ? {} : { actorId }),
+      targetIds:
+        event.type === "voted_out"
+          ? typeof p.target === "number"
+            ? [p.target]
+            : []
+          : [...targets],
+      action,
+      ...(event.type === "wolf_kill_vote_cast" ? { ballot: ballot(event) } : {}),
       speaker: "god",
     };
-  if (event.type === "seer_checked" || event.type === "role_inspected")
-    return {
-      ...scene,
-      kind: "action",
-      actorId,
-      targetIds: targets,
-      action: { kind: "inspect", status: "recorded", result: label },
-      speaker: "god",
-    };
-  if (event.type === "witch_potion_used")
-    return {
-      ...scene,
-      kind: "action",
-      actorId,
-      targetIds: targets,
-      action: {
-        kind: p.potionType === "heal" ? "heal" : p.potionType === "poison" ? "poison" : "generic",
-        status: "recorded",
-      },
-      speaker: "god",
-    };
-  if (event.type === "guard_applied")
-    return {
-      ...scene,
-      kind: "action",
-      actorId,
-      targetIds: targets,
-      action: { kind: "guard", status: "choice" },
-      speaker: "god",
-    };
-  if (event.type === "voted_out")
-    return {
-      ...scene,
-      kind: "action",
-      targetIds: typeof p.target === "number" ? [p.target] : [],
-      action: { kind: "exile", status: "recorded" },
-      speaker: "god",
-    };
+  }
   if (["night_resolved", "additional_deaths"].includes(event.type))
     return {
       ...scene,

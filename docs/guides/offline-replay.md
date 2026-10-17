@@ -34,6 +34,8 @@ fixture通过稳定origin／suite选择，loader根据manifest currentPath定位
 
 `frontend/src/video` 是工作台和离线渲染共用的基础设施。`compileVideoPlan` 从规范复盘及可选 `VideoScript` 编译纯 JSON `VideoPlan`；预览、图片、音轨和片段导出消费同一时间线。可执行命令见 [frontend README](../../frontend/README.md#视频预览与导出)。
 
+新项目的纯编排函数、类型及帧查询从 `src/video/plan` 导入；React／Remotion 组件从 `src/video/render` 导入。旧 `src/video` 入口继续兼容。编译内部复用同一份已校验记录解释，原始事件读取入口继续独立校验；脚本署名、正文及镜头标注不覆盖记录事实。字幕页、结果揭晓和已准备语音共用单镜头调度，状态 cue 绑定同一揭晓节点。主题实现只消费求值后的画面与节点，不重新解释事件或提交生命状态。
+
 ### 默认广播与旧版兼容
 
 无脚本时默认 `broadcast-v1`，画幅1920×1080：12人分左右各6席，名册固定，中央按结构化出处显示发言、技能、票型、结算、阶段与通用说明。日夜使用独立色板；原文与身份牌分开，玩家声称不会改真实身份。移动网页提供独立全文和席位查看，完整视频可全屏横向观看。

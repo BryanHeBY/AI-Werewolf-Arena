@@ -138,6 +138,7 @@ export interface VideoScene {
   stock?: { actorId: number; abilityId: string; heal: number; poison: number };
   /** 同段后续记录的独立结果；揭晓不替代life_committed的生命提交。 */
   resolution?: { text: string; targetId?: number; revealFrame: number };
+  /** 内建旧场景及已准备计划的展示兼容字段；本地化 result 不供选材或事实推断，结构化报告归 visual。 */
   action?: {
     kind:
       | "wolf-vote"

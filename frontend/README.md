@@ -66,6 +66,8 @@ bun run --cwd frontend replay:render -- --input ../record/session_<id> --output 
 - `offline-replay.ts`：公开 God 文档的读取与校验；`replay-projection.ts`：唯一事实投影和前缀索引。
 - `src/video`：编译 `VideoPlan`、语义场景、状态揭晓 cue 与共用 `VideoComposition`；长文分页，按两语阅读预算及settled后完整停留编译自动时长；`captionPageRanges` 明确每页帧区间。
 - `src/video/plan`：纯数据公开入口，供准备/检查命令及编译消费者使用；`src/video/render`：React／Remotion 画面与音轨入口。旧 `src/video` 继续兼容既有项目，包含渲染依赖；新消费者按职责选择入口。
+- 编译内部按 `records → source-index → shot-content → shot-timing → shot-state/tracks → plan` 分工。记录解释只在本次编译和玩家名单内共享；单镜头调度同时拥有字幕、结果及语音时段，事实切换消费其揭晓节点，不由主题重新计时。
+- `video/render/broadcast` 分别拥有常驻名册、发言、票型、行动、公告及正文强调；宿主只求值一次帧视图。哥特道具选择、素材组合与报告封印在 `themes/gothic`，通用连接线与有限动画时钟仍由视频层拥有。
 - `src/presentation`：白名单展示资料、LLM头像徽记与64角色小纹章；`src/themes`：共用主题数据及独立网页偏好。
 - 私有档案只在浏览器显式导入，不自动发现其他玩家，不参与视频或授予 God 信息。角色视角舞台、公开脱敏、在线观战与 MP4 任务队列仍不属于当前范围。
 

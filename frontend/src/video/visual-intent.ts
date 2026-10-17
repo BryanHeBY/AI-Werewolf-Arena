@@ -8,7 +8,7 @@ import {
   type ReplayEvent,
   type ReplayFact,
 } from "@ai-werewolf-arena/replay-contract";
-import { readReplayEvent } from "../replay/replay-event-reader";
+import { readReplayEvent, type ReadReplayEvent } from "../replay/replay-event-reader";
 import { VIDEO_EVENT_VISUAL_ROUTES, VIDEO_STAGE_VISUAL_ROUTES } from "./visual-routes";
 import type { VideoVisualIntent, VideoVisualReport } from "./types";
 import type { GameOutcome } from "@ai-werewolf-arena/game-contract";
@@ -57,6 +57,19 @@ export function eventVisualIntent(
   event: ReplayEvent | undefined,
   playerIds: number[],
 ): VideoVisualIntent {
+  return visualIntentFromRecord(
+    event,
+    event && Object.hasOwn(VIDEO_EVENT_VISUAL_ROUTES, event.type)
+      ? readReplayEvent(event, playerIds)
+      : null,
+  );
+}
+
+/** 编译内部消费一次校验后的记录；独立原始事件入口仍由上面的 wrapper 校验。 */
+export function visualIntentFromRecord(
+  event: ReplayEvent | undefined,
+  parsed: ReadReplayEvent | null,
+): VideoVisualIntent {
   const source = { eventSeqs: event ? [event.seq] : [], factSeqs: [] };
   const neutral: VideoVisualIntent = {
     family: "god_announcement",
@@ -69,7 +82,6 @@ export function eventVisualIntent(
     fallbackReason: event ? "unknown_or_invalid_event" : "no_event",
   };
   if (!event || !Object.hasOwn(VIDEO_EVENT_VISUAL_ROUTES, event.type)) return neutral;
-  const parsed = readReplayEvent(event, playerIds);
   if (!parsed) return neutral;
   const p = parsed.event.payload;
   const route = VIDEO_EVENT_VISUAL_ROUTES[event.type as keyof typeof VIDEO_EVENT_VISUAL_ROUTES];

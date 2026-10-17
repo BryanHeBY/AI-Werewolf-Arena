@@ -38,7 +38,7 @@ import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { thiefEventLabel } from "@ai-werewolf-arena/game-presentation";
-import { readReplayEvent } from "./replay-event-reader";
+import { readReplayEvent, type ReadReplayEvent } from "./replay-event-reader";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import {
   readGravekeeperFeedback,
@@ -74,10 +74,19 @@ export function eventLabel(
   playerIds?: readonly number[],
   roster: readonly NamedPlayer[] = [],
 ): string {
+  return eventLabelFromRecord(readReplayEvent(event, playerIds), locale, playerIds, roster);
+}
+
+/** 内部复用已校验记录的双语标签；原始事件的公开入口仍独立校验。 */
+export function eventLabelFromRecord(
+  fact: ReadReplayEvent | null,
+  locale: Locale,
+  playerIds?: readonly number[],
+  roster: readonly NamedPlayer[] = [],
+): string {
   const text = createPlayerText(roster);
-  const fact = readReplayEvent(event, playerIds);
   if (!fact) return text(locale, "replay.unknown");
-  event = fact.event;
+  const event = fact.event;
   const p = event.payload;
   const warden = wardenEventLabel(event.type, p, locale, text);
   if (warden !== null) return warden;
