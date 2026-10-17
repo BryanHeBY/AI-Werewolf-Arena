@@ -68,6 +68,8 @@ async function unpublished() {
   delete r.decisions.at(-1)!.settleOrder;
   r.checkpoints = r.checkpoints.slice(0, 1);
   r.events = r.events.slice(0, r.checkpoints[0]!.eventCount);
+  // 前缀裁掉游标之后的事实，保留原序号和覆盖声明，避免先被通用事实校验拒绝。
+  if (r.facts) r.facts = r.facts.filter((fact) => fact.afterSeq <= r.events.length);
   r.finalized = false;
   r.termination = null;
   r.operations = [];

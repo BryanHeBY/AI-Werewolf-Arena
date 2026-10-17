@@ -23,6 +23,8 @@ function prefix(day: number, stage: string, pending: boolean) {
   r.termination = null;
   r.checkpoints = r.checkpoints.filter((c) => c.cycle < day);
   r.events = r.events.slice(0, r.checkpoints.at(-1)!.eventCount);
+  // 事件前缀只能携带游标以内的事实，原 seq 与完整死亡覆盖声明继续保留。
+  if (r.facts) r.facts = r.facts.filter((fact) => fact.afterSeq <= r.events.length);
   r.operations = [];
   return r;
 }

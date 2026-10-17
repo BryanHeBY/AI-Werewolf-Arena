@@ -16,6 +16,9 @@ test("legitimate pending Trace uses only previous complete checkpoint and curren
   r.operations = [];
   r.checkpoints.pop();
   r.events = r.events.slice(0, r.checkpoints.at(-1).eventCount);
+  // 前缀同时保留同一事件游标内的原事实；后续事实不能越过已截短的事件流。
+  if (r.facts)
+    r.facts = r.facts.filter((fact: { afterSeq: number }) => fact.afterSeq <= r.events.length);
   r.decisions.at(-1).outcome = { kind: "pending" };
   delete r.decisions.at(-1).settleOrder;
   // Tape3 的 false-close 候选属于终态 error；这里构造尚未结算的前缀，须移除这份返回证据。

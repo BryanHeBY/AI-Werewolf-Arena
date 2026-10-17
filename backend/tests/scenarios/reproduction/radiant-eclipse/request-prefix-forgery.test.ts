@@ -23,6 +23,8 @@ function pending() {
   r.termination = null;
   r.checkpoints = r.checkpoints.filter((c) => c.cycle <= 1);
   r.events = r.events.slice(0, r.checkpoints.at(-1)!.eventCount);
+  // 只截断事件会残留后续事实，掩盖本用例真正要审核的请求许可与私有知识边界。
+  if (r.facts) r.facts = r.facts.filter((fact) => fact.afterSeq <= r.events.length);
   r.operations = [];
   return r;
 }
