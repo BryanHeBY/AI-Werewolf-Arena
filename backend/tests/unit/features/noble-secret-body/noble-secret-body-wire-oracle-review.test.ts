@@ -12,6 +12,7 @@ import {
 // 生产投影、折叠器、归约器、World 或生成的预期快照。
 // 独立静态传输契约由手工编写，不导入预期检查器
 // 或生产 schema 构造器；仅本校准夹具被加强。
+// 固定协议包含自爆确认，仍由独立字面输入校准完整协议及隐私拒绝。
 function staticSchema(locale: "en" | "zh-CN") {
   return locale === "en"
     ? {
@@ -19,7 +20,7 @@ function staticSchema(locale: "en" | "zh-CN") {
         tools: {
           get_game_schema: "{}; query the fixed tool protocol without returning game state.",
           submit_action:
-            "{ turn_id, action, arguments }; select one validated action. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+            "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
           report_bug:
             "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
         },
@@ -29,7 +30,7 @@ function staticSchema(locale: "en" | "zh-CN") {
         tools: {
           get_game_schema: "{}；查询固定工具协议，不返回局内状态。",
           submit_action:
-            "{ turn_id, action, arguments }；选择一个通过校验的行动。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
+            "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
           report_bug: "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
         },
       };

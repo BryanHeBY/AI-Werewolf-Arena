@@ -7,18 +7,19 @@ import type {
   ReproductionRecord,
 } from "../../../../../src/recording/reproduction/format";
 type Tuple = [number, string, Record<string, unknown>];
+// 独立字面协议包含自爆确认约定；仍逐值比较完整响应，不从生产格式器生成预期。
 const protocolDescriptions = {
   en: {
     get_game_schema: "{}; query the fixed tool protocol without returning game state.",
     submit_action:
-      "{ turn_id, action, arguments }; select one validated action. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+      "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
     report_bug:
       "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
   },
   "zh-CN": {
     get_game_schema: "{}；查询固定工具协议，不返回局内状态。",
     submit_action:
-      "{ turn_id, action, arguments }；选择一个通过校验的行动。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
+      "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
     report_bug: "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
   },
 } as const;

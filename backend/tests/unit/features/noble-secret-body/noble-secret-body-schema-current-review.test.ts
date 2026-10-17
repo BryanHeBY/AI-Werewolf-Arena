@@ -17,12 +17,13 @@ const known = {
   publicRevealDay: null,
   awaitingNightReport: false,
 };
+// 独立手写当前固定协议，包含自爆确认，不复用被测检查器的预期。
 const schema = {
   protocol_version: "1",
   tools: {
     get_game_schema: "{}; query the fixed tool protocol without returning game state.",
     submit_action:
-      "{ turn_id, action, arguments }; select one validated action. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+      "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
     report_bug:
       "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
   },
