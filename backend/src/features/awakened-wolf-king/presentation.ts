@@ -5,6 +5,8 @@
  */
 import type { AwakenedClawState } from "@ai-werewolf-arena/game-contract/facts/awakened-claws";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
+
 export function awakenedClawPromptState(state: AwakenedClawState | null, locale: Locale): string {
   const received = state?.units[0]?.source.kind === "bequest";
   const units =
@@ -29,4 +31,19 @@ export function awakenedClawPromptState(state: AwakenedClawState | null, locale:
     " " +
     text(locale, "role.awakened_wolf_king.state", { units, bequests })
   );
+}
+
+/** 只解释本轮已授予的工具与上下文，未命中时交回后续机制。 */
+export function renderAwakenedClawStageHint(
+  request: ActionRequest,
+  queries: { locale(): Locale },
+): string | undefined {
+  // 按原字段优先级展示请求已带来的候选，不据这些文字重新授权目标。
+  if (
+    request.allowedTools.includes("bequeath_claw") &&
+    request.context.claw_bequest_candidates !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.claw_bequest_candidates", {
+      ids: request.context.claw_bequest_candidates.join(", "),
+    });
 }

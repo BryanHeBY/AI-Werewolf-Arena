@@ -5,6 +5,22 @@
  * 每次 World／语言／Catalog／板子读取保留位置，不建立新状态镜像；角色 renderer 晚调用，
  * 失败保留原回调和读取前缀。模板、人设、传输提示及实际行动提交由各自所有者负责。
  */
+import { renderLoverPrompt } from "../../features/cupid/presentation";
+import { renderAwakenedGuardStageHint } from "../../features/awakened-guard/presentation";
+import { renderAwakenedKnightStageHint } from "../../features/awakened-knight/presentation";
+import { renderAwakenedBeautyStageHint } from "../../features/awakened-wolf-beauty/presentation";
+import { renderAwakenedPatrolStageHint } from "../../features/awakened-hunter/presentation";
+import { renderAwakenedWitchStageHint } from "../../features/awakened-witch/presentation";
+import { renderWardenStageHint } from "../../features/warden/presentation";
+import { renderAwakenedClawStageHint } from "../../features/awakened-wolf-king/presentation";
+import { renderSilenceStageHint } from "../../features/silence-elder/presentation";
+import { renderCrowStageHint } from "../../features/crow/presentation";
+import { renderAnimalDreamStageHint } from "../../features/animal-dream/presentation";
+import { renderFragrantPairStageHint } from "../../features/fragrant-pair-seer/presentation";
+import { renderWolfKnifeStageHint } from "../../features/wolf/presentation";
+import { renderMistRavenStageHint } from "../../features/mist-raven/presentation";
+import { renderSheriffStageHint } from "../../features/sheriff/presentation";
+import { buildWitchKnifeContextHint } from "../../features/witch/presentation";
 import { projectAwakenedClaws } from "../../features/awakened-wolf-king/observation-ports";
 import { awakenedClawPromptState } from "../../features/awakened-wolf-king/presentation";
 import { COMPONENT } from "../../domain/components/names";
@@ -25,7 +41,6 @@ import {
   isFragrantPairBoard,
   fragrantPlayerKnowledge,
 } from "../../features/fragrant-pair-seer/authority";
-import { settlesNightBeforeDay } from "../../rulesets/night-death-timing";
 import { projectAlchemist, projectRaven } from "../../features/mist-raven/player-projection";
 import { weddingActorView } from "../../features/ghost-bride/authority";
 import { projectLonelyGirl } from "../../features/lonely-girl/lifecycle";
@@ -309,17 +324,7 @@ export function buildPlayerStatusDirective(
   if (debateVoteBlocked(queries.world(), request.actorId, request.context.day))
     lines.push(text(queries.locale(), "prompt.status.debate_penalty"));
   const lover = projectLover(queries.world(), request.actorId);
-  if (lover) {
-    lines.push(text(queries.locale(), "prompt.status.lover", { partner: lover.partnerId }));
-    // 只解释公开政策；不展示关系记录中的伴侣阵营、是否人狼恋或秘密胜利分组。
-    lines.push(
-      text(
-        queries.locale(),
-        lover.policy === "lui_meme_lovers_only_v1" ? "rules.lovers.lui" : "rules.lovers.netease",
-      ),
-    );
-    if (lover.mayNotVotePartner) lines.push(text(queries.locale(), "prompt.status.lovers_vote"));
-  }
+  if (lover) lines.push(...renderLoverPrompt(lover, () => queries.locale()));
   // 原文最后调用；optional-call 在没有 renderer 时不读取语言，不提前捕获自定义回调结果。
   const privateState = rolePresentationRenderer(role)?.(queries.locale()).trim();
   if (privateState)
@@ -335,204 +340,38 @@ export function buildPlayerStageContextHint(
   request: ActionRequest,
   queries: Pick<PlayerPromptDirectiveQueries, "locale" | "boardConfig">,
 ): string | undefined {
-  if (
-    request.allowedTools.includes("awakened_protect") &&
-    request.context.awakened_protect_options
-  ) {
-    const o = request.context.awakened_protect_options;
-    return text(queries.locale(), "prompt.stage.awakened_protect", {
-      targets: o.targetIds.join(", "),
-      last: String(o.last),
-    });
-  }
-  if (request.allowedTools.includes("awakened_duel") && request.context.awakened_duel_options) {
-    const o = request.context.awakened_duel_options;
-    return text(queries.locale(), "prompt.stage.awakened_duel", {
-      targets: o.targetIds.join(", "),
-      continuing: String(o.continuing),
-    });
-  }
-  if (
-    request.allowedTools.includes("awakened_charm") &&
-    request.context.awakened_charm_candidates !== undefined
-  )
-    return text(queries.locale(), "prompt.stage.awakened_charm_candidates", {
-      ids: request.context.awakened_charm_candidates.join(", "),
-    });
-  if (request.allowedTools.includes("patrol") && request.context.patrol_seat_order !== undefined)
-    return text(queries.locale(), "prompt.stage.patrol_seat_order", {
-      ids: request.context.patrol_seat_order.join(" → "),
-    });
-  // 新族先用稳定工具数组筛选；不向旧请求增加context/getter查询，保原目标提示的读取顺序。
-  if (request.allowedTools.includes("awakened_brew") && request.context.awakened_brew_options) {
-    const o = request.context.awakened_brew_options,
-      locale = queries.locale(),
-      none = text(locale, "common.none");
-    return text(locale, "prompt.stage.awakened_brew", {
-      assistants: o.assistantIds.join(", ") || none,
-      brews: o.brewRemaining,
-      canHeal: text(locale, o.canHeal ? "common.yes" : "common.no"),
-      canPoison: text(locale, o.canPoison ? "common.yes" : "common.no"),
-      heal: o.healRemaining,
-      knife: o.wolfTarget ?? none,
-      required: o.requiredAssistants,
-      targets: o.targetIds.join(", ") || none,
-    });
-  }
-  if (
-    request.allowedTools.some((t) => t === "brew_discuss" || t === "brew_approve") &&
-    request.context.brew_collaboration
-  ) {
-    const g = request.context.brew_collaboration;
-    return text(queries.locale(), "prompt.stage.brew_group", {
-      assistants: g.assistantIds.join(", "),
-      ordinal: g.ordinal,
-      target: g.targetId,
-    });
-  }
-  if (
-    request.allowedTools.includes("warden_pair") &&
-    request.context.warden_candidates !== undefined
-  )
-    return text(queries.locale(), "prompt.stage.warden_candidates", {
-      ids: request.context.warden_candidates.join(", "),
-    });
-  if (
-    request.allowedTools.includes("warden_decide") &&
-    request.context.warden_partner_id !== undefined
-  )
-    return text(queries.locale(), "prompt.stage.warden_partner", {
-      partner: request.context.warden_partner_id,
-    });
-  if (
-    request.allowedTools.some((t) => ["check_identity", "use_potion", "dream"].includes(t)) &&
-    request.context.warden_forced_target !== undefined
-  ) {
-    const forced = text(queries.locale(), "prompt.stage.warden_forced", {
-      target: request.context.warden_forced_target,
-    });
-    // 强制目标和已获准的刀口是两条独立信息，不能因交易约束遮掉女巫的合法知情。
-    // 刀口只读取本次请求，不向 World 查询未披露的狼刀或交易对象身份。
-    return request.allowedTools.includes("use_potion")
-      ? [forced, buildWitchKnifeContextHint(request, queries.locale())].join(" ")
-      : forced;
-  }
-  // 按原字段优先级展示请求已带来的候选，不据这些文字重新授权目标。
-  if (
-    request.allowedTools.includes("bequeath_claw") &&
-    request.context.claw_bequest_candidates !== undefined
-  )
-    return text(queries.locale(), "prompt.stage.claw_bequest_candidates", {
-      ids: request.context.claw_bequest_candidates.join(", "),
-    });
-  if (request.allowedTools.includes("silence") && request.context.silence_candidates !== undefined)
-    return text(queries.locale(), "prompt.stage.silence_candidates", {
-      ids: request.context.silence_candidates.join(", "),
-    });
-  if (
-    request.allowedTools.includes("gesture") &&
-    request.context.stage === "silence_gesture" &&
-    request.context.silence_target_id !== undefined
-  )
-    return text(queries.locale(), "prompt.stage.silence_gesture", {
-      target: request.context.silence_target_id,
-      round: text(
-        queries.locale(),
-        request.context.silence_round === "pk" ? "silence.round.pk" : "silence.round.day",
-      ),
-    });
-  if (
-    request.allowedTools.includes("translate_silence") &&
-    request.context.stage === "silence_translation" &&
-    request.context.silence_target_id !== undefined &&
-    request.context.silence_gesture_description !== undefined
-  )
-    return text(queries.locale(), "prompt.stage.silence_translation", {
-      target: request.context.silence_target_id,
-      round: text(
-        queries.locale(),
-        request.context.silence_round === "pk" ? "silence.round.pk" : "silence.round.day",
-      ),
-      description: request.context.silence_gesture_description,
-    });
-  if (
-    request.allowedTools.includes("curse_exile") &&
-    request.context.crow_candidates !== undefined
-  ) {
-    const ids = request.context.crow_candidates;
-    return ids.length
-      ? text(
-          queries.locale(),
-          ids.includes(request.actorId) ? "prompt.targets.self" : "prompt.targets.others",
-          { ids: ids.join(", ") },
-        )
-      : text(queries.locale(), "prompt.targets.none");
-  }
-  if (request.context.fox_candidates)
-    return text(queries.locale(), "prompt.stage.fox_candidates", {
-      ids: request.context.fox_candidates.join(", "),
-    });
-  const pairCandidates =
-    request.context.fragrant_pair_candidates ?? request.context.pair_check_candidates;
-  if (pairCandidates)
-    return text(queries.locale(), "prompt.stage.fragrant_pair_candidates", {
-      ids: pairCandidates.join(", "),
-    });
-  if (request.context.wolf_kill_candidates !== undefined)
-    return text(queries.locale(), "prompt.stage.wolf_kill_candidates", {
-      candidates:
-        request.context.wolf_kill_candidates.join(", ") || text(queries.locale(), "common.none"),
-    });
-  if (request.context.stage === "alchemist_snake")
-    return text(queries.locale(), "prompt.stage.snake", {
-      target: request.context.snake_target ?? text(queries.locale(), "common.none"),
-      candidates:
-        (request.context.snake_candidates ?? []).join(", ") ||
-        text(queries.locale(), "common.none"),
-    });
-  if (request.context.stage === "alchemist_mist")
-    return text(queries.locale(), "prompt.stage.mist", {
-      candidates: (request.context.mist_candidates ?? []).join(", "),
-    });
-  if (request.context.stage === "raven_knife")
-    return text(queries.locale(), "prompt.stage.raven_knife", {
-      candidates: (request.context.raven_candidates ?? []).join(", "),
-    });
+  const awakenedGuard = renderAwakenedGuardStageHint(request, queries);
+  if (awakenedGuard !== undefined) return awakenedGuard;
+  const awakenedKnight = renderAwakenedKnightStageHint(request, queries);
+  if (awakenedKnight !== undefined) return awakenedKnight;
+  const awakenedBeauty = renderAwakenedBeautyStageHint(request, queries);
+  if (awakenedBeauty !== undefined) return awakenedBeauty;
+  const awakenedPatrol = renderAwakenedPatrolStageHint(request, queries);
+  if (awakenedPatrol !== undefined) return awakenedPatrol;
+  const awakenedWitch = renderAwakenedWitchStageHint(request, queries);
+  if (awakenedWitch !== undefined) return awakenedWitch;
+  const warden = renderWardenStageHint(request, queries, () =>
+    buildWitchKnifeContextHint(request, queries.locale()),
+  );
+  if (warden !== undefined) return warden;
+  const awakenedClaw = renderAwakenedClawStageHint(request, queries);
+  if (awakenedClaw !== undefined) return awakenedClaw;
+  const silence = renderSilenceStageHint(request, queries);
+  if (silence !== undefined) return silence;
+  const crow = renderCrowStageHint(request, queries);
+  if (crow !== undefined) return crow;
+  const animalDream = renderAnimalDreamStageHint(request, queries);
+  if (animalDream !== undefined) return animalDream;
+  const fragrantPair = renderFragrantPairStageHint(request, queries);
+  if (fragrantPair !== undefined) return fragrantPair;
+  const wolfKnife = renderWolfKnifeStageHint(request, queries);
+  if (wolfKnife !== undefined) return wolfKnife;
+  const mistRaven = renderMistRavenStageHint(request, queries);
+  if (mistRaven !== undefined) return mistRaven;
   const stage = getActionRequestStage(request);
   const day = getActionRequestDay(request);
-  // 板子 getter 在原两个表达式分别读取；! 仅消除类型缩窄丢失，不缓存或新增运行时拒绝。
-  const firstDaySheriffTiming =
-    day === 1 &&
-    queries.boardConfig()?.enableSheriff === true &&
-    !settlesNightBeforeDay(queries.boardConfig()!) &&
-    ["sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote"].includes(
-      stage,
-    )
-      ? text(queries.locale(), "prompt.stage.sheriff_timing")
-      : undefined;
-  if (stage === "sheriff_nomination") {
-    return [text(queries.locale(), "prompt.stage.sheriff_nomination"), firstDaySheriffTiming]
-      .filter(Boolean)
-      .join(" ");
-  }
-  if (stage === "sheriff_campaign_speech") {
-    return firstDaySheriffTiming;
-  }
-  if (stage === "sheriff_withdraw") {
-    return [text(queries.locale(), "prompt.stage.sheriff_withdraw"), firstDaySheriffTiming]
-      .filter(Boolean)
-      .join(" ");
-  }
-  if (stage === "sheriff_vote" || stage === "sheriff_pk_vote") {
-    const pk = queries.boardConfig()?.sheriff?.electionPolicy === "awa_nomination_offstage_pk_v1";
-    const eligibility =
-      stage === "sheriff_pk_vote" || request.context.round === 2
-        ? "prompt.stage.sheriff_vote_pk_second"
-        : pk
-          ? "prompt.stage.sheriff_vote_pk_first"
-          : "prompt.stage.sheriff_vote";
-    return [text(queries.locale(), eligibility), firstDaySheriffTiming].filter(Boolean).join(" ");
-  }
+  const sheriff = renderSheriffStageHint(request, stage, day, queries);
+  if (sheriff) return sheriff.text;
   if (stage === "scholar_mentor_choice")
     return text(queries.locale(), "prompt.stage.modifier_choice", {
       modes: (request.context.modifier_modes ?? []).join(", "),
@@ -557,22 +396,4 @@ export function buildPlayerStageContextHint(
       : undefined;
   }
   return buildWitchKnifeContextHint(request, queries.locale());
-}
-
-/** 只渲染请求已授权披露的刀口；undefined 与 null 分别保留“不知情”和“没有刀口”的含义。 */
-function buildWitchKnifeContextHint(request: ActionRequest, locale: Locale): string {
-  if (request.context.wolf_targets !== undefined)
-    return request.context.wolf_targets.length
-      ? text(locale, "prompt.stage.wolf_targets", {
-          targets: request.context.wolf_targets.join(", "),
-        })
-      : text(locale, "prompt.stage.no_wolf_target");
-  if (typeof request.context.wolf_target === "number") {
-    return text(locale, "prompt.stage.wolf_target", {
-      target: request.context.wolf_target,
-    });
-  }
-  return request.context.wolf_target === null
-    ? text(locale, "prompt.stage.no_wolf_target")
-    : text(locale, "prompt.stage.unknown_wolf_target");
 }

@@ -4,6 +4,8 @@
  */
 import type { AwakenedGuardState } from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
+
 export function awakenedGuardPromptState(state: AwakenedGuardState | null, locale: Locale): string {
   const brief = text(locale, "role.awakened_guard.brief");
   if (!state) return brief;
@@ -27,4 +29,21 @@ export function awakenedGuardPromptState(state: AwakenedGuardState | null, local
       history: history.join("; ") || text(locale, "common.none"),
     })
   );
+}
+
+/** 只解释本轮已授予的工具与上下文，未命中时交回后续机制。 */
+export function renderAwakenedGuardStageHint(
+  request: ActionRequest,
+  queries: { locale(): Locale },
+): string | undefined {
+  if (
+    request.allowedTools.includes("awakened_protect") &&
+    request.context.awakened_protect_options
+  ) {
+    const o = request.context.awakened_protect_options;
+    return text(queries.locale(), "prompt.stage.awakened_protect", {
+      targets: o.targetIds.join(", "),
+      last: String(o.last),
+    });
+  }
 }

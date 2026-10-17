@@ -5,6 +5,8 @@
 import type { AwakenedPatrolState } from "@ai-werewolf-arena/game-contract/facts/awakened-patrol";
 import { text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { patrolDirection } from "@ai-werewolf-arena/game-presentation";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
+
 export function awakenedPatrolPromptState(
   state: AwakenedPatrolState | null,
   locale: Locale,
@@ -30,4 +32,15 @@ export function awakenedPatrolPromptState(
               }),
     })
   );
+}
+
+/** 只解释本轮已授予的工具与上下文，未命中时交回后续机制。 */
+export function renderAwakenedPatrolStageHint(
+  request: ActionRequest,
+  queries: { locale(): Locale },
+): string | undefined {
+  if (request.allowedTools.includes("patrol") && request.context.patrol_seat_order !== undefined)
+    return text(queries.locale(), "prompt.stage.patrol_seat_order", {
+      ids: request.context.patrol_seat_order.join(" → "),
+    });
 }

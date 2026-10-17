@@ -4,6 +4,8 @@
  */
 import type { AwakenedKnightState } from "@ai-werewolf-arena/game-contract/facts/awakened-duel";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
+
 export function awakenedKnightPromptState(
   state: AwakenedKnightState | null,
   locale: Locale,
@@ -17,4 +19,18 @@ export function awakenedKnightPromptState(
       targets: state.attempts.map((a) => a.targetId).join(", ") || text(locale, "common.none"),
     })
   );
+}
+
+/** 只解释本轮已授予的工具与上下文，未命中时交回后续机制。 */
+export function renderAwakenedKnightStageHint(
+  request: ActionRequest,
+  queries: { locale(): Locale },
+): string | undefined {
+  if (request.allowedTools.includes("awakened_duel") && request.context.awakened_duel_options) {
+    const o = request.context.awakened_duel_options;
+    return text(queries.locale(), "prompt.stage.awakened_duel", {
+      targets: o.targetIds.join(", "),
+      continuing: String(o.continuing),
+    });
+  }
 }

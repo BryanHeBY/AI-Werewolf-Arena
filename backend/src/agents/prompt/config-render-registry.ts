@@ -3,8 +3,17 @@
  * 文案在实际调用时读取原字段／默认值，不校验有限牌组、不修改参数、推进阶段或保存可变语言。
  * 查验文案只从独立政策公开入口读取，不通过显示路径装配夜阶段、领取库存或取得行动许可。
  */
+import { renderCupidBoardRules } from "../../features/cupid/presentation";
+import { renderCrowBoardRules } from "../../features/crow/presentation";
+import { renderSheriffBoardStatus } from "../../features/sheriff/presentation";
+import { renderSheriffTimingRules } from "../../features/sheriff/presentation";
+import { renderWitchSelfHealRules } from "../../features/witch/presentation";
+import { renderAnimalDreamBoardRules } from "../../features/animal-dream/presentation";
+import { renderSeerBoardRules } from "../../features/seer/presentation";
+import { renderWitchBoardRules } from "../../features/witch/presentation";
+import { renderSheriffElectionRules } from "../../features/sheriff/presentation";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { settlesNightBeforeDay } from "../../rulesets/night-death-timing";
+
 import { renderDeathActionPolicy } from "../../features/death-actions/death-action-policy";
 import { renderInspectionPolicy } from "../../features/role-inspection/policy-ports";
 import { WinCondition, WitchSelfHealRule, Role, KnightDuelWindow } from "../../domain/model";
@@ -42,17 +51,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
         : []),
       ...(config.radiantEclipse ? [text(locale, "rules.radiant_eclipse")] : []),
       text(locale, "prompt.config.title"),
-      ...(config.cupid ||
-      config.roleSetups.some((entry) => entry.role === Role.Cupid && entry.count > 0)
-        ? [
-            text(
-              locale,
-              config.cupid?.policy === "lui_meme_lovers_only_v1"
-                ? "rules.lovers.lui"
-                : "rules.lovers.netease",
-            ),
-          ]
-        : []),
+      ...renderCupidBoardRules(config, locale),
       ...(config.roleSetups.some((entry) => entry.role === Role.Guard && entry.count > 0) &&
       config.roleSetups.some((entry) => entry.role === Role.Witch && entry.count > 0)
         ? [text(locale, "rules.ordinary_night_protection")]
@@ -65,28 +64,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
       ...(config.warden ? [text(locale, "prompt.config.warden")] : []),
       ...(config.awakenedWolfKing ? [text(locale, "prompt.config.awakened_wolf_king")] : []),
       ...(config.silenceElder ? [text(locale, "prompt.config.silence_elder")] : []),
-      ...(config.crow
-        ? [
-            text(locale, "prompt.config.crow", {
-              ballot: text(
-                locale,
-                config.crow.ballotPolicy === "all_ballots"
-                  ? "crow.ballot.all"
-                  : "crow.ballot.first",
-              ),
-              action: text(
-                locale,
-                config.crow.actionPolicy === "required_when_legal"
-                  ? "crow.action.required"
-                  : "crow.action.optional",
-              ),
-              self: text(
-                locale,
-                config.crow.selfTarget ? "crow.self.allowed" : "crow.self.forbidden",
-              ),
-            }),
-          ]
-        : []),
+      ...renderCrowBoardRules(config, locale),
       ...(config.scholarMentor ? [text(locale, "prompt.config.scholar_mentor")] : []),
       ...(config.magician
         ? [
@@ -153,31 +131,8 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
           ]
         : []),
       text(locale, "prompt.config.win", { rules: winConditions }),
-      text(locale, "prompt.config.sheriff", {
-        rules: sheriffEnabled
-          ? text(locale, "prompt.config.sheriff_enabled", {
-              weight: config.sheriff?.voteWeight ?? 1.5,
-            })
-          : text(locale, "common.disabled"),
-      }),
-      ...(sheriffEnabled
-        ? [
-            text(
-              locale,
-              config.mistRaven
-                ? "prompt.config.mist_raven_timing"
-                : settlesNightBeforeDay(config)
-                  ? "prompt.config.night_before_sheriff"
-                  : "prompt.config.sheriff_timing",
-            ),
-            text(
-              locale,
-              config.sheriff?.badgePolicy === "awa_holder_choice_v1"
-                ? "prompt.config.badge_choice"
-                : "prompt.config.badge_next",
-            ),
-          ]
-        : []),
+      renderSheriffBoardStatus(config, locale, sheriffEnabled),
+      ...renderSheriffTimingRules(config, locale, sheriffEnabled),
       text(locale, "prompt.config.blast", {
         rules: windows.length
           ? text(locale, "prompt.config.blast_enabled", {
@@ -185,20 +140,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             })
           : text(locale, "common.disabled"),
       }),
-      ...(config.witch
-        ? [
-            text(locale, "prompt.config.self_heal", {
-              rules: text(
-                locale,
-                healRule === WitchSelfHealRule.Always
-                  ? "prompt.config.self_heal_always"
-                  : healRule === WitchSelfHealRule.FirstNightOnly
-                    ? "prompt.config.self_heal_first"
-                    : "prompt.config.self_heal_disabled",
-              ),
-            }),
-          ]
-        : []),
+      ...renderWitchSelfHealRules(config, locale, healRule),
       ...(config.roleSetups.some((entry) => entry.role === Role.Guard && entry.count > 0)
         ? [
             text(
@@ -239,66 +181,10 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             ),
           ]
         : []),
-      ...(config.animalDream
-        ? [
-            text(locale, "rules.animal_dream", {
-              catPolicy: text(
-                locale,
-                config.whiteCat!.skippedVotePolicy === "awa_wait_for_actual_exile_v1"
-                  ? "animal.policy.cat_wait"
-                  : "animal.policy.cat_skip",
-              ),
-              ballotPolicy: text(
-                locale,
-                config.pufferfish!.ballotPolicy === "awa_first_ballot_v1"
-                  ? "animal.policy.puffer_first"
-                  : "animal.policy.puffer_final",
-              ),
-            }),
-          ]
-        : []),
-      ...(config.roleSetups.some((entry) => entry.role === Role.Seer && entry.count > 0)
-        ? [
-            text(
-              locale,
-              config.seer?.targetPolicy === "awa_fresh_others_v1"
-                ? "role.seer.targets_fresh"
-                : "role.seer.targets_alive",
-            ),
-            text(
-              locale,
-              config.seer?.actionPolicy !== "awa_optional_v1"
-                ? "role.seer.action_required"
-                : "role.seer.action_optional",
-            ),
-          ]
-        : []),
-      ...(config.roleSetups.some((entry) => entry.role === Role.Witch && entry.count > 0)
-        ? [
-            text(
-              locale,
-              config.witch?.knifeVisibility === "awa_always_v1"
-                ? "role.witch.knife_always"
-                : "role.witch.knife_with_heal",
-            ),
-            text(
-              locale,
-              config.witch?.potionPolicy === "awa_both_native_experimental_v1"
-                ? "role.witch.potions_both"
-                : "role.witch.potions_one",
-            ),
-          ]
-        : []),
-      ...(sheriffEnabled
-        ? [
-            text(
-              locale,
-              config.sheriff?.electionPolicy === "awa_nomination_offstage_pk_v1"
-                ? "prompt.config.sheriff_pk"
-                : "prompt.config.sheriff_direct",
-            ),
-          ]
-        : []),
+      ...renderAnimalDreamBoardRules(config, locale),
+      ...renderSeerBoardRules(config, locale),
+      ...renderWitchBoardRules(config, locale),
+      ...renderSheriffElectionRules(config, locale, sheriffEnabled),
       text(
         locale,
         config.voting?.exilePolicy === "awa_one_pk_v1"

@@ -7,6 +7,8 @@ import type {
   AwakenedBeautyKnowledge,
 } from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
+
 export function awakenedBeautyKnowledge(state: AwakenedBeautyState): AwakenedBeautyKnowledge {
   return {
     policy: state.policy,
@@ -39,4 +41,18 @@ export function awakenedBeautyPromptState(
           .join("; ") || text(locale, "common.none"),
     })
   );
+}
+
+/** 只解释本轮已授予的工具与上下文，未命中时交回后续机制。 */
+export function renderAwakenedBeautyStageHint(
+  request: ActionRequest,
+  queries: { locale(): Locale },
+): string | undefined {
+  if (
+    request.allowedTools.includes("awakened_charm") &&
+    request.context.awakened_charm_candidates !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.awakened_charm_candidates", {
+      ids: request.context.awakened_charm_candidates.join(", "),
+    });
 }

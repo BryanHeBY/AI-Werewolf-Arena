@@ -5,6 +5,8 @@
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { WardenState, WardenKnowledge } from "@ai-werewolf-arena/game-contract/facts/warden";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
+
 export function projectWardenKnowledge(state: WardenState, actorId: number): WardenKnowledge {
   return {
     policy: state.policy,
@@ -27,4 +29,39 @@ export function wardenPromptState(state: WardenState | null, locale: Locale): st
       ids: state?.history.flatMap((r) => r.pair ?? []).join(", ") || text(locale, "common.none"),
     })
   );
+}
+
+/** 只解释本轮已授予的工具与上下文，未命中时交回后续机制。 */
+export function renderWardenStageHint(
+  request: ActionRequest,
+  queries: { locale(): Locale },
+  witchKnifeContext: () => string,
+): string | undefined {
+  if (
+    request.allowedTools.includes("warden_pair") &&
+    request.context.warden_candidates !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.warden_candidates", {
+      ids: request.context.warden_candidates.join(", "),
+    });
+  if (
+    request.allowedTools.includes("warden_decide") &&
+    request.context.warden_partner_id !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.warden_partner", {
+      partner: request.context.warden_partner_id,
+    });
+  if (
+    request.allowedTools.some((t) => ["check_identity", "use_potion", "dream"].includes(t)) &&
+    request.context.warden_forced_target !== undefined
+  ) {
+    const forced = text(queries.locale(), "prompt.stage.warden_forced", {
+      target: request.context.warden_forced_target,
+    });
+    // 强制目标和已获准的刀口是两条独立信息，不能因交易约束遮掉女巫的合法知情。
+    // 刀口只读取本次请求，不向 World 查询未披露的狼刀或交易对象身份。
+    return request.allowedTools.includes("use_potion")
+      ? [forced, witchKnifeContext()].join(" ")
+      : forced;
+  }
 }

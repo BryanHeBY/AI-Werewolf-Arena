@@ -4,6 +4,8 @@
  */
 import type { SilenceElderState } from "@ai-werewolf-arena/game-contract/facts/silence-elder";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract";
+
 export function silenceElderPromptState(state: SilenceElderState | null, locale: Locale): string {
   const last = state?.history.at(-1);
   const choice = last
@@ -18,4 +20,41 @@ export function silenceElderPromptState(state: SilenceElderState | null, locale:
     " " +
     text(locale, "role.silence_elder.state", { choice })
   );
+}
+
+/** 只解释本轮已授予的工具与上下文，未命中时交回后续机制。 */
+export function renderSilenceStageHint(
+  request: ActionRequest,
+  queries: { locale(): Locale },
+): string | undefined {
+  if (request.allowedTools.includes("silence") && request.context.silence_candidates !== undefined)
+    return text(queries.locale(), "prompt.stage.silence_candidates", {
+      ids: request.context.silence_candidates.join(", "),
+    });
+  if (
+    request.allowedTools.includes("gesture") &&
+    request.context.stage === "silence_gesture" &&
+    request.context.silence_target_id !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.silence_gesture", {
+      target: request.context.silence_target_id,
+      round: text(
+        queries.locale(),
+        request.context.silence_round === "pk" ? "silence.round.pk" : "silence.round.day",
+      ),
+    });
+  if (
+    request.allowedTools.includes("translate_silence") &&
+    request.context.stage === "silence_translation" &&
+    request.context.silence_target_id !== undefined &&
+    request.context.silence_gesture_description !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.silence_translation", {
+      target: request.context.silence_target_id,
+      round: text(
+        queries.locale(),
+        request.context.silence_round === "pk" ? "silence.round.pk" : "silence.round.day",
+      ),
+      description: request.context.silence_gesture_description,
+    });
 }
