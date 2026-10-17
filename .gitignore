@@ -5,6 +5,8 @@ node_modules
 # Build output
 dist
 */dist
+# 前端预览、画廊与视频导出产物
+/output/
 
 # Environment variables
 .env
