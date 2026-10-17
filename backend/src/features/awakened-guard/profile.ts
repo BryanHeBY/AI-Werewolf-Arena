@@ -3,6 +3,7 @@
  * 输出唯一周期初始化、工具／夜阶段／验证与纯展示；资料和JSON工具不授保护或白天请求权。
  * 新awakened_protect明确区别既有觉醒隐狼awakened_guard工具，保持旧SDK参数契约。
  */
+import { withArgumentVariants } from "../../engine/actions/argument-variants";
 import { z } from "zod";
 import { Role, Camp, Phase, RuleError, WinCondition } from "@ai-werewolf-arena/game-contract";
 import {
@@ -57,15 +58,31 @@ export const AWAKENED_GUARD_ROLE_PROFILE: RoleContributions = {
     toolSpecs: [
       {
         name: "awakened_protect",
-        parameters: {
-          type: "object",
-          properties: {
-            mode: { type: "string", enum: ["protect", "wait", "pass"] },
-            target_id: { type: ["integer", "null"], minimum: 1 },
+        ...withArgumentVariants(
+          {
+            type: "object",
+            properties: {
+              mode: { type: "string", enum: ["protect", "wait", "pass"] },
+              target_id: { type: ["integer", "null"], minimum: 1 },
+            },
+            required: ["mode", "target_id"],
+            additionalProperties: false,
           },
-          required: ["mode", "target_id"],
-          additionalProperties: false,
-        },
+          [
+            {
+              properties: {
+                mode: { type: "string", const: "protect" },
+                target_id: { type: "integer", minimum: 1 },
+              },
+            },
+            {
+              properties: {
+                mode: { type: "string", enum: ["wait", "pass"] },
+                target_id: { type: "null" },
+              },
+            },
+          ],
+        ),
         argHint: 'awakened_protect args: {"mode":"protect"|"wait"|"pass","target_id":number|null}',
         userPromptHintKey: "action.awakened_protect.hint",
       },

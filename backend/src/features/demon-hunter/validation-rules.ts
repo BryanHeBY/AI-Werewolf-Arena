@@ -59,7 +59,9 @@ export const DEMON_REQUEST_ADMISSION: TrustedRequestAdmission = {
     )
       return { ok: false, error: RuleError.ToolMismatch };
     const demonWitch = tool === "use_potion" && demonHunterActorId(world) !== null;
-    const potionCall = demonWitch ? readDemonPotionTool({ name: tool, args: rawArgs }) : null;
+    const potionCall = demonWitch
+      ? readDemonPotionTool({ name: tool, args: rawArgs }, request.actorId)
+      : null;
     if (
       demonWitch &&
       (!potionCall || !demonWitchRequestTargetCurrent(world, request, potionCall.args.target_id))

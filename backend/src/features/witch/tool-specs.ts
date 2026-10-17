@@ -3,6 +3,7 @@
  * 输出为原可写工具数组与本地化指令。number 规格／提示不验证当前库存、目标或救毒资格，
  * 不修复参数、提交用药或扩张事件可见性。
  */
+import { withArgumentVariants } from "../../engine/actions/argument-variants";
 import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫工具规格与阶段提示规则定义。 */
 import { PotionType } from "../../domain/model";
@@ -12,19 +13,25 @@ import { StageDirectiveRule, ToolSpec } from "../../engine/actions/tool-contract
 export const WITCH_TOOL_SPECS: ToolSpec[] = [
   {
     name: "use_potion",
-    parameters: {
-      type: "object",
-      properties: {
-        target_id: { type: "number" },
-        potion_type: {
-          type: "string",
-          enum: [PotionType.Heal, PotionType.Poison, PotionType.None],
+    ...withArgumentVariants(
+      {
+        type: "object",
+        properties: {
+          target_id: { type: "number" },
+          potion_type: {
+            type: "string",
+            enum: [PotionType.Heal, PotionType.Poison, PotionType.None],
+          },
         },
+        required: ["target_id", "potion_type"],
+        additionalProperties: false,
       },
-      required: ["target_id", "potion_type"],
-      additionalProperties: false,
-    },
-    argHint: `use_potion args: {"target_id":number,"potion_type":"${PotionType.Heal}"|"${PotionType.Poison}"|"${PotionType.None}"}`,
+      [
+        { properties: { potion_type: { type: "string", enum: ["heal", "poison"] } } },
+        { properties: { potion_type: { type: "string", const: "none" } }, omit: ["target_id"] },
+      ],
+    ),
+    argHint: `use_potion args: {"potion_type":"${PotionType.Heal}"|"${PotionType.Poison}","target_id":number} | {"potion_type":"${PotionType.None}"}`,
   },
 ];
 

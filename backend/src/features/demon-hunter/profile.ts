@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { withTargetOrAbstain } from "../../engine/actions/argument-variants";
 import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
@@ -56,7 +57,7 @@ export const DEMON_HUNTER_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "demon_hunt",
-        parameters: {
+        ...withTargetOrAbstain({
           type: "object",
           properties: {
             target_id: { type: ["integer", "null"], minimum: 1 },
@@ -64,7 +65,7 @@ export const DEMON_HUNTER_ROLE_PROFILE: NativeRoleContributions = {
           },
           required: ["target_id", "abstain"],
           additionalProperties: false,
-        },
+        }),
         argHint: 'demon_hunt args: {"target_id":number|null,"abstain":boolean}',
         userPromptHintKey: "action.demon_hunt.hint",
       },

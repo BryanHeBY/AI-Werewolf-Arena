@@ -2,6 +2,7 @@
  * 定义纯白查验目标与对应工具校验。输入为当前 World 角色和请求目标；输出为政策允许
  * 的编号或结构化拒绝。目标枚举不提交查验或发表私密结果，原目标／来源及失败顺序不变。
  */
+import { withTargetOrAbstain } from "../../engine/actions/argument-variants";
 import { ownedToolRule } from "../../engine/actions/validation-queries";
 
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
@@ -28,7 +29,7 @@ export function pureWhiteInspectionTargets(
 }
 export const PURE_WHITE_INSPECTION_TOOL: NonNullable<RoleProfile["toolSpecs"]>[number] = {
   name: "inspect_night_identity",
-  parameters: {
+  ...withTargetOrAbstain({
     type: "object",
     properties: {
       target_id: { type: ["integer", "null"], minimum: 1 },
@@ -36,7 +37,7 @@ export const PURE_WHITE_INSPECTION_TOOL: NonNullable<RoleProfile["toolSpecs"]>[n
     },
     required: ["target_id", "abstain"],
     additionalProperties: false,
-  },
+  }),
   argHint: 'inspect_night_identity args: {"target_id":number|null,"abstain":boolean}',
   userPromptHintKey: "action.inspect_night_identity.hint",
 };

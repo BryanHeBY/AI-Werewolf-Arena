@@ -65,9 +65,12 @@ function observeStructure(
   return { kind: "data", structure: { kind: array ? "array" : "object", entries } };
 }
 
-function observeParameters(spec: ToolSpec): SchemaObservation {
+function observeParameters(
+  spec: ToolSpec,
+  field: "parameters" | "legacyParameters" = "parameters",
+): SchemaObservation {
   if (types.isProxy(spec)) return opaque;
-  const descriptor = Object.getOwnPropertyDescriptor(spec, "parameters");
+  const descriptor = Object.getOwnPropertyDescriptor(spec, field);
   if (!descriptor || !("value" in descriptor)) return opaque;
   return observeStructure(descriptor.value, new Set(), { remaining: 65_536 }, 0);
 }
@@ -99,6 +102,15 @@ function checkedName(registered: Map<ToolName, ToolSpec>, spec: ToolSpec): ToolN
       const suffix = typeof name === "string" ? `:${name}` : "";
       throw new Error(TOOL_SCHEMA_CONFLICT + suffix);
     }
+    // 显式旧输入同样属于接收契约；只比较双方已有的自有数据，不执行兼容字段 getter。
+    const oldBefore = observeParameters(previous, "legacyParameters"),
+      oldAfter = observeParameters(spec, "legacyParameters");
+    if (
+      oldBefore.kind === "data" &&
+      oldAfter.kind === "data" &&
+      !equalStructure(oldBefore.structure, oldAfter.structure)
+    )
+      throw new Error(TOOL_SCHEMA_CONFLICT + ":" + name);
   }
   return name;
 }

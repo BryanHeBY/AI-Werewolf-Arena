@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { withArgumentVariants } from "../../engine/actions/argument-variants";
 import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
@@ -35,16 +36,19 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
       {
         name: "self_destruct_with_target",
         confirmation: "self_destruct",
-        parameters: {
-          type: "object",
-          properties: {
-            reason: { type: "string" },
-            confirm: { type: "boolean" },
-            target_id: { type: ["number", "null"] },
+        ...withArgumentVariants(
+          {
+            type: "object",
+            properties: {
+              reason: { type: "string" },
+              confirm: { type: "boolean" },
+              target_id: { type: ["number", "null"] },
+            },
+            required: ["reason", "confirm", "target_id"],
+            additionalProperties: false,
           },
-          required: ["reason", "confirm", "target_id"],
-          additionalProperties: false,
-        },
+          [{ properties: { confirm: { type: "boolean", const: true } } }],
+        ),
         argHint:
           'self_destruct_with_target args: {"reason":"...","confirm":true,"target_id":number|null}',
         userPromptHintKey: "action.white_wolf_king.hint",

@@ -77,6 +77,14 @@ test("different data schema now rejects while preserving the already registered 
   expect(registered.get("speak")).toBe(first);
 });
 
+test("相同模型结构不能悄悄替换已有的旧输入契约", () => {
+  const first = { ...spec(), legacyParameters: parameters() };
+  const incompatible = { ...spec(), legacyParameters: { ...parameters(), required: [] } };
+  expect(() => new ToolSpecRegistry([first, incompatible], [])).toThrow(
+    "tool_schema_conflict:speak",
+  );
+});
+
 test("complete structure includes unknown keywords and ordered array values", () => {
   for (const [before, after] of [
     [parameters(), { ...parameters(), unrecognized_keyword: 7 }],

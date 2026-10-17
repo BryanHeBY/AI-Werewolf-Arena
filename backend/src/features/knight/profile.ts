@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { withArgumentVariants } from "../../engine/actions/argument-variants";
 import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
@@ -48,12 +49,15 @@ export const KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "duel",
-        parameters: {
-          type: "object",
-          properties: { target_id: { type: "number" }, confirm: { type: "boolean" } },
-          required: ["target_id", "confirm"],
-          additionalProperties: false,
-        },
+        ...withArgumentVariants(
+          {
+            type: "object",
+            properties: { target_id: { type: "number" }, confirm: { type: "boolean" } },
+            required: ["target_id", "confirm"],
+            additionalProperties: false,
+          },
+          [{ properties: { confirm: { type: "boolean", const: true } } }],
+        ),
         argHint: 'duel args: {"target_id":number,"confirm":true}',
         userPromptHintKey: "action.knight.hint",
       },

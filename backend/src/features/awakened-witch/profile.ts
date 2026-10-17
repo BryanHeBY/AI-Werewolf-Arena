@@ -3,6 +3,7 @@
  * 输出本族历史初始化、工具/阶段/校验及纯值展示；工具登记不授予协助者行动权。
  * 唯一历史槽拥有次数与资格，不复用普通女巫瓶数或中央原生角色捕获分派。
  */
+import { withArgumentVariants } from "../../engine/actions/argument-variants";
 import { z } from "zod";
 import { Role, Camp, Phase, RuleError, WinCondition } from "@ai-werewolf-arena/game-contract";
 import {
@@ -57,22 +58,55 @@ export const AWAKENED_WITCH_ROLE_PROFILE: RoleContributions = {
     toolSpecs: [
       {
         name: "awakened_brew",
-        parameters: {
-          type: "object",
-          properties: {
-            mode: { type: "string", enum: ["heal", "poison", "pass"] },
-            target_id: { type: ["integer", "null"], minimum: 1 },
-            assistant_ids: {
-              type: "array",
-              items: { type: "integer", minimum: 1 },
-              minItems: 0,
-              maxItems: 3,
-              uniqueItems: true,
+        ...withArgumentVariants(
+          {
+            type: "object",
+            properties: {
+              mode: { type: "string", enum: ["heal", "poison", "pass"] },
+              target_id: { type: ["integer", "null"], minimum: 1 },
+              assistant_ids: {
+                type: "array",
+                items: { type: "integer", minimum: 1 },
+                minItems: 0,
+                maxItems: 3,
+                uniqueItems: true,
+              },
             },
+            required: ["mode", "target_id", "assistant_ids"],
+            additionalProperties: false,
           },
-          required: ["mode", "target_id", "assistant_ids"],
-          additionalProperties: false,
-        },
+          [
+            {
+              properties: {
+                mode: { type: "string", const: "heal" },
+                target_id: { type: "integer", minimum: 1 },
+                // 禁止数组元素同时明确空数组，避免转换器遗漏 maxItems:0。
+                assistant_ids: { type: "array", items: false, maxItems: 0 },
+              },
+            },
+            {
+              properties: {
+                mode: { type: "string", const: "poison" },
+                target_id: { type: "integer", minimum: 1 },
+                assistant_ids: {
+                  type: "array",
+                  items: { type: "integer", minimum: 1 },
+                  minItems: 1,
+                  maxItems: 3,
+                  uniqueItems: true,
+                },
+              },
+            },
+            {
+              properties: {
+                mode: { type: "string", const: "pass" },
+                target_id: { type: "null" },
+                // 禁止数组元素同时明确空数组，避免转换器遗漏 maxItems:0。
+                assistant_ids: { type: "array", items: false, maxItems: 0 },
+              },
+            },
+          ],
+        ),
         argHint:
           'awakened_brew args: {"mode":"heal"|"poison"|"pass","target_id":number|null,"assistant_ids":number[]}',
         userPromptHintKey: "action.awakened_brew.hint",

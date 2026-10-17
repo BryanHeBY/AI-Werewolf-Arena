@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { withTargetOrAbstain } from "../../engine/actions/argument-variants";
 import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
@@ -76,16 +77,19 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
         name: "swap_night_seats",
-        parameters: {
-          type: "object",
-          properties: {
-            first_id: { type: ["integer", "null"], minimum: 1 },
-            second_id: { type: ["integer", "null"], minimum: 1 },
-            abstain: { type: "boolean" },
+        ...withTargetOrAbstain(
+          {
+            type: "object",
+            properties: {
+              first_id: { type: ["integer", "null"], minimum: 1 },
+              second_id: { type: ["integer", "null"], minimum: 1 },
+              abstain: { type: "boolean" },
+            },
+            required: ["first_id", "second_id", "abstain"],
+            additionalProperties: false,
           },
-          required: ["first_id", "second_id", "abstain"],
-          additionalProperties: false,
-        },
+          ["first_id", "second_id"],
+        ),
         argHint:
           'swap_night_seats args: {"first_id":number|null,"second_id":number|null,"abstain":true|false}',
         userPromptHintKey: "action.swap_night_seats.hint",

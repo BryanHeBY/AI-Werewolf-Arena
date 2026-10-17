@@ -3,6 +3,7 @@
  * 数组、规格及 parameters 保持可写，登记和首次 schema 解析由消费 registry／接收器负责。
  * 这里创建资料而不消费库存或提交动作；schema 与提示的存在不等于当前请求准入。
  */
+import { withTargetOrAbstain } from "./argument-variants";
 import { ToolSpec } from "./tool-contracts";
 
 /** write_note → debate_vote → report_bug → speak → vote 的原公开顺序；const 不冻结数组或内层规格。 */
@@ -69,7 +70,7 @@ export const COMMON_TOOL_SPECS: ToolSpec[] = [
   {
     // target_id 与 abstain 都是必填结构；两者语义关系和当前目标合法性仍需后续规则。
     name: "vote",
-    parameters: {
+    ...withTargetOrAbstain({
       type: "object",
       properties: {
         target_id: { type: ["number", "null"] },
@@ -77,7 +78,7 @@ export const COMMON_TOOL_SPECS: ToolSpec[] = [
       },
       required: ["target_id", "abstain"],
       additionalProperties: false,
-    },
+    }),
     argHint: 'vote args: {"target_id":number|null,"abstain":true|false}',
   },
 ];

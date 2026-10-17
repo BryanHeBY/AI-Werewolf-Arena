@@ -462,9 +462,9 @@ export const zhCN = {
   "error.black_market_skill": "黑市礼物只可选择check、poison或gun。",
   "death.black_market_backlash": "黑市反噬",
   "prompt.targets.lucky_poison":
-    "幸运毒药的合法目标编号：{ids}。保留技能可不调用工具；none始终使用你自己的编号{actor}，不受毒目标列表限制。",
+    "幸运毒药的合法目标编号：{ids}。保留技能可不调用工具；{actor}号选择none时无需填写target_id，不受毒目标列表限制。",
   "action.lucky.directive":
-    "当前是幸运儿阶段，本轮只使用绑定的幸运实例；可不调用工具等待到后夜。use_potion仅poison或none（none的target_id须本人），无解药或刀口。guard可守自己/其它活人或target_id:null且abstain:true空守；空守不花一次但关闭本夜，普通守护只挡刀且与解药同守同救相抵消。check_identity不可自验。实际技能使用才花独立的一次库存，原生能力继续按自己的阶段与库存行动。",
+    "当前是幸运儿阶段，本轮只使用绑定的幸运实例；可不调用工具等待到后夜。use_potion仅poison或none（none无需target_id），无解药或刀口。guard可守自己/其它活人或target_id:null且abstain:true空守；空守不花一次但关闭本夜，普通守护只挡刀且与解药同守同救相抵消。check_identity不可自验。实际技能使用才花独立的一次库存，原生能力继续按自己的阶段与库存行动。",
   "role.miracle_merchant.brief":
     "好人神职，任意夜一次赠验/毒/守给另一活人；给真狼反噬，幸运技能当夜起一次。",
   "role.miracle_merchant.state":
@@ -486,7 +486,7 @@ export const zhCN = {
   "console.merchant.outcome":
     "【上帝交易结果】第{day}夜{actor}号对{target}号的{skill}：{outcome}。",
   "ability.lucky.rules":
-    "幸运能力规则：独立一次库存，从收到当夜起在幸运儿阶段700可用，也可留后夜。可不调用工具等待；空守或none不花一次但关闭本夜。实际死亡永久失效，不因复活或转移恢复。原生与幸运技能按同一玩家联合约束：同类技能本夜不能重复同目标；守护还须避开自己前夜两种操作守过的全部目标，不限制别人的选择。幸运查验不可self，幸运毒可self但none须target_id为本人；无解药/刀口，不能读其它玩家原生行动，商人ID不公开。非法或撤权不消耗新实例，已提交消费和效果前缀保留。",
+    "幸运能力规则：独立一次库存，从收到当夜起在幸运儿阶段700可用，也可留后夜。可不调用工具等待；空守或none不花一次但关闭本夜。实际死亡永久失效，不因复活或转移恢复。原生与幸运技能按同一玩家联合约束：同类技能本夜不能重复同目标；守护还须避开自己前夜两种操作守过的全部目标，不限制别人的选择。幸运查验不可self，幸运毒可self但none不填写target_id；无解药/刀口，不能读其它玩家原生行动，商人ID不公开。非法或撤权不消耗新实例，已提交消费和效果前缀保留。",
   "ability.lucky.history": "你自己当前及前夜已实际使用的目标：{actions}。",
   "console.lucky.skipped": "{actor}号第{day}夜保留幸运技能{ability}，本夜机会已关闭。",
   "stage.lucky": "幸运儿行动",
@@ -767,9 +767,9 @@ export const en = {
   "error.black_market_skill": "Choose check, poison or gun as the Black Market gift.",
   "death.black_market_backlash": "Black Market backlash",
   "prompt.targets.lucky_poison":
-    "Legal poison target IDs for this lucky instance: {ids}. To hold the skill, pass without a tool; none always uses your own ID {actor}, independently of the poison target list.",
+    "Legal poison target IDs for this lucky instance: {ids}. To hold the skill, pass without a tool; player {actor} can submit none without target_id, independently of the poison target list.",
   "action.lucky.directive":
-    "This is the Lucky recipient stage. Use only this turn's bound lucky instance, or pass without a tool and hold it for later. use_potion accepts poison or none only (none target_id must be yourself); no antidote or knife information. guard may target self/another living player, or target_id:null with abstain:true for empty guard. Empty guard closes this night without spending the use; ordinary guard blocks knives only and cancels with simultaneous Heal. check_identity cannot target self. An actual skill use spends one independent charge; native skills retain their own stage and inventory.",
+    "This is the Lucky recipient stage. Use only this turn's bound lucky instance, or pass without a tool and hold it for later. use_potion accepts poison or none only (none needs no target_id); no antidote or knife information. guard may target self/another living player, or target_id:null with abstain:true for empty guard. Empty guard closes this night without spending the use; ordinary guard blocks knives only and cancels with simultaneous Heal. check_identity cannot target self. An actual skill use spends one independent charge; native skills retain their own stage and inventory.",
   "role.miracle_merchant.brief":
     "Good god. Once in any night bestow check/poison/guard on another living player; a true wolf causes backlash. A lucky gift has one use from that night.",
   "role.miracle_merchant.state":
@@ -794,7 +794,7 @@ export const en = {
   "console.merchant.outcome":
     "God trade result: player {actor} to player {target}, {skill}, night {day}: {outcome}.",
   "ability.lucky.rules":
-    "Lucky ability rules: one independent use, available in lucky stage 700 from the receiving night or held for a later night. Passing without a tool, empty guard or none closes this night without spending the use. Actual death permanently expires it; revival or transfer never restores it. Your native and lucky actions share actor-local target constraints: no repeated target for the same skill kind this night; Guard also avoids every target you guarded with either skill last night. Other players are unrestricted by your choices. Lucky inspection cannot target self; poison may target self, but none requires your own target_id. No antidote/knife information, no other players' native actions, no merchant ID. Invalid/revoked actions do not spend a new instance; committed consumption and effects retain their prefix.",
+    "Lucky ability rules: one independent use, available in lucky stage 700 from the receiving night or held for a later night. Passing without a tool, empty guard or none closes this night without spending the use. Actual death permanently expires it; revival or transfer never restores it. Your native and lucky actions share actor-local target constraints: no repeated target for the same skill kind this night; Guard also avoids every target you guarded with either skill last night. Other players are unrestricted by your choices. Lucky inspection cannot target self; poison may target self, but none needs no target_id. No antidote/knife information, no other players' native actions, no merchant ID. Invalid/revoked actions do not spend a new instance; committed consumption and effects retain their prefix.",
   "ability.lucky.history":
     "Your own actually used targets from this and the previous night: {actions}.",
   "console.lucky.skipped":

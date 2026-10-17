@@ -219,9 +219,22 @@ export function inheritDemonWitchDeadlineRequest(
 }
 export function readDemonPotionTool(
   value: unknown,
+  noneActorId?: number,
 ): Extract<ToolCall, { name: "use_potion" }> | null {
   try {
     const call = demonSnapshot(value);
+    // 仅接收预检传入本请求行动者时，允许新版无目标 none；领域／历史 reader 默认仍要求旧完整形态。
+    // 先经同一严格快照与字段白名单，再补领域占位，后续仍复验真实请求及目标当前性。
+    if (
+      exactDemonData(call, ["name", "args"]) &&
+      call.name === "use_potion" &&
+      exactDemonData(call.args, ["potion_type"]) &&
+      call.args.potion_type === PotionType.None &&
+      typeof noneActorId === "number" &&
+      Number.isSafeInteger(noneActorId) &&
+      noneActorId > 0
+    )
+      return { name: "use_potion", args: { target_id: noneActorId, potion_type: PotionType.None } };
     if (
       !exactDemonData(call, ["name", "args"]) ||
       call.name !== "use_potion" ||

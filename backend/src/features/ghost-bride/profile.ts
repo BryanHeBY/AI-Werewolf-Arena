@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { withTargetOrAbstain } from "../../engine/actions/argument-variants";
 import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { createGhostBrideValidationRules } from "./validation-rules";
 
@@ -81,12 +82,12 @@ export const GHOST_BRIDE_ROLE_PROFILE: NativeRoleContributions = {
       },
       {
         name: "wedding_kill_vote",
-        parameters: {
+        ...withTargetOrAbstain({
           type: "object",
           properties: { target_id: { type: ["integer", "null"] }, abstain: { type: "boolean" } },
           required: ["target_id", "abstain"],
           additionalProperties: false,
-        },
+        }),
         argHint: 'wedding_kill_vote args: {"target_id":number|null,"abstain":boolean}',
         userPromptHintKey: "action.wedding_kill_vote.hint",
       },

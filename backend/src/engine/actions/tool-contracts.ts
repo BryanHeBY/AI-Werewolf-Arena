@@ -11,8 +11,11 @@ export interface ToolSpec {
   name: ToolName;
   /** 高风险行动由共同选择窗口要求显式往返确认；不是领域提交的授权凭证。 */
   confirmation?: "self_destruct";
-  /** 只用于校验的 JSON Schema；玩家说明由共享本地化提示提供，不写进 schema。 */
+  /** 模型可见且用于新输入校验的 JSON Schema；动态资格仍由领域规则决定。 */
   parameters: Record<string, unknown>;
+  /** 明确保留的旧输入结构；只用于接收兼容，不向新模型推广，也不替代领域校验。 */
+  legacyParameters?: Record<string, unknown>;
+  /** 旧公开简写接口保留兼容；模型的参数说明从 parameters 自动生成。 */
   argHint: string;
   userPromptHint?: string;
   userPromptHintKey?: MessageKey;

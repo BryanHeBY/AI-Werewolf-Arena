@@ -136,7 +136,7 @@ const submissions = [
   {
     turn_id: "t1",
     action: "use_potion",
-    arguments: { target_id: 6, potion_type: PotionType.None },
+    arguments: { potion_type: PotionType.None },
   },
   {
     turn_id: "t1",

@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { withArgumentVariants, withTargetOrAbstain } from "../../engine/actions/argument-variants";
 import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
@@ -90,21 +91,32 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
         ...(base?.runtime.toolSpecs ?? []),
         {
           name: "modify_skill",
-          parameters: {
-            type: "object",
-            properties: {
-              mode: { type: ["string", "null"], enum: ["enhance", "weaken", null] },
-              target_id: { type: ["integer", "null"], minimum: 1 },
+          ...withArgumentVariants(
+            {
+              type: "object",
+              properties: {
+                mode: { type: ["string", "null"], enum: ["enhance", "weaken", null] },
+                target_id: { type: ["integer", "null"], minimum: 1 },
+              },
+              required: ["mode", "target_id"],
+              additionalProperties: false,
             },
-            required: ["mode", "target_id"],
-            additionalProperties: false,
-          },
+            [
+              {
+                properties: {
+                  mode: { type: "string", enum: ["enhance", "weaken"] },
+                  target_id: { type: "integer", minimum: 1 },
+                },
+              },
+              { properties: { mode: { type: "null" }, target_id: { type: "null" } } },
+            ],
+          ),
           argHint: 'modify_skill args: {"mode":"enhance"|"weaken"|null,"target_id":number|null}',
           userPromptHintKey: "action.modify_skill.hint",
         },
         {
           name: "bonus_action",
-          parameters: {
+          ...withTargetOrAbstain({
             type: "object",
             properties: {
               kind: { type: "string", enum: ["check", "guard", "poison", "kill"] },
@@ -113,7 +125,7 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
             },
             required: ["kind", "target_id", "abstain"],
             additionalProperties: false,
-          },
+          }),
           argHint:
             'bonus_action args: {"kind":"check"|"guard"|"poison"|"kill","target_id":number|null,"abstain":boolean}',
           userPromptHintKey: "action.bonus_action.hint",

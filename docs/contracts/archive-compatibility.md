@@ -15,6 +15,8 @@
 
 公开格式兼容与同构建执行分别验证，实际构建身份不能由归档结构或语义版本替代。设计理由见[ADR0004](../decisions/0004-archive-identities-and-evidence.md)。
 
+模型行动参数的新分支约束与历史档案解析分开。旧调用的兼容由工具自己的 `legacyParameters` 及原领域规则明确保留，旧 Tape 与公开事件不按当前模型 schema 重新筛选或批量归一化。女巫新版 `none` 可省略目标，接收边界转为既有领域形态，不升级档案格式；真实源码指纹仍按修改后的构建计算。
+
 ## 严格 Tape3 的返回候选事实
 
 Tape3新增可选`returnedCandidate`，只允许在error结算中保存已返回的ToolCall或显式null。Tape2 reader保原严格decision字段，版本2带该字段仍拒绝；不把旧档迁写为3或补造缺失候选。当前reader接受合法2及3，旧reader对新3没有前向兼容承诺。未知内层版本继续拒绝。

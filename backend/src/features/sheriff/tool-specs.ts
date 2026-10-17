@@ -3,6 +3,7 @@
  * 输出为原可写数组。徽目标仍为 integer／null，普通警长票目标保 number／null；
  * 规格不核存活、票权、徽政策或当前许可，也不提交选举结果。
  */
+import { withTargetOrAbstain } from "../../engine/actions/argument-variants";
 import { ToolSpec } from "../../engine/actions/tool-contracts";
 
 /** 警长机制工具规格列表。 */
@@ -33,7 +34,7 @@ export const SHERIFF_TOOL_SPECS: ToolSpec[] = [
   },
   {
     name: "vote_for_sheriff",
-    parameters: {
+    ...withTargetOrAbstain({
       type: "object",
       properties: {
         target_id: {
@@ -45,7 +46,7 @@ export const SHERIFF_TOOL_SPECS: ToolSpec[] = [
       },
       required: ["target_id", "abstain"],
       additionalProperties: false,
-    },
+    }),
     argHint: 'vote_for_sheriff args: {"target_id":number|null,"abstain":true|false}',
   },
   {

@@ -80,7 +80,11 @@ export class ActionReception {
     // 同一工具只在首个合法参数形态的调用建立 schema；建图失败不先写缓存，后续 properties 仍原位读取。
     let schema = this.schemas.get(tool);
     if (!schema) {
-      schema = z.fromJSONSchema(spec.parameters);
+      schema = z.fromJSONSchema(
+        spec.legacyParameters
+          ? { anyOf: [spec.parameters, spec.legacyParameters] }
+          : spec.parameters,
+      );
       this.schemas.set(tool, schema);
     }
     // 保留原数字字符串修复；不把布尔／文本按 truthiness 或 String() 宽转，也不补缺少的必填参数。
@@ -88,7 +92,8 @@ export class ActionReception {
     if (!admission.ok) return fail(admission.error);
     // 仅各原 reader 明确规范化的参数取其原对象；一般工具仍在全部 raw 预检后做原 spread。
     const input = (admission.args ?? { ...rawArgs }) as Record<string, unknown>;
-    const properties = spec.parameters.properties as
+    // 多分支模型结构不重复根 properties；数值字符串的旧转换仍按原字段表执行。
+    const properties = (spec.legacyParameters ?? spec.parameters).properties as
       Record<string, { type?: string | string[] }> | undefined;
     for (const [key, value] of Object.entries(input)) {
       const type = properties?.[key]?.type;

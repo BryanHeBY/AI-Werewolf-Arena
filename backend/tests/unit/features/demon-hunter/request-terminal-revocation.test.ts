@@ -28,6 +28,7 @@ import {
 } from "../../../../src/domain";
 import { createRandom } from "../../../../src/domain/random";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
@@ -165,6 +166,47 @@ function unchanged(f: Fixture) {
   expect(f.events).toEqual([]);
   expect(f.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
 }
+
+test("猎魔板的独立原生药剂预检接受无目标 none，但仍要求真实且当前的请求", async () => {
+  const f = fixture("potion/schema-none"),
+    receive = new ActionReception(f.world);
+  begin(f, 1);
+  try {
+    const result = await run("potion", f, async (request) => {
+      expect(
+        receive.validate({ ...request, context: { ...request.context } }, "use_potion", {
+          potion_type: "none",
+        }).ok,
+      ).toBe(false);
+      expect(demonWitchRequestCurrent(f.world, request)).toBe(true);
+      expect(receive.validate(request, "use_potion", { potion_type: "heal" }).ok).toBe(false);
+      expect(receive.validate(request, "use_potion", { potion_type: "none", extra: true }).ok).toBe(
+        false,
+      );
+      const accepted = receive.validate(request, "use_potion", { potion_type: "none" });
+      expect(accepted).toEqual({
+        ok: true,
+        action: { name: "use_potion", args: { target_id: 5, potion_type: PotionType.None } },
+      });
+      return accepted.ok ? accepted.action : null;
+    });
+    expect(result).toMatchObject({ used: false });
+    expect(f.events).toHaveLength(1);
+    expect(f.events[0]).toMatchObject({
+      type: "witch_potion_skipped",
+      payload: { actorId: 5, targetId: 5, potionType: PotionType.None },
+    });
+    const stock = findNightAbility(
+      f.world.getComponent(5, COMPONENT.Role),
+      "potion",
+      "native:potion",
+    )!;
+    expect(stock.uses).toBe(0);
+    expect(stock.state).toMatchObject({ heal: 1, poison: 1 });
+  } finally {
+    closeDemonHunterNight(f.world);
+  }
+});
 
 for (const family of ["hunt", "potion"] as const) {
   for (const fault of ["stage", "context", "domain", "earliest_deadline"] as const) {
