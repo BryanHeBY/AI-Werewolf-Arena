@@ -1,12 +1,6 @@
 /**
- * 为前端工作台、视频项目脚本和离线 CLI 消费者导出统一编排与渲染 API。
- * 公开类型、编译器和纯帧组件；不导出对局写权，不在模块装载时读档或执行渲染。
+ * 负责兼容既有项目使用的统一视频入口，保持原编排与渲染导出。
+ * 新消费者分别使用 plan／render；本兼容入口包含 React 依赖，不用于纯数据命令。
  */
-export * from "./types";
-export * from "./source";
-export * from "./compiler";
-export * from "./captions";
-export * from "./layout";
-export * from "./frame";
-export * from "./VideoComposition";
-export type { VideoThemeSlotProps, VideoThemeSlotRegistry } from "./theme-renderers";
+export * from "./plan";
+export * from "./render";

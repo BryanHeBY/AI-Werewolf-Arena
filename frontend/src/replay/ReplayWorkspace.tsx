@@ -24,7 +24,7 @@ import { PlayerSeats } from "./PlayerSeats";
 import { EventTimeline } from "./EventTimeline";
 import { PlayerAgentOutput } from "./PlayerAgentOutput";
 import { useReplayPlayback } from "./useReplayPlayback";
-import { buildVideoFrame, compileVideoPlan, getVideoEventFrame } from "../video";
+import { buildVideoFrame, compileVideoPlan, getVideoEventFrame } from "../video/plan";
 import { presentationPlayers } from "../presentation";
 import { replayFrameNeighbours } from "./replay-video-navigation";
 import { AvatarMark } from "../presentation/AvatarMark";

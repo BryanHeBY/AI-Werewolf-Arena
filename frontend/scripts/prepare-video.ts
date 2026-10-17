@@ -7,7 +7,7 @@ import { readFile, stat, mkdir, copyFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL, fileURLToPath } from "node:url";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { compileVideoPlan, type VideoPlan, type VideoScript } from "../src/video";
+import { compileVideoPlan, type VideoPlan, type VideoScript } from "../src/video/plan";
 import type { VideoProjectDefinition } from "../src/video-project";
 import { parseOfflineReplayJson } from "../src/replay/offline-replay";
 import { resolveReplayInput } from "./replay-dev";

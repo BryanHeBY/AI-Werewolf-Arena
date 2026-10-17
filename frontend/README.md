@@ -65,6 +65,7 @@ bun run --cwd frontend replay:render -- --input ../record/session_<id> --output 
 - `main.tsx → App.tsx → replay/ReplayWorkspace.tsx`：文件状态与工作台；播放控制由 `useReplayPlayback` 拥有。
 - `offline-replay.ts`：公开 God 文档的读取与校验；`replay-projection.ts`：唯一事实投影和前缀索引。
 - `src/video`：编译 `VideoPlan`、语义场景、状态揭晓 cue 与共用 `VideoComposition`；长文分页，按两语阅读预算及settled后完整停留编译自动时长；`captionPageRanges` 明确每页帧区间。
+- `src/video/plan`：纯数据公开入口，供准备/检查命令及编译消费者使用；`src/video/render`：React／Remotion 画面与音轨入口。旧 `src/video` 继续兼容既有项目，包含渲染依赖；新消费者按职责选择入口。
 - `src/presentation`：白名单展示资料、LLM头像徽记与64角色小纹章；`src/themes`：共用主题数据及独立网页偏好。
 - 私有档案只在浏览器显式导入，不自动发现其他玩家，不参与视频或授予 God 信息。角色视角舞台、公开脱敏、在线观战与 MP4 任务队列仍不属于当前范围。
 

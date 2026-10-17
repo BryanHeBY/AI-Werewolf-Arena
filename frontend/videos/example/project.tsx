@@ -8,7 +8,7 @@ import {
   resolveVideoMediaSource,
   type CustomVideoLayerProps,
   type VideoLayerRegistry,
-} from "../../src/video";
+} from "../../src/video/plan";
 
 function DecisionBadge({ frame, props, plan, mediaBaseUrl }: CustomVideoLayerProps) {
   const marker = plan.media.find((asset) => asset.id === "marker")!;

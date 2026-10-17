@@ -8,7 +8,7 @@ import { Player, type PlayerRef } from "@remotion/player";
 import { useMemo, type CSSProperties, type RefObject } from "react";
 import type { PresentationReplay } from "./replay-presentation";
 import { ReplayComposition } from "./ReplayComposition";
-import type { VideoPlan } from "../video";
+import type { VideoPlan } from "../video/plan";
 
 interface ReplayStageProps {
   replay: PresentationReplay;

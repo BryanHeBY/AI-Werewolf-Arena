@@ -5,7 +5,7 @@
  * 其他采样从该源事件的揭晓帧起保持局部偏移，不把原 seq 当数组下标；事实预期仍保留旧纯 reader／字面断言。
  */
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { compileVideoPlan, type VideoPlan } from "../../src/video";
+import { compileVideoPlan, type VideoPlan } from "../../src/video/plan";
 import { buildPresentationReplay } from "../../src/replay/replay-presentation";
 import { FRAMES_PER_EVENT } from "../../src/replay/replay-frame";
 import type { ReplayDisplayOptions } from "../../src/replay/replay-display";

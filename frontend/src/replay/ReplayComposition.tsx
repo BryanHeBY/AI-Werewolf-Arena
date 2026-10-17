@@ -4,7 +4,8 @@
  */
 import { useMemo } from "react";
 import { useCurrentFrame } from "remotion";
-import { compileVideoPlan, getVideoSourceIdentity, VideoFrame } from "../video";
+import { compileVideoPlan, getVideoSourceIdentity } from "../video/plan";
+import { VideoFrame } from "../video/render";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { FRAMES_PER_EVENT, type ReplayRenderInput } from "./replay-frame";
 export { FRAMES_PER_EVENT } from "./replay-frame";

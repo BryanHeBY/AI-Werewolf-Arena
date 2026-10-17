@@ -1,6 +1,6 @@
 /**
- * 架构测试负责核对视频编译和事件视图的单向依赖。输入为真实前端源码的静态运行时 import/export，输出独立的禁入路径断言。
- * 叶视图不得触达视频装配或 React，编译器不得回到旧兼容装配；本测试不执行游戏、渲染或修改源码以通过检查。
+ * 架构测试负责核对视频编译、公开数据入口及准备命令的单向依赖。输入为源码运行时 import/export 和字面量加载，输出独立的禁入断言。
+ * 数据消费者不得触达画面装配或 React；用户显式选择的动态项目模块属于插件边界，不作为静态依赖展开。
  */
 import { expect, test } from "bun:test";
 import { readFileSync, existsSync } from "node:fs";
@@ -20,25 +20,10 @@ function dependencies(entry: string) {
       ts.ScriptTarget.Latest,
       true,
     );
-    for (const statement of tree.statements) {
-      if (!(ts.isImportDeclaration(statement) || ts.isExportDeclaration(statement))) continue;
-      if (!statement.moduleSpecifier || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
-      if (ts.isImportDeclaration(statement)) {
-        const clause = statement.importClause;
-        if (
-          clause?.isTypeOnly ||
-          (clause &&
-            !clause.name &&
-            clause.namedBindings &&
-            ts.isNamedImports(clause.namedBindings) &&
-            clause.namedBindings.elements.every((item) => item.isTypeOnly))
-        )
-          continue;
-      } else if (statement.isTypeOnly) continue;
-      const source = statement.moduleSpecifier.text;
+    function dependency(source: string) {
       if (!source.startsWith(".")) {
         externals.add(source);
-        continue;
+        return;
       }
       const base = path.resolve(path.dirname(file), source);
       const target = [
@@ -51,6 +36,35 @@ function dependencies(entry: string) {
       if (!target) throw new Error(`dependency_unresolved:${source}`);
       visit(target);
     }
+    function walk(node: ts.Node): void {
+      if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) {
+        if (!node.moduleSpecifier || !ts.isStringLiteral(node.moduleSpecifier)) return;
+        if (ts.isImportDeclaration(node)) {
+          const clause = node.importClause;
+          if (
+            clause?.isTypeOnly ||
+            (clause &&
+              !clause.name &&
+              clause.namedBindings &&
+              ts.isNamedImports(clause.namedBindings) &&
+              clause.namedBindings.elements.every((item) => item.isTypeOnly))
+          )
+            return;
+        } else if (node.isTypeOnly) return;
+        dependency(node.moduleSpecifier.text);
+        return;
+      }
+      if (
+        ts.isCallExpression(node) &&
+        (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+          (ts.isIdentifier(node.expression) && node.expression.text === "require")) &&
+        node.arguments[0] &&
+        ts.isStringLiteral(node.arguments[0])
+      )
+        dependency(node.arguments[0].text);
+      ts.forEachChild(node, walk);
+    }
+    walk(tree);
   }
   visit(path.join(root, entry));
   return {
@@ -60,13 +74,23 @@ function dependencies(entry: string) {
 }
 
 test("pure event view and video compiler never depend on the legacy video assembly", () => {
-  for (const entry of ["replay/replay-event-view.ts", "video/compiler.ts"]) {
+  for (const entry of [
+    "replay/replay-event-view.ts",
+    "video/compiler.ts",
+    "video/plan/index.ts",
+    "../scripts/prepare-video.ts",
+    "../scripts/inspect-video.ts",
+  ]) {
     const graph = dependencies(entry);
     expect(graph.files).not.toContain("replay/replay-frame.ts");
     expect(graph.files).not.toContain("video/index.ts");
     expect(graph.files).not.toContain("video/VideoComposition.tsx");
-    expect(graph.externals).not.toContain("react");
-    expect(graph.externals).not.toContain("remotion");
+    expect(graph.files).not.toContain("video/render/index.ts");
+    expect(
+      graph.externals.filter((name) =>
+        /^(?:react(?:-dom)?(?:\/|$)|remotion(?:\/|$)|@remotion\/)/.test(name),
+      ),
+    ).toEqual([]);
   }
   expect(
     dependencies("replay/replay-event-view.ts").files.filter((file) => file.startsWith("video/")),

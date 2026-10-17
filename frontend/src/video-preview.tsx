@@ -6,7 +6,8 @@ import { useEffect, useMemo, useState, type ComponentProps, type CSSProperties }
 import { createRoot } from "react-dom/client";
 import { Player } from "@remotion/player";
 import { text } from "@ai-werewolf-arena/game-text";
-import { VideoComposition, type VideoPlan } from "./video";
+import type { VideoPlan } from "./video/plan";
+import { VideoComposition } from "./video/render";
 import { useReplayPlayback } from "./replay/useReplayPlayback";
 import layerRegistry, { themeSlots } from "./video-layer-registry";
 import { DEFAULT_WEB_THEME, resolveTheme, themeToCssVariables } from "./themes";

@@ -3,7 +3,8 @@
  * 宽高、帧率和片长均读取同一计划；组件注册留在 bundle，不随 JSON 传输，不读取项目文件。
  */
 import { Composition } from "remotion";
-import { compileVideoPlan, VideoComposition } from "./video";
+import { compileVideoPlan } from "./video/plan";
+import { VideoComposition } from "./video/render";
 import type { ComponentProps } from "react";
 import type { VideoThemeSlotRegistry } from "./video/theme-renderers";
 

@@ -8,7 +8,7 @@ import path from "node:path";
 import os from "node:os";
 import { prepareVideo, materializeVideo } from "../../../scripts/prepare-video";
 import { renderVideoArtifact, type VideoRendering } from "../../../scripts/render-video-artifact";
-import { getVideoSourceIdentity } from "../../../src/video";
+import { getVideoSourceIdentity } from "../../../src/video/plan";
 import { replayCommandFailure } from "../../../scripts/cli-error";
 
 const fixture = path.resolve(
