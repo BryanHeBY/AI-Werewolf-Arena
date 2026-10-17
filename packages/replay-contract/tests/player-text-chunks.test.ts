@@ -1,4 +1,7 @@
-/** 玩家录制分片以原文可还原和有效代理对不分离为准，不修改历史档案。 */
+/**
+ * 单元测试负责玩家录制分片的 Unicode 与长度边界。输入边界 emoji、换行、长尾及空文本；
+ * 预期来自原文拼接等值与明确字符上限，不修改历史档案或使用生产分片结果生成预期。
+ */
 import { expect, test } from "bun:test";
 import { PLAYER_RECORD_TEXT_LIMIT, splitPlayerRecordText } from "../src/player-text-chunks";
 

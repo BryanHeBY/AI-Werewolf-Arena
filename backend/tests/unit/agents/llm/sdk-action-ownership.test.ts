@@ -7,6 +7,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { SdkGameToolLoop } from "../../../../src/agents/llm/sdk-game-tool-loop";
 import { PlayerPromptSession } from "../../../../src/agents/llm/player-prompt-session";
 import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { LlmOutputRecorder } from "../../../../src/agents/llm/llm-output-recorder";
 import { PlayerOutputObserver } from "../../../../src/agents/player/player-observer";
 import {
   getDefaultToolCallRepairRegistry,
@@ -75,12 +76,16 @@ function sdkLoop(
     printLlmIo: false,
     printThinking: false,
   });
-  if (onTrace) observer.thinking = onTrace;
+  const outputs = new LlmOutputRecorder(observer);
+  if (onTrace) outputs.thinking = onTrace;
   return new SdkGameToolLoop(
     world,
     getDefaultToolCallRepairRegistry(),
     new PlayerPromptSession({ maxPromptEvents: 20, promptPolicy: policy }),
     observer,
+    undefined,
+    undefined,
+    outputs,
   );
 }
 

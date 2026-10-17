@@ -1,4 +1,7 @@
-/** 使用同一原生事件的实时通知与回合轨迹核对无重复录制及显示失败时的前缀保留。 */
+/**
+ * 单元测试负责 Pi 单轮通知与轨迹的无重复编码。输入手写原生事件、宿主回执和失败显示端；
+ * 预期来自字面文本、工具次数及实际错误对象，不运行模型、领域规则或持久化。
+ */
 import { expect, test } from "bun:test";
 import { PiRoundRecording } from "../../../../src/agents/pi/pi-round-recording";
 import type { PiPromptResult, PiSessionEvent } from "../../../../src/adapters/pi/contracts";

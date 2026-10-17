@@ -1,12 +1,17 @@
 /**
- * 通过真实 SDK 编排核对派发边界：重试记录与传输收到的完整消息一致，过期请求不伪造输入。
- * 使用内存客户端与轮次记录探针，不调用模型或修改领域状态。
+ * 单元测试负责 SDK 派发边界与重试输入录制。输入真实编排、内存客户端和过期请求；
+ * 预期来自传输实际收到的消息与明确未调用的反例，不以生产提示生成预期，不调用模型。
  */
 import { expect, spyOn, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { PlayerRoundRecorder } from "../../../../src/app/player-round-recorder";
 import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
-import type { ChatMessage, ChatModelClient } from "../../../../src/adapters/llm/transport";
+import type {
+  ChatMessage,
+  ChatModelClient,
+  ToolSchema,
+  ToolLoopCallbacks,
+} from "../../../../src/adapters/llm/transport";
 import { speakRequest } from "../../../support/builders/agents/acp-requests";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
@@ -17,7 +22,11 @@ test("SDK retries record each full request actually handed to the client", async
     async chat() {
       return "";
     },
-    async runToolLoop<T>(messages, _tools, callbacks) {
+    async runToolLoop<T>(
+      messages: ChatMessage[],
+      _tools: ToolSchema[],
+      callbacks: ToolLoopCallbacks<T>,
+    ) {
       sent.push(structuredClone(messages));
       if (sent.length === 1) return { finalAction: null, assistantText: "" };
       const turn = messages
