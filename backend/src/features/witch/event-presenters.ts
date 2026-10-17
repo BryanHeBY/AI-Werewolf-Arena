@@ -3,6 +3,8 @@
  * 关闭私有输出时不显示行动者、药型或目标；开启后才读取本地化药型。不消费药瓶、判定目标或重算效果，
  * 终端开关不改变独立的玩家受众投影。
  */
+import type * as ScriptRendering from "../../agents/presentation/contracts";
+
 import { type PlayerText } from "@ai-werewolf-arena/game-presentation";
 import { text as defaultText } from "@ai-werewolf-arena/game-text";
 import type { ScriptLiveRenderHandlers } from "../../agents/presentation/contracts";
@@ -43,4 +45,9 @@ export const WITCH_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
+};
+
+export const WITCH_EVENT_STAGE_HANDLERS: ScriptRendering.ScriptReplayStageHandlers = {
+  witch_potion_used: () => "witch",
+  witch_potion_skipped: () => "witch",
 };

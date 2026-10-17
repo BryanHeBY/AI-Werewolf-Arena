@@ -3,6 +3,8 @@
  * 输出为原名单、票项及分类文案，空名单回退 none，放弃先于目标显示，未知方向保原字符串。
  * 只渲染事实，不计票、授徽、校验候选人或改变事件受众。
  */
+import type * as ScriptRendering from "../../agents/presentation/contracts";
+
 import { type PlayerText } from "@ai-werewolf-arena/game-presentation";
 import { text as defaultText, type Locale } from "@ai-werewolf-arena/game-text";
 import type {
@@ -138,4 +140,41 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       undefined,
       text,
     ),
+};
+
+export const SHERIFF_EVENT_JUDGE_HANDLERS: ScriptRendering.ScriptJudgeLineHandlers = {
+  sheriff_pk_started: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    text(locale, "console.pk.sheriff", {
+      players: event.payload.candidates
+        .map((id) => text(locale, "common.player_reference", { id }))
+        .join(", "),
+    }),
+  sheriff_badge_transferred: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    text(locale, "console.judge.badge_transfer", {
+      from: event.payload.fromId,
+      to: event.payload.toId,
+    }),
+  sheriff_badge_destroyed: (event, locale = "zh-CN", text: PlayerText = defaultText) =>
+    text(locale, "console.judge.badge_destroy", { target: event.payload.targetId }),
+};
+
+export const SHERIFF_EVENT_STAGE_HANDLERS: ScriptRendering.ScriptReplayStageHandlers = {
+  sheriff_pk_started: () => "sheriff_pk_speech",
+  sheriff_candidate_declared: () => "sheriff",
+  sheriff_candidates_finalized: () => "sheriff",
+  sheriff_vote_cast: () => "sheriff",
+  sheriff_elected: () => "sheriff",
+};
+
+export const SHERIFF_EVENT_LIVE_HANDLERS: ScriptRendering.ScriptLiveRenderHandlers = {
+  sheriff_pk_started: (event, _private, locale = "zh-CN", text: PlayerText = defaultText) => [
+    {
+      kind: "god",
+      text: text(locale, "console.pk.sheriff", {
+        players: event.payload.candidates
+          .map((id) => text(locale, "common.player_reference", { id }))
+          .join(", "),
+      }),
+    },
+  ],
 };

@@ -69,6 +69,8 @@
 - `features/death-actions/`：9个完整native／learned／gift枪资源、资格、政策、激活和结算owner。
 - `features/wolf-team/permissions.ts`：知识／聊天／刀权的各自政策。
 - `rulesets/roles/`：Catalog、契约、默认装配和presentation声明；不改加载图。
+- `features/*/presentation.ts`：本机制的原生角色提示捕获、请求提示与公开政策。旧55角色的显式捕获表留在 `agents/observation/native-role-presentation-capture.ts`，仅选择程序并传递原引用；共享片段格式化归 `packages/game-presentation/src/native-role-state.ts`，不查询 World 或角色状态。
+- `features/*/event-presenters.ts`／`event-labels.ts`：本机制事件的文字、阶段及终端受众分类。`agents/presentation/event-render-assembly.ts` 明确装配两条展示链及各自顺序，Registry保通用分派、严格null／空数组回退和默认实例；共享包文案不另做逐机制转发。
 - `domain/original-player-scope.ts`与`domain/original-participant.ts`：不同严格度的原体约束，保持独立。
 - `rulesets/awakened-day-role-plan.ts`：原骑士板有限白天边界的守卫→骑士顺序与续步；只输出恢复／入夜意图，盾／尝试库存仍归本族，真实死亡与延期词归DR，阶段及判胜归PM。组合范围见[机制支持边界](../contracts/mechanism-support-boundaries.md#原觉醒骑士十二人联合板)。
 

@@ -3,6 +3,8 @@
  * 输出为查验文案，仅在该选项开启后读取／渲染结果。未知结果显示明确的未知标签，原始数据保留在记录中，
  * 不查验目标、写历史、证明 payload 授权或扩大原事件受众。
  */
+import type * as ScriptRendering from "../../agents/presentation/contracts";
+
 import { type PlayerText } from "@ai-werewolf-arena/game-presentation";
 import { text as defaultText } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
@@ -24,4 +26,8 @@ export const SEER_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       },
     ];
   },
+};
+
+export const SEER_EVENT_STAGE_HANDLERS: ScriptRendering.ScriptReplayStageHandlers = {
+  seer_checked: () => "seer",
 };

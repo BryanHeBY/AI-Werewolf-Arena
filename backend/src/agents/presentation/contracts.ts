@@ -36,3 +36,27 @@ export type ScriptLiveRenderHandlers = {
     text?: PlayerText,
   ) => ScriptLiveRender[] | null;
 };
+
+/** 有序贡献只提供展示文本与分类，不携带机制状态或分派器实例。 */
+export type ScriptEventLabel = (
+  type: GameEvent["type"],
+  payload: GameEvent["payload"],
+  locale: Locale,
+  text: PlayerText,
+) => string | null;
+export interface JudgeLabelContribution {
+  readonly label: ScriptEventLabel;
+  readonly truthy?: boolean;
+}
+/** 机制只消费已经生成的本条文案；事件参数仍为原引用，私有开关的短路由机制保持。 */
+export type ScriptLiveLabelRenderer = (
+  event: GameEvent,
+  printPrivateEvents: boolean,
+  label: string,
+) => ScriptLiveRender[];
+export type LiveRenderContribution = (
+  event: GameEvent,
+  printPrivateEvents: boolean,
+  locale: Locale,
+  text: PlayerText,
+) => ScriptLiveRender[] | null;

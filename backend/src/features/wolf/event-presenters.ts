@@ -4,6 +4,8 @@
  * 终端消费全量事件，直播 handler 须在读取狼队秘密前检查开关；脚本聊天入口保留本地调试用途。
  * 玩家受众仍由独立投影负责，不在展示层组织讨论、计票或消费刀权。
  */
+import type * as ScriptRendering from "../../agents/presentation/contracts";
+
 import { type PlayerText } from "@ai-werewolf-arena/game-presentation";
 import { text as defaultText } from "@ai-werewolf-arena/game-text";
 import type {
@@ -93,4 +95,10 @@ export const WOLF_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
+};
+
+export const WOLF_EVENT_STAGE_HANDLERS: ScriptRendering.ScriptReplayStageHandlers = {
+  wolf_discussion: () => "wolf_discussion",
+  wolf_discussion_ended: () => "wolf_discussion",
+  wolf_kill_vote_cast: () => "wolf_discussion",
 };
