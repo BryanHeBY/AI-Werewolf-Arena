@@ -1,0 +1,26 @@
+# 职责：固定 Bun、恢复公开依赖下载缓存并安装锁定依赖，为每个 runner 建立独占短临时目录及构建身份证据。
+name: Prepare offline CI
+description: Install the declared Bun version and frozen dependencies, then record build provenance.
+runs:
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      id: bun
+      with:
+        bun-version-file: package.json
+    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      with:
+        path: ~/.bun/install/cache
+        key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ steps.bun.outputs.bun-version }}-${{ hashFiles('bun.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ runner.arch }}-bun-${{ steps.bun.outputs.bun-version }}-
+    # 只缓存依赖下载，不缓存工作区／node_modules／运行记录；每个 runner 都重新校验冻结锁文件。
+    - name: Install locked dependencies
+      shell: bash
+      run: bun install --frozen-lockfile
+    - name: Prepare isolated temporary directory and provenance
+      shell: bash
+      run: |
+        task_tmp=$(mktemp -d /tmp/awa-ci.XXXXXX)
+        echo "TMPDIR=$task_tmp" >> "$GITHUB_ENV"
+        bun --no-env-file tooling/ci/provenance.ts

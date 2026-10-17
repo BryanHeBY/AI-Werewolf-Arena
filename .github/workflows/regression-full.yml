@@ -1,0 +1,122 @@
+# 职责：将完整离线后端回归及真实浏览器验证交给独立 runner；保留分片日志、耗时、原档与画面证据。
+name: Regression full
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "packages/**"
+      - "configs.example/**"
+      - "frontend/**"
+      - "tooling/**"
+      - ".github/**"
+      - "package.json"
+      - "bun.lock"
+      - "bunfig.toml"
+  schedule:
+    # UTC 19:23，即北京时间次日 03:23。
+    - cron: "23 19 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regression-full-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: "true"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # main/PR 已由独立 CI fast 验证；夜间、手动及标签入口补齐相同快速检查，避免遗漏共享包或前端单测。
+  fast:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
+    uses: ./.github/workflows/ci-fast.yml
+
+  backend:
+    name: Backend / ${{ matrix.shard }} of 8
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: Prepare shared timing input
+        # 各片必须使用同一份完整耗时输入。只在本 runner 的产物副本上写回，禁止使用每片不同的缓存分配测试。
+        run: cp tooling/ci/backend-test-timings.json ci-artifacts/backend-timings.json
+      - name: Run complete backend shard serially
+        working-directory: backend
+        env:
+          CI_SHARD: ${{ matrix.shard }}
+        run: |
+          bun --no-env-file test --preload ./tests/setup.ts ./tests \
+            --shard="${CI_SHARD}/8" \
+            --timings ../ci-artifacts/backend-timings.json --update-timings \
+            --reporter=junit --reporter-outfile=../ci-artifacts/backend-junit.xml \
+            2>&1 | tee ../ci-artifacts/backend.log
+      - name: Upload shard evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: backend-${{ matrix.shard }}-${{ github.sha }}-${{ github.run_attempt }}
+          path: ci-artifacts/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Upload failed test records
+        if: failure() && env.TMPDIR != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: backend-${{ matrix.shard }}-records-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ env.TMPDIR }}/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  browser:
+    name: Browser / ${{ matrix.shard }} of 4
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: Install matching Chromium and system libraries
+        working-directory: frontend
+        run: bun --no-env-file ./node_modules/@playwright/test/cli.js install --with-deps chromium
+      - name: Run browser shard
+        working-directory: frontend
+        env:
+          CI_SHARD: ${{ matrix.shard }}
+          PLAYWRIGHT_HTML_OPEN: never
+        run: |
+          bun run test:e2e --shard="${CI_SHARD}/4" --fully-parallel --workers=1 \
+            2>&1 | tee ../ci-artifacts/browser.log
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: browser-${{ matrix.shard }}-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            ci-artifacts/
+            frontend/playwright-report/
+            frontend/test-results/
+          retention-days: 14
+          if-no-files-found: warn

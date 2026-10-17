@@ -10,6 +10,7 @@ bun.lock
 dist/
 **/dist/
 coverage/
+/ci-artifacts/
 **/coverage/
 record/
 data/records/

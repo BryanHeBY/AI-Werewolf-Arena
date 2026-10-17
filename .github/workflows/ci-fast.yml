@@ -1,0 +1,59 @@
+# 职责：PR、main 推送及手动执行离线快速门禁；按检查组隔离 runner，保留失败与公开构建证据。
+name: CI fast
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-fast-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: "true"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  fast:
+    name: Fast / ${{ matrix.suite }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [quality, shared, backend, frontend]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: Run fast gate
+        env:
+          CI_SUITE: ${{ matrix.suite }}
+        run: bun --no-env-file tooling/ci/fast.ts "$CI_SUITE" 2>&1 | tee "ci-artifacts/fast-${CI_SUITE}.log"
+      - name: Upload gate evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: fast-${{ matrix.suite }}-${{ github.sha }}-${{ github.run_attempt }}
+          path: ci-artifacts/
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Upload failed test records
+        if: failure() && env.TMPDIR != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: fast-${{ matrix.suite }}-records-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ env.TMPDIR }}/
+          retention-days: 7
+          if-no-files-found: ignore
