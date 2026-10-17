@@ -6,7 +6,8 @@
 import { expect, test } from "bun:test";
 import { type Locale } from "@ai-werewolf-arena/game-text";
 import { cliFailure, takeDisplayArguments } from "../../../src/app/cli/display";
-import { LlmObserver } from "../../../src/agents/player/player-observer";
+import { LlmOutputRecorder } from "../../../src/agents/llm/llm-output-recorder";
+import { PlayerOutputObserver } from "../../../src/agents/player/player-observer";
 import { createAcpConsoleLogger } from "../../../src/adapters/console/console-presenter";
 import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -66,7 +67,7 @@ for (const locale of ["zh-CN", "en"] as const)
     console.log = (...values) => {
       lines.push(values.join(" "));
     };
-    const observer = new LlmObserver({
+    const observer = new PlayerOutputObserver({
       trace: true,
       locale,
       printLlmIo: true,
@@ -83,8 +84,9 @@ for (const locale of ["zh-CN", "en"] as const)
         request,
       );
       observer.trace("request_start player=1 phase=day");
-      observer.rawResponse(speech, request);
-      observer.thinking(
+      const sdkOutputs = new LlmOutputRecorder(observer);
+      sdkOutputs.rawResponse(speech, request);
+      sdkOutputs.thinking(
         [
           {
             assistantText: speech,

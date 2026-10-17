@@ -20,11 +20,13 @@ import {
   type ToolValidationRuleRegistry,
   getDefaultToolValidationRuleRegistry,
 } from "../../rulesets/mechanism-api";
-import { LlmObserver } from "../player/player-observer";
+import { PlayerOutputObserver } from "../player/player-observer";
 import { ChatMessage, ChatModelClient } from "../../adapters/llm/transport";
 import { PlayerPromptSession } from "./player-prompt-session";
 import { resolveTurnConstraints } from "../../engine/actions/turn-constraints";
 import { awaitWithAbort } from "../runtime/turn-deadline";
+
+import { LlmOutputRecorder } from "./llm-output-recorder";
 
 interface ToolLoopActionResult {
   action: ToolCall | null;
@@ -41,9 +43,10 @@ export class SdkGameToolLoop {
     private readonly world: World,
     repairRegistry: ToolCallRepairRegistry,
     private readonly promptSession: PlayerPromptSession,
-    private readonly observer: LlmObserver,
+    private readonly observer: PlayerOutputObserver,
     toolSpecRegistry: ToolSpecRegistry = getDefaultToolSpecRegistry(),
     validationRules: ToolValidationRuleRegistry = getDefaultToolValidationRuleRegistry(),
+    private readonly outputRecorder = new LlmOutputRecorder(observer),
   ) {
     this.reception = new ActionReception(world, repairRegistry, toolSpecRegistry, validationRules);
     this.bugReports = new AgentBugReportService(world, {
@@ -183,15 +186,15 @@ export class SdkGameToolLoop {
         ]),
         controller.signal,
       );
-      const thinkingText = this.observer.thinkingText(
+      const thinkingText = this.outputRecorder.thinkingText(
         result.assistantText ?? "",
         result.thinkingTrace ?? [],
       );
       if (result.assistantText) {
         this.promptSession.appendAssistant(request.actorId, result.assistantText);
       }
-      this.observer.thinking(result.thinkingTrace ?? [], request);
-      this.observer.rawResponse(result.assistantText ?? "", request);
+      this.outputRecorder.thinking(result.thinkingTrace ?? [], request);
+      this.outputRecorder.rawResponse(result.assistantText ?? "", request);
       const failedActionInput =
         result.failedToolInvocations?.some(
           (call) => call.name !== "get_game_schema" && call.name !== "report_bug",

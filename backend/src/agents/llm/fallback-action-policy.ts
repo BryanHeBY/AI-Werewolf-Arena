@@ -5,7 +5,7 @@
  */
 import { ActionProvider, ActionRequest, ToolCall } from "../../domain";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
-import { LlmObserver } from "../player/player-observer";
+import { PlayerOutputObserver } from "../player/player-observer";
 import {
   allowsActionFallback,
   resolveTurnConstraints,
@@ -25,7 +25,7 @@ export { TurnDeadlineElapsed as FallbackDeadlineElapsed } from "../runtime/turn-
 export class FallbackActionPolicy {
   constructor(
     private readonly provider: ActionProvider,
-    private readonly observer: LlmObserver,
+    private readonly observer: PlayerOutputObserver,
     private readonly specs: ToolSpecRegistry = getDefaultToolSpecRegistry(),
   ) {}
 

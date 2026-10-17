@@ -16,7 +16,7 @@ import {
   FallbackDeadlineElapsed,
   FallbackReason,
 } from "./fallback-action-policy";
-import { LlmObserver } from "../player/player-observer";
+import { PlayerOutputObserver } from "../player/player-observer";
 import type {
   BuiltLlmPlayerPrompt,
   PlayerInputDispatch,
@@ -44,7 +44,7 @@ interface LlmTurnOrchestratorOptions {
   sdkToolLoop: SdkGameToolLoop;
   fallbackPolicy: FallbackActionPolicy;
   recorder: PlayerRoundRecorder;
-  observer: LlmObserver;
+  observer: PlayerOutputObserver;
 }
 
 /** 本轮输入证据与拟发送提示分开持有；排队失败保留空派发集合。 */

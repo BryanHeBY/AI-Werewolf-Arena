@@ -21,7 +21,7 @@ import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
 import { SdkGameToolLoop } from "../../../../src/agents/llm/sdk-game-tool-loop";
 import { PlayerPromptSession } from "../../../../src/agents/llm/player-prompt-session";
 import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
-import { LlmObserver } from "../../../../src/agents/player/player-observer";
+import { PlayerOutputObserver } from "../../../../src/agents/player/player-observer";
 import {
   getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
@@ -87,7 +87,11 @@ function sdkLoop(
     phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(),
     configRenderRegistry: getDefaultConfigRenderRegistry(),
   });
-  const observer = new LlmObserver({ trace: false, printLlmIo: false, printThinking: false });
+  const observer = new PlayerOutputObserver({
+    trace: false,
+    printLlmIo: false,
+    printThinking: false,
+  });
   if (onTrace) observer.thinking = onTrace;
   return new SdkGameToolLoop(
     world,

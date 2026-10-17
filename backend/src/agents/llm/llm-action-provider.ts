@@ -29,11 +29,12 @@ import {
 import type { ObservedPlayerStrategy } from "../observation/player-observation";
 import { ChatModelClient } from "../../adapters/llm/transport";
 import { FallbackActionPolicy } from "./fallback-action-policy";
-import { LlmObserver } from "../player/player-observer";
+import { PlayerOutputObserver } from "../player/player-observer";
 import { PlayerPromptSession } from "./player-prompt-session";
 import { PlayerPromptPolicy } from "../player/player-prompt-policy";
 import { PlayerRoundRecorder } from "../../app/player-round-recorder";
 import { ScopedRequestScheduler } from "../runtime/request-scheduler";
+import { LlmOutputRecorder } from "./llm-output-recorder";
 import { SdkGameToolLoop } from "./sdk-game-tool-loop";
 import { LlmTurnOrchestrator } from "./llm-turn-orchestrator";
 
@@ -86,7 +87,7 @@ export class LlmActionProvider implements ActionProvider {
     const configRenderer = options.configRenderRegistry ?? getDefaultConfigRenderRegistry();
     const configuredConcurrency =
       options.maxConcurrentRequests ?? this.readConcurrencyFromEnvironment();
-    const observer = new LlmObserver({
+    const observer = new PlayerOutputObserver({
       outputSink: options.outputSink,
       trace: options.trace ?? false,
       locale: options.displayLocale ?? world.locale,
@@ -126,7 +127,10 @@ export class LlmActionProvider implements ActionProvider {
       observer,
       toolSpecRegistry,
     );
-    const recorder = new PlayerRoundRecorder(world, (request) => observer.takeOutputs(request));
+    const outputRecorder = new LlmOutputRecorder(observer);
+    const recorder = new PlayerRoundRecorder(world, (request) =>
+      outputRecorder.takeOutputs(request),
+    );
     const sdkToolLoop = new SdkGameToolLoop(
       world,
       repairRegistry,
@@ -134,6 +138,7 @@ export class LlmActionProvider implements ActionProvider {
       observer,
       toolSpecRegistry,
       new ToolValidationRuleRegistry(undefined, roleCatalog),
+      outputRecorder,
     );
     this.orchestrator = new LlmTurnOrchestrator({
       world,

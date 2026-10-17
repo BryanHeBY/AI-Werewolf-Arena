@@ -66,6 +66,8 @@ Fallback可在原政策下处理模型失败或预算耗尽；外来TimeoutError
 
 三种传输的模型输出使用 `AgentOutputEvent`，受众固定为 `private`。传输只归一事实；终端和 Web 共用 `game-presentation` 的分类、可见开关及语义色调，模型原文保留原语言。ANSI 只在终端 sink 添加。显示开关不影响原生输出收集与玩家档案。
 
+`PlayerOutputObserver` 只负责公共上下文与输出派发。SDK 的步骤转换和逐请求录制缓冲归 `LlmOutputRecorder`，Pi 的本轮增量归 `PiRoundRecording`，ACP 轨迹仍由原会话捕获；各自先保存录制事实再交显示消费者，不在公共 observer 中按传输种类建立隐式缓存。
+
 正常工具调用在终端仅于完成时打印一行，失败打印警告；`trace: true` 时才额外打印开始和中间状态。所有结构化消费者仍收到完整工具事实，Web 可展开调用与回执。ACP 工具状态按调用 ID 去重，文本分段继续保护 Unicode。
 
 私有输出端口不承接 ACP 权限登记。显示异常仍由原传输隔离、在回合结束时报告，不能阻断后续 MCP 工具授权或覆盖原始失败。工具接受和归档中的 `accepted` 只表示候选接受，`applied:false` 仍由引擎实际提交改变。

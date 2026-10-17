@@ -43,7 +43,7 @@ import type { ObservedPlayerStrategy } from "../observation/player-observation";
 import { AgentBugReportService } from "../reporting/bug-report-service";
 import { ScopedRequestScheduler } from "../runtime/request-scheduler";
 import { awaitBeforeDeadline, TurnDeadlineElapsed } from "../runtime/turn-deadline";
-import { LlmObserver } from "../player/player-observer";
+import { PlayerOutputObserver } from "../player/player-observer";
 import { PiPromptState } from "./pi-prompt-state";
 import { PiRoundRecording } from "./pi-round-recording";
 
@@ -88,7 +88,7 @@ export class PiActionProvider implements ActionProvider {
   private readonly recorder: PlayerRoundRecorder;
   private readonly fallback: ActionProvider;
   private readonly bugs: AgentBugReportService;
-  private readonly observer: LlmObserver;
+  private readonly observer: PlayerOutputObserver;
   private readonly cleanupFailures: unknown[] = [];
   private readonly closeController = new AbortController();
   private closed = false;
@@ -99,7 +99,7 @@ export class PiActionProvider implements ActionProvider {
     private readonly options: PiActionProviderOptions,
   ) {
     const catalog = getDefaultRoleCatalog();
-    this.observer = new LlmObserver({
+    this.observer = new PlayerOutputObserver({
       outputSink: options.outputSink,
       transport: "pi",
       trace: options.trace ?? false,

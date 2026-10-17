@@ -20,7 +20,7 @@ import { BaselineBotActionProvider } from "../../src/agents/baseline/privileged"
 import { ObservedPlayersActionProvider } from "../../src/app/observed-players-action-provider";
 import { ObservedBot } from "../../src/agents/providers/observed-bot";
 import type { PlayerObservation } from "../../src/agents/observation/player-observation";
-import { LlmObserver } from "../../src/agents/player/player-observer";
+import { PlayerOutputObserver } from "../../src/agents/player/player-observer";
 import { FallbackActionPolicy } from "../../src/agents/llm/fallback-action-policy";
 import { AcpTurnRegistry } from "../../src/adapters/acp/acp-turn-registry";
 import { sixPlayerMvpConfig } from "../../src/rulesets/presets/six-player-mvp";
@@ -98,7 +98,7 @@ describe("F01 current production fallback privilege", () => {
     const baseline = new BaselineBotActionProvider(game.world);
     const fallback = new FallbackActionPolicy(
       baseline,
-      new LlmObserver({ trace: false, printLlmIo: false, printThinking: false }),
+      new PlayerOutputObserver({ trace: false, printLlmIo: false, printThinking: false }),
     );
     await observed.getAction(request);
     expect(observations[0]!.teammateIds).toEqual([]);
@@ -143,7 +143,7 @@ describe("F01 current production fallback privilege", () => {
           return { name: "kill_vote", args: { target_id: 3, abstain: false } };
         },
       },
-      new LlmObserver({ trace: false, printLlmIo: false, printThinking: false }),
+      new PlayerOutputObserver({ trace: false, printLlmIo: false, printThinking: false }),
     );
     expect(await fallback.resolve(request, "runtime_error")).toBeNull();
     expect(calls).toBe(0);

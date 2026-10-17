@@ -11,7 +11,8 @@ import {
 import { createAcpOutputObserver } from "../../../src/adapters/acp/acp-output";
 import { createPiOutputObserver } from "../../../src/adapters/pi/pi-output";
 import { createAgentConsoleSink } from "../../../src/adapters/console/agent-console-presenter";
-import { LlmObserver } from "../../../src/agents/player/player-observer";
+import { PlayerOutputObserver } from "../../../src/agents/player/player-observer";
+import { LlmOutputRecorder } from "../../../src/agents/llm/llm-output-recorder";
 import { Phase, type ActionRequest } from "../../../src/domain";
 
 test("相同消费者接收 LLM、ACP、Pi 输出，关闭显示仍保留所有私有事实", () => {
@@ -38,12 +39,14 @@ test("相同消费者接收 LLM、ACP、Pi 输出，关闭显示仍保留所有�
       turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
     },
   };
-  new LlmObserver({
-    printThinking: false,
-    printLlmIo: false,
-    trace: false,
-    outputSink: sink,
-  }).thinking([{ assistantText: "SDK output", toolCalls: [] }], request);
+  new LlmOutputRecorder(
+    new PlayerOutputObserver({
+      printThinking: false,
+      printLlmIo: false,
+      trace: false,
+      outputSink: sink,
+    }),
+  ).thinking([{ assistantText: "SDK output", toolCalls: [] }], request);
   const acp = createAcpOutputObserver({ transport: "acp", playerId: 2 }, sink);
   for (const text of ["原", "始", "思考"])
     acp.update({ sessionUpdate: "agent_thought_chunk", content: { text } });
@@ -114,7 +117,7 @@ test("默认终端只打印一次工具结果，完整开始／结束仍进入�
 
 test("SDK 录制保留完整原文并与可变显示消费者隔离，取走后不串到下一轮", () => {
   const original = "原文".repeat(6000);
-  const observer = new LlmObserver({
+  const observer = new PlayerOutputObserver({
     printThinking: false,
     printLlmIo: false,
     trace: false,
@@ -133,7 +136,8 @@ test("SDK 录制保留完整原文并与可变显示消费者隔离，取走后�
       turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
     },
   };
-  observer.thinking(
+  const sdkOutputs = new LlmOutputRecorder(observer);
+  sdkOutputs.thinking(
     [
       {
         assistantText: original,
@@ -149,10 +153,10 @@ test("SDK 录制保留完整原文并与可变显示消费者隔离，取走后�
     ],
     request,
   );
-  const facts = observer.takeOutputs(request);
+  const facts = sdkOutputs.takeOutputs(request);
   expect(facts[0]).toMatchObject({ type: "text", text: original });
   expect(facts[1]).toMatchObject({ type: "tool", args: { text: "safe" } });
-  expect(observer.takeOutputs(request)).toEqual([]);
+  expect(sdkOutputs.takeOutputs(request)).toEqual([]);
 });
 
 test("ACP 结束后补充工具结果会进入档案，终端仍只显示一行", () => {

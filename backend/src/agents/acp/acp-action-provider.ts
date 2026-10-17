@@ -52,7 +52,7 @@ import { BuiltPlayerPrompt, PlayerRoundOutcome } from "../player/contracts";
 import { PlayerPromptPolicy } from "../player/player-prompt-policy";
 import { PlayerRoundRecorder } from "../../app/player-round-recorder";
 import { ScopedRequestScheduler } from "../runtime/request-scheduler";
-import { LlmObserver } from "../player/player-observer";
+import { PlayerOutputObserver } from "../player/player-observer";
 
 export interface AcpActionProviderOptions {
   outputSink?: AgentOutputSink;
@@ -114,13 +114,13 @@ export class AcpActionProvider implements ActionProvider {
   private readonly closeController = new AbortController();
   private closed = false;
   private readonly scheduler: ScopedRequestScheduler;
-  private readonly observer: LlmObserver;
+  private readonly observer: PlayerOutputObserver;
 
   constructor(
     world: World,
     private readonly options: AcpActionProviderOptions,
   ) {
-    this.observer = new LlmObserver({
+    this.observer = new PlayerOutputObserver({
       outputSink: options.outputSink,
       transport: "acp",
       trace: options.trace ?? false,
