@@ -98,7 +98,7 @@ function document(): ReplayDocument {
 test("stock is contextual and a pre-event payment never becomes the action's before inventory", () => {
   const doc = document(),
     plan = compileVideoPlan(doc, readingOptions(doc));
-  expect(plan.shots.map((shot) => shot.id)).toEqual(["event:1", "event:2", "fact:3", "event:3"]);
+  expect(plan.shots.map((shot) => shot.id)).toEqual(["event:1", "event:2", "fact:3"]);
   const action = plan.shots[1]!;
   expect(action.scene.inventory).toEqual({
     before: {
@@ -203,13 +203,13 @@ test("an exact same-prefix committed life report reveals once with its authority
     layout: "broadcast-v1",
     factEdits: [{ anchor: { seq: 1, kind: "life_committed" }, caption: "单独确认" }],
   });
-  expect(edited.shots.map((value) => value.id)).toEqual(["event:1", "event:2", "fact:1"]);
-  expect(edited.shots[1]!.scene.body).toContain("等待死亡确认");
-  expect(buildVideoFrame(edited, edited.shots[1]!.from + 24).currentView.players[1]!.alive).toBe(
+  expect(edited.shots.map((value) => value.id)).toEqual(["event:1", "fact:1"]);
+  expect(edited.shots[1]!.scene.body).toBe("单独确认");
+  expect(buildVideoFrame(edited, edited.shots[1]!.from + 23).currentView.players[1]!.alive).toBe(
     true,
   );
 });
-test("different or unknown waves and incomplete submissions keep pending reports rather than claiming all listed players died", () => {
+test("different or unknown waves and incomplete submissions show only authoritative facts without a waiting page", () => {
   for (const waves of [
     [1, 2],
     [undefined, undefined],
@@ -227,13 +227,12 @@ test("different or unknown waves and incomplete submissions keep pending reports
       ...(waves[index] === undefined ? {} : { waveId: waves[index] }),
     }));
     const plan = compileVideoPlan(doc, readingOptions(doc)),
-      report = plan.shots[1]!;
-    expect(plan.shots.map((value) => value.id)).toEqual(["event:1", "event:2", "fact:1", "fact:2"]);
-    expect(report.scene.body).toContain("等待死亡确认");
-    expect(plan.shots[2]!.scene.body).toBe("1号已死亡。");
-    expect(plan.shots[3]!.scene.body).toBe("2号已死亡。");
+      death = plan.shots[1]!;
+    expect(plan.shots.map((value) => value.id)).toEqual(["event:1", "fact:1", "fact:2"]);
+    expect(death.scene.body).toBe("1号已死亡。");
+    expect(plan.shots[2]!.scene.body).toBe("2号已死亡。");
     expect(
-      buildVideoFrame(plan, report.from + 24).currentView.players.map((player) => player.alive),
+      buildVideoFrame(plan, death.from + 23).currentView.players.map((player) => player.alive),
     ).toEqual([true, true]);
   }
   const doc = document();
@@ -251,7 +250,7 @@ test("different or unknown waves and incomplete submissions keep pending reports
     },
   ];
   const plan = compileVideoPlan(doc, readingOptions(doc));
-  expect(plan.shots[1]!.scene.body).toContain("等待死亡确认");
+  expect(plan.shots.map((shot) => shot.id)).toEqual(["event:1", "fact:1"]);
   expect(
     buildVideoFrame(plan, plan.durationFrames - 1).currentView.players.map(
       (player) => player.alive,

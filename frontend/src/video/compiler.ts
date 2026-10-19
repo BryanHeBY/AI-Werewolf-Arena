@@ -20,7 +20,7 @@ import {
   validateReplayDisplay,
   type ReplayDisplayOptions,
 } from "../replay/replay-display";
-import { committedLifeReport } from "./plan/life-report";
+import { committedLifeReport, isCoveredLifeReport } from "./plan/life-report";
 import { createVideoRecordReader } from "./plan/records";
 import { createVideoSourceIndex, selectVideoShotSource } from "./plan/source-index";
 import { fail, integer, nonempty } from "./plan/validation";
@@ -142,6 +142,14 @@ export function compileVideoPlan(
   const shotAudio: AudioCue[] = [];
   let cursor = 0;
   const absorbedFactSeqs = new Set<number>();
+  const silentLifeReports: number[] = [];
+  // 导演扩展可在append阶段才应用；这里只读取稳定镜头id，兼容保留作者明确指定的中间镜头。
+  const authoredShotIds = new Set(
+    (
+      (script as (VideoScript & { shotEdits?: readonly { id: string }[] }) | undefined)
+        ?.shotEdits ?? []
+    ).map((edit) => edit.id),
+  );
   function append(
     index: number,
     id: string,
@@ -380,19 +388,37 @@ export function compileVideoPlan(
           replay.factCoverage?.committedDeaths === 1 &&
           !edit &&
           !holds.has(primaryIndex) &&
-          pending.every((fact) => !factEdits.has(fact.seq)) &&
+          pending
+            .slice(0, Array.isArray(primary.payload.deaths) ? primary.payload.deaths.length : 0)
+            .every((fact) => !factEdits.has(fact.seq)) &&
           Boolean(readRecord(primary).record),
       );
-      append(
-        primaryIndex,
-        `event:${primary.seq}`,
-        "event",
-        edit,
-        group?.indexes ?? [index],
-        [],
-        reportFacts,
-      );
-      for (const fact of reportFacts) absorbedFactSeqs.add(fact.seq);
+      // 有权威生命覆盖时，未能配对的名单只是中间报告；默认不另播“等待确认”，
+      // 死亡仍由后面的原fact镜头逐条/逐波提交。显式导演编辑或停留保留原锚点。
+      if (
+        layout === "broadcast-v1" &&
+        !edit &&
+        !authoredShotIds.has(`event:${primary.seq}`) &&
+        !holds.has(primaryIndex) &&
+        !reportFacts.length &&
+        isCoveredLifeReport(
+          readRecord(primary).record?.event,
+          replay.factCoverage?.committedDeaths === 1,
+        )
+      ) {
+        silentLifeReports.push(primaryIndex);
+      } else {
+        append(
+          primaryIndex,
+          `event:${primary.seq}`,
+          "event",
+          edit,
+          group?.indexes ?? [index],
+          [],
+          reportFacts,
+        );
+        for (const fact of reportFacts) absorbedFactSeqs.add(fact.seq);
+      }
     }
     appendFacts(event.seq);
     for (const hold of holds.get(index) ?? [])
@@ -408,7 +434,25 @@ export function compileVideoPlan(
     !factEdits.size
   )
     append(-1, "context", "event", {}, []);
+  if (!shots.length && silentLifeReports.length) append(-1, "context", "event", {}, []);
   if (!shots.length) fail("timeline_empty");
+  const finalSilentIndex = silentLifeReports.at(-1);
+  const lastShot = [...shots].reverse().find((shot) => shot.kind !== "hold");
+  if (
+    finalSilentIndex !== undefined &&
+    lastShot &&
+    lastShot.stateCues.at(-1)!.throughSeq < replay.events[finalSilentIndex]!.seq
+  ) {
+    // 进行中归档可能恰好停在未确认名单。静默消费末尾原事件，不加页面、不据名单杀人；
+    // 倒看仍由唯一投影按原事件/事实游标还原，不能把未提交名单改成已死亡，不能修改作者固定stateAt的hold。
+    const tail = sourceIndex.cursorAt(finalSilentIndex);
+    lastShot.stateCues.push({
+      frame: lastShot.durationFrames - 1,
+      throughSeq: tail.throughSeq,
+      throughFactSeq: tail.throughFactSeq,
+      view: sourceIndex.viewAt(tail),
+    });
+  }
   const audio = compileAudio([...(script?.audio ?? []), ...shotAudio], media, cursor, playerIds);
   const eventFrames: VideoPlan["eventFrames"] = {};
   for (const shot of shots)
@@ -421,6 +465,20 @@ export function compileVideoPlan(
         mode: shot.kind === "hold" ? "revisit" : seq === shot.eventSeq ? "primary" : "absorbed",
       });
     }
+  // 默认省略的中间报告仍可从Web时间线跳转到接纳该前缀的有效镜头，不能丢失审计锚点。
+  for (const index of silentLifeReports) {
+    const seq = replay.events[index]!.seq;
+    for (const shot of shots) {
+      const cue = shot.stateCues.find(
+        (value) => value.throughSeq >= seq && value.frame >= shot.scene.cues.impact,
+      );
+      if (!cue) continue;
+      eventFrames[String(seq)] = [
+        { shotId: shot.id, frame: shot.from + cue.frame, mode: "absorbed" },
+      ];
+      break;
+    }
+  }
   return {
     version: 1,
     source,
