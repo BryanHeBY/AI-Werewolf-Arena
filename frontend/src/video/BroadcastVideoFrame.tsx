@@ -185,15 +185,16 @@ export function BroadcastVideoFrame({
           right: 42 * scale,
           top: 28 * scale,
           height: 74 * scale,
-          display: "flex",
+          // 两侧内容宽度各异，使用等宽边列将日期/昼夜锁定在完整画布中心。
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1fr) auto minmax(0, 1fr)",
           alignItems: "center",
-          justifyContent: "space-between",
           borderBottom: `${scale}px solid ${alpha(tokens.frame.color, 0.7)}`,
           color: palette.canvasText,
           textShadow: gothic ? "0 2px 5px #000a" : undefined,
         }}
       >
-        <div style={{ display: "flex", alignItems: "baseline", gap: 20 * scale }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 20 * scale, minWidth: 0 }}>
           <strong
             style={{
               fontFamily: theme.definition.fonts.heading,
@@ -215,12 +216,13 @@ export function BroadcastVideoFrame({
             gap: 14 * scale,
             fontSize: 34 * scale,
             fontFamily: theme.definition.fonts.heading,
+            justifySelf: "center",
           }}
         >
           {gothic && current.snapshot.day > 0 && <PhaseSigil night={night} size={34 * scale} />}
           {current.snapshot.day < 1 ? text(locale, "video.setup") : current.dayPhase}
         </span>
-        <span style={{ fontSize: 26 * scale }}>
+        <span style={{ fontSize: 26 * scale, justifySelf: "end", whiteSpace: "nowrap" }}>
           {text(locale, "video.alive", {
             count: current.players.filter((player) => player.alive).length,
             total: current.players.length,
