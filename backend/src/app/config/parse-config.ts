@@ -8,7 +8,7 @@ import type {
   AgentEntryConfig,
   AgentsConfig,
   DebugSummaryConfig,
-  GameAgentSelection,
+  AgentBindingConfig,
   GameConfig,
   GameBoard,
   LlmAgentEntryConfig,
@@ -17,8 +17,8 @@ import type {
   ReasoningEffort,
   RuntimeConfig,
   PlayerConfig,
-  LocalizedPrompt,
 } from "./contracts";
+import { parseCustomInstructions } from "./custom-instructions";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -45,12 +45,6 @@ function readRequiredString(value: unknown, field: string): string {
 function readOptionalString(value: unknown, field: string): string | undefined {
   if (value === undefined) return undefined;
   return readRequiredString(value, field);
-}
-
-/** 玩家专属人格检查非空后返回原字符串；其它配置字符串仍按各自读取函数裁掉首尾空白。 */
-function readPromptText(value: unknown, field: string): string {
-  readRequiredString(value, field);
-  return value as string;
 }
 
 function readOptionalBoolean(value: unknown, field: string): boolean | undefined {
@@ -349,7 +343,7 @@ function normalizeAgents(
       const field = `agents.items.${name}`;
       readRequiredString(name, "agents.items.key");
       if (!isRecord(value)) throw new Error(`runtime_config_agent_invalid: ${field}`);
-      assertKnownKeys(value, ["backend", "options", "personalityPrompt"], field);
+      assertKnownKeys(value, ["backend", "options", "customInstructions"], field);
       const backend = readRequiredString(value.backend, `${field}.backend`);
       if (!Object.hasOwn(providers.items, backend))
         throw new Error(`runtime_config_agent_backend_not_found: ${field}.backend`);
@@ -367,9 +361,9 @@ function normalizeAgents(
           : provider.type === "acp"
             ? normalizeAcpOptions(options, name, backend)
             : normalizeAgentOptions(options, name, backend);
-      agent.personalityPrompt = readOptionalString(
-        value.personalityPrompt,
-        `${field}.personalityPrompt`,
+      agent.customInstructions = parseCustomInstructions(
+        value.customInstructions,
+        `${field}.customInstructions`,
       );
       if (agent.kind === "llm" && provider.type === "anthropic") {
         if (agent.thinkingEnabled && agent.temperature !== undefined)
@@ -385,58 +379,6 @@ function normalizeAgents(
   if (!Object.hasOwn(items, defaultName))
     throw new Error(`runtime_config_agent_default_not_found: ${defaultName}`);
   return { default: defaultName, items };
-}
-
-function normalizeGameAgentSelection(
-  value: unknown,
-  field: string,
-  agents: AgentsConfig,
-): GameAgentSelection {
-  if (typeof value === "string") {
-    const agent = readRequiredString(value, field);
-    if (!Object.hasOwn(agents.items, agent))
-      throw new Error(`runtime_config_agent_not_found: ${agent}`);
-    return agent;
-  }
-  if (!isRecord(value)) throw new Error(`runtime_config_agent_selection_invalid: ${field}`);
-  assertKnownKeys(value, ["agent", "spawnArgs", "personalityPrompt"], field);
-  const agent = readRequiredString(value.agent, `${field}.agent`);
-  const profile = Object.hasOwn(agents.items, agent) ? agents.items[agent] : undefined;
-  if (!profile) throw new Error(`runtime_config_agent_not_found: ${agent}`);
-  const spawnArgs =
-    value.spawnArgs === undefined
-      ? undefined
-      : readStringArray(value.spawnArgs, `${field}.spawnArgs`);
-  if (spawnArgs && profile.kind !== "acp") {
-    throw new Error(`runtime_config_spawn_args_require_acp_agent: ${field}`);
-  }
-  const personalityPrompt = readOptionalString(
-    value.personalityPrompt,
-    `${field}.personalityPrompt`,
-  );
-  return {
-    agent,
-    ...(spawnArgs ? { spawnArgs } : {}),
-    ...(personalityPrompt !== undefined ? { personalityPrompt } : {}),
-  };
-}
-
-function normalizeGameAgentSelections(
-  value: unknown,
-  field: string,
-  agents: AgentsConfig,
-): Record<string, GameAgentSelection> | undefined {
-  if (value === undefined) return undefined;
-  if (!isRecord(value)) throw new Error(`runtime_config_agent_selections_invalid: ${field}`);
-  return Object.fromEntries(
-    Object.entries(value).map(([key, selection]) => {
-      if (key !== key.trim()) throw new Error(`runtime_config_selection_key_invalid: ${field}`);
-      return [
-        readRequiredString(key, `${field}.key`),
-        normalizeGameAgentSelection(selection, `${field}.${key}`, agents),
-      ];
-    }),
-  );
 }
 
 function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
@@ -458,8 +400,8 @@ function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
       "printPrivateEvents",
       "recordRootDir",
       "agent",
-      "roleAgents",
-      "playerAgents",
+      "customInstructions",
+      "roles",
       "players",
       "locale",
       "displayLocale",
@@ -471,13 +413,9 @@ function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
   if (board !== undefined && !/^[a-z][a-z0-9_-]*$/.test(board)) {
     throw new Error(`runtime_config_board_invalid: ${board}`);
   }
-  const agent =
-    raw.agent === undefined
-      ? undefined
-      : normalizeGameAgentSelection(raw.agent, "game.agent", agents);
-  if (agent !== undefined && typeof agent !== "string") {
-    throw new Error("runtime_config_game_agent_must_be_name");
-  }
+  const agent = readOptionalString(raw.agent, "game.agent");
+  if (agent && !Object.hasOwn(agents.items, agent))
+    throw new Error(`runtime_config_agent_not_found: ${agent}`);
   return {
     board: board as GameBoard | undefined,
     maxDays: readOptionalPositiveInteger(raw.maxDays, "game.maxDays"),
@@ -493,9 +431,9 @@ function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
     printPrivateEvents: readOptionalBoolean(raw.printPrivateEvents, "game.printPrivateEvents"),
     recordRootDir: readOptionalString(raw.recordRootDir, "game.recordRootDir"),
     agent,
-    roleAgents: normalizeGameAgentSelections(raw.roleAgents, "game.roleAgents", agents),
-    playerAgents: normalizeGameAgentSelections(raw.playerAgents, "game.playerAgents", agents),
-    players: normalizePlayers(raw.players, agents),
+    customInstructions: parseCustomInstructions(raw.customInstructions, "game.customInstructions"),
+    roles: normalizeBindings(raw.roles, agents, "roles"),
+    players: normalizeBindings(raw.players, agents, "players"),
     locale: readLocale(raw.locale, "game.locale"),
     displayLocale: readLocale(raw.displayLocale, "game.displayLocale"),
     seed: readOptionalString(raw.seed, "game.seed"),
@@ -508,17 +446,37 @@ function readLocale(value: unknown, field: string): Locale | undefined {
   return value;
 }
 
-function normalizePlayers(
+/** 角色和席位共用绑定语义；只有席位允许昵称，Agent 和自定义指令可独立省略。 */
+function normalizeBindings(
   value: unknown,
   agents: AgentsConfig,
+  scope: "roles",
+): Record<string, AgentBindingConfig> | undefined;
+function normalizeBindings(
+  value: unknown,
+  agents: AgentsConfig,
+  scope: "players",
+): Record<string, PlayerConfig> | undefined;
+function normalizeBindings(
+  value: unknown,
+  agents: AgentsConfig,
+  scope: "roles" | "players",
 ): Record<string, PlayerConfig> | undefined {
   if (value === undefined) return undefined;
-  if (!isRecord(value)) throw new Error("runtime_config_players_invalid");
+  if (!isRecord(value)) throw new Error(`runtime_config_bindings_invalid: game.${scope}`);
   return Object.fromEntries(
-    Object.entries(value).map(([seat, entry]) => {
-      const field = `game.players.${seat}`;
-      if (!isRecord(entry)) throw new Error(`runtime_config_player_invalid: ${field}`);
-      assertKnownKeys(entry, ["name", "agent", "spawnArgs", "personalityPrompt"], field);
+    Object.entries(value).map(([key, entry]) => {
+      const field = `game.${scope}.${key}`;
+      if (!key.trim() || key !== key.trim())
+        throw new Error(`runtime_config_selection_key_invalid: game.${scope}`);
+      if (!isRecord(entry)) throw new Error(`runtime_config_binding_invalid: ${field}`);
+      assertKnownKeys(
+        entry,
+        scope === "players"
+          ? ["name", "agent", "spawnArgs", "customInstructions"]
+          : ["agent", "spawnArgs", "customInstructions"],
+        field,
+      );
       let name: string | undefined;
       if (entry.name !== undefined) {
         if (
@@ -528,7 +486,7 @@ function normalizePlayers(
           /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/.test(entry.name)
         )
           throw new Error(`runtime_config_player_name_invalid: ${field}.name`);
-        name = entry.name; // 保留用户名字原文，不翻译或静默裁掉空白。
+        name = entry.name;
       }
       const agent = readOptionalString(entry.agent, `${field}.agent`);
       if (agent && !Object.hasOwn(agents.items, agent))
@@ -539,33 +497,17 @@ function normalizePlayers(
           : readStringArray(entry.spawnArgs, `${field}.spawnArgs`);
       if (spawnArgs && (!agent || agents.items[agent].kind !== "acp"))
         throw new Error(`runtime_config_spawn_args_require_explicit_acp_agent: ${field}`);
-      // 三态保留到 setup：缺省继承、null 清除、字符串或语言表覆盖；名字与人格原文不作为模型选择键。
-      let personalityPrompt: LocalizedPrompt | null | undefined;
-      if (entry.personalityPrompt === null) personalityPrompt = null;
-      else if (entry.personalityPrompt !== undefined) {
-        if (typeof entry.personalityPrompt === "string")
-          personalityPrompt = readPromptText(entry.personalityPrompt, `${field}.personalityPrompt`);
-        else {
-          if (!isRecord(entry.personalityPrompt))
-            throw new Error(`runtime_config_prompt_invalid: ${field}`);
-          assertKnownKeys(entry.personalityPrompt, ["zh-CN", "en"], `${field}.personalityPrompt`);
-          if (!Object.keys(entry.personalityPrompt).length)
-            throw new Error(`runtime_config_prompt_empty: ${field}`);
-          personalityPrompt = Object.fromEntries(
-            Object.entries(entry.personalityPrompt).map(([locale, text]) => [
-              locale,
-              readPromptText(text, `${field}.personalityPrompt.${locale}`),
-            ]),
-          );
-        }
-      }
+      const customInstructions = parseCustomInstructions(
+        entry.customInstructions,
+        `${field}.customInstructions`,
+      );
       return [
-        seat,
+        key,
         {
           ...(name !== undefined ? { name } : {}),
           ...(agent ? { agent } : {}),
           ...(spawnArgs ? { spawnArgs } : {}),
-          ...(personalityPrompt !== undefined ? { personalityPrompt } : {}),
+          ...(customInstructions !== undefined ? { customInstructions } : {}),
         },
       ];
     }),

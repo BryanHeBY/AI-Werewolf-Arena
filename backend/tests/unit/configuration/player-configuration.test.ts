@@ -32,7 +32,7 @@ const input = {
         options: {
           model: "test",
         },
-        personalityPrompt: "default-private-personality",
+        customInstructions: { mode: "replace", text: "default-private-personality" },
       },
     },
   },
@@ -42,21 +42,30 @@ test("player names and personalities are independent of model selection", () => 
     ...input,
     game: {
       players: {
-        "1": { name: " 苏茶茶 ", personalityPrompt: "  private seat style\n" },
-        "2": { personalityPrompt: null },
-        "3": { personalityPrompt: { en: "private English style" } },
+        "1": {
+          name: " 苏茶茶 ",
+          customInstructions: { mode: "replace", text: "  private seat style\n" },
+        },
+        "2": { customInstructions: { mode: "clear" } },
+        "3": { customInstructions: { mode: "replace", text: { en: "private English style" } } },
       },
     },
   });
   const setup = resolveGameSetup(runtime);
   expect(setup.players["1"].profile).toBeUndefined();
   expect(setup.players["1"].name).toBe(" 苏茶茶 ");
-  expect(setup.players["1"].personalityPrompt).toBe("  private seat style\n");
-  expect(setup.players["2"].personalityPrompt).toBeNull();
-  expect(setup.players["3"].personalityPrompt).toBe("private English style");
+  expect(setup.players["1"].customInstructions).toEqual({
+    mode: "replace",
+    text: "  private seat style\n",
+  });
+  expect(setup.players["2"].customInstructions).toEqual({ mode: "clear" });
+  expect(setup.players["3"].customInstructions).toEqual({
+    mode: "replace",
+    text: "private English style",
+  });
   expect(setup.warnings).toContainEqual({
     code: "locale_prompt_fallback",
-    path: "players.3.personalityPrompt",
+    path: "players.3.customInstructions.text",
     requestedLocale: "zh-CN",
     fallbackLocale: "en",
   });
@@ -92,14 +101,14 @@ test("locale, seed and conflicting legacy player bindings fail explicitly", () =
   expect(() =>
     parseRuntimeConfig({
       ...input,
-      game: { players: { "1": { personalityPrompt: { fr: "style" } } } },
+      game: {
+        players: { "1": { customInstructions: { mode: "replace", text: { fr: "style" } } } },
+      },
     }),
   ).toThrow("runtime_config_unknown_field");
-  const runtime = parseRuntimeConfig({
-    ...input,
-    game: { players: { "1": { name: "name" } }, playerAgents: { "1": "test" } },
-  });
-  expect(() => resolveGameSetup(runtime)).toThrow("runtime_config_player_binding_conflict");
+  expect(() => parseRuntimeConfig({ ...input, game: { playerAgents: { "1": "test" } } })).toThrow(
+    "runtime_config_unknown_field: game.playerAgents",
+  );
   const english = resolveGameSetup(
     parseRuntimeConfig({ ...input, game: { locale: "en", seed: "my-seed" } }),
   );

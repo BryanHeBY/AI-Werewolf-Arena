@@ -43,24 +43,30 @@ for (const kind of ["llm", "acp"] as const) {
               kind,
               provider: "test",
               ...(kind === "llm" ? { model: "unused" } : {}),
-              personalityPrompt: "INHERITED_STYLE",
+              customInstructions: { mode: "replace", text: "INHERITED_STYLE" },
             },
             other: {
               kind,
               provider: "test",
               ...(kind === "llm" ? { model: "other" } : {}),
-              personalityPrompt: "OTHER_STYLE",
+              customInstructions: { mode: "replace", text: "OTHER_STYLE" },
             },
           },
         },
         game: {
+          customInstructions: { text: "GLOBAL_STYLE" },
           players: {
-            "1": { name: "Player One", personalityPrompt: "SEAT_STYLE" },
-            "2": { personalityPrompt: null },
+            "1": {
+              name: "Player One",
+              customInstructions: { mode: "replace", text: "SEAT_STYLE" },
+            },
+            "2": { customInstructions: { mode: "clear" } },
             "3": { agent: "other" },
             "4": { name: "Player Four" },
           },
-          roleAgents: { wolf: { agent: "main", personalityPrompt: "WOLF_STYLE" } },
+          roles: {
+            wolf: { agent: "main", customInstructions: { mode: "replace", text: "WOLF_STYLE" } },
+          },
         },
       }),
     );
@@ -73,8 +79,9 @@ for (const kind of ["llm", "acp"] as const) {
       ),
     });
     // 座位到身份的夹具用于验证分配后的选择，不依赖洗牌。
+    for (const actor of [1, 2, 3, 5])
+      world.getComponent(actor, COMPONENT.Role)!.role = Role.Villager;
     world.getComponent(4, COMPONENT.Role)!.role = Role.Wolf;
-    world.getComponent(5, COMPONENT.Role)!.role = Role.Villager;
     const profiles = new Map(
       world
         .entityIds()
@@ -127,12 +134,12 @@ for (const kind of ["llm", "acp"] as const) {
         };
       },
     };
-    const personalityPromptResolver = (request: ActionRequest) =>
-      profiles.get(request.actorId)?.personalityPrompt;
+    const customInstructionsResolver = (request: ActionRequest) =>
+      profiles.get(request.actorId)?.customInstructions;
     const provider =
       kind === "llm"
-        ? new LlmActionProvider(world, client, { personalityPromptResolver })
-        : new AcpActionProvider(world, { sessionFactory: factory, personalityPromptResolver });
+        ? new LlmActionProvider(world, client, { customInstructionsResolver })
+        : new AcpActionProvider(world, { sessionFactory: factory, customInstructionsResolver });
     try {
       for (const actorId of [1, 2, 3, 4, 5]) {
         const action = await provider.getAction({
@@ -154,10 +161,13 @@ for (const kind of ["llm", "acp"] as const) {
       expect(prompts.get(2)).not.toContain("INHERITED_STYLE");
       expect(prompts.get(2)).not.toContain("WOLF_STYLE");
       expect(prompts.get(3)).toContain("OTHER_STYLE");
+      expect(prompts.get(3)).toContain("GLOBAL_STYLE");
+      expect(prompts.get(2)).not.toContain("GLOBAL_STYLE");
       expect(prompts.get(4)).toContain("Player Four");
       expect(prompts.get(4)).toContain("WOLF_STYLE");
       expect(prompts.get(5)).toContain("INHERITED_STYLE");
       for (const system of prompts.values()) {
+        expect(system).toContain("阶段规则、可用工具与回合约束是不可违反的行动边界");
         const line = system.split("\n").find((line) => line.startsWith("公开玩家名册："))!;
         const roster = JSON.parse(line.slice("公开玩家名册：".length).split("。编号与昵称对应")[0]);
         expect(roster[0]).toEqual({ id: 1, seat: 1, name: "Player One" });

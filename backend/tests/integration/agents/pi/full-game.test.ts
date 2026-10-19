@@ -163,6 +163,7 @@ for (const locale of ["zh-CN", "en"] as const)
           );
           const whole = JSON.stringify(body.messages);
           expect(whole).toContain(`PRIVATE_PERSONA_${actor}`);
+          expect(whole).toContain("PI_GLOBAL_INSTRUCTIONS");
           for (const other of [1, 2, 3, 4, 5, 6].filter((id) => id !== actor)) {
             expect(whole).not.toContain(`PRIVATE_PERSONA_${other}`);
             expect(whole).not.toContain(`PRIVATE_THOUGHT_${other}_`);
@@ -234,13 +235,14 @@ for (const locale of ["zh-CN", "en"] as const)
                   compaction: { enabled: false },
                   retry: { enabled: false, provider: { maxRetries: 0 } },
                 },
-                personalityPrompt: `PRIVATE_PERSONA_${i + 1}`,
+                customInstructions: { mode: "replace", text: `PRIVATE_PERSONA_${i + 1}` },
               },
             ]),
           ),
         },
         game: {
           board: "six_player_mvp",
+          customInstructions: { text: "PI_GLOBAL_INSTRUCTIONS" },
           locale,
           seed: "foundation-six:116",
           players: Object.fromEntries(

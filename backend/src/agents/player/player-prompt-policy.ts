@@ -1,7 +1,7 @@
 /**
- * 负责 SDK／Pi／ACP 共用系统／回合模板、人设、工具协议提示与公开开局配比缓存的组织。
+ * 负责 SDK／Pi／ACP 共用系统／回合模板、自定义指令、工具协议提示与公开开局配比缓存的组织。
  * 输入为原 World、请求与提示选项；输出为模板组合文本，机制状态／阶段说明交游戏观察 owner。
- * 查询 thunk 保留每次 World／语言／Catalog／板子 getter 时点，不提前调用人设或角色 renderer。
+ * 查询 thunk 保留每次 World／语言／Catalog／板子 getter 时点，不提前调用自定义指令或角色 renderer。
  * 开局人数先按原顺序写入，公开配比缓存仍唯一归此；来源选择与聚合交游戏观察 owner 直接填入。
  * 查询或聚合失败保留原 size／Map 已写前缀，不回滚，也不把身份候选当作当前权限。
  * 候选仅作提示，不授予行动许可；本模块不提交资源、变更阶段或复制新的私有库存。
@@ -42,9 +42,9 @@ import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prom
 import { renderTurnConstraintUserHint } from "./turn-constraints";
 import { resolveTurnConstraints } from "../../engine/actions/turn-constraints";
 
-/** 装配对象与 registry 保原引用；人设回调收到原 request/role，不能把这个类型契约称作脱离数据或隔离沙箱。 */
+/** 装配对象与 registry 保原引用；自定义指令回调收到原 request/role，不能把这个类型契约称作脱离数据或隔离沙箱。 */
 export interface PlayerPromptPolicyOptions {
-  personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
+  customInstructionsResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   toolSpecRegistry: ToolSpecRegistry;
   roleCatalog: RoleCatalog;
   targetHintRegistry: TargetHintRegistry;
@@ -110,7 +110,7 @@ export class PlayerPromptPolicy {
         teammateIds: this.wolfTeammates(request.actorId),
         boardInfoPrompt,
         configPrompt,
-        personalityPrompt: this.options.personalityPromptResolver?.(request, role),
+        customInstructions: this.options.customInstructionsResolver?.(request, role),
         playerName: this.world.getComponent(request.actorId, COMPONENT.Identity)?.name,
         supportsDebugReporting: options.supportsDebugReporting,
         includeToolUseInstructions: options.includeToolUseInstructions,

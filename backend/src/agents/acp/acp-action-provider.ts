@@ -63,7 +63,7 @@ export interface AcpActionProviderOptions {
   sessionFactory?: AcpSessionFactory;
   sessionFactoryResolver?: (actorId: number) => AcpSessionFactory;
   boardConfig?: ReadonlyBoardConfig;
-  personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
+  customInstructionsResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   turnTimeoutMs?: number;
   onBugReport?: (report: AcpBugReport) => void;
   maxConcurrentRequests?: number;
@@ -145,7 +145,7 @@ export class AcpActionProvider implements ActionProvider {
     );
     const localization = getDefaultPhaseStageLocalizationRegistry();
     this.promptPolicy = new PlayerPromptPolicy(world, {
-      personalityPromptResolver: options.personalityPromptResolver,
+      customInstructionsResolver: options.customInstructionsResolver,
       toolSpecRegistry: getDefaultToolSpecRegistry(),
       roleCatalog,
       targetHintRegistry: getDefaultTargetHintRegistry(),

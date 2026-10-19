@@ -45,6 +45,7 @@ export const definition = {
     "prompt.system.ids": ["max"],
     "prompt.system.boundaries": [],
     "prompt.system.personality": ["personality"],
+    "prompt.system.custom_instructions": ["instructions"],
     "prompt.system.inspection": [],
     "prompt.system.events": [],
     "prompt.system.facts": [],
@@ -194,6 +195,7 @@ export const zhCN = {
   "prompt.system.boundaries":
     "阶段规则、可用工具与回合约束是不可违反的行动边界；在边界内由你自主决定策略和表达。",
   "prompt.system.personality": "你的性格与发言风格要求：{personality}",
+  "prompt.system.custom_instructions": "你的自定义指令：{instructions}",
   "prompt.system.inspection":
     "预言家只查验本板规则规定的阵营标签：普通规则下，金水可能是任意好人角色（如女巫、猎人、守卫），并不等同于平民身份；特殊角色的伪装标签按本板规则解释，查验不会改变真实身份或阵营。事件中存在 result 时，以 result.kind 对应的完整结果为准：camp 为阵营标签，role 为身份标签，combined 为两者。isWerewolf 是旧兼容字段，false 不等于好人，不能覆盖 third_party 或具体身份结果。",
   "prompt.system.events":
@@ -385,6 +387,7 @@ export const en = {
   "prompt.system.boundaries":
     "Follow phase rules, allowed tools and turn constraints. Choose your strategy and expression within those boundaries.",
   "prompt.system.personality": "Your personality and speaking style: {personality}",
+  "prompt.system.custom_instructions": "Your custom instructions: {instructions}",
   "prompt.system.inspection":
     "A Seer inspects the alignment label defined by this board: under ordinary rules, a good result can be any good role, such as Witch, Hunter or Guard, and does not prove Villager identity. Interpret disguised labels under the board's role rules; an inspection does not change real identity or alignment. When an event has result, use the complete result according to result.kind: camp is an alignment label, role is an identity label, and combined reveals both. isWerewolf is a legacy field; false does not mean Good and cannot override third_party or a specific identity result.",
   "prompt.system.events":

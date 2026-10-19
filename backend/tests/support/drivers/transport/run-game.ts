@@ -318,10 +318,15 @@ export async function runTransportGame(
         name: plan.expectedName,
         agent: id,
         ...(scenario.board.config.radiantEclipse && [4, 7, 8, 9].includes(actor)
-          ? { personalityPrompt: `SOURCE_HISTORY_PRIVATE_ACTOR_${actor}` }
+          ? {
+              customInstructions: {
+                mode: "replace",
+                text: `SOURCE_HISTORY_PRIVATE_ACTOR_${actor}`,
+              },
+            }
           : {}),
         ...(scenario.board.config.nobleSecretBody
-          ? { personalityPrompt: `NOBLE_PRIVATE_ACTOR_${actor}` }
+          ? { customInstructions: { mode: "replace", text: `NOBLE_PRIVATE_ACTOR_${actor}` } }
           : {}),
       };
       if (transportKind(actor) === "llm")

@@ -65,7 +65,10 @@ async function configFixture(locale: Locale) {
       players: {
         "1": {
           name: "Original 原名",
-          personalityPrompt: { [locale === "en" ? "zh-CN" : "en"]: "private-persona-canary" },
+          customInstructions: {
+            mode: "replace",
+            text: { [locale === "en" ? "zh-CN" : "en"]: "private-persona-canary" },
+          },
         },
       },
     }),
@@ -87,7 +90,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(report.warnings).toEqual([
       {
         code: "locale_prompt_fallback",
-        path: "players.1.personalityPrompt",
+        path: "players.1.customInstructions.text",
         requestedLocale: locale,
         fallbackLocale: locale === "en" ? "zh-CN" : "en",
       },

@@ -400,7 +400,7 @@ export const zhCN = {
   "cli.reproduced": "动作回放核对完成。",
   "cli.migrated": "配置迁移报告。",
   "config.warning.locale_prompt_fallback":
-    "{path} 缺少 {requested} 人格提示，已回退到 {fallback}。",
+    "{path} 缺少 {requested} 自定义指令，已回退到 {fallback}。",
   "config.warning.legacy_single_win_condition_shadowed_by_effective_win_conditions":
     "旧单一胜利条件已被实际生效的胜利条件列表覆盖。",
   "config.warning.legacy_empty_windows_used_default_pre_vote_window":
@@ -669,7 +669,7 @@ export const en = {
   "cli.reproduced": "Action reproduction verified.",
   "cli.migrated": "Configuration migration report.",
   "config.warning.locale_prompt_fallback":
-    "{path} has no personality prompt for {requested}; using {fallback}.",
+    "{path} has no custom instructions for {requested}; using {fallback}.",
   "config.warning.legacy_single_win_condition_shadowed_by_effective_win_conditions":
     "The legacy single win condition was overridden by the effective win-condition list.",
   "config.warning.legacy_empty_windows_used_default_pre_vote_window":

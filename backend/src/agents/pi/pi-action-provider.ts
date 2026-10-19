@@ -61,7 +61,7 @@ export interface PiActionProviderOptions {
   outputSink?: AgentOutputSink;
   runtime: PiPlayerRuntime;
   settingsResolver: (actorId: number) => Record<string, unknown>;
-  personalityPromptResolver?: (request: ActionRequest) => string | undefined;
+  customInstructionsResolver?: (request: ActionRequest) => string | undefined;
   boardConfig?: ReadonlyBoardConfig;
   turnTimeoutMs?: number;
   maxConcurrentRequests?: number;
@@ -112,7 +112,7 @@ export class PiActionProvider implements ActionProvider {
       defaultMaxConcurrentRequests: options.maxConcurrentRequests ?? Infinity,
     });
     this.policy = new PlayerPromptPolicy(world, {
-      personalityPromptResolver: options.personalityPromptResolver,
+      customInstructionsResolver: options.customInstructionsResolver,
       boardConfig: options.boardConfig,
       roleCatalog: catalog,
       toolSpecRegistry: getDefaultToolSpecRegistry(),

@@ -63,7 +63,7 @@ const board: BoardConfig = {
 function setup(locale: Locale, personality?: string) {
   const game = bootstrapGame(board, { locale, fixedRoles: roles, playerNames: names });
   const policy = new PlayerPromptPolicy(game.world, {
-    personalityPromptResolver: () => personality,
+    customInstructionsResolver: () => personality,
     boardConfig: board,
     roleCatalog: getDefaultRoleCatalog(),
     toolSpecRegistry: getDefaultToolSpecRegistry(),
@@ -293,7 +293,7 @@ test("ACP session identity and actual turn prompts use isolated game locales and
       let initial = "";
       const provider = new AcpActionProvider(game.world, {
         boardConfig: board,
-        personalityPromptResolver: () => "绿茶人设",
+        customInstructionsResolver: () => "绿茶人设",
         privilegedFallbackProvider: {
           async getAction() {
             throw new Error("unexpected_fallback");

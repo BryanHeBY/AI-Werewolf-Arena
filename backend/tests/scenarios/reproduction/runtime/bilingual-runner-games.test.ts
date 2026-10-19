@@ -241,13 +241,19 @@ async function runFixture(
     }
     if (kind === "mixed")
       for (const actor of actorPlans.keys()) {
-        (agents[`actor-${actor}`] as any).personalityPrompt = `[persona:agent:${actor}]`;
+        (agents[`actor-${actor}`] as any).customInstructions = {
+          mode: "replace",
+          text: `[persona:agent:${actor}]`,
+        };
         if (actor === 3)
-          (players[String(actor)] as any).personalityPrompt = {
-            "zh-CN": "[persona:seat:3]",
-            en: "[persona:seat:3]",
+          (players[String(actor)] as any).customInstructions = {
+            mode: "replace",
+            text: {
+              "zh-CN": "[persona:seat:3]",
+              en: "[persona:seat:3]",
+            },
           };
-        if (actor === 4) (players[String(actor)] as any).personalityPrompt = null;
+        if (actor === 4) (players[String(actor)] as any).customInstructions = { mode: "clear" };
       }
     const boardName = size === 6 ? "six_player_mvp" : "twelve_player_standard";
     let board = await loadBoardDefinition(

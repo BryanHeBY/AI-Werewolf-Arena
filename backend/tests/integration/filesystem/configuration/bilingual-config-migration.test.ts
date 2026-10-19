@@ -107,20 +107,30 @@ test("bilingual party example resolves every named seat without missing-language
     expect(Object.keys(setup.players)).toHaveLength(12);
     for (const [seat, entry] of Object.entries(setup.players)) {
       expect(entry.name).toBe(game.players[seat].name);
-      expect(entry.personalityPrompt).toBe(game.players[seat].personalityPrompt[locale]);
-      expect(entry.personalityPrompt).toContain(locale === "en" ? "playful game" : "欢乐局");
-      expect(entry.personalityPrompt).toContain(
+      expect((entry.customInstructions as { text: string }).text).toBe(
+        game.players[seat].customInstructions.text[locale],
+      );
+      expect((entry.customInstructions as { text: string }).text).toContain(
+        locale === "en" ? "playful game" : "欢乐局",
+      );
+      expect((entry.customInstructions as { text: string }).text).toContain(
         locale === "en" ? "sharing of your own inspections" : "分享自己的查验",
       );
-      expect(entry.personalityPrompt).toContain(locale === "en" ? "in your reasoning" : "自己记清");
-      expect(entry.personalityPrompt).not.toContain(
+      expect((entry.customInstructions as { text: string }).text).toContain(
+        locale === "en" ? "in your reasoning" : "自己记清",
+      );
+      expect((entry.customInstructions as { text: string }).text).not.toContain(
         locale === "en" ? "private information must not be casually disclosed" : "不该公开的信息",
       );
     }
-    expect(new Set(Object.values(setup.players).map((entry) => entry.personalityPrompt)).size).toBe(
-      12,
-    );
-    const ceo = setup.players["2"].personalityPrompt!;
+    expect(
+      new Set(
+        Object.values(setup.players).map(
+          (entry) => (entry.customInstructions as { text: string }).text,
+        ),
+      ).size,
+    ).toBe(12);
+    const ceo = (setup.players["2"].customInstructions as { text: string }).text;
     expect(ceo).toContain(locale === "en" ? "occasionally signing off" : "偶尔用");
     expect(ceo).not.toContain(locale === "en" ? "then finish with" : "每次发言");
   }

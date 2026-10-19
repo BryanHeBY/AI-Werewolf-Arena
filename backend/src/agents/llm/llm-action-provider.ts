@@ -60,7 +60,7 @@ export interface LlmActionProviderOptions {
     request: ActionRequest,
     role?: RoleComponent,
   ) => number | undefined;
-  personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
+  customInstructionsResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   toolSpecRegistry?: ToolSpecRegistry;
   roleCatalog?: RoleCatalog;
   toolCallRepairRegistry?: ToolCallRepairRegistry;
@@ -106,7 +106,7 @@ export class LlmActionProvider implements ActionProvider {
       },
     });
     const promptPolicy = new PlayerPromptPolicy(world, {
-      personalityPromptResolver: options.personalityPromptResolver,
+      customInstructionsResolver: options.customInstructionsResolver,
       toolSpecRegistry,
       roleCatalog,
       targetHintRegistry,

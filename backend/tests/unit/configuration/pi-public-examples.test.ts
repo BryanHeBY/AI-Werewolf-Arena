@@ -7,6 +7,8 @@ import { readFileSync } from "node:fs";
 import type { Provider } from "@earendil-works/pi-ai";
 import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
 import { checkConfig } from "../../../src/app/cli/check-config";
+import { resolveGameSetup, resolvePlayerProfile } from "../../../src/app/config/resolve-game-setup";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
 import path from "node:path";
 const root = path.resolve(import.meta.dir, "../../../../configs.example");
 const read = (name: string) => JSON.parse(readFileSync(path.join(root, name), "utf8"));
@@ -68,4 +70,38 @@ test("public six/twelve Pi game examples resolve every seat through real V2 conf
     );
     expect(JSON.stringify(setup)).not.toContain("YOUR_PI_");
   }
+});
+
+test("catgirl Pi example gives every seat global instructions and appends individual bilingual styles", async () => {
+  const game = read("games/twelve_player_pi_miao.json");
+  const board = await loadBoardDefinition(root, game.board);
+  for (const locale of ["zh-CN", "en"] as const) {
+    const setup = resolveGameSetup(
+      parseRuntimeConfig({
+        backends: read("runtime/backends.json"),
+        agents: read("runtime/agents.json"),
+        game: { ...game, locale },
+        environment: {},
+      }),
+      {},
+      board,
+    );
+    expect(setup.warnings).toEqual([]);
+    for (let actor = 1; actor <= 12; actor++) {
+      const profile = resolvePlayerProfile(setup, actor);
+      expect(profile.kind).toBe("pi");
+      expect(profile.customInstructions).toContain(locale === "en" ? "catgirl" : "猫娘");
+      expect(profile.customInstructions).toContain("喵");
+      if (actor === 1)
+        expect(profile.customInstructions).toContain(locale === "en" ? "sunbathing" : "晒太阳");
+      if (actor === 2)
+        expect(profile.customInstructions).toContain(locale === "en" ? "prickly" : "傲娇");
+    }
+    expect(resolvePlayerProfile(setup, 3).customInstructions).not.toContain(
+      locale === "en" ? "sunbathing" : "晒太阳",
+    );
+  }
+  const summary = await checkConfig(root, "twelve_player_pi_miao");
+  expect(summary.customInstructions).toEqual({ mode: "append" });
+  expect(JSON.stringify(summary)).not.toContain("catgirl");
 });

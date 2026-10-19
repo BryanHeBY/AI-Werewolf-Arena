@@ -60,7 +60,7 @@ function source() {
             compaction: { enabled: false },
             futureNativeFlag: { value: [true, 0, null, "${TEST_PI_SECRET}"] },
           },
-          personalityPrompt: "synthetic-secret-personality",
+          customInstructions: { mode: "replace", text: "synthetic-secret-personality" },
         },
         process: {
           backend: "process",

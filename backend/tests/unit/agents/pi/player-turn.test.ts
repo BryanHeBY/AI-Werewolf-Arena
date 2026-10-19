@@ -93,7 +93,7 @@ function setup(
   const provider = new PiActionProvider(game.world, {
     runtime,
     settingsResolver: () => ({}),
-    personalityPromptResolver: (req) => `PRIVATE_PERSONALITY_${req.actorId}`,
+    customInstructionsResolver: (req) => `PRIVATE_PERSONALITY_${req.actorId}`,
     boardConfig: sixPlayerMvpConfig,
     printThinking: false,
     printLlmIo,

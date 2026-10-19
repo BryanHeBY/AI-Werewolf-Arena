@@ -334,7 +334,7 @@ test("reentrant close during initial prompt preparation starts no factory and wa
     closing: Promise<void> | undefined;
   const provider = new AcpActionProvider(world(), {
     turnTimeoutMs: 1000,
-    personalityPromptResolver() {
+    customInstructionsResolver() {
       closing ??= provider.close();
       return "synthetic";
     },

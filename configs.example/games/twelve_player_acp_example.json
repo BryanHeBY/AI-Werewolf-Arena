@@ -1,13 +1,20 @@
 {
   "board": "twelve_player_standard",
   "agent": "acp_default",
-  "roleAgents": {
+  "maxDays": 2,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "streamEvents": true,
+  "printPrivateEvents": true,
+  "roles": {
     "wolf": {
       "agent": "acp_default",
-      "personalityPrompt": "发言简洁，基于公开事实分析，注意团队配合。"
+      "customInstructions": {
+        "text": "发言简洁，基于公开事实分析，注意团队配合。"
+      }
     }
   },
-  "playerAgents": {
+  "players": {
     "1": {
       "agent": "acp_default",
       "spawnArgs": ["--model", "fast-model"]
@@ -15,12 +22,9 @@
     "6": {
       "agent": "acp_default",
       "spawnArgs": ["--model", "strong-model"],
-      "personalityPrompt": "语气温和，先总结事实，再提出问题。"
+      "customInstructions": {
+        "text": "语气温和，先总结事实，再提出问题。"
+      }
     }
-  },
-  "maxDays": 2,
-  "maxRuntimeMs": 1800000,
-  "llmTimeoutMs": 45000,
-  "streamEvents": true,
-  "printPrivateEvents": true
+  }
 }

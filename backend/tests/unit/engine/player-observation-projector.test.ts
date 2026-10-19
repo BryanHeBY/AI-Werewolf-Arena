@@ -100,7 +100,7 @@ test("policy methods are looked up before actor getters and capture does not inv
     return "custom raw text";
   });
   const policy = new PlayerPromptPolicy(f.world, {
-    personalityPromptResolver: () => {
+    customInstructionsResolver: () => {
       personaText++;
       return "custom personality";
     },

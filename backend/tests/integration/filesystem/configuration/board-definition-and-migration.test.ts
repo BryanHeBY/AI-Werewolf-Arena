@@ -199,7 +199,7 @@ test("game bindings and CLI number overrides are validated after board resolutio
           options: {
             model: "test",
           },
-          personalityPrompt: "PRIVATE_PROMPT",
+          customInstructions: { mode: "replace", text: "PRIVATE_PROMPT" },
         },
       },
     },
@@ -209,7 +209,7 @@ test("game bindings and CLI number overrides are validated after board resolutio
   for (const seat of ["01", "99", "0", "1.0"]) {
     const runtime = parseRuntimeConfig({
       ...input,
-      game: { ...input.game, playerAgents: { [seat]: "test" } },
+      game: { ...input.game, players: { [seat]: { agent: "test" } } },
     });
     expect(() => resolveGameSetup(runtime, {}, board)).toThrow(
       "runtime_config_player_binding_invalid",
@@ -217,7 +217,7 @@ test("game bindings and CLI number overrides are validated after board resolutio
   }
   const typo = parseRuntimeConfig({
     ...input,
-    game: { ...input.game, roleAgents: { wlof: "test" } },
+    game: { ...input.game, roles: { wlof: { agent: "test" } } },
   });
   expect(() => resolveGameSetup(typo, {}, board)).toThrow("runtime_config_role_binding_invalid");
   const runtime = parseRuntimeConfig(input);

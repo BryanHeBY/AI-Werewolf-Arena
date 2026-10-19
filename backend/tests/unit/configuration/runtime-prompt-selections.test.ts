@@ -5,7 +5,9 @@ import { expect, test } from "bun:test";
 import {
   resolveAgentProfileByName,
   resolveGameSetup,
+  resolvePlayerProfile,
 } from "../../../src/app/config/resolve-game-setup";
+import { Role } from "../../../src/domain/identity";
 import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
 
 for (const kind of ["llm", "acp"] as const) {
@@ -29,33 +31,36 @@ for (const kind of ["llm", "acp"] as const) {
         items: {
           test_agent: {
             backend: "test_provider",
-            personalityPrompt: "默认风格",
+            customInstructions: { mode: "replace", text: "默认风格" },
             options: kind === "llm" ? { model: "test-model" } : { spawnArgs: ["--base"] },
           },
         },
       },
       game: {
         agent: "test_agent",
-        roleAgents: { wolf: { agent: "test_agent", personalityPrompt: "狼人风格" } },
-        playerAgents: {
+        roles: {
+          wolf: { agent: "test_agent", customInstructions: { mode: "replace", text: "狼人风格" } },
+        },
+        players: {
           "1": {
             agent: "test_agent",
-            personalityPrompt: "一号风格",
+            customInstructions: { mode: "replace", text: "一号风格" },
             ...(kind === "acp" ? { spawnArgs: ["--seat"] } : {}),
           },
-          "2": "test_agent",
+          "2": { agent: "test_agent" },
           "3": { agent: "test_agent" },
         },
       },
     });
     const setup = resolveGameSetup(runtime);
-    expect(setup.defaultProfile.personalityPrompt).toBe("默认风格");
-    expect(setup.roleProfiles.wolf.personalityPrompt).toBe("狼人风格");
-    expect(setup.playerProfiles["1"].personalityPrompt).toBe("一号风格");
-    expect(setup.playerProfiles["2"].personalityPrompt).toBe("默认风格");
-    expect(setup.playerProfiles["3"].personalityPrompt).toBe("默认风格");
-    expect(resolveAgentProfileByName(runtime).personalityPrompt).toBe("默认风格");
-    if (kind === "acp") expect(setup.playerProfiles["1"].spawnArgs).toEqual(["--base", "--seat"]);
+    expect(setup.defaultProfile.customInstructions).toBe("默认风格");
+    expect(resolvePlayerProfile(setup, 6, Role.Wolf).customInstructions).toBe("狼人风格");
+    expect(resolvePlayerProfile(setup, 1).customInstructions).toBe("一号风格");
+    expect(resolvePlayerProfile(setup, 2).customInstructions).toBe("默认风格");
+    expect(resolvePlayerProfile(setup, 3).customInstructions).toBe("默认风格");
+    expect(resolveAgentProfileByName(runtime).customInstructions).toBe("默认风格");
+    if (kind === "acp")
+      expect(resolvePlayerProfile(setup, 1).spawnArgs).toEqual(["--base", "--seat"]);
   });
 }
 
@@ -73,17 +78,17 @@ test("validates ACP prompt strings at agent and selection boundaries", () => {
       ...input,
       agents: {
         ...input.agents,
-        items: { acp: { ...input.agents.items.acp, personalityPrompt: 123 } },
+        items: { acp: { ...input.agents.items.acp, customInstructions: 123 } },
       },
     }),
-  ).toThrow("runtime_config_required_string_invalid: agents.items.acp.personalityPrompt");
+  ).toThrow("runtime_config_custom_instructions_invalid: agents.items.acp.customInstructions");
   expect(() =>
     parseRuntimeConfig({
       ...input,
       game: {
         ...input.game,
-        playerAgents: { "1": { agent: "acp", personalityPrompt: " " } },
+        players: { "1": { agent: "acp", customInstructions: { mode: "replace", text: " " } } },
       },
     }),
-  ).toThrow("runtime_config_required_string_invalid: game.playerAgents.1.personalityPrompt");
+  ).toThrow("runtime_config_required_string_invalid: game.players.1.customInstructions.text");
 });

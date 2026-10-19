@@ -202,7 +202,7 @@ async function createAcpRuntime(options: PlayerAgentFactoryOptions): Promise<Pla
           onPromptEnd: (actor) => observers.get(actor)?.flush?.(),
         });
       },
-      personalityPromptResolver: (request) => profiles.get(request.actorId)?.personalityPrompt,
+      customInstructionsResolver: (request) => profiles.get(request.actorId)?.customInstructions,
       boardConfig: options.boardConfig,
       turnTimeoutMs: options.llmTimeoutMs,
       outputSink: options.outputSink,
@@ -298,7 +298,7 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
       const profile = profileFor(request.actorId);
       return profile.provider.maxConcurrentRequests;
     },
-    personalityPromptResolver: (request) => profileFor(request.actorId).personalityPrompt,
+    customInstructionsResolver: (request) => profileFor(request.actorId).customInstructions,
     outputSink: options.outputSink,
     trace: options.trace,
     displayLocale: options.displayLocale,
@@ -345,8 +345,8 @@ async function createPiRuntime(options: PlayerAgentFactoryOptions): Promise<Play
           new PiActionProvider(options.world, {
             runtime,
             settingsResolver: (actorId) => ({ ...profiles.get(actorId)?.piSettings }),
-            personalityPromptResolver: (request) =>
-              profiles.get(request.actorId)?.personalityPrompt,
+            customInstructionsResolver: (request) =>
+              profiles.get(request.actorId)?.customInstructions,
             boardConfig: options.boardConfig,
             maxConcurrentRequests: first.provider.maxConcurrentRequests,
             turnTimeoutMs: options.llmTimeoutMs,

@@ -450,7 +450,7 @@ describe("LlmActionProvider prompts", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new ToolLoopClient("speak", { text: "简洁发言" });
     const provider = new LlmActionProvider(context.world, client, {
-      personalityPromptResolver: () => "先总结事实，再提出问题。",
+      customInstructionsResolver: () => "先总结事实，再提出问题。",
     });
     await provider.getAction({
       actorId: 1,
@@ -459,7 +459,7 @@ describe("LlmActionProvider prompts", () => {
       context: { turn_constraints: {}, day: 1, stage: "day_speech", visible_events: [] },
     });
     const system = client.lastMessages.find((message) => message.role === "system")?.content;
-    expect(system).toContain("你的性格与发言风格要求：先总结事实，再提出问题。");
+    expect(system).toContain("你的自定义指令：先总结事实，再提出问题。");
     expect(system).toContain("争取达成本局规则赋予你的个人胜利目标");
   });
 

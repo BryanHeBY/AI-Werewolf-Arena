@@ -8,7 +8,7 @@
 import { Role } from "../../domain";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
-/** 调用方提供的身份与人设文本；role 是原显示字符串，不在这里据其重新判断阵营。 */
+/** 调用方提供的身份与自定义指令文本；role 是原显示字符串，不在这里据其重新判断阵营。 */
 export interface SystemPromptInput {
   players?: readonly import("@ai-werewolf-arena/game-contract").PublicPlayerIdentity[];
   locale?: Locale;
@@ -19,8 +19,8 @@ export interface SystemPromptInput {
   teammateIds: number[];
   boardInfoPrompt?: string;
   configPrompt?: string;
-  /** 保留可选原人设；非空判断与正文插入各按原位置读取／trim，不预处理或改变产品文本。 */
-  personalityPrompt?: string;
+  /** 保留可选原自定义指令；非空判断与正文插入各按原位置读取／trim，不预处理或改变产品文本。 */
+  customInstructions?: string;
   playerName?: string;
   supportsDebugReporting?: boolean;
   includeToolUseInstructions?: boolean;
@@ -59,8 +59,8 @@ export interface BoardInfoPromptInput {
   roleSkillBrief: (role: Role) => string;
 }
 
-/** 身份、名字、队友和人设仍依原顺序拼接；工具说明与报告说明保原开关短路。 */
-// 数组段落按表达式顺序求值；后段 formatter/getter 失败不返回已拼部分，也不撤销人设／回调已有副作用。
+/** 身份、名字、队友和自定义指令仍依原顺序拼接；工具说明与报告说明保原开关短路。 */
+// 数组段落按表达式顺序求值；后段 formatter/getter 失败不返回已拼部分，也不撤销自定义指令／回调已有副作用。
 export function buildSystemPrompt(input: SystemPromptInput): string {
   const locale = input.locale ?? "zh-CN";
   return [
@@ -76,8 +76,12 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     }),
     text(locale, "prompt.system.ids", { max: input.maxPlayerId }),
     text(locale, "prompt.system.boundaries"),
-    ...(input.personalityPrompt?.trim()
-      ? [text(locale, "prompt.system.personality", { personality: input.personalityPrompt.trim() })]
+    ...(input.customInstructions?.trim()
+      ? [
+          text(locale, "prompt.system.custom_instructions", {
+            instructions: input.customInstructions.trim(),
+          }),
+        ]
       : []),
     ...(input.boardInfoPrompt ? [input.boardInfoPrompt] : []),
     ...(input.configPrompt ? [input.configPrompt] : []),

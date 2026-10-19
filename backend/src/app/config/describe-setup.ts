@@ -13,7 +13,7 @@ function agentSummary(profile: ResolvedAgentRuntimeProfile) {
     kind: profile.kind,
     providerName: profile.providerName,
     ...(profile.model ? { model: profile.model } : {}),
-    customPrompt: Boolean(profile.personalityPrompt),
+    hasCustomInstructions: Boolean(profile.customInstructions),
   };
 }
 
@@ -27,15 +27,21 @@ export function describeResolvedSetup(
     definitionVersion: setup.boardDefinition?.definition.version ?? null,
     ruleset: setup.boardDefinition?.definition.ruleset ?? null,
     rules: setup.boardDefinition?.definition.rules ?? null,
-    roles: setup.boardConfig.roleSetups,
+    roleSetups: setup.boardConfig.roleSetups,
     parameters: setup.boardDefinition?.definition.roles ?? {},
     mechanisms: setup.boardDefinition?.definition.mechanisms ?? {},
     defaultAgent: agentSummary(setup.defaultProfile),
-    playerAgents: Object.fromEntries(
-      Object.entries(setup.playerProfiles).map(([seat, profile]) => [seat, agentSummary(profile)]),
-    ),
-    roleAgents: Object.fromEntries(
-      Object.entries(setup.roleProfiles).map(([role, profile]) => [role, agentSummary(profile)]),
+    customInstructions: setup.customInstructions ? { mode: setup.customInstructions.mode } : null,
+    roles: Object.fromEntries(
+      Object.entries(setup.roles).map(([role, entry]) => [
+        role,
+        {
+          ...(entry.profile ? { agent: agentSummary(entry.profile) } : {}),
+          ...(entry.customInstructions
+            ? { customInstructions: { mode: entry.customInstructions.mode } }
+            : {}),
+        },
+      ]),
     ),
     players: Object.fromEntries(
       Object.entries(setup.players).map(([seat, entry]) => [
@@ -43,9 +49,10 @@ export function describeResolvedSetup(
         {
           ...(entry.name !== undefined ? { name: entry.name } : {}),
           ...(entry.profile ? { agent: agentSummary(entry.profile) } : {}),
-          // undefined 沿用绑定策略，null 显式清空；状态位与最终 profile 的非空提示概览不同。
-          customPrompt: entry.personalityPrompt !== undefined && entry.personalityPrompt !== null,
-          clearedPrompt: entry.personalityPrompt === null,
+          // 摘要只展示操作，不输出指令原文；缺省仍由上层配置继承。
+          ...(entry.customInstructions
+            ? { customInstructions: { mode: entry.customInstructions.mode } }
+            : {}),
         },
       ]),
     ),

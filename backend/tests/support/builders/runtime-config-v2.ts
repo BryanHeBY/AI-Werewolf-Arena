@@ -47,7 +47,7 @@ export function runtimeConfigV2(input: RuntimeFixtureInput) {
       default: input.agents.default,
       items: Object.fromEntries(
         Object.entries(input.agents.items).map(([name, value]) => {
-          const { kind, provider, personalityPrompt, ...options } = fields(value);
+          const { kind, provider, customInstructions, ...options } = fields(value);
           const connection = fields(input.providers.items[String(provider)]);
           return [
             name,
@@ -59,7 +59,7 @@ export function runtimeConfigV2(input: RuntimeFixtureInput) {
                   : {}),
                 ...options,
               },
-              ...(personalityPrompt === undefined ? {} : { personalityPrompt }),
+              ...(customInstructions === undefined ? {} : { customInstructions }),
             },
           ];
         }),

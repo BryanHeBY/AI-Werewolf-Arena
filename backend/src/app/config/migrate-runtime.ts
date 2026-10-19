@@ -87,7 +87,9 @@ export function convertLegacyRuntime(providersInput: unknown, agentsInput: unkno
         {
           backend: provider,
           options,
-          ...(personalityPrompt === undefined ? {} : { personalityPrompt }),
+          ...(personalityPrompt === undefined
+            ? {}
+            : { customInstructions: { text: personalityPrompt } }),
         },
       ];
     }),

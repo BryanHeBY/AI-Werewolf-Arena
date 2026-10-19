@@ -70,7 +70,7 @@ test("loads only the explicit config directory and game name", async () => {
     game: {
       board: "twelve_player_standard",
       agent: "test_agent",
-      playerAgents: { "1": "test_agent" },
+      players: { "1": { agent: "test_agent" } },
     },
   });
   const runtime = await loadRuntimeConfig({ configDir: root, gameName: "strict" });

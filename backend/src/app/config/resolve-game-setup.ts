@@ -1,17 +1,23 @@
 /**
  * 负责合并已解析配置、运行参数和座位／角色 Agent 选择。输入为公开配置与 CLI 覆盖；
  * 输出为完整对局设置、逐玩家配置和语言回退诊断。仅选择已登记角色，不创建对局、
- * 读取认证或授予行动权限；名字和人格保留原文，不参与模型选择。
+ * 读取认证或授予行动权限；名字和自定义指令保留原文，不参与模型选择。
  */
 import type { BoardConfig } from "../../domain";
 import type {
   GameConfig,
-  GameAgentSelection,
+  AgentBindingConfig,
+  GameSetupWarning,
   ResolvedAgentRuntimeProfile,
   ResolvedAuditConfig,
   RuntimeConfig,
-  PlayerConfig,
 } from "./contracts";
+import {
+  combineCustomInstructions,
+  resolveCustomInstructions,
+  type ResolvedCustomInstructions,
+} from "./custom-instructions";
+export type { GameSetupWarning } from "./contracts";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 import {
   resolveBoardConfig,
@@ -38,17 +44,13 @@ export interface RunGameOptions {
   recordRootDir?: string;
 }
 
-export interface GameSetupWarning {
-  code: "locale_prompt_fallback";
-  path: string;
-  requestedLocale: Locale;
-  fallbackLocale: Locale;
-}
-
-export interface ResolvedPlayerConfig {
-  name?: string;
+/** 角色／席位绑定只携带自己的指令操作；最终组合在身份分配后执行。 */
+export interface ResolvedAgentBinding {
   profile?: ResolvedAgentRuntimeProfile;
-  personalityPrompt?: string | null;
+  customInstructions?: ResolvedCustomInstructions;
+}
+export interface ResolvedPlayerConfig extends ResolvedAgentBinding {
+  name?: string;
 }
 
 /** runner 的完整输入：已解析板子、逐玩家／角色 profile 与可选审计；不携带运行句柄或已分配身份。 */
@@ -56,8 +58,8 @@ export interface ResolvedGameSetup {
   options: RunGameOptions;
   boardConfig: BoardConfig;
   defaultProfile: ResolvedAgentRuntimeProfile;
-  playerProfiles: Readonly<Record<string, ResolvedAgentRuntimeProfile>>;
-  roleProfiles: Readonly<Record<string, ResolvedAgentRuntimeProfile>>;
+  roles: Readonly<Record<string, ResolvedAgentBinding>>;
+  customInstructions?: ResolvedCustomInstructions;
   audit: ResolvedAuditConfig | null;
   boardDefinition?: ResolvedBoardDefinition;
   context: { locale: Locale; displayLocale: Locale; seed?: string };
@@ -65,21 +67,24 @@ export interface ResolvedGameSetup {
   warnings: readonly GameSetupWarning[];
 }
 
-/** 分配身份后按 players 显式 Agent→playerAgents→roleAgents→默认值选择；独立人格最后覆盖，null 清除继承。 */
+/** 身份分配后独立选择 Agent，再按 Agent→全局→角色→席位顺序组合指令。 */
 export function resolvePlayerProfile(
   setup: ResolvedGameSetup,
   actorId: number,
   role?: Role,
 ): ResolvedAgentRuntimeProfile {
   const player = setup.players[String(actorId)];
-  const selected =
-    player?.profile ??
-    setup.playerProfiles[String(actorId)] ??
-    (role ? setup.roleProfiles[role] : undefined) ??
-    setup.defaultProfile;
-  return player?.personalityPrompt !== undefined
-    ? { ...selected, personalityPrompt: player.personalityPrompt ?? undefined }
-    : selected;
+  const roleBinding = role ? setup.roles[role] : undefined;
+  const selected = player?.profile ?? roleBinding?.profile ?? setup.defaultProfile;
+  return {
+    ...selected,
+    customInstructions: combineCustomInstructions(
+      selected.customInstructions,
+      setup.customInstructions,
+      roleBinding?.customInstructions,
+      player?.customInstructions,
+    ),
+  };
 }
 
 export function resolveGameBoard(
@@ -96,6 +101,7 @@ export function resolveGameBoard(
 export function resolveAgentProfileByName(
   runtime: RuntimeConfig,
   agentName?: string,
+  warnings: GameSetupWarning[] = [],
 ): ResolvedAgentRuntimeProfile {
   const selected = agentName ?? runtime.agents.default;
   const entry = Object.hasOwn(runtime.agents.items, selected)
@@ -109,6 +115,15 @@ export function resolveAgentProfileByName(
     throw new Error(
       `runtime_config_agent_provider_not_found: agent=${selected} provider=${entry.provider}`,
     );
+  const customInstructions = combineCustomInstructions(
+    undefined,
+    resolveCustomInstructions(
+      entry.customInstructions,
+      runtime.game.locale ?? "zh-CN",
+      `agents.items.${selected}.customInstructions`,
+      warnings,
+    ),
+  );
   if (entry.kind === "acp") {
     return {
       name: selected,
@@ -127,7 +142,7 @@ export function resolveAgentProfileByName(
       spawnArgs: entry.spawnArgs,
       sessionReuse: entry.sessionReuse,
       actionTransport: entry.actionTransport ?? "mcp",
-      personalityPrompt: entry.personalityPrompt,
+      customInstructions,
     };
   }
   if (entry.kind === "pi")
@@ -137,7 +152,7 @@ export function resolveAgentProfileByName(
       provider,
       kind: "pi",
       piSettings: entry.piSettings,
-      personalityPrompt: entry.personalityPrompt,
+      customInstructions,
     };
   return {
     name: selected,
@@ -149,33 +164,8 @@ export function resolveAgentProfileByName(
     maxTokens: entry.maxTokens,
     reasoningEffort: entry.reasoningEffort,
     thinkingEnabled: entry.thinkingEnabled,
-    personalityPrompt: entry.personalityPrompt,
+    customInstructions,
   };
-}
-
-function resolveSelections(
-  runtime: RuntimeConfig,
-  selections: Record<string, GameAgentSelection> | undefined,
-): Record<string, ResolvedAgentRuntimeProfile> {
-  return Object.fromEntries(
-    Object.entries(selections ?? {}).map(([key, selection]) => {
-      const name = typeof selection === "string" ? selection : selection.agent;
-      const profile = resolveAgentProfileByName(runtime, name);
-      const spawnArgs = typeof selection === "object" ? selection.spawnArgs : undefined;
-      const personalityPrompt =
-        typeof selection === "object" ? selection.personalityPrompt : undefined;
-      return [
-        key,
-        {
-          ...profile,
-          ...(profile.kind === "acp" && spawnArgs?.length
-            ? { spawnArgs: [...(profile.spawnArgs ?? []), ...spawnArgs] }
-            : {}),
-          ...(personalityPrompt !== undefined ? { personalityPrompt } : {}),
-        },
-      ];
-    }),
-  );
 }
 
 export function resolveGameSetup(
@@ -229,7 +219,14 @@ export function resolveGameSetup(
   validateGameBindings(game, boardConfig);
   const locale = game.locale ?? "zh-CN";
   const warnings: GameSetupWarning[] = [];
-  const players = resolvePlayers(runtime, game.players, locale, warnings);
+  const players = resolveBindings(runtime, game.players, "players", locale, warnings);
+  const roles = resolveBindings(runtime, game.roles, "roles", locale, warnings);
+  const customInstructions = resolveCustomInstructions(
+    game.customInstructions,
+    locale,
+    "game.customInstructions",
+    warnings,
+  );
   return {
     options,
     boardConfig,
@@ -241,15 +238,19 @@ export function resolveGameSetup(
     },
     players,
     warnings,
-    defaultProfile: resolveAgentProfileByName(runtime, game.agent),
-    playerProfiles: resolveSelections(runtime, game.playerAgents),
-    roleProfiles: resolveSelections(runtime, game.roleAgents),
+    defaultProfile: resolveAgentProfileByName(runtime, game.agent, warnings),
+    roles,
+    customInstructions,
     // 只有显式 enabled:false 才关闭审计；省略配置保原默认值，创建与失败处理留给运行／审计 owner。
     audit:
       auditConfig?.enabled === false
         ? null
         : {
-            profile: resolveAgentProfileByName(runtime, auditConfig?.agentName ?? game.agent),
+            profile: resolveAgentProfileByName(
+              runtime,
+              auditConfig?.agentName ?? game.agent,
+              warnings,
+            ),
             timeoutMs: auditConfig?.timeoutMs ?? 15000,
             maxAttempts: Math.max(1, auditConfig?.maxAttempts ?? 2),
             concurrency: Math.max(1, auditConfig?.concurrency ?? 4),
@@ -266,20 +267,10 @@ export function validateGameBindings(game: GameConfig, board: BoardConfig): void
   const present = new Set(
     board.roleSetups.filter((entry) => entry.count > 0).map((entry) => entry.role),
   );
-  for (const key of Object.keys(game.roleAgents ?? {})) {
+  for (const key of Object.keys(game.roles ?? {})) {
     if (!catalog.metadata(key as Role) || !present.has(key as Role))
       throw new Error(`runtime_config_role_binding_invalid: ${key}`);
   }
-  for (const key of Object.keys(game.playerAgents ?? {})) {
-    if (
-      !/^[1-9]\d*$/.test(key) ||
-      Number(key) > board.boardSize ||
-      !Number.isSafeInteger(Number(key))
-    ) {
-      throw new Error(`runtime_config_player_binding_invalid: ${key}`);
-    }
-  }
-  // 同一座位同时出现于新 players 和旧 playerAgents 会拒绝，避免隐式优先级掩盖配置冲突。
   for (const key of Object.keys(game.players ?? {})) {
     if (
       !/^[1-9]\d*$/.test(key) ||
@@ -287,45 +278,36 @@ export function validateGameBindings(game: GameConfig, board: BoardConfig): void
       !Number.isSafeInteger(Number(key))
     )
       throw new Error(`runtime_config_player_binding_invalid: ${key}`);
-    if (game.playerAgents && key in game.playerAgents)
-      throw new Error(`runtime_config_player_binding_conflict: ${key}`);
   }
 }
 
-function resolvePlayers(
+/** 指令按层保留 replace／clear，不能在选择模型时提前覆盖角色或全局文本。 */
+function resolveBindings(
   runtime: RuntimeConfig,
-  entries: Record<string, PlayerConfig> | undefined,
+  entries: Record<string, AgentBindingConfig & { name?: string }> | undefined,
+  scope: "players" | "roles",
   locale: Locale,
   warnings: GameSetupWarning[],
 ): Record<string, ResolvedPlayerConfig> {
   return Object.fromEntries(
-    Object.entries(entries ?? {}).map(([seat, entry]) => {
-      let profile = entry.agent ? resolveAgentProfileByName(runtime, entry.agent) : undefined;
+    Object.entries(entries ?? {}).map(([key, entry]) => {
+      let profile = entry.agent
+        ? resolveAgentProfileByName(runtime, entry.agent, warnings)
+        : undefined;
       if (profile?.kind === "acp" && entry.spawnArgs?.length)
         profile = { ...profile, spawnArgs: [...(profile.spawnArgs ?? []), ...entry.spawnArgs] };
-      let personalityPrompt: string | null | undefined =
-        entry.personalityPrompt === null ? null : undefined;
-      if (typeof entry.personalityPrompt === "string") personalityPrompt = entry.personalityPrompt;
-      // 语言表优先本语言，再优先中文、最后英文；只产生回退诊断，不翻译用户人格文本。
-      else if (entry.personalityPrompt) {
-        if (entry.personalityPrompt[locale]) personalityPrompt = entry.personalityPrompt[locale];
-        else {
-          const fallback = entry.personalityPrompt["zh-CN"] ? "zh-CN" : "en";
-          personalityPrompt = entry.personalityPrompt[fallback];
-          warnings.push({
-            code: "locale_prompt_fallback",
-            path: `players.${seat}.personalityPrompt`,
-            requestedLocale: locale,
-            fallbackLocale: fallback,
-          });
-        }
-      }
+      const customInstructions = resolveCustomInstructions(
+        entry.customInstructions,
+        locale,
+        `${scope}.${key}.customInstructions`,
+        warnings,
+      );
       return [
-        seat,
+        key,
         {
           ...(entry.name !== undefined ? { name: entry.name } : {}),
           ...(profile ? { profile } : {}),
-          ...(personalityPrompt !== undefined ? { personalityPrompt } : {}),
+          ...(customInstructions !== undefined ? { customInstructions } : {}),
         },
       ];
     }),

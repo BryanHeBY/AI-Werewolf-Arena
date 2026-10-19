@@ -44,9 +44,23 @@ export interface PiProviderConfig {
 
 export type ProviderConfig = LlmProviderConfig | AcpProviderConfig | PiProviderConfig;
 
-/** 提示配置只保存人格文本；实际注入由玩家提示策略统一执行，不授予游戏动作权限。 */
+/** 用户自定义指令可按玩家语言选择，保留原文，不解释环境占位符。 */
+export type LocalizedInstructionText = string | Partial<Record<Locale, string>>;
+
+/** append 默认追加；replace 只替换附加指令；clear 不允许携带正文。基础游戏提示不参与合并。 */
+export type CustomInstructions =
+  { text: LocalizedInstructionText; mode?: "append" | "replace" } | { mode: "clear" };
+
+export interface GameSetupWarning {
+  code: "locale_prompt_fallback";
+  path: string;
+  requestedLocale: Locale;
+  fallbackLocale: Locale;
+}
+
+/** 配置层保存尚未选择语言的自定义指令；实际注入由共用玩家提示策略执行。 */
 export interface AgentPromptConfig {
-  personalityPrompt?: string;
+  customInstructions?: CustomInstructions;
 }
 
 export interface AgentProfileConfig extends AgentPromptConfig {
@@ -90,23 +104,14 @@ export interface AgentsConfig {
   items: Record<string, AgentEntryConfig>;
 }
 
-/** 对局引用已定义的 Agent；对象形式可覆盖提示词及 ACP 启动参数。 */
-export type GameAgentSelection =
-  | string
-  | {
-      agent: string;
-      spawnArgs?: string[];
-      personalityPrompt?: string;
-    };
-
-/** 玩家专属人格可按语言选择；未设置表示继承，null 表示清除，选择后的字符串仍保留原文。 */
-export type LocalizedPrompt = string | Partial<Record<Locale, string>>;
-export interface PlayerConfig {
-  name?: string;
+/** 角色／席位可独立配置 Agent 或指令；省略 Agent 不影响该层指令的作用。 */
+export interface AgentBindingConfig extends AgentPromptConfig {
   agent?: string;
   spawnArgs?: string[];
-  /** null 明确清除继承人格；字符串原文保留。 */
-  personalityPrompt?: LocalizedPrompt | null;
+}
+
+export interface PlayerConfig extends AgentBindingConfig {
+  name?: string;
 }
 
 export interface GameConfig {
@@ -124,8 +129,8 @@ export interface GameConfig {
   printPrivateEvents?: boolean;
   recordRootDir?: string;
   agent?: string;
-  roleAgents?: Record<string, GameAgentSelection>;
-  playerAgents?: Record<string, GameAgentSelection>;
+  customInstructions?: CustomInstructions;
+  roles?: Record<string, AgentBindingConfig>;
   players?: Record<string, PlayerConfig>;
   /** locale 控制玩家提示，displayLocale 控制展示；未设置的展示语言跟随玩家语言。 */
   locale?: Locale;
@@ -167,7 +172,9 @@ export interface ResolvedAuditConfig {
 }
 
 /** 装配结果引用已校验的 provider 配置；这是运行输入，不包含进程、会话或请求租约。 */
-export interface ResolvedAgentRuntimeProfile extends AgentPromptConfig {
+export interface ResolvedAgentRuntimeProfile {
+  /** 已按语言选择并组合的附加正文；各传输只消费同一结果，不再次合并。 */
+  customInstructions?: string;
   name: string;
   providerName: string;
   provider: ProviderConfig;
