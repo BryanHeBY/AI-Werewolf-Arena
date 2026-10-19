@@ -123,6 +123,7 @@ export function RosterHud({
             {renderSlot(
               "seatBadge",
               <span
+                data-seat-number={identity?.seat ?? player.playerId}
                 style={{
                   position: "absolute",
                   bottom: hiddenAvatar ? undefined : hasMetadata ? -9 * scale : undefined,
@@ -141,11 +142,22 @@ export function RosterHud({
                   background: cards.canvas,
                   border: `${tokens.frame.width * scale}px solid ${accent}`,
                   fontSize: 30 * scale,
-                  fontVariantNumeric: "tabular-nums",
+                  lineHeight: 1,
+                  fontVariantNumeric: "lining-nums tabular-nums",
                   fontWeight: 700,
+                  whiteSpace: "nowrap",
                 }}
               >
-                {identity?.seat ?? player.playerId}
+                <span
+                  style={{
+                    display: "block",
+                    // 去掉字体在数字字形上下的额外行盒留白，再居中可见字高，避免只居中行盒导致数字下沉。
+                    textBoxTrim: "trim-both",
+                    textBoxEdge: "cap alphabetic",
+                  }}
+                >
+                  {identity?.seat ?? player.playerId}
+                </span>
               </span>,
               player.playerId,
             )}
