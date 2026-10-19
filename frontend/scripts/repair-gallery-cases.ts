@@ -175,6 +175,38 @@ export function createRepairGalleryCases(): ArtGalleryCase[] {
     { presentation: { showNames: true, showModels: true } },
     "en",
   );
+  // 警徽用原字号标签时，左右长资料卡都必须验证角落预留；单独样例保留唯一当前持徽者。
+  for (const holder of [2, 8]) {
+    const sheriff = structuredClone(metadata);
+    sheriff.events = [
+      {
+        seq: 1,
+        timestamp: "t",
+        day: 2,
+        phase: "day",
+        type: "sheriff_elected",
+        payload: { winnerId: holder },
+      },
+    ];
+    add(
+      `repair-sheriff-metadata-${holder}`,
+      sheriff,
+      { presentation: { showNames: true, showModels: true } },
+      "en",
+    );
+    add(
+      `repair-sheriff-symbol-${holder}`,
+      sheriff,
+      {
+        presentation: {
+          showNames: false,
+          showModels: false,
+          players: { [holder]: { avatarKey: "openai" } },
+        },
+      },
+      "en",
+    );
+  }
   add(
     "repair-explicit-avatar",
     metadata,

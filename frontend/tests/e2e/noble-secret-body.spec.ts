@@ -42,7 +42,10 @@ for (const locale of ["en", "zh-CN"] as const)
     const seat = page.locator(`[data-composition-player="${id}"]`);
     await expect(seat).toHaveAttribute("data-player-alive", "true");
     await expect(seat).toContainText(locale === "en" ? "Awakened Village Idiot" : "觉醒愚者");
-    await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
+    await expect(seat.locator("[data-sheriff-badge]")).toHaveAttribute(
+      "aria-label",
+      locale === "en" ? "Sheriff" : "警长",
+    );
     await expect(page.getByTestId("composition-winner")).toHaveCount(0);
     expect(replay.events.some((e) => e.type === "secret_body_reveal_speech")).toBe(false);
   });
@@ -245,9 +248,9 @@ for (const locale of ["en", "zh-CN"] as const)
             "data-player-alive",
             "true",
           );
-          await expect(page.locator(`[data-composition-player="${id}"]`)).toContainText(
-            locale === "en" ? "Sheriff" : "警长",
-          );
+          await expect(
+            page.locator(`[data-composition-player="${id}"] [data-sheriff-badge]`),
+          ).toHaveAttribute("aria-label", locale === "en" ? "Sheriff" : "警长");
         }
         if (i > 0) {
           await seek(i * 90 - 1);
@@ -324,11 +327,17 @@ for (const locale of ["en", "zh-CN"] as const)
       await seek(i * 90 - 1);
       if (actor !== "body") await expect(seat).toContainText(text(locale, "replay.unknown"));
       await expect(seat).toHaveAttribute("data-player-alive", "true");
-      await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
+      await expect(seat.locator("[data-sheriff-badge]")).toHaveAttribute(
+        "aria-label",
+        locale === "en" ? "Sheriff" : "警长",
+      );
       await seek(i * 90 + 45);
       await expect(seat).toContainText(locale === "en" ? "Awakened Village Idiot" : "觉醒愚者");
       await expect(seat).toHaveAttribute("data-player-alive", "true");
-      await expect(seat).toContainText(locale === "en" ? "Sheriff" : "警长");
+      await expect(seat.locator("[data-sheriff-badge]")).toHaveAttribute(
+        "aria-label",
+        locale === "en" ? "Sheriff" : "警长",
+      );
       await seek(i * 90 - 1);
       if (actor !== "body") await expect(seat).toContainText(text(locale, "replay.unknown"));
       expect(

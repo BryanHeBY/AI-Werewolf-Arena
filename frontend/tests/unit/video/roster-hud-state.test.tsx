@@ -90,6 +90,9 @@ test("mirrors geometry without flipping text, fully grays dead winner and retain
   expect(html).toContain("rotate(-12deg)");
   expect(html).toContain("data-roster-winner");
   expect(html).toContain("警长");
+  expect(html).toContain('data-sheriff-badge="gothic-v1"');
+  expect(html).toContain("sheriff-badge-v1.png");
+  expect(html.match(/data-sheriff-badge=/g)).toHaveLength(1);
   expect(html).toContain('data-identity-role="seer"');
   expect(html).toContain('data-avatar-auto="unknown"');
   expect(html).toContain('title="未知"');

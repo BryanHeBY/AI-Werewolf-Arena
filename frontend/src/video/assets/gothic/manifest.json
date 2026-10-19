@@ -209,6 +209,20 @@
       "safeArea": "完整弩形位于画布82%以内；不得把猎魔人混同骑士或火枪"
     },
     {
+      "file": "sheriff-badge-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: one production transparent cutout UI badge for an original medieval gothic werewolf replay, used at only 28-40 pixels.\nPrimary request: a compact town sheriff / village magistrate badge, an upright heraldic shield with a single simple silver sword engraved vertically on its dark slate central face. A very small restrained three-point metal crown forms the upper edge. Thick simple silhouette readable when tiny.\nStyle/medium: tactile painterly realistic aged metal relief, matching cold silver and old iron identity medallions, a narrow worn brass rim, fine material depth, cool upper-left light. Dark slate center, silver sword, warm muted brass edge. Solemn, sinister medieval village atmosphere, understated craftsmanship.\nComposition/framing: square canvas, badge centered and front facing, whole shield fills 86 percent of canvas, modest transparent margin. Only one badge, no surrounding ring, no pedestal, no environment, no extra objects.\nText: none. No letters, numerals, words, logos or watermark.\nConstraints: genuinely transparent background and transparent outside silhouette, no cast shadow outside the badge, no glow or particles, no large ornaments or ribbons, no contemporary police badge, no five-point or six-point star, no wolf or faction symbol, no crossbones, no sharp bright yellow gold. Legible simple sword and shield at small UI size.",
+      "transparent": true,
+      "sha256": "dd05b99fd859fa69e92a853778ac3301db03e314124a89357714e076d409df61",
+      "width": 1254,
+      "height": 1254,
+      "generator": "built-in image_gen; imagegen skill",
+      "status": "integrated",
+      "alpha": "RGBA; transparent silhouette margins verified",
+      "safeArea": "centered upright shield; crown and sword remain readable at HUD size",
+      "lightDirection": "cool upper left",
+      "provenance": "Original built-in image_gen generation, 2026-10-19; prompt retained above"
+    },
+    {
       "file": "identity-medallion-v1.png",
       "prompt": "Use case: stylized-concept. Asset type: production game UI cutout bitmap for an ORIGINAL medieval gothic werewolf broadcast. Genuinely transparent background, isolated single physical object, square centered canvas unless stated otherwise. Restrained painterly realism, cold silver and aged iron, fine worn brass edges, slate-blue shadows, subdued crimson details, subtle precision engraving. Front-facing with only slight relief, consistent cool light from upper left and natural self-shadow. Elegant, sinister, compact silhouette readable at small sizes. No scene, people, UI layout, letters, words, numerals, logos or watermark. No neon, cartoon, flat vector outline, oversize glow, floating particles or busy decorative clutter. Entire object inside canvas with modest transparent margin. Create one circular ancient identity medallion, with a narrow worn silver ring and very restrained aged-brass notches. Its inner circular field, at least 72% of diameter, MUST be empty smooth dark slate metal, faint tactile material only: it is a blank backing for a code-drawn role engraving. Absolutely no central symbol, shield, animal, eye, gemstone, emblem or markings. Object occupies 86% of square width. Fine bevels and material depth rather than glowing concentric rings.",
       "transparent": true,

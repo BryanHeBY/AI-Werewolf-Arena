@@ -146,9 +146,9 @@ for (const variant of cases)
                 .allTextContents()
             ).map(Number),
           ).toEqual([holder]);
-          await expect(page.locator(`[data-composition-player="${holder}"]`)).toContainText(
-            locale === "en" ? "Sheriff" : "警长",
-          );
+          await expect(
+            page.locator(`[data-composition-player="${holder}"] [data-sheriff-badge]`),
+          ).toHaveAttribute("aria-label", locale === "en" ? "Sheriff" : "警长");
         }
         if (e.type !== "game_over")
           await expect(page.getByTestId("composition-winner")).toHaveCount(0);

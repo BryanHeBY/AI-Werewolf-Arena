@@ -348,9 +348,11 @@ input[type="search"] {
 }
 .seat-identity {
   display: flex;
+  /* 窄卡与显式模型头像允许换行；警徽参与布局，避免悬在头像上。 */
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 5px;
 }
 .seat-number {
   font-size: 21px;
@@ -406,18 +408,9 @@ input[type="search"] {
   font-size: 10px;
 }
 .sheriff {
-  position: absolute;
-  top: 6px;
-  right: 5px;
-  display: grid;
-  width: 15px;
-  height: 15px;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--awa-accentText);
-  background: var(--awa-accent);
-  font-size: 9px;
-  font-weight: 800;
+  display: inline-flex;
+  color: var(--awa-accent);
+  line-height: 0;
 }
 .winner {
   display: block;

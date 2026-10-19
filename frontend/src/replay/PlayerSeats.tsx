@@ -9,6 +9,7 @@ import type { ReplayPlayerState } from "./replay-projection";
 import { campName, roleName } from "./replay-localization";
 import { IdentityAvatar } from "../presentation/IdentityAvatar";
 import { EliminatedStamp } from "../presentation/EliminatedStamp";
+import { SheriffBadge } from "../presentation/SheriffBadge";
 import { visibleIdentityRole } from "../presentation";
 import type { ThemeId } from "../themes";
 import { RoleCrest } from "../presentation/RoleCrest";
@@ -87,10 +88,16 @@ export const PlayerSeats = memo(function PlayerSeats({
                   size={32}
                 />
                 {avatar.kind !== "auto" && <RoleCrest role={visibleRole} size={24} />}
+                {player.isSheriff && (
+                  <span className="sheriff">
+                    <SheriffBadge
+                      label={text(locale, "replay.sheriff")}
+                      size={26}
+                      themeId={themeId}
+                    />
+                  </span>
+                )}
               </span>
-              {player.isSheriff && (
-                <span className="sheriff">{text(locale, "replay.sheriff_short")}</span>
-              )}
               {player.isWinner && (
                 <span className="winner">{text(locale, "victory.winner_badge")}</span>
               )}

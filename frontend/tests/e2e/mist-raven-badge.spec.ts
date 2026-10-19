@@ -60,9 +60,9 @@ for (const locale of ["en", "zh-CN"] as const)
             .allTextContents()
         ).map(Number),
       ).toEqual([holder]);
-      await expect(page.locator(`[data-composition-player="${holder}"]`)).toContainText(
-        locale === "en" ? "Sheriff" : "警长",
-      );
+      await expect(
+        page.locator(`[data-composition-player="${holder}"] [data-sheriff-badge]`),
+      ).toHaveAttribute("aria-label", locale === "en" ? "Sheriff" : "警长");
       await expect(page.locator(`[data-composition-player="${holder}"]`)).toHaveAttribute(
         "data-player-alive",
         String(living),

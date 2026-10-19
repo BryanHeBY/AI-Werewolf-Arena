@@ -6,6 +6,7 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { RoleCrest } from "../../../presentation/RoleCrest";
 import { visibleIdentityRole } from "../../../presentation";
 import { EliminatedStamp } from "../../../presentation/EliminatedStamp";
+import { SheriffBadge } from "../../../presentation/SheriffBadge";
 import { VideoImage } from "../../VideoImage";
 import type { ResolvedPlayerPresentation } from "../../../presentation";
 import { GothicMetalFrame } from "../../GothicArt";
@@ -60,6 +61,11 @@ export function RosterHud({
           seat.x >
           (Math.min(...seats.map((item) => item.x)) + Math.max(...seats.map((item) => item.x))) / 2;
         const hasMetadata = Boolean(identity?.displayName?.trim() || identity?.modelLabel?.trim());
+        const hasSeparateRole = (identity?.avatar.kind ?? "auto") !== "auto";
+        const compactSheriffInset =
+          player.isSheriff && !hasMetadata && hasSeparateRole && locale === "en"
+            ? 32 * scale
+            : undefined;
         const active =
           focusPlayerIds.includes(player.playerId) ||
           scene.actorId === player.playerId ||
@@ -210,16 +216,34 @@ export function RosterHud({
                     justifyContent: hasMetadata ? undefined : "center",
                     gap: 18 * scale,
                     width: "100%",
+                    // 英文徽记与独立角色章同现时留出内侧间距；席位仍在头像外侧，不翻转字形。
+                    paddingLeft: mirrored ? compactSheriffInset : undefined,
+                    paddingRight: mirrored ? undefined : compactSheriffInset,
+                    boxSizing: "border-box",
                   }}
                 >
                   {portrait}
-                  {(identity?.avatar.kind ?? "auto") !== "auto" && (
+                  {hasSeparateRole && (
                     <RoleCrest role={visibleRole} size={24 * scale} color={roleColor} />
                   )}
                   {hasMetadata && (
                     <div
                       data-player-metadata
-                      style={{ ...quiet, flex: 1, textAlign: mirrored ? "right" : "left" }}
+                      style={{
+                        ...quiet,
+                        flex: 1,
+                        textAlign: mirrored ? "right" : "left",
+                        // 警徽和原字号标签占用内侧角落；资料行预留同侧安全区，长英文名不能穿过图文徽记。
+                        paddingLeft:
+                          player.isSheriff && mirrored
+                            ? (locale === "en" ? 72 : 50) * scale
+                            : undefined,
+                        paddingRight:
+                          player.isSheriff && !mirrored
+                            ? (locale === "en" ? 72 : 50) * scale
+                            : undefined,
+                        boxSizing: "border-box",
+                      }}
                     >
                       {identity?.displayName?.trim() && (
                         <div
@@ -305,17 +329,24 @@ export function RosterHud({
             )}
             {player.isSheriff && (
               <span
+                data-roster-sheriff
                 style={{
                   position: "absolute",
-                  right: mirrored ? undefined : 4 * scale,
-                  left: mirrored ? 4 * scale : undefined,
-                  top: 2 * scale,
+                  right: mirrored ? undefined : 8 * scale,
+                  left: mirrored ? 8 * scale : undefined,
+                  top: 6 * scale,
                   color: cards.canvasText,
-                  background: cards.canvas,
-                  fontSize: 20 * scale,
+                  lineHeight: 0,
                 }}
               >
-                {player.sheriffLabel}
+                <SheriffBadge
+                  label={player.sheriffLabel}
+                  size={38 * scale}
+                  labelSize={20 * scale}
+                  labelBackground={cards.canvas}
+                  themeId={theme.id}
+                  renderImage={(props) => <VideoImage {...props} />}
+                />
               </span>
             )}
           </div>
