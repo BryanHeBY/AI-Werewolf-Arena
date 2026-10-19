@@ -149,6 +149,17 @@ export function ReplayWorkspace({
   const tone = snapshot.phase === "night" ? "night" : "day";
   const resultLabel = useMemo(() => replayResultLabel(replay, locale), [replay, locale]);
   const currentLabel = factRevealed ? videoFrame.scene.body : currentView.label;
+  // 结构化播报承担主阅读面；原始长句仍可展开审计。玩家原话和作者稿保持原样，不重复追加一套字段。
+  const structuredCurrent =
+    sceneRevealed &&
+    videoFrame.scene.bodySource === "event" &&
+    videoFrame.scene.emphasis.length === 0 &&
+    !videoFrame.scene.content?.blocks.some(
+      (block) => block.kind === "action" || block.kind === "record",
+    ) &&
+    videoFrame.scene.content?.blocks.some(
+      (block) => block.kind !== "record" && block.kind !== "dialogue",
+    );
   // 焦点只筛时间线，不裁剪驱动画面／席位的完整展示事件；公开信息边界由加载文档决定。
   const visibleEvents = useMemo(
     () =>
@@ -332,18 +343,45 @@ export function ReplayWorkspace({
                 {factRevealed ? ` · F${videoFrame.sourceFactSeq}` : ""}
               </span>
             </div>
-            <p tabIndex={0} aria-label={text(locale, "replay.current_event_text")}>
-              {currentLabel}
-            </p>
-            {sceneRevealed && videoFrame.scene.content && (
+            {structuredCurrent && videoFrame.scene.content ? (
               <div data-current-structured-content>
                 <SceneContentBlocks
                   content={videoFrame.scene.content}
                   locale={locale}
                   players={players}
-                  kinds={["action", "ballot", "report", "inventory", "outcome"]}
+                  kinds={[
+                    "announcement",
+                    "life",
+                    "action",
+                    "ballot",
+                    "report",
+                    "inventory",
+                    "outcome",
+                  ]}
                 />
               </div>
+            ) : (
+              <p tabIndex={0} aria-label={text(locale, "replay.current_event_text")}>
+                {currentLabel}
+              </p>
+            )}
+            {!structuredCurrent &&
+              sceneRevealed &&
+              videoFrame.scene.content?.blocks.some((block) => block.kind === "inventory") && (
+                <SceneContentBlocks
+                  content={videoFrame.scene.content}
+                  locale={locale}
+                  players={players}
+                  kinds={["inventory"]}
+                />
+              )}
+            {structuredCurrent && (
+              <details data-original-announcement>
+                <summary>{text(locale, "replay.original_event")}</summary>
+                <p tabIndex={0} aria-label={text(locale, "replay.current_event_text")}>
+                  {currentLabel}
+                </p>
+              </details>
             )}
             <div className="event-meta">
               <span>

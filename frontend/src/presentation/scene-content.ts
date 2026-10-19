@@ -3,6 +3,8 @@
  * 不解析正文意图、不查询真实角色或执行规则；原文、请求、报告、结果及资源保持独立，揭晓时钟仍由视频场景负责。
  */
 import type { GameOutcome } from "@ai-werewolf-arena/game-contract";
+import type { ReadReplayEvent } from "../replay/replay-event-reader";
+import { announcementContent, type AnnouncementContent } from "./announcement-content";
 import type {
   PotionInventoryState,
   VideoBallot,
@@ -12,6 +14,8 @@ import type {
 } from "../video/types";
 
 export type SceneContentBlock =
+  | { kind: "announcement"; announcement: AnnouncementContent }
+  | { kind: "life"; playerIds: number[]; causes: Record<string, string[]> }
   | {
       kind: "dialogue";
       actorId: number;
@@ -28,7 +32,13 @@ export type SceneContentBlock =
       effectiveTargetKnown: boolean;
       recipientIds: number[];
     }
-  | { kind: "report"; report: VideoVisualReport; targetIds: number[]; recipientIds: number[] }
+  | {
+      kind: "report";
+      report: VideoVisualReport;
+      actorId?: number;
+      targetIds: number[];
+      recipientIds: number[];
+    }
   | { kind: "ballot"; ballot: VideoBallot }
   | { kind: "inventory"; state: PotionInventoryState }
   | {
@@ -45,9 +55,18 @@ export interface SceneContent {
 }
 
 /** 兼容字段只在此适配一次；消费者按block.kind选模板，不能从字符串补结果。 */
-export function sceneContent(scene: VideoScene): SceneContent {
+export function sceneContent(scene: VideoScene, record?: ReadReplayEvent | null): SceneContent {
   const blocks: SceneContentBlock[] = [];
   const visual = scene.visual;
+  const announcement = scene.bodySource === "event" ? announcementContent(record) : null;
+  if (announcement) blocks.push({ kind: "announcement", announcement });
+  // 只有权威生命提交携带出局对象；一般技能报告、请求目标和未确认夜报不能制造此块。
+  if (visual?.life?.committed)
+    blocks.push({
+      kind: "life",
+      playerIds: [...visual.life.playerIds],
+      causes: structuredClone(visual.life.causes ?? {}),
+    });
   if (visual?.dialogue && visual.actorId !== undefined)
     blocks.push({
       kind: "dialogue",
@@ -61,6 +80,7 @@ export function sceneContent(scene: VideoScene): SceneContent {
     blocks.push({
       kind: "report",
       report: structuredClone(visual.report),
+      ...(visual.actorId === undefined ? {} : { actorId: visual.actorId }),
       targetIds: [...visual.requestedTargetIds],
       recipientIds: [...visual.recipientIds],
     });
@@ -71,8 +91,10 @@ export function sceneContent(scene: VideoScene): SceneContent {
     visual &&
     !visual.dialogue &&
     !visual.victory &&
+    !visual.report &&
     !scene.ballot &&
     !scene.stock &&
+    !visual.life &&
     visual.process !== "notice" &&
     !visual.fallbackReason
   )

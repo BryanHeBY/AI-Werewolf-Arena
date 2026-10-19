@@ -7,11 +7,20 @@ import {
   playerLabel,
   victoryClaimLabel,
 } from "@ai-werewolf-arena/game-presentation";
-import { text, term, roleName, type Locale } from "@ai-werewolf-arena/game-text";
+import {
+  text,
+  term,
+  roleName,
+  dictionaries,
+  type Locale,
+  type MessageKey,
+} from "@ai-werewolf-arena/game-text";
 import type { NamedPlayer } from "@ai-werewolf-arena/game-presentation";
 import type { SceneContent, SceneContentBlock } from "./scene-content";
 import { Fragment } from "react";
 import type { VideoVisualReport } from "../video/types";
+import { AnnouncementFields } from "./AnnouncementFields";
+import { semanticColors, type SemanticColors } from "./semantic-colors";
 /** 短字段是完整词组；长未知标识只保正常词界，玩家长名字单独允许换行，不做意图识别。 */
 function ContentToken({ value }: { value: string }) {
   return (
@@ -54,12 +63,17 @@ export function SceneContentBlocks({
   locale,
   players = [],
   kinds,
+  colors: suppliedColors,
+  iconSize,
 }: {
   content: SceneContent;
   locale: Locale;
   players?: readonly NamedPlayer[];
   kinds?: readonly SceneContentBlock["kind"][];
+  colors?: Partial<SemanticColors>;
+  iconSize?: number;
 }) {
+  const colors = semanticColors(suppliedColors);
   const label = (id: number) =>
     playerLabel(players.find((player) => player.id === id) ?? { id }, locale);
   const playerToken = (id: number) => {
@@ -99,6 +113,54 @@ export function SceneContentBlocks({
         .filter((block) => !kinds || kinds.includes(block.kind))
         .map((block, index) => {
           switch (block.kind) {
+            case "announcement":
+              return (
+                <div key={index} data-content-block="announcement">
+                  <AnnouncementFields
+                    announcement={block.announcement}
+                    locale={locale}
+                    players={players}
+                    colors={colors}
+                    iconSize={iconSize}
+                  />
+                </div>
+              );
+            case "life":
+              return (
+                <div
+                  key={index}
+                  data-content-block="life"
+                  style={{ display: "flex", flexWrap: "wrap", gap: ".5em" }}
+                >
+                  {block.playerIds.map((id, row) => (
+                    <div
+                      key={`${id}:${row}`}
+                      data-life-player={id}
+                      style={{
+                        color: colors.danger,
+                        borderLeft: ".12em solid currentColor",
+                        padding: ".25em .5em",
+                        minWidth: 0,
+                      }}
+                    >
+                      <strong>{playerToken(id)}</strong>{" "}
+                      <ContentToken value={text(locale, "video.eliminated")} />
+                      {block.causes[String(id)]?.length > 0 && (
+                        <div data-life-causes style={{ fontSize: ".72em", color: colors.muted }}>
+                          {block.causes[String(id)]!.map((cause) => {
+                            const key = `death.${cause}` as MessageKey;
+                            return text(
+                              locale,
+                              Object.hasOwn(dictionaries[locale], key) ? key : "common.unknown",
+                            );
+                          }).join(" / ")}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  {!block.playerIds.length && <ContentToken value={text(locale, "common.none")} />}
+                </div>
+              );
             case "inventory":
               return (
                 <div
@@ -133,10 +195,30 @@ export function SceneContentBlocks({
                   style={{ margin: 0 }}
                 >
                   <dt>
-                    {text(locale, "video.report")} · {labels(block.targetIds)}
+                    {block.actorId !== undefined && <>{playerToken(block.actorId)} · </>}
+                    {text(locale, "video.report")}
+                    {block.report.kind === "range" && (
+                      <> · {text(locale, "video.range_adjacent_alive")}</>
+                    )}
+                    {block.targetIds.length > 0 && <> · {labels(block.targetIds)}</>}
                   </dt>
                   <dd style={{ margin: 0 }}>
-                    {<ContentToken value={reportLabel(block.report, locale)} />}
+                    {
+                      <span
+                        style={{
+                          color:
+                            block.report.kind === "camp" || block.report.kind === "combined"
+                              ? colors[
+                                  block.report.camp === "third_party"
+                                    ? "thirdParty"
+                                    : block.report.camp
+                                ]
+                              : colors.accent,
+                        }}
+                      >
+                        <ContentToken value={reportLabel(block.report, locale)} />
+                      </span>
+                    }
                   </dd>
                   {block.recipientIds.length > 0 && (
                     <dd style={{ margin: 0 }}>
@@ -240,7 +322,7 @@ export function SceneContentBlocks({
               return (
                 <div key={index} data-content-block="action" data-action-process={block.process}>
                   {block.actorId !== undefined && <strong>{playerToken(block.actorId)} · </strong>}
-                  {labels(block.requestedTargetIds)}
+                  {block.requestedTargetIds.length > 0 && labels(block.requestedTargetIds)}
                   {block.effectiveTargetKnown && (
                     <div data-effective-targets>
                       {text(locale, "video.committed")} · {labels(block.effectiveTargetIds)}

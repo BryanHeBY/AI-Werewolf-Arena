@@ -128,9 +128,9 @@ export function scheduleVideoShot(
   // 无声自动场景用于快速看过程，不为机械读速或等待结果另加停留；作者时钟和已备音轨仍拥有完整区间。
   const fastScene =
     options.narrationPacing === true &&
+    kind !== "hold" &&
     automaticReading &&
     finalKind !== "speech" &&
-    kind !== "hold" &&
     edit.durationFrames === undefined &&
     edit.scene?.cues === undefined;
   const authoredSpeechReading = readVideoSpeechReadingOptions(edit.speechReading);

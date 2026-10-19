@@ -38,13 +38,18 @@ export function classifyVideoScene(scene: VideoScene, themeId: string) {
     treatment = "unhandled";
     reason = visual.fallbackReason;
   } else if (layout === "notice") {
-    // compact_notice 是展示路由的显式决策；普通 fact_card/notice 不因此被误报为专门呈现。
-    if (visual?.template.endsWith("/compact_notice") || visual?.process === "skipped") {
-      treatment = "compact_notice";
-      reason = "explicit_compact_notice";
+    if (scene.content?.blocks.some((block) => block.kind === "announcement")) {
+      treatment = "dedicated";
+      reason = "structured_announcement";
     } else {
-      treatment = "generic_record";
-      reason = visual?.fallbackReason ?? "no_dedicated_notice_layout";
+      // compact_notice 是展示路由的显式决策；普通 fact_card/notice 不因此被误报为专门呈现。
+      if (visual?.template.endsWith("/compact_notice") || visual?.process === "skipped") {
+        treatment = "compact_notice";
+        reason = "explicit_compact_notice";
+      } else {
+        treatment = "generic_record";
+        reason = visual?.fallbackReason ?? "no_dedicated_notice_layout";
+      }
     }
   } else if (layout === "action" && art === "record") {
     treatment = "generic_record";

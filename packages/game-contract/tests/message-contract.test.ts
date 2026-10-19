@@ -146,12 +146,16 @@ test("existing message IDs retain their sequence and prompt additions append aft
     ...appendedReplayKeys,
     ...appendedVideoStudioKeys,
     "prompt.system.custom_instructions",
+    "replay.original_event",
+    "video.range_adjacent_alive",
   ]);
   for (const key of [
     ...appendedPromptKeys,
     ...appendedReplayKeys,
     ...appendedVideoStudioKeys,
     "prompt.system.custom_instructions",
+    "replay.original_event",
+    "video.range_adjacent_alive",
   ])
     expect(isMessageKey(key)).toBe(true);
 });

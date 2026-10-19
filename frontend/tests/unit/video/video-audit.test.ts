@@ -10,6 +10,7 @@ import { auditVideoReplay } from "../../../src/video/plan/audit";
 import { auditVideoRecords } from "../../../scripts/audit-video-records";
 import { classifyVideoScene } from "../../../src/video/scene-classification";
 import { compileVideoPlan } from "../../../src/video/compiler";
+import { auditSceneReadability } from "../../../src/video/plan/readability-audit";
 
 function replay(): ReplayDocument {
   return {
@@ -75,14 +76,39 @@ test("actual compiler distinguishes speech, intentional compact notice and unsup
   expect(JSON.stringify(input)).toBe(original);
 });
 
-test("a known generic notice stays visible as review work rather than being declared dedicated by its route", () => {
+test("a sheriff notice is dedicated only when its actual compiled semantic fields are present", () => {
   const input = replay();
   input.events = [{ ...input.events[0]!, type: "sheriff_elected", payload: { winnerId: 1 } }];
   const audit = auditVideoReplay(input);
-  expect(audit.scenes[0]).toMatchObject({ treatment: "generic_record", layout: "notice" });
+  expect(audit.scenes[0]).toMatchObject({
+    treatment: "dedicated",
+    layout: "notice",
+    blocks: ["announcement"],
+  });
   expect(audit.invalidEvents).toEqual([]);
   const plan = compileVideoPlan(input);
-  expect(classifyVideoScene(plan.shots[0]!.scene, "minimal-v1").treatment).toBe("generic_record");
+  expect(classifyVideoScene(plan.shots[0]!.scene, "minimal-v1").treatment).toBe("dedicated");
+  const noFields = { ...plan.shots[0]!.scene, content: undefined };
+  expect(classifyVideoScene(noFields, "minimal-v1").treatment).toBe("generic_record");
+});
+
+test("readability diagnostics use typed provisional life and layout, never keywords in speech or authored prose", () => {
+  const scene = structuredClone(compileVideoPlan(replay()).shots[0]!.scene);
+  scene.body = "原话里的等待确认不可被关键词过滤".repeat(12);
+  expect(auditSceneReadability(scene, true)).toEqual([]);
+  scene.kind = "phase";
+  scene.content = {
+    version: 1,
+    blocks: [{ kind: "record", text: scene.body, reason: "recorded_context" }],
+  };
+  expect(auditSceneReadability(scene, true)).toEqual(["long-unstructured-announcement"]);
+  scene.bodySource = "script";
+  expect(auditSceneReadability(scene, true)).toEqual([]);
+  scene.bodySource = "event";
+  scene.body = "short";
+  scene.visual = { ...scene.visual!, life: { playerIds: [1], committed: false } };
+  expect(auditSceneReadability(scene, true)).toEqual(["provisional-life-report"]);
+  expect(auditSceneReadability(scene, false)).toEqual([]);
 });
 
 test("unfinished archive uses only recorded initialization roster and preserves its source identity", () => {

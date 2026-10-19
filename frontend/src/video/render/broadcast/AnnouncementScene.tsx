@@ -10,6 +10,7 @@ import { ReadingViewport } from "./ReadingViewport";
 import { quiet, localSurface } from "./style";
 import type { SceneRenderProps } from "./contracts";
 import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
+import { paletteSemanticColors } from "../../../presentation/semantic-colors";
 import type { ResolvedPlayerPresentation } from "../../../presentation";
 
 import type { BroadcastSceneLayout } from "./contracts";
@@ -27,9 +28,29 @@ export function AnnouncementScene({
   players?: readonly ResolvedPlayerPresentation[];
 }) {
   const { scale, stage, readingWidth, bodySize, lineHeight, padding } = metrics;
-  const { theme, surface, gothic, palette, night } = appearance;
+  const { theme, surface, gothic, palette, cards, night } = appearance;
   const tokens = theme.definition;
   const revealed = localFrame >= scene.cues.impact;
+  const structured =
+    // 旧逐页时钟和作者精确强调仍以原文为准，不能每一页重复整个名单或吞掉UTF16强调范围。
+    Boolean(caption.reading) &&
+    scene.bodySource === "event" &&
+    scene.emphasis.length === 0 &&
+    scene.content?.blocks.some((block) => block.kind === "announcement" || block.kind === "life");
+  const fields = structured ? (
+    <SceneContentBlocks
+      content={scene.content!}
+      locale={locale}
+      kinds={["announcement", "life"]}
+      players={players.map((player) => ({
+        id: player.playerId,
+        seat: player.seat,
+        name: player.displayName,
+      }))}
+      colors={paletteSemanticColors(cards, surface.readingMuted)}
+      iconSize={bodySize * 0.8}
+    />
+  ) : undefined;
 
   const phase = layout === "phase",
     settlement = layout === "settlement";
@@ -106,7 +127,9 @@ export function AnnouncementScene({
             kind="announcement"
             fontSize={bodySize}
             lineHeight={lineHeight}
-          />
+          >
+            {fields}
+          </ReadingViewport>
         ) : (
           <div
             data-scene-announcement
@@ -118,13 +141,15 @@ export function AnnouncementScene({
               textAlign: "left",
             }}
           >
-            {revealed ? (
-              <SceneText
-                caption={caption}
-                emphasis={scene.emphasis}
-                accent={gothic ? "#efb4a8" : palette.wolf}
-              />
-            ) : null}
+            {revealed
+              ? (fields ?? (
+                  <SceneText
+                    caption={caption}
+                    emphasis={scene.emphasis}
+                    accent={gothic ? "#efb4a8" : palette.wolf}
+                  />
+                ))
+              : null}
           </div>
         )}
         {revealed && scene.content?.blocks.some((block) => block.kind === "inventory") && (

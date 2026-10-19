@@ -3,6 +3,7 @@
  * requested/effective/recipient分别只读；唯一world容器只变换图形，不移动正文或名册，不补命中、死亡或库存。
  */
 import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
+import { paletteSemanticColors } from "../../../presentation/semantic-colors";
 import { presentationPlayers } from "../../../presentation";
 import { AbsoluteFill } from "remotion";
 import { SceneHero, SceneConnector } from "../../SceneVisual";
@@ -34,13 +35,28 @@ export function ActionScene({
   mediaBaseUrl?: string;
 } & { stageTransform: string; renderSlot: RenderThemeSlot }) {
   const { scale, stage, readingWidth, bodySize, lineHeight } = metrics;
-  const { theme, surface, gothic, palette } = appearance;
+  const { theme, surface, gothic, palette, cards } = appearance;
   const tokens = theme.definition,
     t = tokens.typography,
     readingInk = surface.readingText,
     mutedInk = surface.readingMuted;
   const { seatLabel } = playerLabels(players, locale);
   const revealed = localFrame >= scene.cues.impact;
+  // 哥特白天仍是暗色阅读衬，使用与暗色名册同套语义色，避免深血红文字落在暗面上。
+  const fieldColors = paletteSemanticColors(cards, mutedInk);
+  const reportFields =
+    scene.bodySource === "event" &&
+    scene.emphasis.length === 0 &&
+    caption.reading &&
+    scene.content?.blocks.some((block) => block.kind === "report") ? (
+      <SceneContentBlocks
+        content={scene.content!}
+        locale={locale}
+        players={presentationPlayers(players)}
+        kinds={["report"]}
+        colors={fieldColors}
+      />
+    ) : undefined;
 
   const visual = scene.visual;
   const sources = visual?.participantIds?.length
@@ -258,7 +274,9 @@ export function ActionScene({
                 lineHeight={lineHeight}
                 textAlign="center"
                 maxHeight={readingMaxHeight}
-              />
+              >
+                {reportFields}
+              </ReadingViewport>
             ) : (
               <SceneText
                 caption={caption}
@@ -268,7 +286,7 @@ export function ActionScene({
             )
           ) : null}
         </div>
-        {revealed && (
+        {revealed && !reportFields && (
           <div
             style={{
               fontSize: t.aux * scale,
@@ -335,6 +353,7 @@ export function ActionScene({
                 locale={locale}
                 players={presentationPlayers(players)}
                 kinds={["inventory"]}
+                colors={fieldColors}
               />
             </div>
           )}

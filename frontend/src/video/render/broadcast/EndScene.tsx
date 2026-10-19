@@ -4,6 +4,7 @@
  */
 import { SceneHero } from "../../SceneVisual";
 import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
+import { paletteSemanticColors } from "../../../presentation/semantic-colors";
 import { presentationPlayers, type ResolvedPlayerPresentation } from "../../../presentation";
 import { outcomeEmblem } from "../../../presentation/scene-content";
 import { sceneContent } from "../../../presentation/scene-content";
@@ -146,6 +147,7 @@ export function EndScene({
                 locale={locale}
                 players={presentationPlayers(players)}
                 kinds={["outcome"]}
+                colors={paletteSemanticColors(appearance.cards, surface.readingMuted)}
               />
             </div>
             {(scene.bodySource === "script" || scene.emphasis.length > 0) && (

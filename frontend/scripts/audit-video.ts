@@ -24,7 +24,10 @@ if (import.meta.main) {
     });
     if (values.theme && !["gothic-v1", "minimal-v1"].includes(values.theme))
       throw new Error("video_audit_theme_invalid");
-    if (values["fail-on"] && !["error", "unhandled", "generic"].includes(values["fail-on"]))
+    if (
+      values["fail-on"] &&
+      !["error", "unhandled", "generic", "readability"].includes(values["fail-on"])
+    )
       throw new Error("video_audit_policy_invalid");
     const report = await auditVideoRecords(
       values.input ?? path.resolve(import.meta.dir, "../../record"),
@@ -43,6 +46,10 @@ if (import.meta.main) {
     if (
       report.truncated ||
       report.summary.failed ||
+      (values["fail-on"] === "readability" &&
+        (counts.unhandled > 0 ||
+          invalidRecords ||
+          Object.values(report.summary.readabilityCounts).some((count) => count > 0))) ||
       (values["fail-on"] === "unhandled" && (counts.unhandled > 0 || invalidRecords)) ||
       (values["fail-on"] === "generic" &&
         (counts.unhandled > 0 || counts.generic_record > 0 || invalidRecords))

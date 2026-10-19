@@ -265,7 +265,7 @@ export function compileVideoPlan(
       const after = sourceIndex.inventoryAt(selected.after.throughFactSeq, actorId, abilityId);
       scene.inventory = { before, after, revealFrame: scene.cues.impact };
     }
-    scene.content = sceneContent(scene);
+    scene.content = sceneContent(scene, committedFact ? undefined : readRecord(event).record);
     const compiledVoice = compileSpeechTrack(speech, {
       id,
       shotFrom: cursor,

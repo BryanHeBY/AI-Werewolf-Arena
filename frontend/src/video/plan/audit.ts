@@ -8,6 +8,11 @@ import { classifyVideoScene, type SceneTreatment } from "../scene-classification
 import { createVideoRecordReader } from "./records";
 import { replayDisplayRoster } from "../../replay/replay-display-roster";
 import { getVideoSourceIdentity } from "../source";
+import {
+  auditSceneReadability,
+  READABILITY_ISSUES,
+  type ReadabilityIssue,
+} from "./readability-audit";
 
 export function auditVideoReplay(
   replay: ReplayDocument,
@@ -24,6 +29,7 @@ export function auditVideoReplay(
   const plan = compileVideoPlan(replay, {
     source: getVideoSourceIdentity(replay),
     layout: "broadcast-v1",
+    pacing: "narration",
     theme: { id: themeId },
   });
   const counts: Record<SceneTreatment, number> = {
@@ -58,10 +64,20 @@ export function auditVideoReplay(
       template: shot.scene.visual?.template ?? null,
       process: shot.scene.visual?.process ?? null,
       blocks: shot.scene.content?.blocks.map((block) => block.kind) ?? [],
+      readabilityIssues: auditSceneReadability(
+        shot.scene,
+        replay.factCoverage?.committedDeaths === 1,
+      ),
       ...classification,
     };
   });
-  const scheduled = new Set(plan.shots.flatMap((shot) => shot.sourceSeqs));
+  const scheduled = new Set(Object.keys(plan.eventFrames).map(Number));
+  const readabilityCounts = Object.fromEntries(
+    READABILITY_ISSUES.map((issue) => [
+      issue,
+      scenes.filter((scene) => scene.readabilityIssues.includes(issue)).length,
+    ]),
+  ) as Record<ReadabilityIssue, number>;
   return {
     source: plan.source,
     rosterSource: roster.source,
@@ -73,6 +89,7 @@ export function auditVideoReplay(
     facts: replay.facts?.length ?? 0,
     shotCount: scenes.length,
     counts,
+    readabilityCounts,
     invalidEvents,
     unscheduledEventTypes: [
       ...new Set(

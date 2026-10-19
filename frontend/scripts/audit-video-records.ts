@@ -8,6 +8,7 @@ import { lstat, open, readdir } from "node:fs/promises";
 import path from "node:path";
 import { parseOfflineReplayJson } from "../src/replay/offline-replay";
 import { auditVideoReplay } from "../src/video/plan/audit";
+import { READABILITY_ISSUES } from "../src/video/plan/readability-audit";
 
 const excluded = new Set([
   "node_modules",
@@ -158,6 +159,12 @@ export async function auditVideoRecords(input: string, options: RecordAuditOptio
         ["dedicated", "compact_notice", "generic_record", "unhandled"].map((key) => [
           key,
           good.reduce((sum, row) => sum + row.audit.counts[key as keyof AuditResult["counts"]], 0),
+        ]),
+      ),
+      readabilityCounts: Object.fromEntries(
+        READABILITY_ISSUES.map((issue) => [
+          issue,
+          good.reduce((sum, row) => sum + row.audit.readabilityCounts[issue], 0),
         ]),
       ),
     },

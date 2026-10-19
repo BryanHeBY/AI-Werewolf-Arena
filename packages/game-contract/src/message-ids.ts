@@ -1912,6 +1912,8 @@ export const MESSAGE_IDS = Object.freeze([
   "video.end_chat",
   "video.life_report_pending",
   "prompt.system.custom_instructions",
+  "replay.original_event",
+  "video.range_adjacent_alive",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];
