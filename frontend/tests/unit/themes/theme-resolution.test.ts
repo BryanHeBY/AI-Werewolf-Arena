@@ -58,6 +58,7 @@ test("shared visual tokens preserve the agreed output baseline and separate Web 
   });
   expect(gothic.definition.surface.stage).toBe("transparent");
   expect(gothic.definition.surface.readingMaxHeightRatio).toBe(0.8);
+  expect(gothic.definition.surface.speechReadingMaxHeightRatio).toBe(0.9);
   expect(gothic.definition.typography.readingMaxWidth).toBe(1280);
   expect(themeSurface(gothic, "day").readingText).toBe("#efeade");
   expect(themeSurface(gothic, "night").readingText).toBe("#efeade");
@@ -135,6 +136,7 @@ test("a handwritten old compiled theme keeps authored appearance while new token
   expect(resolved.definition.typography.speechBodyZh).toBe(26);
   expect(resolved.definition.typography.speechBodyEn).toBe(24);
   expect(resolved.definition.surface.readingMaxHeightRatio).toBe(0.8);
+  expect(resolved.definition.surface.speechReadingMaxHeightRatio).toBe(0.9);
   expect(resolved.definition.frame.width).toBe(1.5);
   expect(resolved.definition.connector.choiceDash).toEqual([6, 6]);
   expect(resolved.definition.effect.heroSize).toBe(410);

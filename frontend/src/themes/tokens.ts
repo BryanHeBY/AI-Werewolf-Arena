@@ -44,6 +44,8 @@ export interface ThemeSurface extends ThemeSurfaceColors {
   cardOpacity: number;
   heroOpacity: number;
   readingMaxHeightRatio: number;
+  /** 长发言可用更高阅读面；公告仍沿用独立上限，主题可分别调节。 */
+  speechReadingMaxHeightRatio: number;
   /** minimal 的局部阅读面随日夜变化；哥特两种环境均使用骨白字配局部暗衬。 */
   palette: { day: ThemeSurfaceColors; night: ThemeSurfaceColors };
 }
@@ -139,6 +141,7 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
       cardOpacity: 0.92,
       heroOpacity: 0.24,
       readingMaxHeightRatio: 0.8,
+      speechReadingMaxHeightRatio: 0.9,
       palette: { day, night },
     },
     frame: {

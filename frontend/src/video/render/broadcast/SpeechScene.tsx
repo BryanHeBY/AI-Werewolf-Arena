@@ -54,7 +54,7 @@ export function SpeechScene({
   const safeTop = scene.editorial ? 120 * scale : 28 * scale;
   const safeBottom = 32 * scale;
   const maxHeight = Math.min(
-    stage.height * surface.readingMaxHeightRatio,
+    stage.height * surface.speechReadingMaxHeightRatio,
     stage.height - safeTop - safeBottom,
   );
   const height = flow
