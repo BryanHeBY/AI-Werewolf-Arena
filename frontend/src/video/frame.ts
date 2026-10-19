@@ -5,6 +5,7 @@
 import { cameraTargetPose, createVideoLayout, type CameraPose, type VideoLayout } from "./layout";
 import type { CameraKeyframe, PlannedAudioCue, VideoPlan, VideoShot } from "./types";
 import { videoReadingProgress, videoCaptionRange } from "./captions";
+import { sceneContent } from "../presentation/scene-content";
 
 function cameraAt(
   keys: CameraKeyframe[],
@@ -51,6 +52,13 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
   const localFrame = frame - shot.from;
   const state = [...shot.stateCues].reverse().find((cue) => cue.frame <= localFrame)!;
   const currentView = state.view;
+  // 正式计票来自后续原事件，只有它的游标揭晓后才进入Web/视频/custom共同消费的当前场景。
+  const resolution = shot.scene.resolution;
+  const scene =
+    resolution?.ballot && localFrame >= resolution.revealFrame
+      ? { ...shot.scene, ballot: resolution.ballot }
+      : shot.scene;
+  const currentScene = scene === shot.scene ? scene : { ...scene, content: sceneContent(scene) };
   const layout = createVideoLayout(
     plan.layout === "broadcast-v1"
       ? plan.playersPresentation.map((player) => player.playerId)
@@ -104,7 +112,7 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     shotIndex,
     shot,
     currentView,
-    scene: shot.scene,
+    scene: currentScene,
     sourceSeq: state.throughSeq,
     sourceFactSeq: state.throughFactSeq,
     cue:

@@ -54,6 +54,14 @@ export async function createRecordedGalleryCases(
       add(`recorded-${type.replaceAll("_", "-")}`, index, Math.max(shot.scene.cues.settled, 60));
       if (["witch_potion_used", "seer_checked", "game_over"].includes(type))
         add(`recorded-${type.replaceAll("_", "-")}--before`, index, shot.scene.cues.impact - 1);
+      if (type === "sheriff_vote_summary" && shot.scene.resolution?.ballot) {
+        add(
+          "recorded-sheriff-vote-summary--before-tally",
+          index,
+          shot.scene.resolution.revealFrame - 1,
+        );
+        add("recorded-sheriff-vote-summary--tally", index, shot.scene.resolution.revealFrame);
+      }
     }
     if (type === "witch_potion_used")
       add(`recorded-witch-${shot.eventSeq}`, index, shot.scene.cues.settled);

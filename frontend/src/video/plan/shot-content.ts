@@ -5,7 +5,7 @@
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { playerLabel, type NamedPlayer } from "@ai-werewolf-arena/game-presentation";
 import { eventLabelFromRecord } from "../../replay/event-labels";
-import { eventScene, factScene } from "../semantic-scenes";
+import { eventScene, factScene, sheriffResolutionBallot } from "../semantic-scenes";
 import type { ShotOptions, VideoLayoutId } from "../types";
 import type { VideoRecordReader } from "./records";
 import type { VideoShotSource } from "./source-index";
@@ -96,7 +96,10 @@ export function prepareVideoShotContent(
     ? {
         text: label(resolutionEvent, locale),
         otherText: label(resolutionEvent, otherLocale),
-        targetId: Number(resolutionEvent.payload.target),
+        targetId: Number(resolutionEvent.payload.target ?? resolutionEvent.payload.winnerId),
+        ...(event && resolutionEvent.type === "sheriff_elected"
+          ? { ballot: sheriffResolutionBallot(event, resolutionEvent, playerIds, readRecord) }
+          : {}),
       }
     : undefined;
   // 票型字段由图表绘制，简短总述不等于全部信息的阅读量；只借原已本地化标签作预算，不再重复画或播它。

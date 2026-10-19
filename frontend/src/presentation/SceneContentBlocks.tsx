@@ -165,8 +165,8 @@ export function SceneContentBlocks({
                       {playerToken(vote.actorId)} →{" "}
                       {vote.targetId === null
                         ? text(locale, "replay.vote_abstain", { actor: label(vote.actorId) })
-                        : playerToken(vote.targetId)}{" "}
-                      · {vote.weight ?? "—"}
+                        : playerToken(vote.targetId)}
+                      {vote.weight !== null && <> · {vote.weight}</>}
                     </div>
                   ))}
                   {!block.ballot.votes.length && !block.ballot.tally && (

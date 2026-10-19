@@ -106,7 +106,7 @@ test("a winner-only archived sheriff summary shows the recorded result without i
   expect(html).toContain('data-ballot-target="6"');
   expect(html).toContain("未记录逐票明细");
   expect(html).toContain("结果 · 6号");
-  expect(html).toContain("—");
+  expect(html).not.toContain("—");
   expect(html).not.toContain("0票");
   expect(html.match(/data-player-alive="true"/g)).toHaveLength(12);
 });

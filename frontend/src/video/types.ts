@@ -143,7 +143,14 @@ export interface VideoScene {
   inventory?: { before: PotionInventoryState; after: PotionInventoryState; revealFrame: number };
   stock?: { actorId: number; abilityId: string; heal: number; poison: number };
   /** 同段后续记录的独立结果；揭晓不替代life_committed的生命提交。 */
-  resolution?: { text: string; targetId?: number; revealFrame: number; reading?: VideoReading };
+  resolution?: {
+    text: string;
+    targetId?: number;
+    revealFrame: number;
+    reading?: VideoReading;
+    /** 后续正式计票保留在自己的揭晓节点，不能提前并入summary票型。 */
+    ballot?: VideoBallot;
+  };
   /** 内建旧场景及已准备计划的展示兼容字段；本地化 result 不供选材或事实推断，结构化报告归 visual。 */
   action?: {
     kind:

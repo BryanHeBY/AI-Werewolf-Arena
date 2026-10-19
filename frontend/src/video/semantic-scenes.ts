@@ -24,10 +24,71 @@ import type {
 type Names = readonly { id: number; seat?: number; name?: string }[];
 /** 当前录制registry对这两种事件回退到type名；只统一已知展示别名，PK／未知阶段仍独立切段。 */
 function ballotStage(event: ReplayEvent): string | undefined {
-  if (event.type === "sheriff_vote_summary" && event.stage === "sheriff_vote_summary")
+  if (
+    ["sheriff_vote_summary", "sheriff_elected"].includes(event.type) &&
+    event.stage === event.type
+  )
     return "sheriff";
   if (event.type === "crow_curse_applied" && event.stage === "crow_curse_applied") return "voting";
   return event.stage;
+}
+
+/** 只接纳正式记录的合法计票值；不从逐票重算，不把缺失或坏值补为0。 */
+function recordedSheriffTally(event: ReplayEvent, playerIds: readonly number[]) {
+  const tally = event.payload.tally;
+  if (!tally || typeof tally !== "object" || Array.isArray(tally)) return null;
+  const entries = Object.entries(tally);
+  if (
+    !entries.length ||
+    entries.some(
+      ([id, count]) =>
+        !playerIds.includes(Number(id)) ||
+        String(Number(id)) !== id ||
+        typeof count !== "number" ||
+        !Number.isFinite(count) ||
+        count < 0,
+    )
+  )
+    return null;
+  return Object.fromEntries(entries) as Record<string, number>;
+}
+
+/** 关联只限紧邻正式当选记录；未知stage、轮次差异和导演/事实屏障均留为独立节点。 */
+function sheriffResolution(
+  summary: ReplayEvent,
+  elected: ReplayEvent | undefined,
+  playerIds: readonly number[],
+  readRecord: VideoRecordReader,
+) {
+  if (
+    summary.type !== "sheriff_vote_summary" ||
+    elected?.type !== "sheriff_elected" ||
+    summary.day !== elected.day ||
+    summary.phase !== elected.phase ||
+    ![undefined, "sheriff"].includes(ballotStage(summary)) ||
+    ballotStage(summary) !== ballotStage(elected) ||
+    typeof summary.payload.winnerId !== "number" ||
+    summary.payload.winnerId !== elected.payload.winnerId ||
+    (elected.payload.round !== undefined &&
+      (!Number.isSafeInteger(elected.payload.round) ||
+        Number(elected.payload.round) < 1 ||
+        summary.payload.round !== elected.payload.round)) ||
+    !readRecord(summary).record ||
+    !readRecord(elected).record
+  )
+    return null;
+  return recordedSheriffTally(elected, playerIds);
+}
+
+/** 后续计票只供独立resolution使用，保持原summary和原事件载荷不变。 */
+export function sheriffResolutionBallot(
+  summary: ReplayEvent,
+  elected: ReplayEvent,
+  playerIds: readonly number[],
+  readRecord: VideoRecordReader,
+): VideoBallot | undefined {
+  const tally = sheriffResolution(summary, elected, playerIds, readRecord);
+  return tally ? { ...ballot(summary), tally } : undefined;
 }
 function ballot(event: ReplayEvent): VideoBallot {
   const p = event.payload;
@@ -109,6 +170,12 @@ export function semanticEventGroups(
       !barriers.has(index) &&
       !explicitAnchors.has(index + 1) &&
       readRecord(next).record
+    )
+      indexes.push(index + 1);
+    if (
+      !barriers.has(index) &&
+      !barriers.has(index + 1) &&
+      sheriffResolution(event, next, playerIds, readRecord)
     )
       indexes.push(index + 1);
     // 单个summary仍是独立节点；没有summary的旧逐票记录不伪造complete或最终落点。

@@ -29,7 +29,11 @@ export function BallotScene({
   const { profile, label, seatLabel } = playerLabels(players, locale);
   const revealed = localFrame >= scene.cues.impact;
 
-  const data = scene.ballot;
+  // 直接使用本组件的消费者也遵循独立结果帧；未到正式计票游标不能借用后续tally。
+  const data =
+    scene.resolution?.ballot && localFrame >= scene.resolution.revealFrame
+      ? scene.resolution.ballot
+      : scene.ballot;
   if (!data || !revealed)
     return (
       <div
@@ -177,17 +181,18 @@ export function BallotScene({
                   >
                     {seatLabel(id)}
                   </strong>
-                  <strong
-                    style={{
-                      fontSize: (compact ? 26 : dense ? 30 : 36) * scale,
-                      color:
-                        id === data.targetId ? (gothic ? "#efb4a8" : palette.accent) : readingInk,
-                    }}
-                  >
-                    {data.tally && Object.hasOwn(data.tally, String(id))
-                      ? text(locale, "video.votes", { count: data.tally[String(id)]! })
-                      : "—"}
-                  </strong>
+                  {data.tally && Object.hasOwn(data.tally, String(id)) && (
+                    <strong
+                      data-ballot-count={id}
+                      style={{
+                        fontSize: (compact ? 26 : dense ? 30 : 36) * scale,
+                        color:
+                          id === data.targetId ? (gothic ? "#efb4a8" : palette.accent) : readingInk,
+                      }}
+                    >
+                      {text(locale, "video.votes", { count: data.tally[String(id)]! })}
+                    </strong>
+                  )}
                   <div
                     style={{
                       marginLeft: "auto",

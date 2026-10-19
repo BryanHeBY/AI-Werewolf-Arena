@@ -126,7 +126,8 @@ export function selectVideoShotSource(
     committedFact,
     committedFacts,
     resolutionEvent:
-      endIndex > index && source.replay.events[endIndex]?.type === "voted_out"
+      endIndex > index &&
+      ["voted_out", "sheriff_elected"].includes(source.replay.events[endIndex]?.type ?? "")
         ? source.replay.events[endIndex]
         : undefined,
     sourceEvents: sourceIndexes

@@ -167,6 +167,7 @@ export function scheduleVideoShot(
     scene.resolution = {
       text: resolution!.text,
       targetId: resolution!.targetId,
+      ...(resolution!.ballot ? { ballot: resolution!.ballot } : {}),
       // 结果是第二条原始记录；自动播报先读完票型，再揭晓结果并给它独立停留。
       revealFrame:
         automaticReading && edit.scene?.cues?.settled === undefined
