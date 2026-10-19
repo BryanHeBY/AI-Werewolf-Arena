@@ -9,7 +9,6 @@
     "checkJs": true,
     "noEmit": true,
     "types": ["node", "bun-types", "bun-types/test-globals"],
-    "baseUrl": ".",
     "paths": {
       "typescript": ["./node_modules/typescript"]
     }
