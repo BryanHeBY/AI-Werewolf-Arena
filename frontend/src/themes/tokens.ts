@@ -58,6 +58,14 @@ export interface ThemeFrame {
   activeWidth: number;
   cornerSize: number;
   padding: number;
+  /** 活动范围与当前发言者分层用色；与角色身份色、请求/实际目标边框分别拥有语义。 */
+  activity: {
+    wolf: string;
+    wolfSpeaker: string;
+    candidate: string;
+    candidateSpeaker: string;
+    withdrawn: string;
+  };
 }
 export interface ThemeConnector {
   choiceWidth: number;
@@ -153,6 +161,13 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
       activeWidth: 3,
       cornerSize: gothic ? 20 : 0,
       padding: 28,
+      activity: {
+        wolf: gothic ? "#b64c5c" : "#b52e42",
+        wolfSpeaker: gothic ? "#ff6a77" : "#d5223b",
+        candidate: gothic ? "#b99a61" : "#9b6d17",
+        candidateSpeaker: gothic ? "#f5d99b" : "#805400",
+        withdrawn: gothic ? "#9099a4" : "#77828f",
+      },
     },
     connector: {
       choiceWidth: 2,

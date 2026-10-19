@@ -15,6 +15,7 @@ import type { VideoPlan, VideoScene } from "../../types";
 import type { SceneAppearance, RenderThemeSlot, BroadcastSceneLayout } from "./contracts";
 import { quiet, twoLines, alpha } from "./style";
 import { PlayerAvatar, playerLabels } from "./PlayerVisual";
+import { playerActivityHighlight } from "../../../presentation/player-activity-highlight";
 
 export function RosterHud({
   players,
@@ -80,8 +81,39 @@ export function RosterHud({
           scene.visual?.effectiveTargetKnown === true &&
           scene.visual.effectiveTargetIds.includes(player.playerId);
         const target = requested || effective;
-        const accent =
-          active || target ? (gothic ? tokens.frame.light : palette.accent) : tokens.frame.color;
+        // 范围来自当前事实前缀，个人发言来自结构化dialogue；不把镜头焦点或台词中的身份声称当夜聊成员。
+        const activity = player.alive ? player.rosterActivity : undefined;
+        const speaking =
+          scene.kind === "speech" && (scene.visual?.actorId ?? scene.actorId) === player.playerId;
+        const wolfSpeaking =
+          player.alive &&
+          speaking &&
+          activity?.kind === "wolf-discussion" &&
+          activity.status === "speaker";
+        const colors = tokens.frame.activity;
+        const acting =
+          scene.kind === "action" && (scene.visual?.actorId ?? scene.actorId) === player.playerId;
+        const highlight = playerActivityHighlight(
+          activity,
+          player.alive && (speaking || acting),
+          colors,
+          gothic ? tokens.frame.light : palette.accent,
+        );
+        const accent = target
+          ? gothic
+            ? tokens.frame.light
+            : palette.accent
+          : (highlight.color ??
+            (active ? (gothic ? tokens.frame.light : palette.accent) : tokens.frame.color));
+        const borderWidth = wolfSpeaking
+          ? tokens.frame.activeWidth + 2
+          : highlight.strong
+            ? tokens.frame.activeWidth + 2
+            : active || target
+              ? tokens.frame.activeWidth
+              : activity
+                ? tokens.frame.secondaryWidth + 1
+                : tokens.frame.width;
         const hiddenAvatar = identity?.avatar.kind === "none";
         const requestedAvatar =
           (hiddenAvatar ? 34 : hasMetadata ? 54 : locale === "en" ? 64 : 76) * scale;
@@ -189,6 +221,10 @@ export function RosterHud({
             data-roster-side={mirrored ? "right" : "left"}
             data-requested-target={requested ? "true" : undefined}
             data-effective-target={effective ? "true" : undefined}
+            data-roster-activity={activity?.kind}
+            data-roster-activity-status={activity?.status}
+            data-roster-speaker={speaking ? "true" : undefined}
+            data-player-current={highlight.strong ? "true" : undefined}
             data-testid={player.isWinner ? "composition-winner" : undefined}
             style={{
               position: "absolute",
@@ -198,8 +234,19 @@ export function RosterHud({
               height: seat.height,
               boxSizing: "border-box",
               background: alpha(cards.panel, surface.cardOpacity),
-              border: `${(active || target ? tokens.frame.activeWidth : tokens.frame.width) * scale}px solid ${accent}`,
-              borderStyle: requested && !effective && !active ? "dashed" : "solid",
+              backgroundImage: highlight.strong
+                ? `linear-gradient(${mirrored ? "270deg" : "90deg"}, ${alpha(accent, 0.23)}, ${alpha(accent, 0.08)})`
+                : undefined,
+              border: `${borderWidth * scale}px solid ${accent}`,
+              borderStyle:
+                (requested && !effective && !active) ||
+                (!target && activity?.status === "withdrawn")
+                  ? "dashed"
+                  : "solid",
+              boxShadow:
+                activity || wolfSpeaking
+                  ? `inset 0 0 0 ${scale}px ${alpha(accent, 0.18)}`
+                  : undefined,
               color: cards.text,
               // 整卡去色，身份和编号仍保有对比；不以低透明度假装死亡，也不因获胜重新着色。
               filter: player.alive ? undefined : "grayscale(1) brightness(0.78)",
@@ -309,7 +356,7 @@ export function RosterHud({
             {gothic && (
               <GothicMetalFrame
                 scale={scale}
-                active={Boolean(active || target)}
+                active={Boolean(active || target || activity)}
                 color={accent}
                 small
               />

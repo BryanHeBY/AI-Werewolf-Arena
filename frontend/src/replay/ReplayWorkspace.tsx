@@ -300,6 +300,13 @@ export function ReplayWorkspace({
             players={orderedPlayers}
             presentations={playerProfiles}
             themeId={webAppearance.theme.id}
+            activePlayerIds={
+              ["speech", "action"].includes(videoFrame.scene.kind)
+                ? [videoFrame.scene.visual?.actorId ?? videoFrame.scene.actorId].filter(
+                    (id): id is number => id !== undefined,
+                  )
+                : []
+            }
             avatarSources={avatarSources}
             locale={locale}
             focusedPlayerId={focusedPlayerId}

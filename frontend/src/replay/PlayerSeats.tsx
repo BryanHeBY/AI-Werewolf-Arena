@@ -11,7 +11,8 @@ import { IdentityAvatar } from "../presentation/IdentityAvatar";
 import { EliminatedStamp } from "../presentation/EliminatedStamp";
 import { SheriffBadge } from "../presentation/SheriffBadge";
 import { visibleIdentityRole } from "../presentation";
-import type { ThemeId } from "../themes";
+import { resolveTheme, type ThemeId } from "../themes";
+import { playerActivityHighlight } from "../presentation/player-activity-highlight";
 import { RoleCrest } from "../presentation/RoleCrest";
 import type { ResolvedPlayerPresentation } from "../presentation";
 
@@ -22,6 +23,8 @@ interface PlayerSeatsProps {
   onToggleFocus: (playerId: number) => void;
   presentations?: readonly ResolvedPlayerPresentation[];
   themeId?: ThemeId;
+  /** 当前视频场景明确的行动/发言主体；焦点选择仍独立，不把点击当行动。 */
+  activePlayerIds?: readonly number[];
   /** 仅由宿主已准备 image 媒体建立的映射；组件不读取原档路径或自行下载。 */
   avatarSources?: Readonly<Record<string, string>>;
 }
@@ -33,10 +36,12 @@ export const PlayerSeats = memo(function PlayerSeats({
   onToggleFocus,
   presentations,
   themeId = "minimal-v1",
+  activePlayerIds = [],
   avatarSources,
 }: PlayerSeatsProps) {
   // 存活统计只取当前帧投影；终局胜者与存活是两个独立标记。
   const aliveCount = players.filter((player) => player.alive).length;
+  const theme = resolveTheme(themeId);
 
   return (
     <section className="panel player-panel">
@@ -66,6 +71,13 @@ export const PlayerSeats = memo(function PlayerSeats({
             assetField && "value" in assetField && typeof assetField.value === "string"
               ? assetField.value
               : undefined;
+          const activity = player.alive ? player.rosterActivity : undefined;
+          const highlight = playerActivityHighlight(
+            activity,
+            player.alive && activePlayerIds.includes(player.playerId),
+            theme.definition.frame.activity,
+            "var(--awa-accent)",
+          );
           return (
             <button
               type="button"
@@ -75,6 +87,22 @@ export const PlayerSeats = memo(function PlayerSeats({
               data-player-id={player.playerId}
               data-seat={seat}
               data-has-metadata={Boolean(name || profile?.modelLabel)}
+              data-roster-activity={activity?.kind}
+              data-roster-activity-status={activity?.status}
+              data-player-current={highlight.strong ? "true" : undefined}
+              style={
+                highlight.color
+                  ? {
+                      borderColor: highlight.color,
+                      borderWidth: highlight.strong ? 3 : 2,
+                      borderStyle: highlight.withdrawn ? "dashed" : "solid",
+                      background: highlight.strong
+                        ? `color-mix(in srgb, ${highlight.color} 23%, var(--awa-panel))`
+                        : undefined,
+                      transition: "none",
+                    }
+                  : undefined
+              }
               className={`seat ${player.alive ? "alive" : "dead"} ${player.isWinner ? "winner-seat" : ""} ${player.camp} ${focusedPlayerId === player.playerId ? "focused" : ""}`}
               onClick={() => onToggleFocus(player.playerId)}
             >

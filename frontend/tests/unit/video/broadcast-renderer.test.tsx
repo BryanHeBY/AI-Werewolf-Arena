@@ -167,7 +167,7 @@ test("minimal daytime speaker focus uses the dark semantic accent on its white c
   const video = plan(document, { theme: { id: "minimal-v1" } });
   const html = renderToStaticMarkup(<VideoFrame plan={video} frame={0} />);
   const actorCard = html.match(/<div data-composition-player="2"[^>]*>/)?.[0];
-  expect(actorCard).toContain("border:3px solid #274f85");
+  expect(actorCard).toContain("border:5px solid #274f85");
   expect(actorCard).not.toContain("#d9e4f0");
 });
 

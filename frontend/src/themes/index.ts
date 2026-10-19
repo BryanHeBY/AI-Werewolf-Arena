@@ -269,7 +269,11 @@ export function normalizeResolvedTheme(theme: ResolvedTheme): ResolvedTheme {
           night: { ...base.surface.palette.night, ...previous.surface?.palette?.night },
         },
       },
-      frame: { ...base.frame, ...previous.frame },
+      frame: {
+        ...base.frame,
+        ...previous.frame,
+        activity: { ...base.frame.activity, ...previous.frame?.activity },
+      },
       connector: { ...base.connector, ...previous.connector },
       effect: { ...base.effect, ...previous.effect },
       motion: {

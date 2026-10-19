@@ -9,6 +9,7 @@ import {
 } from "@ai-werewolf-arena/replay-contract";
 import { readReplayEvent, readReplayEventEnvelope } from "./replay-event-reader";
 import type { SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
+import { createReplayRosterActivity, type ReplayRosterActivity } from "./replay-roster-activity";
 
 export interface ReplayPlayerState {
   playerId: number;
@@ -19,6 +20,8 @@ export interface ReplayPlayerState {
   isSheriff: boolean;
   isWinner: boolean;
   publicRole?: string;
+  /** 已记录活动窗口的展示范围；不表示角色能力或行动许可。 */
+  rosterActivity?: ReplayRosterActivity;
 }
 
 export interface ReplaySnapshot {
@@ -33,6 +36,7 @@ export interface ReplaySnapshot {
 type ProjectionReplay = Pick<ReplayDocument, "players" | "events"> &
   Partial<Pick<ReplayDocument, "facts" | "factCoverage">>;
 function createProjector(replay: ProjectionReplay) {
+  const rosterActivity = createReplayRosterActivity();
   const states = new Map<number, ReplayPlayerState>(
     replay.players.map((player) => [
       player.player_id,
@@ -63,6 +67,7 @@ function createProjector(replay: ProjectionReplay) {
     if (fact) {
       day = fact.event.day;
       phase = fact.event.phase;
+      rosterActivity.append(fact.event);
     }
     for (const effect of fact?.effects ?? []) {
       switch (effect.kind) {
@@ -106,12 +111,16 @@ function createProjector(replay: ProjectionReplay) {
     append,
     appendFact: (fact: ReplayFact) => {
       day = fact.day;
+      rosterActivity.atDay(day);
       if (fact.kind === "life_committed") markDead(fact.playerId);
     },
     snapshot: (): ReplaySnapshot => ({
       event: event ? structuredClone(event) : null,
       players: [...states.values()]
-        .map((player) => ({ ...player }))
+        .map((player) => {
+          const activity = rosterActivity.forPlayer(player.playerId);
+          return { ...player, ...(activity ? { rosterActivity: activity } : {}) };
+        })
         .sort((left, right) => left.playerId - right.playerId),
       day,
       phase,
