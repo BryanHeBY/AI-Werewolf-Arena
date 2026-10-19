@@ -29,7 +29,9 @@ bun run --cwd backend run --configs-dir ../configs --game-config-name six_player
 bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_pi --locale en --display-locale en
 ```
 
-只使用一个模型时，将 game 的 `agent` 设为相应 Pi Agent，并移除示例中的 `players` 绑定；否则席位选择优先于默认。也可按原有 `roleAgents`／`players.<seat>.agent` 与 LLM／ACP 混用。`pi_native.limits.maxConcurrentRequests` 在本局中由这个连接下的所有 Pi 玩家共享，各席位会话和可见事件仍隔离。
+只使用一个模型时，将 game 的 `agent` 设为相应 Pi Agent，并移除示例中的 `players` 绑定；否则席位选择优先于默认。也可按原有 `roles.<role>.agent`／`players.<seat>.agent` 与 LLM／ACP 混用。`pi_native.limits.maxConcurrentRequests` 在本局中由这个连接下的所有 Pi 玩家共享，各席位会话和可见事件仍隔离。
+
+`customInstructions` 位于 Agent／game／roles／players 的配置层，按默认追加或显式替换、清除统一组合，不放进 Pi 原生 `options`。全局猫娘局示例为 `games/twelve_player_pi_miao.json`；详细语义见[配置契约](../contracts/configuration.md#自定义指令与-agent-选择)。
 
 认证可直接填字符串，也可用整个值为 `${PI_API_KEY}` 的环境占位符。默认模板仅含 `YOUR_*` 合成占位字符串，不包含认证；没有填好的 provider 可删除其 auth 条目及未使用 Agent，再调整游戏绑定。`config:check` 执行无会话、无网络的静态验证，不证明 key 有效或模型有授权。
 

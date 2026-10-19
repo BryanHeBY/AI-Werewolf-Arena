@@ -77,7 +77,7 @@ Pi 的 `config.models` 和 `config.auth` 分别是原生 `models.json` 和 `auth
         "actionTransport": "mcp",
         "sessionConfigOptions": { "fast-mode": true }
       },
-      "personalityPrompt": "保持独立判断，用简短句子发言。"
+      "customInstructions": { "text": "保持独立判断，用简短句子发言。" }
     }
   }
 }
@@ -85,7 +85,7 @@ Pi 的 `config.models` 和 `config.auth` 分别是原生 `models.json` 和 `auth
 
 Agent 的类别由引用的 backend 唯一决定，禁止重复写 `kind`／`provider` 或把参数平铺在顶层。`options` 未提供时视为 `{}`，显式 `null` 拒绝；LLM 仍必须提供 `options.model`。LLM 可设置 `temperature`、`maxTokens`、`reasoningEffort`、`thinkingEnabled`；ACP 可设置 `spawnArgs`、`sessionReuse`、`actionTransport`、`sessionConfigOptions`。Pi `options` 是原生 Settings 对象，保持原生字段结构，不将 LLM 的 `model` 等别名自动翻译成 Pi 设置。
 
-`personalityPrompt` 是跨传输的 Agent 顶层字段。game 引用板子和 Agent；board 保存角色／机制参数；`debug_summary.agent.agentName` 引用既有 Agent，不能内联模型配置。内部 `RuntimeConfig.providers` 只是已解析连接表的兼容名称，不是第二份文件或备用配置来源。
+`customInstructions` 是 LLM、ACP、Pi 共用的 Agent 顶层字段，不放入传输专属的 `options`。game 引用板子和 Agent；board 保存角色／机制参数；`debug_summary.agent.agentName` 引用既有 Agent，不能内联模型配置。内部 `RuntimeConfig.providers` 只是已解析连接表的兼容名称，不是第二份文件或备用配置来源。
 
 ## 解析、默认与组合是不同责任
 
@@ -97,7 +97,7 @@ Agent 的类别由引用的 backend 唯一决定，禁止重复写 `kind`／`pro
 
 ### 玩家编号与可选昵称
 
-对局 `players` 按座位配置，`name` 与 `agent`、`personalityPrompt` 独立；普通对局无须填写任何名字：
+对局 `players` 按座位配置，`name` 与 `agent`、`customInstructions` 独立；普通对局无须填写任何名字：
 
 ```json
 {
@@ -113,7 +113,63 @@ Agent 的类别由引用的 backend 唯一决定，禁止重复写 `kind`／`pro
 
 公开身份契约 `PublicPlayerIdentity` 只包含 `id`、`seat` 和可选 `name`。ID 是行动和记录关联键，座位描述位置，昵称只供交流与展示；不能用昵称提交行动、定位目标或授予权限。更换 LLM／ACP／Pi 后端不改变玩家名字，单局内没有改名行动。
 
-玩家Agent选择优先级是席位→角色→对局默认。personalityPrompt缺席继承Agent；显式null清除；原字符串／双语字典按既有locale回退规则解析。原始人格与名字不是应翻译的维护注释，也不应输出到脱敏报告。
+### 自定义指令与 Agent 选择
+
+Agent 选择优先级为 `players.<seat>.agent` → `roles.<role>.agent` → 对局 `agent` → Agent 文件默认值。
+`roles` 与 `players` 都使用对象形式，`agent` 可缺省；换模型不会跳过角色或全局指令。
+`spawnArgs` 仅用于显式绑定 ACP Agent 的角色或席位，并追加到该 Agent 的启动参数。
+
+自定义指令按以下顺序组合，作用于发牌后各玩家自己的提示：
+
+```text
+所选 Agent.customInstructions → game.customInstructions
+  → game.roles.<role>.customInstructions → game.players.<seat>.customInstructions
+```
+
+每层使用同一种对象结构：
+
+| 写法                                    | 行为                                     |
+| --------------------------------------- | ---------------------------------------- |
+| 字段缺省                                | 继承此前附加指令                         |
+| `{ "text": "正文" }`                    | 默认 `append`，用空行追加正文            |
+| `{ "mode": "append", "text": "正文" }`  | 显式追加                                 |
+| `{ "mode": "replace", "text": "正文" }` | 清除此前附加指令，使用当前正文           |
+| `{ "mode": "clear" }`                   | 清除此前附加指令；后续更具体的层仍可追加 |
+
+`replace`／`clear` 只影响配置层的附加指令。基础系统提示中的身份、规则、可见信息和工具协议始终由系统生成。
+指令可以描述表达风格、策略偏好和互动要求；必须强制执行的游戏机制由板子配置与引擎实现。
+`append` 不分析文本冲突，互斥要求应显式使用 `replace`。
+
+```json
+{
+  "board": "twelve_player_standard",
+  "agent": "pi_default",
+  "customInstructions": {
+    "text": "本局是欢乐局，所有玩家都是猫娘，每个完整句子以‘喵’收尾。"
+  },
+  "roles": {
+    "wolf": {
+      "customInstructions": { "text": "喜欢把狼队夜聊演成猫猫秘密会议。" }
+    }
+  },
+  "players": {
+    "1": { "name": "奶糖", "customInstructions": { "text": "你的语气甜甜的。" } },
+    "2": { "customInstructions": { "mode": "replace", "text": "使用简短冷静的表达。" } },
+    "3": { "customInstructions": { "mode": "clear" } }
+  }
+}
+```
+
+上例 1 号追加个人风格，2 号只保留自己的附加指令（不再继承全局句尾要求），3 号没有附加指令。
+完整中英示例见 `configs.example/games/twelve_player_pi_miao.json`；其他未单独配置的席位自动继承全局要求。
+`game.roles` 是 Agent／指令绑定；`boards/*.json` 内的 `roles` 仍是角色机制参数，两者归属不同文件。
+
+`text` 接受非空字符串或 `{ "zh-CN": "中文正文", "en": "English text" }`，语言表至少包含一种语言。
+各层独立按对局 `locale` 选择文本，缺少目标语言时优先中文、再英文，并记录不含正文的字段路径诊断。
+正文保留原文，不翻译、不解析 `${ENV}` 占位符；姓名同样保留原文。
+`null`、空正文、未知模式、未知语言、`clear` 携带 `text` 均被拒绝。
+正常加载器只接受当前写法，旧 `personalityPrompt`、`playerAgents`、`roleAgents` 会报未知字段。
+配置检查摘要只输出指令存在状态与操作模式，不输出指令正文；全局玩家指令不注入审计 Agent。
 
 超时、并发、天数等按实际schema接纳有限正值；不要根据某篇早期文档的角色数量推导现行支持。实际运行枚举与资料目录状态分别核对，有限支持及未开放变体从[规则卡](../rules/README.md)进入。
 

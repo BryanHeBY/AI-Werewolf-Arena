@@ -30,7 +30,7 @@
 | M16  | 投票           | `mechanisms.voting`、tieBreaker、乌鸦附加票／王子重投           | `engine/phases/voting-pipeline.ts`与具名ruleset；原票、附加来源、权重、弃票、PK与真实候选分别保留         |
 | M17  | 警长与警徽     | `mechanisms.sheriff`选举／徽章政策及票权                        | `features/sheriff/`；警上、退水、PK、方向与原持徽死亡交接，不借提案移徽                                   |
 | M18  | 发言与表达     | 正反向、杠精辩论、禁言手势／翻译                                | `engine/phases/day-pipeline.ts`、`features/debater/`、`silence-elder/`；文字版改编具名，拒译与未提交分开  |
-| M19  | 人格与关系     | game.players／roleAgents、昵称／personalityPrompt、关系选择     | `app/config/resolve-game-setup.ts`及关系feature；席位／角色／默认优先级、显式null清除与原文保留           |
+| M19  | 人格与关系     | game.players／roles、昵称／customInstructions、关系选择         | `app/config/resolve-game-setup.ts`及关系feature；Agent独立选择、指令逐层追加／替换／清除与原文保留        |
 | M20  | 事件与道具     | 唯一已交付`awa_wall_notes_once_v1`／`anonymous_note`            | `features/wall-notes/`；一次私有短句、随机匿名公开；不是可执行脚本或任意道具系统                          |
 | M21  | Agent运行      | Provider／Agent与席位绑定、并发／超时／取消／日志               | `agents/`、`adapters/`、`app/game-runner.ts`；统一接收器，独立会话与清理，裸cwd不算沙箱                   |
 | M22  | 记录与审计     | 稳定事实、locale、私有Tape、公开God与逐玩家导出                 | `recording/`、`app/simulation/`及公共replay包；格式、独立审计与同构建执行三层分别验收                     |
