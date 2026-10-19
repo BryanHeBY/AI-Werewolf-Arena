@@ -13,6 +13,7 @@ import {
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
 import { RoleCrest } from "./RoleCrest";
+import { roleColorVariable } from "../themes/role-colors";
 import type { AnnouncementContent } from "./announcement-content";
 import { announcementCampColor, semanticColors, type SemanticColors } from "./semantic-colors";
 
@@ -132,6 +133,7 @@ export function AnnouncementFields({
       >
         {ordered.map((entry, index) => {
           const color = announcementCampColor(entry.camp, colors);
+          const roleColor = roleColorVariable(entry.roleId, color);
           return (
             <div
               key={`${entry.playerId}:${index}`}
@@ -140,7 +142,7 @@ export function AnnouncementFields({
               style={{
                 minWidth: 0,
                 padding: ".35em .5em",
-                borderLeft: `.12em solid ${color}`,
+                borderLeft: `.12em solid ${roleColor}`,
                 background: "transparent",
                 display: "grid",
                 gap: ".12em",
@@ -160,7 +162,7 @@ export function AnnouncementFields({
               <div
                 data-lineup-role={entry.roleId}
                 style={{
-                  color,
+                  color: roleColor,
                   display: "flex",
                   alignItems: "center",
                   gap: ".25em",
@@ -169,7 +171,7 @@ export function AnnouncementFields({
                   minWidth: 0,
                 }}
               >
-                <RoleCrest role={entry.roleId} size={iconSize} color={color} />
+                <RoleCrest role={entry.roleId} size={iconSize} color={roleColor} />
                 <span style={{ minWidth: 0, wordBreak: "normal", overflowWrap: "anywhere" }}>
                   {entry.roleId === "unknown"
                     ? text(locale, "common.unknown")

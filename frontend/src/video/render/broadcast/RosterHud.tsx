@@ -16,6 +16,7 @@ import type { SceneAppearance, RenderThemeSlot, BroadcastSceneLayout } from "./c
 import { quiet, twoLines, alpha } from "./style";
 import { PlayerAvatar, playerLabels } from "./PlayerVisual";
 import { playerActivityHighlight } from "../../../presentation/player-activity-highlight";
+import { actionAppearance, roleAppearance } from "../../../themes";
 
 export function RosterHud({
   players,
@@ -56,6 +57,11 @@ export function RosterHud({
         const seat = seats.find((item) => item.playerId === player.playerId)!;
         const identity = profile(player.playerId);
         const visibleRole = visibleIdentityRole(player);
+        const roleSkin = roleAppearance(
+          theme,
+          gothic || appearance.night ? "night" : "day",
+          visibleRole,
+        );
         const roleLabel =
           visibleRole === "unknown" ? text(locale, "replay.unknown") : player.roleLabel;
         const mirrored =
@@ -92,12 +98,16 @@ export function RosterHud({
           activity.status === "speaker";
         const colors = tokens.frame.activity;
         const acting =
-          scene.kind === "action" && (scene.visual?.actorId ?? scene.actorId) === player.playerId;
+          layout === "action" && (scene.visual?.actorId ?? scene.actorId) === player.playerId;
         const highlight = playerActivityHighlight(
           activity,
           player.alive && (speaking || acting),
           colors,
-          gothic ? tokens.frame.light : palette.accent,
+          acting
+            ? actionAppearance(theme, gothic || appearance.night ? "night" : "day", scene).ink
+            : gothic
+              ? tokens.frame.light
+              : palette.accent,
         );
         const accent = target
           ? gothic
@@ -125,8 +135,7 @@ export function RosterHud({
                 Math.max(34 * scale, seat.height - (8 + t.roleEn * 2.7) * scale),
               )
             : requestedAvatar;
-        const roleColor =
-          player.camp === "wolf" ? cards.wolf : player.camp === "good" ? cards.good : cards.neutral;
+        const roleColor = roleSkin.ink;
         const portrait = (
           <div
             style={{
@@ -219,12 +228,15 @@ export function RosterHud({
             data-player-alive={player.alive ? "true" : "false"}
             data-player-seat={identity?.seat ?? player.playerId}
             data-roster-side={mirrored ? "right" : "left"}
+            data-visible-role={visibleRole}
+            data-role-color-key={roleSkin.key}
             data-requested-target={requested ? "true" : undefined}
             data-effective-target={effective ? "true" : undefined}
             data-roster-activity={activity?.kind}
             data-roster-activity-status={activity?.status}
             data-roster-speaker={speaking ? "true" : undefined}
             data-player-current={highlight.strong ? "true" : undefined}
+            data-player-acting={acting ? "true" : undefined}
             data-testid={player.isWinner ? "composition-winner" : undefined}
             style={{
               position: "absolute",
@@ -233,19 +245,21 @@ export function RosterHud({
               width: seat.width,
               height: seat.height,
               boxSizing: "border-box",
-              background: alpha(cards.panel, surface.cardOpacity),
-              backgroundImage: highlight.strong
-                ? `linear-gradient(${mirrored ? "270deg" : "90deg"}, ${alpha(accent, 0.23)}, ${alpha(accent, 0.08)})`
+              backgroundColor: alpha(cards.panel, surface.cardOpacity),
+              backgroundImage: highlight.fillOpacity
+                ? `linear-gradient(${mirrored ? "270deg" : "90deg"}, ${alpha(accent, highlight.fillOpacity)}, ${alpha(accent, highlight.fillOpacity / 2)})`
                 : undefined,
-              border: `${borderWidth * scale}px solid ${accent}`,
+              borderWidth: borderWidth * scale,
+              borderColor: accent,
               borderStyle:
                 (requested && !effective && !active) ||
                 (!target && activity?.status === "withdrawn")
                   ? "dashed"
                   : "solid",
+              // 卡框与衬底仅编码活动状态；警上金色与角色文字色分离，内侧饰边保持左右镜像。
               boxShadow:
-                activity || wolfSpeaking
-                  ? `inset 0 0 0 ${scale}px ${alpha(accent, 0.18)}`
+                activity || highlight.strong
+                  ? `inset ${(mirrored ? -3 : 3) * scale}px 0 0 ${alpha(accent, 0.8)}, inset 0 0 0 ${scale}px ${alpha(accent, 0.18)}`
                   : undefined,
               color: cards.text,
               // 整卡去色，身份和编号仍保有对比；不以低透明度假装死亡，也不因获胜重新着色。
@@ -282,9 +296,7 @@ export function RosterHud({
                   }}
                 >
                   {portrait}
-                  {hasSeparateRole && (
-                    <RoleCrest role={visibleRole} size={24 * scale} color={roleColor} />
-                  )}
+                  {hasSeparateRole && <RoleCrest role={visibleRole} size={24 * scale} />}
                   {hasMetadata && (
                     <div
                       data-player-metadata

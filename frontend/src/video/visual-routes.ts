@@ -428,9 +428,10 @@ export const VIDEO_EVENT_VISUAL_ROUTES = {
     template: "protection/recorded_choice",
     process: "choice",
   },
+  // 复制就绪与执行个人刀分开；后者复用攻击选择模板，不因技能来源换成资源道具。
   awakened_attack_chosen: {
-    family: "copy_resource",
-    template: "copy_resource/recorded_choice",
+    family: "pack_attack",
+    template: "pack_attack/recorded_individual_choice",
     process: "choice",
   },
   mechanical_mode_selected: {
@@ -460,8 +461,8 @@ export const VIDEO_EVENT_VISUAL_ROUTES = {
     process: "choice",
   },
   mechanical_attack_chosen: {
-    family: "copy_resource",
-    template: "copy_resource/recorded_choice",
+    family: "pack_attack",
+    template: "pack_attack/recorded_individual_choice",
     process: "choice",
   },
   mechanical_poison_reflected: {

@@ -117,8 +117,8 @@ test("explicit routes cover exactly 217 known events, 98 request stages and 64 r
   expect(VIDEO_VISUAL_FAMILIES).toHaveLength(31);
   expect(
     new Set(Object.values(VIDEO_EVENT_VISUAL_ROUTES).map((route) => route.template)).size,
-    // 夜聊结束与发言共用对白模板，原孤立pack compact notice不再占专属模板。
-  ).toBe(85);
+    // 个人复制刀与狼队刀票共享选择模板，不再以复制资源模板冒充实际攻击。
+  ).toBe(84);
   expect(VIDEO_EVENT_VISUAL_ROUTES.awakened_self_destruct_resolved.family).toBe("pack_attack");
   expect(VIDEO_EVENT_VISUAL_ROUTES.mechanical_poison_reflected.family).toBe("reflection");
   const blast = eventVisualIntent(

@@ -2,6 +2,7 @@
  * 负责票型、作者全文与独立结果的有限阅读槽。输入为编译票型、统一阅读时钟及当前帧，输出完整票表和原揭晓边界。
  * 作者说明、票表、结果各限高而不删字；票数只读tally/adjustments，不重新计票或借滚动提前宣布结果。
  */
+import { actionAppearance } from "../../../themes";
 import { text } from "@ai-werewolf-arena/game-text";
 import { SceneText } from "./SceneText";
 import { ReadingViewport } from "./ReadingViewport";
@@ -21,7 +22,9 @@ export function BallotScene({
   players,
 }: SceneRenderProps & { players: readonly ResolvedPlayerPresentation[] }) {
   const { scale, stage, padding, bodySize, lineHeight } = metrics;
-  const { theme, surface, gothic, palette } = appearance;
+  const { theme, surface, gothic } = appearance;
+  const actionSkin = actionAppearance(theme, gothic || appearance.night ? "night" : "day", scene);
+  const ballotAccent = actionSkin.ink;
   const tokens = theme.definition,
     t = tokens.typography,
     readingInk = surface.readingText,
@@ -82,6 +85,7 @@ export function BallotScene({
     <div
       data-scene-ballot={flow ? undefined : true}
       data-surface="ballot"
+      data-action-color-key={actionSkin.key}
       style={{
         ...localSurface(appearance, scale, surface.ballotOpacity),
         position: "absolute",
@@ -116,18 +120,14 @@ export function BallotScene({
             <ReadingViewport
               caption={caption}
               emphasis={scene.emphasis}
-              accent={gothic ? "#efb4a8" : palette.wolf}
+              accent={ballotAccent}
               kind="announcement"
               fontSize={bodySize}
               lineHeight={lineHeight}
               maxHeight={editorialMax}
             />
           ) : (
-            <SceneText
-              caption={caption}
-              emphasis={scene.emphasis}
-              accent={gothic ? "#efb4a8" : palette.wolf}
-            />
+            <SceneText caption={caption} emphasis={scene.emphasis} accent={ballotAccent} />
           )}
         </div>
       )}
@@ -144,7 +144,7 @@ export function BallotScene({
       <ReadingViewport
         caption={caption}
         emphasis={[]}
-        accent={palette.accent}
+        accent={ballotAccent}
         kind={flow ? "ballot" : undefined}
         fontSize={t.aux * scale}
         lineHeight={1.3}
@@ -187,8 +187,7 @@ export function BallotScene({
                       data-ballot-count={id}
                       style={{
                         fontSize: (compact ? 26 : dense ? 30 : 36) * scale,
-                        color:
-                          id === data.targetId ? (gothic ? "#efb4a8" : palette.accent) : readingInk,
+                        color: id === data.targetId ? ballotAccent : readingInk,
                       }}
                     >
                       {text(locale, "video.votes", { count: data.tally[String(id)]! })}
@@ -228,7 +227,7 @@ export function BallotScene({
                       style={{
                         height: "100%",
                         width: `${data.tally ? (100 * (data.tally[String(id)] ?? 0)) / total : 0}%`,
-                        background: id === data.targetId ? palette.accent : palette.good,
+                        background: id === data.targetId ? ballotAccent : alpha(ballotAccent, 0.7),
                       }}
                     />
                   </div>
@@ -263,7 +262,7 @@ export function BallotScene({
             borderTop: `${scale}px solid ${tokens.frame.color}`,
             paddingTop: 16 * scale,
             fontSize: t.result * scale,
-            color: gothic ? "#efb4a8" : palette.wolf,
+            color: ballotAccent,
             lineHeight: 1.35,
             flexShrink: 0,
             minHeight: 0,
@@ -287,7 +286,7 @@ export function BallotScene({
                     : undefined,
                 }}
                 emphasis={[]}
-                accent={gothic ? "#efb4a8" : palette.wolf}
+                accent={ballotAccent}
                 kind="resolution"
                 fontSize={bodySize}
                 lineHeight={lineHeight}

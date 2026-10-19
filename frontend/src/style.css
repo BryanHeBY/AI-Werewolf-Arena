@@ -330,12 +330,6 @@ input[type="search"] {
   border-color: var(--awa-accent);
   background: color-mix(in srgb, var(--awa-accent) 9%, var(--awa-panel));
 }
-.seat.wolf {
-  box-shadow: inset 0 2px 0 var(--awa-wolf);
-}
-.seat.good {
-  box-shadow: inset 0 2px 0 var(--awa-good);
-}
 /* 已提交出局使用整卡去色与斜章；保留完整可读性、选择操作和独立胜者徽章。 */
 .seat.dead {
   filter: grayscale(1) brightness(0.8);
@@ -385,6 +379,7 @@ input[type="search"] {
 }
 /* 角色小纹章不替代 LLM 头像；身份横排并允许长英文自然换行，不压成竖窄槽。 */
 .seat .seat-role {
+  color: var(--awa-role-ink, var(--awa-text));
   display: flex;
   align-items: center;
   justify-content: center;

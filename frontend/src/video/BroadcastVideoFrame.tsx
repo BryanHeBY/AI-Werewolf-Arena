@@ -11,6 +11,7 @@ import {
   resolveTheme,
   themePalette,
   themeSurface,
+  themeRoleCssVariables,
   type ThemeSlot,
 } from "../themes";
 import { buildVideoFrame, type VideoFrameView } from "./frame";
@@ -164,6 +165,7 @@ export function BroadcastVideoFrame({
       data-scene-treatment={classifyVideoScene(scene, theme.id).treatment}
       data-fallback-reason={scene.visual?.fallbackReason}
       style={{
+        ...themeRoleCssVariables(theme, gothic ? "night" : tone),
         fontFamily: theme.definition.fonts.body,
         lineHeight: 1.2,
         color: palette.text,

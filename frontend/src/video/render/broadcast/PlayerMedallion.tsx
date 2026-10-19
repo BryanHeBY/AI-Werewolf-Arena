@@ -9,6 +9,7 @@ import { quiet, twoLines, alpha } from "./style";
 import { PlayerAvatar, playerLabels } from "./PlayerVisual";
 export function PlayerMedallion({
   id,
+  accent,
   size,
   compact = false,
   scale,
@@ -19,6 +20,8 @@ export function PlayerMedallion({
   mediaBaseUrl,
 }: {
   id: number;
+  /** 仅来源章消费当前行动色；目标保留中性边框，避免混淆行动方与作用对象。 */
+  accent?: string;
   size: number;
   compact?: boolean;
   scale: number;
@@ -51,7 +54,7 @@ export function PlayerMedallion({
           display: "grid",
           placeItems: "center",
           background: alpha(surface.readingColor, 0.85),
-          border: `${2 * scale}px solid ${tokens.frame.color}`,
+          border: `${2 * scale}px solid ${accent ?? tokens.frame.color}`,
         }}
       >
         {

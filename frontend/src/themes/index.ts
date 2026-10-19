@@ -4,6 +4,12 @@
  */
 import { text } from "@ai-werewolf-arena/game-text";
 import { createThemeVisualTokens, type ThemeVisualTokens } from "./tokens";
+import { createThemeRoleColors, themeRoleCssVariables, type ThemeRoleColors } from "./role-colors";
+import { createThemeActionColors, type ThemeActionColors } from "./action-colors";
+export { roleAppearance, roleColorVariable, themeRoleCssVariables } from "./role-colors";
+export { actionAppearance } from "./action-colors";
+export type { ThemeRoleColors, RoleColorKey } from "./role-colors";
+export type { ThemeActionColors } from "./action-colors";
 export type * from "./tokens";
 export type ThemeId = "gothic-v1" | "minimal-v1";
 export type ThemeTone = "day" | "night";
@@ -39,6 +45,8 @@ export interface ThemePalette {
   success: string;
 }
 export interface ThemeDefinition extends ThemeVisualTokens {
+  roleColors: ThemeRoleColors;
+  actionColors: ThemeActionColors;
   id: ThemeId;
   version: 1;
   label: { "zh-CN": string; en: string };
@@ -151,6 +159,8 @@ const minimalNight: ThemePalette = {
 const definitions: Record<ThemeId, ThemeDefinition> = {
   "gothic-v1": {
     ...createThemeVisualTokens(true),
+    roleColors: createThemeRoleColors(),
+    actionColors: createThemeActionColors(),
     id: "gothic-v1",
     version: 1,
     label: { "zh-CN": text("zh-CN", "theme.gothic_name"), en: text("en", "theme.gothic_name") },
@@ -168,6 +178,8 @@ const definitions: Record<ThemeId, ThemeDefinition> = {
   },
   "minimal-v1": {
     ...createThemeVisualTokens(false),
+    roleColors: createThemeRoleColors(),
+    actionColors: createThemeActionColors(),
     id: "minimal-v1",
     version: 1,
     label: { "zh-CN": text("zh-CN", "theme.minimal_name"), en: text("en", "theme.minimal_name") },
@@ -252,6 +264,19 @@ export function normalizeResolvedTheme(theme: ResolvedTheme): ResolvedTheme {
     definition: {
       ...base,
       ...previous,
+      roleColors: {
+        ...base.roleColors,
+        ...previous.roleColors,
+        roles: { ...base.roleColors.roles, ...previous.roleColors?.roles },
+        palette: {
+          day: { ...base.roleColors.palette.day, ...previous.roleColors?.palette?.day },
+          night: { ...base.roleColors.palette.night, ...previous.roleColors?.palette?.night },
+        },
+      },
+      actionColors: {
+        families: { ...base.actionColors.families, ...previous.actionColors?.families },
+        tools: { ...base.actionColors.tools, ...previous.actionColors?.tools },
+      },
       palette: {
         day: { ...base.palette.day, ...previous.palette?.day },
         night: { ...base.palette.night, ...previous.palette?.night },
@@ -312,6 +337,7 @@ export function themeToCssVariables(
       .replace('"Noto Serif SC"', '"AWA Web Noto Serif SC"');
   return {
     ...Object.fromEntries(Object.entries(palette).map(([key, value]) => [`--awa-${key}`, value])),
+    ...themeRoleCssVariables(theme, tone),
     "--awa-font-body": webFont(theme.definition.fonts.body),
     "--awa-font-heading": webFont(theme.definition.fonts.heading),
     "--awa-font-mono": theme.definition.fonts.mono,

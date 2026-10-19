@@ -29,9 +29,10 @@ import { PlayerAgentOutput } from "./PlayerAgentOutput";
 import { useReplayPlayback } from "./useReplayPlayback";
 import { buildVideoFrame, compileVideoPlan, getVideoEventFrame } from "../video/plan";
 import { presentationPlayers } from "../presentation";
+import { broadcastSceneLayout } from "../video/scene-classification";
 import { replayFrameNeighbours } from "./replay-video-navigation";
 import { AvatarMark } from "../presentation/AvatarMark";
-import { themeToCssVariables } from "../themes";
+import { actionAppearance, themeToCssVariables } from "../themes";
 import type { WebAppearanceController } from "../themes/useWebAppearance";
 import { WebAppearancePanel } from "../themes/WebAppearancePanel";
 import { playerLabel } from "@ai-werewolf-arena/game-presentation";
@@ -97,6 +98,7 @@ export function ReplayWorkspace({
     () => buildVideoFrame(videoPlan, currentFrame),
     [videoPlan, currentFrame],
   );
+  const sceneLayout = broadcastSceneLayout(videoFrame.scene);
   const currentView = videoFrame.currentView;
   const snapshot = currentView.snapshot;
   const activeEvent = snapshot.event;
@@ -311,8 +313,18 @@ export function ReplayWorkspace({
             players={orderedPlayers}
             presentations={playerProfiles}
             themeId={webAppearance.theme.id}
+            theme={webAppearance.theme}
+            tone={tone}
             activePlayerIds={
-              ["speech", "action"].includes(videoFrame.scene.kind)
+              ["speech", "action"].includes(sceneLayout)
+                ? [videoFrame.scene.visual?.actorId ?? videoFrame.scene.actorId].filter(
+                    (id): id is number => id !== undefined,
+                  )
+                : []
+            }
+            actionColor={actionAppearance(webAppearance.theme, tone, videoFrame.scene).ink}
+            actingPlayerIds={
+              sceneLayout === "action"
                 ? [videoFrame.scene.visual?.actorId ?? videoFrame.scene.actorId].filter(
                     (id): id is number => id !== undefined,
                   )

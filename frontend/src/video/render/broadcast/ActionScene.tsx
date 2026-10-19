@@ -2,6 +2,7 @@
  * 负责行动场景的世界图形、来源目标小章与固定结果文字。输入为typed意图、有限帧及中央矩阵，输出原有行动DOM与图层位置。
  * requested/effective/recipient分别只读；唯一world容器只变换图形，不移动正文或名册，不补命中、死亡或库存。
  */
+import { actionAppearance } from "../../../themes";
 import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
 import { paletteSemanticColors } from "../../../presentation/semantic-colors";
 import { presentationPlayers } from "../../../presentation";
@@ -35,7 +36,7 @@ export function ActionScene({
   mediaBaseUrl?: string;
 } & { stageTransform: string; renderSlot: RenderThemeSlot }) {
   const { scale, stage, readingWidth, bodySize, lineHeight } = metrics;
-  const { theme, surface, gothic, palette, cards } = appearance;
+  const { theme, surface, cards } = appearance;
   const tokens = theme.definition,
     t = tokens.typography,
     readingInk = surface.readingText,
@@ -91,14 +92,12 @@ export function ActionScene({
     resultMaxHeight - 40 * scale - auxiliaryHeight,
   );
   const size = Math.min(tokens.effect.heroSize * scale, stage.width * 0.4, bodyTop - 80 * scale);
-  const color =
-    visual?.family === "pack_attack" || scene.action?.kind === "poison"
-      ? gothic
-        ? "#c48186"
-        : palette.wolf
-      : gothic
-        ? tokens.frame.light
-        : palette.accent;
+  const actionSkin = actionAppearance(
+    theme,
+    appearance.gothic || appearance.night ? "night" : "day",
+    scene,
+  );
+  const color = actionSkin.ink;
   return (
     <>
       {/* 唯一world容器应用中央矩阵一次；正文、结果、HUD永远是它的兄弟。 */}
@@ -112,6 +111,8 @@ export function ActionScene({
       >
         <AbsoluteFill
           data-video-world
+          data-action-color-key={actionSkin.key}
+          data-action-color={color}
           style={{ transform: stageTransform, transformOrigin: "50% 50%" }}
         >
           {visual && (
@@ -134,7 +135,7 @@ export function ActionScene({
                 frame={localFrame}
                 size={size}
                 theme={theme}
-                gothic={gothic}
+                gothic={appearance.gothic}
                 color={color}
               />,
             )}
@@ -157,6 +158,7 @@ export function ActionScene({
                 <PlayerMedallion
                   key={id}
                   id={id}
+                  accent={color}
                   size={(sources.length > 2 ? 44 : 86) * scale}
                   compact={sources.length > 2}
                   scale={scale}
@@ -268,7 +270,7 @@ export function ActionScene({
               <ReadingViewport
                 caption={caption}
                 emphasis={scene.emphasis}
-                accent={gothic ? "#efb4a8" : palette.wolf}
+                accent={color}
                 kind="result"
                 fontSize={bodySize}
                 lineHeight={lineHeight}
@@ -278,11 +280,7 @@ export function ActionScene({
                 {reportFields}
               </ReadingViewport>
             ) : (
-              <SceneText
-                caption={caption}
-                emphasis={scene.emphasis}
-                accent={gothic ? "#efb4a8" : palette.wolf}
-              />
+              <SceneText caption={caption} emphasis={scene.emphasis} accent={color} />
             )
           ) : null}
         </div>
