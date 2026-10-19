@@ -180,6 +180,22 @@ export function BroadcastVideoFrame({
           <AbsoluteFill style={{ background: palette.canvas }} />
         ),
       )}
+      {gothic && (
+        <div
+          aria-hidden="true"
+          data-header-contrast
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 180 * scale,
+            // 页眉独立承托浅色字，向下融入亮雾；不压暗中央舞台，也不参与日期居中或镜头变换。
+            background: `linear-gradient(180deg, ${alpha(tokens.frame.dark, 0.74)} 0%, ${alpha(tokens.frame.dark, 0.68)} 57%, ${alpha(tokens.frame.dark, 0)} 100%)`,
+            pointerEvents: "none",
+          }}
+        />
+      )}
       <header
         style={{
           position: "absolute",
@@ -193,7 +209,7 @@ export function BroadcastVideoFrame({
           alignItems: "center",
           borderBottom: `${scale}px solid ${alpha(tokens.frame.color, 0.7)}`,
           color: palette.canvasText,
-          textShadow: gothic ? "0 2px 5px #000a" : undefined,
+          textShadow: gothic ? `0 ${2 * scale}px ${4 * scale}px #000d` : undefined,
         }}
       >
         <div style={{ display: "flex", alignItems: "baseline", gap: 20 * scale, minWidth: 0 }}>
