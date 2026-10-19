@@ -20,6 +20,17 @@ bun run --cwd frontend test
 
 整体检查使用 `bun run check`、`bun run lint` 和 `bun run format:check`；完整测试入口为 `bun run test`。不要把根聚合任务及其子任务重复计作不同验收。
 
+## 编辑器类型检查
+
+后端按 Bun 的 `preserve`／`bundler` 模式解析和生成模块，显式加载 Node 与 Bun 类型。
+后端及共享包的测试目录、后端脚本目录各有标准名称的 `tsconfig.json`，继承对应的
+`tsconfig.tests.json`，让 VS Code 自动发现的项目与命令行检查使用相同的类型和文件范围。
+不要仅在自定义名称的配置中添加测试类型，编辑器不会自动选择该配置。
+
+调整配置后若 VS Code 仍显示旧诊断，运行 `TypeScript: Restart TS Server`。
+仓库的 TypeScript 版本由各工作区依赖管理；可用 `TypeScript: Select TypeScript Version`
+选择工作区版本。配置同时兼容 TypeScript 5.9 与 6，不通过 `ignoreDeprecations` 隐藏弃用项。
+
 ## GitHub CI 分层
 
 日常本地仍优先运行受影响模块；完整回归交给 GitHub Actions，不必为每次功能提交重复等待全部场景。
