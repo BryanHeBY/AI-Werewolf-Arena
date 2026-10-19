@@ -16,6 +16,14 @@ import { outcomeEmblem } from "../../../src/presentation/scene-content";
 import { SceneContentBlocks } from "../../../src/presentation/SceneContentBlocks";
 import { interpretVideoEvent } from "../../../src/video/plan/records";
 import { replayDisplayRoster } from "../../../src/replay/replay-display-roster";
+/** 明确选择既有阅读制作时钟；紧凑旁白节奏的边界另由video-narration-pacing独立验证。 */
+function readingOptions(document: ReplayDocument) {
+  return {
+    source: getVideoSourceIdentity(document),
+    layout: "broadcast-v1" as const,
+    pacing: "reading" as const,
+  };
+}
 function document(): ReplayDocument {
   return {
     schemaVersion: 2,
@@ -89,7 +97,7 @@ function document(): ReplayDocument {
 }
 test("stock is contextual and a pre-event payment never becomes the action's before inventory", () => {
   const doc = document(),
-    plan = compileVideoPlan(doc);
+    plan = compileVideoPlan(doc, readingOptions(doc));
   expect(plan.shots.map((shot) => shot.id)).toEqual(["event:1", "event:2", "fact:3", "event:3"]);
   const action = plan.shots[1]!;
   expect(action.scene.inventory).toEqual({
@@ -148,7 +156,7 @@ test("action result owns one visible DOM text marker in both flow and explicit l
             layout: "broadcast-v1",
             edits: [{ anchor: { seq: 2, type: "witch_potion_used" }, durationFrames: 90 }],
           }
-        : undefined,
+        : readingOptions(doc),
     );
     const shot = plan.shots.find((value) => value.eventSeq === 2)!;
     for (const localFrame of [23, 24]) {
@@ -172,7 +180,7 @@ test("an exact same-prefix committed life report reveals once with its authority
       waveId: 4,
     },
   ];
-  const plan = compileVideoPlan(doc),
+  const plan = compileVideoPlan(doc, readingOptions(doc)),
     shot = plan.shots[1]!;
   expect(plan.shots.map((value) => value.id)).toEqual(["event:1", "event:2"]);
   expect(shot.sourceSeqs).toEqual([2]);
@@ -218,7 +226,7 @@ test("different or unknown waves and incomplete submissions keep pending reports
       causes: ["poison"],
       ...(waves[index] === undefined ? {} : { waveId: waves[index] }),
     }));
-    const plan = compileVideoPlan(doc),
+    const plan = compileVideoPlan(doc, readingOptions(doc)),
       report = plan.shots[1]!;
     expect(plan.shots.map((value) => value.id)).toEqual(["event:1", "event:2", "fact:1", "fact:2"]);
     expect(report.scene.body).toContain("等待死亡确认");
@@ -242,7 +250,7 @@ test("different or unknown waves and incomplete submissions keep pending reports
       waveId: 4,
     },
   ];
-  const plan = compileVideoPlan(doc);
+  const plan = compileVideoPlan(doc, readingOptions(doc));
   expect(plan.shots[1]!.scene.body).toContain("等待死亡确认");
   expect(
     buildVideoFrame(plan, plan.durationFrames - 1).currentView.players.map(
@@ -265,7 +273,7 @@ test("a partial tail stock consumes its exact fact cursor without adding narrati
       poison: 1,
     },
   ];
-  const plan = compileVideoPlan(doc),
+  const plan = compileVideoPlan(doc, readingOptions(doc)),
     shot = plan.shots[0]!;
   expect(plan.shots.map((value) => value.id)).toEqual(["event:1"]);
   expect(shot.speech.some((cue) => cue.text.includes("解药"))).toBe(false);
@@ -434,7 +442,7 @@ test("typed terminal outcomes choose six emblems only after reveal and preserve 
         decidedAt: { day: 1, phase: "night", checkpoint: "night_settled" },
       },
     };
-    const plan = compileVideoPlan(doc),
+    const plan = compileVideoPlan(doc, readingOptions(doc)),
       shot = plan.shots.at(-1)!;
     expect(outcomeEmblem(shot.scene.visual?.victory?.outcome)).toBe(emblems[index]!);
     expect(sceneArt(shot.scene)).toBe("judgement-seal");

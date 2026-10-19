@@ -266,9 +266,7 @@ export function ActionScene({
                 accent={gothic ? "#efb4a8" : palette.wolf}
               />
             )
-          ) : (
-            text(locale, "video.waiting")
-          )}
+          ) : null}
         </div>
         {revealed && (
           <div

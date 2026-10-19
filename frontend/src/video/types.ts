@@ -295,6 +295,8 @@ export interface VideoScript {
   height?: number;
   defaultEventFrames?: number;
   captionPageFrames?: number;
+  /** 无脚本预览默认旁白节奏；旧显式脚本保留阅读预算，可主动选择紧凑自动场景。 */
+  pacing?: "narration" | "reading";
   speechReading?: VideoSpeechReadingOptions;
   seed?: number;
   edits?: VideoEventEdit[];

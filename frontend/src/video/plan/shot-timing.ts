@@ -35,6 +35,7 @@ export interface VideoShotTimingOptions {
   media: MediaAsset[];
   playerIds: number[];
   speechReading?: VideoSpeechReadingOptions;
+  narrationPacing?: boolean;
 }
 export function scheduleVideoShot(
   content: VideoShotContent,
@@ -124,6 +125,14 @@ export function scheduleVideoShot(
       )
     : 0;
   const finalKind = edit.scene?.kind ?? base.kind;
+  // 无声自动场景用于快速看过程，不为机械读速或等待结果另加停留；作者时钟和已备音轨仍拥有完整区间。
+  const fastScene =
+    options.narrationPacing === true &&
+    automaticReading &&
+    finalKind !== "speech" &&
+    kind !== "hold" &&
+    edit.durationFrames === undefined &&
+    edit.scene?.cues === undefined;
   const authoredSpeechReading = readVideoSpeechReadingOptions(edit.speechReading);
   // 全局策略略过票型、结果及旧时钟；逐段显式写在不适用节点则拒绝，避免接受后不生效。
   if (authoredSpeechReading && (!automaticReading || finalKind !== "speech"))
@@ -138,17 +147,32 @@ export function scheduleVideoShot(
       : Math.max(Math.round((fps * 40) / 30), ...Object.values(edit.scene?.cues ?? {}));
   const durationFrames = integer(
     edit.durationFrames ??
-      Math.max(
-        defaultDuration,
-        pageCount * pageDuration,
-        mediaDuration +
-          (automaticReading && speech.some((cue) => cue.assetId) ? Math.round(fps * 0.4) : 0),
-        automaticReading ? readingSettled + readingDuration + resolutionReadFrames : 0,
-      ),
+      (fastScene
+        ? // 制作暂定：公告、技能和阶段页面默认2秒，动画另在半秒内收束。
+          // 后期接旁白后按音轨或逐镜头durationFrames按需调整，不把此值当固定成片时长。
+          Math.max(1, Math.round(fps * 2), mediaDuration)
+        : Math.max(
+            defaultDuration,
+            pageCount * pageDuration,
+            mediaDuration +
+              (automaticReading && speech.some((cue) => cue.assetId) ? Math.round(fps * 0.4) : 0),
+            automaticReading ? readingSettled + readingDuration + resolutionReadFrames : 0,
+          )),
     "shot_duration",
     1,
   );
   const scene = compileScene(base, edit.scene, edit.emphasis, fps, durationFrames, playerIds);
+  if (fastScene) {
+    const last = durationFrames - 1;
+    scene.cues = compactNotice
+      ? { establish: 0, travel: 0, impact: 0, settled: 0 }
+      : {
+          establish: 0,
+          travel: Math.min(last, Math.floor(fps * 0.05)),
+          impact: Math.min(last, Math.floor(fps * 0.12)),
+          settled: Math.min(last, Math.floor(fps * 0.3)),
+        };
+  }
   if (edit.caption !== undefined || edit.scene?.body !== undefined) scene.bodySource = "script";
   if (
     compactNotice ||
@@ -186,8 +210,9 @@ export function scheduleVideoShot(
       targetId: resolution!.targetId,
       ...(resolution!.ballot ? { ballot: resolution!.ballot } : {}),
       // 结果是第二条原始记录；自动播报先读完票型，再揭晓结果并给它独立停留。
-      revealFrame:
-        automaticReading && edit.scene?.cues?.settled === undefined
+      revealFrame: fastScene
+        ? Math.min(durationFrames - 1, Math.max(scene.cues.impact, Math.floor(fps * 0.25)))
+        : automaticReading && edit.scene?.cues?.settled === undefined
           ? readingSettled + readingDuration
           : scene.cues.settled,
     };

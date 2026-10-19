@@ -68,6 +68,8 @@ export function compileVideoPlan(
   };
   validateReplayDisplay(options);
   const fps = integer(script?.fps ?? 30, "fps", 1);
+  if (script?.pacing !== undefined && !["narration", "reading"].includes(script.pacing))
+    fail("pacing_invalid");
   const speechReading = readVideoSpeechReadingOptions(script?.speechReading);
   // 旧单局脚本的坐标和world图层保持原布局；新项目默认采用广播名册与中央舞台。
   const layout = script?.layout ?? (script ? "legacy-ellipse-v1" : "broadcast-v1");
@@ -185,6 +187,7 @@ export function compileVideoPlan(
       media,
       playerIds,
       speechReading,
+      narrationPacing: script === undefined || script.pacing === "narration",
     });
     const { base } = content;
     const { scene, durationFrames, captionPages, captionPageOffsets, captionPageRanges, speech } =

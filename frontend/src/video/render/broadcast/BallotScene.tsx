@@ -34,7 +34,8 @@ export function BallotScene({
     scene.resolution?.ballot && localFrame >= scene.resolution.revealFrame
       ? scene.resolution.ballot
       : scene.ballot;
-  if (!data || !revealed)
+  if (!revealed) return null;
+  if (!data)
     return (
       <div
         data-scene-ballot-pending
@@ -48,7 +49,7 @@ export function BallotScene({
           fontSize: bodySize,
         }}
       >
-        {text(locale, data ? "video.waiting" : "video.no_ballots")}
+        {text(locale, "video.no_ballots")}
       </div>
     );
   const targets = [

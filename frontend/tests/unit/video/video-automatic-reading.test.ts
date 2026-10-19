@@ -56,9 +56,9 @@ test("a known neutral notice reads immediately for at least three seconds while 
   expect(cue.durationFrames).toBe(150);
   expect(compileVideoPlan(replay("future_unknown_notice", {})).shots[0]!.scene.cues).toEqual({
     establish: 0,
-    travel: 8,
-    impact: 24,
-    settled: 40,
+    travel: 1,
+    impact: 3,
+    settled: 9,
   });
 });
 test("automatic reading preserves one full 120-character body with deterministic head and tail holds", () => {

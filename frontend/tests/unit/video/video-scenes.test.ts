@@ -14,6 +14,14 @@ import {
   createReplaySnapshotIndex,
 } from "../../../src/replay/replay-projection";
 
+/** 明确选择既有阅读制作时钟；紧凑旁白节奏的边界另由video-narration-pacing独立验证。 */
+function readingOptions(document: ReplayDocument) {
+  return {
+    source: getVideoSourceIdentity(document),
+    layout: "broadcast-v1" as const,
+    pacing: "reading" as const,
+  };
+}
 function replay(
   items: Array<Pick<ReplayEvent, "type" | "payload"> & Partial<Pick<ReplayEvent, "day" | "phase">>>,
 ): ReplayDocument {
@@ -59,7 +67,7 @@ function election(): ReplayDocument {
 
 test("broadcast merges only the recorded ballot window and preserves raw weighted tally and crow source", () => {
   const document = election();
-  const plan = compileVideoPlan(document);
+  const plan = compileVideoPlan(document, readingOptions(document));
   expect([plan.layout, plan.width, plan.height, plan.theme.id]).toEqual([
     "broadcast-v1",
     1920,
@@ -348,7 +356,7 @@ test("independent knife and protection facts keep their scope, while an explicit
       causes: ["other"],
     },
   ];
-  const plan = compileVideoPlan(document);
+  const plan = compileVideoPlan(document, readingOptions(document));
   const knife = plan.shots[0]!;
   expect(knife.scene.participantIds).toEqual([1, 2]);
   expect(knife.scene.targetIds).toEqual([4]);
@@ -417,7 +425,7 @@ test("same afterSeq is not wave evidence and a recorded wave crossing events kee
     [life(1, 3, 1, 7), life(2, 4, 2, 7)],
   ]) {
     document.facts = facts;
-    const plan = compileVideoPlan(document);
+    const plan = compileVideoPlan(document, readingOptions(document));
     const first = plan.shots.find((s) => s.id === "fact:1")!;
     const second = plan.shots.find((s) => s.id === "fact:2")!;
     expect(first.sourceFacts).toEqual([1]);
@@ -477,7 +485,7 @@ test("knife revocation is explicit and a new covered ballot paragraph cannot com
       causes: ["exile"],
     },
   ];
-  const plan = compileVideoPlan(document);
+  const plan = compileVideoPlan(document, readingOptions(document));
   const revoked = plan.shots.find((shot) => shot.id === "fact:2")!;
   expect(revoked.scene.action).toEqual({
     kind: "wolf-knife",

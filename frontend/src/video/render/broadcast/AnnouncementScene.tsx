@@ -124,9 +124,7 @@ export function AnnouncementScene({
                 emphasis={scene.emphasis}
                 accent={gothic ? "#efb4a8" : palette.wolf}
               />
-            ) : (
-              text(locale, "video.waiting")
-            )}
+            ) : null}
           </div>
         )}
         {revealed && scene.content?.blocks.some((block) => block.kind === "inventory") && (

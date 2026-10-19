@@ -7,7 +7,6 @@ import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
 import { presentationPlayers, type ResolvedPlayerPresentation } from "../../../presentation";
 import { outcomeEmblem } from "../../../presentation/scene-content";
 import { sceneContent } from "../../../presentation/scene-content";
-import { text } from "@ai-werewolf-arena/game-text";
 import { SceneText } from "./SceneText";
 import { ReadingViewport } from "./ReadingViewport";
 import { localSurface } from "./style";
@@ -158,9 +157,7 @@ export function EndScene({
               <SceneText caption={caption} emphasis={scene.emphasis} accent={palette.accent} />
             )}
           </ReadingViewport>
-        ) : (
-          text(locale, "video.waiting")
-        )}
+        ) : null}
       </div>
     </div>
   );
