@@ -2,7 +2,35 @@
  * 负责将长字幕按保守字宽预算分页。输入为原文字串、行宽与行数，输出原文的连续切片，拼接后与原文一致。
  * 行宽只用于计算页边界，浏览器自然换行；原有换行保留，分页不依赖字体测量，预览与导出使用同一结果。
  */
-import type { VideoLayoutId, VideoScene, VideoReading } from "./types";
+import type { VideoLayoutId, VideoScene, VideoReading, VideoSpeechReadingOptions } from "./types";
+
+/** 脚本只接受已声明的阅读策略和值；不为拼错motion或无效过渡帧静默回退。 */
+export function readVideoSpeechReadingOptions(
+  value: unknown,
+): VideoSpeechReadingOptions | undefined {
+  if (value === undefined) return undefined;
+  if (!value || typeof value !== "object" || Array.isArray(value))
+    throw new Error("video_speech_reading_invalid");
+  const options = value as Record<string, unknown>;
+  if (Reflect.ownKeys(options).some((key) => key !== "motion" && key !== "transitionFrames"))
+    throw new Error("video_speech_reading_invalid");
+  if (
+    typeof options.motion !== "string" ||
+    !["line", "continuous", "static"].includes(options.motion)
+  )
+    throw new Error("video_speech_reading_motion_invalid");
+  if (
+    options.transitionFrames !== undefined &&
+    (!Number.isSafeInteger(options.transitionFrames) || Number(options.transitionFrames) < 0)
+  )
+    throw new Error("video_speech_reading_transition_frames_invalid");
+  return {
+    motion: options.motion as VideoSpeechReadingOptions["motion"],
+    ...(options.transitionFrames === undefined
+      ? {}
+      : { transitionFrames: Number(options.transitionFrames) }),
+  };
+}
 
 /** 广播结果正文从揭晓后开始分页；玩家发言和旧布局沿用整段时钟，供纯帧与导航共用。 */
 export function videoCaptionRange(
@@ -116,6 +144,14 @@ export function videoReadingProgress(reading: VideoReading, frame: number) {
     progress: clamp(age / Math.max(1, reading.durationFrames)),
     scrollProgress: clamp((age - reading.headHoldFrames) / scrollFrames),
     active: age >= 0 && age < reading.durationFrames,
+    // 旧已编译计划必须保原返回形状；只有明确的新策略附带逐行运动所需的帧区间。
+    ...(reading.motion === undefined
+      ? {}
+      : {
+          motion: reading.motion,
+          transitionFrames: reading.transitionFrames ?? 0,
+          scrollFrames,
+        }),
   };
 }
 
@@ -125,6 +161,7 @@ export function scheduleVideoReading(
   end: number,
   settled: number,
   fps: number,
+  speechReading?: VideoSpeechReadingOptions,
 ): VideoReading {
   const durationFrames = end - from;
   return {
@@ -137,5 +174,13 @@ export function scheduleVideoReading(
       Math.max(0, settled - from) + Math.round(fps * 3),
     ),
     tailHoldFrames: Math.min(Math.round(fps * 3), Math.floor(durationFrames / 3)),
+    ...(speechReading
+      ? {
+          motion: speechReading.motion,
+          transitionFrames:
+            speechReading.transitionFrames ??
+            (speechReading.motion === "line" ? Math.round(fps * 0.15) : 0),
+        }
+      : {}),
   };
 }

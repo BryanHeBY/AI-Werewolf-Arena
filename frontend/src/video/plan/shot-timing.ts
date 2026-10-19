@@ -8,9 +8,17 @@ import {
   estimateVideoReadFrames,
   scheduleVideoCaptionPages,
   scheduleVideoReading,
+  readVideoSpeechReadingOptions,
 } from "../captions";
 import { compileScene } from "../semantic-scenes";
-import type { MediaAsset, ShotOptions, SpeechCue, VideoLayoutId, VideoShot } from "../types";
+import type {
+  MediaAsset,
+  ShotOptions,
+  SpeechCue,
+  VideoLayoutId,
+  VideoShot,
+  VideoSpeechReadingOptions,
+} from "../types";
 import type { VideoShotContent } from "./shot-content";
 import { fail, integer } from "./validation";
 
@@ -26,6 +34,7 @@ export interface VideoShotTimingOptions {
   largeText: boolean;
   media: MediaAsset[];
   playerIds: number[];
+  speechReading?: VideoSpeechReadingOptions;
 }
 export function scheduleVideoShot(
   content: VideoShotContent,
@@ -115,6 +124,14 @@ export function scheduleVideoShot(
       )
     : 0;
   const finalKind = edit.scene?.kind ?? base.kind;
+  const authoredSpeechReading = readVideoSpeechReadingOptions(edit.speechReading);
+  // 全局策略略过票型、结果及旧时钟；逐段显式写在不适用节点则拒绝，避免接受后不生效。
+  if (authoredSpeechReading && (!automaticReading || finalKind !== "speech"))
+    fail("speech_reading_unavailable");
+  const speechReading =
+    automaticReading && finalKind === "speech"
+      ? (authoredSpeechReading ?? options.speechReading ?? { motion: "line" as const })
+      : undefined;
   const readingSettled =
     finalKind === "speech" || compactNotice
       ? 0
@@ -219,6 +236,7 @@ export function scheduleVideoShot(
         readingEnd,
         finalKind === "speech" ? 0 : scene.cues.settled,
         fps,
+        speechReading,
       )
     : undefined;
   if (automaticReading && scene.resolution)

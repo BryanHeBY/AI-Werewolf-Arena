@@ -265,6 +265,8 @@ export interface ShotOptions {
   camera?: CameraKeyframe[];
   layers?: VideoLayer[];
   speech?: SpeechCue[];
+  /** 仅新广播自动发言全文窗可用；逐段完整覆盖全局，显式分页/时长与hold保旧约定。 */
+  speechReading?: VideoSpeechReadingOptions;
   scene?: VideoSceneOverride;
   emphasis?: TextEmphasis[];
 }
@@ -293,6 +295,7 @@ export interface VideoScript {
   height?: number;
   defaultEventFrames?: number;
   captionPageFrames?: number;
+  speechReading?: VideoSpeechReadingOptions;
   seed?: number;
   edits?: VideoEventEdit[];
   factEdits?: VideoFactEdit[];
@@ -324,7 +327,13 @@ export type PotionInventoryState =
       afterSeq: number;
       day: number;
     };
-/** 新全文阅读的确定性时钟；旧计划缺省时继续使用 captionPageRanges。 */
+/** 发言阅读只选择位移方式；实际行边界由固定字体就绪后的渲染器测量，不参与事实或语音调度。 */
+export interface VideoSpeechReadingOptions {
+  motion: "line" | "continuous" | "static";
+  /** 逐行推进的短过渡上限，渲染器还需限制到每行周期的30%；缺省为0.15秒换算的整数帧。 */
+  transitionFrames?: number;
+}
+/** 新全文阅读的确定性时钟；旧计划缺省motion仍为连续滚动，缺省reading仍使用captionPageRanges。 */
 export interface VideoReading {
   version: 1;
   mode: "flow";
@@ -332,6 +341,8 @@ export interface VideoReading {
   durationFrames: number;
   headHoldFrames: number;
   tailHoldFrames: number;
+  motion?: VideoSpeechReadingOptions["motion"];
+  transitionFrames?: number;
 }
 export interface VideoShot {
   id: string;

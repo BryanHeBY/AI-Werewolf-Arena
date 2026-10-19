@@ -9,6 +9,7 @@ import {
   type ReplayFact,
 } from "@ai-werewolf-arena/replay-contract";
 import { supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
+import { readVideoSpeechReadingOptions } from "./captions";
 import { sceneContent } from "../presentation/scene-content";
 import { replayDisplayRoster } from "../replay/replay-display-roster";
 import { buildPresentationReplay } from "../replay/replay-presentation";
@@ -67,6 +68,7 @@ export function compileVideoPlan(
   };
   validateReplayDisplay(options);
   const fps = integer(script?.fps ?? 30, "fps", 1);
+  const speechReading = readVideoSpeechReadingOptions(script?.speechReading);
   // 旧单局脚本的坐标和world图层保持原布局；新项目默认采用广播名册与中央舞台。
   const layout = script?.layout ?? (script ? "legacy-ellipse-v1" : "broadcast-v1");
   if (!["legacy-ellipse-v1", "broadcast-v1"].includes(layout)) fail("layout_invalid");
@@ -109,12 +111,14 @@ export function compileVideoPlan(
   const { facts, factsAfter, anchorIndex } = sourceIndex;
   const edits = new Map<number, NonNullable<VideoScript["edits"]>[number]>();
   for (const edit of script?.edits ?? []) {
+    readVideoSpeechReadingOptions(edit.speechReading);
     const index = anchorIndex(edit.anchor);
     if (edits.has(index)) fail("edit_anchor_duplicate");
     edits.set(index, edit);
   }
   const factEdits = new Map<number, NonNullable<VideoScript["factEdits"]>[number]>();
   for (const edit of script?.factEdits ?? []) {
+    readVideoSpeechReadingOptions(edit.speechReading);
     if (!Number.isSafeInteger(edit.anchor?.seq)) fail(`fact_anchor_mismatch:${edit.anchor?.seq}`);
     const fact = facts[edit.anchor?.seq - 1];
     if (!fact || fact.kind !== edit.anchor.kind) fail(`fact_anchor_mismatch:${edit.anchor?.seq}`);
@@ -124,6 +128,7 @@ export function compileVideoPlan(
   const holds = new Map<number, NonNullable<VideoScript["holds"]>>();
   const holdIds = new Set<string>();
   for (const hold of script?.holds ?? []) {
+    readVideoSpeechReadingOptions(hold.speechReading);
     nonempty(hold.id, "hold_id");
     if (holdIds.has(hold.id)) fail("hold_id_duplicate");
     holdIds.add(hold.id);
@@ -179,6 +184,7 @@ export function compileVideoPlan(
       largeText: theme.options.largeText === true,
       media,
       playerIds,
+      speechReading,
     });
     const { base } = content;
     const { scene, durationFrames, captionPages, captionPageOffsets, captionPageRanges, speech } =

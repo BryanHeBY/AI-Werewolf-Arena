@@ -20,6 +20,10 @@ export interface SceneCaption {
     readonly progress: number;
     readonly scrollProgress: number;
     readonly active: boolean;
+    /** 缺省为旧计划连续滚动；有策略时scrollFrames为扣除首尾停留后的纯帧区间。 */
+    readonly motion?: "line" | "continuous" | "static";
+    readonly transitionFrames?: number;
+    readonly scrollFrames?: number;
   };
   /** 只来自已裁剪展示资料，保护换行而不推断原话意图或身份。 */
   readonly protectedTerms?: readonly string[];

@@ -151,10 +151,21 @@ test("flow scroll positions agree at equal physical times for 30 and 60fps and a
     sixty = make(60);
   expect(thirty.shots[0]!.durationFrames).toBe(900);
   expect(sixty.shots[0]!.durationFrames).toBe(1800);
-  for (const seconds of [0, 3, 8, 15, 27, 29])
-    expect(buildVideoFrame(thirty, seconds * 30).reading).toEqual(
-      buildVideoFrame(sixty, seconds * 60).reading,
-    );
+  for (const seconds of [0, 3, 8, 15, 27, 29]) {
+    const {
+      transitionFrames: firstTransition,
+      scrollFrames: firstScroll,
+      ...first
+    } = buildVideoFrame(thirty, seconds * 30).reading!;
+    const {
+      transitionFrames: secondTransition,
+      scrollFrames: secondScroll,
+      ...second
+    } = buildVideoFrame(sixty, seconds * 60).reading!;
+    expect(first).toEqual(second);
+    expect(firstScroll! / 30).toBe(secondScroll! / 60);
+    expect([firstTransition, secondTransition]).toEqual([5, 9]);
+  }
   const middle = buildVideoFrame(thirty, 450).reading;
   expect(middle?.scrollProgress).toBe(0.5);
   buildVideoFrame(thirty, 899);
