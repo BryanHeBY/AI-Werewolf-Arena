@@ -4,14 +4,11 @@
  */
 import { useMemo, useState } from "react";
 import { roleName, type Locale } from "@ai-werewolf-arena/game-text";
-import {
-  ActionWindow,
-  KnightDuelWindow,
-  WitchSelfHealRule,
-} from "@ai-werewolf-arena/game-contract";
-import type { BoardCard, Json, JsonObject } from "@ai-werewolf-arena/workbench-contract";
+import type { BoardCard, JsonObject } from "@ai-werewolf-arena/workbench-contract";
 import type { Translator } from "./types";
-import { asObject, readPath, writePath } from "./config-edit";
+import { asObject } from "./config-edit";
+import { BoardRuleFields } from "./BoardRuleFields";
+import { variantRuleSummary } from "./board-summary";
 export function BoardExplorer({
   boards,
   t,
@@ -115,12 +112,13 @@ function BoardGroup({
           <select value={board.id} onChange={(e) => setSelected(e.target.value)}>
             {ordered.map((b) => (
               <option value={b.id} key={b.id}>
-                {b.id.replace(/^twelve_player_|^six_player_|^awa_/g, "").replaceAll("_", " ")}
+                {variantRuleSummary(b, group, locale) || b.id}
               </option>
             ))}
           </select>
         </label>
       )}
+      {group.length > 1 && <p className="muted">{variantRuleSummary(board, group, locale)}</p>}
       <div className="card-bottom">
         <code>{board.id}</code>
         <button onClick={() => onChoose(board)}>{t("choose")} →</button>
@@ -139,59 +137,8 @@ export function BoardForm({
   t: Translator;
   locale: Locale;
 }) {
-  const set = (field: string, value: Json) => {
-      let next = writePath(raw, field, value);
-      if (field === "mechanisms.selfDestruct.enabledWindows" && Array.isArray(value)) {
-        const hooks: Record<string, string> = {
-          on_daybreak: "onDaybreak",
-          on_pre_election: "onPreElection",
-          on_pre_vote: "onPreVote",
-          on_per_speech_gap: "onPerSpeechGap",
-        };
-        for (const window of value)
-          if (typeof window === "string" && hooks[window])
-            next = writePath(next, `rules.hooks.${hooks[window]}`, true);
-      }
-      change(next);
-    },
-    board = asObject(raw.board),
-    roster = Array.isArray(board.roleSetups) ? board.roleSetups.map(asObject) : [],
-    has = (role: string) => roster.some((r) => r.role === role);
-  const check = (field: string, label: string) => (
-    <label className="check">
-      <input
-        type="checkbox"
-        checked={readPath(raw, field) === true}
-        onChange={(e) => set(field, e.target.checked)}
-      />
-      {label}
-    </label>
-  );
-  const multi = (field: string, options: { value: string; label: string }[]) => {
-    const values = readPath(raw, field);
-    const selected = Array.isArray(values) ? values : [];
-    return (
-      <div className="checks">
-        {options.map((option) => (
-          <label key={option.value}>
-            <input
-              type="checkbox"
-              checked={selected.includes(option.value)}
-              onChange={(e) =>
-                set(
-                  field,
-                  e.target.checked
-                    ? [...selected, option.value]
-                    : selected.filter((v) => v !== option.value),
-                )
-              }
-            />
-            {option.label}
-          </label>
-        ))}
-      </div>
-    );
-  };
+  const board = asObject(raw.board),
+    roster = Array.isArray(board.roleSetups) ? board.roleSetups.map(asObject) : [];
   return (
     <div className="form-body">
       <h3>
@@ -204,54 +151,7 @@ export function BoardForm({
           </span>
         ))}
       </div>
-      <p className="muted">{t("policyJson")}</p>
-      <section className="field-section">
-        <h3>{t("rules")}</h3>
-        {check("mechanisms.sheriff.enabled", t("sheriff"))}
-        <label>
-          {t("voteWeight")}
-          <input
-            type="number"
-            min={0.1}
-            step={0.5}
-            value={Number(readPath(raw, "mechanisms.sheriff.voteWeight") ?? 1.5)}
-            onChange={(e) => set("mechanisms.sheriff.voteWeight", Number(e.target.value))}
-          />
-        </label>
-        {has("witch") && (
-          <label>
-            {t("witchSelfHeal")}
-            <select
-              aria-label={t("witchSelfHeal")}
-              value={String(readPath(raw, "roles.witch.selfHeal") ?? WitchSelfHealRule.Disabled)}
-              onChange={(e) => set("roles.witch.selfHeal", e.target.value)}
-            >
-              <option value={WitchSelfHealRule.Disabled}>{t("disabled")}</option>
-              <option value={WitchSelfHealRule.FirstNightOnly}>{t("firstNight")}</option>
-              <option value={WitchSelfHealRule.Always}>{t("always")}</option>
-            </select>
-          </label>
-        )}
-        {has("knight") && (
-          <div className="field-section">
-            <h4>{t("knightWindows")}</h4>
-            {multi("roles.knight.enabledWindows", [
-              { value: KnightDuelWindow.BeforeSpeeches, label: t("beforeSpeeches") },
-              { value: KnightDuelWindow.BetweenSpeeches, label: t("speechGap") },
-              { value: KnightDuelWindow.AfterSpeeches, label: t("afterSpeeches") },
-            ])}
-          </div>
-        )}
-        <div className="field-section">
-          <h4>{t("selfDestruct")}</h4>
-          {multi("mechanisms.selfDestruct.enabledWindows", [
-            { value: ActionWindow.OnDaybreak, label: t("daybreak") },
-            { value: ActionWindow.OnPreElection, label: t("preElection") },
-            { value: ActionWindow.OnPreVote, label: t("preVote") },
-            { value: ActionWindow.OnPerSpeechGap, label: t("speechGap") },
-          ])}
-        </div>
-      </section>
+      <BoardRuleFields raw={raw} change={change} t={t} locale={locale} />
     </div>
   );
 }
