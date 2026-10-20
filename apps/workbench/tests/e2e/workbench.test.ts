@@ -281,6 +281,51 @@ test("homepage quick start names the saved game and deletion blocks referenced b
   expect((await request.get(`/api/documents/boards/${game.board}`)).ok()).toBe(true);
 });
 
+test("a newly saved board stays selected while an older catalog refresh arrives late", async ({
+  page,
+  request,
+}) => {
+  const boardName = `delayed_board_${Date.now().toString(36)}`;
+  await page.goto("/#/boards");
+  await page
+    .locator('[data-config-id="six_player_mvp"]')
+    .getByRole("button", { name: "查看配置", exact: true })
+    .click();
+  await page.getByRole("button", { name: "复制为新配置", exact: true }).click();
+  const staleCatalog = await (await request.get("/api/catalog")).json();
+  let release!: () => void;
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const holdCatalog = async (route: import("@playwright/test").Route) => {
+    await held;
+    await route.fulfill({ json: staleCatalog });
+  };
+  await page.route("**/api/catalog", holdCatalog);
+  try {
+    await page.getByLabel("配置 ID", { exact: true }).fill(boardName);
+    await page.getByRole("button", { name: "保存", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "查看板子", exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "创建游戏", exact: true }).click();
+    await expect(page.getByLabel("选择板子", { exact: true })).toHaveValue(boardName);
+    await page.getByRole("button", { name: "JSON 源码", exact: true }).click();
+    const source = page.getByRole("textbox", { name: "JSON 源码", exact: true });
+    expect(JSON.parse(await source.inputValue()).board).toBe(boardName);
+    const response = page.waitForResponse((result) => result.url().endsWith("/api/catalog"));
+    release();
+    await response;
+    await page.getByRole("button", { name: "配置向导", exact: true }).click();
+    await expect(
+      page.getByLabel("选择板子", { exact: true }).locator(`option[value="${boardName}"]`),
+    ).toHaveText(`6 · ${boardName}`);
+    expect(staleCatalog.boards.some((board: { id: string }) => board.id === boardName)).toBe(false);
+    expect((await request.get(`/api/documents/boards/${boardName}`)).ok()).toBe(true);
+  } finally {
+    release();
+    await page.unroute("**/api/catalog", holdCatalog);
+  }
+});
+
 test("copy a local board, save a game from it, start, replay and delete only that session", async ({
   page,
   request,

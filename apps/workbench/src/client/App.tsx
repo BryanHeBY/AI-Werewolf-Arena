@@ -371,6 +371,13 @@ export default function App() {
                 locale={locale}
                 refresh={refresh}
                 useBoard={async (board) => {
+                  // 保存后的目录刷新可能仍在途；用户明确选择的板子先交给新建页，不能退回旧目录首项。
+                  // 使此前的目录请求失效，防止迟到的旧快照抹掉这份已保存的公开板子元数据。
+                  ++catalogGeneration.current;
+                  setCatalog((current) => ({
+                    ...current,
+                    boards: [...current.boards.filter((item) => item.id !== board.id), board],
+                  }));
                   sessionStorage.setItem("awa.new-game-board", JSON.stringify({ id: board.id }));
                   navigate("games", "new");
                 }}
