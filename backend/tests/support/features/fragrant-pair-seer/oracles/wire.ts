@@ -28,6 +28,47 @@ const name = {
   en: { fragrant_phantom: "Fragrant Phantom", awakened_seer: "Awakened Seer" },
   "zh-CN": { fragrant_phantom: "寻香魅影", awakened_seer: "觉醒预言家" },
 };
+// 参数预期是规则要求的独立字面结构；不从生产 registry、prompt 或捕获消息反向生成。
+const actionParameters = {
+  report_bug: {
+    type: "object",
+    properties: {
+      category: { type: "string", enum: ["flow", "rule", "state", "logging", "other"] },
+      severity: { type: "string", enum: ["low", "medium", "high", "critical"] },
+      message: { type: "string" },
+    },
+    required: ["category", "severity", "message"],
+    additionalProperties: false,
+  },
+  bind_fragrant_pair: {
+    type: "object",
+    properties: {
+      target_ids: {
+        type: ["array", "null"],
+        items: { type: "integer", minimum: 1 },
+        minItems: 2,
+        maxItems: 2,
+        uniqueItems: true,
+      },
+    },
+    required: ["target_ids"],
+    additionalProperties: false,
+  },
+  check_pair: {
+    type: "object",
+    properties: {
+      target_ids: {
+        type: "array",
+        items: { type: "integer", minimum: 1 },
+        minItems: 2,
+        maxItems: 2,
+        uniqueItems: true,
+      },
+    },
+    required: ["target_ids"],
+    additionalProperties: false,
+  },
+};
 // 当前真实端点包含自爆二次确认字段；保留完整字面协议预期，不从生产词典生成 expected。
 const schema = {
   en: {
@@ -195,7 +236,13 @@ export function assertFragrantTransportWire(run: FragrantWireRun) {
       must(m[1] === none || (known !== null && m[1] === String(known)), "initial_teammates");
     }
   };
-  const current = (actor: number, ord: number, prompt: string, mark = false) => {
+  const current = (
+    actor: number,
+    ord: number,
+    prompt: string,
+    mark = false,
+    transport: "sdk" | "acp" = "sdk",
+  ) => {
     privacy(actor, prompt);
     const d = decision(actor, ord),
       r = role(actor);
@@ -233,11 +280,20 @@ export function assertFragrantTransportWire(run: FragrantWireRun) {
       }
       if (d.stage === "fragrant_bind")
         must(
-          prompt.includes('bind_fragrant_pair args: {"target_ids":[number,number]|null}'),
+          equal(jsonAt(prompt, en ? "Action arguments: " : "行动参数提示："), {
+            bind_fragrant_pair: actionParameters.bind_fragrant_pair,
+            ...(transport === "sdk" ? { report_bug: actionParameters.report_bug } : {}),
+          }),
           "bind_hint",
         );
       if (d.stage === "pair_inspection")
-        must(prompt.includes('check_pair args: {"target_ids":[number,number]}'), "pair_hint");
+        must(
+          equal(jsonAt(prompt, en ? "Action arguments: " : "行动参数提示："), {
+            check_pair: actionParameters.check_pair,
+            ...(transport === "sdk" ? { report_bug: actionParameters.report_bug } : {}),
+          }),
+          "pair_hint",
+        );
     }
     if (mark) covered.add(`${actor}/${ord}`);
   };
@@ -310,15 +366,28 @@ export function assertFragrantTransportWire(run: FragrantWireRun) {
     );
     for (const [i, prompt] of prompts.entries()) {
       const ord = trace.arrivals[i]!.actorOrdinal;
-      current(actor, ord, prompt, true);
+      current(actor, ord, prompt, true, "acp");
       const tuples = prompt.split("\n").flatMap((line) => {
         const n = line.indexOf('{"events":');
         return n < 0 ? [] : (JSON.parse(line.slice(n)).events as Tuple[]);
       });
       events(actor, ord, tuples, "acp");
       must(trace.activeSchemas[i]!.actorOrdinal === ord, "schema_ordinal");
+      const body = trace.activeSchemas[i]!.body as Record<string, unknown>;
+      const { actions, ...protocol } = body;
+      must(equal(protocol, { protocol_version: "1", tools: schema[locale] }), "schema");
+      must(actions !== null && typeof actions === "object" && !Array.isArray(actions), "schema");
+      const parameters = actions as Record<string, unknown>;
+      // 全部公开行动参数是静态目录，不等于本轮授权；相关角色的两个结构仍逐字段按独立字面预期核对。
       must(
-        equal(trace.activeSchemas[i]!.body, { protocol_version: "1", tools: schema[locale] }),
+        equal(parameters.bind_fragrant_pair, actionParameters.bind_fragrant_pair) &&
+          equal(parameters.check_pair, actionParameters.check_pair) &&
+          equal(parameters.report_bug, actionParameters.report_bug),
+        "schema",
+      );
+      privacy(actor, JSON.stringify(parameters));
+      must(
+        equal(parameters, (trace.activeSchemas[0]!.body as Record<string, unknown>).actions),
         "schema",
       );
     }

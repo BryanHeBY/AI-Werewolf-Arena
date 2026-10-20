@@ -45,6 +45,7 @@ import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
 import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 
@@ -489,7 +490,7 @@ test("an already committed ordinary guard protects its original target after cas
 });
 
 for (const locale of ["zh-CN", "en"] as const)
-  test(`${locale}: Lucky poison prompt is optional, names no Witch turn, and none-self remains possible outside poison target IDs`, () => {
+  test(`${locale}: Lucky poison prompt permits target-free none and retains legacy self-target compatibility outside poison target IDs`, () => {
     const game = bootstrapGame(config, { fixedRoles: deck, locale }),
       events: GameEvent[] = [],
       gift = grantNightAbility(
@@ -534,16 +535,20 @@ for (const locale of ["zh-CN", "en"] as const)
         : "当前女巫阶段：必须调用use_potion",
     );
     expect(prompt).toContain(
-      locale === "en" ? "none always uses your own ID 4" : "none始终使用你自己的编号4",
+      locale === "en"
+        ? "player 4 can submit none without target_id, independently of the poison target list"
+        : "4号选择none时无需填写target_id，不受毒目标列表限制",
     );
-    expect(
-      new ToolGateway().validateAndSanitize(
-        game.world,
-        4,
-        { name: "use_potion", args: { target_id: 4, potion_type: PotionType.None } },
-        { phase: Phase.Night, day: 1, abilityId: gift.id },
-      ).ok,
-    ).toBe(true);
+    const reception = new ActionReception(game.world);
+    // 新模型输入不需要虚构目标；旧录制中的 self 占位参数仍可进入同一个合法等待候选。
+    for (const args of [
+      { potion_type: PotionType.None },
+      { target_id: 4, potion_type: PotionType.None },
+    ])
+      expect(reception.validate(request, "use_potion", args)).toEqual({
+        ok: true,
+        action: { name: "use_potion", args: { target_id: 4, potion_type: PotionType.None } },
+      });
   });
 
 import { executeNightStage } from "../../support/builders/night-stage-context";

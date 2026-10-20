@@ -195,12 +195,27 @@ negative(
   () => sdk,
   (r) => {
     const m = current(first(r, "fragrant_phantom"));
+    const targetShape =
+      '"target_ids":{"type":["array","null"],"items":{"type":"integer","minimum":1},"minItems":2,"maxItems":2,"uniqueItems":true}';
+    expect(m.content).toContain(targetShape);
     m.content = m.content.replace(
-      'bind_fragrant_pair args: {"target_ids":[number,number]|null}',
-      "bind_fragrant_pair args: {}",
+      targetShape,
+      '"target_ids":{"type":"array","items":{"type":"integer","minimum":1}}',
     );
   },
   "bind_hint",
+);
+negative(
+  "pair inspection schema cannot admit three targets",
+  () => sdk,
+  (r) => {
+    const m = current(first(r, "awakened_seer"));
+    const targetShape =
+      '"target_ids":{"type":"array","items":{"type":"integer","minimum":1},"minItems":2,"maxItems":2,"uniqueItems":true}';
+    expect(m.content).toContain(targetShape);
+    m.content = m.content.replace(targetShape, targetShape.replace('"maxItems":2', '"maxItems":3'));
+  },
+  "pair_hint",
 );
 negative(
   "rewrite retained historical status using future used",
@@ -271,6 +286,43 @@ negative(
   () => acp,
   (r) => {
     (r.acpTraces[0]!.trace.activeSchemas[0]!.body as any).world = { wolves: [1, 8, 12] };
+  },
+  "schema",
+);
+negative(
+  "ACP binding schema cannot remove the explicit null pass",
+  () => acp,
+  (r) => {
+    const parameters = (r.acpTraces[0]!.trace.activeSchemas[0]!.body as any).actions;
+    parameters.bind_fragrant_pair.properties.target_ids.type = "array";
+  },
+  "schema",
+);
+negative(
+  "ACP pair inspection schema must require its two targets",
+  () => acp,
+  (r) => {
+    const parameters = (r.acpTraces[0]!.trace.activeSchemas[0]!.body as any).actions;
+    parameters.check_pair.required = [];
+  },
+  "schema",
+);
+negative(
+  "ACP public schema cannot carry private state in an unrelated action",
+  () => acp,
+  (r) => {
+    const parameters = (r.acpTraces[0]!.trace.activeSchemas[0]!.body as any).actions;
+    parameters.speak.properties.rootId = { type: "integer", const: 5 };
+  },
+  "actual_state_exposed",
+);
+negative(
+  "ACP static action catalog must not change between turns",
+  () => acp,
+  (r) => {
+    const trace = r.acpTraces.find((entry) => entry.trace.activeSchemas.length > 1)!.trace;
+    const parameters = (trace.activeSchemas[1]!.body as any).actions;
+    parameters.speak.properties.text.minLength = 99;
   },
   "schema",
 );
