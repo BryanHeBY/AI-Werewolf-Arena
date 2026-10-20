@@ -7,7 +7,7 @@
  * or grants acceptance; callers retain real filesystem and transport boundaries.
  */
 import { fileURLToPath } from "node:url";
-import snapshot from "../../../../../tooling/refactor/fixtures/manifest.json";
+import snapshot from "../../../../../tooling/refactor/fixtures/manifest.json" with { type: "json" };
 import {
   fixtureSuiteById,
   parseFixtureManifest,

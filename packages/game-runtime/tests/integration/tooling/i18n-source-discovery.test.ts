@@ -4,22 +4,30 @@
 import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
 import { tmpdir } from "node:os";
 import { scanRepository, verifyLiteralExceptions } from "../../../scripts/check-i18n-literals.mjs";
 
 async function isolatedApplicationRoots() {
   const root = await mkdtemp(path.join(tmpdir(), "awa-i18n-root-boundary-"));
-  for (const directory of ["backend/src", "frontend/src", "frontend/scripts"])
+  for (const directory of [
+    "packages/game-runtime/src",
+    "packages/game-media/src",
+    "apps/game/src",
+    "apps/replay/src",
+    "apps/video/src",
+    "apps/video/scripts",
+  ])
     await mkdir(path.join(root, directory), { recursive: true });
   return root;
 }
 
 test("source discovery covers present shared code and only skips absent optional roots", async () => {
-  const root = await mkdtemp(path.join(tmpdir(), "awa-i18n-scan-"));
+  const root = await isolatedApplicationRoots();
   const sourceFiles = {
-    "backend/src/example.ts": 'export const label = "后端硬编码";',
-    "frontend/src/example.tsx": "export const view = <p>前端硬编码</p>;",
-    "frontend/scripts/example.ts": 'export const label = "脚本硬编码";',
+    "packages/game-runtime/src/example.ts": 'export const label = "后端硬编码";',
+    "packages/game-media/src/example.tsx": "export const view = <p>前端硬编码</p>;",
+    "apps/video/scripts/example.ts": 'export const label = "脚本硬编码";',
     "apps/workbench/src/client/example.tsx": "export const view = <p>工作台硬编码</p>;",
     "apps/workbench/src/server/example.ts": 'export const label = "工作台服务硬编码";',
     "packages/game-text/src/messages/common.ts":
@@ -33,16 +41,16 @@ test("source discovery covers present shared code and only skips absent optional
     }
     await symlink(
       path.join(root, "config/runtime/auth.json"),
-      path.join(root, "backend/src/link.ts"),
+      path.join(root, "packages/game-runtime/src/link.ts"),
     );
     expect(
       (await scanRepository(root)).map((entry) => `${entry.file}:${entry.text}`).sort(),
     ).toEqual([
+      "apps/video/scripts/example.ts:脚本硬编码",
       "apps/workbench/src/client/example.tsx:工作台硬编码",
       "apps/workbench/src/server/example.ts:工作台服务硬编码",
-      "backend/src/example.ts:后端硬编码",
-      "frontend/scripts/example.ts:脚本硬编码",
-      "frontend/src/example.tsx:前端硬编码",
+      "packages/game-media/src/example.tsx:前端硬编码",
+      "packages/game-runtime/src/example.ts:后端硬编码",
       "packages/game-text/src/messages/common.ts:词典邻近硬编码",
     ]);
     const presentation = path.join(root, "packages/game-presentation/src");
@@ -81,7 +89,7 @@ test("source discovery rejects a workbench ancestor symlink before reading priva
       path.join(privateDirectory, "src/client/auth.ts"),
       'export const secret = "工作台链接私有金丝雀";',
     );
-    await mkdir(path.join(root, "apps"));
+    await mkdir(path.join(root, "apps"), { recursive: true });
     await symlink(privateDirectory, path.join(root, "apps/workbench"));
     await expect(scanRepository(root)).rejects.toThrow("i18n_scan_source_symlink: apps/workbench");
   } finally {
@@ -117,7 +125,7 @@ test("source discovery rejects a shared ancestor symlink before traversing its p
       path.join(privateDirectory, "src/agent.ts"),
       'export const secret = "上级链接私有金丝雀";',
     );
-    await mkdir(path.join(root, "packages"));
+    await mkdir(path.join(root, "packages"), { recursive: true });
     await symlink(privateDirectory, path.join(root, "packages/game-presentation"));
     await expect(scanRepository(root)).rejects.toThrow(
       "i18n_scan_source_symlink: packages/game-presentation",
@@ -146,7 +154,7 @@ test("source discovery rejects a present dangling shared root instead of treatin
 test("repository Chinese literals have exact reviewed compatibility exceptions without broad directory skips", async () => {
   const exceptions = JSON.parse(
     await readFile(
-      path.resolve(process.cwd(), "../tooling/refactor/policies/i18n-source-exceptions.json"),
+      path.join(PROJECT_ROOT, "tooling/refactor/policies/i18n-source-exceptions.json"),
       "utf8",
     ),
   );

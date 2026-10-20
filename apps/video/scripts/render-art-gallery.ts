@@ -3,6 +3,8 @@
  * 临时bundle和浏览器由本调用关闭，不改归档或生产计划；图片必须由评审者实际查看，机器导出成功不等于视觉验收通过。
  */
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { applicationDirectory } from "@ai-werewolf-arena/project-paths";
 import { parseArgs } from "node:util";
 import { mkdir, mkdtemp, rm, writeFile, lstat, readFile } from "node:fs/promises";
 import { bundle } from "@remotion/bundler";
@@ -69,12 +71,13 @@ const temporary = await mkdtemp(path.join(output, ".art-gallery-"));
 let browser: Awaited<ReturnType<typeof openBrowser>> | undefined;
 const errors: unknown[] = [];
 // 源码摘要在bundle前计算，人工复查能确认图片确实来自同一份实现；不把git提交号等同于工作区内容。
-const { sourceDigest, sourceFileCount } = await videoGallerySource(
-  path.resolve(import.meta.dir, ".."),
-  ["game-contract", "game-catalog", "game-text", "game-presentation", "replay-contract"].map(
-    (name) => path.resolve(import.meta.dir, "../../../packages", name, "src"),
+const { sourceDigest, sourceFileCount } = await videoGallerySource(applicationDirectory("video"), [
+  ...["game-contract", "game-catalog", "game-text", "game-presentation", "replay-contract"].map(
+    (name) => path.dirname(fileURLToPath(import.meta.resolve(`@ai-werewolf-arena/${name}`))),
   ),
-);
+  path.dirname(fileURLToPath(import.meta.resolve("@ai-werewolf-arena/game-media/video-project"))),
+  path.dirname(fileURLToPath(import.meta.resolve("@ai-werewolf-arena/game-media/testing/gallery"))),
+]);
 try {
   const publicDir = path.join(temporary, "public");
   await mkdir(publicDir);

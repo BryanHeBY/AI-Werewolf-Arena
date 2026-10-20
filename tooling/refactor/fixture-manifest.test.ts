@@ -428,11 +428,11 @@ test("fixture-root ancestor links are rejected before directory enumeration", as
     canary = path.join(temporary, "canary");
   try {
     const layout = parseFixtureManifest(JSON.stringify(publicSourceManifest));
-    // 先备齐已登记声明迁移与两条历史包退桥的当前输入，再布置 frontend 祖先链接负例；不从生产结果生成预期。
+    // 先备齐已登记声明迁移与两条历史包退桥的当前输入，再布置 game-media 祖先链接负例；不从生产结果生成预期。
     for (const relative of new Set([
       "tooling/refactor/fixtures/source-inventory.json",
       fixtureManifestPath,
-      "backend/package.json",
+      "packages/game-runtime/package.json",
       ...layout.sourceAssets.map((asset) => asset.currentPath),
       ...layout.sourceAssets.flatMap((asset) =>
         (asset.moduleRelocations ?? []).map((relocation) => relocation.currentPath),
@@ -448,8 +448,8 @@ test("fixture-root ancestor links are rejected before directory enumeration", as
     }
     await symlink(path.join(repository, ".git"), path.join(isolated, ".git"));
     await symlink(
-      path.join(repository, "backend/node_modules"),
-      path.join(isolated, "backend/node_modules"),
+      path.join(repository, "packages/game-runtime/node_modules"),
+      path.join(isolated, "packages/game-runtime/node_modules"),
     );
     await mkdir(path.join(isolated, "packages/replay-contract/fixtures"), { recursive: true });
     await mkdir(path.join(canary, "tests/fixtures"), { recursive: true });
@@ -457,7 +457,7 @@ test("fixture-root ancestor links are rejected before directory enumeration", as
       path.join(canary, "tests/fixtures/outside-sentinel.json"),
       '{"literal":"must-not-enumerate"}',
     );
-    await symlink(canary, path.join(isolated, "frontend"));
+    await symlink(canary, path.join(isolated, "packages/game-media"));
     await expect(generateFixtureManifest(isolated)).rejects.toThrow(
       "fixture_manifest_invalid: symlink_rejected",
     );

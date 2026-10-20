@@ -3,7 +3,7 @@
  * 输出为清单现行路径和已序列化玩家资料，同 cohort 只取一份 God、至多一份 checkpoint 及玩家视角成员。
  * 本支持层不读归档字节、不生成可见性／规则／验收预期，实际加载和读取错误仍归调用方。
  */
-import snapshot from "../../../../../tooling/refactor/fixtures/manifest.json";
+import snapshot from "../../../../../tooling/refactor/fixtures/manifest.json" with { type: "json" };
 import {
   fixtureSuiteById,
   parseFixtureManifest,

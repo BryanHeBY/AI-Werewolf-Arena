@@ -1,6 +1,6 @@
 /**
- * 入口集成测试从仓库、应用和仓库外目录启动真实 Vite，独立预期核对同一应用资源与显式输入文件。
- * 仅使用带空格的临时归档和 loopback HTTP，不读取个人配置、不启动游戏或浏览器；退出关闭本次子进程。
+ * 入口集成测试从仓库、应用和仓库外目录启动真实 Vite，独立预期核对同一应用资源根。
+ * 仅使用带空格的临时目录和 loopback HTTP，不读取个人配置、不启动游戏或浏览器；退出关闭本次子进程。
  */
 import { expect, test } from "bun:test";
 import { mkdtemp, rm } from "node:fs/promises";

@@ -18,7 +18,7 @@ import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-
 import { speakRequest } from "../../../support/builders/agents/acp-requests";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 const launcher = fileURLToPath(
-  new URL("../../../../../../../configs.example/acp/run-bwrap-acp.sh", import.meta.url),
+  new URL("../../../../../../configs.example/acp/run-bwrap-acp.sh", import.meta.url),
 );
 test("隔离入口拒认证目录、根目录别名与过宽cwd，拒绝发生在bwrap执行前", async () => {
   const root = await createTestTempDirectory("awa-acp-sandbox-input-"),
@@ -141,14 +141,19 @@ test.skipIf(process.platform !== "linux" || !existsSync("/usr/bin/bwrap"))(
         args: [
           launcher,
           binary,
-          path.join(repository, "backend/src/adapters/acp/werewolf-mcp-server.ts"),
+          path.join(repository, "packages/game-runtime/src/adapters/acp/werewolf-mcp-server.ts"),
         ],
         cwd: workspace,
         env: {
           ...env,
           PATH: "/usr/bin:/bin",
           ACP_MCP_RUNTIME_EXECUTABLE: binary,
-          ACP_READONLY_ROOTS: ["backend/src", "backend/node_modules", "node_modules", "packages"]
+          ACP_READONLY_ROOTS: [
+            "packages/game-runtime/src",
+            "packages/game-runtime/node_modules",
+            "node_modules",
+            "packages",
+          ]
             .map((name) => path.join(repository, name))
             .join(":"),
           ACP_ENV_ALLOWLIST: "WEREWOLF_MCP_CONTROL_URL:WEREWOLF_MCP_TOKEN",

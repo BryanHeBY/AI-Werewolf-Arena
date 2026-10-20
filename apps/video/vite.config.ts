@@ -5,7 +5,7 @@
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import { videoPreviewPlugin } from "./scripts/video-preview-plugin";
+import { videoPreviewPlugin } from "./scripts/video-preview-plugin.ts";
 export default defineConfig({
   root: fileURLToPath(new URL("./", import.meta.url)),
   plugins: [react(), videoPreviewPlugin()],

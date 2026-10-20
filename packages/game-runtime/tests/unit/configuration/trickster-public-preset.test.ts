@@ -11,7 +11,7 @@ import { tricksterTwelveConfig } from "../../../src/rulesets/presets/trickster-t
 test("Public Trickster preset matches the validated twelve-player scenario", () => {
   const raw = JSON.parse(
     readFileSync(
-      new URL("../../../../../../configs.example/boards/awa_trickster_12_v1.json", import.meta.url),
+      new URL("../../../../../configs.example/boards/awa_trickster_12_v1.json", import.meta.url),
       "utf8",
     ),
   );
