@@ -16,6 +16,10 @@
 | `recording/verification/<feature>` | 独立档案算术及因果校验                                 | 导入生产结算作oracle                                  |
 | `adapters`                         | LLM、Pi、ACP、文件系统、终端的外部边界                 | 更改领域授权或恢复关闭的回合                          |
 | `packages`                         | 明确的纯数据、语言、展示、目录与归档公共契约           | 反导backend运行owner                                  |
+| `frontend/src`                     | 视频与语音契约、纯时间线编译、共用画面与字幕           | 读取本局作者文件、凭据或调用TTS                       |
+| `frontend/scripts`                 | 本地文件读取、作者项目装配、素材准备与渲染命令         | 写死某局台词、选角或剧情，静态依赖具体对局            |
+| `frontend/examples`                | 基于教学夹具的可运行演示、通用音色试听                 | 正式对局剧本、生产运行算法                            |
+| `frontend/videos/<theme>`          | 本局完整剧本、固定选角、来源配置和制作记录             | 通用读取、合成、时间线或渲染实现                      |
 
 这不是允许所有同层互导的名单。跨族只消费实际公开端口；私有 state／frame／authority 的形状相似不等于共同不变量。
 
@@ -58,3 +62,11 @@ LLM、ACP、Pi 使用 `replay-contract/agent-output.ts` 的私有输出契约。
 - 录制器沿共同契约编码现有玩家 `delta_messages`（工具状态使用新增可选元数据）；Web 显式导入私有玩家档案后，用相同分类还原。录制完成并不表示工具候选已在领域生效。
 
 这是显式函数接线，没有全局事件总线。领域游戏事件继续走原投影与事件录制链；Agent 私有输出不变成公开游戏事件。私有文件查看状态不参与 Remotion 帧或游戏时间线计算。
+
+## 离线配音制作
+
+配音身份归 `frontend/src/speech-identity.ts`，停顿与增量时钟归 `speech-clock.ts`，JSONL与画面绑定归 `speech-script.ts`，字词对齐与字幕断句归 `speech-timing.ts`。它们只消费数据，不读取凭据、素材或访问服务商。作者JSONL拥有口播，完整TS稿拥有视觉编排；正文来源与展示版式分开。
+
+`scripts/prepare-video.ts` 分开项目加载、计划编译和素材准备，`scripts/video/authoring.ts` 的项目工厂只声明编排。`tts/chunk-cache.ts` 拥有独立合成段缓存，`tts/prepare.ts` 拥有整行装配缓存与清单发布。详细对齐放JSON附属文件，TS保留类型化索引和来源摘要。`scripts/video/publication.ts` 拥有候选版本目录的校验后发布，`render-production-video.ts` 拥有可恢复分段与连续音轨封装。预览、检查和渲染不隐式生成语音。
+
+`scripts/video/production.ts` 拥有主题作者目录与本机产物的路径约定；`casting.ts` 只装配显式席位音色，不按身份重新随机。生成语音清单、对齐JSON和原生快照归忽略的 `output/videos/<theme>/`，不进入作者目录。`scripts/produce-video.ts` 串接可单独运行的本地阶段；审片HTTP、音源准备和成片验收是通用工具，不再保存在output的特定两局脚本中。目录及命令见[视频制作指南](../guides/video-production.md)。

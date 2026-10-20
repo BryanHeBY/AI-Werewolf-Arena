@@ -37,6 +37,7 @@ bun run dev:frontend
 | 板子与游戏示例                       | [公开入口](docs/examples/README.md)、[角色支持矩阵](docs/contracts/gameplay-support-matrix.md) |
 | 模块职责、状态与资源所有权           | [架构说明](docs/architecture/README.md)                                                        |
 | 回放、玩家私有输出与视频             | [离线复盘指南](docs/guides/offline-replay.md)、[前端说明](frontend/README.md)                  |
+| 视频作者目录、配音、配乐与成片制作   | [制作指南](docs/guides/video-production.md)、[离线语音与字幕](docs/guides/offline-speech.md)   |
 | 测试与功能交付                       | [验证方法](docs/guides/validation.md)、[新增机制](docs/guides/add-mechanism.md)                |
 | 凭据、个人路径与归档发布             | [仓库隐私维护](docs/guides/repository-hygiene.md)                                              |
 

@@ -108,7 +108,7 @@ export default defineVideoProject({
 });
 ```
 
-以上片段按 `frontend/videos/<name>/project.tsx` 的位置导入 API，来源与资源路径需替换成本局实际值；可直接运行的广播版见 `frontend/videos/gothic-demo/project.tsx`，旧椭圆桌示例见 `frontend/videos/example/project.tsx`。
+以上片段按 `frontend/videos/<name>/project.tsx` 的位置导入 API，来源与资源路径需替换成本局实际值；可直接运行的广播版见 `frontend/examples/video/gothic/project.tsx`，旧椭圆桌示例见 `frontend/examples/video/custom-layers/project.tsx`。
 
 ### 本地字体与素材固化
 
