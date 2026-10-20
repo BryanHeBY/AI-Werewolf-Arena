@@ -1,0 +1,40 @@
+{
+  "name": "awa-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun src/server/main.ts",
+    "start": "bun src/server/main.ts",
+    "dev:client": "vite --host 127.0.0.1 --port 5174",
+    "build": "vite build",
+    "check": "tsc --noEmit",
+    "test": "bun --no-env-file test tests/unit tests/integration",
+    "test:e2e": "bun ./node_modules/@playwright/test/cli.js test",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "dependencies": {
+    "@ai-werewolf-arena/workbench-contract": "workspace:*",
+    "@ai-werewolf-arena/game-contract": "workspace:*",
+    "@ai-werewolf-arena/game-catalog": "workspace:*",
+    "@ai-werewolf-arena/game-text": "workspace:*",
+    "@ai-werewolf-arena/replay-contract": "workspace:*",
+    "ai-werewolf-arena-backend": "workspace:*",
+    "ai-werewolf-arena-frontend": "workspace:*",
+    "@xterm/xterm": "^6.0.0",
+    "@xterm/addon-fit": "^0.11.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "bun-types": "^1.4.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.1",
+    "eslint": "^9.39.5",
+    "@typescript-eslint/parser": "^8.70.1"
+  }
+}

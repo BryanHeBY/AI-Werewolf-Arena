@@ -1,0 +1,175 @@
+/** 浏览器端到端测试负责核对平台、板子、游戏、真实 CLI 与回放闭环；合成本机认证和 API 是输入，独立页面断言是预期。 */
+import { expect, test } from "@playwright/test";
+test("workbench reuses video themes and keeps appearance when opening configuration pages", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/");
+  const shell = page.locator(".workbench");
+  await expect(shell).toHaveAttribute("data-web-theme", "gothic-v1");
+  await expect(shell).toHaveCSS("background-color", "rgb(16, 23, 35)");
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({ path: testInfo.outputPath("workbench-gothic.png"), fullPage: true });
+  await page.getByRole("combobox", { name: "网页主题", exact: true }).selectOption("minimal-v1");
+  await expect(shell).toHaveCSS("background-color", "rgb(17, 23, 34)");
+  await page.getByRole("combobox", { name: "界面明暗", exact: true }).selectOption("day");
+  await expect(shell).toHaveCSS("background-color", "rgb(242, 244, 247)");
+  await page.getByRole("navigation").getByRole("button", { name: "Agent", exact: true }).click();
+  await expect(shell).toHaveAttribute("data-web-theme", "minimal-v1");
+  await page.screenshot({
+    path: testInfo.outputPath("workbench-minimal-agents.png"),
+    fullPage: true,
+  });
+});
+test("configure a game, watch the ANSI log, then open the existing replay workspace", async ({
+  page,
+  request,
+}, testInfo) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "配置一桌，开局即看" })).toBeVisible();
+  await page.getByRole("navigation").getByRole("button", { name: "游戏配置", exact: true }).click();
+  await page.getByLabel("选择游戏", { exact: true }).selectOption("offline_game");
+  await expect(page.getByLabel("配置 ID", { exact: true })).toHaveValue("offline_game");
+  await page.getByRole("button", { name: "JSON 源码", exact: true }).click();
+  const source = page.getByRole("textbox", { name: "JSON 源码", exact: true });
+  const game = JSON.parse(await source.inputValue());
+  game.customInstructions = { text: "A cheerful local test.", mode: "append" };
+  await source.fill(JSON.stringify(game, null, 2));
+  await page.getByRole("button", { name: "检查配置", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("配置检查通过");
+  await page.getByRole("button", { name: "保存", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("已保存");
+  await page.getByRole("button", { name: "开始对局", exact: true }).click();
+  await expect(page.getByRole("log", { name: "终端日志" })).toBeVisible();
+  await expect
+    .poll(
+      async () => {
+        const runs = await (await request.get("/api/runs")).json();
+        return runs.some((run: any) => run.recording === "complete");
+      },
+      { timeout: 25000 },
+    )
+    .toBe(true);
+  await page.getByRole("button", { name: "打开回放", exact: true }).click();
+  await expect(page.locator(".replay-workspace")).toBeVisible({
+    timeout: 20000,
+  });
+  await expect(page.locator(".replay-workspace")).toHaveAttribute("data-web-theme", "gothic-v1");
+  const header = page.locator(".replay-workspace > .topbar");
+  const headerBounds = await header.boundingBox();
+  const subtitleBounds = await header.locator(".subtitle").boundingBox();
+  expect(subtitleBounds!.y + subtitleBounds!.height).toBeLessThanOrEqual(
+    headerBounds!.y + headerBounds!.height,
+  );
+  await page.screenshot({ path: testInfo.outputPath("workbench-replay.png"), fullPage: true });
+  expect(errors).toEqual([]);
+});
+test("board discovery and English UI expose the same configuration flow", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
+  await page.getByRole("button", { name: "六人局", exact: true }).click();
+  await expect(page.locator(".board-card")).not.toHaveCount(0);
+  await page.getByLabel("对局语言", { exact: true }).first().selectOption("en");
+  await expect(page.getByRole("heading", { name: "Choose board", exact: true })).toBeVisible();
+  await page.getByRole("navigation").getByRole("button", { name: "Agents", exact: true }).click();
+  await expect(page.getByRole("button", { name: /OpenAI API/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Zhipu Coding Plan/ })).toBeVisible();
+});
+
+test("platform wizard creates reusable agents and player edits persist in the same JSON", async ({
+  page,
+  request,
+}) => {
+  const backend = await (await request.get("/api/documents/backends/backends")).json();
+  const endpoint = JSON.parse(backend.text).items.offline.config.baseURL;
+  await page.goto("/");
+  await page.getByRole("navigation").getByRole("button", { name: "Agent", exact: true }).click();
+  await page.getByRole("button", { name: /OpenAI Compatible/ }).click();
+  await page.getByLabel("Agent ID", { exact: true }).fill("browser_agent");
+  await page.getByLabel("模型 ID", { exact: true }).fill("offline-model");
+  await page.getByLabel("思考等级", { exact: true }).selectOption("low");
+  await page.getByLabel(/API key/).fill("synthetic-browser-key");
+  await page.getByLabel("API 地址", { exact: true }).fill(endpoint);
+  await page.getByRole("button", { name: "保存", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "browser_agent", exact: true })).toBeVisible();
+  await page.getByRole("navigation").getByRole("button", { name: "游戏配置", exact: true }).click();
+  await page.getByLabel("选择游戏", { exact: true }).selectOption("offline_game");
+  await page.getByLabel("默认 Agent", { exact: true }).selectOption("browser_agent");
+  await page.locator("summary").filter({ hasText: "玩家设置" }).click();
+  await page.locator(".seat-config").first().getByLabel("玩家名字（可留空）").fill("Miao");
+  await page.getByRole("button", { name: "保存", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("已保存");
+  const game = await (await request.get("/api/documents/games/offline_game")).json();
+  expect(JSON.parse(game.text)).toMatchObject({
+    agent: "browser_agent",
+    players: { "1": { name: "Miao" } },
+  });
+  expect(JSON.stringify(await (await request.get("/api/catalog")).json())).not.toContain(
+    "synthetic-browser-key",
+  );
+});
+
+test("a board can be copied with textual rule choices without editing JSON", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
+  await page.getByRole("textbox", { name: "搜索板子或角色" }).fill("twelve_player_wolf_beauty");
+  await page.locator(".board-card").first().getByRole("button", { name: /选择/ }).click();
+  await page.getByLabel("配置 ID", { exact: true }).fill("browser_beauty");
+  await page.getByLabel("女巫自救", { exact: true }).selectOption("first_night_only");
+  await page.getByRole("button", { name: "另存为", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("已保存");
+  const doc = await (await request.get("/api/documents/boards/browser_beauty")).json();
+  expect(JSON.parse(doc.text)).toMatchObject({
+    id: "browser_beauty",
+    roles: { witch: { selfHeal: "first_night_only" } },
+  });
+});
+
+test("unsaved JSON survives sidebar and browser hash navigation until explicit reload", async ({
+  page,
+}) => {
+  await page.goto("/#/games");
+  await page.getByLabel("选择游戏", { exact: true }).selectOption("offline_game");
+  await page.getByRole("button", { name: "JSON 源码", exact: true }).click();
+  const source = page.getByRole("textbox", { name: "JSON 源码", exact: true });
+  const original = await source.inputValue();
+  const edited = `${original}\n `;
+  await source.fill(edited);
+  await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText("先保存当前修改");
+  await expect(source).toHaveValue(edited);
+  await page.evaluate(() => {
+    location.hash = "/agents";
+  });
+  await expect(page).toHaveURL(/#\/games$/);
+  await expect(source).toHaveValue(edited);
+  await page.getByRole("button", { name: "重新读取", exact: true }).click();
+  await expect(source).toHaveValue(original);
+  await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "选择板子", exact: true })).toBeVisible();
+});
+
+test("new templates can be reset and connection-only wizard edits have a visible clear action", async ({
+  page,
+}) => {
+  await page.goto("/#/games/new");
+  await page.getByRole("button", { name: "JSON 源码", exact: true }).click();
+  const source = page.getByRole("textbox", { name: "JSON 源码", exact: true });
+  await expect(source).not.toHaveValue("");
+  const original = await source.inputValue();
+  await source.fill(`${original}\n `);
+  await page.getByRole("button", { name: "重新读取", exact: true }).click();
+  await expect(source).toHaveValue(original);
+  await page.getByRole("navigation").getByRole("button", { name: "Agent", exact: true }).click();
+  await page.getByLabel("API 地址", { exact: true }).fill("http://local.invalid/v1");
+  await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText("先保存当前修改");
+  await page.getByRole("button", { name: "清除", exact: true }).click();
+  await expect(page.getByLabel("API 地址", { exact: true })).toHaveValue("");
+  await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "选择板子", exact: true })).toBeVisible();
+});

@@ -5,6 +5,7 @@
   "type": "module",
   "types": "./src/index.ts",
   "exports": {
+    "./workbench": "./src/workbench.ts",
     ".": "./src/index.ts"
   },
   "dependencies": {

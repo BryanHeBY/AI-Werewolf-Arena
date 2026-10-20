@@ -7,6 +7,9 @@ dist
 */dist
 # 前端预览、画廊与视频导出产物
 /output/
+/.workbench/
+/apps/workbench/test-results/
+/apps/workbench/playwright-report/
 
 # Environment variables
 .env

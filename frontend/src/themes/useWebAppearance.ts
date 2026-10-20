@@ -15,9 +15,9 @@ export interface WebAppearance {
   theme: ThemeSelection;
   reduceMotion: boolean;
 }
-function initial(): WebAppearance {
+function initial(defaultTheme: ThemeId): WebAppearance {
   const fallback: WebAppearance = {
-    theme: { id: DEFAULT_WEB_THEME },
+    theme: { id: defaultTheme },
     reduceMotion:
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true,
@@ -40,8 +40,8 @@ function initial(): WebAppearance {
     return fallback;
   }
 }
-export function useWebAppearance() {
-  const [appearance, setAppearance] = useState<WebAppearance>(initial);
+export function useWebAppearance(defaultTheme: ThemeId = DEFAULT_WEB_THEME) {
+  const [appearance, setAppearance] = useState<WebAppearance>(() => initial(defaultTheme));
   const theme = useMemo(() => resolveTheme(appearance.theme), [appearance.theme]);
   useEffect(() => {
     try {
