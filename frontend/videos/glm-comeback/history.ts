@@ -6,6 +6,7 @@ export const history = [
     title: "字幕上移并预留播放器底部空间",
     changes: [
       "1080p字幕底边留白从56增至144像素，中央正文同步避让，左右玩家栏保持原位",
+      "较长的规则与人格配置页压紧字号和间距，完整展示提示词，不裁切底部说明",
       "重新渲染完整画面，复用既有连续配音和低音量配乐母带，保留字幕延时、章节与片尾留白",
     ],
     productionDirectory: "output/videos/glm-comeback/subtitle-safe",

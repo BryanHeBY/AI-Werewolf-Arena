@@ -38,7 +38,9 @@ export function AnnouncementScene({
     scene.content?.blocks.some(
       (block) => block.kind === "announcement" && block.announcement.kind === "lineup",
     );
-  const readingSize = bodySize * (compact ? 0.875 : 1);
+  // 多行配置页压紧字号和标题间距，给抬高后的字幕安全区留出完整小字说明。
+  const denseNotes = (scene.notes?.body.split("\n").length ?? 0) > 3;
+  const readingSize = bodySize * (denseNotes ? 0.78 : compact ? 0.875 : 1);
   const structured =
     // 旧逐页时钟和作者精确强调仍以原文为准，不能每一页重复整个名单或吞掉UTF16强调范围。
     Boolean(caption.reading) &&
@@ -62,7 +64,7 @@ export function AnnouncementScene({
 
   const phase = layout === "phase",
     settlement = layout === "settlement";
-  const safeTop = 150 * scale,
+  const safeTop = (denseNotes ? 124 : 150) * scale,
     safeBottom = 32 * scale;
   const available = Math.max(0, stage.height - safeTop - safeBottom);
   const artSize = settlement ? 150 * scale : 0;
@@ -88,8 +90,8 @@ export function AnnouncementScene({
       <section
         data-announcement-notes
         style={{
-          marginTop: 20 * scale,
-          paddingTop: 16 * scale,
+          marginTop: (denseNotes ? 16 : 20) * scale,
+          paddingTop: (denseNotes ? 12 : 16) * scale,
           borderTop: `${scale}px solid ${alpha(tokens.frame.color, 0.45)}`,
           color: surface.readingMuted,
           fontSize: readingSize * 0.75,
