@@ -29,8 +29,13 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command:
-      "AWA_REPLAY_INPUT=../../packages/game-media/tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173",
+    command: "bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173",
+    // 显式环境字段在 Windows 和 Unix 具有相同含义，避免 shell 前缀赋值。
+    env: {
+      ...process.env,
+      AWA_REPLAY_INPUT:
+        "../../packages/game-media/tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
+    },
     url: "http://127.0.0.1:4173/src/main.tsx",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
