@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
 import { materializeVideo, prepareVideo } from "../../../../../apps/video/scripts/prepare-video";
 import { previewVideo } from "../../../../../apps/video/scripts/preview-video";
 import {
@@ -75,7 +76,13 @@ test("preview startup passes the same theme-only project and prepared assets to 
   const directory = await mkdtemp(path.join(os.tmpdir(), "awa-video-theme-preview-"));
   let preparedDirectory = "";
   let command: unknown;
-  let captured: { project?: string; replay?: string; bytes?: Uint8Array; fonts?: unknown } = {};
+  let captured: {
+    cwd?: string;
+    project?: string;
+    replay?: string;
+    bytes?: Uint8Array;
+    fonts?: unknown;
+  } = {};
   const before = [process.listenerCount("SIGINT"), process.listenerCount("SIGTERM")];
   const spawn = spyOn(Bun, "spawn");
   try {
@@ -85,11 +92,12 @@ test("preview startup passes the same theme-only project and prepared assets to 
     });
     spawn.mockImplementation(((
       _command: unknown,
-      options: { env: Record<string, string | undefined> },
+      options: { cwd: string; env: Record<string, string | undefined> },
     ) => {
       command = _command;
       preparedDirectory = options.env.AWA_VIDEO_PLAN_DIR!;
       captured = {
+        cwd: options.cwd,
         project: options.env.AWA_VIDEO_PROJECT_ENTRY,
         replay: options.env.AWA_REPLAY_INPUT,
       };
@@ -111,13 +119,14 @@ test("preview startup passes the same theme-only project and prepared assets to 
     expect(command).toEqual([
       "bun",
       "--no-env-file",
-      path.resolve(import.meta.dir, "../../../node_modules/vite/bin/vite.js"),
+      path.join(PROJECT_ROOT, "apps/video/node_modules/vite/bin/vite.js"),
       "--host",
       "127.0.0.1",
       "--port",
       "4199",
       "--strictPort",
     ]);
+    expect(captured.cwd).toBe(path.join(PROJECT_ROOT, "apps/video"));
     expect(captured.project).toBe(filename);
     expect(captured.replay).toBe(path.join(directory, "replay.json"));
     expect(captured.fonts).toEqual([
