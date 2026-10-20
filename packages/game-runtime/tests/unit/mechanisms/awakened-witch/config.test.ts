@@ -15,7 +15,7 @@ const raw = () =>
   JSON.parse(
     readFileSync(
       new URL(
-        "../../../../../configs.example/boards/awa_awakened_witch_12_v1.json",
+        "../../../../../../configs.example/boards/awa_awakened_witch_12_v1.json",
         import.meta.url,
       ),
       "utf8",
@@ -35,7 +35,7 @@ test("原十二人双觉醒公开板真实parse/bootstrap往返，三种game指�
     const g = JSON.parse(
       readFileSync(
         new URL(
-          `../../../../../configs.example/games/twelve_player_awakened_witch${suffix}.json`,
+          `../../../../../../configs.example/games/twelve_player_awakened_witch${suffix}.json`,
           import.meta.url,
         ),
         "utf8",

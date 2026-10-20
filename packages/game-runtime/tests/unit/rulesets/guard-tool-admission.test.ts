@@ -226,7 +226,7 @@ test("真实学者未结算错误和已结算削弱均先于空守参数读取",
   const board = parseBoardDefinition(
     await Bun.file(
       new URL(
-        "../../../../../../configs.example/boards/awa_scholar_mentor_12_v1.json",
+        "../../../../../configs.example/boards/awa_scholar_mentor_12_v1.json",
         import.meta.url,
       ),
     ).json(),

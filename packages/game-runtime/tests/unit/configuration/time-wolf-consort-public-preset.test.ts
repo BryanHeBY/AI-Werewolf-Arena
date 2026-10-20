@@ -13,10 +13,7 @@ import { timeConsortTwelveConfig } from "../../../src/rulesets/presets/time-wolf
 test("Public Time-Wolf Consort preset matches the validated twelve-player scenario", () => {
   const raw = JSON.parse(
     readFileSync(
-      new URL(
-        "../../../../../../configs.example/boards/awa_time_consort_12_v1.json",
-        import.meta.url,
-      ),
+      new URL("../../../../../configs.example/boards/awa_time_consort_12_v1.json", import.meta.url),
       "utf8",
     ),
   );

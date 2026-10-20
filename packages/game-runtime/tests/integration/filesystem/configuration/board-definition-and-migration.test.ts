@@ -1,6 +1,8 @@
 /**
  * 配置文件系统集成测试以原公开十二人定义、真实临时 board／runtime 文件及字面非法覆盖为输入，核对规范板子拒绝、源码迁移、备份冲突和 setup 元数据。精确诊断路径、备份字节及脱敏 setup 值为预期；私有标记均为合成字面量，不运行模型或游戏。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { ActionWindow } from "../../../../src/domain/identity";
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
@@ -21,7 +23,7 @@ async function definition() {
     await readFile(
       path.resolve(
         import.meta.dir,
-        "../../../../../configs.example/boards/twelve_player_standard.json",
+        "../../../../../../configs.example/boards/twelve_player_standard.json",
       ),
       "utf8",
     ),
@@ -233,7 +235,7 @@ test("game bindings and CLI number overrides are validated after board resolutio
   expect(report).toContain('"explicit"');
 });
 test("the public twelve-player window example loads through normal v2 setup with all four hooks", async () => {
-  const root = path.resolve(process.cwd(), "../configs.example");
+  const root = path.resolve(PROJECT_ROOT, "configs.example");
   const resolved = await loadBoardDefinition(root, "twelve_player_windows");
   expect(resolved.config.boardSize).toBe(12);
   expect(resolved.config.selfDestruct!.enabledWindows).toEqual([

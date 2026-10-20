@@ -1,6 +1,8 @@
 /**
  * 单元测试持有旧私档元数据转换及错误版本／形状的严格拒绝。输入为每次新读的不可变公开本地化身份夹具；字面规范字段、用户／工具原文不变及来源零修改为预期。不写玩家档案。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -10,8 +12,8 @@ async function legacy() {
   return JSON.parse(
     await readFile(
       path.resolve(
-        process.cwd(),
-        "../packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
+        PROJECT_ROOT,
+        "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
       ),
       "utf8",
     ),

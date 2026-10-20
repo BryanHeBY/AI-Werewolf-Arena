@@ -13,7 +13,7 @@ for (const size of [6, 12])
       JSON.parse(
         readFileSync(
           new URL(
-            `../../../../configs.example/boards/awa_lui_meme_wild_child_${size}_v1.json`,
+            `../../../../../configs.example/boards/awa_lui_meme_wild_child_${size}_v1.json`,
             import.meta.url,
           ),
           "utf8",

@@ -32,10 +32,7 @@ import {
 const board = parseBoardDefinition(
   JSON.parse(
     readFileSync(
-      new URL(
-        "../../../../../../configs.example/boards/awa_mist_raven_12_v1.json",
-        import.meta.url,
-      ),
+      new URL("../../../../../configs.example/boards/awa_mist_raven_12_v1.json", import.meta.url),
       "utf8",
     ),
   ),

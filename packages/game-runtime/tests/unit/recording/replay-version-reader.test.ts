@@ -1,6 +1,8 @@
 /**
  * 单元测试持有显式旧版／规范 replay 元数据路径、错误版本及纯新版本 writer 形状。输入为每次新读的不可变公开档案及字面变体；原用户文本、未知 ID、私密元数据省略及脱离来源输出为预期。不改写或导出档案到磁盘。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -15,8 +17,8 @@ async function fixture() {
   return JSON.parse(
     await readFile(
       path.resolve(
-        process.cwd(),
-        "../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json",
+        PROJECT_ROOT,
+        "packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json",
       ),
       "utf8",
     ),

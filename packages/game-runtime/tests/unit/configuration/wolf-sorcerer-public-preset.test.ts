@@ -12,7 +12,7 @@ test("Public Wolf Sorcerer preset matches the validated twelve-player scenario",
   const raw = JSON.parse(
     readFileSync(
       new URL(
-        "../../../../../../configs.example/boards/awa_wolf_sorcerer_12_v1.json",
+        "../../../../../configs.example/boards/awa_wolf_sorcerer_12_v1.json",
         import.meta.url,
       ),
       "utf8",

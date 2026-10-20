@@ -55,5 +55,6 @@
     "eslint": "^9.39.5",
     "@ai-werewolf-arena/game-runtime": "workspace:*",
     "@ai-werewolf-arena/game-media": "workspace:*"
-  }
+  },
+  "type": "module"
 }

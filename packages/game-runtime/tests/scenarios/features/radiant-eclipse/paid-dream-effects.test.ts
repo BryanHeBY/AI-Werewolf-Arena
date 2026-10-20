@@ -114,7 +114,7 @@ const config = parseBoardDefinition(
   JSON.parse(
     readFileSync(
       new URL(
-        "../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
+        "../../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
         import.meta.url,
       ),
       "utf8",

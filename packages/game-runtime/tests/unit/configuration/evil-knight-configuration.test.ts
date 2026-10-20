@@ -129,7 +129,7 @@ for (const shot of ["night_shot_immune", "hunter_shot_bypasses"] as const) {
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly] as const) {
     test(`public evil knight board ${shot}/${selfHeal} loads and exactly roundtrips`, async () => {
       const path = new URL(
-        `../../../../configs.example/boards/awa_evil_knight_12_${shot}_${selfHeal}_v1.json`,
+        `../../../../../configs.example/boards/awa_evil_knight_12_${shot}_${selfHeal}_v1.json`,
         import.meta.url,
       );
       const definition = await Bun.file(path).json();

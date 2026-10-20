@@ -40,6 +40,9 @@ jobs:
           fetch-depth: ${{ (matrix.suite == 'quality' || matrix.suite == 'shared') && '0' || '1' }}
           persist-credentials: false
       - uses: ./.github/actions/setup
+      - name: Install audio tooling for real media tests
+        if: matrix.suite == 'frontend'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Run fast gate
         env:
           CI_SUITE: ${{ matrix.suite }}

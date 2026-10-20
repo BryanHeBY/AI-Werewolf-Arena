@@ -36,10 +36,17 @@ async function withServer(cwd: string, verify: (url: URL) => Promise<void>) {
   try {
     const ready = (async () => {
       let text = "";
-      for await (const chunk of child.stdout) {
-        text += new TextDecoder().decode(chunk);
-        const match = /http:\/\/127\.0\.0\.1:\d+\//.exec(text);
-        if (match) return new URL(match[0]);
+      const reader = child.stdout.getReader();
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          text += new TextDecoder().decode(value);
+          const match = /http:\/\/127\.0\.0\.1:\d+\//.exec(text);
+          if (match) return new URL(match[0]);
+        }
+      } finally {
+        reader.releaseLock();
       }
       throw new Error(`replay_server_exited: ${await stderr}`);
     })();

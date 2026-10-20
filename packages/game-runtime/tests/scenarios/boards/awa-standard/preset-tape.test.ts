@@ -4,6 +4,8 @@
  * 字面预期为归一化警长／投票配置、两类 PK 各一次、1 号夜死后移交给 6 号及其持徽字段；严格重放另核对本局录制一致性，不重新生成固定预期。
  * 测试不调用付费模型，也不重写预期 fixture／Tape 字节。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
@@ -38,7 +40,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const { config } = parseBoardDefinition(
       JSON.parse(
         await readFile(
-          path.resolve(process.cwd(), "../configs.example/boards/awa_classic_pk_choice_12_v1.json"),
+          path.resolve(PROJECT_ROOT, "configs.example/boards/awa_classic_pk_choice_12_v1.json"),
           "utf8",
         ),
       ),

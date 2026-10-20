@@ -1,6 +1,8 @@
 /**
  * 原生 CLI 集成测试以原有限命令／参数矩阵、临时合成配置和公开示例副本为输入，核对配置命令保留安全双语失败报告与提示语言回退。精确进程状态、脱敏报告、语言回退及无堆栈断言为预期；不使用计费模型或私有凭据。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -10,7 +12,7 @@ async function command(file: string, args: string[]) {
   const child = Bun.spawn(
     [
       Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun",
-      path.resolve(import.meta.dir, `../../../src/app/cli/${file}`),
+      path.resolve(import.meta.dir, `../../../../../apps/game/src/cli/${file}`),
       ...args,
     ],
     { stdout: "pipe", stderr: "pipe" },
@@ -74,7 +76,7 @@ async function configFixture(locale: Locale) {
     }),
   );
   await fs.copyFile(
-    path.resolve(process.cwd(), "../configs.example/boards/six_player_mvp.json"),
+    path.resolve(PROJECT_ROOT, "configs.example/boards/six_player_mvp.json"),
     path.join(root, "boards/six_player_mvp.json"),
   );
   return root;

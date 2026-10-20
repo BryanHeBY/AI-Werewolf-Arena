@@ -45,7 +45,7 @@ async function fixture() {
     JSON.stringify({ board: "six_player_mvp" }),
   );
   await fs.copyFile(
-    path.resolve(import.meta.dir, "../../../../configs.example/boards/six_player_mvp.json"),
+    path.resolve(import.meta.dir, "../../../../../configs.example/boards/six_player_mvp.json"),
     path.join(root, "boards/six_player_mvp.json"),
   );
   return { root, backends, agents, write };
@@ -84,7 +84,7 @@ test("actual Pi config CLI returns a fixed diagnostic without native configurati
   const child = Bun.spawn(
     [
       Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun",
-      path.resolve(import.meta.dir, "../../../src/app/cli/check-config.ts"),
+      path.resolve(import.meta.dir, "../../../../../apps/game/src/cli/check-config.ts"),
       "--configs-dir",
       f.root,
     ],

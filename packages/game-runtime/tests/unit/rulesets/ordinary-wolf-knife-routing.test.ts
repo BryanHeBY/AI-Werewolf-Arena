@@ -38,10 +38,7 @@ function ordinary() {
 test("mist draw publication failure preserves paid mist and reads RNG twice before any knife write", async () => {
   const raw = JSON.parse(
     await readFile(
-      new URL(
-        "../../../../../../configs.example/boards/awa_mist_raven_12_v1.json",
-        import.meta.url,
-      ),
+      new URL("../../../../../configs.example/boards/awa_mist_raven_12_v1.json", import.meta.url),
       "utf8",
     ),
   );

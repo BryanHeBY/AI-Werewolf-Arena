@@ -200,7 +200,7 @@ test("actual --runtime CLI preview accepts two display locales without printing 
     const child = Bun.spawn(
       [
         Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun",
-        path.resolve(import.meta.dir, "../../../../src/app/cli/migrate-configs.ts"),
+        path.resolve(import.meta.dir, "../../../../../../apps/game/src/cli/migrate-configs.ts"),
         "--configs-dir",
         root,
         "--runtime",

@@ -1,6 +1,8 @@
 /**
  * 配置文件系统集成测试以原真实临时旧文件、公开聚会游戏 JSON 及字面非法语言为输入，核对双语迁移预览／发布和具名聚会 persona 解析。精确备份／报告字节、非法语言零写入及十二个原 persona 字符串为预期；合成输入不替代 golden。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -74,7 +76,7 @@ test("bilingual party example resolves every named seat without missing-language
   const { resolveGameSetup } = await import("../../../../src/app/config/resolve-game-setup");
   const game = JSON.parse(
     await fs.readFile(
-      path.resolve(process.cwd(), "../configs.example/games/twelve_player_fun.json"),
+      path.resolve(PROJECT_ROOT, "configs.example/games/twelve_player_fun.json"),
       "utf8",
     ),
   );

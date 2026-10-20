@@ -119,7 +119,7 @@ test("normalized role defaults expose their source without exposing private prom
     await readFile(
       path.resolve(
         import.meta.dir,
-        "../../../../configs.example/boards/twelve_player_standard.json",
+        "../../../../../configs.example/boards/twelve_player_standard.json",
       ),
       "utf8",
     ),

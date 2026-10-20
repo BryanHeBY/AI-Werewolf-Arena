@@ -14,7 +14,7 @@ function raw(size: number) {
   return JSON.parse(
     readFileSync(
       new URL(
-        `../../../../../configs.example/boards/awa_netease_dark_stars_${size}_v1.json`,
+        `../../../../../../configs.example/boards/awa_netease_dark_stars_${size}_v1.json`,
         import.meta.url,
       ),
       "utf8",
@@ -39,7 +39,7 @@ for (const size of [10, 12])
       const game = JSON.parse(
         readFileSync(
           new URL(
-            `../../../../../configs.example/games/${size === 10 ? "ten" : "twelve"}_player_dark_stars${suffix}.json`,
+            `../../../../../../configs.example/games/${size === 10 ? "ten" : "twelve"}_player_dark_stars${suffix}.json`,
             import.meta.url,
           ),
           "utf8",

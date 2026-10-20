@@ -110,7 +110,7 @@ test("configuration CLI preserves safe locations and never prints raw provider J
     path.join(root, "runtime/backends.json"),
     '{"key":"PRIVATE_SECRET_FRAGMENT",INVALID}',
   );
-  const command = path.resolve(import.meta.dir, "../../../src/app/cli/check-config.ts");
+  const command = path.resolve(import.meta.dir, "../../../../../apps/game/src/cli/check-config.ts");
   const run = async (args: string[]) => {
     const process = Bun.spawn([Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun", command, ...args], {
       stdout: "pipe",

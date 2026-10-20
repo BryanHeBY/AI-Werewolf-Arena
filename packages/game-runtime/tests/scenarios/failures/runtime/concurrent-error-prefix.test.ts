@@ -3,6 +3,8 @@
  * 输入为受控行动回复、原可选文件失败与真实录制清理；输出由字面单次关闭计数、聚合错误身份和可复盘前缀核对。
  * 不用生产 oracle 重生接受行动，实际文件新封装仅在原输入读取位置解包。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { runtimeConfigV2 } from "../../../support/builders/runtime-config-v2";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
@@ -28,7 +30,7 @@ for (const diskFailure of [false, true])
       const root = await createTestTempDirectory("awa-run-multi-"),
         output = await createTestTempDirectory("awa-run-multi-replay-");
       const board = await loadBoardDefinition(
-        path.resolve(process.cwd(), "../configs.example"),
+        path.resolve(PROJECT_ROOT, "configs.example"),
         "twelve_player_standard",
       );
       const config = parseRuntimeConfig(

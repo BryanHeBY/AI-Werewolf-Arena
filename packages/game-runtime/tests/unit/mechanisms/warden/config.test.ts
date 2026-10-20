@@ -11,7 +11,7 @@ function raw() {
   return JSON.parse(
     readFileSync(
       new URL(
-        "../../../../../configs.example/boards/awa_warden_12_partner_native_v1.json",
+        "../../../../../../configs.example/boards/awa_warden_12_partner_native_v1.json",
         import.meta.url,
       ),
       "utf8",
@@ -35,7 +35,7 @@ test("完整公开board实际parse/bootstrap往返；两种game指向同一有�
     const game = JSON.parse(
       readFileSync(
         new URL(
-          `../../../../../configs.example/games/twelve_player_warden${suffix}.json`,
+          `../../../../../../configs.example/games/twelve_player_warden${suffix}.json`,
           import.meta.url,
         ),
         "utf8",

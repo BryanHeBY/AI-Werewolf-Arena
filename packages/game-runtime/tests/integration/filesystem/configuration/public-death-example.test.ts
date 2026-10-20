@@ -13,7 +13,7 @@ test("source-scoped six-player example strictly resolves the documented clauses 
   const raw = JSON.parse(
     await Bun.file(
       new URL(
-        "../../../../../configs.example/boards/netease_2017_open_clause_6_v1.json",
+        "../../../../../../configs.example/boards/netease_2017_open_clause_6_v1.json",
         import.meta.url,
       ),
     ).text(),

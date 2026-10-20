@@ -1,6 +1,8 @@
 /**
  * 文件系统集成测试以新的不可变旧版数据和临时直接／硬链接／符号链接路径为输入，核对原 replay 导出、版本发布及来源别名覆盖拒绝。精确 v2 输出与原来源字节不变为预期；原生写入、链接及清理仍归原用例。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir, link, symlink } from "node:fs/promises";
 import path from "node:path";
@@ -12,8 +14,8 @@ async function fixture() {
   return JSON.parse(
     await readFile(
       path.resolve(
-        process.cwd(),
-        "../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json",
+        PROJECT_ROOT,
+        "packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json",
       ),
       "utf8",
     ),

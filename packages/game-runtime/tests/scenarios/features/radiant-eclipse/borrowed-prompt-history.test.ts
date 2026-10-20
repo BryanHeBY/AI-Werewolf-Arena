@@ -36,7 +36,7 @@ import { buildAgentVisibleEvent } from "../../../../src/agents/observation/event
 const raw = JSON.parse(
   await readFile(
     new URL(
-      "../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
+      "../../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
       import.meta.url,
     ),
     "utf8",

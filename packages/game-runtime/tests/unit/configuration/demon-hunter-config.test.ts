@@ -15,7 +15,7 @@ const read = async (size: number, goal: string) =>
   JSON.parse(
     await readFile(
       new URL(
-        `../../../../configs.example/boards/awa_netease_demon_hunter_${size}_${goal}_v1.json`,
+        `../../../../../configs.example/boards/awa_netease_demon_hunter_${size}_${goal}_v1.json`,
         import.meta.url,
       ),
       "utf8",

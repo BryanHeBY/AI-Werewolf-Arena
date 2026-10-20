@@ -3,6 +3,8 @@
  * 输入为原录制器创建 spy、真实模拟及后续离线复现。
  * 输出与预期为两次执行中的明确展示语言／对局语言断言；词典内容和归档元数据不变。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import { expect, spyOn, test } from "bun:test";
 import { SessionRecordManager } from "../../../../src/recording/session/recorder";
 import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
@@ -18,7 +20,7 @@ test("simulation and offline replay pass transient display locale to recording w
   const root = await createTestTempDirectory("awa-simulation-display-");
   const output = await createTestTempDirectory("awa-replay-display-");
   const board = await loadBoardDefinition(
-    path.resolve(process.cwd(), "../configs.example"),
+    path.resolve(PROJECT_ROOT, "configs.example"),
     "six_player_mvp",
   );
   const create = SessionRecordManager.create;

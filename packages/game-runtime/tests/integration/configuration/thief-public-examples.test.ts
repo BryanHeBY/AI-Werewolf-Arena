@@ -1,6 +1,8 @@
 /**
  * 盗贼公开示例集成测试读取原六／十二人板子 JSON，经 JSON／板子解析后，以内部固定 RNG 调用真实 bootstrap。字面断言核对人数、身份总数、盗贼政策、N 名玩家及 N+2 张初始牌；不执行选择窗口、provider 失败 Tape、租约变体或游戏循环。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
@@ -13,7 +15,7 @@ test("public six/twelve Thief examples roundtrip N role parameters and execute a
   for (const size of [6, 12]) {
     const raw = JSON.parse(
         await fs.readFile(
-          path.resolve(process.cwd(), `../configs.example/boards/lui_meme_thief_${size}_v1.json`),
+          path.resolve(PROJECT_ROOT, `configs.example/boards/lui_meme_thief_${size}_v1.json`),
           "utf8",
         ),
       ),

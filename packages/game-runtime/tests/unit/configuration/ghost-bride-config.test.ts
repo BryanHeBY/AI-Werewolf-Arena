@@ -10,7 +10,7 @@ const read = async () =>
   JSON.parse(
     await readFile(
       new URL(
-        "../../../../configs.example/boards/awa_melbourne_ghost_bride_12_v1.json",
+        "../../../../../configs.example/boards/awa_melbourne_ghost_bride_12_v1.json",
         import.meta.url,
       ),
       "utf8",

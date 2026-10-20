@@ -13,7 +13,7 @@ for (const size of [6, 12])
   test(`public ${size}-seat sample parses and initializes the exact normal-N setup`, async () => {
     const json = await Bun.file(
       new URL(
-        `../../../../configs.example/boards/awa_netease_lonely_girl_${size}_v1.json`,
+        `../../../../../configs.example/boards/awa_netease_lonely_girl_${size}_v1.json`,
         import.meta.url,
       ),
     ).json();

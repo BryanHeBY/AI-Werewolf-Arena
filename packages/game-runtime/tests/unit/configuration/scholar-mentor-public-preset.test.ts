@@ -13,10 +13,7 @@ import { scholarMentorTwelveConfig } from "../../../src/rulesets/presets/scholar
 import { Role, type BoardConfig } from "../../../src/domain";
 const publicDefinition = JSON.parse(
   readFileSync(
-    new URL(
-      "../../../../../../configs.example/boards/awa_scholar_mentor_12_v1.json",
-      import.meta.url,
-    ),
+    new URL("../../../../../configs.example/boards/awa_scholar_mentor_12_v1.json", import.meta.url),
     "utf8",
   ),
 );
