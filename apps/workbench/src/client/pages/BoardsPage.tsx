@@ -10,6 +10,10 @@ import { BoardExplorer, BoardForm } from "../BoardExplorer";
 import { ConfigDetail } from "../ConfigDetail";
 import { DeleteDialog } from "../DeleteDialog";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
+import {
+  workbenchConfigLocation,
+  workbenchServiceMessage,
+} from "@ai-werewolf-arena/game-text/workbench-service";
 
 type Screen =
   | { mode: "list" }
@@ -113,7 +117,14 @@ export function BoardsPage({
                     </span>
                   ))}
                 </div>
-                {board.diagnostic && <p role="alert">{board.diagnostic.code}</p>}
+                {board.diagnostic && (
+                  <p role="alert">
+                    {workbenchServiceMessage(locale, board.diagnostic.code) ?? t("error")}
+                    {board.diagnostic.path && (
+                      <> · {workbenchConfigLocation(locale, board.diagnostic.path)}</>
+                    )}
+                  </p>
+                )}
                 <div className="actions">
                   <button onClick={() => setScreen({ mode: "view", board })}>
                     {configUiText(locale, "view")}
@@ -232,7 +243,7 @@ export function BoardsPage({
       )}
       {error && (
         <p className="notice error" role="alert">
-          {error}
+          {workbenchServiceMessage(locale, error) ?? t("error")}
         </p>
       )}
     </>

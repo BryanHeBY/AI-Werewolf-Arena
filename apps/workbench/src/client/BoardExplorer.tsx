@@ -9,6 +9,22 @@ import type { Translator } from "./types";
 import { asObject } from "./config-edit";
 import { BoardRuleFields } from "./BoardRuleFields";
 import { variantRuleSummary } from "./board-summary";
+
+/** 模板推荐是产品选择，不能用文件名长度决定自爆频率或选举规则。 */
+export function orderBoardTemplates(group: BoardCard[]): BoardCard[] {
+  const recommended = [
+    "twelve_player_standard",
+    "six_player_mvp",
+    "twelve_player_animal_dream_wait_final",
+  ];
+  const rank = (board: BoardCard) => {
+    const index = recommended.indexOf(board.id);
+    if (index >= 0) return index;
+    if (board.id === "twelve_player_windows") return 100;
+    return board.id.startsWith("twelve_player_") || board.id.startsWith("six_player_") ? 10 : 20;
+  };
+  return [...group].sort((a, b) => rank(a) - rank(b) || a.id.localeCompare(b.id));
+}
 export function BoardExplorer({
   boards,
   t,
@@ -83,7 +99,7 @@ function BoardGroup({
   locale: Locale;
   onChoose: (board: BoardCard) => void;
 }) {
-  const ordered = [...group].sort((a, b) => a.id.length - b.id.length),
+  const ordered = orderBoardTemplates(group),
     [selected, setSelected] = useState(ordered[0].id),
     board = group.find((b) => b.id === selected) ?? ordered[0];
   const special = board.roles.filter((r) => !["wolf", "villager"].includes(r.role));
@@ -109,7 +125,11 @@ function BoardGroup({
       {group.length > 1 && (
         <label className="variant-label">
           {t("variants")} · {group.length}
-          <select value={board.id} onChange={(e) => setSelected(e.target.value)}>
+          <select
+            aria-label={t("variants")}
+            value={board.id}
+            onChange={(e) => setSelected(e.target.value)}
+          >
             {ordered.map((b) => (
               <option value={b.id} key={b.id}>
                 {variantRuleSummary(b, group, locale) || b.id}

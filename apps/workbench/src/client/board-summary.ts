@@ -22,7 +22,7 @@ export function variantRuleSummary(board: BoardCard, group: BoardCard[], locale:
     });
   const current = fields(board),
     others = group.map(fields);
-  return Object.entries(current)
+  const summary = Object.entries(current)
     .filter(([path, value]) => {
       const leaf = path.split(".").at(-1)!;
       return (
@@ -40,4 +40,8 @@ export function variantRuleSummary(board: BoardCard, group: BoardCard[], locale:
       return `${role}${label}：${Array.isArray(value) ? value.map(format).join(" / ") : format(value)}`;
     })
     .join("；");
+  const windows = current["mechanisms.selfDestruct.enabledWindows"];
+  return Array.isArray(windows) && windows.includes("on_per_speech_gap")
+    ? `${boardLabel(locale, "frequentWindows")}${summary ? `；${summary}` : ""}`
+    : summary;
 }

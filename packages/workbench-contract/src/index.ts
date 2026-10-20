@@ -4,6 +4,7 @@
  */
 export type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 export type JsonObject = { [key: string]: Json };
+export { applyBoardRuleEdit } from "./board-rule-edit";
 export type ConfigKind = "backends" | "agents" | "games" | "boards";
 export interface ConfigDocument {
   kind: ConfigKind;

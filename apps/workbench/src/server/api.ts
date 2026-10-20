@@ -84,6 +84,8 @@ export function createWorkbench(options: WorkbenchOptions) {
             result = await (models ??= describeModelCatalog());
           else if (parts[1] === "board-rules" && request.method === "GET")
             result = describeBoardRuleCatalog();
+          else if (parts[1] === "board-rules" && request.method === "POST")
+            result = describeBoardRuleCatalog(body.board);
           else if (parts[1] === "platform-defaults" && request.method === "GET")
             result = await describePlatformDefaults(options.repository, options.configs);
           else if (parts[1] === "catalog" && request.method === "GET") {
