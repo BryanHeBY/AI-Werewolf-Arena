@@ -36,7 +36,8 @@ async function windowsProbe(pid?: number): Promise<string | null> {
   const command = windowsIdentityCommand(pid);
   const { stdout } = await execute(command.file, command.args, {
     windowsHide: true,
-    timeout: 5000,
+    // Windows 冷启动 PowerShell／CIM 可能超过 5 秒；保留有限预算，超时仍只返回未知身份。
+    timeout: 15000,
     maxBuffer: 16384,
     env: { ...process.env, ...command.environment },
   });

@@ -49,4 +49,5 @@ test("current supported platform returns repeatable startup and boot identities"
   expect(typeof boot).toBe("string");
   expect(boot).toBeTruthy();
   expect(await readBootId()).toBe(boot);
-}, 20000);
+  // Windows 的首次 PowerShell/CIM 冷启动及后续独立查询各有有限预算；不重试或跳过真实身份断言。
+}, 60000);
