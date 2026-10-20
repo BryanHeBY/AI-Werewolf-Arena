@@ -15,6 +15,7 @@ import { applySpeechScript } from "@ai-werewolf-arena/game-media/speech-script";
 import type { VideoProjectDefinition } from "@ai-werewolf-arena/game-media/video-project";
 import { publishVideoDirectory } from "./video/publication";
 import { videoSubtitlesSrt } from "@ai-werewolf-arena/game-media/video/subtitles";
+import { VIDEO_PROJECT_SNAPSHOT_HEADER } from "./video/project-snapshot";
 
 export async function compileSpeechVideo(options: {
   project: string;
@@ -121,7 +122,7 @@ export async function compileSpeechVideo(options: {
         : {}),
     };
     const output = path.join(publishedDirectory, `voiced-${version}.project.ts`);
-    const code = `/** 负责保存已备语音生成的项目。输入为锁定台词和音频，输出连续时间线；重新编译生成新版本，不手改此文件。 */\nimport { defineVideoProject } from ${JSON.stringify(contractImport)};\nexport default defineVideoProject(${JSON.stringify(result, null, 2)});\n`;
+    const code = `${VIDEO_PROJECT_SNAPSHOT_HEADER}\nimport { defineVideoProject } from ${JSON.stringify(contractImport)};\nexport default defineVideoProject(${JSON.stringify(result, null, 2)});\n`;
     const { plan } = compileLoadedVideo(loaded, result);
     await writeFile(path.join(candidate, path.basename(output)), code);
     await writeFile(

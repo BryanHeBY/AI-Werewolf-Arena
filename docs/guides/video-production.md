@@ -51,6 +51,8 @@ TMPDIR="$PWD/output/render-tmp" bun --no-env-file apps/video/scripts/produce-vid
 
 字幕位置由 `packages/game-media/src/themes/tokens.ts` 的 `subtitle.bottom` 统一控制。当前在1080p画面底部留144像素，给播放器章节标识和控制条保留空间，其他分辨率按画幅缩放。中央正文同步避开字幕安全区，带四行以上配置说明的开场页会压紧字号和标题间距，左右玩家栏位置保持不变；字幕延后400毫秒的时间规则独立于布局。调整位置后需要重渲画面，并使用新输出目录，不能只替换SRT或复用旧分段。
 
+工具生成的纯数据冻结稿按严格生成格式读取，保留原项目目录作为相对路径基准，兼容迁移前引用 `frontend/src/video-project` 的旧快照。带自定义代码的作者项目仍正常加载模块，不重写历史产物，也不恢复旧目录。新编译使用当前包导出定位契约和渲染入口；修改画面后仍需使用新目录重新输出。
+
 ## 音源、配乐与音效
 
 [`asset/audio/ambient-sources.json`](../../asset/audio/ambient-sources.json) 保存当前选定的音源下载地址、来源、许可、原件及处理后摘要、裁切与滤波参数。音频二进制继续保存在本机 `output/video-audio-library/`。

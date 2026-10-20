@@ -18,6 +18,10 @@ import {
 } from "../../../../../apps/video/scripts/render-video-artifact";
 import { getVideoSourceIdentity } from "../../../src/video/plan";
 import { replayCommandFailure } from "@ai-werewolf-arena/game-media/cli-error";
+import {
+  VIDEO_PROJECT_SNAPSHOT_HEADER,
+  readVideoProjectSnapshot,
+} from "../../../../../apps/video/scripts/video/project-snapshot";
 
 const fixture = path.resolve(
   import.meta.dir,
@@ -27,6 +31,41 @@ const example = path.resolve(
   import.meta.dir,
   "../../../../../apps/video/examples/video/custom-layers/project.tsx",
 );
+
+test("generated snapshots survive moved contract imports without changing their bytes or relative asset base", async () => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), "awa-frozen-project-"));
+  try {
+    const project = path.join(directory, "voiced.project.ts");
+    const replay = JSON.parse(await readFile(fixture, "utf8"));
+    const definition = {
+      input: fixture,
+      script: {
+        source: getVideoSourceIdentity(replay),
+        media: [{ id: "image", kind: "image", src: "portrait.png" }],
+      },
+    };
+    const source = `${VIDEO_PROJECT_SNAPSHOT_HEADER}\nimport { defineVideoProject } from "../../removed/frontend/src/video-project";\nexport default defineVideoProject(${JSON.stringify(definition, null, 2)});\n`;
+    await writeFile(project, source);
+    await writeFile(path.join(directory, "portrait.png"), "local image");
+    const prepared = await prepareVideo({ project });
+    expect(prepared.plan.source.sessionId).toBe(replay.sessionId);
+    expect(
+      prepared.assets.some((asset) => asset.source === path.join(directory, "portrait.png")),
+    ).toBe(true);
+    expect(await readFile(project, "utf8")).toBe(source);
+    expect(readVideoProjectSnapshot(source + "export const layers = {};\n")).toBeUndefined();
+    expect(
+      readVideoProjectSnapshot(source.replace(VIDEO_PROJECT_SNAPSHOT_HEADER, "// authored")),
+    ).toBeUndefined();
+    expect(() =>
+      readVideoProjectSnapshot(
+        source.replace(JSON.stringify(definition, null, 2), "{input: 'code'}"),
+      ),
+    ).toThrow("video_project_snapshot_invalid");
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
 
 test("loading and compiling remain usable without materializing an unrelated missing media file", async () => {
   const directory = await mkdtemp(path.join(os.tmpdir(), "awa-plan-only-"));

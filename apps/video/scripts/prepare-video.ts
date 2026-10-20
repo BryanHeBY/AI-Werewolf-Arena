@@ -13,6 +13,7 @@ import { applySpeechScript } from "@ai-werewolf-arena/game-media/speech-script";
 import { readVideoSource } from "./video/authoring";
 import { resolveReplayInput } from "@ai-werewolf-arena/project-paths";
 import { THEME_IDS, resolveTheme } from "@ai-werewolf-arena/game-media/themes";
+import { readVideoProjectSnapshot } from "./video/project-snapshot";
 
 export interface PrepareVideoOptions {
   input?: string;
@@ -51,9 +52,13 @@ export async function loadVideoProject(options: PrepareVideoOptions) {
   let layerNames: string[] = [];
   let themeSlotNames: string[] = [];
   if (projectPath) {
+    const source = await readFile(projectPath, "utf8");
+    const snapshot = readVideoProjectSnapshot(source);
     let module: Record<string, unknown> = projectPath.endsWith(".json")
-      ? { default: JSON.parse(await readFile(projectPath, "utf8")) }
-      : await import(pathToFileURL(projectPath).href);
+      ? { default: JSON.parse(source) }
+      : snapshot
+        ? { default: snapshot }
+        : await import(pathToFileURL(projectPath).href);
     const value = module.default;
     if (!value || typeof value !== "object" || Array.isArray(value))
       throw new Error("video_project_invalid");
