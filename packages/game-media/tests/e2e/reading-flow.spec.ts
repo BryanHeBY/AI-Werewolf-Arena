@@ -140,7 +140,7 @@ for (const [theme, locale, count, height, large] of [
     }
     const bounds = await page.locator('[data-surface="speech"]').boundingBox();
     const stage = await page.locator("[data-video-stage]").boundingBox();
-    // 短文仍按内容收缩，不能因长文上限升到90%而一律撑满。
+    // 短文仍按内容收缩，不能因长文阅读区扩大而一律撑满。
     expect(bounds!.height).toBeLessThan(stage!.height * 0.8);
     expect(bounds!.y).toBeGreaterThan(stage!.y);
     expect(bounds!.y + bounds!.height).toBeLessThan(stage!.y + stage!.height);
@@ -247,7 +247,8 @@ test.describe("whole-line speech holds on the physical pixel grid", () => {
       const card = await page.locator('[data-surface="speech"]').boundingBox();
       const stage = await page.locator("[data-video-stage]").boundingBox();
       expect(card!.height).toBeGreaterThan(stage!.height * 0.85);
-      expect(card!.height).toBeLessThanOrEqual(stage!.height * 0.9 + 2);
+      expect(card!.y).toBeGreaterThan(stage!.y);
+      expect(card!.y + card!.height).toBeLessThan(stage!.y + stage!.height);
       await expect
         .poll(async () => Number(await viewport.getAttribute("data-reading-line-stops")))
         .toBeGreaterThan(3);
@@ -626,4 +627,80 @@ test("a merged ballot gives a complete long result its own reading clock at the 
   await seek(page, shot.from + resolution.revealFrame);
   await expect(resultWindow).toHaveAttribute("data-reading-offset", "0");
   await expect(card.locator("[data-ballot-target]")).toHaveCount(12);
+});
+
+test("spoken final lines are visible before trailing silence, with a stable subtitle gap and reverse seek", async ({
+  page,
+}) => {
+  const body =
+    "独立跟读验收，非真实对局。请保留每句原话，停顿不代表正文仍需等待，最后一行要在开始播报时完整可见。".repeat(
+      24,
+    );
+  const replay = readingReplay(body, "zh-CN", 12);
+  const fps = 30,
+    from = 30;
+  const spans = Array.from(body, (text, index) => ({
+    text,
+    startMs: 100 + index * 120 + (index > body.length / 2 ? 6000 : 0),
+    endMs: 200 + index * 120 + (index > body.length / 2 ? 6000 : 0),
+  }));
+  const durationFrames = Math.ceil((spans.at(-1)!.endMs * fps) / 1000);
+  const plan = compileVideoPlan(replay, {
+    source: getVideoSourceIdentity(replay),
+    layout: "broadcast-v1",
+    width: 1920,
+    height: 1080,
+    fps,
+    subtitles: { lingerMs: 400 },
+    shotEdits: [
+      {
+        id: "event:1",
+        readingClock: "flow",
+        durationFrames: from + durationFrames + fps * 10,
+        speech: [
+          {
+            speaker: "player:2",
+            text: body,
+            from,
+            durationFrames,
+            subtitles: spans,
+            alignment: { source: "manual", spans },
+          },
+        ],
+      },
+    ],
+  });
+  await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
+  await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
+  const viewport = page.locator("[data-reading-viewport]");
+  await expect(viewport).toHaveAttribute("data-reading-ready", "true");
+  await expect(viewport).toHaveAttribute("data-reading-clock", "speech");
+  const lastLineStart = await viewport.locator("[data-reading-content]").evaluate((element) => {
+    const spans = Array.from(element.children);
+    const top = spans.at(-1)!.getBoundingClientRect().top;
+    return Number(
+      spans
+        .find((span) => Math.abs(span.getBoundingClientRect().top - top) < 1)!
+        .getAttribute("data-reading-start"),
+    );
+  });
+  const frame = from + Math.ceil((spans[lastLineStart]!.startMs * fps) / 1000);
+  await seek(page, frame);
+  await expectVisibleLastLine(viewport);
+  const offset = await pixelAlignedOffset(viewport);
+  expect(offset).toBeGreaterThan(0);
+  const card = (await page.locator('[data-surface="speech"]').boundingBox())!;
+  const subtitle = (await page.getByTestId("video-subtitle").locator("span").boundingBox())!;
+  const root = (await page.locator("[data-video-shot]").boundingBox())!;
+  const scale = root.width / plan.width;
+  expect(subtitle.y - card.y - card.height).toBeGreaterThan(0);
+  expect((subtitle.y - card.y - card.height) / scale).toBeLessThan(40);
+  await seek(page, 0);
+  await expect(viewport).toHaveAttribute("data-reading-offset", "0");
+  await seek(page, frame);
+  expect(await pixelAlignedOffset(viewport)).toBe(offset);
+  await expectVisibleLastLine(viewport);
+  await seek(page, plan.durationFrames - 1);
+  await expectVisibleLastLine(viewport);
+  await expect(page.getByTestId("video-subtitle")).toHaveCount(0);
 });

@@ -13,7 +13,7 @@ import type { GameOutcome, RoleId } from "@ai-werewolf-arena/game-contract";
 import type { VideoFrameView } from "./frame";
 import type { SceneContent } from "../presentation/scene-content";
 import type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
-import type { SpeechTextTiming } from "../speech-timing";
+import type { SpeechAlignment, SpeechTextTiming } from "../speech-timing";
 export type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
 
 export type JsonValue =
@@ -279,6 +279,8 @@ export interface SpeechCue {
   assetId?: string;
   /** 字幕时间相对于本段配音起点，单位毫秒；镜头平移不修改这些边界。 */
   subtitles?: SpeechTextTiming[];
+  /** 正文跟读使用原始对齐，不受字幕分段、关闭或延后显示影响。 */
+  alignment?: SpeechAlignment;
 }
 export interface MediaAsset {
   id: string;

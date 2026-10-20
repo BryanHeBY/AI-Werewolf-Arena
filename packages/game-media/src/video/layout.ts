@@ -7,8 +7,10 @@ import type { CameraTarget, LayerPoint, VideoLayoutId } from "./types";
 import type { ResolvedPlayerPresentation } from "../presentation";
 
 export interface VideoLayoutOptions {
-  /** 按整份计划固定预留两行底部配音字幕，间隙和镜头切换不触发舞台跳动。 */
+  /** 按整份计划固定预留底部配音字幕，间隙和镜头切换不触发舞台跳动。 */
   subtitleSafeArea?: boolean;
+  /** 全片最长字幕的UTF16长度；显式换行或旧计划未提供时仍保留完整安全高度。 */
+  subtitleMaxCharacters?: number;
   subtitle?: ThemeSubtitle;
   /** 只消费整局已完成匿名／显隐裁剪的资料；省略时保持旧广播几何，不从原始姓名或当前事件反推。 */
   playersPresentation?: readonly Pick<
@@ -51,15 +53,29 @@ export function createVideoLayout(
   const scale = Math.min(width / 1280, height / 720);
   const unit = Math.min(width / 1920, height / 1080);
   const subtitle = options.subtitle ?? createThemeVisualTokens(false).subtitle;
-  const regions = (x: number, regionWidth: number) => ({
-    subtitle: {
-      x,
-      y: height - ((id === "broadcast-v1" ? subtitle.bottom : 12) + subtitle.safeHeight) * unit,
-      width: regionWidth,
-      height: subtitle.safeHeight * unit,
-    },
-    footer: { x, y: height - 48 * unit, width: regionWidth, height: 32 * unit },
-  });
+  const regions = (x: number, regionWidth: number) => {
+    // 每字预留1.25em及两侧padding；只有全片均能保守容纳一行时才回收第二行，不能随字幕显隐跳动。
+    const singleLine =
+      options.subtitleMaxCharacters !== undefined &&
+      options.subtitleMaxCharacters * subtitle.fontSize * 1.25 * unit +
+        (40 + subtitle.paddingX * 2) * unit <=
+        regionWidth;
+    const safeHeight = singleLine
+      ? Math.min(
+          subtitle.safeHeight,
+          subtitle.fontSize * subtitle.lineHeight + subtitle.paddingY * 2,
+        )
+      : subtitle.safeHeight;
+    return {
+      subtitle: {
+        x,
+        y: height - ((id === "broadcast-v1" ? subtitle.bottom : 12) + safeHeight) * unit,
+        width: regionWidth,
+        height: safeHeight * unit,
+      },
+      footer: { x, y: height - 48 * unit, width: regionWidth, height: 32 * unit },
+    };
+  };
   if (id === "broadcast-v1") {
     const rows = Math.ceil(playerIds.length / 2);
     const metadata =
@@ -104,7 +120,7 @@ export function createVideoLayout(
     if (options.subtitleSafeArea)
       stage.height = Math.min(
         stage.height,
-        regions(stage.x, stage.width).subtitle.y - stage.y - 20 * unit,
+        regions(stage.x, stage.width).subtitle.y - stage.y - (subtitle.contentGap ?? 24) * unit,
       );
     return {
       id,

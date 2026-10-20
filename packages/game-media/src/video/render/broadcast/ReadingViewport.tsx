@@ -3,12 +3,25 @@
  * 正文由VideoFonts门挂载；量高只决定像素溢出，不回写时长／事实，不用CSS动画、定时器或scrollTop累加。
  * 每次首次量高与尺寸变更均阻塞Remotion到稳定commit，倒放或直接seek只改变进度对应的transform。
  */
-import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import {
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import { continueRender, delayRender, useCurrentScale, usePixelDensity } from "remotion";
 import { SceneText } from "./SceneText";
 import type { SceneCaption } from "./contracts";
 import type { VideoScene } from "../../types";
-import { readingLineStops, readingMotionOffset } from "./reading-motion";
+import {
+  readingLineStops,
+  readingMotionOffset,
+  speechReadingStops,
+  speechReadingOffset,
+  type ReadingRow,
+} from "./reading-motion";
 export { readingOffset } from "./reading-motion";
 interface Measurement {
   key: string;
@@ -18,6 +31,7 @@ interface Measurement {
   contentHeight: number;
   overflow: number;
   lineStops: number[];
+  rows: ReadingRow[];
 }
 export function ReadingViewport({
   caption,
@@ -86,27 +100,37 @@ export function ReadingViewport({
       const style = getComputedStyle(content.current);
       const rowHeight = Number.parseFloat(style.lineHeight);
       const padding = Number.parseFloat(style.paddingTop) + Number.parseFloat(style.paddingBottom);
-      const rows = rowHeight > 0 ? Math.max(0, Math.floor((height - padding) / rowHeight)) : 0;
+      const visibleRows =
+        rowHeight > 0 ? Math.max(0, Math.floor((height - padding) / rowHeight)) : 0;
       // 外层始终以全文为首选高度参与flex；内窗只向下取整，避免反过来让外层越量越矮。
       const windowHeight =
         wholeRows && contentHeight > height && rowHeight > 0
-          ? rows > 0
-            ? Math.min(height, rows * rowHeight + padding)
+          ? visibleRows > 0
+            ? Math.min(height, visibleRows * rowHeight + padding)
             : 0
           : height;
       const overflow = Math.max(0, contentHeight - windowHeight);
       const lineTops: number[] = [];
+      const rows: ReadingRow[] = [];
       if (motion === "line" && overflow > 0) {
         const origin = content.current.getBoundingClientRect().top;
         // 使用已排好版的inline片段，保留中英换行与空行；转换回composition坐标后去重同一视觉行。
-        const tops = Array.from(content.current.children)
+        const fragments = Array.from(content.current.children)
           .flatMap((node) =>
-            Array.from(node.getClientRects(), (rect) => (rect.top - origin) / compositionScale),
+            Array.from(node.getClientRects(), (rect) => ({
+              top: (rect.top - origin) / compositionScale,
+              start: Number(node.getAttribute("data-reading-start")),
+              visible: rect.width > 0 && rect.height > 0,
+            })),
           )
-          .sort((a, b) => a - b);
+          .filter((fragment) => fragment.visible)
+          .sort((a, b) => a.top - b.top || a.start - b.start);
         const tolerance = fontSize * lineHeight * 0.4;
-        for (const top of tops)
-          if (!lineTops.length || top - lineTops.at(-1)! > tolerance) lineTops.push(top);
+        for (const fragment of fragments)
+          if (!lineTops.length || fragment.top - lineTops.at(-1)! > tolerance) {
+            lineTops.push(fragment.top);
+            rows.push({ start: fragment.start, top: fragment.top - lineTops[0]! });
+          }
       }
       const next = {
         key: layoutKey,
@@ -117,6 +141,7 @@ export function ReadingViewport({
         contentHeight,
         overflow,
         lineStops: readingLineStops(lineTops, overflow),
+        rows,
       };
       const previous = measured.current;
       if (
@@ -167,17 +192,37 @@ export function ReadingViewport({
     pending.current.clear();
   }, [measurement]);
   const progress = caption.reading?.scrollProgress ?? 0;
-  const offset = readingMotionOffset(
-    wholeRows && current?.windowHeight === 0 ? 0 : (current?.overflow ?? 0),
-    progress,
-    {
-      motion,
-      transitionFrames: caption.reading?.transitionFrames,
-      scrollFrames: caption.reading?.scrollFrames,
-      stops: current?.lineStops,
-      pixelsPerUnit,
-    },
+  const speechStops = useMemo(
+    () =>
+      motion === "line" && current && caption.speechReading
+        ? speechReadingStops(
+            current.rows,
+            caption.speechReading.cues,
+            current.windowHeight,
+            current.overflow,
+          )
+        : undefined,
+    [motion, current, caption.speechReading?.cues],
   );
+  const offset =
+    speechStops && caption.speechReading
+      ? speechReadingOffset(
+          speechStops,
+          caption.speechReading.frame,
+          caption.reading?.transitionFrames ?? 0,
+          pixelsPerUnit,
+        )
+      : readingMotionOffset(
+          wholeRows && current?.windowHeight === 0 ? 0 : (current?.overflow ?? 0),
+          progress,
+          {
+            motion,
+            transitionFrames: caption.reading?.transitionFrames,
+            scrollFrames: caption.reading?.scrollFrames,
+            stops: current?.lineStops,
+            pixelsPerUnit,
+          },
+        );
   return (
     <div
       ref={viewport}
@@ -190,6 +235,7 @@ export function ReadingViewport({
       data-reading-overflow={current?.overflow ?? 0}
       data-reading-offset={offset}
       data-reading-progress={progress}
+      data-reading-clock={speechStops ? "speech" : "scene"}
       style={{
         minHeight: 0,
         minWidth: 0,

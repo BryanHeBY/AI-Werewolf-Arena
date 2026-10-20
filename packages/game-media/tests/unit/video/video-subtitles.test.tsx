@@ -108,7 +108,18 @@ test("subtitles use shot plus speech offsets, have half-open boundaries and foll
   const original = buildVideoFrame({ ...plan, subtitles: undefined }, 78).layout;
   expect(during.seats).toEqual(original.seats);
   expect(during.stage.height).toBeLessThan(original.stage.height);
-  expect(during.stage.y + during.stage.height).toBeLessThan(plan.height - 144 - 2 * 36 * 1.4 - 8);
+  expect(during.subtitle.height).toBeCloseTo(36 * 1.4 + 8);
+  expect(during.stage.y + during.stage.height + 24).toBeCloseTo(during.subtitle.y);
+});
+test("the whole-plan subtitle reserve keeps two lines for long or explicitly wrapped text", () => {
+  const { plan } = fixture();
+  for (const text of ["字幕".repeat(40), "第一行\n第二行"]) {
+    const wrapped = { ...plan, subtitles: [{ ...plan.subtitles![0]!, text }] };
+    const layout = buildVideoFrame(wrapped, 78).layout;
+    expect(layout.subtitle.height).toBe(108);
+    expect(layout.stage.y + layout.stage.height + 24).toBeCloseTo(layout.subtitle.y);
+    expect(buildVideoFrame(wrapped, 104).layout).toEqual(layout);
+  }
 });
 test("broadcast subtitles reserve a scaled player-controls band without moving the roster", () => {
   const { plan } = fixture();

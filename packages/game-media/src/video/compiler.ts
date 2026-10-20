@@ -306,6 +306,7 @@ export function compileVideoPlan(
     scene.content = sceneContent(scene, committedFact ? undefined : readRecord(event).record);
     const compiledVoice = compileSpeechTrack(speech, {
       id,
+      fps,
       shotFrom: cursor,
       durationFrames,
       media,

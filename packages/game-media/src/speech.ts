@@ -222,6 +222,7 @@ export function preparedSpeech(
       assetId,
       durationFrames,
       ...(subtitles?.length ? { subtitles } : {}),
+      ...(entry.alignment ? { alignment: entry.alignment } : {}),
     },
     durationFrames,
   };

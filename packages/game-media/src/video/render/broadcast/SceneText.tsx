@@ -46,11 +46,18 @@ export const SceneText = memo(
       <>
         {readingTextRuns(page, caption.protectedTerms).map((run) =>
           run.keep ? (
-            <span key={run.start} data-reading-token style={{ whiteSpace: "nowrap" }}>
+            <span
+              key={run.start}
+              data-reading-start={run.start}
+              data-reading-token
+              style={{ whiteSpace: "nowrap" }}
+            >
               {slice(run.start, run.end)}
             </span>
           ) : (
-            <span key={run.start}>{slice(run.start, run.end)}</span>
+            <span key={run.start} data-reading-start={run.start}>
+              {slice(run.start, run.end)}
+            </span>
           ),
         )}
       </>

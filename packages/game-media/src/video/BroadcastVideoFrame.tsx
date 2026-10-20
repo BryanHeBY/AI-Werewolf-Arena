@@ -31,6 +31,7 @@ import { CaptionCounter } from "./render/broadcast/SceneText";
 import { playerLabels } from "./render/broadcast/PlayerVisual";
 import { quiet, twoLines, alpha } from "./render/broadcast/style";
 import { broadcastSceneLayout } from "./render/broadcast/scene-layout";
+import { speechReadingCues } from "./render/broadcast/speech-reading";
 export { broadcastSceneLayout } from "./render/broadcast/scene-layout";
 
 export function BroadcastVideoFrame({
@@ -114,7 +115,22 @@ export function BroadcastVideoFrame({
     }),
   );
   const appearance = { theme, palette, cards, surface, gothic, night, visibleRoles };
-  const metrics = { scale, stage, readingWidth, bodySize, lineHeight, padding };
+  const speechReading = useMemo(
+    () =>
+      layout === "speech" && view.reading
+        ? speechReadingCues(scene.body, view.shot.speech, plan.fps)
+        : undefined,
+    [layout, Boolean(view.reading), scene.body, view.shot.speech, plan.fps],
+  );
+  const metrics = {
+    scale,
+    stage,
+    readingWidth,
+    bodySize,
+    lineHeight,
+    padding,
+    subtitleSafeArea: Boolean(plan.subtitles?.length),
+  };
   const caption = {
     text: view.caption,
     offset: view.captionOffset,
@@ -123,6 +139,7 @@ export function BroadcastVideoFrame({
     scheduled: Boolean(view.shot.captionPageRanges),
     reading: view.reading,
     protectedTerms,
+    ...(speechReading ? { speechReading: { cues: speechReading, frame: view.localFrame } } : {}),
   };
   const sceneProps = { scene, caption, localFrame: view.localFrame, metrics, appearance, locale };
   const content =

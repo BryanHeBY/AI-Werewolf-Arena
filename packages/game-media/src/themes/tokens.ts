@@ -102,6 +102,8 @@ export interface ThemeSubtitle {
   safeHeight: number;
   /** 以1080p为基准给播放器章节及控制条留出底部距离，由统一布局随画幅缩放。 */
   bottom: number;
+  /** 正文下缘与字幕安全区的间距，和bottom一样按画幅缩放。 */
+  contentGap: number;
 }
 export interface ThemeOpening {
   inset: number;
@@ -149,6 +151,7 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
       radius: 5,
       safeHeight: 108,
       bottom: 144,
+      contentGap: 24,
     },
     opening: {
       inset: 32,
@@ -198,7 +201,7 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
       cardOpacity: 0.92,
       heroOpacity: 0.24,
       readingMaxHeightRatio: 0.8,
-      speechReadingMaxHeightRatio: 0.9,
+      speechReadingMaxHeightRatio: 1,
       palette: { day, night },
     },
     frame: {

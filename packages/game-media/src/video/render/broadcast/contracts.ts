@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import type { ResolvedTheme, ThemePalette, ThemeSlot, themeSurface } from "../../../themes";
 import type { VideoFrameView } from "../../frame";
 import type { VideoPlan, VideoScene } from "../../types";
+import type { SpeechReadingCue } from "./speech-reading";
 
 export type BroadcastSceneLayout =
   "speech" | "ballot" | "action" | "end" | "phase" | "settlement" | "notice";
@@ -27,6 +28,8 @@ export interface SceneCaption {
   };
   /** 只来自已裁剪展示资料，保护换行而不推断原话意图或身份。 */
   readonly protectedTerms?: readonly string[];
+  /** 镜头局部帧与真实文字锚点独立于字幕的延后显示；不匹配的说明页不强行跟读。 */
+  readonly speechReading?: { cues: readonly SpeechReadingCue[]; frame: number };
 }
 export interface SceneMetrics {
   readonly scale: number;
@@ -35,6 +38,7 @@ export interface SceneMetrics {
   readonly bodySize: number;
   readonly lineHeight: number;
   readonly padding: number;
+  readonly subtitleSafeArea?: boolean;
 }
 export interface SceneAppearance {
   readonly theme: ResolvedTheme;

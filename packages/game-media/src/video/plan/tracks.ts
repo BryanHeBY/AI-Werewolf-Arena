@@ -4,6 +4,7 @@
  */
 import { fail, integer, finite, nonempty, json } from "./validation";
 import { isVideoSpeaker } from "../speakers";
+import { validateSpeechAlignment } from "../../speech-timing";
 import type {
   CompiledSpeechCue,
   SpeechCue,
@@ -197,6 +198,7 @@ export function compileSpeechTrack(
     id: string;
     shotFrom: number;
     durationFrames: number;
+    fps: number;
     media: MediaAsset[];
     playerIds: number[];
   },
@@ -218,6 +220,7 @@ export function compileSpeechTrack(
       1,
     );
     if (from + duration > durationFrames) fail("speech_out_of_shot");
+    if (cue.alignment) validateSpeechAlignment(cue.alignment, (duration * 1000) / options.fps);
     if (asset)
       audio.push({
         id: `speech:${id}:${cueIndex}`,

@@ -69,6 +69,10 @@ export function buildVideoFrame(plan: VideoPlan, requestedFrame: number) {
     {
       playersPresentation: plan.playersPresentation,
       subtitleSafeArea: Boolean(plan.subtitles?.length),
+      subtitleMaxCharacters: plan.subtitles?.reduce(
+        (maximum, cue) => Math.max(maximum, /[\r\n]/.test(cue.text) ? Infinity : cue.text.length),
+        0,
+      ),
       subtitle: plan.theme.definition.subtitle,
     },
   );

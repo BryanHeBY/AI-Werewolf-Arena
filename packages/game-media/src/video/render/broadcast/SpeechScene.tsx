@@ -55,7 +55,7 @@ export function SpeechScene({
     (scene.visual?.recipientIds.length ? 32 : 0) +
     (scene.visual?.dialogue?.originalSpeakerId !== undefined ? 32 : 0);
   const safeTop = scene.editorial ? 120 * scale : 28 * scale;
-  const safeBottom = 32 * scale;
+  const safeBottom = metrics.subtitleSafeArea ? 0 : 32 * scale;
   const maxHeight = Math.min(
     stage.height * surface.speechReadingMaxHeightRatio,
     stage.height - safeTop - safeBottom,
@@ -72,9 +72,7 @@ export function SpeechScene({
       style={{
         ...localSurface(appearance, scale),
         position: "absolute",
-        bottom: flow ? undefined : safeBottom,
-        top: flow ? safeTop + (stage.height - safeTop - safeBottom) / 2 : undefined,
-        transform: flow ? "translateY(-50%)" : undefined,
+        bottom: safeBottom,
         left: (stage.width - readingWidth) / 2,
         width: readingWidth,
         height,
