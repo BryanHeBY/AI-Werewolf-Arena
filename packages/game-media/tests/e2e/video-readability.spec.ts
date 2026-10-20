@@ -3,6 +3,7 @@
  * 镜头只用于定位；死亡名单、原文折叠和布局中心均由字面预期及实际DOM几何核对，倒看不能提前提交连锁波。
  */
 import { expect, test, type Page } from "@playwright/test";
+import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { compileVideoPlan } from "../../src/video/compiler";
 import { getVideoSourceIdentity } from "../../src/video/source";
@@ -125,7 +126,9 @@ test("the complete phase label stays at the canvas center despite unequal title/
       { locale, timeZone: "UTC" },
     );
     await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-    await page.goto("/video.html");
+    await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
+    // 两个应用的根路径不同；独立页面标题防止测试误落到复盘的 SPA fallback。
+    await expect(page).toHaveTitle("AI Werewolf Arena · Video Preview");
     await seek(page, plan.shots[1]!.from + 4);
     await page.evaluate(() => document.fonts.ready);
     const canvas = await page.locator('[data-video-layout="broadcast-v1"]').boundingBox();
@@ -149,6 +152,7 @@ test("Web shows structured identities and committed waves once, keeps the origin
   const plan = compileVideoPlan(doc);
   await page.route("**/api/replay", (route) => route.fulfill({ json: doc }));
   await page.goto("/");
+  await expect(page).toHaveTitle("AI Werewolf Arena · Replay Studio");
   await seek(page, 4);
   const current = page.locator(".current-event");
   await expect(current.locator("[data-lineup-player]")).toHaveCount(12);

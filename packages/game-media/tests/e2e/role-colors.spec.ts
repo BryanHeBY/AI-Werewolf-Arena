@@ -3,6 +3,7 @@
  * 颜色/名单由字面预期指定；狼美人投刀与普通狼人必须同色，未知底牌不从技能或报告反推，左右渐变须镜像。
  */
 import { expect, test, type Page } from "@playwright/test";
+import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { compileVideoPlan } from "../../src/video/compiler";
 import { getVideoEventFrame } from "../../src/video/frame";
@@ -104,7 +105,7 @@ for (const theme of ["gothic-v1", "minimal-v1"] as const)
       theme: { id: theme },
     });
     await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-    await page.goto("/video.html");
+    await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
     const card = (id: number) => page.locator(`[data-composition-player="${id}"]`);
     await seek(page, plan, 1);
     for (const id of [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12]) {

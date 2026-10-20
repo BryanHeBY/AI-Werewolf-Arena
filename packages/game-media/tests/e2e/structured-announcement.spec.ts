@@ -3,6 +3,7 @@
  * 身份、颜色与原文来自独立fixture字面值；计划只定位揭晓／尾帧，不从scene.content自产预期，不执行对局或TTS。
  */
 import { expect, test, type Page } from "@playwright/test";
+import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
 import { mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -88,7 +89,7 @@ for (const [locale, theme, large] of [
       { locale, timeZone: "UTC" },
     );
     await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-    await page.goto("/video.html");
+    await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
     const grid = page.locator('[data-announcement-kind="lineup"]');
     await expect(grid).toBeVisible();
     await expect(grid.locator("[data-lineup-player]")).toHaveCount(12);

@@ -3,6 +3,11 @@
  * 输出为 Playwright 配置和使用登记 sample 归档的本地服务命令。只管理测试启动边界，复盘渲染和游戏规则仍归应用 owner。
  */
 import { defineConfig, devices } from "@playwright/test";
+import { fileURLToPath } from "node:url";
+import {
+  REPLAY_BROWSER_ORIGIN,
+  VIDEO_BROWSER_ORIGIN,
+} from "../../packages/game-media/tests/support/browser-hosts";
 
 export default defineConfig({
   testDir: "../../packages/game-media/tests/e2e",
@@ -12,7 +17,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: REPLAY_BROWSER_ORIGIN,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     headless: process.env.PLAYWRIGHT_HEADLESS !== "false",
@@ -28,16 +33,35 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: "bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173",
-    // 显式环境字段在 Windows 和 Unix 具有相同含义，避免 shell 前缀赋值。
-    env: {
-      ...process.env,
-      AWA_REPLAY_INPUT:
-        "../../packages/game-media/tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
+  webServer: [
+    {
+      command:
+        "bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173 --strictPort",
+      cwd: fileURLToPath(new URL("./", import.meta.url)),
+      // 显式环境字段在 Windows 和 Unix 具有相同含义，避免 shell 前缀赋值。
+      env: {
+        ...process.env,
+        AWA_REPLAY_INPUT:
+          "../../packages/game-media/tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
+      },
+      url: `${REPLAY_BROWSER_ORIGIN}/src/main.tsx`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120000,
     },
-    url: "http://127.0.0.1:4173/src/main.tsx",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000,
-  },
+    {
+      // 视频拥有自己的 HTML 和 Vite 插件；不能借复盘的 SPA fallback 充当预览入口。
+      command:
+        "bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4174 --strictPort",
+      cwd: fileURLToPath(new URL("../video/", import.meta.url)),
+      env: {
+        ...process.env,
+        // 每个用例仅通过 route mock 提供计划，禁止读取调用者本地准备目录或项目模块。
+        AWA_VIDEO_PLAN_DIR: "",
+        AWA_VIDEO_PROJECT_ENTRY: "",
+      },
+      url: `${VIDEO_BROWSER_ORIGIN}/src/video-preview.tsx`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120000,
+    },
+  ],
 });

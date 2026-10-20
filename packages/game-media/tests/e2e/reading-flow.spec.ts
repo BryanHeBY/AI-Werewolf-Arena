@@ -4,6 +4,7 @@
  * 不运行游戏或模型，不改历史fixture；反向seek恢复同一位移，延迟真实字体证明未就绪时正文不能提前量高。
  */
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
 import { readFileSync } from "node:fs";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { compileVideoPlan } from "../../src/video/compiler";
@@ -122,7 +123,7 @@ for (const [theme, locale, count, height, large] of [
       { locale, timeZone: "UTC" },
     );
     await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-    await page.goto("/video.html");
+    await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
     const viewport = page.locator("[data-reading-viewport]");
     await expect(viewport).toHaveAttribute("data-reading-ready", "true");
     await expect(viewport.locator("[data-reading-content]")).toHaveText(ordinary);
@@ -173,7 +174,7 @@ for (const [theme, locale, height, fps, large, reduced] of [
     const end = reading.from + reading.durationFrames - reading.tailHoldFrames;
     const middle = Math.floor((start + end) / 2);
     await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-    await page.goto("/video.html");
+    await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
     const viewport = page.locator("[data-reading-viewport]");
     await expect(viewport).toHaveAttribute("data-reading-ready", "true");
     await expect(viewport).toHaveAttribute("data-reading-motion", "continuous");
@@ -238,7 +239,7 @@ test.describe("whole-line speech holds on the physical pixel grid", () => {
       const start = shot.from + reading.from + reading.headHoldFrames;
       const end = shot.from + reading.from + reading.durationFrames - reading.tailHoldFrames;
       await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-      await page.goto("/video.html");
+      await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
       const viewport = page.locator("[data-reading-viewport]");
       await expect(viewport).toHaveAttribute("data-reading-ready", "true");
       await expect(viewport).toHaveAttribute("data-reading-motion", "line");
@@ -346,7 +347,7 @@ for (const mode of ["static", "legacy-continuous"] as const)
     const end = shot.from + reading.from + reading.durationFrames - reading.tailHoldFrames;
     const middle = Math.floor((start + end) / 2);
     await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-    await page.goto("/video.html");
+    await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
     const viewport = page.locator("[data-reading-viewport]");
     await expect(viewport).toHaveAttribute("data-reading-ready", "true");
     await expect(viewport).toHaveAttribute("data-reading-motion", mode);
@@ -387,7 +388,7 @@ test("a delayed real project font holds the reading subtree until the exact face
     await route.fulfill({ contentType: "font/woff2", body: bytes });
   });
   await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-  await page.goto("/video.html", { waitUntil: "domcontentloaded" });
+  await page.goto(`${VIDEO_BROWSER_ORIGIN}/`, { waitUntil: "domcontentloaded" });
   try {
     await expect.poll(() => requested).toBe(true);
     await expect(page.locator("[data-reading-viewport]")).toHaveCount(0);
@@ -455,7 +456,7 @@ test("switching adjacent short and long speeches remeasures the same reading win
   const reading = long.reading!;
   const tail = long.from + reading.from + reading.durationFrames - reading.tailHoldFrames;
   await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-  await page.goto("/video.html");
+  await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
   const viewport = page.locator("[data-reading-viewport]");
   const card = page.locator('[data-surface="speech"]');
   const stage = await page.locator("[data-video-stage]").boundingBox();
@@ -553,7 +554,7 @@ test("a long authored ballot keeps its complete explanation and all twelve weigh
   );
   const shot = plan.shots[0]!;
   await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-  await page.goto("/video.html");
+  await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
   await seek(page, shot.from + shot.scene.cues.impact);
   const card = page.locator('[data-surface="ballot"]');
   await expect(page.locator("[data-scene-ballot]")).toHaveCount(1);
@@ -594,7 +595,7 @@ test("a merged ballot gives a complete long result its own reading clock at the 
   const shot = plan.shots[0]!;
   const resolution = shot.scene.resolution!;
   await page.route("**/api/video/plan", (route) => route.fulfill({ json: plan }));
-  await page.goto("/video.html");
+  await page.goto(`${VIDEO_BROWSER_ORIGIN}/`);
   await seek(page, shot.from + shot.scene.cues.impact);
   const card = page.locator('[data-surface="ballot"]');
   await expect(page.locator("[data-scene-ballot]")).toHaveCount(1);
