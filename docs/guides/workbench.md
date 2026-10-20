@@ -16,7 +16,7 @@ bun run workbench
 # 打开 http://127.0.0.1:4310
 ```
 
-根命令先构建客户端，再启动本地服务。已有 `configs/`、`record/`、`output/` 都保留。首次访问配置 API 时，缺失的 `runtime/backends.json` 和 `runtime/agents.json` 自动补为 `{ "schemaVersion": 2, "items": {} }`。已有文件（包括空文件或坏 JSON）保留原内容，不自动导入占位连接、认证或游戏。首页和 Agent 页引导“配置 Agent”，通过平台向导填写自己的认证；首个 Agent 自动成为默认值，后续添加保留已选择的默认 Agent。
+根命令先构建客户端，再启动本地服务。已有 `configs/`、`record/`、`output/` 都保留。首次读取配置目录或运行文档时，缺失的 `runtime/backends.json` 和 `runtime/agents.json` 自动补为 `{ "schemaVersion": 2, "items": {} }`；校验请求不初始化目录或写文件。已有文件（包括空文件或坏 JSON）保留原内容，不自动导入占位连接、认证或游戏。首页和 Agent 页引导“配置 Agent”，通过平台向导填写自己的认证；首个 Agent 自动成为默认值，后续添加保留已选择的默认 Agent。
 
 ```bash
 bun run workbench -- --configs-dir ./my-configs --record-root-dir ./my-records --port 4311

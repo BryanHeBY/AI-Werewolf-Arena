@@ -68,8 +68,15 @@ export function createWorkbench(options: WorkbenchOptions) {
             if (text.length > 2_000_000) throw new WorkbenchError("request_too_large", 413);
             body = objectDocument(text);
           }
-          // 只在配置请求中补齐空运行文件；浏览首页即可配置首个 Agent，不自动导入示例或认证。
-          if (["catalog", "documents", "validate", "codex-import", "test-agent"].includes(parts[1]))
+          // 首次浏览目录或运行文档时补空骨架；校验、连接测试和认证导入均只消费已有配置。
+          if (
+            request.method === "GET" &&
+            (parts[1] === "catalog" ||
+              (parts[1] === "documents" &&
+                parts.length === 4 &&
+                ["backends", "agents"].includes(parts[2]) &&
+                parts[3] === parts[2]))
+          )
             await documents.ensureRuntime();
           let result: unknown;
           if (parts[1] === "health" && request.method === "GET") result = { status: "ok" };

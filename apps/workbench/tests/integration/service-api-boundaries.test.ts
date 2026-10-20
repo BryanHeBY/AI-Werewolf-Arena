@@ -124,7 +124,7 @@ test("HTTP deletion validates origins, revision and references before touching l
     await fs.rm(f.root, { recursive: true, force: true });
   }
 });
-test("initialization preserves a separate example library when a local board has the same ID", async () => {
+test("catalog keeps templates independent from local boards without the retired example import", async () => {
   const f = await fixture();
   try {
     const example = await (await f.request("board-template/six_player_mvp?source=example")).json();
@@ -134,8 +134,12 @@ test("initialization preserves a separate example library when a local board has
     await f.app.documents.save({ ...original, text: JSON.stringify(local) }, (value) =>
       f.app.configs.validate("boards", "six_player_mvp", value),
     );
-    expect((await f.request("initialize", "POST", {})).status).toBe(200);
+    const saved = await f.app.documents.read("boards", "six_player_mvp");
+    // 批量占位导入入口返回 404；读取目录仍须保留本地变体和独立的规则模板。
+    expect((await f.request("initialize", "POST", {})).status).toBe(404);
     const catalog = await (await f.request("catalog")).json();
+    expect(await f.app.documents.read("boards", "six_player_mvp")).toEqual(saved);
+    expect(await f.app.documents.list("games")).toEqual(["game"]);
     expect(
       catalog.boards.find((board: { id: string }) => board.id === "six_player_mvp"),
     ).toMatchObject({

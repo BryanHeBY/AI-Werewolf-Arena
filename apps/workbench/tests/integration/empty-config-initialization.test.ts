@@ -4,6 +4,42 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { createWorkbench } from "../../src/server/api";
+
+test("validation and retired example import do not bootstrap or modify an empty config root", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-readonly-validation-"));
+  try {
+    const application = createWorkbench({
+      repository: path.resolve(import.meta.dir, "../../../.."),
+      configs: path.join(root, "configs"),
+      records: path.join(root, "record"),
+      jobs: path.join(root, "jobs"),
+    });
+    for (const kind of ["boards", "backends", "agents", "games"]) {
+      const response = await application.fetch(
+        new Request("http://127.0.0.1:4310/api/validate", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ kind, name: kind, text: "{}" }),
+        }),
+      );
+      expect(response.status).toBe(200);
+      expect(await response.json()).toMatchObject({ valid: false });
+      expect(await fs.readdir(root)).toEqual([]);
+    }
+    const retired = await application.fetch(
+      new Request("http://127.0.0.1:4310/api/initialize", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: "{}",
+      }),
+    );
+    expect(retired.status).toBe(404);
+    expect(await fs.readdir(root)).toEqual([]);
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+
 test("empty config startup creates only runtime skeletons without placeholder examples", async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-empty-initialize-")),
     configs = path.join(root, "configs");
