@@ -17,12 +17,14 @@ import {
   buildAgentOptions,
   nativeObject,
   requiresCodexImport,
+  nativeModelTier,
   type ModelSummary,
 } from "./agent-platforms";
 import { agentText } from "@ai-werewolf-arena/game-text/workbench-agent";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 import { workbenchServiceMessage } from "@ai-werewolf-arena/game-text/workbench-service";
 import { AgentConnectionTest } from "./AgentConnectionTest";
+import { AgentThinkingField, AgentConnectionInfo } from "./AgentModelSettings";
 interface PlatformDefaults {
   claudeCode: {
     supported: boolean;
@@ -50,17 +52,19 @@ export function AgentWizard({
     [name, setName] = useState(""),
     [key, setKey] = useState(""),
     [model, setModel] = useState(""),
-    [thinking, setThinking] = useState("medium"),
+    [thinking, setThinking] = useState(""),
     [thinkingTouched, setThinkingTouched] = useState(false),
     [fast, setFast] = useState(false),
     [baseURL, setBaseURL] = useState(""),
     [backend, setBackend] = useState(""),
     [command, setCommand] = useState(""),
-    [args, setArgs] = useState("[]"),
+    [args, setArgs] = useState(""),
     [providerInput, setProviderInput] = useState(""),
     [environment, setEnvironment] = useState("{}"),
     [native, setNative] = useState("{}"),
     [nativeOptions, setNativeOptions] = useState("{}"),
+    [concurrency, setConcurrency] = useState("2"),
+    [initializeTimeout, setInitializeTimeout] = useState("45000"),
     [createdConnection, setCreatedConnection] = useState(""),
     [defaults, setDefaults] = useState<PlatformDefaults>(),
     [authMode, setAuthMode] = useState("subscription"),
@@ -92,20 +96,23 @@ export function AgentWizard({
     choices[0];
   const modelId = model.trim() || (platform.kind === "pi" ? (suggested?.id ?? "") : "");
   const currentModel = choices.find((m) => m.id === modelId);
-  const thinkingLevels =
-    platform.kind === "llm"
-      ? ["none", "minimal", "low", "medium", "high", "xhigh"]
-      : currentModel
-        ? currentModel.thinkingLevels.length
-          ? currentModel.thinkingLevels
-          : ["off"]
-        : ["off", "minimal", "low", "medium", "high", "xhigh", "max"];
-  useEffect(() => {
-    if (!thinkingLevels.includes(thinking)) setThinking(thinkingLevels[0]);
-  }, [modelId, provider, platformId, models, thinking]);
+  let optionDraft: JsonObject = {};
+  let nativeTier = "";
+  try {
+    optionDraft = nativeObject(nativeOptions);
+    nativeTier = nativeModelTier(nativeObject(native), provider, modelId);
+  } catch {
+    /* 保存时统一报告 JSON 错误，输入时保留原草稿。 */
+  }
+  const thinkingOptions = {
+    ...optionDraft,
+    ...(thinking ? { defaultThinkingLevel: thinking, reasoningEffort: thinking } : {}),
+  };
   const dirty = !!(
     native !== "{}" ||
     nativeOptions !== "{}" ||
+    concurrency !== "2" ||
+    initializeTimeout !== "45000" ||
     environment !== "{}" ||
     providerInput ||
     name ||
@@ -115,7 +122,7 @@ export function AgentWizard({
     instructions ||
     baseURL ||
     backend ||
-    args !== "[]" ||
+    args !== "" ||
     fast ||
     thinkingTouched ||
     authSource ||
@@ -134,11 +141,13 @@ export function AgentWizard({
     setKey("");
     setModel("");
     setCommand("");
-    setArgs("[]");
+    setArgs("");
     setBaseURL("");
     setBackend("");
     setFast(false);
-    setThinking("medium");
+    setThinking("");
+    setConcurrency("2");
+    setInitializeTimeout("45000");
     setThinkingTouched(false);
     setAuthMode("subscription");
     setInstructions(undefined);
@@ -154,6 +163,30 @@ export function AgentWizard({
       if (platform.kind !== "acp" && !modelId) throw Error("model_required");
       if (catalog.agents.some((a) => a.name === name)) throw Error("agent_already_exists");
       const connection = backend || createdConnection || `${name}_connection`;
+      // 先完成本地字段检查，避免高级参数冲突或未知模型留下半份连接。
+      const options = buildAgentOptions(
+        platform,
+        provider,
+        modelId,
+        thinking,
+        nativeObject(nativeOptions),
+      );
+      if (platform.kind === "pi") {
+        const host = nativeObject(!backend && !createdConnection ? native : "{}");
+        const registered = asObject(asObject(host.models).providers)[provider];
+        const customModels = asObject(registered).models;
+        const savedConnection = catalog.backends.find((item) => item.name === connection);
+        const declared = savedConnection?.registeredModels?.[provider] ?? [];
+        if (
+          !models.some((item) => item.provider === provider && item.id === modelId) &&
+          !declared.includes(modelId) &&
+          !(
+            Array.isArray(customModels) &&
+            customModels.some((item) => asObject(item).id === modelId)
+          )
+        )
+          throw Error(models.length ? "unknown_pi_model" : "models_unavailable");
+      }
       if (
         backend &&
         !compatibleConnection(
@@ -168,14 +201,14 @@ export function AgentWizard({
           raw = JSON.parse(doc.text) as JsonObject;
         if (Object.hasOwn(asObject(raw.items), connection)) throw Error("backend_already_exists");
         let launchCommand = command,
-          launchArgs = args,
+          launchArgs = args.trim() || "[]",
           launchEnv = environment;
         if (platform.id === "claude-code") {
           const preset = defaults?.claudeCode;
           if (!preset) throw Error("platform_defaults_unavailable");
           if (!preset.supported) throw Error("linuxOnly");
           launchCommand = command.trim() || preset.command;
-          launchArgs = args === "[]" ? JSON.stringify(preset.args) : args;
+          launchArgs = args.trim() ? args : JSON.stringify(preset.args);
           const env: JsonObject = { ...preset.env, ...nativeObject(environment) };
           if (authMode === "subscription")
             env.ACP_AUTH_SOURCE = authSource.trim() || preset.authSource;
@@ -210,6 +243,8 @@ export function AgentWizard({
             args: launchArgs,
             env: launchEnv,
             native,
+            maxConcurrentRequests: concurrency,
+            initializeTimeoutMs: initializeTimeout,
           }),
         };
         await api("documents/backends/backends", {
@@ -254,13 +289,6 @@ export function AgentWizard({
         raw = JSON.parse(doc.text) as JsonObject;
       // 目录刷新前可能新增同名 Agent；基于刚读取的原文件检查，不能覆盖外部新条目。
       if (Object.hasOwn(asObject(raw.items), name)) throw Error("agent_already_exists");
-      const options = buildAgentOptions(
-        platform,
-        provider,
-        modelId,
-        thinking,
-        nativeObject(nativeOptions),
-      );
       raw.items = {
         ...asObject(raw.items),
         [name]: {
@@ -280,7 +308,32 @@ export function AgentWizard({
       setMessage(t("saved"));
       onSaved();
     } catch (error) {
-      setError(error instanceof Error ? error.message : "request_failed");
+      const codes = {
+        model_required: "modelMissing",
+        provider_required: "providerMissing",
+        api_key_required: "keyMissing",
+        connection_fields_required: "fieldsMissing",
+        acp_command_required: "commandMissing",
+        invalid_arguments: "invalidArgs",
+        invalid_environment: "invalidEnvironment",
+        agent_already_exists: "duplicateAgent",
+        backend_already_exists: "duplicateBackend",
+        incompatible_backend: "incompatibleBackend",
+        models_unavailable: "modelsUnavailable",
+        unknown_pi_model: "unknownModel",
+      } as const;
+      const code = error instanceof Error ? error.message : "request_failed";
+      setError(
+        error instanceof SyntaxError || code === "object_required"
+          ? l("invalidNative")
+          : code.startsWith("native_field_conflict:")
+            ? `${l("nativeConflict")} ${code.split(":").slice(1).join(":")}`
+            : code.startsWith("positive_integer_required:")
+              ? `${l("invalidPositive")} ${code.split(":")[1]}`
+              : Object.hasOwn(codes, code)
+                ? l(codes[code as keyof typeof codes])
+                : code,
+      );
       onSaved();
     } finally {
       setBusy(false);
@@ -311,8 +364,11 @@ export function AgentWizard({
                 setKey("");
                 setBaseURL("");
                 setCommand("");
-                setArgs("[]");
+                setArgs("");
                 setFast(false);
+                setThinking("");
+                setConcurrency("2");
+                setInitializeTimeout("45000");
                 setThinkingTouched(false);
                 setError("");
               }}
@@ -323,6 +379,16 @@ export function AgentWizard({
             </button>
           ))}
         </div>
+        {(backend || createdConnection) && (
+          <AgentConnectionInfo
+            connection={catalog.backends.find(
+              (item) => item.name === (backend || createdConnection),
+            )}
+            provider={provider}
+            model={modelId}
+            locale={locale}
+          />
+        )}
         <div className="two-columns">
           <label>
             {t("agentId")}
@@ -430,7 +496,11 @@ export function AgentWizard({
                   )}
                   <label>
                     {t("model")}
-                    <input value={model} onChange={(e) => setModel(e.target.value)} />
+                    <input
+                      disabled={!!createdConnection}
+                      value={model}
+                      onChange={(e) => setModel(e.target.value)}
+                    />
                   </label>
                 </div>
               )}
@@ -451,6 +521,7 @@ export function AgentWizard({
                 <label>
                   {t("args")}
                   <textarea
+                    aria-label={t("args")}
                     disabled={!!createdConnection}
                     value={args}
                     placeholder={
@@ -460,11 +531,13 @@ export function AgentWizard({
                     }
                     onChange={(e) => setArgs(e.target.value)}
                   />
+                  <small className="muted">{l("argsHelp")}</small>
                 </label>
               </div>
               <label>
                 {l("environment")}
                 <textarea
+                  aria-label={l("environment")}
                   disabled={!!createdConnection}
                   value={environment}
                   onChange={(e) => setEnvironment(e.target.value)}
@@ -493,23 +566,25 @@ export function AgentWizard({
                 </datalist>
                 {platform.kind === "pi" && <small className="muted">{l("optionalModel")}</small>}
               </label>
-              <label>
-                {t("thinking")}
-                <select
-                  aria-label={t("thinking")}
-                  value={thinking}
-                  onChange={(e) => {
-                    setThinking(e.target.value);
-                    setThinkingTouched(true);
-                  }}
-                >
-                  {thinkingLevels.map((level) => (
-                    <option key={level} value={level}>
-                      {level}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <AgentThinkingField
+                kind={platform.kind}
+                provider={provider}
+                model={modelId}
+                options={thinkingOptions}
+                models={models}
+                locale={locale}
+                onChange={(options) => {
+                  const field = platform.kind === "pi" ? "defaultThinkingLevel" : "reasoningEffort";
+                  setThinking(String(options[field] ?? ""));
+                  const extension = { ...optionDraft };
+                  delete extension[field];
+                  if (options.modelThinkingLevels)
+                    extension.modelThinkingLevels = options.modelThinkingLevels;
+                  else delete extension.modelThinkingLevels;
+                  setNativeOptions(JSON.stringify(extension, null, 2));
+                  setThinkingTouched(true);
+                }}
+              />
             </div>
             {!backend && platform.id !== "codex" && (
               <label>
@@ -523,7 +598,9 @@ export function AgentWizard({
                   placeholder={platform.credential ? "${" + platform.credential + "}" : ""}
                   onChange={(e) => setKey(e.target.value)}
                 />
-                <small className="muted">{l("apiHelp")}</small>
+                <small className="muted">
+                  {l(platform.kind === "llm" ? "apiCompatibleHelp" : "apiHelp")}
+                </small>
               </label>
             )}
             {!backend && (
@@ -556,8 +633,15 @@ export function AgentWizard({
                       checked={fast}
                       onChange={(e) => setFast(e.target.checked)}
                     />
-                    {t("fast")}
+                    {l("fastCheckbox")}
                   </label>
+                )}
+                <p className="muted">{l("fastHelp")}</p>
+                {!backend && (
+                  <p>
+                    {l("effectiveTier")}:{" "}
+                    <strong>{fast ? "priority" : nativeTier || l("sdkDefault")}</strong>
+                  </p>
                 )}
               </div>
             )}
@@ -565,20 +649,55 @@ export function AgentWizard({
         )}
         <details className="field-section">
           <summary>{t("advanced")}</summary>
-          <p className="muted">{l("nativeHelp")}</p>
+          <p className="muted">{l(platform.kind === "pi" ? "nativeHelp" : "nativeGeneralHelp")}</p>
           {!backend && (
-            <label>
-              {l("nativeConnection")}
-              <textarea
-                disabled={!!createdConnection}
-                value={native}
-                onChange={(e) => setNative(e.target.value)}
-              />
-            </label>
+            <>
+              <label>
+                {l("concurrency")}
+                <input
+                  aria-label={l("concurrency")}
+                  type="number"
+                  min="1"
+                  step="1"
+                  disabled={!!createdConnection}
+                  value={concurrency}
+                  onChange={(event) => setConcurrency(event.target.value)}
+                />
+                <small className="muted">{l("concurrencyHelp")}</small>
+              </label>
+              {platform.kind === "acp" && (
+                <label>
+                  {l("initializeTimeout")}
+                  <input
+                    aria-label={l("initializeTimeout")}
+                    type="number"
+                    min="1"
+                    step="1"
+                    disabled={!!createdConnection}
+                    value={initializeTimeout}
+                    onChange={(event) => setInitializeTimeout(event.target.value)}
+                  />
+                  <small className="muted">{l("initializeHelp")}</small>
+                </label>
+              )}
+              <label>
+                {l("nativeConnection")}
+                <textarea
+                  aria-label={l("nativeConnection")}
+                  disabled={!!createdConnection}
+                  value={native}
+                  onChange={(e) => setNative(e.target.value)}
+                />
+              </label>
+            </>
           )}
           <label>
             {l("nativeOptions")}
-            <textarea value={nativeOptions} onChange={(e) => setNativeOptions(e.target.value)} />
+            <textarea
+              aria-label={l("nativeOptions")}
+              value={nativeOptions}
+              onChange={(e) => setNativeOptions(e.target.value)}
+            />
           </label>
         </details>
         <section className="field-section">

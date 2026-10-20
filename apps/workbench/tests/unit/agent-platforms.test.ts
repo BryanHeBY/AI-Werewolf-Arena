@@ -5,6 +5,10 @@ import {
   buildAgentOptions,
   compatibleConnection,
   requiresCodexImport,
+  changeThinking,
+  thinkingValue,
+  connectionTier,
+  nativeModelTier,
   platforms,
   type PlatformInput,
 } from "../../src/client/agent-platforms";
@@ -116,6 +120,101 @@ describe("Pi native defaults", () => {
       config: { models: { providers: { local: { api: "openai-completions" } } } },
     });
   });
+});
+test("unspecified thinking stays absent and editing a model override changes its effective value", () => {
+  const options = buildAgentOptions(input("openai").platform, "openai", "test", "", {
+    modelThinkingLevels: { "openai/test": "high", "openai/other": "medium" },
+  });
+  expect(Object.hasOwn(options, "defaultThinkingLevel")).toBe(false);
+  expect(thinkingValue("pi", "openai", "test", options)).toBe("high");
+  const edited = changeThinking("pi", "openai", "test", options, "low");
+  expect(thinkingValue("pi", "openai", "test", edited)).toBe("low");
+  expect(edited.modelThinkingLevels).toEqual({ "openai/other": "medium" });
+  const inherited = changeThinking("pi", "openai", "test", edited, "");
+  expect(thinkingValue("pi", "openai", "test", inherited)).toBe("");
+  expect(edited.defaultThinkingLevel).toBe("low");
+});
+test("native fields conflicting with form controls are rejected rather than overwritten", () => {
+  expect(() =>
+    buildAgentOptions(input("openai").platform, "openai", "test", "low", {
+      defaultThinkingLevel: "high",
+    }),
+  ).toThrow("native_field_conflict: defaultThinkingLevel");
+  expect(() =>
+    buildConnection(
+      input("compatible", { baseURL: "https://synthetic.invalid", native: '{"type":"anthropic"}' }),
+    ),
+  ).toThrow("native_field_conflict: type");
+  expect(() =>
+    buildConnection(
+      input("openai", {
+        baseURL: "https://synthetic.invalid",
+        native: '{"models":{"providers":{"openai":{"baseUrl":"https://other.invalid"}}}}',
+      }),
+    ),
+  ).toThrow("native_field_conflict: models.providers.baseUrl");
+});
+test("connection limits distinguish runtime defaults from explicit positive values", () => {
+  const omitted = buildConnection(input("acp"));
+  expect(omitted.limits).toBeUndefined();
+  expect((omitted.config as Record<string, unknown>).initializeTimeoutMs).toBeUndefined();
+  expect(
+    buildConnection(input("acp", { maxConcurrentRequests: "4", initializeTimeoutMs: "60000" })),
+  ).toMatchObject({ limits: { maxConcurrentRequests: 4 }, config: { initializeTimeoutMs: 60000 } });
+  expect(() => buildConnection(input("acp", { maxConcurrentRequests: "0" }))).toThrow(
+    "positive_integer_required",
+  );
+  expect(() => buildConnection(input("acp", { initializeTimeoutMs: "0.5" }))).toThrow(
+    "positive_integer_required",
+  );
+});
+test("fast request tiers are specific to a provider and model in a shared connection", () => {
+  const connection = {
+    name: "shared",
+    kind: "pi",
+    modelTiers: { "openai-codex": { one: "priority" } },
+  };
+  expect(connectionTier(connection, "openai-codex", "one")).toBe("priority");
+  expect(connectionTier(connection, "openai-codex", "two")).toBe("");
+  expect(connectionTier(connection, "openai", "one")).toBe("");
+  expect(() =>
+    buildConnection(
+      input("codex", {
+        fast: true,
+        native:
+          '{"models":{"providers":{"openai-codex":{"modelOverrides":{"synthetic-model":{"samplingParams":{"service_tier":"flex"}}}}}}}',
+      }),
+    ),
+  ).toThrow("native_field_conflict");
+});
+test("native request tier inherits a model declaration and an override takes precedence", () => {
+  const native = {
+    models: {
+      providers: {
+        "openai-codex": {
+          models: [{ id: "one", samplingParams: { service_tier: "priority" } }],
+          modelOverrides: { one: { samplingParams: { temperature: 0.4 } } },
+        },
+      },
+    },
+  };
+  expect(nativeModelTier(native, "openai-codex", "one")).toBe("priority");
+  expect(
+    nativeModelTier(
+      {
+        models: {
+          providers: {
+            "openai-codex": {
+              ...native.models.providers["openai-codex"],
+              modelOverrides: { one: { samplingParams: { service_tier: "flex" } } },
+            },
+          },
+        },
+      },
+      "openai-codex",
+      "one",
+    ),
+  ).toBe("flex");
 });
 test("LLM and ACP preserve their own transport options and reject invalid maps", () => {
   expect(buildConnection(input("compatible", { baseURL: "http://localhost/v1" }))).toMatchObject({

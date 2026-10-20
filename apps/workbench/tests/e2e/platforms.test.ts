@@ -53,8 +53,29 @@ test("Codex import failure retains its connection and retry completes without a 
 }) => {
   let attempts = 0,
     connectionWrites = 0;
-  await page.route("**/api/codex-import", (route) => {
+  await page.route("**/api/codex-import", async (route) => {
     attempts++;
+    if (attempts === 2) {
+      // 成功导入必须具有真实的文档副作用；纯内存校验不再接受缺失 provider 的假成功响应。
+      const document = await (await request.get("/api/documents/backends/backends")).json();
+      const raw = JSON.parse(document.text);
+      raw.items.codex_retry_synthetic_connection.config.auth["openai-codex"] = {
+        type: "oauth",
+        access: "synthetic-access",
+        refresh: "synthetic-refresh",
+        expires: Date.now() + 3600000,
+      };
+      expect(
+        (
+          await request.put("/api/documents/backends/backends", {
+            data: {
+              revision: document.revision,
+              text: JSON.stringify(raw),
+            },
+          })
+        ).ok(),
+      ).toBe(true);
+    }
     return route.fulfill({
       status: attempts === 1 ? 409 : 200,
       contentType: "application/json",

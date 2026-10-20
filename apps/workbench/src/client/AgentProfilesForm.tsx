@@ -10,6 +10,9 @@ import { asObject } from "./config-edit";
 import { Instructions } from "./GameForm";
 import { agentText } from "@ai-werewolf-arena/game-text/workbench-agent";
 import { AgentConnectionTest } from "./AgentConnectionTest";
+import { AgentThinkingField, AgentConnectionInfo } from "./AgentModelSettings";
+import { compatibleConnection, platforms, type ModelSummary } from "./agent-platforms";
+import { api } from "./api";
 
 export function AgentProfilesForm({
   raw,
@@ -30,12 +33,22 @@ export function AgentProfilesForm({
   const [selected, setSelected] = useState(Object.keys(items)[0] ?? "");
   const entry = asObject(items[selected]);
   const options = asObject(entry.options);
+  const [models, setModels] = useState<ModelSummary[]>([]);
+  useEffect(() => {
+    const controller = new AbortController();
+    void api<ModelSummary[]>("models", { signal: controller.signal })
+      .then(setModels)
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
   useEffect(() => {
     if (!Object.hasOwn(items, selected)) setSelected(Object.keys(items)[0] ?? "");
   }, [raw, selected]);
   const update = (value: JsonObject) => change({ ...raw, items: { ...items, [selected]: value } });
   const kind = catalog.backends.find((backend) => backend.name === entry.backend)?.kind;
   const modelField = kind === "pi" ? "defaultModel" : "model";
+  const provider = String(options.defaultProvider ?? "");
+  const model = String(options[modelField] ?? "");
   return (
     <div className="form-body">
       <label>
@@ -77,7 +90,17 @@ export function AgentProfilesForm({
               onChange={(event) => update({ ...entry, backend: event.target.value })}
             >
               {catalog.backends
-                .filter((backend) => backend.kind === kind || backend.name === entry.backend)
+                .filter(
+                  (backend) =>
+                    backend.name === entry.backend ||
+                    (kind === "pi"
+                      ? compatibleConnection(
+                          backend,
+                          platforms.find((platform) => platform.id === "pi-native")!,
+                          provider,
+                        )
+                      : backend.kind === kind),
+                )
                 .map((backend) => (
                   <option key={backend.name} value={backend.name}>
                     {backend.name} · {backend.kind}
@@ -85,6 +108,12 @@ export function AgentProfilesForm({
                 ))}
             </select>
           </label>
+          <AgentConnectionInfo
+            connection={catalog.backends.find((item) => item.name === entry.backend)}
+            provider={provider}
+            model={model}
+            locale={locale}
+          />
           {kind !== "acp" && (
             <label>
               {t("model")}
@@ -106,6 +135,17 @@ export function AgentProfilesForm({
                 }
               />
             </label>
+          )}
+          {kind !== "acp" && (
+            <AgentThinkingField
+              kind={kind ?? "llm"}
+              provider={provider}
+              model={model}
+              options={options}
+              models={models}
+              locale={locale}
+              onChange={(next) => update({ ...entry, options: next })}
+            />
           )}
           <section className="field-section">
             <h3>{t("customInstructions")}</h3>

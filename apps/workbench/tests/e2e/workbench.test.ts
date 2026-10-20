@@ -182,7 +182,7 @@ test("new templates can be reset and connection-only wizard edits have a visible
   await page.getByLabel("API 地址", { exact: true }).fill("http://local.invalid/v1");
   await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText("先保存当前修改");
-  await page.getByRole("button", { name: "清除", exact: true }).click();
+  await page.getByRole("button", { name: "清除草稿", exact: true }).click();
   await expect(page.getByLabel("API 地址", { exact: true })).toHaveValue("");
   await page.getByRole("navigation").getByRole("button", { name: "板子", exact: true }).click();
   await expect(page.getByRole("heading", { name: "已保存的板子", exact: true })).toBeVisible();

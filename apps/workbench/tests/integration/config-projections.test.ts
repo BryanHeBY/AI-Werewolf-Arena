@@ -50,6 +50,59 @@ test("native authorization headers stay masked and survive an unrelated edit", a
   }
 });
 
+test("connection summaries expose model registration, tier and limits without native authentication", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-workbench-model-summary-"));
+  try {
+    await fs.mkdir(path.join(root, "runtime"));
+    await fs.writeFile(
+      path.join(root, "runtime/backends.json"),
+      JSON.stringify({
+        items: {
+          shared: {
+            kind: "pi",
+            limits: { maxConcurrentRequests: 4 },
+            config: {
+              models: {
+                providers: {
+                  "openai-codex": {
+                    models: [
+                      {
+                        id: "test",
+                        samplingParams: { service_tier: "flex" },
+                        headers: { Authorization: "synthetic-private-header" },
+                      },
+                      { id: "inherited", samplingParams: { service_tier: "priority" } },
+                    ],
+                    modelOverrides: {
+                      test: {
+                        samplingParams: {
+                          service_tier: "priority",
+                          hidden: "synthetic-private-option",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              auth: { "openai-codex": { type: "oauth", access: "synthetic-private-access" } },
+            },
+          },
+        },
+      }),
+    );
+    const summary = await new ConfigService(new ConfigDocuments(root), root).summary();
+    expect(summary.backends[0]).toMatchObject({
+      name: "shared",
+      maxConcurrentRequests: 4,
+      registeredModels: { "openai-codex": ["test", "inherited"] },
+      modelTiers: { "openai-codex": { test: "priority", inherited: "priority" } },
+    });
+    expect(JSON.stringify(summary)).not.toContain("synthetic-private");
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+
 test("catalog projects primitive fields even when a malformed document contains nested credentials", async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-workbench-catalog-projection-"));
   try {

@@ -17,7 +17,10 @@ async function fixture() {
     items: {
       native: {
         kind: "pi",
-        config: { models: { providers: {} }, auth: { openai: { type: "api_key", key: secret } } },
+        config: {
+          models: { providers: { openai: { models: [{ id: "synthetic-test-model" }] } } },
+          auth: { openai: { type: "api_key", key: secret } },
+        },
       },
     },
   };

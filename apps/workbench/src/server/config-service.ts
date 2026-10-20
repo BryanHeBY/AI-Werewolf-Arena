@@ -201,11 +201,77 @@ export class ConfigService {
         name,
         kind: stringValue((value as JsonObject)?.kind),
         ...(() => {
+          const limits = (value as JsonObject)?.limits as JsonObject | undefined;
+          const config = (value as JsonObject)?.config as JsonObject | undefined;
+          return {
+            ...(typeof limits?.maxConcurrentRequests === "number"
+              ? { maxConcurrentRequests: limits.maxConcurrentRequests }
+              : {}),
+            ...(typeof config?.initializeTimeoutMs === "number"
+              ? { initializeTimeoutMs: config.initializeTimeoutMs }
+              : {}),
+          };
+        })(),
+        ...(() => {
           const config = (value as JsonObject)?.config as JsonObject | undefined;
           const native = config?.models as JsonObject | undefined;
           const providers = native?.providers;
           const auth = config?.auth;
           return {
+            // 只摘要模型标识与请求档位；不向目录暴露原生 headers、认证或其它采样字段。
+            registeredModels: Object.fromEntries(
+              Object.entries((providers ?? {}) as JsonObject).flatMap(([id, value]) => {
+                if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+                const models = value.models;
+                return [
+                  [
+                    id,
+                    Array.isArray(models)
+                      ? models.flatMap((row) =>
+                          row &&
+                          typeof row === "object" &&
+                          !Array.isArray(row) &&
+                          typeof row.id === "string"
+                            ? [row.id]
+                            : [],
+                        )
+                      : [],
+                  ],
+                ];
+              }),
+            ),
+            modelTiers: Object.fromEntries(
+              Object.entries((providers ?? {}) as JsonObject).flatMap(([id, value]) => {
+                if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+                const tiers: Record<string, string> = {};
+                for (const row of Array.isArray(value.models) ? value.models : []) {
+                  if (
+                    !row ||
+                    typeof row !== "object" ||
+                    Array.isArray(row) ||
+                    typeof row.id !== "string"
+                  )
+                    continue;
+                  const params = row.samplingParams;
+                  const tier =
+                    params && typeof params === "object" && !Array.isArray(params)
+                      ? params.service_tier
+                      : undefined;
+                  if (typeof tier === "string") tiers[row.id] = tier;
+                }
+                const overrides = value.modelOverrides;
+                for (const [modelId, patch] of Object.entries((overrides ?? {}) as JsonObject)) {
+                  if (!patch || typeof patch !== "object" || Array.isArray(patch)) continue;
+                  const params = patch.samplingParams;
+                  const tier =
+                    params && typeof params === "object" && !Array.isArray(params)
+                      ? params.service_tier
+                      : undefined;
+                  if (typeof tier === "string") tiers[modelId] = tier;
+                }
+                return [[id, tiers]];
+              }),
+            ),
             providers:
               providers && typeof providers === "object" && !Array.isArray(providers)
                 ? Object.keys(providers)
