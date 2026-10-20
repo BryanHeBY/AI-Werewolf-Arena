@@ -32,9 +32,9 @@ test("an executed shared result decoder change invalidates the engine fingerprin
   const { currentEngineVersion } = await import("../../../src/app/simulation/reproduction-context");
   const root = await createTestTempDirectory("awa-fingerprint-");
   for (const directory of [
-    "backend/src/core",
-    "backend/src/game",
-    "backend/src/app",
+    "packages/game-runtime/src/core",
+    "packages/game-runtime/src/game",
+    "packages/game-runtime/src/app",
     "packages/game-catalog/src",
     "packages/game-text/src",
     "packages/replay-contract/src",

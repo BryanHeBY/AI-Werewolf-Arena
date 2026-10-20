@@ -34,21 +34,24 @@ async function fixture() {
   const root = path.join(temporary, "root");
   const external = path.join(temporary, "external");
   for (const directory of [
-    path.join(root, "backend/src"),
+    path.join(root, "packages/game-runtime/src"),
     path.join(root, "packages/a/src"),
-    path.join(external, "backend/src"),
+    path.join(external, "packages/game-runtime/src"),
     path.join(external, "packages/a/src"),
   ])
     await mkdir(directory, { recursive: true });
   await writeFile(path.join(root, "bun.lock"), "literal-lock\n");
-  await writeFile(path.join(root, "backend/src/main.ts"), 'export { value } from "./.internal";\n');
+  await writeFile(
+    path.join(root, "packages/game-runtime/src/main.ts"),
+    'export { value } from "./.internal";\n',
+  );
   await writeFile(path.join(root, "packages/a/src/index.ts"), "export const value = 1;\n");
   await writeFile(path.join(root, "packages/a/src/alternate.ts"), "export const value = 2;\n");
   await writeFile(
     path.join(root, "packages/a/package.json"),
     JSON.stringify({ name: "@awa/a", exports: { ".": "./src/index.ts" } }),
   );
-  for (const name of ["backend/src/canary.ts", "packages/a/src/canary.ts"])
+  for (const name of ["packages/game-runtime/src/canary.ts", "packages/a/src/canary.ts"])
     await writeFile(path.join(external, name), "export const mockOutside = true;\n");
   return { temporary, root, external };
 }
@@ -64,8 +67,11 @@ async function using(run: (input: Awaited<ReturnType<typeof fixture>>) => Promis
 
 test("fingerprint refuses a backend ancestor symlink before hashing an external source", async () => {
   await using(async (f) => {
-    await rename(path.join(f.root, "backend"), path.join(f.root, "original-backend"));
-    await symlink(path.join(f.external, "backend"), path.join(f.root, "backend"));
+    await rename(path.join(f.root, "packages/game-runtime"), path.join(f.root, "original-backend"));
+    await symlink(
+      path.join(f.external, "packages/game-runtime"),
+      path.join(f.root, "packages/game-runtime"),
+    );
     await expect(engineFingerprintInputs(f.root)).rejects.toThrow("engine_source_symlink_rejected");
   });
 });
@@ -101,7 +107,11 @@ test("package entrypoint selection changes identity without changing source modu
   });
 });
 
-for (const metadata of ["backend/tsconfig.json", "packages/a/tsconfig.json", "bunfig.toml"])
+for (const metadata of [
+  "packages/game-runtime/tsconfig.json",
+  "packages/a/tsconfig.json",
+  "bunfig.toml",
+])
   test(`${metadata} resolution settings participate in identity without changing the lock`, async () => {
     await using(async (f) => {
       const filename = path.join(f.root, metadata);
@@ -125,10 +135,10 @@ for (const metadata of ["backend/tsconfig.json", "packages/a/tsconfig.json", "bu
 test("an inherited local compiler resolution change cannot retain the old source identity", async () => {
   await using(async (f) => {
     await writeFile(
-      path.join(f.root, "backend/tsconfig.json"),
+      path.join(f.root, "packages/game-runtime/tsconfig.json"),
       '{"extends":"./tsconfig.base.json"}',
     );
-    const base = path.join(f.root, "backend/tsconfig.base.json");
+    const base = path.join(f.root, "packages/game-runtime/tsconfig.base.json");
     await writeFile(base, '{"compilerOptions":{"baseUrl":".","paths":{"alias":["src/main.ts"]}}}');
     const before = await fingerprintEngine(f.root);
     await writeFile(
@@ -141,9 +151,15 @@ test("an inherited local compiler resolution change cannot retain the old source
 
 test("maintained dot-prefixed imported modules participate in exact source identity", async () => {
   await using(async (f) => {
-    await writeFile(path.join(f.root, "backend/src/.internal.ts"), "export const value = 1;\n");
+    await writeFile(
+      path.join(f.root, "packages/game-runtime/src/.internal.ts"),
+      "export const value = 1;\n",
+    );
     const before = await fingerprintEngine(f.root);
-    await writeFile(path.join(f.root, "backend/src/.internal.ts"), "export const value = 2;\n");
+    await writeFile(
+      path.join(f.root, "packages/game-runtime/src/.internal.ts"),
+      "export const value = 2;\n",
+    );
     expect((await fingerprintEngine(f.root)).sourceHash).not.toBe(before.sourceHash);
   });
 });
@@ -152,10 +168,10 @@ test("module and schema membership is deterministic across file creation order",
   await using(async (f) => {
     const second = path.join(f.temporary, "second");
     const entries: ReadonlyArray<readonly [string, string]> = [
-      ["backend/src/a/inside.ts", "inside"],
-      ["backend/src/a.ts", "neighbor"],
-      ["backend/src/client.tsx", "tsx"],
-      ["backend/src/schema.json", '{"literal":true}'],
+      ["packages/game-runtime/src/a/inside.ts", "inside"],
+      ["packages/game-runtime/src/a.ts", "neighbor"],
+      ["packages/game-runtime/src/client.tsx", "tsx"],
+      ["packages/game-runtime/src/schema.json", '{"literal":true}'],
       ["packages/new-contract/src/value.cts", "cts"],
       ["packages/new-contract/src/value.mts", "mts"],
       ["packages/new-contract/src/value.mjs", "mjs"],
@@ -182,13 +198,13 @@ test("private canary and generated dependency directory never join fingerprint m
   await using(async (f) => {
     const before = await fingerprintEngine(f.root);
     for (const [name, value] of [
-      ["backend/src/.env.local", "MOCK_ENV_ONLY"],
-      ["backend/src/auth.json", "MOCK_AUTH_ONLY"],
-      ["backend/src/credentials.json", "MOCK_CREDENTIALS_ONLY"],
-      ["backend/src/node_modules/injected.ts", "MOCK_DEPENDENCY_ONLY"],
-      ["backend/src/.codex/config.json", "MOCK_CODEX_CONFIG_ONLY"],
-      ["backend/src/.aws/config.json", "MOCK_AWS_CONFIG_ONLY"],
-      ["backend/src/.git/config.json", "MOCK_GIT_CONFIG_ONLY"],
+      ["packages/game-runtime/src/.env.local", "MOCK_ENV_ONLY"],
+      ["packages/game-runtime/src/auth.json", "MOCK_AUTH_ONLY"],
+      ["packages/game-runtime/src/credentials.json", "MOCK_CREDENTIALS_ONLY"],
+      ["packages/game-runtime/src/node_modules/injected.ts", "MOCK_DEPENDENCY_ONLY"],
+      ["packages/game-runtime/src/.codex/config.json", "MOCK_CODEX_CONFIG_ONLY"],
+      ["packages/game-runtime/src/.aws/config.json", "MOCK_AWS_CONFIG_ONLY"],
+      ["packages/game-runtime/src/.git/config.json", "MOCK_GIT_CONFIG_ONLY"],
     ]) {
       await mkdir(path.dirname(path.join(f.root, name!)), { recursive: true });
       await writeFile(path.join(f.root, name!), value!);

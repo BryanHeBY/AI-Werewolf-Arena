@@ -17,7 +17,7 @@ for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
       const config = nobleSecretBodyTwelveConfig(wolf, body),
         id = `awa_noble_secret_body_12_${wolf}_${body === "awa_repeat_v1" ? "repeat" : "nonconsecutive"}_v1`,
         definition = await Bun.file(
-          new URL(`../../../../configs.example/boards/${id}.json`, import.meta.url),
+          new URL(`../../../../../configs.example/boards/${id}.json`, import.meta.url),
         ).json();
       expect(isNobleSecretBodyPreset(config)).toBe(true);
       expect(isDemonHunterPreset(config)).toBe(true);

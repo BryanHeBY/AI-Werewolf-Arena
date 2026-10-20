@@ -9,6 +9,7 @@ import { requireBoardParameters } from "../../rulesets/board-parameters";
 import { RulePlan } from "../../rulesets/rule-plan";
 import { fingerprintEngine } from "../../recording/reproduction/engine-fingerprint";
 import path from "node:path";
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
 import { execFileSync } from "node:child_process";
 import type { RuntimeSnapshot, World } from "../../domain";
 import type { EngineVersion, RecordedCheckpoint } from "../../recording/reproduction/format";
@@ -28,7 +29,7 @@ import type { SessionRecordManager } from "../../recording/session/recorder";
 
 /** 即使引擎存在未提交改动，真实源码／lock 指纹仍明确控制重放兼容。 */
 export async function currentEngineVersion(
-  sourceRoot: string = path.resolve(__dirname, "../../../../.."),
+  sourceRoot: string = PROJECT_ROOT,
 ): Promise<EngineVersion> {
   const root = path.resolve(sourceRoot);
   const { sourceHash, lockHash } = await fingerprintEngine(root);

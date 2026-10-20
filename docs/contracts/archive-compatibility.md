@@ -11,7 +11,7 @@
 
 声明新封装后，未知外层／内层版本或错误kind不能降级成旧裸档；历史自定义format扩展按原判别接受，不因名字碰巧相同就误判。玩家原文、局部seq与未知允许扩展保reader实际政策，不反推中文／当前阵营。
 
-结构与独立机制审计通过后，严格执行先原source／lock，再RNG和ruleset，之后声明与payload来源一致性；语义版本相同不豁免源码指纹。当前指纹覆盖backend全部src、共享包src及声明的清单／锁身份；目录、注释、词典、schema、tsconfig、package resolver同样能改变sourceHash。不得回写旧记录或删除input成员求跨构建绿。
+结构与独立机制审计通过后，严格执行先原source／lock，再RNG和ruleset，之后声明与payload来源一致性；语义版本相同不豁免源码指纹。当前指纹覆盖 `packages/game-runtime/src`、迁出的 `apps/game/src`、所有共享包 src 及应用／共享包声明的清单、tsconfig 与锁身份；目录、注释、词典、schema、tsconfig、package resolver同样能改变sourceHash。不得回写旧记录或删除input成员求跨构建绿。
 
 公开格式兼容与同构建执行分别验证，实际构建身份不能由归档结构或语义版本替代。设计理由见[ADR0004](../decisions/0004-archive-identities-and-evidence.md)。
 

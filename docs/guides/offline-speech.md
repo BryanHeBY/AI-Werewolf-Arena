@@ -143,7 +143,7 @@ line.subtitles = [
 
 ```bash
 # 从已经绑定声音的正式项目导出字幕；与Remotion底部显示使用相同帧时间
-bun run --cwd apps/video video:subtitles -- --project videos/catgirl-knight/voiced.ts --output ../output/session_1792391429963_4bygw6/subtitles.srt
+bun run --cwd apps/video video:subtitles -- --project videos/catgirl-knight/voiced.ts --output ../../output/session_1792391429963_4bygw6/subtitles.srt
 ```
 
 本局正式配音与真实字幕已全部准备，101段台词编排为97个场景、1849条字幕，实际时间线为3955.933秒，约65分56秒。连续WAV、SRT、时间报告及首版成片保存在 `output/session_1792391429963_4bygw6/production-v1/`；该目录的README记录检查页启动与断点恢复命令。原生和制作稿预览继续保持独立，不使用估算字幕。

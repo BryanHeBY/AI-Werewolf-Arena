@@ -11,6 +11,38 @@ import { isLocale } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { replayCommandFailure } from "@ai-werewolf-arena/game-media/cli-error";
 
+/** 子进程仅消费已解析输入；工具目录与参数目录在此明确分开，退出时回收信号监听。 */
+export async function startReplayDevServer(
+  replayPath?: string,
+  viteArguments: string[] = [],
+): Promise<number> {
+  const child = Bun.spawn(
+    [
+      process.execPath,
+      applicationResource("replay", "node_modules/vite/bin/vite.js"),
+      "--config",
+      applicationResource("replay", "vite.config.ts"),
+      ...viteArguments,
+    ],
+    {
+      cwd: applicationDirectory("replay"),
+      env: { ...process.env, AWA_REPLAY_INPUT: replayPath },
+      stdin: "inherit",
+      stdout: "inherit",
+      stderr: "inherit",
+    },
+  );
+  const stop = () => child.kill("SIGTERM");
+  process.on("SIGINT", stop);
+  process.on("SIGTERM", stop);
+  try {
+    return await child.exited;
+  } finally {
+    process.off("SIGINT", stop);
+    process.off("SIGTERM", stop);
+  }
+}
+
 if (import.meta.main) {
   let locale: Locale = "zh-CN";
   try {
@@ -27,24 +59,9 @@ if (import.meta.main) {
       } else throw new Error("replay_dev_usage");
     }
 
-    const replayPath = input ? resolveReplayInput(input) : undefined;
-    // 输入先相对调用目录解析；Vite 工具固定在应用目录运行，不能重新解释数据路径。
-    const child = Bun.spawn(
-      [
-        process.execPath,
-        applicationResource("replay", "node_modules/vite/bin/vite.js"),
-        "--config",
-        applicationResource("replay", "vite.config.ts"),
-      ],
-      {
-        cwd: applicationDirectory("replay"),
-        env: { ...process.env, AWA_REPLAY_INPUT: replayPath },
-        stdin: "inherit",
-        stdout: "inherit",
-        stderr: "inherit",
-      },
-    );
-    process.exitCode = await child.exited;
+    if (!input) throw new Error("replay_dev_usage");
+    const replayPath = resolveReplayInput(input);
+    process.exitCode = await startReplayDevServer(replayPath);
   } catch (error) {
     console.error(JSON.stringify(replayCommandFailure(error, locale)));
     process.exitCode = 1;

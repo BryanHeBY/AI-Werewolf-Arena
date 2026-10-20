@@ -4,14 +4,14 @@
  */
 import { ReplayLoadError } from "../../../src/replay/offline-replay";
 import { expect, test } from "bun:test";
-import path from "node:path";
+import { applicationResource } from "@ai-werewolf-arena/project-paths";
 import { replayCommandFailure } from "@ai-werewolf-arena/game-media/cli-error";
 
 async function command(script: string, args: string[]) {
   const child = Bun.spawn(
     [
       Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun",
-      path.resolve(import.meta.dir, `../../../scripts/${script}`),
+      applicationResource(script === "replay-dev.ts" ? "replay" : "video", "scripts", script),
       ...args,
     ],
     { stdout: "pipe", stderr: "pipe" },

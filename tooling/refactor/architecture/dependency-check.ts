@@ -742,6 +742,24 @@ export function checkDependencies(
           "Browser source imports a local server implementation.",
           target,
         );
+      // 语义包是可复用能力的唯一所有者，不得反向读取任何应用的实现。
+      if (/^packages\/[^/]+\/src\//.test(file.path) && /^apps\/[^/]+\//.test(target))
+        add(
+          "dependency.package-application",
+          file.path,
+          ref,
+          "Shared implementation imports an application rather than a package port.",
+          target,
+        );
+      // 路径包依赖 Node 文件系统；公开导出不使服务器专用能力成为浏览器 API。
+      if (browserSource(file.path) && /^packages\/project-paths\/src\//.test(target))
+        add(
+          "dependency.browser-runtime-package",
+          file.path,
+          ref,
+          "Browser source imports the server-only project path package.",
+          target,
+        );
       const sourcePackageRoot = /^packages\/[^/]+/.exec(file.path)?.[0],
         targetPackageRoot = /^packages\/[^/]+/.exec(target)?.[0];
       if (sourcePackageRoot && targetPackageRoot && sourcePackageRoot !== targetPackageRoot)

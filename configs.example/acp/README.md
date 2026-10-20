@@ -15,14 +15,14 @@
 | `ACP_AUTH_KIND`              | `codex`默认映射到`/opt/codex-home/auth.json`；`claude`映射到`/opt/claude-home/.credentials.json`，均只读 |
 | `ACP_ENV_ALLOWLIST`          | 冒号分隔的具名环境变量；缺席不传。HOME、PATH、XDG及ACP控制变量不可覆盖                                   |
 
-游戏MCP的只读依赖示例是仓库的`backend/src`、`backend/node_modules`、`node_modules`和`packages`。workspace链接的目标也必须挂载，只有node_modules链接本身不够。独立adaptor若依赖另一位置的Node、Codex或Claude可执行文件，也需显式挂其运行目录。新增挂载会扩大Agent的可读范围，必须逐项检查，不能为修缺包改成`--ro-bind / /`。
+游戏MCP的只读依赖示例是仓库的`packages/game-runtime/src`、`packages/game-runtime/node_modules`、`node_modules`和`packages`。workspace链接的目标也必须挂载，只有node_modules链接本身不够。独立adaptor若依赖另一位置的Node、Codex或Claude可执行文件，也需显式挂其运行目录。新增挂载会扩大Agent的可读范围，必须逐项检查，不能为修缺包改成`--ro-bind / /`。
 
 Codex通常需要具名传递`CODEX_PATH:CODEX_CONFIG:INITIAL_AGENT_MODE:NO_BROWSER`；Claude Code通过智谱等兼容服务接入时，按实际配置具名传递`ANTHROPIC_BASE_URL:ANTHROPIC_AUTH_TOKEN:ANTHROPIC_MODEL`等所需变量。密钥放在操作者本地环境或只读单文件中，不写入本模板、命令行或归档。脚本不自动继承宿主代理、SSH socket或其它Provider密钥。
 
 ## 已验证范围
 
 ```bash
-bun --no-env-file test backend/tests/integration/agents/acp/sandbox-canary.test.ts
+bun --no-env-file test packages/game-runtime/tests/integration/agents/acp/sandbox-canary.test.ts
 ```
 
 本机真实bwrap探针使用合成文件与假认证，验证同行、God、宿主home及认证原路径不可读，唯一认证映射可读但不可写，自己的workspace可写，未授权变量不可见；另在相同隔离入口运行实际游戏MCP，完成三工具发现与合成回合提交。没有读取个人认证、启动Codex／Claude模型或消费付费服务。未安装bwrap或非Linux平台明确跳过这组操作系统探针，不能算隔离验证通过。

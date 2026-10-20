@@ -78,7 +78,7 @@ jobs:
       - name: Install locked workspaces
         run: bun install --frozen-lockfile --ignore-scripts
       - name: Check path semantics and portable workbench helpers
-        run: bun --no-env-file test packages/project-paths/tests apps/game/tests apps/workbench/tests/unit/config-edit.test.ts apps/workbench/tests/unit/listen-address.test.ts
+        run: bun --no-env-file test packages/project-paths/tests apps/game/tests packages/game-runtime/tests/unit/app/process-identity.test.ts apps/workbench/tests/unit/config-edit.test.ts apps/workbench/tests/unit/listen-address.test.ts
       - name: Smoke independent game CLI
         run: bun run --cwd apps/game run:mock
       - name: Build replay and workbench applications

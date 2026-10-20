@@ -39,7 +39,8 @@ function DecisionBadge({ frame, props, plan, mediaBaseUrl }: CustomVideoLayerPro
 export const layers: VideoLayerRegistry = { DecisionBadge };
 
 export default defineVideoProject({
-  input: "../../../tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
+  input:
+    "../../../../../packages/game-media/tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
   script: {
     source: { sessionId: "session_frontend_fixture", fingerprint: "fnv1a64:324fac06cf547954" },
     media: [{ id: "marker", kind: "image", src: "./marker.svg", width: 96, height: 96 }],

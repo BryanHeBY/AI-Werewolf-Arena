@@ -19,15 +19,17 @@
 | `app/checkpoint`                   | 现场 World／机制查询的五个 checkpoint 捕获与装配 owner | 重新推导规则、拥有第二份状态、承担独立归档校验        |
 | `recording/verification/<feature>` | 独立档案算术及因果校验                                 | 导入生产结算作oracle                                  |
 | `adapters`                         | LLM、Pi、ACP、文件系统、终端的外部边界                 | 更改领域授权或恢复关闭的回合                          |
-| `packages`                         | 明确的纯数据、语言、展示、目录与归档公共契约           | 反导backend运行owner                                  |
-| `frontend/src`                     | 视频与语音契约、纯时间线编译、共用画面与字幕           | 读取本局作者文件、凭据或调用TTS                       |
-| `frontend/scripts`                 | 本地文件读取、作者项目装配、素材准备与渲染命令         | 写死某局台词、选角或剧情，静态依赖具体对局            |
-| `frontend/examples`                | 基于教学夹具的可运行演示、通用音色试听                 | 正式对局剧本、生产运行算法                            |
+| `packages`                         | 明确的纯数据、语言、展示、目录与归档公共契约           | 反向导入应用实现；纯契约包不得读取 runtime owner      |
+| `packages/game-media/src`          | 视频与语音契约、纯时间线编译、共用画面与字幕           | 读取本局作者文件、凭据或调用TTS                       |
+| `apps/video/scripts`               | 本地文件读取、作者项目装配、素材准备与渲染命令         | 写死某局台词、选角或剧情，静态依赖具体对局            |
+| `apps/video/examples`              | 基于教学夹具的可运行演示、通用音色试听                 | 正式对局剧本、生产运行算法                            |
 | `apps/video/videos/<theme>`        | 本局完整剧本、固定选角、来源配置和制作记录             | 通用读取、合成、时间线或渲染实现                      |
 
 这不是允许所有同层互导的名单。跨族只消费实际公开端口；私有 state／frame／authority 的形状相似不等于共同不变量。
 
 Pi 的模型／认证内存状态和会话句柄由 `adapters/pi` 持有；逐玩家游标、调度租约和行动选择窗口由 `agents/pi` 持有。两者不提交领域动作。完整对话与压缩摘要由原生 Pi 会话独占；AWA 的逐轮录制只追加实际输入、思考、回应和工具回执。审计创建独立会话，不复用玩家历史。
+
+`apps/game` 只拥有命令参数、进程信号和退出码，配置检查用例与 runner 实际实现归 `packages/game-runtime`；`apps/replay` 只拥有浏览器宿主、Vite 与输入入口。二者均不制造第二份引擎或投影。
 
 ## 单一运行模块与公开面
 
@@ -41,7 +43,7 @@ Catalog／contracts／assembly／builtin 同在 `rulesets/roles`，保原 lazy r
 
 检查器必须识别 engine／features／agents／recording/verification 的真实位置，保原禁止依赖，不能让旧 game 目录退休后检查空跑。旧 synthetic 输入和历史路径仍有明确测试作用。旧 deep import 退休、模块名／缓存／堆栈及 sourceHash 改变应明示；不承诺未知外部消费者无影响。
 
-应用源码同样进入结构与 i18n 检查。工作台浏览器不能导入本应用 `src/server`、backend 实现或 Node／Bun 运行时，类型导入、包公开出口和路径别名也遵守此边界；共享 DTO、词典和 frontend 的明确公开入口可用。服务端通过 backend 的实际公开配置端口装配，不能把解析结果转存成另一套配置。
+应用源码同样进入结构与 i18n 检查。工作台浏览器不能导入本应用 `src/server`、game-runtime 实现或 Node／Bun 运行时，类型导入、包公开出口和路径别名也遵守此边界；共享 DTO、词典和 game-media 的明确公开入口可用。服务端通过 game-runtime 的实际公开配置端口装配，不能把解析结果转存成另一套配置。
 
 ## 现场 checkpoint 的实际归属
 

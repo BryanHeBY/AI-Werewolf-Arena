@@ -2,7 +2,7 @@
 
 # 视频美术设计资料
 
-设计与验收约束见 [美术与动效规范](../../docs/guides/video-art-direction.md)。这里的角色/事件家族是设计索引，不授予角色能力，不判定身份与生命，也不表示新增素材已经实现。
+设计与验收约束见 [美术与动效规范](../../../docs/guides/video-art-direction.md)。这里的角色/事件家族是设计索引，不授予角色能力，不判定身份与生命，也不表示新增素材已经实现。
 
 - [visual-coverage.json](visual-coverage.json)：审计基线、源文件摘要、29 个视觉项和闭合事件/阶段/工具/事实清单。
 - [role-art-briefs.json](role-art-briefs.json)：64 角色的纹章方向、机制关联、结果差异及源码/规则卡入口。

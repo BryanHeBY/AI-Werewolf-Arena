@@ -2,7 +2,7 @@
  * 负责识别原生复现构建所用的自维护引擎、运行时、Agent、录制及共享包源码字节。
  * 输入为显式仓库根目录；输出为有序公开路径及源码／锁文件 SHA-256。文件系统适配
  * 不拥有 World、规则或历史兼容政策。路径、注释、词典、未执行 schema、包配置和根／
- * 应用／共享包的 tsconfig 清单均参与精确身份；前端源码与测试不在本源码范围。
+ * 应用／共享包的 tsconfig 清单均参与精确身份；浏览器应用入口与测试不在本源码范围。
  * 本地配置／认证、依赖目录和生成记录不参与枚举，依赖版本由独立锁文件指纹表示。
  */
 import { createHash } from "node:crypto";
@@ -26,8 +26,10 @@ export async function engineFingerprintInputs(repositoryRoot: string): Promise<s
   };
   for (const manifest of [
     "package.json",
-    "backend/package.json",
-    "frontend/package.json",
+    "apps/game/package.json",
+    "apps/replay/package.json",
+    "apps/video/package.json",
+    "apps/workbench/package.json",
     "bunfig.toml",
   ]) {
     try {
@@ -51,7 +53,8 @@ export async function engineFingerprintInputs(repositoryRoot: string): Promise<s
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     }
   };
-  for (const owner of ["", "backend", "frontend"]) await compilerManifests(owner);
+  for (const owner of ["", "apps/game", "apps/replay", "apps/video", "apps/workbench"])
+    await compilerManifests(owner);
   // 递归只接受源码扩展名；私有目录、环境文件和认证文件在加入路径集合前排除。
   const walk = async (relative: string): Promise<void> => {
     await rejectSymlinkAncestors(relative);
@@ -70,8 +73,16 @@ export async function engineFingerprintInputs(repositoryRoot: string): Promise<s
       else if (entry.isFile() && /\.(?:[cm]?[jt]sx?|json)$/.test(entry.name)) files.push(name);
     }
   };
-  // 后端全部 src 与每个共享包 src 参与身份，不按是否被某次对局导入缩小集合。
-  await walk("backend/src");
+  // 独立游戏 CLI 迁出运行包后仍属于旧引擎的执行来源；浏览器应用不在此枚举。
+  // 合成源码根允许没有应用入口，但真实仓库会把现有 CLI 字节完整纳入。
+  try {
+    await readdir(path.join(root, "apps/game/src"));
+    await walk("apps/game/src");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  // 运行包与所有共享包的源码、未执行 schema 和元数据均参与身份，不借迁移缩小来源范围。
+  await rejectSymlinkAncestors("packages/game-runtime/src");
   await rejectSymlinkAncestors("packages");
   for (const entry of (await readdir(path.join(root, "packages"), { withFileTypes: true })).sort(
     (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0),

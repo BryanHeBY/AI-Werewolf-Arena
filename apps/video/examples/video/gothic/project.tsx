@@ -22,7 +22,8 @@ const symbols: AvatarKey[] = [
   "deepseek",
 ];
 export default defineVideoProject({
-  input: "../../../tests/fixtures/twelve-player-dreamer/dreamer-twelve/zh-CN/god.replay.json",
+  input:
+    "../../../../../packages/game-media/tests/fixtures/twelve-player-dreamer/dreamer-twelve/zh-CN/god.replay.json",
   script: {
     source: { sessionId: "session_1791458555965_gtf44n", fingerprint: "fnv1a64:bb93170e8c2f3910" },
     layout: "broadcast-v1",

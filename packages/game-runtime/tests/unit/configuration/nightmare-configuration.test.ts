@@ -23,7 +23,7 @@ for (const fear of ["optional", "required_when_legal"] as const)
       expect(bootstrapGame(config).world.entityIds()).toHaveLength(12);
       const id = `awa_nightmare_12_${fear}_${wolf}_v1`;
       const definition = await Bun.file(
-        new URL(`../../../../configs.example/boards/${id}.json`, import.meta.url),
+        new URL(`../../../../../configs.example/boards/${id}.json`, import.meta.url),
       ).json();
       expect(parseBoardDefinition(definition).config).toEqual(config);
       expect(boardDefinitionFromConfig(id, config)).toEqual(definition);

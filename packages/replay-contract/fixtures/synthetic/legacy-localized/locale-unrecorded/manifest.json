@@ -215,7 +215,7 @@
   "sourceAssets": [
     {
       "originPath": "backend/tests/support/audit_summary_fixture.ts",
-      "currentPath": "backend/tests/support/builders/audit-summary.ts",
+      "currentPath": "packages/game-runtime/tests/support/builders/audit-summary.ts",
       "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
       "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
       "originalBytes": 811,
@@ -227,7 +227,7 @@
     },
     {
       "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
-      "currentPath": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+      "currentPath": "packages/game-runtime/tests/support/features/mist-raven/oracles/transport.ts",
       "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
       "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
       "originalBytes": 7318,

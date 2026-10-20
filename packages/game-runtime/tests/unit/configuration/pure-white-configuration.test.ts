@@ -129,7 +129,7 @@ for (const priority of ["wolf", "good"] as const)
     test(`public paired board file preserves ${priority}/${selfHeal}`, async () => {
       const id = `awa_pure_white_12_${priority}_${selfHeal}_v1`;
       const raw = await Bun.file(
-        new URL(`../../../../configs.example/boards/${id}.json`, import.meta.url),
+        new URL(`../../../../../configs.example/boards/${id}.json`, import.meta.url),
       ).json();
       const board = parseBoardDefinition(raw);
       expect(board.definition.id).toBe(id);

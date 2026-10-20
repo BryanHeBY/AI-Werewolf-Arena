@@ -132,7 +132,7 @@ export async function createArtGalleryCases(): Promise<ArtGalleryCase[]> {
   >();
   const allDocuments: Array<{ document: ReplayDocument; file: string }> = [];
   for (const [directory, pattern] of [
-    ["frontend/tests/fixtures", "**/god.replay.json"],
+    ["packages/game-media/tests/fixtures", "**/god.replay.json"],
     ["docs/examples", "**/*.replay.json"],
   ]) {
     for await (const relative of new Bun.Glob(pattern).scan(path.join(root, directory))) {

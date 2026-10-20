@@ -18,7 +18,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const replay = readReplayDocument(
       JSON.parse(
         readFileSync(
-          new URL(`../../../../../docs/examples/crow/${locale}.replay.json`, import.meta.url),
+          new URL(`../../../../../../docs/examples/crow/${locale}.replay.json`, import.meta.url),
           "utf8",
         ),
       ),

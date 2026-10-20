@@ -6,9 +6,10 @@
 import { mkdtemp, mkdir, readdir, writeFile, symlink, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
-const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const repo = PROJECT_ROOT;
 const root = await mkdtemp(path.join(tmpdir(), "awa-seer-baseline-"));
 const baseline = "eb4f026a38205d420cc2172b32fe23a29cb00da0";
 try {
@@ -22,12 +23,16 @@ try {
   const deps = path.join(root, "backend/node_modules");
   await mkdir(deps);
   // 本工具不冻结依赖字节；仅把工作区包切回旧源码，其余链接保留现有安装环境。
-  for (const name of await readdir(path.join(repo, "backend/node_modules"))) {
+  for (const name of await readdir(path.join(repo, "packages/game-runtime/node_modules"))) {
     if (name === "@ai-werewolf-arena") {
       await mkdir(path.join(deps, name));
-      for (const pkg of await readdir(path.join(repo, "backend/node_modules", name)))
+      for (const pkg of await readdir(path.join(repo, "packages/game-runtime/node_modules", name)))
         await symlink(path.join(root, "packages", pkg), path.join(deps, name, pkg));
-    } else await symlink(path.join(repo, "backend/node_modules", name), path.join(deps, name));
+    } else
+      await symlink(
+        path.join(repo, "packages/game-runtime/node_modules", name),
+        path.join(deps, name),
+      );
   }
   for (const name of ["game-text", "replay-contract"])
     await symlink(deps, path.join(root, "packages", name, "node_modules"));
@@ -52,7 +57,10 @@ console.log(JSON.stringify({baseline: '${baseline}', request: actual}, null, 2))
   const actual = JSON.parse(probe.stdout.toString());
   const { readFile } = await import("node:fs/promises");
   const fixture = JSON.parse(
-    await readFile(path.join(repo, "backend/tests/support/seer_baseline_request.json"), "utf8"),
+    await readFile(
+      path.join(repo, "packages/game-runtime/tests/support/seer_baseline_request.json"),
+      "utf8",
+    ),
   );
   if (JSON.stringify(actual) !== JSON.stringify(fixture))
     throw new Error("baseline_fixture_mismatch");

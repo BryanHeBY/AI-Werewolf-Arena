@@ -23,7 +23,10 @@ const fixture = path.resolve(
   import.meta.dir,
   "../../fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
 );
-const example = path.resolve(import.meta.dir, "../../../examples/video/custom-layers/project.tsx");
+const example = path.resolve(
+  import.meta.dir,
+  "../../../../../apps/video/examples/video/custom-layers/project.tsx",
+);
 
 test("loading and compiling remain usable without materializing an unrelated missing media file", async () => {
   const directory = await mkdtemp(path.join(os.tmpdir(), "awa-plan-only-"));

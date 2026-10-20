@@ -173,7 +173,7 @@ test("browser shared contracts cannot import the workbench server even through a
     ),
     "packages/workbench-contract/src/index.ts": "export type {ServerConfig} from 'workbench/api';",
   });
-  expect(rules(graph)).toEqual(["dependency.browser-server"]);
+  expect(rules(graph)).toEqual(["dependency.browser-server", "dependency.package-application"]);
 });
 
 test("application source retains production dependency and responsibility checks", () => {
@@ -659,4 +659,36 @@ test("current files require valid contracts without historical grace", () => {
     checkArchitecture(process.cwd(), input({ "backend/src/a.ts": header + "export const x=1;" }))
       .failures,
   ).toEqual([]);
+});
+
+test("semantic runtime retains feature privacy and rejects reverse application dependencies", () => {
+  expect(
+    rules(
+      input({
+        "packages/game-runtime/src/features/a/effect.ts": "import {x} from '../b/authority';",
+        "packages/game-runtime/src/features/b/authority.ts": "export const x=1;",
+        "packages/game-runtime/src/app/runtime.ts":
+          "import {main} from '../../../../apps/game/src/entry';",
+        "apps/game/src/entry.ts": "export const main=1;",
+      }),
+    ),
+  ).toEqual(["dependency.feature-internal", "dependency.package-application"]);
+});
+
+test("browser cannot use a declared server-only path package while server entrypoints can", () => {
+  const rows = {
+    "packages/project-paths/package.json": pkg("@ai-werewolf-arena/project-paths"),
+    "packages/project-paths/src/index.ts": "export const root='project';",
+    "apps/replay/package.json": pkg("replay-app", undefined, {
+      "@ai-werewolf-arena/project-paths": "workspace:*",
+    }),
+    "apps/replay/src/main.ts": "import {root} from '@ai-werewolf-arena/project-paths';",
+  };
+  expect(rules(input(rows))).toEqual(["dependency.browser-runtime-package"]);
+  const server = {
+    ...rows,
+    "apps/replay/src/main.ts": "",
+    "apps/replay/scripts/dev.ts": "import {root} from '@ai-werewolf-arena/project-paths';",
+  };
+  expect(rules(input(server))).toEqual([]);
 });

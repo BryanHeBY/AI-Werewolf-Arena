@@ -4,7 +4,7 @@
 
 ```bash
 bun run --cwd apps/game simulate --configs-dir ../../configs.example --board twelve_player_standard --count 25
-bun run --cwd apps/game replay:actions --record ../record/<session-id>/reproduction.json
+bun run --cwd apps/game replay:actions --record ../../record/<session-id>/reproduction.json
 ```
 
 模拟使用明确受限观察机器人和固定seed输入，不调用模型，也不证明原始God baseline符合玩家信息边界。seed仅固定随机流，模型原文和不同动作仍能改变结果。
