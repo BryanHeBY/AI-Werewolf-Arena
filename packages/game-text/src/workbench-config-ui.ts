@@ -21,6 +21,8 @@ export const zhCN = {
   configIdHelp:
     "这是配置文件名，请以小写英文字母开头，仅使用小写字母、数字、下划线或短横线，不含 .json。例如 my_board。",
   configIdExists: "这个配置 ID 已存在。请换用新 ID，或返回列表编辑已有配置。",
+  checkConfigurationAgain: "请检查配置后重试。",
+  diagnosticDetails: "诊断详情",
   savedGames: "已保存的游戏配置",
   savedBoards: "已保存的板子",
   newBoard: "新建板子",
@@ -106,6 +108,8 @@ export const zhCN = {
   none: "无胜者",
 } as const;
 export const en: Record<keyof typeof zhCN, string> = {
+  checkConfigurationAgain: "Check the configuration and try again.",
+  diagnosticDetails: "Diagnostic details",
   noAgents:
     "No agents are configured yet. Choose a platform, enter your credentials and save an agent before choosing a board and creating a game.",
   configureAgent: "Configure an agent",

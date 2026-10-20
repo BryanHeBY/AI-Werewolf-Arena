@@ -306,13 +306,11 @@ export function DocumentEditor({
             <div key={`${diagnostic.code}/${index}`}>
               <p>
                 {workbenchServiceMessage(locale, diagnostic.code) ??
-                  (locale === "en"
-                    ? "Check the configuration and try again."
-                    : "请检查配置后重试。")}
+                  configUiText(locale, "checkConfigurationAgain")}
               </p>
               {diagnostic.path && <p>{workbenchConfigLocation(locale, diagnostic.path)}</p>}
               <details>
-                <summary>{locale === "en" ? "Diagnostic details" : "诊断详情"}</summary>
+                <summary>{configUiText(locale, "diagnosticDetails")}</summary>
                 <code>
                   {diagnostic.code}
                   {diagnostic.path ? ` · ${diagnostic.path}` : ""}

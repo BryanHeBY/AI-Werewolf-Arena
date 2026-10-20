@@ -18,6 +18,7 @@ const translationOwners = new Set([
   "packages/game-text/src/workbench-agent.ts",
   "packages/game-text/src/workbench-board.ts",
   "packages/game-text/src/workbench-config-ui.ts",
+  "packages/game-text/src/workbench-config-diagnostics.ts",
   "packages/game-text/src/workbench-service.ts",
   "packages/game-text/src/messages/common.ts",
   "packages/game-text/src/messages/runtime.ts",

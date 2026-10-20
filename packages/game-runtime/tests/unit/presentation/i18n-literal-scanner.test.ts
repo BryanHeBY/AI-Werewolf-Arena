@@ -33,6 +33,7 @@ test("translation owner exemption covers direct zhCN values and no adjacent code
   for (const file of [
     "packages/game-text/src/messages/common.ts",
     "packages/game-text/src/workbench.ts",
+    "packages/game-text/src/workbench-config-diagnostics.ts",
   ])
     expect(collectChineseLiterals(file, source).map((entry) => entry.text)).toEqual([
       "中文键",

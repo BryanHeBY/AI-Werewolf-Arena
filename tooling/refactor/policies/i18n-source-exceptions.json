@@ -114,10 +114,10 @@
     "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
   },
   {
-    "file": "apps/video/scripts/compile-speech-video.ts",
-    "text": "/** 负责保存已备语音生成的项目。输入为锁定台词和音频，输出连续时间线；重新编译生成新版本，不手改此文件。 */\nimport { defineVideoProject } from ",
+    "file": "apps/video/scripts/video/project-snapshot.ts",
+    "text": "/** 负责保存已备语音生成的项目。输入为锁定台词和音频，输出连续时间线；重新编译生成新版本，不手改此文件。 */",
     "count": 1,
-    "reason": "Generated TypeScript responsibility comment for a local frozen production; not runtime or player-facing text."
+    "reason": "冻结项目的生成代码职责注释已移至共用快照模块；只登记该完整字面及一次出现，不豁免运行或玩家文案。"
   },
   {
     "file": "apps/video/scripts/video/casting.ts",
