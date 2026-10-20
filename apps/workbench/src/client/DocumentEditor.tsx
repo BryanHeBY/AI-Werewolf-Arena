@@ -14,7 +14,10 @@ import type { Translator } from "./types";
 import { useDraft } from "./draft-context";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
-import { workbenchServiceMessage } from "@ai-werewolf-arena/game-text/workbench-service";
+import {
+  workbenchConfigLocation,
+  workbenchServiceMessage,
+} from "@ai-werewolf-arena/game-text/workbench-service";
 export function DocumentEditor({
   kind,
   name,
@@ -44,6 +47,7 @@ export function DocumentEditor({
     [original, setOriginal] = useState(""),
     [mode, setMode] = useState<"form" | "source">("form"),
     [error, setError] = useState(""),
+    [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
     [reading, setReading] = useState(false);
@@ -61,6 +65,7 @@ export function DocumentEditor({
     setDocument(null);
     setTarget(name);
     setError("");
+    setDiagnostics([]);
     setMessage("");
     const ready = (doc: ConfigDocument) => {
       if (generation.current === id) {
@@ -95,11 +100,14 @@ export function DocumentEditor({
     setBusy(true);
     setReading(freezeDraft);
     setError("");
+    setDiagnostics([]);
     setMessage("");
     try {
       await operation();
     } catch (e) {
       setError(e instanceof ApiError ? e.code + (e.path ? ` · ${e.path}` : "") : "request_failed");
+      if (e instanceof ApiError)
+        setDiagnostics([{ code: e.code, ...(e.path ? { path: e.path } : {}), severity: "error" }]);
     } finally {
       setBusy(false);
       setReading(false);
@@ -210,6 +218,7 @@ export function DocumentEditor({
                 // 检查结论属于发出请求时的原文；用户后续输入不能收到旧版本“通过”的提示。
                 if (latestText.current !== text) return;
                 if (!result.valid) {
+                  setDiagnostics(result.diagnostics);
                   setError(
                     result.diagnostics
                       .map((d) => `${d.code}${d.path ? ` · ${d.path}` : ""}`)
@@ -290,10 +299,27 @@ export function DocumentEditor({
               ? configUiText(locale, "configIdExists")
               : t("conflict")
             : t("error")}
-          {workbenchServiceMessage(locale, error.split(" · ")[0]) && (
-            <p>{workbenchServiceMessage(locale, error.split(" · ")[0])}</p>
-          )}
-          <code>{error}</code>
+          {(diagnostics.length
+            ? diagnostics
+            : [{ code: error.split(" · ")[0], severity: "error" as const }]
+          ).map((diagnostic, index) => (
+            <div key={`${diagnostic.code}/${index}`}>
+              <p>
+                {workbenchServiceMessage(locale, diagnostic.code) ??
+                  (locale === "en"
+                    ? "Check the configuration and try again."
+                    : "请检查配置后重试。")}
+              </p>
+              {diagnostic.path && <p>{workbenchConfigLocation(locale, diagnostic.path)}</p>}
+              <details>
+                <summary>{locale === "en" ? "Diagnostic details" : "诊断详情"}</summary>
+                <code>
+                  {diagnostic.code}
+                  {diagnostic.path ? ` · ${diagnostic.path}` : ""}
+                </code>
+              </details>
+            </div>
+          ))}
         </div>
       )}
       {message && (

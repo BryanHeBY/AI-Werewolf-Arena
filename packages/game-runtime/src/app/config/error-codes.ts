@@ -155,6 +155,8 @@ export const CONFIG_ERROR_CODES = [
   "pi_settings_thinking_invalid",
   "pi_model_api_base_required",
   "pi_model_override_unknown",
+  "pi_provider_not_configured",
+  "pi_model_not_found",
 ] as const;
 export type ConfigErrorCode = (typeof CONFIG_ERROR_CODES)[number];
 

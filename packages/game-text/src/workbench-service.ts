@@ -1,4 +1,6 @@
 /** 负责工作台文件与运行服务的双语诊断词典；输入机器码和语言，输出给调用方的本地化说明。仅声明文案，令牌、原始文件正文和异常栈不进入说明。 */
+import { workbenchConfigMessage } from "./workbench-config-diagnostics";
+export { workbenchConfigLocation } from "./workbench-config-diagnostics";
 export const zhCN = {
   file_access_denied: "文件权限不允许此操作，请检查目标目录权限后重试。",
   disk_full: "磁盘空间不足，文件尚未保存，请释放空间后重试。",
@@ -25,6 +27,10 @@ export const zhCN = {
   connection_test_busy: "已有连接测试正在执行，请等待完成后重试。",
   connection_test_empty_response: "服务结束了请求，但没有返回文本，请检查模型和平台配置。",
   connection_test_cleanup_failed: "测试资源未能完整关闭，请检查 Agent 进程状态。",
+  invalid_json: "JSON 语法不正确，请检查括号、引号和逗号。",
+  object_required: "配置必须是 JSON 对象，不能是列表、文本或空值。",
+  secret_reentry_required: "认证保留标记没有对应原值，请重新填写该认证后保存。",
+  invalid_preview_selection: "请选择当前板子范围内的座位及角色后预览。",
 } as const;
 export const en: Record<keyof typeof zhCN, string> = {
   file_access_denied:
@@ -64,8 +70,16 @@ export const en: Record<keyof typeof zhCN, string> = {
     "The request ended without text. Check the model and platform configuration.",
   connection_test_cleanup_failed:
     "Test resources could not be fully closed. Check the agent process.",
+  invalid_json: "Invalid JSON syntax. Check brackets, quotes and commas.",
+  object_required: "The configuration must be a JSON object, not a list, string or null.",
+  secret_reentry_required:
+    "A credential marker has no original value. Reenter that credential before saving.",
+  invalid_preview_selection:
+    "Select a seat and role that belong to the current board before previewing.",
 };
 
 export function workbenchServiceMessage(locale: "zh-CN" | "en", code: string): string | undefined {
-  return (locale === "en" ? en : zhCN)[code as keyof typeof zhCN];
+  return (
+    (locale === "en" ? en : zhCN)[code as keyof typeof zhCN] ?? workbenchConfigMessage(locale, code)
+  );
 }
