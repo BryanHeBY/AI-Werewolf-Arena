@@ -4,7 +4,7 @@
 
 ## 快速开始
 
-使用根 `package.json` 声明的 Bun 版本安装依赖。仅在首次创建本地配置时复制模板；已有 `configs/` 时按需合并条目。
+使用根 `package.json` 声明的 Bun 版本安装依赖。首次空配置目录可在工作台显式补充缺失模板；已有 `configs/` 时保留原文件。
 
 ```bash
 bun install
@@ -25,7 +25,7 @@ bun run run:twelve
 bun run dev:frontend
 ```
 
-默认模板使用 OpenRouter 的 DeepSeek V4 Flash。Pi 多模型、ACP 隔离、本地配置迁移和完整命令见下方指南；运行真实 Agent 会使用所配置的网络服务或本地进程。
+首页可直接选择已保存游戏开始对局；板子、游戏与 Agent 页分别管理配置。首次初始化只补充缺失 JSON，不覆盖已有配置，也不启动游戏。默认模板使用 OpenRouter 的 DeepSeek V4 Flash。Pi 多模型、ACP 隔离、本地配置迁移和完整命令见下方指南；运行真实 Agent 会使用所配置的网络服务或本地进程。
 
 ## 文档入口
 
@@ -81,7 +81,7 @@ bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelv
 
 缺省 `configs/record/output/.workbench` 始终属于仓库根；显式 CLI 相对路径按命令入口的当前目录，配置文件内的文件引用按声明文件目录。Vite 与子进程在各自应用目录运行，接收已经解析的绝对路径。运行参数不会因为工具切换目录而改变含义。迁移保留原 `configs/record/output` 内容，旧 `backend/frontend` 下的忽略产物不自动清除。
 
-工作台、LLM／Pi、独立对局与复盘入口使用跨平台 Bun／Node API；Windows 不需要 Bash 来启动这些命令。ACP 的 `bwrap` 文件隔离是 Linux 专属能力，Windows 接入 ACP 需自行提供受支持的适配器与隔离方式。浏览器测试另需 Node.js 和匹配版本的 Playwright Chromium。
+工作台、LLM／Pi、独立对局与复盘入口使用跨平台 Bun／Node API；Windows 不需要 Bash 来启动这些命令。进程身份查询提供 Linux、Windows 和 macOS 实现，当前已确认 Linux／Windows 定向测试，macOS 尚无同级 CI 验证。ACP 的 `bwrap` 文件隔离是 Linux 专属能力，Windows 接入 ACP 需自行提供受支持的适配器与隔离方式。浏览器测试另需 Node.js 和匹配版本的 Playwright Chromium。
 
 ## 开发与验证
 

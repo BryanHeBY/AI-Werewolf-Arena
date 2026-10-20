@@ -6,8 +6,9 @@
 
 ```bash
 bun install
-cp -R configs.example configs
-# 仅首次建立本地目录时复制；已有 configs 时不执行 cp。
+# 首次可启动工作台，在首页或 Agent 页显式补充缺失模板。
+bun run workbench
+# 已有配置原地保留；完成认证后可关闭工作台，独立运行 CLI。
 # 在 configs/runtime/backends.json 填认证，agents.json 配置 options。
 bun run --cwd apps/game config:check --configs-dir ../../configs --game-config-name twelve_player_standard
 ```
