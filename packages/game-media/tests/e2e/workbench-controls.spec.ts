@@ -341,17 +341,21 @@ test("absorbed ballot entries keep raw seq navigation while sidebar and rosters 
   await expect(page.locator(".current-event")).toHaveAttribute("data-source-seq", "4");
   await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
   await expect(page.locator('[data-composition-player="2"]')).not.toContainText("出局");
-  // 主票型落定后仍需完整阅读；放逐结果有独立揭晓点，不能沿用旧 settled 即提交的假设。
-  await seek(ballot.from + ballot.scene.cues.settled);
+  // 默认快速播报中结果可早于装饰收束；事实边界只认独立揭晓帧，不能用 settled 代替。
+  expect(ballot.scene.resolution).toBeDefined();
+  const resultFrame = ballot.scene.resolution!.revealFrame;
+  expect(resultFrame).toBeGreaterThan(ballot.scene.cues.impact);
+  await seek(ballot.from + resultFrame - 1);
   await expect(page.locator(".current-event")).toHaveAttribute("data-source-seq", "4");
   await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
   await expect(page.locator('[data-composition-player="2"]')).not.toContainText("出局");
-  expect(ballot.scene.resolution).toBeDefined();
-  expect(ballot.scene.resolution!.revealFrame).toBeGreaterThan(ballot.scene.cues.settled);
-  await seek(ballot.from + ballot.scene.resolution!.revealFrame);
+  await seek(ballot.from + resultFrame);
   await expect(page.locator(".current-event")).toHaveAttribute("data-source-seq", "5");
   await expect(page.locator(".seat-grid .dead .seat-number")).toHaveText("2");
   await expect(page.locator('[data-composition-player="2"]')).toContainText("出局");
+  await seek(ballot.from + ballot.scene.cues.settled);
+  await expect(page.locator(".current-event")).toHaveAttribute("data-source-seq", "5");
+  await expect(page.locator(".seat-grid .dead .seat-number")).toHaveText("2");
   await seek(ballot.from + ballot.scene.cues.impact - 1);
   await expect(page.locator(".current-event")).toHaveAttribute("data-source-seq", "1");
   await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
