@@ -22,9 +22,11 @@ _十二人对局的复盘／视频画面，上帝视角。_
 
 ## 快速开始
 
-使用根 [package.json](package.json) 声明的 Bun 版本，在仓库根目录安装依赖：
+先安装根 [package.json](package.json) 声明版本的 Bun。首次使用时，克隆仓库、进入根目录并安装依赖：
 
 ```sh
+git clone https://github.com/BryanHeBY/AI-Werewolf-Arena.git
+cd AI-Werewolf-Arena
 bun install
 ```
 
