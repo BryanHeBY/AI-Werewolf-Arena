@@ -60,6 +60,12 @@
     "reason": "Existing Chinese authoring annotations for the explicitly non-gameplay art repair gallery, not shared game UI or player prose."
   },
   {
+    "file": "frontend/scripts/render-production-video.ts",
+    "text": "AI 狼人杀",
+    "count": 1,
+    "reason": "Fallback MP4 metadata title matches the Chinese project name; does not change localized scene rendering."
+  },
+  {
     "file": "frontend/scripts/generate-speech-script.ts",
     "text": "<!doctype html><html lang=\"zh-CN\"><meta charset=\"utf-8\"><title>完整旁白与发言稿</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;background:#10171f;color:#e7e4db;font:18px/1.9 system-ui}header{position:sticky;top:0;background:#10171ff5;padding:12px 0}h1{font-size:28px}h2{font-size:23px;margin:0 0 10px}article{padding:28px 0;border-bottom:1px solid #394550}small{color:#9eacb8}p{white-space:pre-wrap;margin:12px 0 20px}b{color:#92d0df}input{box-sizing:border-box;width:100%;padding:12px;background:#202d39;border:1px solid #52616b;color:white;font:inherit}.hidden{display:none}</style><header><h1>完整旁白与发言稿</h1><small>",
     "count": 1,
@@ -112,6 +118,54 @@
     "text": "/** 负责保存已备语音生成的项目。输入为锁定台词和音频，输出连续时间线；重新编译生成新版本，不手改此文件。 */\nimport { defineVideoProject } from ",
     "count": 1,
     "reason": "Generated TypeScript responsibility comment for a local frozen production; not runtime or player-facing text."
+  },
+  {
+    "file": "frontend/scripts/video/casting.ts",
+    "text": "解说小明 2.0",
+    "count": 1,
+    "reason": "Provider voice proper names and explicit Chinese synthesis instructions; translation would alter the approved voice/cache identity."
+  },
+  {
+    "file": "frontend/scripts/video/casting.ts",
+    "text": "用自然、清晰的游戏解说口吻介绍，轻松平实，不夸张。",
+    "count": 1,
+    "reason": "Provider voice proper names and explicit Chinese synthesis instructions; translation would alter the approved voice/cache identity."
+  },
+  {
+    "file": "frontend/scripts/video/casting.ts",
+    "text": "魅力女友 2.0",
+    "count": 1,
+    "reason": "Provider voice proper names and explicit Chinese synthesis instructions; translation would alter the approved voice/cache identity."
+  },
+  {
+    "file": "frontend/scripts/video/casting.ts",
+    "text": "用清晰、平稳的狼人杀主持人口吻播报，语气克制，停顿自然。",
+    "count": 1,
+    "reason": "Provider voice proper names and explicit Chinese synthesis instructions; translation would alter the approved voice/cache identity."
+  },
+  {
+    "file": "frontend/scripts/video/review.ts",
+    "text": " · 在视频中查看</a>",
+    "count": 1,
+    "reason": "Chinese-only offline director review and download labels; independent of game replay display locale."
+  },
+  {
+    "file": "frontend/scripts/video/review.ts",
+    "text": "fps</p><video controls preload=\"metadata\" src=\"./movie.mp4\"></video><nav><a href=\"./movie.mp4\" download>下载完整MP4</a><a href=\"./script-review.html\">带时间完整台词</a>",
+    "count": 1,
+    "reason": "Chinese-only offline director review and download labels; independent of game replay display locale."
+  },
+  {
+    "file": "frontend/scripts/video/review.ts",
+    "text": "<a href=\"./subtitles.srt\" download>下载SRT字幕</a>",
+    "count": 1,
+    "reason": "Chinese-only offline director review and download labels; independent of game replay display locale."
+  },
+  {
+    "file": "frontend/scripts/video/review.ts",
+    "text": "<a href=\"./credits.txt\" download>音乐与音效署名</a>",
+    "count": 1,
+    "reason": "Chinese-only offline director review and download labels; independent of game replay display locale."
   },
   {
     "file": "frontend/scripts/generate-video-script.ts",
