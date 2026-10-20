@@ -16,6 +16,7 @@ import {
   buildConnection,
   buildAgentOptions,
   nativeObject,
+  requiresCodexImport,
   type ModelSummary,
 } from "./agent-platforms";
 import { agentText } from "@ai-werewolf-arena/game-text/workbench-agent";
@@ -65,6 +66,10 @@ export function AgentWizard({
     [error, setError] = useState(""),
     [message, setMessage] = useState("");
   const platform = platforms.find((p) => p.id === platformId)!;
+  const importSubscription = requiresCodexImport(
+    platform,
+    catalog.backends.find((item) => item.name === backend),
+  );
   const provider = platform.id === "pi-native" ? providerInput.trim() : platform.provider;
   const l = (key: Parameters<typeof agentText>[1]) => agentText(locale, key);
   useEffect(() => {
@@ -210,7 +215,7 @@ export function AgentWizard({
         // 两文件保存可能部分成功，明确保留已创建连接；重试继续认证/Agent步骤，不碰无关条目。
         setCreatedConnection(connection);
       }
-      if (platform.id === "codex" && !backend)
+      if (importSubscription)
         await api("codex-import", { method: "POST", body: { backend: connection } });
       if (platform.id === "codex" && fast && !backend) {
         const current = await api<ConfigDocument>("documents/backends/backends");
@@ -572,7 +577,7 @@ export function AgentWizard({
             {t("clear")}
           </button>
           <button className="primary" disabled={busy || !name} onClick={() => void submit()}>
-            {platform.id === "codex" && !backend ? `${t("codexImport")} + ${t("save")}` : t("save")}
+            {importSubscription ? `${t("codexImport")} + ${t("save")}` : t("save")}
           </button>
         </div>
       </fieldset>

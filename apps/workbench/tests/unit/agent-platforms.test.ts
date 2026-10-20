@@ -4,6 +4,7 @@ import {
   buildConnection,
   buildAgentOptions,
   compatibleConnection,
+  requiresCodexImport,
   platforms,
   type PlatformInput,
 } from "../../src/client/agent-platforms";
@@ -93,6 +94,13 @@ describe("Pi native defaults", () => {
       ),
     ).toBe(true);
     expect(compatibleConnection(undefined, platform)).toBe(false);
+    const codex = input("codex").platform;
+    expect(
+      requiresCodexImport(codex, { name: "partial", kind: "pi", providers: ["openai-codex"] }),
+    ).toBe(true);
+    expect(
+      requiresCodexImport(codex, { name: "ready", kind: "pi", authProviders: ["openai-codex"] }),
+    ).toBe(false);
   });
   test("native custom providers and environment placeholders stay unexpanded", () => {
     const backend = buildConnection(

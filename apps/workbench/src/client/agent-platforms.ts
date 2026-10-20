@@ -68,6 +68,10 @@ export function compatibleConnection(
         [...(connection.authProviders ?? []), ...(connection.providers ?? [])].includes(provider)))
   );
 }
+/** 部分保存的 Codex 连接可恢复；已有订阅认证的复用不再次覆盖令牌。 */
+export function requiresCodexImport(platform: Platform, connection?: ConnectionSummary): boolean {
+  return platform.id === "codex" && !connection?.authProviders?.includes("openai-codex");
+}
 export function nativeObject(text: string): JsonObject {
   const raw: unknown = JSON.parse(text);
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw Error("object_required");
