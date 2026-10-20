@@ -66,7 +66,9 @@ export class ConfigService {
       resolveGameSetup(runtime, {}, board);
     }
   }
-  async boardRaw(name: string): Promise<JsonObject> {
+  async boardRaw(name: string, source?: "local" | "example"): Promise<JsonObject> {
+    if (source === "example") return new ConfigDocuments(this.examplesRoot).raw("boards", name);
+    if (source === "local") return this.documents.raw("boards", name);
     try {
       return await this.documents.raw("boards", name);
     } catch (error) {
@@ -75,15 +77,16 @@ export class ConfigService {
     // 示例仅作为用户显式选择的模板来源；真实运行仍须保存本地板子。
     return new ConfigDocuments(this.examplesRoot).raw("boards", name);
   }
-  async boards(): Promise<BoardCard[]> {
-    const local = await this.documents.list("boards"),
+  async boards(source?: "example"): Promise<BoardCard[]> {
+    // 示例库有独立身份：同 ID 已复制到本地，也不能让“新建”失去原始模板。
+    const local = source === "example" ? [] : await this.documents.list("boards"),
       example = await new ConfigDocuments(this.examplesRoot).list("boards");
     return Promise.all(
       [...new Set([...local, ...example])].sort().map(async (name) => {
         let raw: JsonObject = {};
         let problem: Diagnostic | undefined;
         try {
-          raw = await this.boardRaw(name);
+          raw = await this.boardRaw(name, source);
           parseBoardDefinition(raw, name);
         } catch (error) {
           problem = diagnostic(error);

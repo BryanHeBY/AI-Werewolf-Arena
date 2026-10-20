@@ -25,5 +25,6 @@ export interface Catalog {
   agents: AgentSummary[];
   backends: { name: string; kind?: string; providers?: string[]; authProviders?: string[] }[];
   boards: BoardCard[];
+  boardTemplates?: BoardCard[];
 }
 export type Page = "home" | "games" | "boards" | "agents" | "logs" | "replay";

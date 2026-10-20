@@ -76,9 +76,14 @@ export function createWorkbench(options: WorkbenchOptions) {
             result = describeBoardRuleCatalog();
           else if (parts[1] === "platform-defaults" && request.method === "GET")
             result = await describePlatformDefaults(options.repository, options.configs);
-          else if (parts[1] === "catalog" && request.method === "GET")
-            result = { ...(await configs.summary()), boards: await configs.boards() };
-          else if (parts[1] === "initialize" && request.method === "POST") {
+          else if (parts[1] === "catalog" && request.method === "GET") {
+            const [summary, boards, boardTemplates] = await Promise.all([
+              configs.summary(),
+              configs.boards(),
+              configs.boards("example"),
+            ]);
+            result = { ...summary, boards, boardTemplates };
+          } else if (parts[1] === "initialize" && request.method === "POST") {
             await documents.initialize(path.join(options.repository, "configs.example"));
             result = { ok: true };
           } else if (parts[1] === "documents" && parts.length === 4) {
@@ -105,9 +110,12 @@ export function createWorkbench(options: WorkbenchOptions) {
             parts[1] === "board-template" &&
             parts.length === 3 &&
             request.method === "GET"
-          )
-            result = await configs.boardRaw(parts[2]);
-          else if (parts[1] === "validate" && request.method === "POST") {
+          ) {
+            const source = url.searchParams.get("source");
+            if (source !== null && source !== "example" && source !== "local")
+              throw new WorkbenchError("invalid_path");
+            result = await configs.boardRaw(parts[2], source ?? undefined);
+          } else if (parts[1] === "validate" && request.method === "POST") {
             if (typeof body.text !== "string" || typeof body.name !== "string")
               throw new WorkbenchError("invalid_document");
             try {

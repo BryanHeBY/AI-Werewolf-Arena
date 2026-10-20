@@ -422,7 +422,7 @@ test("late board template responses cannot replace the currently edited template
   request,
 }) => {
   const catalog = await (await request.get("/api/catalog")).json();
-  const templates = catalog.boards.filter(
+  const templates = (catalog.boardTemplates ?? catalog.boards).filter(
     (board: any) => board.source === "example" && board.supported && board.size === 12,
   );
   const first = templates[0],
@@ -431,7 +431,7 @@ test("late board template responses cannot replace the currently edited template
   let release!: () => void, received!: () => void;
   const held = new Promise<void>((resolve) => (release = resolve)),
     submitted = new Promise<void>((resolve) => (received = resolve));
-  await page.route(`**/api/board-template/${first.id}`, async (route) => {
+  await page.route(`**/api/board-template/${first.id}?source=example`, async (route) => {
     const response = await route.fetch();
     received();
     await held;
@@ -517,12 +517,12 @@ test("revealing credentials cannot replace a document with an external revision"
   await expect(source).toHaveValue(original);
 });
 
-test("a first-time empty workspace initializes explicitly before creating an agent", async ({
+test("a first-time empty workspace initializes explicitly and keeps example templates independent from local copies", async ({
   page,
+  request,
 }) => {
-  await page.setExtraHTTPHeaders({
-    "x-awa-test-empty-workspace": `first_${Date.now().toString(36)}`,
-  });
+  const headers = { "x-awa-test-empty-workspace": `first_${Date.now().toString(36)}` };
+  await page.setExtraHTTPHeaders(headers);
   await page.goto("/");
   await expect(page.getByRole("button", { name: "补充缺失的示例配置", exact: true })).toBeVisible();
   await expect(page.locator(".saved-config-card")).toHaveCount(0);
@@ -539,4 +539,32 @@ test("a first-time empty workspace initializes explicitly before creating an age
   await page.getByLabel("API key 或 ${ENV_NAME}", { exact: true }).fill("synthetic-first-key");
   await page.getByRole("button", { name: "保存", exact: true }).click();
   await expect(page.getByRole("status")).toContainText("已保存");
+  const localDocument = await (
+    await request.get("/api/documents/boards/six_player_mvp", { headers })
+  ).json();
+  const example = await (
+    await request.get("/api/board-template/six_player_mvp?source=example", { headers })
+  ).json();
+  const local = JSON.parse(localDocument.text);
+  local.mechanisms.tieBreaker.exileVote = "no_elimination";
+  expect(
+    (
+      await request.put("/api/documents/boards/six_player_mvp", {
+        headers,
+        data: { revision: localDocument.revision, text: JSON.stringify(local) },
+      })
+    ).ok(),
+  ).toBe(true);
+  await page.goto("/#/boards");
+  await page.getByRole("button", { name: "新建板子", exact: true }).click();
+  await page.getByRole("button", { name: "六人局", exact: true }).click();
+  await page.getByRole("textbox", { name: "搜索板子或角色", exact: true }).fill("six_player_mvp");
+  await expect(page.locator(".board-card")).not.toHaveCount(0);
+  await page.locator(".board-card").first().getByRole("button", { name: /选择/ }).click();
+  await page.getByRole("button", { name: "JSON 源码", exact: true }).click();
+  const copied = JSON.parse(
+    await page.getByRole("textbox", { name: "JSON 源码", exact: true }).inputValue(),
+  );
+  expect(copied.mechanisms.tieBreaker.exileVote).toBe(example.mechanisms.tieBreaker.exileVote);
+  expect(copied.mechanisms.tieBreaker.exileVote).not.toBe("no_elimination");
 });

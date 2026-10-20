@@ -124,3 +124,38 @@ test("HTTP deletion validates origins, revision and references before touching l
     await fs.rm(f.root, { recursive: true, force: true });
   }
 });
+test("initialization preserves a separate example library when a local board has the same ID", async () => {
+  const f = await fixture();
+  try {
+    const example = await (await f.request("board-template/six_player_mvp?source=example")).json();
+    const original = await f.app.documents.read("boards", "six_player_mvp");
+    const local = JSON.parse(original.text);
+    local.rules.winConditions = ["wolf_reach_half", "slaughter_city"];
+    await f.app.documents.save({ ...original, text: JSON.stringify(local) }, (value) =>
+      f.app.configs.validate("boards", "six_player_mvp", value),
+    );
+    expect((await f.request("initialize", "POST", {})).status).toBe(200);
+    const catalog = await (await f.request("catalog")).json();
+    expect(
+      catalog.boards.find((board: { id: string }) => board.id === "six_player_mvp"),
+    ).toMatchObject({
+      source: "local",
+      supported: true,
+      rules: { winConditions: ["wolf_reach_half", "slaughter_city"] },
+    });
+    expect(
+      catalog.boardTemplates.find((board: { id: string }) => board.id === "six_player_mvp"),
+    ).toMatchObject({
+      source: "example",
+      supported: true,
+      rules: { winConditions: ["slaughter_city", "wolf_reach_half"] },
+    });
+    expect(await (await f.request("board-template/six_player_mvp?source=example")).json()).toEqual(
+      example,
+    );
+    expect(await (await f.request("board-template/six_player_mvp")).json()).toEqual(local);
+    expect((await f.request("board-template/six_player_mvp?source=invalid")).status).toBe(400);
+  } finally {
+    await fs.rm(f.root, { recursive: true, force: true });
+  }
+});

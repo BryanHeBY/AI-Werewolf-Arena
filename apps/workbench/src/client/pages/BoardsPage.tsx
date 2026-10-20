@@ -39,7 +39,9 @@ export function BoardsPage({
     const request = ++templateRequest.current;
     setError("");
     try {
-      const template = await api<JsonObject>(`board-template/${encodeURIComponent(board.id)}`);
+      const template = await api<JsonObject>(
+        `board-template/${encodeURIComponent(board.id)}${board.source === "example" ? "?source=example" : ""}`,
+      );
       if (request === templateRequest.current) create(template);
     } catch (e) {
       if (request === templateRequest.current)
@@ -143,7 +145,7 @@ export function BoardsPage({
           <p className="muted">{configUiText(locale, "templateHelp")}</p>
           <span className="eyebrow">{configUiText(locale, "example")}</span>
           <BoardExplorer
-            boards={catalog.boards.filter((b) => b.source === "example")}
+            boards={catalog.boardTemplates ?? catalog.boards.filter((b) => b.source === "example")}
             t={t}
             locale={locale}
             onChoose={(board) => void choose(board)}
