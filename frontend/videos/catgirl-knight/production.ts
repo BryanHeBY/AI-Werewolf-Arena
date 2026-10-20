@@ -5,4 +5,5 @@ export default defineVideoProduction({
   sessionId: "session_1792391429963_4bygw6",
   title: "12 个 GPT 猫娘玩狼人杀",
   model: "gpt-6.1-sol",
+  soundtrack: "./soundtrack.ts",
 });

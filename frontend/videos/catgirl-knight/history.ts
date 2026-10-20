@@ -1,6 +1,18 @@
 /** 负责记录本局制作决策。输入为已确认的基调和微调，输出按版本排列的差异；不参与视频渲染。 */
 export const history = [
   {
+    revision: "soundtrack-v1",
+    date: "2026-10-20",
+    title: "补齐完整配乐与动作音效",
+    changes: [
+      "沿用已确认配乐：白天Wisps of Whorls为-46dB RMS，夜间River Flute为-49dB RMS",
+      "昼夜先淡出再淡入，中间600毫秒间隔；天亮不额外加铃声，发言时不再压低音乐",
+      "33处音效跟随实际语音节点，包括四次狼刀确认、魅惑、守护、查验、女巫用药、投票、警徽移交和骑士决斗",
+      "复用第二版120504帧画面和全部配音，保留字幕延后与片尾3秒停顿",
+    ],
+    productionDirectory: "output/videos/catgirl-knight/production",
+  },
+  {
     revision: "production-layout",
     date: "2026-10-20",
     title: "制作目录与通用工具整理",
