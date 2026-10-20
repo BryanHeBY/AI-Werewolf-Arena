@@ -15,6 +15,10 @@ export const repositoryRoot = PROJECT_ROOT;
 const han = /\p{Script=Han}/u;
 const translationOwners = new Set([
   "packages/game-text/src/workbench.ts",
+  "packages/game-text/src/workbench-agent.ts",
+  "packages/game-text/src/workbench-board.ts",
+  "packages/game-text/src/workbench-config-ui.ts",
+  "packages/game-text/src/workbench-service.ts",
   "packages/game-text/src/messages/common.ts",
   "packages/game-text/src/messages/runtime.ts",
   "packages/game-text/src/messages/agents.ts",
