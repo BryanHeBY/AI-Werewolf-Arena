@@ -29,6 +29,7 @@ const documentationPath = (file: string) =>
 const sortFiles = (files: ArchitectureFile[]) =>
   files.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 const publicRoots = [
+  "apps/",
   "backend/src/",
   "backend/tests/",
   "backend/scripts/",
@@ -92,6 +93,7 @@ export async function readCurrentPublicInput(repository: string): Promise<Archit
     .filter(Boolean);
   // Git 会列出被替换的源码根本身，不遍历其符号链接；先检查白名单祖先，再筛普通公共文件。
   const publicAncestors = new Set([
+    "apps",
     "backend",
     "frontend",
     "tooling",

@@ -8,6 +8,7 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - "apps/**"
       - "backend/**"
       - "packages/**"
       - "configs.example/**"
@@ -118,5 +119,32 @@ jobs:
             ci-artifacts/
             frontend/playwright-report/
             frontend/test-results/
+          retention-days: 14
+          if-no-files-found: warn
+
+  workbench:
+    name: Workbench / browser workflow
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - name: Build workbench and install Chromium
+        run: |
+          bun run build:workbench
+          bun --cwd apps/workbench ./node_modules/@playwright/test/cli.js install --with-deps chromium
+      - name: Run offline workbench workflow
+        working-directory: apps/workbench
+        run: bun run test:e2e
+      - name: Upload workbench evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: workbench-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            apps/workbench/playwright-report/
+            apps/workbench/test-results/
           retention-days: 14
           if-no-files-found: warn

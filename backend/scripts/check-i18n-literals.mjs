@@ -13,6 +13,7 @@ import { lstat, readFile, readdir } from "node:fs/promises";
 export const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const han = /\p{Script=Han}/u;
 const translationOwners = new Set([
+  "packages/game-text/src/workbench.ts",
   "packages/game-text/src/messages/common.ts",
   "packages/game-text/src/messages/runtime.ts",
   "packages/game-text/src/messages/agents.ts",
@@ -219,7 +220,11 @@ export async function scanRepository(publicRoot = repositoryRoot) {
     await sourceRootIsPresent(directory);
     await walk(directory);
   }
-  for (const directory of ["packages/game-text/src", "packages/game-presentation/src"])
+  for (const directory of [
+    "packages/game-text/src",
+    "packages/game-presentation/src",
+    "apps/workbench/src",
+  ])
     if (await sourceRootIsPresent(directory, true)) await walk(directory);
   return found;
 }

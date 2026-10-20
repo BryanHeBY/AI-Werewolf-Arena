@@ -10,6 +10,7 @@ const suites = {
     ["run", "check"],
     ["run", "lint:backend"],
     ["run", "lint:frontend"],
+    ["run", "lint:workbench"],
     ["run", "format:check"],
   ],
   shared: [
@@ -29,6 +30,8 @@ const suites = {
     ],
   ],
   frontend: [
+    ["run", "test:workbench"],
+    ["run", "build:workbench"],
     ["run", "test:frontend"],
     ["run", "build:frontend"],
   ],

@@ -20,6 +20,8 @@ test("source discovery covers present shared code and only skips absent optional
     "backend/src/example.ts": 'export const label = "后端硬编码";',
     "frontend/src/example.tsx": "export const view = <p>前端硬编码</p>;",
     "frontend/scripts/example.ts": 'export const label = "脚本硬编码";',
+    "apps/workbench/src/client/example.tsx": "export const view = <p>工作台硬编码</p>;",
+    "apps/workbench/src/server/example.ts": 'export const label = "工作台服务硬编码";',
     "packages/game-text/src/messages/common.ts":
       'export const zhCN = { "common.none": "无" } as const; const label = "词典邻近硬编码";',
     "config/runtime/auth.json": '{"private":"不应读取"}',
@@ -36,6 +38,8 @@ test("source discovery covers present shared code and only skips absent optional
     expect(
       (await scanRepository(root)).map((entry) => `${entry.file}:${entry.text}`).sort(),
     ).toEqual([
+      "apps/workbench/src/client/example.tsx:工作台硬编码",
+      "apps/workbench/src/server/example.ts:工作台服务硬编码",
       "backend/src/example.ts:后端硬编码",
       "frontend/scripts/example.ts:脚本硬编码",
       "frontend/src/example.tsx:前端硬编码",
@@ -63,6 +67,23 @@ test("source discovery covers present shared code and only skips absent optional
     await rm(presentation, { recursive: true });
     await writeFile(presentation, "not a directory");
     await expect(scanRepository(root)).rejects.toMatchObject({ code: "ENOTDIR" });
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("source discovery rejects a workbench ancestor symlink before reading private files", async () => {
+  const root = await isolatedApplicationRoots();
+  try {
+    const privateDirectory = path.join(root, "private");
+    await mkdir(path.join(privateDirectory, "src/client"), { recursive: true });
+    await writeFile(
+      path.join(privateDirectory, "src/client/auth.ts"),
+      'export const secret = "工作台链接私有金丝雀";',
+    );
+    await mkdir(path.join(root, "apps"));
+    await symlink(privateDirectory, path.join(root, "apps/workbench"));
+    await expect(scanRepository(root)).rejects.toThrow("i18n_scan_source_symlink: apps/workbench");
   } finally {
     await rm(root, { recursive: true, force: true });
   }

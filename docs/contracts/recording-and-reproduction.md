@@ -2,6 +2,8 @@
 
 ## 记录负责人
 
+新公共 CLI 另写 `runtime.json` 和有序 `console.jsonl`，录制器最后发布核心终档的 `completion.json`；活性、自然终局和录制发布分别判断，详见[运行生命周期](run-lifecycle.md)。历史 ended_at 或 in_progress 不证明进程仍活着，缺少新回执也不自动认定历史文件损坏。
+
 会话lifecycle持初始化、刷盘、closing／flush／finalize与资源关闭；session context隔离并行异步对局。内存aggregate不持磁盘封装；文件store只写单文件.tmp／rename，不承诺多文件事务或自己补终档。
 
 JSON.stringify在宽写入catch外的既有位置，编码失败仍传播；宽catch不含任意后续日志／诊断throw。必需核心产品写入失败不得降成可选警告。运行和清理／保存同时失败按原owner保留原对象或AggregateError，不能靠统一cleanup吞掉一边。

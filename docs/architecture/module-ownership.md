@@ -2,8 +2,12 @@
 
 ## 目录表达已存在的职责
 
+`apps/workbench` 拥有本机服务、原始配置编辑、进程管理与网页工作流；运行、录制和复盘仍调用原唯一所有者，详见[工作台架构](workbench.md)。共享工作台 JSON DTO 归 `packages/workbench-contract`，不得携带认证或控制令牌到公开列表。
+
 | 位置                               | 拥有                                                   | 不拥有                                                |
 | ---------------------------------- | ------------------------------------------------------ | ----------------------------------------------------- |
+| `apps/workbench/src/client`        | 原始配置草稿、页面导航、ANSI 终端和复盘接入            | 认证解析、服务端配置读取、运行控制令牌                |
+| `apps/workbench/src/server`        | 本机 HTTP 用例、文件编辑协议、启动登记与运行发现       | 游戏规则、World、终档写入或第二套配置解析器           |
 | `backend/src/app`                  | 配置入口、装配、运行用例、会话生命周期                 | 角色规则或第二份状态                                  |
 | `domain`                           | World／组件、原体引用、运行许可与明确提交数据          | UI、Agent、具体机制算法                               |
 | `engine`                           | 阶段推进、动作接收、死亡波次、必要检查点和唯一终局提交 | 根据角色 ID 重写族内规则                              |
@@ -36,6 +40,8 @@ Catalog／contracts／assembly／builtin 同在 `rulesets/roles`，保原 lazy r
 ## 依赖检查
 
 检查器必须识别 engine／features／agents／recording/verification 的真实位置，保原禁止依赖，不能让旧 game 目录退休后检查空跑。旧 synthetic 输入和历史路径仍有明确测试作用。旧 deep import 退休、模块名／缓存／堆栈及 sourceHash 改变应明示；不承诺未知外部消费者无影响。
+
+应用源码同样进入结构与 i18n 检查。工作台浏览器不能导入本应用 `src/server`、backend 实现或 Node／Bun 运行时，类型导入、包公开出口和路径别名也遵守此边界；共享 DTO、词典和 frontend 的明确公开入口可用。服务端通过 backend 的实际公开配置端口装配，不能把解析结果转存成另一套配置。
 
 ## 现场 checkpoint 的实际归属
 

@@ -119,6 +119,75 @@ test("configured browser alias resolves before applying backend and runtime boun
   ]);
 });
 
+test("workbench browser rejects backend exports, aliases and its own server implementation", () => {
+  const graph = input({
+    "backend/package.json": pkg("backend", { "./config": "./src/app/config.ts" }),
+    "backend/src/app/config.ts": "export const x=1;",
+    "apps/workbench/package.json": pkg("workbench", undefined, { backend: "workspace:*" }),
+    "apps/workbench/tsconfig.json": JSON.stringify({
+      compilerOptions: { paths: { "local-server": ["./src/server/api.ts"] } },
+    }),
+    "apps/workbench/src/client/editor.ts":
+      "import {x} from 'backend/config'; type T=typeof import('../server/api'); import {y} from 'local-server'; import fs from 'node:fs';",
+    "apps/workbench/src/server/api.ts": "export const y=1;",
+  });
+  expect(rules(graph)).toEqual([
+    "dependency.browser-backend",
+    "dependency.browser-server",
+    "dependency.browser-server",
+    "dependency.browser-runtime",
+  ]);
+});
+
+test("workbench server retains backend ports while browser can consume pure contracts and replay", () => {
+  const graph = input({
+    "backend/package.json": pkg("backend", { "./config": "./src/app/config.ts" }),
+    "backend/src/app/config.ts": "export const x=1;",
+    "frontend/package.json": pkg("frontend", { "./replay": "./src/replay.ts" }),
+    "frontend/src/replay.ts": "export const view=1;",
+    "packages/workbench-contract/package.json": pkg("@ai-werewolf-arena/workbench-contract"),
+    "packages/workbench-contract/src/index.ts": "export interface SessionEntry {}",
+    "apps/workbench/package.json": pkg("workbench", undefined, {
+      backend: "workspace:*",
+      frontend: "workspace:*",
+      "@ai-werewolf-arena/workbench-contract": "workspace:*",
+    }),
+    "apps/workbench/src/client/editor.ts":
+      "import type {SessionEntry} from '@ai-werewolf-arena/workbench-contract'; import {view} from 'frontend/replay';",
+    "apps/workbench/src/server/api.ts":
+      "import fs from 'node:fs'; import {x} from 'backend/config';",
+  });
+  expect(rules(graph)).toEqual([]);
+});
+
+test("browser shared contracts cannot import the workbench server even through a package export", () => {
+  const graph = input({
+    "apps/workbench/package.json": pkg("workbench", { "./api": "./src/server/api.ts" }),
+    "apps/workbench/src/server/api.ts": "export interface ServerConfig {}",
+    "packages/workbench-contract/package.json": pkg(
+      "@ai-werewolf-arena/workbench-contract",
+      undefined,
+      {
+        workbench: "workspace:*",
+      },
+    ),
+    "packages/workbench-contract/src/index.ts": "export type {ServerConfig} from 'workbench/api';",
+  });
+  expect(rules(graph)).toEqual(["dependency.browser-server"]);
+});
+
+test("application source retains production dependency and responsibility checks", () => {
+  const graph = input({
+    "apps/workbench/src/server/run.ts": "import {answer} from '../../tests/oracle';",
+    "apps/workbench/tests/oracle.ts": "export const answer=1;",
+  });
+  expect(rules(graph)).toEqual(["dependency.production-test"]);
+  expect(checkComments(ts, graph).map((row) => [row.path, row.rule])).toEqual([
+    ["apps/workbench/src/server/run.ts", "comment.missing-head"],
+    ["apps/workbench/tests/oracle.ts", "comment.missing-head"],
+  ]);
+});
+
 test("an exact own installed alias retains the declared external package boundary", () => {
   const graph = input({
     "frontend/package.json": pkg("frontend", undefined, { typescript: "5.9.3" }),
@@ -312,6 +381,33 @@ test("current discovery includes untracked public source and excludes private co
     expect(JSON.stringify(current)).not.toContain("sentinel-private");
   } finally {
     rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("current discovery includes application owners and rejects an application ancestor symlink", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "awa-architecture-app-")),
+    external = mkdtempSync(path.join(tmpdir(), "awa-architecture-private-"));
+  try {
+    execFileSync("git", ["init", "-q"], { cwd: root, stdio: "ignore" });
+    mkdirSync(path.join(root, "apps/workbench/src/client"), { recursive: true });
+    mkdirSync(path.join(root, "apps/workbench/src/server"), { recursive: true });
+    writeFileSync(path.join(root, "apps/workbench/package.json"), pkg("workbench"));
+    writeFileSync(path.join(root, "apps/workbench/src/client/view.ts"), "export const view=1;");
+    writeFileSync(path.join(root, "apps/workbench/src/server/api.ts"), "export const api=1;");
+    expect((await readCurrentPublicInput(root)).files.map((row) => row.path)).toEqual([
+      "apps/workbench/package.json",
+      "apps/workbench/src/client/view.ts",
+      "apps/workbench/src/server/api.ts",
+    ]);
+    rmSync(path.join(root, "apps/workbench"), { recursive: true });
+    writeFileSync(path.join(external, "private.ts"), "sentinel-do-not-read");
+    symlinkSync(external, path.join(root, "apps/workbench"));
+    await expect(readCurrentPublicInput(root)).rejects.toThrow(
+      "architecture_input_symlink_rejected",
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+    rmSync(external, { recursive: true, force: true });
   }
 });
 

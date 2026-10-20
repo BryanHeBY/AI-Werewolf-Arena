@@ -92,7 +92,7 @@ export function parseSource(ts: typeof TypeScript, file: ArchitectureFile): Type
   );
 }
 export function isProductionPath(file: string): boolean {
-  return /^(?:backend\/src\/|frontend\/src\/|packages\/[^/]+\/src\/)/.test(file);
+  return /^(?:backend\/src\/|frontend\/src\/|packages\/[^/]+\/src\/|apps\/[^/]+\/src\/)/.test(file);
 }
 export function isTypedSource(file: string): boolean {
   return /\.[cm]?[jt]sx?$/.test(file);

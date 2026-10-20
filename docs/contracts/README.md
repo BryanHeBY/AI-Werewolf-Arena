@@ -1,9 +1,8 @@
 # 接口与运行契约
 
-- [对局运行与录制发布](run-lifecycle.md)
-
 本目录维护当前数据格式、权限和失败边界；完整角色规则见[规则 spec](../rules/README.md)。
 
+- [对局运行与录制发布](run-lifecycle.md)
 - [配置与有限支持](configuration.md)
 - [请求、别名与领域完成](action-requests.md)
 - [实际阵营、身份与资源](identity-and-resources.md)

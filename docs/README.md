@@ -11,6 +11,7 @@
 | 配置、行动、事件、玩家观察和归档格式     | [接口与运行契约](contracts/README.md) |
 | 模块归属、状态写权和生命周期             | [架构 spec](architecture/README.md)   |
 | 本地运行、离线复盘、测试和新增机制       | [维护指南](guides/README.md)          |
+| 网页配置、对局运行、日志与回放           | [本地工作台](guides/workbench.md)     |
 | 关键设计选择及理由                       | [架构决策](decisions/README.md)       |
 
 ## 维护约定

@@ -30,19 +30,19 @@ test("translation owner exemption covers direct zhCN values and no adjacent code
     'export const en = { "common.none": "英文中夹中文" };',
     'export const definition = { parameters: { "common.none": ["参数硬编码"] } };',
   ].join("\n");
-  expect(
-    collectChineseLiterals("packages/game-text/src/messages/common.ts", source).map(
-      (entry) => entry.text,
-    ),
-  ).toEqual([
-    "中文键",
-    "嵌套硬编码",
-    "词典邻近硬编码",
-    "局部冒名",
-    "函数硬编码",
-    "英文中夹中文",
-    "参数硬编码",
-  ]);
+  for (const file of [
+    "packages/game-text/src/messages/common.ts",
+    "packages/game-text/src/workbench.ts",
+  ])
+    expect(collectChineseLiterals(file, source).map((entry) => entry.text)).toEqual([
+      "中文键",
+      "嵌套硬编码",
+      "词典邻近硬编码",
+      "局部冒名",
+      "函数硬编码",
+      "英文中夹中文",
+      "参数硬编码",
+    ]);
   for (const file of [
     "packages/game-text/src/messages/definition.ts",
     "packages/game-text/src/messages/catalog.ts",

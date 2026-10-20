@@ -1,6 +1,6 @@
 # AI Werewolf Arena
 
-多智能体狼人杀对局引擎，以及用于离线复盘和视频生成的 React 工作台。支持 LLM、Pi 和 ACP 玩家混合对局，按玩家权限投影信息，并提供中文与英文提示和展示。
+多智能体狼人杀对局引擎与本地工作台。通过网页配置板子、Agent 和游戏，管理独立对局进程、查看 ANSI 日志并打开复盘。支持 LLM、Pi 和 ACP 玩家混合对局，按玩家权限投影信息，并提供中文与英文提示和展示。离线视频制作保留独立入口。
 
 ## 快速开始
 
@@ -8,6 +8,10 @@
 
 ```bash
 bun install
+bun run workbench
+# 打开 http://127.0.0.1:4310；已有配置原地保留，首次可在页面补充缺失模板。
+
+# 也可继续使用 CLI。仅在首次创建本地配置时复制模板：
 cp -R configs.example configs
 # 在 configs/runtime/backends.json 中配置自己的认证。
 
@@ -30,6 +34,7 @@ bun run dev:frontend
 | ------------------------------------ | ---------------------------------------------------------------------------------------------- |
 | 文档分类与维护约定                   | [项目文档](docs/README.md)                                                                     |
 | 本地运行、配置迁移与检查             | [运行指南](docs/guides/run-locally.md)                                                         |
+| 网页配置、运行管理与终端日志         | [工作台指南](docs/guides/workbench.md)                                                         |
 | 配置字段、玩家名字、人设与混合 Agent | [配置契约](docs/contracts/configuration.md)                                                    |
 | Pi 模型、认证与内存会话              | [Pi 接入指南](docs/guides/pi-agent.md)                                                         |
 | ACP 文件与环境隔离                   | [隔离启动器](configs.example/acp/README.md)                                                    |
@@ -43,6 +48,7 @@ bun run dev:frontend
 
 ## 工作区组织
 
+- `apps/workbench/`：本地 HTTP 服务、配置向导、对局进程管理、终端与回放入口。
 - `backend/`：对局引擎、角色机制、Agent 调度、录制与 CLI。
 - `frontend/`：React 与 Remotion 离线播放器，只读回放文件。
 - `packages/`：共享游戏契约、角色资料、中文／英文文案、展示和复盘格式。
@@ -50,7 +56,7 @@ bun run dev:frontend
 - `docs/`：现行规则、契约、架构、示例、指南与设计决策。
 - `tooling/`：架构与冻结夹具检查。
 
-本地 `configs/`、认证、模型输出和 `record/` 不纳入版本控制。God 回放、逐玩家私有档案和严格复现 Tape 的用途不同；God 全知信息不因工作台筛选席位而成为玩家视角。当前没有在线观战或多租户服务。
+本地 `configs/`、认证、模型输出和 `record/` 不纳入版本控制。God 回放、逐玩家私有档案和严格复现 Tape 的用途不同；God 全知信息不因工作台筛选席位而成为玩家视角。运行中可查看只读 ANSI 终端，结构化在线观战和多租户服务属于后续范围。
 
 ## 开发与验证
 

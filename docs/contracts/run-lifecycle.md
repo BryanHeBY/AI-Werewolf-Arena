@@ -4,7 +4,7 @@
 
 - 运行：starting、running、finalizing、completed、failed、cancelled；心跳过期且无法确认实例时显示 lost，确认进程身份失效时显示 interrupted。
 - 对局：由真实 game_result 判断 decided，否则为 unfinished；历史不充分的记录保持 unknown。
-- 录制：running、complete、partial 或 legacy。完整表示必需终档已成功发布，不代表对局自然打完，也不代表独立严格复现已经通过。
+- 录制：running、complete、partial 或 legacy。完整表示必需核心终档已成功发布，不代表可选玩家档案／摘要全部成功、对局自然打完或独立严格复现已经通过。
 
 ## 会话目录
 
@@ -17,3 +17,5 @@
 CLI 的 SIGINT／SIGTERM 先交 runner 撤销新动作，关闭 Agent、等待在途动作、追加实际事件并保存终档，再退出。SIGKILL／断电不保证收尾。原有运行、关闭和保存失败仍汇总；取消不能吞掉额外失败。
 
 工作台外启动的新 CLI 同样创建运行文件和日志。可信停止请求通过本局本机控制端口及随机令牌校验，不根据目录里的 PID 直接发送信号。控制令牌仅留在私有会话元数据，不进入浏览器列表。工作台关闭不主动杀死对局。
+
+当前实例确认读取 Linux `/proc` 的进程启动时间与启动系统 ID。心跳超时但身份仍可验证的实例可显示 lost，并保留经过复验的停止能力；身份无法确认的实例不能停止。确认本机旧进程身份已经失效则显示 interrupted，不把磁盘上遗留的运行文件当作活动锁。

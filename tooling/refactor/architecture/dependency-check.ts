@@ -77,7 +77,8 @@ const executionAgentSource = (file: string) =>
   /^backend\/src\/app\/(?:agent-exports|audit-agent-exports|audit-agent-factory)\.[cm]?ts$/.test(
     file,
   );
-const browserSource = (file: string) => /^(?:frontend\/src\/|packages\/[^/]+\/src\/)/.test(file);
+const browserSource = (file: string) =>
+  /^(?:frontend\/src\/|packages\/[^/]+\/src\/|apps\/[^/]+\/src\/client\/)/.test(file);
 const domainSource = (file: string) => /^backend\/src\/(?:core|domain)\//.test(file);
 const verifierSource = (file: string) =>
   /^backend\/src\/(?:verification\/|recording\/verification\/)/.test(file) ||
@@ -686,6 +687,24 @@ export function checkDependencies(
           file.path,
           ref,
           "Frontend consumer imports backend implementation.",
+          target,
+        );
+      // 工作台同一包同时包含浏览器和服务器，公开包出口不能代替运行环境边界。
+      // 相对路径、tsconfig 别名和已声明 backend 出口解析后都检查真实目标。
+      if (/^apps\/[^/]+\/src\/client\//.test(file.path) && target.startsWith("backend/"))
+        add(
+          "dependency.browser-backend",
+          file.path,
+          ref,
+          "Browser application imports backend implementation rather than shared data contracts.",
+          target,
+        );
+      if (browserSource(file.path) && /^apps\/[^/]+\/src\/server\//.test(target))
+        add(
+          "dependency.browser-server",
+          file.path,
+          ref,
+          "Browser source imports a local server implementation.",
           target,
         );
       const sourcePackageRoot = /^packages\/[^/]+/.exec(file.path)?.[0],

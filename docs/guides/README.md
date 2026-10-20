@@ -1,5 +1,6 @@
 # 运行与维护指南
 
+- [本地工作台：配置、运行与回放](workbench.md)
 - [本地运行与配置检查](run-locally.md)
 - [Pi 原生 Agent：配置、模型与内存边界](pi-agent.md)
 - [离线模拟、复盘与视频](offline-replay.md)
