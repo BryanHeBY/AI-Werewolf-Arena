@@ -63,7 +63,7 @@ bun --no-env-file frontend/scripts/produce-video.ts --production frontend/videos
 bun --no-env-file frontend/scripts/produce-video.ts --production frontend/videos/trusted-wolf/production.ts --stage mux
 ```
 
-`soundtrack.ts` 拥有本局音量和时间锚点，音效跟随场景或具体口播行。当前预设白天 −46 dB RMS、夜间 −49 dB RMS，发言时不额外压低音乐。昼夜音乐先淡出再淡入，中间600毫秒不重叠；片尾淡出并保留短静音。狼刀指最终确认，逐人投刀页面仍省略；骑士出剑与结果分别引用对应语音节点。
+`soundtrack.ts` 拥有本局音量和时间锚点，音效跟随场景或具体口播行。当前预设白天 −48 dB RMS、夜间 −57 dB RMS，发言时不额外压低音乐。昼夜音乐先淡出再淡入，中间600毫秒不重叠；片尾淡出并保留短静音。狼刀指最终确认，逐人投刀页面仍省略；骑士出剑与结果分别引用对应语音节点。
 
 混音输出独立的音乐、音效与母带，`mixed-build.json` 指向已校验版本。`mux` 复制画面码流，只编码新音轨，并核对帧数、时长、画面摘要和多个音频位置后发布 `delivery.json`。只有音量或音效变化时无需重渲画面。
 

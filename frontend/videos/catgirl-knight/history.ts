@@ -1,6 +1,16 @@
 /** 负责记录本局制作决策。输入为已确认的基调和微调，输出按版本排列的差异；不参与视频渲染。 */
 export const history = [
   {
+    revision: "soundtrack-v2",
+    date: "2026-10-20",
+    title: "降低昼夜背景音乐",
+    changes: [
+      "夜间River Flute从-49降为-57dB RMS，再降低8dB，约为原振幅的40%；白天从-46降为-48dB RMS，轻微降低2dB；人声和动作音效保持现状",
+      "复用原始画面重新混音封装，保留全部字幕、章节、昼夜间隔和片尾留白",
+    ],
+    productionDirectory: "output/videos/catgirl-knight/production",
+  },
+  {
     revision: "soundtrack-v1",
     date: "2026-10-20",
     title: "补齐完整配乐与动作音效",

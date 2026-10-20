@@ -1,6 +1,16 @@
 /** 负责本局制作修订记录。输入为已确认的标题、模型与节奏，输出可追溯版本；不修改归档。 */
 export const history = [
   {
+    revision: "soundtrack-v5",
+    date: "2026-10-20",
+    title: "降低昼夜背景音乐",
+    changes: [
+      "夜间River Flute从-49降为-57dB RMS，再降低8dB，约为原振幅的40%；白天从-46降为-48dB RMS，轻微降低2dB；人声和动作音效保持现状",
+      "复用原始画面重新混音封装，保留全部字幕、章节、昼夜间隔和片尾留白",
+    ],
+    productionDirectory: "output/videos/trusted-wolf/production",
+  },
+  {
     revision: "production-layout",
     date: "2026-10-20",
     title: "制作目录与通用工具整理",
