@@ -136,6 +136,8 @@ export async function renderVideoArtifact(
         outputLocation: artifact,
         frameRange: [from, to],
         concurrency: options.concurrency ?? 2,
+        // Bun长片先落帧再编码，避免并发JPEG管道的背压等待阻塞分段收尾。
+        disallowParallelEncoding: true,
         onProgress: options.onProgress,
         overwrite: false,
       });

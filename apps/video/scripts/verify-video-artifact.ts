@@ -12,6 +12,7 @@ export async function verifyVideoArtifact(options: {
   width: number;
   height: number;
   endingSilenceMs?: number;
+  fullDecode?: boolean;
 }) {
   if (
     [options.fps, options.frames, options.width, options.height].some(
@@ -129,6 +130,38 @@ export async function verifyVideoArtifact(options: {
     tailPeakDb = 20 * Math.log10(Math.max(1e-12, peak));
     if (!tail.length || tailPeakDb > -60) throw new Error("video_artifact_tail_not_silent");
   }
+  let fullDecode: { passed: true; frames: number } | undefined;
+  if (options.fullDecode) {
+    const progress = (
+      await soundtrackCommand([
+        "ffmpeg",
+        "-v",
+        "error",
+        "-xerror",
+        "-nostdin",
+        "-nostats",
+        "-threads",
+        "4",
+        "-i",
+        videoFile,
+        "-map",
+        "0:v:0",
+        "-map",
+        "0:a:0",
+        "-fps_mode",
+        "passthrough",
+        "-progress",
+        "pipe:1",
+        "-f",
+        "null",
+        "-",
+      ])
+    ).toString();
+    const frames = Number([...progress.matchAll(/^frame=\s*(\d+)$/gm)].at(-1)?.[1]);
+    if (!progress.trimEnd().endsWith("progress=end") || frames !== options.frames)
+      throw new Error("video_artifact_decode_incomplete");
+    fullDecode = { passed: true, frames };
+  }
   return {
     passed: true,
     video: videoFile,
@@ -137,6 +170,7 @@ export async function verifyVideoArtifact(options: {
     seconds,
     audioSync: checks,
     tailPeakDb,
+    ...(fullDecode ? { fullDecode } : {}),
   };
 }
 if (import.meta.main) {
@@ -145,6 +179,7 @@ if (import.meta.main) {
       review: { type: "string" },
       output: { type: "string" },
       "ending-silence-ms": { type: "string" },
+      "full-decode": { type: "boolean" },
     },
   });
   if (!values.review) throw new Error("video_review_required");
@@ -157,6 +192,7 @@ if (import.meta.main) {
     width: review.width,
     height: review.height,
     endingSilenceMs: values["ending-silence-ms"] ? Number(values["ending-silence-ms"]) : undefined,
+    fullDecode: values["full-decode"],
   });
   if (values.output)
     await Bun.write(path.resolve(values.output), JSON.stringify(result, null, 2) + "\n");

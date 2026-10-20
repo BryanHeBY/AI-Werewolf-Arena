@@ -49,6 +49,8 @@ TMPDIR="$PWD/output/render-tmp" bun --no-env-file apps/video/scripts/produce-vid
 
 `--stage all` 依次编译、渲染、按配置混音及封装，最后生成审片页；不准备语音。单独执行各阶段方便局部修改和验收。命令也可通过 `bun run --cwd apps/video video:produce -- ...` 使用，路径相对于该命令工作目录。
 
+制作脚本和浏览器测试均使用Bun。MP4先将图像帧写入本次临时目录，再调用FFmpeg编码，避免长片并发时流式JPEG管道的背压等待；成功后清理临时帧，已验证的完整分段仍可恢复，不降低画质或改变时间线。
+
 字幕位置由 `packages/game-media/src/themes/tokens.ts` 的 `subtitle.bottom` 统一控制。当前在1080p画面底部留144像素，给播放器章节标识和控制条保留空间，其他分辨率按画幅缩放。中央正文同步避开字幕安全区，带四行以上配置说明的开场页会压紧字号和标题间距，左右玩家栏位置保持不变；字幕延后400毫秒的时间规则独立于布局。调整位置后需要重渲画面，并使用新输出目录，不能只替换SRT或复用旧分段。
 
 发言卡片底部贴近字幕安全区，间距由 `subtitle.contentGap` 控制，当前为1080p下24像素。按全片最长字幕保守核对单行宽度，能容纳时回收第二行预留，显式换行或长字幕仍保留完整高度；卡片不会随字幕显隐跳动，长发言可以使用新增空间。
@@ -82,10 +84,12 @@ bun --no-env-file apps/video/scripts/produce-video.ts --production apps/video/vi
 ```bash
 bun --no-env-file apps/video/scripts/produce-video.ts --production apps/video/videos/trusted-wolf/production.ts --stage review
 bun --no-env-file apps/video/scripts/serve-video-review.ts --review output/videos/trusted-wolf/production/review/review.json --port 5186
-bun --no-env-file apps/video/scripts/verify-video-artifact.ts --review output/videos/trusted-wolf/production/review/review.json --output output/videos/trusted-wolf/production/artifact-check.json
+bun --no-env-file apps/video/scripts/verify-video-artifact.ts --review output/videos/trusted-wolf/production/review/review.json --full-decode --output output/videos/trusted-wolf/production/artifact-check.json
 ```
 
 审片页包含实际章节、带时间全文、视频与字幕下载，以及存在时的音乐署名。服务只开放该索引明确列出的产物，支持 GET/HEAD 和 Range，不开放目录。验收命令核对 H.264/AAC、尺寸、帧率、总帧数、多个位置的音频对齐和片尾静音；不能替代对声音风格与剧情的人工观看。
+
+`--full-decode` 额外从头解码视频和音频到结尾，遇到解码错误即失败，并要求实际解出的帧数等于计划帧数、进度正常结束。分段恢复后交付完整成片时使用这一项，报告记录实际解码结果，不能只依赖容器声明的帧数。
 
 已有冻结项目可通过 `--build <build.json> --video <已有MP4>` 直接生成审片页，无需重新渲染；配乐版另传 `--audio <混音母带WAV>`，用于准确验收音频。已有交付保留在 `output/session_<id>/production-v*/`，本次重组不迁移或覆盖成片；历史审片地址仍由原本的本机服务提供。
 
