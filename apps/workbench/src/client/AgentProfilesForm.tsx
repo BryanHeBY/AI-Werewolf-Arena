@@ -9,6 +9,7 @@ import type { Catalog, Translator } from "./types";
 import { asObject } from "./config-edit";
 import { Instructions } from "./GameForm";
 import { agentText } from "@ai-werewolf-arena/game-text/workbench-agent";
+import { AgentConnectionTest } from "./AgentConnectionTest";
 
 export function AgentProfilesForm({
   raw,
@@ -16,12 +17,14 @@ export function AgentProfilesForm({
   catalog,
   t,
   locale,
+  dirty = false,
 }: {
   raw: JsonObject;
   change: (value: JsonObject) => void;
   catalog: Catalog;
   t: Translator;
   locale: Locale;
+  dirty?: boolean;
 }) {
   const items = asObject(raw.items);
   const [selected, setSelected] = useState(Object.keys(items)[0] ?? "");
@@ -53,6 +56,7 @@ export function AgentProfilesForm({
       </label>
       {selected && Object.hasOwn(items, selected) && (
         <>
+          <AgentConnectionTest name={selected} locale={locale} disabled={dirty} />
           <label>
             {t("defaultAgent")}
             <select

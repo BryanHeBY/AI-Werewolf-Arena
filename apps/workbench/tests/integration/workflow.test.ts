@@ -12,8 +12,8 @@ test("API rejects cross-origin writes and exposes supported boards without crede
   const workspace = await offlineWorkspace();
   try {
     const response = await workspace.application.fetch(
-      new Request("http://127.0.0.1:4310/api/initialize", {
-        method: "POST",
+      new Request("http://127.0.0.1:4310/api/documents/agents/agents", {
+        method: "PUT",
         headers: { "content-type": "application/json", origin: "https://unrelated.invalid" },
         body: "{}",
       }),

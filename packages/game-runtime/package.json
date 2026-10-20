@@ -34,7 +34,8 @@
     "./rulesets/presets/six-player-mvp": "./src/rulesets/presets/six-player-mvp.ts",
     "./agents/baseline/privileged": "./src/agents/baseline/privileged.ts",
     "./config/rule-catalog": "./src/app/config/rule-catalog.ts",
-    "./testing/fixtures": "./tests/support/fixtures/manifest.ts"
+    "./testing/fixtures": "./tests/support/fixtures/manifest.ts",
+    "./config/test-agent-connection": "./src/app/config/test-agent-connection.ts"
   },
   "scripts": {
     "build": "bun --bun tsc",

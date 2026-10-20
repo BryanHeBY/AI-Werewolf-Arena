@@ -125,7 +125,7 @@ export class AiSdkClient implements ChatModelClient {
       maxOutputTokens: this.maxTokens,
       providerOptions: this.getProviderOptions(),
       headers: { "user-agent": this.userAgent },
-      maxRetries: 3,
+      maxRetries: options.maxRetries ?? 3,
       abortSignal: options.signal,
       // 摘要调用方自行校验结果JSON；本普通文本调用不套用下方工具输入schema。
     });

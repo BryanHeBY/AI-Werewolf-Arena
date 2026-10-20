@@ -127,16 +127,20 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry> implements AcpSession
       controller.signal.throwIfAborted();
       await fs.mkdir(this.options.cwd, { recursive: true });
       controller.signal.throwIfAborted();
-      const bridge = this.options.mcpBridge ?? this.defaultWerewolfBridge();
-      const control = bridge.createControl(input.registry);
+      const bridge =
+        this.options.mcpBridge === null
+          ? undefined
+          : (this.options.mcpBridge ?? this.defaultWerewolfBridge());
+      const control = bridge?.createControl(input.registry);
       // 先登记控制面再等待启动；启动后若已中止，仍先尝试关闭该控制面，再传播原中止原因。
       mcpControl = control;
-      const mcpServer = await control.start(process.execPath, [
-        bridge.serverEntrypoint(__filename),
-      ]);
+      const mcpServer =
+        control && bridge
+          ? await control.start(process.execPath, [bridge.serverEntrypoint(__filename)])
+          : undefined;
       if (controller.signal.aborted) {
         await awaitBeforeDeadline(
-          () => control.close({ force: true }),
+          () => control?.close({ force: true }) ?? Promise.resolve(),
           Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS,
         );
         controller.signal.throwIfAborted();
@@ -199,7 +203,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry> implements AcpSession
       const session = await protocolConnection.agent
         .buildSession({
           cwd: this.options.cwd,
-          mcpServers: [mcpServer],
+          mcpServers: mcpServer ? [mcpServer] : [],
         })
         .start();
       controller.signal.throwIfAborted();
@@ -210,7 +214,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry> implements AcpSession
       );
       // 配置应用完成后另建本机 registry 身份；它与 ACP wire sessionId 分开，控制面先绑定再交出会话。
       const registrySessionId = randomUUID();
-      control.bindSession(registrySessionId);
+      control?.bindSession(registrySessionId);
       const createdSession = new AcpProcessSession(
         session,
         protocolConnection.agent,
@@ -219,7 +223,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry> implements AcpSession
         this.options.onUpdate,
         control,
         approvedInjectedMcpToolCallIds,
-        bridge.serverName,
+        bridge?.serverName,
         protocolConnection,
         initializeResponse.agentCapabilities?.sessionCapabilities?.close != null,
         this.options.onPromptEnd,

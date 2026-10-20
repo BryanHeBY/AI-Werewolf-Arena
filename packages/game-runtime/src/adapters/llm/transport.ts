@@ -13,6 +13,8 @@ export interface ChatMessage {
 
 export interface ChatOptions {
   signal?: AbortSignal;
+  /** 普通文本探测可关闭重试；省略时保留既有游戏／审计预算。 */
+  maxRetries?: number;
 }
 
 export interface ToolSchema {

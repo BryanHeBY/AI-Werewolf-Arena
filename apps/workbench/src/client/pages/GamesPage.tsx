@@ -44,6 +44,8 @@ export function GamesPage({
   busy,
   routeId = "",
   action = "",
+  configureAgents,
+  showSavedGame,
 }: {
   catalog: Catalog;
   t: Translator;
@@ -53,6 +55,8 @@ export function GamesPage({
   busy: boolean;
   routeId?: string;
   action?: string;
+  configureAgents: () => void;
+  showSavedGame: (name: string) => void;
 }) {
   const [screen, setScreen] = useState<Screen>(() =>
       routeId === "new"
@@ -78,7 +82,13 @@ export function GamesPage({
       <div className="section-heading">
         <div>
           {screen.mode === "view" && (
-            <button className="text-link" onClick={() => setScreen({ mode: "list" })}>
+            <button
+              className="text-link"
+              onClick={() => {
+                setScreen({ mode: "list" });
+                showSavedGame("");
+              }}
+            >
               ← {t("games")}
             </button>
           )}
@@ -91,6 +101,14 @@ export function GamesPage({
           </button>
         )}
       </div>
+      {!catalog.agents.length && (
+        <section className="panel config-detail notice" role="alert">
+          <p>{configUiText(locale, "noAgents")}</p>
+          <button className="primary" onClick={configureAgents}>
+            {configUiText(locale, "configureAgent")}
+          </button>
+        </section>
+      )}
       {screen.mode === "list" &&
         (catalog.games.length ? (
           <div className="saved-config-list">
@@ -116,7 +134,7 @@ export function GamesPage({
                     </button>
                     <button
                       className="primary"
-                      disabled={busy || !card?.revision}
+                      disabled={busy || !card?.revision || !catalog.agents.length}
                       onClick={() => card?.revision && start(name, card.revision)}
                     >
                       {t("start")}
@@ -151,7 +169,11 @@ export function GamesPage({
           edit={() => setScreen({ mode: "edit", name: screen.name })}
           copy={(doc) => create(JSON.parse(doc.text))}
           remove={setDeleting}
-          start={busy ? undefined : (doc) => doc.revision && start(screen.name, doc.revision)}
+          start={
+            busy || !catalog.agents.length
+              ? undefined
+              : (doc) => doc.revision && start(screen.name, doc.revision)
+          }
         >
           {(raw) => <GameSummary raw={raw} catalog={catalog} locale={locale} t={t} />}
         </ConfigDetail>
@@ -163,6 +185,7 @@ export function GamesPage({
           name={screen.mode === "create" ? "my_game" : screen.name}
           initial={screen.mode === "create" ? screen.initial : undefined}
           locale={locale}
+          saveBlocked={!catalog.agents.length}
           t={t}
           onCancel={() =>
             setScreen(
@@ -171,7 +194,10 @@ export function GamesPage({
           }
           onSaved={(doc, newerChanges) => {
             void refresh();
-            if (!newerChanges) setScreen({ mode: "view", name: doc.name });
+            if (!newerChanges) {
+              setScreen({ mode: "view", name: doc.name });
+              showSavedGame(doc.name);
+            }
           }}
         >
           {(raw, change) => (

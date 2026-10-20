@@ -94,30 +94,6 @@ test("catalog projects primitive fields even when a malformed document contains 
   }
 });
 
-test("initialization fills missing JSON while leaving existing user bytes and other files intact", async () => {
-  const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-workbench-initialize-"));
-  try {
-    const examples = path.join(root, "examples"),
-      local = path.join(root, "local");
-    for (const kind of ["runtime", "games", "boards"])
-      await fs.mkdir(path.join(examples, kind), { recursive: true });
-    await fs.mkdir(path.join(local, "games"), { recursive: true });
-    await fs.writeFile(path.join(examples, "games/existing.json"), '{"template":true}');
-    await fs.writeFile(path.join(examples, "games/new.json"), '{"new":true}');
-    await fs.writeFile(path.join(examples, "games/not-copied.txt"), "template extra");
-    const userBytes = '{\n  "custom": true\n}\n';
-    await fs.writeFile(path.join(local, "games/existing.json"), userBytes);
-    await fs.writeFile(path.join(local, "preserve.bin"), "user content");
-    await new ConfigDocuments(local).initialize(examples);
-    expect(await fs.readFile(path.join(local, "games/existing.json"), "utf8")).toBe(userBytes);
-    expect(await fs.readFile(path.join(local, "games/new.json"), "utf8")).toBe('{"new":true}');
-    expect(await fs.readFile(path.join(local, "preserve.bin"), "utf8")).toBe("user content");
-    expect(await Bun.file(path.join(local, "games/not-copied.txt")).exists()).toBe(false);
-  } finally {
-    await fs.rm(root, { recursive: true, force: true });
-  }
-});
-
 test("source editing repairs broken JSON, while an unrecoverable credential mask still requires reentry", async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-workbench-broken-json-"));
   try {

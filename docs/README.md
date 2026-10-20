@@ -4,7 +4,7 @@
 
 ## 第一次使用
 
-1. 阅读[工作台指南](guides/workbench.md)，补充示例配置、连接模型并启动一局。
+1. 阅读[工作台指南](guides/workbench.md)，通过 GUI 添加 Agent、创建板子与游戏并启动一局。
 2. 按[配置契约](contracts/configuration.md)设置默认 Agent、角色／席位覆盖、玩家名字和自定义指令；Pi 原生配置见[接入指南](guides/pi-agent.md)。
 3. 从[角色支持矩阵](contracts/gameplay-support-matrix.md)选择板子，结合[规则卡](rules/README.md)阅读玩法差异。
 4. 对局结束后进入复盘；也可直接导入[公开示例归档](examples/README.md)，按[离线复盘指南](guides/offline-replay.md)查看事件和玩家私有输出。

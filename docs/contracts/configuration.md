@@ -4,6 +4,8 @@
 
 正常配置只从显式 `configs-dir` 读取：`runtime/backends.json`、`runtime/agents.json`、`games/<name>.json`、`boards/<id>.json`，可选 `runtime/debug_summary.json`。两份 runtime 文件使用 `schemaVersion: 2`；板子独立使用 `version: 2`。正常运行不读取旧 `runtime/providers.json`，不搜索旧根路径、回退示例或覆盖本地秘密配置。
 
+工作台的首次编辑允许两份 runtime 文件暂为 `{ "schemaVersion": 2, "items": {} }`：只补缺失文件，已有原文不覆盖。编辑目录解析器复用同一份条目校验，允许先保存连接、后保存首个 Agent；首个 Agent 由 GUI 写入 `default`。这些空骨架仅供配置阶段使用，正常 CLI／启动检查仍拒绝空连接或空 Agent，不把不完整目录视为可执行对局。
+
 ### 连接：backends.json
 
 ```json

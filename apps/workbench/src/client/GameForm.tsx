@@ -125,7 +125,11 @@ export function GameForm({
       <div className="two-columns">
         <label>
           {t("chooseBoard")}
-          <select value={String(raw.board ?? "")} onChange={(e) => set("board", e.target.value)}>
+          <select
+            aria-label={t("chooseBoard")}
+            value={String(raw.board ?? "")}
+            onChange={(e) => set("board", e.target.value)}
+          >
             <option value="">{t("chooseBoard")}</option>
             {catalog.boards
               .filter((b) => b.supported && b.source === "local")

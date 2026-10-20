@@ -6,7 +6,7 @@
 
 ```bash
 bun install
-# 首次可启动工作台，在首页或 Agent 页显式补充缺失模板。
+# 首次可启动工作台，按 GUI 引导添加 Agent，再创建板子和游戏。
 bun run workbench
 # 已有配置原地保留；完成认证后可关闭工作台，独立运行 CLI。
 # 在 configs/runtime/backends.json 填认证，agents.json 配置 options。

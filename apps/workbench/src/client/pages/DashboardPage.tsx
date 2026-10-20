@@ -5,7 +5,6 @@ import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import type { Catalog, Page, Translator } from "../types";
 import { RunCard } from "../session-summary";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
-import { InitializeNotice } from "../InitializeNotice";
 export function DashboardPage({
   active,
   runs,
@@ -18,8 +17,6 @@ export function DashboardPage({
   start,
   busy,
   remove,
-  initialize,
-  initializing,
 }: {
   active: SessionEntry[];
   runs: SessionEntry[];
@@ -32,10 +29,17 @@ export function DashboardPage({
   start: (id: string, revision: string) => void;
   busy: boolean;
   remove: (run: SessionEntry) => void;
-  initialize: () => Promise<void>;
-  initializing: boolean;
 }) {
   const history = runs.filter((run) => !active.some((r) => r.sessionId === run.sessionId));
+  const hasAgent = catalog.agents.length > 0;
+  const hasBoard = catalog.boards.some((board) => board.source === "local" && board.supported);
+  const nextPage = !hasAgent ? "agents" : !hasBoard ? "boards" : "games";
+  const nextLabel = !hasAgent
+    ? t("newAgent")
+    : !hasBoard
+      ? configUiText(locale, "newBoard")
+      : t("newGame");
+  const next = () => navigate(nextPage, nextPage === "games" ? "new" : "");
   return (
     <>
       <section className="hero">
@@ -43,8 +47,8 @@ export function DashboardPage({
           <span className="eyebrow">MULTI-AGENT WEREWOLF ARENA</span>
           <h1>{t("title")}</h1>
           <p>{t("intro")}</p>
-          <button className="primary" onClick={() => navigate("games", "new")}>
-            {t("newGame")} <span>↗</span>
+          <button className="primary" onClick={next}>
+            {nextLabel} <span>↗</span>
           </button>
         </div>
         <div className="hero-art" aria-hidden="true">
@@ -54,8 +58,36 @@ export function DashboardPage({
           <span>AWA</span>
         </div>
       </section>
-      {(!catalog.agents.length || !catalog.backends.length) && (
-        <InitializeNotice t={t} locale={locale} busy={initializing} initialize={initialize} />
+      {(!hasAgent || !hasBoard || !catalog.games.length) && (
+        <section
+          className="panel config-detail setup-guide"
+          aria-label={configUiText(locale, "setupTitle")}
+        >
+          <h2>{configUiText(locale, "setupTitle")}</h2>
+          <p className="muted">{configUiText(locale, "setupHelp")}</p>
+          <ol className="setup-steps">
+            {[
+              { page: "agents" as const, done: hasAgent, label: "configureAgent" as const },
+              { page: "boards" as const, done: hasBoard, label: "newBoard" as const },
+              {
+                page: "games" as const,
+                done: catalog.games.length > 0,
+                label: "createGame" as const,
+              },
+            ].map((step) => (
+              <li key={step.page}>
+                <strong>{configUiText(locale, step.label)}</strong>
+                <span>{configUiText(locale, step.done ? "setupDone" : "setupTodo")}</span>
+                <button
+                  disabled={step.page === "games" && (!hasAgent || !hasBoard)}
+                  onClick={() => navigate(step.page)}
+                >
+                  {step.done ? configUiText(locale, "view") : configUiText(locale, step.label)} →
+                </button>
+              </li>
+            ))}
+          </ol>
+        </section>
       )}
       <section className="quick-start">
         <div className="section-heading">
@@ -106,7 +138,7 @@ export function DashboardPage({
                     </button>
                     <button
                       className="primary"
-                      disabled={busy || !card?.revision}
+                      disabled={busy || !card?.revision || !catalog.agents.length}
                       onClick={() => card?.revision && start(id, card.revision)}
                     >
                       {t("start")}
@@ -118,8 +150,10 @@ export function DashboardPage({
           </div>
         ) : (
           <section className="panel empty">
-            <p>{configUiText(locale, "noGames")}</p>
-            <button onClick={() => navigate("games", "new")}>{t("newGame")}</button>
+            <p>
+              {configUiText(locale, !hasAgent ? "noAgents" : !hasBoard ? "needsBoard" : "noGames")}
+            </p>
+            <button onClick={next}>{nextLabel}</button>
           </section>
         )}
       </section>

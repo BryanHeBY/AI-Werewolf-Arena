@@ -68,6 +68,9 @@ export function createWorkbench(options: WorkbenchOptions) {
             if (text.length > 2_000_000) throw new WorkbenchError("request_too_large", 413);
             body = objectDocument(text);
           }
+          // 只在配置请求中补齐空运行文件；浏览首页即可配置首个 Agent，不自动导入示例或认证。
+          if (["catalog", "documents", "validate", "codex-import", "test-agent"].includes(parts[1]))
+            await documents.ensureRuntime();
           let result: unknown;
           if (parts[1] === "health" && request.method === "GET") result = { status: "ok" };
           else if (parts[1] === "models" && request.method === "GET")
@@ -83,9 +86,6 @@ export function createWorkbench(options: WorkbenchOptions) {
               configs.boards("example"),
             ]);
             result = { ...summary, boards, boardTemplates };
-          } else if (parts[1] === "initialize" && request.method === "POST") {
-            await documents.initialize(path.join(options.repository, "configs.example"));
-            result = { ok: true };
           } else if (parts[1] === "documents" && parts.length === 4) {
             const kind = parts[2] as ConfigKind,
               name = parts[3];
@@ -124,6 +124,10 @@ export function createWorkbench(options: WorkbenchOptions) {
             } catch (error) {
               result = { valid: false, diagnostics: [diagnostic(error)] };
             }
+          } else if (parts[1] === "test-agent" && request.method === "POST") {
+            if (typeof body.name !== "string" || !/^[a-z][a-z0-9_-]*$/.test(body.name))
+              throw new WorkbenchError("invalid_config_name");
+            result = await configs.testAgent(body.name, request.signal);
           } else if (parts[1] === "runs" && parts.length === 2) {
             if (request.method === "GET") result = await runs.list();
             else if (request.method === "POST") {

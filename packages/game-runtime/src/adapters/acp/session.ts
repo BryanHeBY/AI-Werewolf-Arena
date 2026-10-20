@@ -59,7 +59,8 @@ export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
   onUpdate?: (update: AcpSessionUpdate) => void;
   /** 更新流结束时调用，包括错误／取消；异常与已有错误一并报告，不覆盖协议失败或表示行动成功。 */
   onPromptEnd?: (actorId: number) => void;
-  mcpBridge?: AcpMcpBridgeFactory<TRegistry>;
+  /** null 用于连接探测：建立真实 ACP 会话，但不挂载游戏或审计工具。 */
+  mcpBridge?: AcpMcpBridgeFactory<TRegistry> | null;
   /** session/new 后通过标准 ACP session/set_config_option 应用。 */
   sessionConfigOptions?: Record<string, AcpSessionConfigOptionValue>;
 }

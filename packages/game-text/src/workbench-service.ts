@@ -3,6 +3,8 @@ export const zhCN = {
   file_access_denied: "文件权限不允许此操作，请检查目标目录权限后重试。",
   disk_full: "磁盘空间不足，文件尚未保存，请释放空间后重试。",
   config_not_found: "配置文件已不存在，请刷新列表。",
+  invalid_config_name:
+    "配置 ID 请以小写英文字母开头，仅使用小写字母、数字、下划线或短横线，不要填写中文、空格或 .json 后缀。",
   config_conflict: "配置已被其他操作修改，请重新读取后再继续。",
   board_in_use: "板子仍被游戏配置引用，请先修改或删除这些游戏。",
   board_references_unreadable: "部分游戏配置无法读取，暂时无法安全确认板子引用。",
@@ -20,12 +22,17 @@ export const zhCN = {
   codex_auth_unavailable: "本机 Codex 文件没有可导入的订阅令牌，请先完成订阅登录。",
   invalid_document: "请求缺少有效文档版本，请刷新配置后重试。",
   invalid_backend: "所选连接不能接收该认证，请选择正确平台连接。",
+  connection_test_busy: "已有连接测试正在执行，请等待完成后重试。",
+  connection_test_empty_response: "服务结束了请求，但没有返回文本，请检查模型和平台配置。",
+  connection_test_cleanup_failed: "测试资源未能完整关闭，请检查 Agent 进程状态。",
 } as const;
 export const en: Record<keyof typeof zhCN, string> = {
   file_access_denied:
     "File permissions do not allow this action. Check the target directory permissions and retry.",
   disk_full: "There is not enough disk space to save the file. Free some space and retry.",
   config_not_found: "The configuration no longer exists. Refresh the list.",
+  invalid_config_name:
+    "Start the configuration ID with a lowercase letter and use only lowercase letters, digits, underscores or hyphens. Do not include spaces, non-Latin characters or .json.",
   config_conflict: "The configuration changed. Reload it before continuing.",
   board_in_use: "Saved games still reference this board. Change or delete them first.",
   board_references_unreadable:
@@ -52,6 +59,11 @@ export const en: Record<keyof typeof zhCN, string> = {
     "The request is missing a valid document revision. Refresh the configuration and retry.",
   invalid_backend:
     "This connection cannot accept these credentials. Choose the correct platform connection.",
+  connection_test_busy: "Another connection test is running. Wait for it to finish and retry.",
+  connection_test_empty_response:
+    "The request ended without text. Check the model and platform configuration.",
+  connection_test_cleanup_failed:
+    "Test resources could not be fully closed. Check the agent process.",
 };
 
 export function workbenchServiceMessage(locale: "zh-CN" | "en", code: string): string | undefined {

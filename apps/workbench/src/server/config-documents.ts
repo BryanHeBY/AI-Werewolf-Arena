@@ -3,7 +3,7 @@
  * 本模块拥有文件写入，不解析环境变量或创建 Agent；临时文件原子替换，外部编辑冲突明确拒绝。
  * 路径逐级拒绝符号链接，认证遮罩仅在编辑边界使用，未改遮罩从同版本原文恢复。
  */
-import { promises as fs, constants } from "node:fs";
+import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import type { ConfigKind, ConfigDocument, JsonObject } from "@ai-werewolf-arena/workbench-contract";
@@ -136,6 +136,27 @@ export class ConfigDocuments {
     this.mutations = operation;
     return operation;
   }
+  /** 首次配置只补缺失的运行目录骨架；独占创建保证已有认证、空文件和损坏文档都不会被覆盖。 */
+  async ensureRuntime(): Promise<void> {
+    await this.mutate(async () => {
+      for (const kind of ["backends", "agents"] as const) {
+        const file = await containedFile(this.root, this.relative(kind, kind));
+        await fs.mkdir(path.dirname(file), { recursive: true });
+        try {
+          await fs.writeFile(
+            file,
+            JSON.stringify({ schemaVersion: 2, items: {} }, null, 2) + "\n",
+            {
+              flag: "wx",
+              mode: 0o600,
+            },
+          );
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+        }
+      }
+    });
+  }
   async save(
     input: ConfigDocument,
     validate: (raw: JsonObject) => void | Promise<void> = () => {},
@@ -195,20 +216,5 @@ export class ConfigDocuments {
       if (current.revision !== expected) throw new WorkbenchError("config_conflict", 409);
       await fs.unlink(await containedFile(this.root, this.relative(kind, name)));
     });
-  }
-  async initialize(examples: string): Promise<void> {
-    for (const section of ["boards", "games", "runtime"]) {
-      const source = path.join(examples, section);
-      for (const entry of await fs.readdir(source, { withFileTypes: true })) {
-        if (!entry.isFile() || !entry.name.endsWith(".json")) continue;
-        const destination = await containedFile(this.root, `${section}/${entry.name}`);
-        await fs.mkdir(path.dirname(destination), { recursive: true });
-        try {
-          await fs.copyFile(path.join(source, entry.name), destination, constants.COPYFILE_EXCL);
-        } catch (error) {
-          if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
-        }
-      }
-    }
   }
 }

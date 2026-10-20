@@ -2,11 +2,18 @@
  * 负责工作台配置检查、可用板子目录与具名游戏摘要；输入原始文档，输出脱敏诊断及支持信息。
  * 实际解析和有限规则判断仍交 backend 唯一所有者；不启动 Agent，不把已解析认证写回原始文件。
  */
-import { parseRuntimeConfig } from "@ai-werewolf-arena/game-runtime/config/parse";
+import {
+  parseRuntimeConfig,
+  parseRuntimeCatalog,
+} from "@ai-werewolf-arena/game-runtime/config/parse";
 import { parseBoardDefinition } from "@ai-werewolf-arena/game-runtime/config/board";
 import { resolveGameSetup, resolveGameBoard } from "@ai-werewolf-arena/game-runtime/config/resolve";
 import { configDiagnostic } from "@ai-werewolf-arena/game-runtime/config/diagnostics";
 import { validateRuntimeNativeConfig } from "@ai-werewolf-arena/game-runtime/config/validate";
+import { testAgentConnection } from "@ai-werewolf-arena/game-runtime/config/test-agent-connection";
+import { resolveAgentProfileByName } from "@ai-werewolf-arena/game-runtime/config/resolve";
+import { resolveDeclaredPath } from "@ai-werewolf-arena/project-paths";
+import path from "node:path";
 import type {
   BoardCard,
   ConfigKind,
@@ -41,10 +48,38 @@ export function diagnostic(error: unknown): Diagnostic {
   return { ...configDiagnostic(error), severity: "error" };
 }
 export class ConfigService {
+  private testingConnection = false;
   constructor(
     readonly documents: ConfigDocuments,
     readonly examplesRoot: string,
   ) {}
+  /** 只测试磁盘中已保存的配置；一次一个探测，避免重复点击并发启动进程或计费请求。 */
+  async testAgent(name: string, signal?: AbortSignal) {
+    if (this.testingConnection) throw new WorkbenchError("connection_test_busy", 409);
+    this.testingConnection = true;
+    try {
+      const runtime = parseRuntimeConfig({
+        backends: await this.documents.raw("backends", "backends"),
+        agents: await this.documents.raw("agents", "agents"),
+        game: {},
+      });
+      await validateRuntimeNativeConfig(runtime);
+      const profile = resolveAgentProfileByName(runtime, name);
+      if (profile.provider.type === "acp") {
+        const file = path.join(this.documents.root, "runtime/backends.json");
+        profile.provider = {
+          ...profile.provider,
+          command: /[/\\]/.test(profile.provider.command)
+            ? resolveDeclaredPath(profile.provider.command, file)
+            : profile.provider.command,
+          ...(profile.provider.cwd ? { cwd: resolveDeclaredPath(profile.provider.cwd, file) } : {}),
+        };
+      }
+      return await testAgentConnection(profile, { signal });
+    } finally {
+      this.testingConnection = false;
+    }
+  }
   async validate(kind: ConfigKind, name: string, raw: JsonObject): Promise<void> {
     if (
       !["backends", "agents", "games", "boards"].includes(kind) ||
@@ -57,6 +92,11 @@ export class ConfigService {
     }
     const backends = kind === "backends" ? raw : await this.documents.raw("backends", "backends");
     const agents = kind === "agents" ? raw : await this.documents.raw("agents", "agents");
+    if (kind === "backends" || kind === "agents") {
+      // 配置阶段允许先有连接、后有 Agent；已有条目照常校验，开局继续使用严格解析器。
+      await validateRuntimeNativeConfig(parseRuntimeCatalog({ backends, agents }));
+      return;
+    }
     const game = kind === "games" ? raw : {};
     const runtime = parseRuntimeConfig({ backends, agents, game });
     await validateRuntimeNativeConfig(runtime);

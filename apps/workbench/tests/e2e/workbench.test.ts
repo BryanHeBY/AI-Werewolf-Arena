@@ -130,7 +130,7 @@ test("a board can be copied with textual rule choices without editing JSON", asy
   await page.locator(".board-card").first().getByRole("button", { name: /选择/ }).click();
   await page.getByLabel("配置 ID", { exact: true }).fill("browser_beauty");
   await page.getByLabel("女巫自救", { exact: true }).selectOption("first_night_only");
-  await page.getByRole("button", { name: "另存为", exact: true }).click();
+  await page.getByRole("button", { name: "保存", exact: true }).click();
   await expect(page.getByRole("heading", { name: "查看板子", exact: true })).toBeVisible();
   const doc = await (await request.get("/api/documents/boards/browser_beauty")).json();
   expect(JSON.parse(doc.text)).toMatchObject({
@@ -205,7 +205,7 @@ test("saved lists are read only and games can be created twice, cancelled, then 
   for (const name of ["browser_new_one", "browser_new_two"]) {
     await page.getByRole("button", { name: "创建游戏", exact: true }).click();
     await page.getByLabel("配置 ID", { exact: true }).fill(name);
-    await page.getByRole("button", { name: "另存为", exact: true }).click();
+    await page.getByRole("button", { name: "保存", exact: true }).click();
     await expect(page.getByRole("heading", { name: "查看游戏配置", exact: true })).toBeVisible();
     await expect(page.locator(".config-detail > code")).toHaveText(`games/${name}.json`);
     await page.getByRole("button", { name: "← 游戏配置", exact: true }).click();
@@ -295,7 +295,7 @@ test("copy a local board, save a game from it, start, replay and delete only tha
     .click();
   await page.getByRole("button", { name: "复制为新配置", exact: true }).click();
   await page.getByLabel("配置 ID", { exact: true }).fill(boardName);
-  await page.getByRole("button", { name: "另存为", exact: true }).click();
+  await page.getByRole("button", { name: "保存", exact: true }).click();
   await expect(page.getByRole("heading", { name: "查看板子", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "创建游戏", exact: true }).click();
   await page.getByLabel("配置 ID", { exact: true }).fill(gameName);
@@ -308,7 +308,7 @@ test("copy a local board, save a game from it, start, replay and delete only tha
   raw.maxRuntimeMs = 4000;
   raw.llmTimeoutMs = 1000;
   await source.fill(JSON.stringify(raw, null, 2));
-  await page.getByRole("button", { name: "另存为", exact: true }).click();
+  await page.getByRole("button", { name: "保存", exact: true }).click();
   await expect(page.getByRole("heading", { name: "查看游戏配置", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "开始对局", exact: true }).click();
   await expect(page.getByRole("log", { name: "终端日志" })).toBeVisible();
@@ -378,7 +378,7 @@ test("a local board can be deleted after confirmation while the source board rem
     .click();
   await page.getByRole("button", { name: "复制为新配置", exact: true }).click();
   await page.getByLabel("配置 ID", { exact: true }).fill(name);
-  await page.getByRole("button", { name: "另存为", exact: true }).click();
+  await page.getByRole("button", { name: "保存", exact: true }).click();
   await expect(page.getByRole("heading", { name: "查看板子", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "删除", exact: true }).click();
   await page.getByRole("dialog").getByRole("button", { name: "取消", exact: true }).click();
@@ -517,34 +517,16 @@ test("revealing credentials cannot replace a document with an external revision"
   await expect(source).toHaveValue(original);
 });
 
-test("a first-time empty workspace initializes explicitly and keeps example templates independent from local copies", async ({
+test("example board templates stay independent from local copies in an empty workspace", async ({
   page,
   request,
 }) => {
-  const headers = { "x-awa-test-empty-workspace": `first_${Date.now().toString(36)}` };
+  const headers = { "x-awa-test-empty-workspace": `template_${Date.now().toString(36)}` };
   await page.setExtraHTTPHeaders(headers);
-  await page.goto("/");
-  await expect(page.getByRole("button", { name: "补充缺失的示例配置", exact: true })).toBeVisible();
-  await expect(page.locator(".saved-config-card")).toHaveCount(0);
-  await page.getByRole("navigation").getByRole("button", { name: "Agent", exact: true }).click();
-  await expect(page.getByRole("alert")).toHaveCount(0);
-  await page.getByRole("button", { name: "补充缺失的示例配置", exact: true }).click();
-  await expect(page.getByLabel("已配置 Agent", { exact: true })).toBeVisible();
-  await expect(page.getByRole("button", { name: "补充缺失的示例配置", exact: true })).toHaveCount(
-    0,
-  );
-  await page.getByRole("button", { name: "添加 Agent", exact: true }).click();
-  await page.getByRole("button", { name: /OpenAI API/ }).click();
-  await page.getByLabel("Agent ID", { exact: true }).fill("first_local_agent");
-  await page.getByLabel("API key 或 ${ENV_NAME}", { exact: true }).fill("synthetic-first-key");
-  await page.getByRole("button", { name: "保存", exact: true }).click();
-  await expect(page.getByRole("status")).toContainText("已保存");
-  const localDocument = await (
-    await request.get("/api/documents/boards/six_player_mvp", { headers })
-  ).json();
   const example = await (
     await request.get("/api/board-template/six_player_mvp?source=example", { headers })
   ).json();
+  const localDocument = { text: JSON.stringify(example), revision: null };
   const local = JSON.parse(localDocument.text);
   local.mechanisms.tieBreaker.exileVote = "no_elimination";
   expect(

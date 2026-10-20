@@ -1,8 +1,26 @@
 /** 负责配置管理文案；输入为界面语言和语义键，输出对应中英文用语。只服务配置界面，不定义运行规则或文件格式。 */
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 export const zhCN = {
-  initializeHelp:
-    "首次使用可补充缺失的本地示例文件，已有配置不会覆盖。完成后请配置自己的认证；这项操作不会启动对局。",
+  noAgents: "还没有配置 Agent。先选择平台、填写认证并保存一个 Agent，再选择板子创建游戏。",
+  configureAgent: "配置 Agent",
+  setupTitle: "开局前的配置",
+  setupHelp: "先配置 Agent 和本地板子，再创建游戏。已保存的配置可以反复使用。",
+  setupDone: "已保存",
+  setupTodo: "待配置",
+  connectionTest: "测试连接",
+  connectionTesting: "正在测试连接…",
+  connectionTestHelp:
+    "按已保存配置发送一次短请求，可能消耗模型额度。最长等待 30 秒；测试不创建对局或录制。",
+  connectionSaveFirst: "先保存当前修改，再测试这份 Agent 配置。",
+  connectionSucceeded: "连接成功，已收到模型回复",
+  connectionFailed: "连接测试失败",
+  connectionStage_initialize: "建立会话",
+  connectionStage_request: "模型请求",
+  connectionStage_cleanup: "资源清理",
+  connectionStage_complete: "测试完成",
+  configIdHelp:
+    "这是配置文件名，请以小写英文字母开头，仅使用小写字母、数字、下划线或短横线，不含 .json。例如 my_board。",
+  configIdExists: "这个配置 ID 已存在。请换用新 ID，或返回列表编辑已有配置。",
   savedGames: "已保存的游戏配置",
   savedBoards: "已保存的板子",
   newBoard: "新建板子",
@@ -52,8 +70,29 @@ export const zhCN = {
   none: "无胜者",
 } as const;
 export const en: Record<keyof typeof zhCN, string> = {
-  initializeHelp:
-    "For first-time setup, add missing local example files without replacing existing configurations. Then set your credentials. This does not start a game.",
+  noAgents:
+    "No agents are configured yet. Choose a platform, enter your credentials and save an agent before choosing a board and creating a game.",
+  configureAgent: "Configure an agent",
+  setupTitle: "Set up your first game",
+  setupHelp:
+    "Configure an agent and a local board, then create a game. Saved configurations can be reused.",
+  setupDone: "Saved",
+  setupTodo: "Needs setup",
+  connectionTest: "Test connection",
+  connectionTesting: "Testing connection…",
+  connectionTestHelp:
+    "Send one short request using the saved configuration. This may consume model credits. The request has a 30-second limit and creates no game or recording.",
+  connectionSaveFirst: "Save your changes before testing this agent configuration.",
+  connectionSucceeded: "Connected and received a model reply",
+  connectionFailed: "Connection test failed",
+  connectionStage_initialize: "Session initialization",
+  connectionStage_request: "Model request",
+  connectionStage_cleanup: "Resource cleanup",
+  connectionStage_complete: "Complete",
+  configIdHelp:
+    "This is the configuration filename. Start with a lowercase letter and use only lowercase letters, digits, underscores or hyphens, without .json. For example: my_board.",
+  configIdExists:
+    "This configuration ID already exists. Choose another ID, or return to the list to edit the existing configuration.",
   savedGames: "Saved game configurations",
   savedBoards: "Saved boards",
   newBoard: "New board",

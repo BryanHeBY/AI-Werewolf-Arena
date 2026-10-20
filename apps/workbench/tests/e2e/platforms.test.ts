@@ -93,6 +93,7 @@ test("existing agents open as editable profiles and retain native options", asyn
   await expect(page.getByLabel("已配置 Agent", { exact: true })).toBeVisible();
   await page.getByLabel("已配置 Agent", { exact: true }).selectOption("offline");
   await page.getByLabel("模型 ID", { exact: true }).fill("edited-synthetic-model");
+  await expect(page.getByRole("button", { name: "测试连接", exact: true })).toBeDisabled();
   await page.getByRole("button", { name: "保存", exact: true }).click();
   await expect(page.getByRole("status")).toContainText("已保存");
   const document = await (await request.get("/api/documents/agents/agents")).json();

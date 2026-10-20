@@ -93,7 +93,6 @@ export default function App() {
     }),
     [catalog, setCatalog] = useState<Catalog>(emptyCatalog),
     [catalogReady, setCatalogReady] = useState(false),
-    [initializing, setInitializing] = useState(false),
     [runs, setRuns] = useState<SessionEntry[]>([]),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
@@ -134,18 +133,6 @@ export default function App() {
       if (generation === catalogGeneration.current) throw error;
     }
   }, []);
-  const initialize = async () => {
-    setInitializing(true);
-    setError("");
-    try {
-      await api("initialize", { method: "POST", body: {} });
-      await refresh();
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "request_failed");
-    } finally {
-      setInitializing(false);
-    }
-  };
   useEffect(() => {
     const handler = () => {
       if (!canLeave()) {
@@ -352,8 +339,6 @@ export default function App() {
                 start={(name, revision) => void start(name, revision)}
                 busy={busy}
                 remove={setDeletingRun}
-                initialize={initialize}
-                initializing={initializing}
               />
             )}
             {catalogReady && locationState.page === "games" && (
@@ -367,6 +352,16 @@ export default function App() {
                 busy={busy}
                 routeId={locationState.id}
                 action={locationState.action}
+                configureAgents={() => navigate("agents")}
+                showSavedGame={(name) => {
+                  // 保存成功或从只读详情返回后同步地址；刷新不能把已保存文件重新打开成新建草稿。
+                  history.replaceState(
+                    null,
+                    "",
+                    `#/games${name ? `/${encodeURIComponent(name)}` : ""}`,
+                  );
+                  setLocationState({ page: "games", id: name, action: "" });
+                }}
               />
             )}
             {catalogReady && locationState.page === "boards" && (
@@ -382,14 +377,7 @@ export default function App() {
               />
             )}
             {catalogReady && locationState.page === "agents" && (
-              <AgentsPage
-                catalog={catalog}
-                t={t}
-                refresh={refresh}
-                locale={locale}
-                initialize={initialize}
-                initializing={initializing}
-              />
+              <AgentsPage catalog={catalog} t={t} refresh={refresh} locale={locale} />
             )}
             {locationState.page === "logs" && (
               <>

@@ -611,12 +611,36 @@
     font-weight: 700;
   }
   .editor-footer {
+    /* 操作栏位于长表单顶部并随滚动停靠，始终保留单一保存入口。 */
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--awa-panel);
+    border-bottom: 1px solid var(--line);
     padding: 20px 26px;
     border-top: 1px solid var(--line);
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 18px;
+  }
+  .field-error {
+    color: var(--awa-danger);
+  }
+  .setup-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px;
+    padding-left: 22px;
+  }
+  .setup-steps li {
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .setup-steps :is(strong, span) {
+    display: block;
+    margin-bottom: 12px;
   }
   .source {
     width: calc(100% - 52px) !important;

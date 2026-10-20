@@ -2,7 +2,7 @@
  * 负责同一原始文档的表单／源码编辑和保存冲突提示；输入文件标识及可选模板，输出用户保存动作。
  * 文档与 revision 由本组件拥有；取消旧加载、校验不覆盖草稿，密钥原值只经显式显示请求取得。
  */
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import type {
   ConfigDocument,
   ConfigKind,
@@ -14,6 +14,7 @@ import type { Translator } from "./types";
 import { useDraft } from "./draft-context";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
+import { workbenchServiceMessage } from "@ai-werewolf-arena/game-text/workbench-service";
 export function DocumentEditor({
   kind,
   name,
@@ -23,16 +24,18 @@ export function DocumentEditor({
   onSaved,
   onStart,
   onCancel,
+  saveBlocked = false,
   locale = "zh-CN",
 }: {
   kind: ConfigKind;
   name: string;
   initial?: JsonObject;
   t: Translator;
-  children?: (raw: JsonObject, change: (raw: JsonObject) => void) => ReactNode;
+  children?: (raw: JsonObject, change: (raw: JsonObject) => void, dirty: boolean) => ReactNode;
   onSaved?: (document: ConfigDocument, newerChanges: boolean) => void;
   onStart?: (name: string) => void;
   onCancel?: () => void;
+  saveBlocked?: boolean;
   locale?: Locale;
 }) {
   const [document, setDocument] = useState<ConfigDocument | null>(null),
@@ -45,6 +48,8 @@ export function DocumentEditor({
     [busy, setBusy] = useState(false),
     [reading, setReading] = useState(false);
   const generation = useRef(0);
+  const targetHelp = useId();
+  const validTarget = /^[a-z][a-z0-9_-]*$/.test(target);
   // 保存请求期间仍允许写作；响应仅更新已保存基线，不覆盖后来输入的内容。
   const latestText = useRef(text);
   latestText.current = text;
@@ -123,15 +128,23 @@ export function DocumentEditor({
           {t("gameName")}
           <input
             aria-label={t("gameName")}
+            aria-describedby={targetHelp}
+            aria-invalid={!validTarget}
+            spellCheck={false}
             value={target}
             disabled={
               busy || document?.revision !== null || kind === "agents" || kind === "backends"
             }
             onChange={(e) => {
               setTarget(e.target.value);
+              setError("");
+              setMessage("");
               if (kind === "boards" && raw) change({ ...raw, id: e.target.value });
             }}
           />
+          <small id={targetHelp} className={validTarget ? "muted" : "field-error"}>
+            {configUiText(locale, "configIdHelp")}
+          </small>
         </label>
         <div className="segments">
           <button className={mode === "form" ? "selected" : ""} onClick={() => setMode("form")}>
@@ -142,49 +155,10 @@ export function DocumentEditor({
           </button>
         </div>
       </div>
-      <fieldset disabled={reading} className="editor-draft-fields">
-        {document &&
-          (mode === "source" ? (
-            <textarea
-              className="source"
-              aria-label={t("source")}
-              value={text}
-              spellCheck={false}
-              onChange={(e) => {
-                setText(e.target.value);
-                setMessage("");
-              }}
-            />
-          ) : raw && children ? (
-            children(raw, change)
-          ) : (
-            <p role="alert">{t("invalid")}</p>
-          ))}
-      </fieldset>
-      {kind === "backends" && (
-        <div className="hint">
-          <p>{t("credentialsHelp")}</p>
-          <button
-            disabled={busy || (!!document && (text !== original || target !== document.name))}
-            onClick={() =>
-              void run(async () => {
-                const next = await api<ConfigDocument>(`documents/backends/backends?reveal=true`);
-                // 显示密钥只揭示已读版本，不能趁此吸入外部修改并替换整份文档。
-                if (next.revision !== document?.revision)
-                  throw new ApiError("config_conflict", 409);
-                setDocument(next);
-                setOriginal(next.text);
-                setText(next.text);
-                setMode("source");
-              }, true)
-            }
-          >
-            {t("reveal")}
-          </button>
-        </div>
-      )}
       <div className="editor-footer">
-        <span className="muted">{dirty ? t("unsaved") : t("saved")}</span>
+        <span className={validTarget ? "muted" : "field-error"}>
+          {!validTarget ? configUiText(locale, "configIdHelp") : dirty ? t("unsaved") : t("saved")}
+        </span>
         <div className="actions">
           {onCancel && (
             <button
@@ -226,7 +200,7 @@ export function DocumentEditor({
             {t("reload")}
           </button>
           <button
-            disabled={busy || !document}
+            disabled={busy || !document || !validTarget || saveBlocked}
             onClick={() =>
               void run(async () => {
                 const result = await api<{ valid: boolean; diagnostics: Diagnostic[] }>(
@@ -251,10 +225,10 @@ export function DocumentEditor({
           </button>
           <button
             className="primary"
-            disabled={busy || !document || !raw}
+            disabled={busy || !document || !raw || !validTarget || saveBlocked}
             onClick={() => void save()}
           >
-            {document?.revision === null ? t("saveAs") : t("save")}
+            {t("save")}
           </button>
           {onStart && (
             <button
@@ -268,9 +242,57 @@ export function DocumentEditor({
           )}
         </div>
       </div>
+      <fieldset disabled={reading} className="editor-draft-fields">
+        {document &&
+          (mode === "source" ? (
+            <textarea
+              className="source"
+              aria-label={t("source")}
+              value={text}
+              spellCheck={false}
+              onChange={(e) => {
+                setText(e.target.value);
+                setMessage("");
+              }}
+            />
+          ) : raw && children ? (
+            children(raw, change, dirty || busy)
+          ) : (
+            <p role="alert">{t("invalid")}</p>
+          ))}
+      </fieldset>
+      {kind === "backends" && (
+        <div className="hint">
+          <p>{t("credentialsHelp")}</p>
+          <button
+            disabled={busy || (!!document && (text !== original || target !== document.name))}
+            onClick={() =>
+              void run(async () => {
+                const next = await api<ConfigDocument>(`documents/backends/backends?reveal=true`);
+                // 显示密钥只揭示已读版本，不能趁此吸入外部修改并替换整份文档。
+                if (next.revision !== document?.revision)
+                  throw new ApiError("config_conflict", 409);
+                setDocument(next);
+                setOriginal(next.text);
+                setText(next.text);
+                setMode("source");
+              }, true)
+            }
+          >
+            {t("reveal")}
+          </button>
+        </div>
+      )}
       {error && (
         <div className="notice error" role="alert">
-          {error.startsWith("config_conflict") ? t("conflict") : t("error")}
+          {error.startsWith("config_conflict")
+            ? document?.revision === null
+              ? configUiText(locale, "configIdExists")
+              : t("conflict")
+            : t("error")}
+          {workbenchServiceMessage(locale, error.split(" · ")[0]) && (
+            <p>{workbenchServiceMessage(locale, error.split(" · ")[0])}</p>
+          )}
           <code>{error}</code>
         </div>
       )}

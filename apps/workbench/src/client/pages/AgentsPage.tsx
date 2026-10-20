@@ -10,21 +10,17 @@ import { useCanLeaveDraft } from "../draft-context";
 import { AgentWizard } from "../AgentWizard";
 import { AgentProfilesForm } from "../AgentProfilesForm";
 import { agentText } from "@ai-werewolf-arena/game-text/workbench-agent";
-import { InitializeNotice } from "../InitializeNotice";
+import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 export function AgentsPage({
   catalog,
   t,
   locale,
   refresh,
-  initialize,
-  initializing,
 }: {
   catalog: Catalog;
   t: Translator;
   locale: Locale;
   refresh: () => Promise<void>;
-  initialize: () => Promise<void>;
-  initializing: boolean;
 }) {
   const canLeave = useCanLeaveDraft();
   const [tab, setTab] = useState<"wizard" | "agents" | "backends">("agents");
@@ -50,8 +46,13 @@ export function AgentsPage({
           ))}
         </div>
       </div>
-      {(!catalog.agents.length || !catalog.backends.length) && (
-        <InitializeNotice t={t} locale={locale} busy={initializing} initialize={initialize} />
+      {!catalog.agents.length && tab === "agents" && (
+        <section className="panel empty">
+          <p>{configUiText(locale, "noAgents")}</p>
+          <button className="primary" onClick={() => setTab("wizard")}>
+            {configUiText(locale, "configureAgent")}
+          </button>
+        </section>
       )}
       {tab === "wizard" ? (
         <>
@@ -68,9 +69,9 @@ export function AgentsPage({
           </div>
           <AgentWizard catalog={catalog} t={t} locale={locale} onSaved={() => void refresh()} />
         </>
-      ) : catalog.agents.length && catalog.backends.length ? (
+      ) : tab === "backends" || catalog.agents.length ? (
         <DocumentEditor kind={tab} name={tab} t={t} locale={locale} onSaved={() => void refresh()}>
-          {(raw, change) =>
+          {(raw, change, dirty) =>
             tab === "agents" ? (
               <AgentProfilesForm
                 raw={raw}
@@ -78,6 +79,7 @@ export function AgentsPage({
                 catalog={catalog}
                 t={t}
                 locale={locale}
+                dirty={dirty}
               />
             ) : (
               <div className="form-body">

@@ -20,6 +20,9 @@ import {
   type ModelSummary,
 } from "./agent-platforms";
 import { agentText } from "@ai-werewolf-arena/game-text/workbench-agent";
+import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
+import { workbenchServiceMessage } from "@ai-werewolf-arena/game-text/workbench-service";
+import { AgentConnectionTest } from "./AgentConnectionTest";
 interface PlatformDefaults {
   claudeCode: {
     supported: boolean;
@@ -41,6 +44,7 @@ export function AgentWizard({
   locale: Locale;
   onSaved: () => void;
 }) {
+  const [savedAgent, setSavedAgent] = useState("");
   const [instructions, setInstructions] = useState<Json | undefined>();
   const [platformId, setPlatformId] = useState("openai"),
     [name, setName] = useState(""),
@@ -265,11 +269,14 @@ export function AgentWizard({
           ...(instructions === undefined ? {} : { customInstructions: instructions }),
         },
       };
+      // 首个 Agent 同时成为默认值，后续添加保留用户已经选择的默认 Agent。
+      if (raw.default === undefined) raw.default = name;
       await api("documents/agents/agents", {
         method: "PUT",
         body: { revision: doc.revision, text: JSON.stringify(raw) },
       });
       clearDraft();
+      setSavedAgent(name);
       setMessage(t("saved"));
       onSaved();
     } catch (error) {
@@ -319,7 +326,13 @@ export function AgentWizard({
         <div className="two-columns">
           <label>
             {t("agentId")}
-            <input value={name} placeholder="my_agent" onChange={(e) => setName(e.target.value)} />
+            <input
+              aria-label={t("agentId")}
+              value={name}
+              placeholder="my_agent"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <small className="muted">{configUiText(locale, "configIdHelp")}</small>
           </label>
           <label>
             {t("backend")}
@@ -592,7 +605,7 @@ export function AgentWizard({
           <p>
             {["codex_auth_missing", "codex_auth_unreadable", "codex_auth_invalid"].includes(error)
               ? l(error as "codex_auth_missing")
-              : error}
+              : (workbenchServiceMessage(locale, error) ?? error)}
           </p>
         </div>
       )}
@@ -600,6 +613,9 @@ export function AgentWizard({
         <p className="notice success" role="status">
           {message}
         </p>
+      )}
+      {savedAgent && (
+        <AgentConnectionTest name={savedAgent} locale={locale} disabled={dirty || busy} />
       )}
     </section>
   );

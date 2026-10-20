@@ -5,7 +5,10 @@
  */
 import type { RuntimeConfig } from "./contracts";
 
-export async function validateRuntimeNativeConfig(runtime: RuntimeConfig): Promise<void> {
+export async function validateRuntimeNativeConfig(runtime: {
+  providers: Pick<RuntimeConfig["providers"], "items">;
+  agents: Pick<RuntimeConfig["agents"], "items">;
+}): Promise<void> {
   if (!Object.values(runtime.providers.items).some((provider) => provider.type === "pi")) return;
   const { validatePiHostConfig, validatePiSettings } =
     await import("../../adapters/pi/native-config");

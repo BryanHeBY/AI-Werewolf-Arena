@@ -251,18 +251,25 @@ function normalizeBackend(
   };
 }
 
-function normalizeBackends(raw: unknown, environment: NodeJS.ProcessEnv): ProvidersConfig {
+function normalizeBackendItems(
+  raw: unknown,
+  environment: NodeJS.ProcessEnv,
+): ProvidersConfig["items"] {
   if (!isRecord(raw)) throw new Error("runtime_config_invalid_backends");
   assertKnownKeys(raw, ["schemaVersion", "items"], "backends");
   if (raw.schemaVersion !== 2)
     throw new Error("runtime_config_schema_version_invalid: backends.schemaVersion");
   if (!isRecord(raw.items)) throw new Error("runtime_config_invalid_backends_items");
-  const items = Object.fromEntries(
+  return Object.fromEntries(
     Object.entries(raw.items).map(([name, value]) => [
       readRequiredString(name, "backends.items.key"),
       normalizeBackend(name, value, environment),
     ]),
   );
+}
+
+function normalizeBackends(raw: unknown, environment: NodeJS.ProcessEnv): ProvidersConfig {
+  const items = normalizeBackendItems(raw, environment);
   const names = Object.keys(items);
   if (!names.length) throw new Error("runtime_config_empty_backends_items");
   // 公共 V2 没有 backend 默认值；内部旧字段仅用于装配完整性检查，Agent 一律显式引用。
@@ -330,17 +337,17 @@ function normalizeAcpOptions(
   };
 }
 
-function normalizeAgents(
+function normalizeAgentItems(
   raw: unknown,
-  providers: ProvidersConfig,
+  providers: Pick<ProvidersConfig, "items">,
   environment: NodeJS.ProcessEnv,
-): AgentsConfig {
+): AgentsConfig["items"] {
   if (!isRecord(raw)) throw new Error("runtime_config_invalid_agents");
   assertKnownKeys(raw, ["schemaVersion", "default", "items"], "agents");
   if (raw.schemaVersion !== 2)
     throw new Error("runtime_config_schema_version_invalid: agents.schemaVersion");
   if (!isRecord(raw.items)) throw new Error("runtime_config_invalid_agents_items");
-  const items = Object.fromEntries(
+  return Object.fromEntries(
     Object.entries(raw.items).map(([name, value]) => {
       const field = `agents.items.${name}`;
       readRequiredString(name, "agents.items.key");
@@ -377,11 +384,23 @@ function normalizeAgents(
       return [name, agent];
     }),
   );
-  if (!Object.keys(items).length) throw new Error("runtime_config_empty_agents_items");
-  const defaultName = readRequiredString(raw.default, "agents.default");
+}
+
+function agentDefault(raw: unknown, items: AgentsConfig["items"]): string {
+  const defaultName = readRequiredString(isRecord(raw) ? raw.default : undefined, "agents.default");
   if (!Object.hasOwn(items, defaultName))
     throw new Error(`runtime_config_agent_default_not_found: ${defaultName}`);
-  return { default: defaultName, items };
+  return defaultName;
+}
+
+function normalizeAgents(
+  raw: unknown,
+  providers: ProvidersConfig,
+  environment: NodeJS.ProcessEnv,
+): AgentsConfig {
+  const items = normalizeAgentItems(raw, providers, environment);
+  if (!Object.keys(items).length) throw new Error("runtime_config_empty_agents_items");
+  return { default: agentDefault(raw, items), items };
 }
 
 function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
@@ -570,6 +589,26 @@ function normalizeDebugSummaryConfig(raw: unknown, agents: AgentsConfig): DebugS
       ),
     },
   };
+}
+
+/** 编辑目录允许尚未创建连接或 Agent；每个已有条目仍执行与开局相同的字段与引用校验。 */
+export function parseRuntimeCatalog(input: {
+  backends: unknown;
+  agents: unknown;
+  environment?: NodeJS.ProcessEnv;
+}): {
+  providers: Pick<ProvidersConfig, "items">;
+  agents: { items: AgentsConfig["items"]; default?: string };
+} {
+  const environment = input.environment ?? process.env;
+  const providers = { items: normalizeBackendItems(input.backends, environment) };
+  const items = normalizeAgentItems(input.agents, providers, environment);
+  // 空目录没有默认 Agent；一旦出现条目就必须有有效默认值，不能把缺省带进真实开局。
+  const defaultName =
+    Object.keys(items).length || (isRecord(input.agents) && input.agents.default !== undefined)
+      ? agentDefault(input.agents, items)
+      : undefined;
+  return { providers, agents: { items, ...(defaultName ? { default: defaultName } : {}) } };
 }
 
 export function parseRuntimeConfig(input: {

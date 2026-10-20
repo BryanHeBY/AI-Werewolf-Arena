@@ -16,6 +16,15 @@ export interface Diagnostic {
   path?: string;
   severity: "error" | "warning";
 }
+/** 连接测试不回传模型原文、认证或异常正文；stage 区分配置、建立、请求和资源清理。 */
+export interface AgentConnectionTestResult {
+  ok: boolean;
+  kind: "llm" | "pi" | "acp";
+  stage: "initialize" | "request" | "cleanup" | "complete";
+  elapsedMs: number;
+  diagnostic?: { code: string; statusCode?: number };
+  cleanupFailed?: boolean;
+}
 export type RunState =
   | "starting"
   | "running"
