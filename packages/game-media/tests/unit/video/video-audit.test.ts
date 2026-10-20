@@ -5,6 +5,7 @@
 import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import path from "node:path";
+import os from "node:os";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { auditVideoReplay } from "../../../src/video/plan/audit";
 import { auditVideoRecords } from "../../../../../apps/video/scripts/audit-video-records";
@@ -149,9 +150,7 @@ test("missing roster is diagnosed separately and malformed game-over does not ma
 });
 
 test("directory scan continues past a bad archive, rejects symlinks, prunes private/source directories and stays read-only", async () => {
-  const directory = await mkdtemp(
-    path.resolve(import.meta.dir, "../../../../../node_modules/.cache/video-audit-"),
-  );
+  const directory = await mkdtemp(path.join(os.tmpdir(), "awa-video-audit-"));
   try {
     for (const sub of ["good", "bad", "players", "checkout", "linked"])
       await mkdir(path.join(directory, sub));

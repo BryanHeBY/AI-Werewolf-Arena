@@ -2,6 +2,8 @@
  * 单元测试负责全天保护／决斗事实的双语Web时间线与逐帧投影。输入十一类字面事实，输出席位关系和真实生命变化。
  * 亮牌、技能声明、God阻挡及尝试均不推定死亡；仅独立实际结算death数组更新Alive。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+import { join } from "node:path";
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { AWAKENED_GUARD_POLICY as gp } from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
@@ -171,10 +173,7 @@ for (const mode of ["body", "substitute"] as const)
       const r = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(
-                `../../../../../docs/examples/awakened-knight/${mode}-${locale}.replay.json`,
-                import.meta.url,
-              ),
+              join(PROJECT_ROOT, `docs/examples/awakened-knight/${mode}-${locale}.replay.json`),
               "utf8",
             ),
           ),

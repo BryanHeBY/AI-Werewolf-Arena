@@ -2,6 +2,8 @@
  * 单元测试负责暗夜星辰五类付款/公开结果的双语时间线和帧投影。输入手写字面事件，输出自然文案与关联席位。
  * 不运行后端或根据付款伪造实际死亡；God原伤害仅为展示，真正Alive变化由独立通用死亡事实拥有。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+import { join } from "node:path";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -123,9 +125,9 @@ for (const [size, path] of [
       const r = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(
-                `../../../../../docs/examples/awakened-dark-stars/${size}-${path}-${locale}.replay.json`,
-                import.meta.url,
+              join(
+                PROJECT_ROOT,
+                `docs/examples/awakened-dark-stars/${size}-${path}-${locale}.replay.json`,
               ),
               "utf8",
             ),

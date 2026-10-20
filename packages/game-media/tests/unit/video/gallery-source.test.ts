@@ -5,11 +5,10 @@
 import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
+import os from "node:os";
 import { videoGallerySource } from "../../../../../apps/video/scripts/gallery-source";
 test("gallery digest includes nested support plus font and image bytes and rejects empty inventories", async () => {
-  const root = await mkdtemp(
-    path.resolve(import.meta.dir, "../../../../../node_modules/.cache/gallery-source-"),
-  );
+  const root = await mkdtemp(path.join(os.tmpdir(), "awa-gallery-source-"));
   try {
     for (const scope of ["src", "scripts", "tests/support"])
       await mkdir(path.join(root, scope), { recursive: true });

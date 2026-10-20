@@ -2,6 +2,8 @@
  * 用手写狼爪归档核两语时间线与帧；私有库存事实不改变存活或公开原身份。
  * actual player_shot仍独立负责死亡效果；此测试不运行引擎，不将God文档当玩家授权流。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+import { join } from "node:path";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -118,10 +120,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const replay = readReplayDocument(
         JSON.parse(
           readFileSync(
-            new URL(
-              `../../../../../docs/examples/awakened-wolf-king/${locale}.replay.json`,
-              import.meta.url,
-            ),
+            join(PROJECT_ROOT, `docs/examples/awakened-wolf-king/${locale}.replay.json`),
             "utf8",
           ),
         ),

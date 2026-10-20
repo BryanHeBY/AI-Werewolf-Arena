@@ -2,6 +2,8 @@
  * 单元测试负责字面God教学事件验证两语时间线、关联席位与帧投影；不由规则引擎生成预期。
  * 动作及个人译文是展示事实，不能暗改生命、认证身份或修改投票权；玩家授权仍在后端投影。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+import { join } from "node:path";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -146,10 +148,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const replay = readReplayDocument(
       JSON.parse(
         readFileSync(
-          new URL(
-            `../../../../../docs/examples/silence-elder/${locale}.replay.json`,
-            import.meta.url,
-          ),
+          join(PROJECT_ROOT, `docs/examples/silence-elder/${locale}.replay.json`),
           "utf8",
         ),
       ),

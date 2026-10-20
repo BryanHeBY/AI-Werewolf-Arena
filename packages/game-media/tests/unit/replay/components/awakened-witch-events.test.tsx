@@ -2,6 +2,8 @@
  * 单元测试负责觉醒女巫God事实的时间线与帧投影。输入手写私密事件，输出两语自然标签与关联席位；逐字段字面值是独立人工预期，不由生产输出生成。
  * 该层不运行引擎，不决定玩家受众；资源、聊天、票和最终提案都不得自行改变生命/翻牌/警徽。
  */
+import { PROJECT_ROOT } from "@ai-werewolf-arena/project-paths";
+import { join } from "node:path";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -113,10 +115,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const r = readReplayDocument(
         JSON.parse(
           readFileSync(
-            new URL(
-              `../../../../../docs/examples/awakened-witch/${locale}.replay.json`,
-              import.meta.url,
-            ),
+            join(PROJECT_ROOT, `docs/examples/awakened-witch/${locale}.replay.json`),
             "utf8",
           ),
         ),
