@@ -100,6 +100,7 @@ export interface ThemeSubtitle {
   paddingY: number;
   radius: number;
   safeHeight: number;
+  /** 以1080p为基准给播放器章节及控制条留出底部距离，由统一布局随画幅缩放。 */
   bottom: number;
 }
 export interface ThemeOpening {
@@ -147,7 +148,7 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
       paddingY: 4,
       radius: 5,
       safeHeight: 108,
-      bottom: 56,
+      bottom: 144,
     },
     opening: {
       inset: 32,

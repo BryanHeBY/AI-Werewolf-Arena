@@ -108,7 +108,25 @@ test("subtitles use shot plus speech offsets, have half-open boundaries and foll
   const original = buildVideoFrame({ ...plan, subtitles: undefined }, 78).layout;
   expect(during.seats).toEqual(original.seats);
   expect(during.stage.height).toBeLessThan(original.stage.height);
-  expect(during.stage.y + during.stage.height).toBeLessThan(plan.height - 56 - 2 * 36 * 1.4 - 8);
+  expect(during.stage.y + during.stage.height).toBeLessThan(plan.height - 144 - 2 * 36 * 1.4 - 8);
+});
+test("broadcast subtitles reserve a scaled player-controls band without moving the roster", () => {
+  const { plan } = fixture();
+  for (const [width, height] of [
+    [1920, 1080],
+    [1280, 720],
+    [2560, 1440],
+  ] as const) {
+    const scaled = { ...plan, width, height };
+    const layout = buildVideoFrame(scaled, 78).layout;
+    const without = buildVideoFrame({ ...scaled, subtitles: undefined }, 78).layout;
+    const unit = Math.min(width / 1920, height / 1080);
+    expect(height - layout.subtitle.y - layout.subtitle.height).toBeCloseTo(144 * unit);
+    expect(layout.stage.y + layout.stage.height + 20 * unit).toBeLessThanOrEqual(
+      layout.subtitle.y + 1e-6,
+    );
+    expect(layout.seats).toEqual(without.seats);
+  }
 });
 test("the frame renders spoken subtitles and complete stage rules independently and SRT uses the same clock", () => {
   const { plan } = fixture();

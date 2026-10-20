@@ -1,6 +1,16 @@
 /** 负责记录本局制作决策。输入为已确认的基调和微调，输出按版本排列的差异；不参与视频渲染。 */
 export const history = [
   {
+    revision: "subtitle-safe-area",
+    date: "2026-10-20",
+    title: "字幕上移并预留播放器底部空间",
+    changes: [
+      "1080p字幕底边留白从56增至144像素，中央正文同步避让，左右玩家栏保持原位",
+      "重新渲染完整画面，复用既有连续配音和低音量配乐母带，保留字幕延时、章节与片尾留白",
+    ],
+    productionDirectory: "output/videos/catgirl-knight/subtitle-safe",
+  },
+  {
     revision: "soundtrack-v2",
     date: "2026-10-20",
     title: "降低昼夜背景音乐",
