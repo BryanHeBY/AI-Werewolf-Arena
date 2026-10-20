@@ -19,6 +19,30 @@ const known = {
 };
 // 独立手写当前固定协议，包含自爆确认，不复用被测检查器的预期。
 const schema = {
+  actions: {
+    choose_servant: {
+      type: "object",
+      properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+      required: ["target_id"],
+      additionalProperties: false,
+    },
+    protect_secret_body: {
+      type: "object",
+      properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+      required: ["target_id"],
+      additionalProperties: false,
+    },
+    report_bug: {
+      type: "object",
+      properties: {
+        category: { type: "string", enum: ["flow", "rule", "state", "logging", "other"] },
+        severity: { type: "string", enum: ["low", "medium", "high", "critical"] },
+        message: { type: "string" },
+      },
+      required: ["category", "severity", "message"],
+      additionalProperties: false,
+    },
+  },
   protocol_version: "1",
   tools: {
     get_game_schema: "{}; query the fixed tool protocol without returning game state.",
@@ -108,6 +132,19 @@ test("actual active MCP schema must reject an empty schema", () => {
   const r = input();
   r.acpTraces[0]!.trace.activeSchemas[0]!.body = {};
   expect(() => assertNobleTransportWire(r)).toThrow();
+});
+for (const action of ["choose_servant", "protect_secret_body", "report_bug"] as const)
+  test(`actual active MCP schema must reject a missing public ${action} definition`, () => {
+    const r = input();
+    const body = r.acpTraces[0]!.trace.activeSchemas[0]!.body as typeof schema;
+    delete (body.actions as Partial<typeof schema.actions>)[action];
+    expect(() => assertNobleTransportWire(r)).toThrow("fixture_noble_action_schema_invalid");
+  });
+test("actual active MCP schema must reject altered Noble target semantics", () => {
+  const r = input();
+  const body = r.acpTraces[0]!.trace.activeSchemas[0]!.body as typeof schema;
+  body.actions.choose_servant.properties.target_id.minimum = 0;
+  expect(() => assertNobleTransportWire(r)).toThrow("fixture_noble_action_schema_invalid");
 });
 for (const kind of ["acp", "sdk"] as const)
   test(`${kind} current prompt must reject a second contradictory status`, () => {

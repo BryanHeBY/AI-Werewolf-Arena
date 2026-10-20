@@ -23,6 +23,31 @@ const protocolDescriptions = {
     report_bug: "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
   },
 } as const;
+// 公开行动目录不是本轮授权或局内状态；两个角色与问题反馈的参数仍用独立字面预期校验。
+const actionParameters = {
+  choose_servant: {
+    type: "object",
+    properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+    required: ["target_id"],
+    additionalProperties: false,
+  },
+  protect_secret_body: {
+    type: "object",
+    properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+    required: ["target_id"],
+    additionalProperties: false,
+  },
+  report_bug: {
+    type: "object",
+    properties: {
+      category: { type: "string", enum: ["flow", "rule", "state", "logging", "other"] },
+      severity: { type: "string", enum: ["low", "medium", "high", "critical"] },
+      message: { type: "string" },
+    },
+    required: ["category", "severity", "message"],
+    additionalProperties: false,
+  },
+};
 export type NobleWireRun = {
   record: ReproductionRecord;
   sdkWireMessages: Array<{ actor: number; ordinal: number; messages: unknown[] }>;
@@ -245,13 +270,20 @@ export function assertNobleTransportWire(run: NobleWireRun) {
       if (trace.activeSchemas[i]!.actorOrdinal !== ordinal)
         throw Error("fixture_noble_active_schema_ordinal");
       privacy(actor, JSON.stringify(trace.activeSchemas[i]!.body));
+      const { actions, ...protocol } = trace.activeSchemas[i]!.body as Record<string, unknown>;
       if (
-        !isDeepStrictEqual(trace.activeSchemas[i]!.body, {
+        !isDeepStrictEqual(protocol, {
           protocol_version: "1",
           tools: protocolDescriptions[run.record.metadata.locale ?? "en"],
         })
       )
         throw Error("fixture_noble_active_schema_invalid");
+      if (actions === null || typeof actions !== "object" || Array.isArray(actions))
+        throw Error("fixture_noble_action_schema_invalid");
+      for (const [name, parameters] of Object.entries(actionParameters))
+        if (!isDeepStrictEqual((actions as Record<string, unknown>)[name], parameters))
+          throw Error("fixture_noble_action_schema_invalid");
+      // 完整目录跨回合必须不变，不能夹带身体消耗、夜仆契约等随对局变化的状态。
       if (!isDeepStrictEqual(trace.activeSchemas[i]!.body, trace.activeSchemas[0]!.body))
         throw Error("fixture_noble_active_schema_changed");
     }

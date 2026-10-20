@@ -16,6 +16,30 @@ import {
 function staticSchema(locale: "en" | "zh-CN") {
   return locale === "en"
     ? {
+        actions: {
+          choose_servant: {
+            type: "object",
+            properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+            required: ["target_id"],
+            additionalProperties: false,
+          },
+          protect_secret_body: {
+            type: "object",
+            properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+            required: ["target_id"],
+            additionalProperties: false,
+          },
+          report_bug: {
+            type: "object",
+            properties: {
+              category: { type: "string", enum: ["flow", "rule", "state", "logging", "other"] },
+              severity: { type: "string", enum: ["low", "medium", "high", "critical"] },
+              message: { type: "string" },
+            },
+            required: ["category", "severity", "message"],
+            additionalProperties: false,
+          },
+        },
         protocol_version: "1",
         tools: {
           get_game_schema: "{}; query the fixed tool protocol without returning game state.",
@@ -26,6 +50,30 @@ function staticSchema(locale: "en" | "zh-CN") {
         },
       }
     : {
+        actions: {
+          choose_servant: {
+            type: "object",
+            properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+            required: ["target_id"],
+            additionalProperties: false,
+          },
+          protect_secret_body: {
+            type: "object",
+            properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+            required: ["target_id"],
+            additionalProperties: false,
+          },
+          report_bug: {
+            type: "object",
+            properties: {
+              category: { type: "string", enum: ["flow", "rule", "state", "logging", "other"] },
+              severity: { type: "string", enum: ["low", "medium", "high", "critical"] },
+              message: { type: "string" },
+            },
+            required: ["category", "severity", "message"],
+            additionalProperties: false,
+          },
+        },
         protocol_version: "1",
         tools: {
           get_game_schema: "{}；查询固定工具协议，不返回局内状态。",
