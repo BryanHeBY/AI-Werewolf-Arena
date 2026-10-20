@@ -2,6 +2,7 @@
  * 浏览器集成测试验证诡术师映射、取消和 PK 放逐的两语归档。
  * 输入为原事件与 checkpoint；输出检查真实放逐目标、已死目标落空及终局胜者，保留字面席位预期；跳转不执行映射或计票。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -32,7 +33,7 @@ for (const variant of ["mapped", "cancel", "pk"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.locator(".current-event > p")).toHaveText(label);
+        await expect(currentEventSourceText(page)).toHaveText(label);
         const dead = async () =>
           (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);
         expect(await dead()).toHaveLength(2);

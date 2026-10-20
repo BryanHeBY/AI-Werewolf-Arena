@@ -3,6 +3,7 @@
  * 输入为原翻牌／死亡事实及 checkpoint；输出以手写存活断言和终局 checkpoint 对照核对公共字幕、席位及胜者时点。
  * 这些字面断言与归档对照分别保留，不在浏览器应用生命周期规则。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -41,7 +42,7 @@ for (const mode of ["expire", "knife", "blast"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.locator(".current-event > p")).toHaveText(label);
+        await expect(currentEventSourceText(page)).toHaveText(label);
         if (e.type === "red_moon_exile_delayed") await expect(seat).not.toHaveClass(/dead/);
         else await expect(seat).toHaveClass(/dead/);
         if (e.type !== "red_moon_delay_expired")

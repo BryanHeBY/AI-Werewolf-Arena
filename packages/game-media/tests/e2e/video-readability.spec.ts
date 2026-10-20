@@ -156,11 +156,17 @@ test("Web shows structured identities and committed waves once, keeps the origin
   await seek(page, 4);
   const current = page.locator(".current-event");
   await expect(current.locator("[data-lineup-player]")).toHaveCount(12);
+  await expect(current.locator("[data-current-structured-content]")).toBeVisible();
   const original = current.locator("[data-original-announcement]");
   await expect(original).not.toHaveAttribute("open");
+  await expect(original.locator("summary")).toBeVisible();
+  await expect(original.locator("p")).not.toBeVisible();
   await original.locator("summary").click();
+  await expect(original).toHaveAttribute("open");
+  await expect(original.locator("p")).toBeVisible();
   await expect(original.locator("p")).toContainText("角色分布");
   await original.locator("summary").click();
+  await expect(original.locator("p")).not.toBeVisible();
   const death = plan.shots[2]!,
     chain = plan.shots[3]!;
   await seek(page, death.from + 2);

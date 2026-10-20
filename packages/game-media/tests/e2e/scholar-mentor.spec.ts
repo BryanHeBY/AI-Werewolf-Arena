@@ -2,6 +2,7 @@
  * 浏览器集成测试验证学者／导师加成和冲突的两语归档。输入为已结算事件和 checkpoint；
  * 输出检查加成不提前改变席位、同一好人或双狼冲突直到黎明才死亡，字面人数与目标预期保留，不在测试选择导师。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -31,7 +32,7 @@ for (const locale of ["zh-CN", "en"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
     };
     const skipped = replay.events.find((e) => e.type === "modifier_choice_skipped")!;
     await show(skipped);
@@ -94,7 +95,7 @@ for (const variant of ["same-good", "both-wolves"] as const)
             })),
           );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-          await expect(page.locator(".current-event > p")).toHaveText(label);
+          await expect(currentEventSourceText(page)).toHaveText(label);
         };
         const conflict = replay.events.find((e) => e.type === "modifier_conflict_resolved")!;
         expect(conflict).toBeDefined();

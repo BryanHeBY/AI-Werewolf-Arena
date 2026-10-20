@@ -3,6 +3,7 @@
  * 输入为既有 replay/checkpoint；输出检查选择时点的存活席位、他人身份遮蔽及终局猎人追加死亡链。
  * 字面胜者预期与归档对照分别保留；浏览器不执行决斗或游戏规则。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -34,7 +35,7 @@ for (const size of [6, 12])
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");
         await page.locator(".timeline .event").filter({ hasText: label }).click();
-        await expect(page.locator(".current-event > p")).toHaveText(label);
+        await expect(currentEventSourceText(page)).toHaveText(label);
         await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
         await expect(
           page.locator(`[data-composition-player="${chosen.payload.actorId}"]`),
@@ -101,7 +102,7 @@ for (const locale of ["zh-CN", "en"] as const)
       })),
     );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(label);
+    await expect(currentEventSourceText(page)).toHaveText(label);
     for (const p of replay.players.filter((p: any) => p.player_id !== view.player_id))
       await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
         text(locale, "replay.unknown"),

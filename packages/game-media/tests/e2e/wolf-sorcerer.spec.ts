@@ -2,6 +2,7 @@
  * 浏览器集成测试验证狼术师重叠、取消和分离目标的两语归档。
  * 输入为原事件及 checkpoint；输出以字幕对照和字面席位预期核对身份保留、真实死亡与终局，不在测试组合目标效果。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -35,7 +36,7 @@ for (const variant of ["overlap", "cancel", "disjoint"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.locator(".current-event > p")).toHaveText(label);
+        await expect(currentEventSourceText(page)).toHaveText(label);
         const dead = async () =>
           (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);
         expect(await dead()).toHaveLength(3);

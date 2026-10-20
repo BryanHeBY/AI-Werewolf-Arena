@@ -1,6 +1,7 @@
 /**
  * 浏览器集成测试读取鬼新娘全知／本人视角 fixture，覆盖伴侣、见证者与终夜结果。归档和 checkpoint 字段提供原生身份、私有婚姻、死亡和两语三阵营胜者的预期；浏览器只渲染已结算记录，不解析婚姻规则或重新判胜。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { createPlayerText } from "@ai-werewolf-arena/game-presentation";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
@@ -33,7 +34,7 @@ for (const kind of ["good", "wolf", "pair", "witness"])
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       const bride = group.payload.brideId;
       await expect(page.locator(`[data-composition-player="${bride}"]`)).toContainText(
@@ -137,7 +138,7 @@ for (const actor of ["bride", "groom", "witness", "pack"])
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       for (const p of replay.players.filter((p: any) => p.player_id !== view.player_id))
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
           text(locale, "replay.unknown"),

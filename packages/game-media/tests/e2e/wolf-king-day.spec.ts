@@ -2,6 +2,7 @@
  * 浏览器集成测试负责跳转并倒看狼王白天开枪归档，覆盖原目标／换位目标、夜间／放逐来源和两语。
  * 输入为原事件及 checkpoint；输出按原席位预期核对各枪击帧和胜者时点，不执行死亡 hook 或更换录制政策。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -39,7 +40,7 @@ for (const mapping of ["original", "exchanged"] as const)
             })),
           );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-          await expect(page.locator(".current-event > p")).toHaveText(label);
+          await expect(currentEventSourceText(page)).toHaveText(label);
         };
         const deadIds = async () =>
           (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);

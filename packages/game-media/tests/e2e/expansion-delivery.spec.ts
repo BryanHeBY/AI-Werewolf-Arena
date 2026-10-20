@@ -3,6 +3,7 @@
  * 输入是公开两语真实归档；逐帧视图作UI接线对照，角色规则另由独立引擎判例核验。
  * 本测试不执行模型或读取个人记录；God档含隐藏身份，不能当玩家授权导出。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -91,7 +92,7 @@ for (const [feature, prefixes] of features)
             `${playerLabel({ id: targetId, seat: target.seat }, locale)} +${sourceEvent.payload.bonus}`,
           );
         }
-        await expect(page.locator(".current-event > p")).not.toContainText('{"policy"');
+        await expect(currentEventSourceText(page)).not.toContainText('{"policy"');
         await expect(page.locator("[data-video-stage]")).not.toContainText('{"policy"');
         for (const p of state.players)
           await expect(page.locator(`[data-composition-player="${p.playerId}"]`)).toHaveAttribute(

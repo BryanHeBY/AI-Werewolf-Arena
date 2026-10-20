@@ -2,6 +2,7 @@
  * 浏览器集成测试验证光蚀各角色真实玩家档构成的最小画面。输入为已授权事件、两语和帧号；
  * 输出按原无胜者／零死亡及未知他人身份的字面预期核对跳转和倒看，字幕与现行展示函数对照，不引入 God 私有知识。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
@@ -77,7 +78,7 @@ for (const actor of ["maid", "count", "witch", "pack", "villager"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       for (const p of replay.players) {
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
           p.player_id === view.player_id

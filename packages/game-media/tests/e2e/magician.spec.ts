@@ -2,6 +2,7 @@
  * 浏览器集成测试验证魔术师原目标／换位目标枪政策的两语归档。
  * 输入为 replay 与 checkpoint；输出检查换位不改席位、夜枪落空字幕和终局胜者。归档顺序及原席位预期保留，不在播放器结算行动。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -32,7 +33,7 @@ for (const policy of ["original", "exchanged"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator("[data-composition-player]")).toHaveCount(12);
       await expect(page.getByTestId("composition-winner")).toHaveCount(0);
@@ -48,7 +49,7 @@ for (const policy of ["original", "exchanged"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: missLabel }).first().click();
-        await expect(page.locator(".current-event > p")).toHaveText(missLabel);
+        await expect(currentEventSourceText(page)).toHaveText(missLabel);
         await expect(page.locator(".seat-grid .dead")).toHaveCount(2);
       }
       await page.locator(".timeline .event").last().click();

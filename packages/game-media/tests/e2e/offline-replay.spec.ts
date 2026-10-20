@@ -1,6 +1,7 @@
 /**
  * 浏览器集成测试通过工作台验证复盘加载、播放、拖动、席位筛选、语言与时区。输入为录制角色归档和显式畸形／修改字面量；预期检查事件时点、身份可见性、错误与终局胜者，不调用模型或游戏引擎。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { withPlayerNames } from "../support/named-label-expectation";
 import { createPlayerText } from "@ai-werewolf-arena/game-presentation";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
@@ -43,7 +44,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
@@ -87,7 +88,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: armed }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(armed);
+      await expect(currentEventSourceText(page)).toHaveText(armed);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
@@ -102,7 +103,7 @@ for (const locale of ["zh-CN", "en"] as const)
           locale,
         );
       await page.locator(".timeline .event").filter({ hasText: shot }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(shot);
+      await expect(currentEventSourceText(page)).toHaveText(shot);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(3);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const caption = await page.getByTestId("composition-caption").boundingBox();
@@ -148,7 +149,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
         name: locale === "en" ? "Player 1·Seat 1" : "1号·Seat 1",
@@ -206,7 +207,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(label);
+    await expect(currentEventSourceText(page)).toHaveText(label);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(4);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
     const victim = page.getByRole("button", {
@@ -469,11 +470,11 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: king }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(king);
+    await expect(currentEventSourceText(page)).toHaveText(king);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(3); // 夜间死者为 5，放逐者为 1，枪击死者为 2。
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
     await page.locator(".timeline .event").filter({ hasText: hunter }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(hunter);
+    await expect(currentEventSourceText(page)).toHaveText(hunter);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(4);
     await page.locator(".timeline .event").last().click();
     await expect(page.getByTestId("composition-winner")).toHaveCount(5);
@@ -501,7 +502,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: blast }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(blast);
+    await expect(currentEventSourceText(page)).toHaveText(blast);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(3);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
     const shot = withPlayerNames(
@@ -510,7 +511,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: shot }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(shot);
+    await expect(currentEventSourceText(page)).toHaveText(shot);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(4);
     await page.locator(".timeline .event").last().click();
     await expect(page.locator(".seat-grid .winner")).toHaveCount(4);
@@ -544,7 +545,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: duel }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(duel);
+      await expect(currentEventSourceText(page)).toHaveText(duel);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(2);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       await expect(
@@ -588,7 +589,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: first }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(first);
+    await expect(currentEventSourceText(page)).toHaveText(first);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(1);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
     const second = withPlayerNames(
@@ -599,7 +600,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: second }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(second);
+    await expect(currentEventSourceText(page)).toHaveText(second);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(5);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
     const caption = await page.getByTestId("composition-caption").boundingBox();
@@ -640,7 +641,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: text }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(text);
+      await expect(currentEventSourceText(page)).toHaveText(text);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(kind === "gun_blocked" ? 1 : 3);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       await page.locator(".timeline .event").last().click();
@@ -675,7 +676,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: text }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(text);
+      await expect(currentEventSourceText(page)).toHaveText(text);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(special ? 3 : 2);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const caption = await page.getByTestId("composition-caption").boundingBox();
@@ -718,7 +719,7 @@ for (const locale of ["zh-CN", "en"] as const)
           ? `Day ${badge ? 1 : 2}: Bear did not roar`
           : `第${badge ? 1 : 2}天：熊没有咆哮`;
       await page.locator(".timeline .event").filter({ hasText: text }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(text);
+      await expect(currentEventSourceText(page)).toHaveText(text);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(badge ? 2 : 3);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const caption = await page.getByTestId("composition-caption").boundingBox();
@@ -764,7 +765,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 4 : 1);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       await expect(
@@ -815,7 +816,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 4 : 1);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       await expect(
@@ -860,7 +861,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(label);
+    await expect(currentEventSourceText(page)).toHaveText(label);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
   });
@@ -892,7 +893,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).last().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 5 : 1);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const caption = await page.getByTestId("composition-caption").boundingBox();
@@ -935,7 +936,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 8 : 1);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
@@ -983,7 +984,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
@@ -1031,7 +1032,7 @@ for (const locale of ["zh-CN", "en"] as const)
           locale,
         );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const actor = page.getByRole("button", {
@@ -1089,7 +1090,7 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       );
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(large ? 5 : 0);
       await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
       const id = large ? 5 : 3,
@@ -1151,7 +1152,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: first }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(first);
+    await expect(currentEventSourceText(page)).toHaveText(first);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
     await expect(page.locator(".seat-grid .sheriff")).toHaveCount(0);
     const third = withPlayerNames(
@@ -1160,7 +1161,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: third }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(third);
+    await expect(currentEventSourceText(page)).toHaveText(third);
     await expect(page.locator(".seat-grid .sheriff")).toHaveCount(1);
     await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
     await page.locator(".timeline .event").last().click();
@@ -1170,7 +1171,7 @@ for (const locale of ["zh-CN", "en"] as const)
       exact: true,
     });
     await expect(successor.locator(".sheriff")).toHaveCount(1);
-    await expect(page.locator(".current-event > p")).toContainText("3");
+    await expect(currentEventSourceText(page)).toContainText("3");
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
   });
 
@@ -1215,7 +1216,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     await page.locator(".timeline .event").filter({ hasText: label }).click();
-    await expect(page.locator(".current-event > p")).toHaveText(label);
+    await expect(currentEventSourceText(page)).toHaveText(label);
     await expect(target).toContainText(marker);
     await expect(target).toHaveClass(/dead/);
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
@@ -1249,7 +1250,7 @@ for (const locale of ["zh-CN", "en"] as const)
         await expect(page.locator(".result-chip strong")).toContainText(
           locale === "en" ? "personal goal victory" : "个人目标胜利",
         );
-        await expect(page.locator(".current-event > p")).toContainText(
+        await expect(currentEventSourceText(page)).toContainText(
           locale === "en" ? "Survive an ordinary faction elimination" : "普通阵营全灭时存活",
         );
       } else {
@@ -1340,17 +1341,17 @@ for (const size of [6, 12])
           exact: true,
         });
         await expect(seat).not.toHaveClass(/dead/);
-        await expect(page.locator(".current-event > p")).toContainText(
+        await expect(currentEventSourceText(page)).toContainText(
           locale === "en" ? "remains alive" : "仍然存活",
         );
         const result = replay.events.findIndex(
           (e: { type: string }) => e.type === "debate_resolved",
         );
         await page.locator(".timeline .event").nth(result).click();
-        await expect(page.locator(".current-event > p")).toContainText(
+        await expect(currentEventSourceText(page)).toContainText(
           locale === "en" ? "participants" : "全体",
         );
-        await expect(page.locator(".current-event > p")).not.toContainText("voterId");
+        await expect(currentEventSourceText(page)).not.toContainText("voterId");
         await expect(page.locator("[data-video-stage]")).not.toContainText("voterId");
         await expect(seat).not.toHaveClass(/dead/);
         if (size === 12 && outcome === "success")
@@ -1382,14 +1383,14 @@ for (const size of [6, 12])
               locale === "en" ? "Anonymous wall notes (random order)" : "匿名墙纸条（随机顺序）",
           })
           .click();
-        await expect(page.locator(".current-event > p")).toContainText(
+        await expect(currentEventSourceText(page)).toContainText(
           locale === "en" ? "Anonymous wall" : "匿名墙",
         );
         // 非空纸条仍保留用户原文；空列表采用共享的“无／None”语义，不泄露原始 JSON 表示。
-        await expect(page.locator(".current-event > p")).toContainText(
+        await expect(currentEventSourceText(page)).toContainText(
           mode === "write" ? "[God] secret 💌" : locale === "en" ? "None" : "无",
         );
-        await expect(page.locator(".current-event > p")).not.toContainText("actorId");
+        await expect(currentEventSourceText(page)).not.toContainText("actorId");
         await expect(page.locator("[data-video-stage]")).not.toContainText("actorId");
         const exile = replay.events.find((e: { type: string }) => e.type === "voted_out").payload
           .target;
@@ -1446,9 +1447,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-keep"])
       await expect(seat).toContainText(label);
       await expect(seat).not.toHaveClass(/dead/);
       await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(label);
-      await expect(page.locator(".current-event > p")).toContainText(
-        locale === "en" ? "Thief" : "盗贼",
-      );
+      await expect(currentEventSourceText(page)).toContainText(locale === "en" ? "Thief" : "盗贼");
       const slider = page.getByRole("slider");
       for (let n = 0; n < 15; n++) await slider.press("ArrowRight");
       await expect(page.getByTestId("composition-caption")).toHaveCSS("opacity", "1");
@@ -1500,14 +1499,14 @@ for (const name of ["6-wolf_exile", "6-hunter_chain", "12-good_knife", "6-same_w
         ),
       )!;
       await page.locator(".timeline .event").filter({ hasText: selectedLabel }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(selectedLabel);
+      await expect(currentEventSourceText(page)).toHaveText(selectedLabel);
       await expect(seat).not.toHaveClass(/dead/);
       await expect(seat).toHaveClass(/wolf/);
       await expect(seat).toContainText(locale === "en" ? "Wild Child" : "野孩子");
       await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(
         locale === "en" ? "Wild Child" : "野孩子",
       );
-      await expect(page.locator(".current-event > p")).toContainText(
+      await expect(currentEventSourceText(page)).toContainText(
         locale === "en" ? "Wild Child" : "野孩子",
       );
       const slider = page.getByRole("slider");
@@ -1556,7 +1555,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
         ),
       )!;
       await page.locator(".timeline .event").filter({ hasText: selectedLabel }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(selectedLabel);
+      await expect(currentEventSourceText(page)).toHaveText(selectedLabel);
       const labels: Record<string, [string, string]> = {
         seer: ["预言家", "Seer"],
         hunter: ["猎人", "Hunter"],
@@ -1567,7 +1566,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
       await expect(seat).toContainText(label);
       await expect(seat).not.toHaveClass(/dead/);
       await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(label);
-      await expect(page.locator(".current-event > p")).toContainText(
+      await expect(currentEventSourceText(page)).toContainText(
         locale === "en" ? "Many-Faced One" : "千面人",
       );
       const slider = page.getByRole("slider");
@@ -1653,7 +1652,7 @@ for (const name of ["6-seer", "12-one1"])
         ),
       )!;
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(seat).toContainText(
         event.payload.role === "wolf"
           ? locale === "en"
@@ -1702,7 +1701,7 @@ for (const name of ["6-good_dead", "6-hunter_chain", "6-wolf_needs_girl", "12-wo
         exact: true,
       });
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(seat).toContainText(locale === "en" ? "Lonely Girl" : "孤独少女");
       await expect(seat).not.toHaveClass(/dead/);
       await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(
@@ -1799,7 +1798,7 @@ for (const name of ["6-good_dead", "12-wolf_win"])
         ),
       )!;
       await page.locator(".timeline .event").filter({ hasText: label }).click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(
         locale === "en" ? "Lonely Girl" : "孤独少女",
       );

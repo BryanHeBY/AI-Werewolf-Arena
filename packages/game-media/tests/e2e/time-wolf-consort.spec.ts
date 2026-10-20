@@ -2,6 +2,7 @@
  * 浏览器集成测试验证蚀时狼妃整夜／首次效果反射的两语归档。
  * 输入为原事件及 checkpoint；输出以字面席位预期核对反射先披露、实际死亡和胜者随后出现，不执行反射算法。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -32,7 +33,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
             })),
           );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.locator(".current-event > p")).toHaveText(label);
+        await expect(currentEventSourceText(page)).toHaveText(label);
         const dead = async () =>
           (await page.locator(".seat-grid .dead .seat-number").allTextContents()).map(Number);
         expect(await dead()).toEqual([]);
@@ -49,7 +50,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
             })),
           );
           await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-          await expect(page.locator(".current-event > p")).toHaveText(label);
+          await expect(currentEventSourceText(page)).toHaveText(label);
           expect(await dead()).toEqual([]);
         }
         const resolved = replay.events.find((e) => e.type === "night_resolved" && e.day === 1)!;

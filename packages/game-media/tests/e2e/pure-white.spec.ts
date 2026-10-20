@@ -2,6 +2,7 @@
  * 浏览器集成测试验证纯白之女／狼巫不同查验目标的两语归档。
  * 输入为原查验与死亡事件；输出按字面死亡／胜者数量核对同时死亡和终局时点，不执行查验或死亡结算。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { withPlayerNames } from "../support/named-label-expectation";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
@@ -49,7 +50,7 @@ for (const locale of ["zh-CN", "en"] as const)
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       await page.locator(".timeline .event").filter({ hasText: label }).last().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(3);
       await expect(page.getByTestId("composition-winner")).toHaveCount(0);
       await expect(page.locator("[data-composition-player]")).toHaveCount(12);

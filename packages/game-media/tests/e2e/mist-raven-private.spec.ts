@@ -3,6 +3,7 @@
  * 输出以手写零死亡／无胜者和未知他人身份预期核对跳转、倒看；字幕与现行展示函数对照。
  * 只纳入玩家已导出事件，不加入 God 私有知识，也不是 UI 直接导入私有文件。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
@@ -76,7 +77,7 @@ for (const actor of ["alchemist", "raven", "villager"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       for (const p of replay.players) {
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
           p.player_id === view.player_id

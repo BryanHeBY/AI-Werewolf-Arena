@@ -2,6 +2,7 @@
  * 浏览器集成测试验证恶夜骑士查验和枪政策的两语归档。输入为已结算 replay；
  * 输出检查查验、枪击及终局帧的字幕、存活席位与胜者时点，预期沿原字面数量和事件顺序，不运行对局。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -33,7 +34,7 @@ for (const kind of ["night_immune_wolf", "shot_bypass_good", "day_shot_good"] as
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
       await expect(page.getByTestId("composition-winner")).toHaveCount(0);
       await expect(page.locator("[data-composition-player]")).toHaveCount(12);

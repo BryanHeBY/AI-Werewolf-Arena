@@ -3,6 +3,7 @@
  * 当前全文区域保留严格原文预期；视频发言正文来自独立归档原话，终局逐字段核原typed结果，其他说明沿用调用方字面全文。长文只读取帧区间和页数作导航，逐页读取真实中央场景 DOM 后拼接。
  * 本层不拿编译字幕页生成 expected，不改变存活／身份／胜者预期；采样后恢复原帧，后续边界与逆向断言不受影响。
  */
+import { currentEventSourceText } from "./replay-current-event";
 import { expect, type Locator, type Page } from "@playwright/test";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayDisplayOptions } from "../../src/replay/replay-display";
@@ -28,7 +29,7 @@ export async function expectReplayCaption(
   display: ReplayDisplayOptions,
 ) {
   const marker = page.getByTestId("composition-event");
-  await expect(page.locator(".current-event > p")).toHaveText(expected.text);
+  await expect(currentEventSourceText(page)).toHaveText(expected.text);
   await expect(marker).toHaveAttribute("data-event-seq", String(expected.seq));
   const shot = replayBrowserPlan(replay, display).shots.find(
     (item) => item.kind === "event" && item.eventSeq === expected.seq,

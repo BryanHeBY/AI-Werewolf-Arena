@@ -2,6 +2,7 @@
  * 浏览器集成测试验证光蚀已付款但中止的两语归档。输入为不完整事件前缀；
  * 输出以原字幕对照和字面缺席断言核对未发表第二夜夜报、未出现胜者；只渲染失败记录，不恢复对局。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { replayBrowserFrame } from "../support/replay-browser-frame";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
@@ -40,7 +41,7 @@ for (const locale of ["en", "zh-CN"] as const)
         .locator(".timeline .event")
         .filter({ hasText: `#${e.seq} ·` })
         .click();
-      await expect(page.locator(".current-event > p")).toHaveText(
+      await expect(currentEventSourceText(page)).toHaveText(
         eventLabel(
           e,
           locale,

@@ -2,6 +2,7 @@
  * 浏览器集成测试负责跳转定序王子首日／次日亮牌的两语归档。输入为原事件和 checkpoint；
  * 输出检查存活、放逐重置与终局胜者，保留字面席位预期；只展示已录决定，不选择亮牌政策。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { expect, test } from "@playwright/test";
@@ -34,7 +35,7 @@ for (const variant of ["day1", "day2"] as const)
           })),
         );
         await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-        await expect(page.locator(".current-event > p")).toHaveText(label);
+        await expect(currentEventSourceText(page)).toHaveText(label);
         await expect(page.locator("[data-composition-player]")).toHaveCount(12);
         const deadBefore = (
           await page.locator(".seat-grid .dead .seat-number").allTextContents()

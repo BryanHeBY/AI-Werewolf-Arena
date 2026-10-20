@@ -2,6 +2,7 @@
  * 浏览器集成测试负责正向跳转并回看雾鸦板子的警徽链。输入为两语归档事件；
  * 输出按手写持徽者／存活预期检查每次移交和无提前胜者，字幕沿现行展示函数对照；测试不实际移交警徽。
  */
+import { currentEventSourceText } from "../support/replay-current-event";
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -50,7 +51,7 @@ for (const locale of ["en", "zh-CN"] as const)
         })),
       );
       await page.locator(".timeline .event").filter({ hasText: label }).first().click();
-      await expect(page.locator(".current-event > p")).toHaveText(label);
+      await expect(currentEventSourceText(page)).toHaveText(label);
       expect(
         (
           await page
