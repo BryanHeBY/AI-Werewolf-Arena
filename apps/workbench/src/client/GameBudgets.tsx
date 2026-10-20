@@ -1,4 +1,4 @@
-/** 对局保护限制使用公共运行缺省值；新建草稿的推荐值由创建入口显式写入，编辑不会偷改省略字段。 */
+/** 负责展示和编辑对局保护限制；输入原文及公共运行缺省，输出带来源的数值和显式修改，不把新建推荐值冒充省略字段的实际执行值。 */
 import type { Json, JsonObject } from "@ai-werewolf-arena/workbench-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";

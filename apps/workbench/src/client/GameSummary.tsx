@@ -31,7 +31,9 @@ export function GameSummary({
       body = data.text;
     return (
       <>
-        <strong>{t(mode === "clear" ? "clearInstructions" : mode === "replace" ? "replace" : "append")}</strong>
+        <strong>
+          {t(mode === "clear" ? "clearInstructions" : mode === "replace" ? "replace" : "append")}
+        </strong>
         {mode !== "clear" && (
           <pre style={{ whiteSpace: "pre-wrap" }}>
             {typeof body === "string" ? body : JSON.stringify(body, null, 2)}

@@ -1,4 +1,4 @@
-/** 游戏配置浏览器反例：推荐预算、缺省编辑、换板子保留与清理，以及真实解析器驱动的附加指令预览。 */
+/** 浏览器测试负责游戏配置语义回归；以手写预算、继承顺序和原始 JSON 为独立预期，核对缺省编辑、换板清理及附加指令预览，不使用真实模型。 */
 import { expect, test, type APIRequestContext } from "@playwright/test";
 
 async function saveGame(request: APIRequestContext, name: string, raw: object) {

@@ -1,4 +1,4 @@
-/** 定向测试确保配置解析器的每个公开诊断都有双语恢复建议，并保留可读字段位置。 */
+/** 单元测试负责核对公开配置诊断的双语覆盖；以解析器的机器码清单和手写字段位置为预期，独立断言恢复建议，不解析认证或修改配置。 */
 import { expect, test } from "bun:test";
 import { CONFIG_ERROR_CODES } from "@ai-werewolf-arena/game-runtime/config/diagnostics";
 import {

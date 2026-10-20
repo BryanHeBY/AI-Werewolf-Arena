@@ -1,4 +1,4 @@
-/** 集成测试核对真实指令组合和最小公开响应；假认证只落在临时目录，预览不发牌、不联网、不保存草稿。 */
+/** 集成测试负责核对真实指令组合与公开响应；按手写文本顺序和字段白名单独立断言，假认证仅落临时目录，预览不发牌、不联网、不保存草稿。 */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

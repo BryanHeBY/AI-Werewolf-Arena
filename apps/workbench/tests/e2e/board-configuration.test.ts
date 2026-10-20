@@ -1,4 +1,4 @@
-/** 工作台板子 GUI 的语义回归：推荐模板、实际自爆窗口、依赖联动与有限玩法只读项。只使用隔离测试目录。 */
+/** 浏览器测试负责板子 GUI 语义回归；按标准板规则与手写原文断言推荐模板、实际自爆窗口、依赖联动及固定项，仅使用隔离测试目录。 */
 import { expect, test, type Page } from "@playwright/test";
 
 async function createBoard(page: Page, id?: string) {
