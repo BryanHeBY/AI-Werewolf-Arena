@@ -1,6 +1,7 @@
 {
   "name": "ai-werewolf-arena",
   "version": "1.0.0",
+  "license": "MIT",
   "private": true,
   "description": "AI multi-agent Werewolf game arena, replay studio, and video generator",
   "packageManager": "bun@1.4.3",
