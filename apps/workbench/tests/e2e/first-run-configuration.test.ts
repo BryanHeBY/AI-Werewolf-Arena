@@ -30,7 +30,7 @@ test("empty workspace guides agent setup and disables game save until an agent e
     /schemaVersion/,
   );
   await expect(page.getByRole("alert")).toHaveCount(0);
-  await page.getByLabel("对局语言", { exact: true }).selectOption("en");
+  await page.getByLabel("界面语言", { exact: true }).selectOption("en");
   await page.goto("/#/games/new");
   await expect(page.getByRole("alert")).toContainText("No agents are configured yet");
   await expect(page.getByRole("button", { name: "Save", exact: true })).toBeDisabled();

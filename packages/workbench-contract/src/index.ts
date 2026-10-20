@@ -26,6 +26,13 @@ export interface AgentConnectionTestResult {
   diagnostic?: { code: string; statusCode?: number };
   cleanupFailed?: boolean;
 }
+/** 用户显式预览的附加指令；仅投影最终文本及 Agent 选择来源，不携带认证或预分配身份。 */
+export interface GameInstructionPreview {
+  agent: { name: string; source: "seat" | "role" | "game" | "runtime" };
+  locale: "zh-CN" | "en";
+  customInstructions: string | null;
+  warnings?: Diagnostic[];
+}
 export type RunState =
   | "starting"
   | "running"

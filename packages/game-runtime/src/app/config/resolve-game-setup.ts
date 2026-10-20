@@ -18,7 +18,7 @@ import {
   type ResolvedCustomInstructions,
 } from "./custom-instructions";
 export type { GameSetupWarning } from "./contracts";
-import type { Locale } from "@ai-werewolf-arena/game-contract";
+import { GAME_CONFIG_DEFAULTS, type Locale } from "@ai-werewolf-arena/game-contract";
 import {
   resolveBoardConfig,
   type BoardName,
@@ -91,7 +91,7 @@ export function resolveGameBoard(
   runtime: RuntimeConfig,
   overrides: Partial<RunGameOptions> = {},
 ): string {
-  const board = overrides.board ?? runtime.game.board ?? "six_player_mvp";
+  const board = overrides.board ?? runtime.game.board ?? GAME_CONFIG_DEFAULTS.board;
   if (!/^[a-z][a-z0-9_-]*$/.test(board)) {
     throw new Error(`runtime_config_board_invalid: ${board}`);
   }
@@ -183,17 +183,22 @@ export function resolveGameSetup(
   // 空值合并让显式 false 保持有效；CLI 覆盖只作用于这里声明的运行选项，语言和 seed 仍由 game 提供。
   const options: RunGameOptions = {
     board: resolveGameBoard(runtime, overrides),
-    maxDays: overrides.maxDays ?? game.maxDays ?? 10,
-    maxRuntimeMs: overrides.maxRuntimeMs ?? game.maxRuntimeMs ?? 30000,
-    llmTimeoutMs: overrides.llmTimeoutMs ?? game.llmTimeoutMs ?? 30000,
-    trace: overrides.trace ?? game.trace ?? false,
-    printAllEvents: overrides.printAllEvents ?? game.printAllEvents ?? false,
-    printChat: overrides.printChat ?? game.printChat ?? false,
-    streamEvents: overrides.streamEvents ?? game.streamEvents ?? true,
-    color: overrides.color ?? game.color ?? true,
-    printLlmIo: overrides.printLlmIo ?? game.printLlmIo ?? false,
-    printThinking: overrides.printThinking ?? game.printThinking ?? false,
-    printPrivateEvents: overrides.printPrivateEvents ?? game.printPrivateEvents ?? true,
+    maxDays: overrides.maxDays ?? game.maxDays ?? GAME_CONFIG_DEFAULTS.maxDays,
+    maxRuntimeMs: overrides.maxRuntimeMs ?? game.maxRuntimeMs ?? GAME_CONFIG_DEFAULTS.maxRuntimeMs,
+    llmTimeoutMs: overrides.llmTimeoutMs ?? game.llmTimeoutMs ?? GAME_CONFIG_DEFAULTS.llmTimeoutMs,
+    trace: overrides.trace ?? game.trace ?? GAME_CONFIG_DEFAULTS.trace,
+    printAllEvents:
+      overrides.printAllEvents ?? game.printAllEvents ?? GAME_CONFIG_DEFAULTS.printAllEvents,
+    printChat: overrides.printChat ?? game.printChat ?? GAME_CONFIG_DEFAULTS.printChat,
+    streamEvents: overrides.streamEvents ?? game.streamEvents ?? GAME_CONFIG_DEFAULTS.streamEvents,
+    color: overrides.color ?? game.color ?? GAME_CONFIG_DEFAULTS.color,
+    printLlmIo: overrides.printLlmIo ?? game.printLlmIo ?? GAME_CONFIG_DEFAULTS.printLlmIo,
+    printThinking:
+      overrides.printThinking ?? game.printThinking ?? GAME_CONFIG_DEFAULTS.printThinking,
+    printPrivateEvents:
+      overrides.printPrivateEvents ??
+      game.printPrivateEvents ??
+      GAME_CONFIG_DEFAULTS.printPrivateEvents,
     recordRootDir: overrides.recordRootDir ?? game.recordRootDir,
   };
   const auditConfig = runtime.debugSummary?.agent;
@@ -217,7 +222,7 @@ export function resolveGameSetup(
     boardDefinition?.config ??
     resolveBoardConfig(options.board as BoardName, boardOverride as BoardOverride | null);
   validateGameBindings(game, boardConfig);
-  const locale = game.locale ?? "zh-CN";
+  const locale = game.locale ?? GAME_CONFIG_DEFAULTS.locale;
   const warnings: GameSetupWarning[] = [];
   const players = resolveBindings(runtime, game.players, "players", locale, warnings);
   const roles = resolveBindings(runtime, game.roles, "roles", locale, warnings);

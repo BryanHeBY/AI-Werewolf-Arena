@@ -278,7 +278,7 @@ export default function App() {
               </select>
             </label>
             <select
-              aria-label={t("language")}
+              aria-label={t("interfaceLanguage")}
               value={locale}
               onChange={(e) => setLocale(e.target.value as Locale)}
             >

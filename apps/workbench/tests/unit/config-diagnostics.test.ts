@@ -14,6 +14,8 @@ test("all public configuration errors have Chinese and English recovery guidance
   expect(workbenchServiceMessage("zh-CN", "pi_model_not_found")).toContain("登记");
   expect(workbenchServiceMessage("en", "runtime_config_player_binding_invalid")).toContain("board");
   expect(workbenchServiceMessage("zh-CN", "untrusted-arbitrary-error")).toBeUndefined();
+  expect(workbenchServiceMessage("zh-CN", "__proto__")).toBeUndefined();
+  expect(workbenchServiceMessage("en", "toString")).toBeUndefined();
 });
 test("field locations preserve named IDs while explaining structural fields", () => {
   expect(workbenchConfigLocation("zh-CN", "agents.items.cat.options.defaultModel")).toBe(

@@ -13,6 +13,7 @@ import { describeBoardRuleCatalog } from "@ai-werewolf-arena/game-runtime/config
 import { normalizeListenHost, workbenchRequestHosts } from "./listen-address";
 import { readCodexSubscription } from "./codex-auth";
 import { describePlatformDefaults } from "./platform-defaults";
+import { previewGameInstructions } from "./game-instruction-preview";
 
 export interface WorkbenchOptions {
   repository: string;
@@ -133,6 +134,8 @@ export function createWorkbench(options: WorkbenchOptions) {
             } catch (error) {
               result = { valid: false, diagnostics: [diagnostic(error)] };
             }
+          } else if (parts[1] === "preview-game" && request.method === "POST") {
+            result = await previewGameInstructions(documents, body.game, body.seat, body.role);
           } else if (parts[1] === "test-agent" && request.method === "POST") {
             if (typeof body.name !== "string" || !/^[a-z][a-z0-9_-]*$/.test(body.name))
               throw new WorkbenchError("invalid_config_name");

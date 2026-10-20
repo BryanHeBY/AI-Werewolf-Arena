@@ -74,7 +74,7 @@ test("board discovery and English UI expose the same configuration flow", async 
   await page.getByRole("button", { name: "新建板子", exact: true }).click();
   await page.getByRole("button", { name: "六人局", exact: true }).click();
   await expect(page.locator(".board-card")).not.toHaveCount(0);
-  await page.getByLabel("对局语言", { exact: true }).first().selectOption("en");
+  await page.getByLabel("界面语言", { exact: true }).selectOption("en");
   await expect(page.getByRole("heading", { name: "Choose board", exact: true })).toBeVisible();
   await page.getByRole("navigation").getByRole("button", { name: "Agents", exact: true }).click();
   await page.getByRole("button", { name: "Add agent", exact: true }).click();

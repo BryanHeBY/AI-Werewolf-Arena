@@ -31,6 +31,7 @@ export const zhCN = {
   object_required: "配置必须是 JSON 对象，不能是列表、文本或空值。",
   secret_reentry_required: "认证保留标记没有对应原值，请重新填写该认证后保存。",
   invalid_preview_selection: "请选择当前板子范围内的座位及角色后预览。",
+  locale_prompt_fallback: "这层指令没有所选语言的文本，已使用可用语言回退。",
 } as const;
 export const en: Record<keyof typeof zhCN, string> = {
   file_access_denied:
@@ -76,10 +77,13 @@ export const en: Record<keyof typeof zhCN, string> = {
     "A credential marker has no original value. Reenter that credential before saving.",
   invalid_preview_selection:
     "Select a seat and role that belong to the current board before previewing.",
+  locale_prompt_fallback:
+    "These instructions do not include the selected language; an available language was used instead.",
 };
 
 export function workbenchServiceMessage(locale: "zh-CN" | "en", code: string): string | undefined {
-  return (
-    (locale === "en" ? en : zhCN)[code as keyof typeof zhCN] ?? workbenchConfigMessage(locale, code)
-  );
+  const messages = locale === "en" ? en : zhCN;
+  return Object.hasOwn(messages, code)
+    ? messages[code as keyof typeof zhCN]
+    : workbenchConfigMessage(locale, code);
 }

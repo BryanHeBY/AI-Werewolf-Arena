@@ -10,6 +10,7 @@ import { DeleteDialog } from "../DeleteDialog";
 import { GameSummary } from "../GameSummary";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 import { api } from "../api";
+import { createGameDraft } from "../game-config";
 
 type Screen =
   | { mode: "list" }
@@ -17,23 +18,13 @@ type Screen =
   | { mode: "edit"; name: string }
   | { mode: "create"; key: number; initial: JsonObject };
 function newGame(catalog: Catalog): JsonObject {
-  let board = catalog.boards.find((b) => b.source === "local" && b.supported)?.id ?? "";
+  let board: string | undefined;
   try {
     const saved = JSON.parse(sessionStorage.getItem("awa.new-game-board") ?? "null");
     if (saved?.id) board = saved.id;
   } catch {}
   sessionStorage.removeItem("awa.new-game-board");
-  return {
-    board,
-    agent: catalog.defaultAgent ?? catalog.agents[0]?.name ?? "",
-    locale: "zh-CN",
-    streamEvents: true,
-    printThinking: true,
-    printPrivateEvents: false,
-    maxDays: 8,
-    maxRuntimeMs: 1800000,
-    llmTimeoutMs: 45000,
-  };
+  return createGameDraft(catalog, board);
 }
 export function GamesPage({
   catalog,

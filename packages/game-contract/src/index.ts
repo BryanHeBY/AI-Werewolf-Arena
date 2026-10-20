@@ -243,6 +243,7 @@ export type { ComponentPresentationPart } from "./component-presentation-data";
 export { ACTION_REQUEST_CONTRACT } from "./request-version";
 
 export { GAME_PRESENTATION_CONTRACT } from "./presentation-version";
+export { GAME_CONFIG_DEFAULTS, NEW_GAME_CONFIG_DEFAULTS } from "./game-config-defaults";
 
 export * from "./facts/warden";
 export { readReplayFact } from "./replay-facts";
