@@ -1,11 +1,13 @@
 /**
  * 浏览器集成测试支持层负责验证分页舞台字幕仍完整覆盖原全文。输入为原复盘、独立 expected seq／全文及显示选项，输出实际 DOM 断言。
- * 当前全文区域保留严格原文预期；视频发言正文来自独立归档原话，终局逐字段核原typed结果，其他说明沿用调用方字面全文。长文只读取帧区间和页数作导航，逐页读取真实中央场景 DOM 后拼接。
+ * 当前全文区域保留严格原文预期；视频发言正文来自独立归档原话，警徽和终局逐字段核原记录，其他说明沿用调用方字面全文。长文只读取帧区间和页数作导航，逐页读取真实中央场景 DOM 后拼接。
  * 本层不拿编译字幕页生成 expected，不改变存活／身份／胜者预期；采样后恢复原帧，后续边界与逆向断言不受影响。
  */
 import { currentEventSourceText } from "./replay-current-event";
 import { expect, type Locator, type Page } from "@playwright/test";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { playerLabel } from "@ai-werewolf-arena/game-presentation";
+import { text } from "@ai-werewolf-arena/game-text";
 import type { ReplayDisplayOptions } from "../../src/replay/replay-display";
 import { replayBrowserPlan, replayCaptionPageFrame } from "./replay-browser-frame";
 import { replayOutcomeExpectation } from "./replay-outcome-expectation";
@@ -36,6 +38,33 @@ export async function expectReplayCaption(
   );
   if (!shot) throw new Error(`browser_caption_event_missing:${expected.seq}`);
   const event = replay.events.find((item) => item.seq === expected.seq)!;
+  if (event.type === "sheriff_badge_transferred") {
+    // 结构化警徽公告用原记录双方校验，不能拿生产 scene.content 或显示文本反推预期。
+    const ids = [Number(event.payload.fromId), Number(event.payload.toId)];
+    const badge = page.locator('[data-scene-announcement] [data-announcement-kind="badge"]');
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveAttribute("data-badge-operation", "transferred");
+    await expect(badge.locator(":scope > div")).toHaveText(
+      text(display.locale, "replay.stage.sheriff_badge_transferred"),
+    );
+    const players = badge.locator("[data-content-player]");
+    await expect(players).toHaveText(
+      ids.map((id) => {
+        const player = replay.players.find((candidate) => candidate.player_id === id);
+        const label = playerLabel(
+          { id, ...(player?.seat === undefined ? {} : { seat: player.seat }) },
+          display.locale,
+        );
+        return player?.name ? `${label} · ${player.name}` : label;
+      }),
+    );
+    expect(
+      await players.evaluateAll((nodes) =>
+        nodes.map((node) => Number(node.getAttribute("data-content-player"))),
+      ),
+    ).toEqual(ids);
+    return;
+  }
   if (event.type === "game_over") {
     const outcome = replayOutcomeExpectation(event, replay.players, display.locale);
     const block = page.locator('[data-end-fields] [data-content-block="outcome"]');
