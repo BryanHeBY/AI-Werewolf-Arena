@@ -75,7 +75,10 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(parsed!.effects).toEqual([]);
       const before = buildReplaySnapshot(replay, i - 1),
         after = buildReplaySnapshot(replay, i);
-      expect(after.players).toEqual(before.players);
+      // 当前发言高亮可在行动记录处结束；库存、选择不改变身份与生命事实。
+      expect(after.players.map(({ rosterActivity: _activity, ...facts }) => facts)).toEqual(
+        before.players.map(({ rosterActivity: _activity, ...facts }) => facts),
+      );
       expect(buildReplayFrame(input, i * 90 + 45).snapshot).toEqual(after);
       const label = eventLabel(e, locale, ids);
       expect(label).not.toMatch(/unitId|awakened_claw:|undefined|NaN/);
@@ -142,7 +145,10 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(parsed).not.toBeNull();
       if (e.type.startsWith("awakened_claw")) {
         expect(parsed!.effects).toEqual([]);
-        expect(after.players).toEqual(before.players);
+        // 当前发言高亮可在行动记录处结束；库存、选择不改变身份与生命事实。
+        expect(after.players.map(({ rosterActivity: _activity, ...facts }) => facts)).toEqual(
+          before.players.map(({ rosterActivity: _activity, ...facts }) => facts),
+        );
       } else {
         expect(after.players.find((p) => p.playerId === e.payload.targetId)!.alive).toBe(false);
       }

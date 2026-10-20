@@ -79,7 +79,10 @@ for (const kind of ["good", "wolf", "pair", "witness"])
         const event = replay.events[index]!,
           before = buildReplaySnapshot(replay, index - 1),
           after = buildReplaySnapshot(replay, index);
-        expect(after.players).toEqual(before.players);
+        // 当前发言高亮可在行动记录处结束；库存、选择不改变身份与生命事实。
+        expect(after.players.map(({ rosterActivity: _activity, ...facts }) => facts)).toEqual(
+          before.players.map(({ rosterActivity: _activity, ...facts }) => facts),
+        );
         if (view) {
           expect(after.players.find((p) => p.playerId === view.player_id)).toMatchObject({
             role: view.role,
