@@ -15,7 +15,7 @@
     "export:replay": "bun src/cli/export-replay-bundle.ts",
     "simulate": "bun src/cli/simulate.ts",
     "replay:actions": "bun src/cli/replay-actions.ts",
-    "check": "tsc --noEmit",
+    "check": "bun --bun tsc --noEmit",
     "test": "bun --no-env-file test tests"
   },
   "dependencies": {

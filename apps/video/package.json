@@ -22,9 +22,9 @@
     "video:review": "bun --no-env-file scripts/serve-video-review.ts",
     "video:verify": "bun --no-env-file scripts/verify-video-artifact.ts",
     "video:audio": "bun --no-env-file scripts/prepare-video-audio.ts",
-    "check": "tsc --noEmit",
-    "lint": "eslint . --max-warnings=0",
-    "build": "vite build --config vite.config.ts"
+    "check": "bun --bun tsc --noEmit",
+    "lint": "bun --bun eslint . --max-warnings=0",
+    "build": "bun --bun vite build --config vite.config.ts"
   },
   "dependencies": {
     "@ai-werewolf-arena/replay-contract": "workspace:*",

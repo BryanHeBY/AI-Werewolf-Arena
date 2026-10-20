@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "bun scripts/dev.ts",
     "replay:dev": "bun scripts/replay-dev.ts",
-    "build": "vite build --config vite.config.ts",
-    "preview": "vite preview --config vite.config.ts",
-    "check": "tsc --noEmit",
+    "build": "bun --bun vite build --config vite.config.ts",
+    "preview": "bun --bun vite preview --config vite.config.ts",
+    "check": "bun --bun tsc --noEmit",
     "test:e2e": "bun ../../tooling/browser-tests.ts .",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "bun --bun eslint . --max-warnings=0",
     "test": "bun --no-env-file test tests"
   },
   "dependencies": {

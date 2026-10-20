@@ -11,7 +11,7 @@
     "@ai-werewolf-arena/game-contract": "workspace:*"
   },
   "scripts": {
-    "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
+    "check": "bun --bun tsc -p tsconfig.json --noEmit && bun --bun tsc -p tsconfig.tests.json --noEmit",
     "test": "bun test tests"
   },
   "devDependencies": {

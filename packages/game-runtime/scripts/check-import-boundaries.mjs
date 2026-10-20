@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 /**
  * 负责旧层级导入规则的命令行扫描。输入为工作目录相对源码根，默认 src；输出为字面路径违规列表或成功，失败退出 1。
  * 按文件系统目录项递归读取 .ts，AST 识别导入、导出、require、动态 import、import type 和 import equals 的字面模块名。

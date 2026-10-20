@@ -13,7 +13,7 @@
     "@ai-werewolf-arena/game-text": "workspace:*"
   },
   "scripts": {
-    "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
+    "check": "bun --bun tsc -p tsconfig.json --noEmit && bun --bun tsc -p tsconfig.tests.json --noEmit",
     "test": "bun --no-env-file test tests"
   },
   "devDependencies": {

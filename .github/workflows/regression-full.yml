@@ -101,7 +101,7 @@ jobs:
       - uses: ./.github/actions/setup
       - name: Install matching Chromium and system libraries
         working-directory: apps/replay
-        run: node ./node_modules/@playwright/test/cli.js install --with-deps chromium
+        run: bun ./node_modules/@playwright/test/cli.js install --with-deps chromium
       - name: Run browser shard
         working-directory: apps/replay
         env:
@@ -135,7 +135,7 @@ jobs:
         run: bun run build:workbench
       - name: Install matching Chromium and system libraries
         working-directory: apps/workbench
-        run: node ./node_modules/@playwright/test/cli.js install --with-deps chromium
+        run: bun ./node_modules/@playwright/test/cli.js install --with-deps chromium
       - name: Run offline workbench workflow
         working-directory: apps/workbench
         run: bun run test:e2e

@@ -15,10 +15,10 @@ for (const key of [
 ])
   delete env[key];
 env.PLAYWRIGHT_HTML_OPEN = "never";
-// Playwright 由官方支持的 Node 运行；Bun 仅负责跨平台启动和环境隔离。
+// 显式以当前 Bun 执行 CLI，避免工具的 Node shebang 重新引入另一套运行时。
 const child = Bun.spawn(
   [
-    "node",
+    process.execPath,
     path.join(directory, "node_modules/@playwright/test/cli.js"),
     "test",
     ...process.argv.slice(3),

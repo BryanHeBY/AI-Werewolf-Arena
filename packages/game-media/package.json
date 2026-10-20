@@ -40,7 +40,7 @@
   },
   "scripts": {
     "test": "bun run test:unit && bun run test:integration && bun run test:architecture",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "bun --bun eslint . --max-warnings=0",
     "test:unit": "bun test tests/unit",
     "test:integration": "bun test tests/integration",
     "test:architecture": "bun --no-env-file test tests/architecture",

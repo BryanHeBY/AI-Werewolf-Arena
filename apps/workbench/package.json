@@ -6,12 +6,12 @@
   "scripts": {
     "dev": "bun src/server/main.ts",
     "start": "bun src/server/main.ts",
-    "dev:client": "vite --host 127.0.0.1 --port 5174",
-    "build": "vite build",
-    "check": "tsc --noEmit",
+    "dev:client": "bun --bun vite --host 127.0.0.1 --port 5174",
+    "build": "bun --bun vite build",
+    "check": "bun --bun tsc --noEmit",
     "test": "bun --no-env-file test tests/unit tests/integration",
     "test:e2e": "bun ../../tooling/browser-tests.ts .",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "bun --bun eslint . --max-warnings=0"
   },
   "dependencies": {
     "@ai-werewolf-arena/workbench-contract": "workspace:*",

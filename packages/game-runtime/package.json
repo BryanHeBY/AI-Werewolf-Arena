@@ -37,11 +37,11 @@
     "./testing/fixtures": "./tests/support/fixtures/manifest.ts"
   },
   "scripts": {
-    "build": "tsc",
-    "check": "tsc -p tsconfig.json --noEmit && bun run check:tests",
-    "check:tests": "tsc -p tsconfig.tests.json --noEmit",
+    "build": "bun --bun tsc",
+    "check": "bun --bun tsc -p tsconfig.json --noEmit && bun run check:tests",
+    "check:tests": "bun --bun tsc -p tsconfig.tests.json --noEmit",
     "test": "bun test --preload ./tests/setup.ts tests",
-    "lint:deps": "eslint \"src/**/*.ts\" --max-warnings=0",
+    "lint:deps": "bun --bun eslint \"src/**/*.ts\" --max-warnings=0",
     "lint:boundaries": "bun scripts/check-import-boundaries.mjs",
     "test:watch": "bun test --preload ./tests/setup.ts tests --watch",
     "test:coverage": "bun test --preload ./tests/setup.ts tests --coverage",
@@ -49,7 +49,7 @@
     "test:unit": "bun --no-env-file test --preload ./tests/setup.ts tests/unit",
     "test:integration": "bun --no-env-file test --preload ./tests/setup.ts tests/integration",
     "test:scenarios": "bun --no-env-file test --preload ./tests/setup.ts tests/scenarios",
-    "check:tooling": "tsc -p ../../tooling/tsconfig.json --noEmit"
+    "check:tooling": "bun --bun tsc -p ../../tooling/tsconfig.json --noEmit"
   },
   "dependencies": {
     "@ai-werewolf-arena/workbench-contract": "workspace:*",

@@ -7,7 +7,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "check": "tsc --noEmit",
+    "check": "bun --bun tsc --noEmit",
     "test": "bun --no-env-file test tests"
   },
   "devDependencies": {
