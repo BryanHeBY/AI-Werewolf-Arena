@@ -8,18 +8,26 @@ import { useState } from "react";
 import { DocumentEditor } from "../DocumentEditor";
 import { useCanLeaveDraft } from "../draft-context";
 import { AgentWizard } from "../AgentWizard";
+import { AgentProfilesForm } from "../AgentProfilesForm";
+import { agentText } from "@ai-werewolf-arena/game-text/workbench-agent";
+import { InitializeNotice } from "../InitializeNotice";
 export function AgentsPage({
   catalog,
   t,
+  locale,
   refresh,
+  initialize,
+  initializing,
 }: {
   catalog: Catalog;
   t: Translator;
-  locale?: Locale;
+  locale: Locale;
   refresh: () => Promise<void>;
+  initialize: () => Promise<void>;
+  initializing: boolean;
 }) {
   const canLeave = useCanLeaveDraft();
-  const [tab, setTab] = useState<"wizard" | "agents" | "backends">("wizard");
+  const [tab, setTab] = useState<"wizard" | "agents" | "backends">("agents");
   return (
     <>
       <div className="section-heading">
@@ -36,12 +44,15 @@ export function AgentsPage({
               {value === "wizard"
                 ? t("newAgent")
                 : value === "agents"
-                  ? t("agents")
-                  : t("connection")}
+                  ? agentText(locale, "existingAgents")
+                  : agentText(locale, "existingConnections")}
             </button>
           ))}
         </div>
       </div>
+      {(!catalog.agents.length || !catalog.backends.length) && (
+        <InitializeNotice t={t} locale={locale} busy={initializing} initialize={initialize} />
+      )}
       {tab === "wizard" ? (
         <>
           <div className="agent-summary-grid">
@@ -55,18 +66,28 @@ export function AgentsPage({
               </article>
             ))}
           </div>
-          <AgentWizard catalog={catalog} t={t} onSaved={() => void refresh()} />
+          <AgentWizard catalog={catalog} t={t} locale={locale} onSaved={() => void refresh()} />
         </>
-      ) : (
-        <DocumentEditor kind={tab} name={tab} t={t} onSaved={() => void refresh()}>
-          {(raw) => (
-            <div className="form-body">
-              <p className="muted">{t("native")}</p>
-              <pre>{JSON.stringify(raw, null, 2)}</pre>
-            </div>
-          )}
+      ) : catalog.agents.length && catalog.backends.length ? (
+        <DocumentEditor kind={tab} name={tab} t={t} locale={locale} onSaved={() => void refresh()}>
+          {(raw, change) =>
+            tab === "agents" ? (
+              <AgentProfilesForm
+                raw={raw}
+                change={change}
+                catalog={catalog}
+                t={t}
+                locale={locale}
+              />
+            ) : (
+              <div className="form-body">
+                <p className="muted">{t("native")}</p>
+                <pre>{JSON.stringify(raw, null, 2)}</pre>
+              </div>
+            )
+          }
         </DocumentEditor>
-      )}
+      ) : null}
     </>
   );
 }

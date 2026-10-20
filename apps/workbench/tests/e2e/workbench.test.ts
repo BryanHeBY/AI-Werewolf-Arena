@@ -516,3 +516,27 @@ test("revealing credentials cannot replace a document with an external revision"
   await expect(source).toBeEnabled();
   await expect(source).toHaveValue(original);
 });
+
+test("a first-time empty workspace initializes explicitly before creating an agent", async ({
+  page,
+}) => {
+  await page.setExtraHTTPHeaders({
+    "x-awa-test-empty-workspace": `first_${Date.now().toString(36)}`,
+  });
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: "补充缺失的示例配置", exact: true })).toBeVisible();
+  await expect(page.locator(".saved-config-card")).toHaveCount(0);
+  await page.getByRole("navigation").getByRole("button", { name: "Agent", exact: true }).click();
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  await page.getByRole("button", { name: "补充缺失的示例配置", exact: true }).click();
+  await expect(page.getByLabel("已配置 Agent", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "补充缺失的示例配置", exact: true })).toHaveCount(
+    0,
+  );
+  await page.getByRole("button", { name: "添加 Agent", exact: true }).click();
+  await page.getByRole("button", { name: /OpenAI API/ }).click();
+  await page.getByLabel("Agent ID", { exact: true }).fill("first_local_agent");
+  await page.getByLabel("API key 或 ${ENV_NAME}", { exact: true }).fill("synthetic-first-key");
+  await page.getByRole("button", { name: "保存", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("已保存");
+});

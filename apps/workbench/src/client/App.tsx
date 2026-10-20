@@ -93,6 +93,7 @@ export default function App() {
     }),
     [catalog, setCatalog] = useState<Catalog>(emptyCatalog),
     [catalogReady, setCatalogReady] = useState(false),
+    [initializing, setInitializing] = useState(false),
     [runs, setRuns] = useState<SessionEntry[]>([]),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
@@ -121,11 +122,30 @@ export default function App() {
     window.addEventListener("beforeunload", prevent);
     return () => window.removeEventListener("beforeunload", prevent);
   }, [dirty]);
+  const catalogGeneration = useRef(0);
   const refresh = useCallback(async () => {
-    const next = await api<Catalog>("catalog");
-    setCatalog(next);
-    setCatalogReady(true);
+    const generation = ++catalogGeneration.current;
+    try {
+      const next = await api<Catalog>("catalog");
+      if (generation !== catalogGeneration.current) return;
+      setCatalog(next);
+      setCatalogReady(true);
+    } catch (error) {
+      if (generation === catalogGeneration.current) throw error;
+    }
   }, []);
+  const initialize = async () => {
+    setInitializing(true);
+    setError("");
+    try {
+      await api("initialize", { method: "POST", body: {} });
+      await refresh();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "request_failed");
+    } finally {
+      setInitializing(false);
+    }
+  };
   useEffect(() => {
     const handler = () => {
       if (!canLeave()) {
@@ -332,6 +352,8 @@ export default function App() {
                 start={(name, revision) => void start(name, revision)}
                 busy={busy}
                 remove={setDeletingRun}
+                initialize={initialize}
+                initializing={initializing}
               />
             )}
             {catalogReady && locationState.page === "games" && (
@@ -360,7 +382,14 @@ export default function App() {
               />
             )}
             {catalogReady && locationState.page === "agents" && (
-              <AgentsPage catalog={catalog} t={t} refresh={refresh} locale={locale} />
+              <AgentsPage
+                catalog={catalog}
+                t={t}
+                refresh={refresh}
+                locale={locale}
+                initialize={initialize}
+                initializing={initializing}
+              />
             )}
             {locationState.page === "logs" && (
               <>

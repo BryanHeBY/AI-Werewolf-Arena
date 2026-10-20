@@ -1,6 +1,8 @@
 /** 负责配置管理文案；输入为界面语言和语义键，输出对应中英文用语。只服务配置界面，不定义运行规则或文件格式。 */
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 export const zhCN = {
+  initializeHelp:
+    "首次使用可补充缺失的本地示例文件，已有配置不会覆盖。完成后请配置自己的认证；这项操作不会启动对局。",
   savedGames: "已保存的游戏配置",
   savedBoards: "已保存的板子",
   newBoard: "新建板子",
@@ -50,6 +52,8 @@ export const zhCN = {
   none: "无胜者",
 } as const;
 export const en: Record<keyof typeof zhCN, string> = {
+  initializeHelp:
+    "For first-time setup, add missing local example files without replacing existing configurations. Then set your credentials. This does not start a game.",
   savedGames: "Saved game configurations",
   savedBoards: "Saved boards",
   newBoard: "New board",

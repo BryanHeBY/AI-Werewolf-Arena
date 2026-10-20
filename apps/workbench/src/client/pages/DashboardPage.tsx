@@ -5,6 +5,7 @@ import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import type { Catalog, Page, Translator } from "../types";
 import { RunCard } from "../session-summary";
 import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
+import { InitializeNotice } from "../InitializeNotice";
 export function DashboardPage({
   active,
   runs,
@@ -17,6 +18,8 @@ export function DashboardPage({
   start,
   busy,
   remove,
+  initialize,
+  initializing,
 }: {
   active: SessionEntry[];
   runs: SessionEntry[];
@@ -29,6 +32,8 @@ export function DashboardPage({
   start: (id: string, revision: string) => void;
   busy: boolean;
   remove: (run: SessionEntry) => void;
+  initialize: () => Promise<void>;
+  initializing: boolean;
 }) {
   const history = runs.filter((run) => !active.some((r) => r.sessionId === run.sessionId));
   return (
@@ -49,6 +54,9 @@ export function DashboardPage({
           <span>AWA</span>
         </div>
       </section>
+      {(!catalog.agents.length || !catalog.backends.length) && (
+        <InitializeNotice t={t} locale={locale} busy={initializing} initialize={initialize} />
+      )}
       <section className="quick-start">
         <div className="section-heading">
           <div>
