@@ -4,10 +4,7 @@
  */
 import { defineConfig, devices } from "@playwright/test";
 import { fileURLToPath } from "node:url";
-import {
-  REPLAY_BROWSER_ORIGIN,
-  VIDEO_BROWSER_ORIGIN,
-} from "../../packages/game-media/tests/support/browser-hosts";
+import { REPLAY_BROWSER_ORIGIN, VIDEO_BROWSER_ORIGIN } from "../../tooling/media-browser-hosts";
 
 export default defineConfig({
   testDir: "../../packages/game-media/tests/e2e",

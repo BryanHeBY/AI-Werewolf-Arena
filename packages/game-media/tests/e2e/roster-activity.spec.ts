@@ -4,7 +4,7 @@
  * 不运行模型或规则，不修改历史fixture；倒看必须恢复原名单，匿名英文仍保留真实actor和可辨活动状态。
  */
 import { expect, test, type Page } from "@playwright/test";
-import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
+import { VIDEO_BROWSER_ORIGIN } from "../../../../tooling/media-browser-hosts";
 import { mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";

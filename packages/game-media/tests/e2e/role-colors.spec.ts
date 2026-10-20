@@ -3,7 +3,7 @@
  * 颜色/名单由字面预期指定；狼美人投刀与普通狼人必须同色，未知底牌不从技能或报告反推，左右渐变须镜像。
  */
 import { expect, test, type Page } from "@playwright/test";
-import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
+import { VIDEO_BROWSER_ORIGIN } from "../../../../tooling/media-browser-hosts";
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { compileVideoPlan } from "../../src/video/compiler";
 import { getVideoEventFrame } from "../../src/video/frame";

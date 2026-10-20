@@ -3,7 +3,7 @@
  * 镜头只用于定位；死亡名单、原文折叠和布局中心均由字面预期及实际DOM几何核对，倒看不能提前提交连锁波。
  */
 import { expect, test, type Page } from "@playwright/test";
-import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
+import { VIDEO_BROWSER_ORIGIN } from "../../../../tooling/media-browser-hosts";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { compileVideoPlan } from "../../src/video/compiler";
 import { getVideoSourceIdentity } from "../../src/video/source";

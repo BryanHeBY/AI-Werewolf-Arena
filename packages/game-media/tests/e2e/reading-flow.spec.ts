@@ -4,7 +4,7 @@
  * 不运行游戏或模型，不改历史fixture；反向seek恢复同一位移，延迟真实字体证明未就绪时正文不能提前量高。
  */
 import { expect, test, type Locator, type Page } from "@playwright/test";
-import { VIDEO_BROWSER_ORIGIN } from "../support/browser-hosts";
+import { VIDEO_BROWSER_ORIGIN } from "../../../../tooling/media-browser-hosts";
 import { readFileSync } from "node:fs";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { compileVideoPlan } from "../../src/video/compiler";

@@ -44,6 +44,7 @@ const rootFiles = new Set([
   "package.json",
   "tooling/eslint.config.js",
   "tooling/browser-tests.ts",
+  "tooling/media-browser-hosts.ts",
   "bun.lock",
   "bunfig.toml",
   "backend/package.json",
