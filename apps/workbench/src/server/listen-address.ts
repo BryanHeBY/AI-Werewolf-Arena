@@ -12,7 +12,8 @@ export function normalizeListenHost(value: string): string {
     .replace(/^\[([^\]]+)\]$/, "$1");
   if (!host || (!isIP(host) && !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/.test(host)))
     throw Error("workbench_host_invalid");
-  return host;
+  // WHATWG URL 会将 IPv6 的展开、压缩和 IPv4 映射写法统一为同一地址。
+  return isIP(host) === 6 ? new URL(`http://[${host}]/`).hostname.slice(1, -1) : host;
 }
 
 export function listenUrl(host: string, port: number): string {
@@ -27,6 +28,6 @@ export function workbenchRequestHosts(
   const allowed = new Set(["localhost", "127.0.0.1", "::1", normalized]);
   if (normalized === "0.0.0.0" || normalized === "::")
     for (const entries of Object.values(interfaces ?? networkInterfaces()))
-      for (const entry of entries ?? []) allowed.add(entry.address.toLowerCase());
+      for (const entry of entries ?? []) allowed.add(normalizeListenHost(entry.address));
   return allowed;
 }

@@ -12,8 +12,9 @@ import type {
   ConfigKind,
   JsonObject,
   Diagnostic,
+  GameCard,
 } from "@ai-werewolf-arena/workbench-contract";
-import { ConfigDocuments, WorkbenchError } from "./config-documents";
+import { ConfigDocuments, WorkbenchError, objectDocument } from "./config-documents";
 
 /** 损坏的原始文档仍可编辑，但目录摘要只投影有限字符串，不能借原生扩展对象带出认证。 */
 function stringValue(value: unknown): string | undefined {
@@ -27,6 +28,16 @@ export function diagnostic(error: unknown): Diagnostic {
       severity: "error",
       ...(error.fieldPath ? { path: error.fieldPath } : {}),
     };
+  let filesystemCode: unknown;
+  try {
+    if (error instanceof Error)
+      filesystemCode = Object.getOwnPropertyDescriptor(error, "code")?.value;
+  } catch {
+    /* 外来异常也不能借 getter 将正文或认证带进诊断。 */
+  }
+  if (filesystemCode === "EACCES" || filesystemCode === "EPERM")
+    return { code: "file_access_denied", severity: "error" };
+  if (filesystemCode === "ENOSPC") return { code: "disk_full", severity: "error" };
   return { ...configDiagnostic(error), severity: "error" };
 }
 export class ConfigService {
@@ -51,7 +62,7 @@ export class ConfigService {
     await validateRuntimeNativeConfig(runtime);
     if (kind === "games") {
       const boardId = resolveGameBoard(runtime);
-      const board = parseBoardDefinition(await this.boardRaw(boardId), boardId);
+      const board = parseBoardDefinition(await this.documents.raw("boards", boardId), boardId);
       resolveGameSetup(runtime, {}, board);
     }
   }
@@ -98,6 +109,13 @@ export class ConfigService {
           supported: !problem,
           ...(problem ? { diagnostic: problem } : {}),
           source: local.includes(name) ? "local" : "example",
+          ...(!problem
+            ? {
+                rules: raw.rules as JsonObject,
+                mechanisms: raw.mechanisms as JsonObject,
+                roleOptions: raw.roles as JsonObject,
+              }
+            : {}),
         };
       }),
     );
@@ -121,6 +139,7 @@ export class ConfigService {
         : {};
     return {
       games: await this.documents.list("games"),
+      gameCards: await this.gameCards(stringValue(agents.default)),
       defaultAgent: stringValue(agents.default),
       agents: Object.entries(profiles).map(([name, value]) => {
         const entry = value as JsonObject,
@@ -138,24 +157,86 @@ export class ConfigService {
       backends: Object.entries(connections).map(([name, value]) => ({
         name,
         kind: stringValue((value as JsonObject)?.kind),
+        ...(() => {
+          const config = (value as JsonObject)?.config as JsonObject | undefined;
+          const native = config?.models as JsonObject | undefined;
+          const providers = native?.providers;
+          const auth = config?.auth;
+          return {
+            providers:
+              providers && typeof providers === "object" && !Array.isArray(providers)
+                ? Object.keys(providers)
+                : [],
+            authProviders:
+              auth && typeof auth === "object" && !Array.isArray(auth) ? Object.keys(auth) : [],
+          };
+        })(),
       })),
     };
   }
-  async ensureBoard(name: string): Promise<void> {
-    if ((await this.documents.list("boards")).includes(name)) return;
-    const raw = await this.boardRaw(name);
-    await this.documents.save(
-      { kind: "boards", name, revision: null, text: JSON.stringify(raw) },
-      (value) => this.validate("boards", name, value),
+  private async gameCards(defaultAgent?: string): Promise<GameCard[]> {
+    return Promise.all(
+      (await this.documents.list("games")).map(async (name) => {
+        const card: GameCard = { id: name, source: "local", roleAgents: {}, seatAgents: {} };
+        try {
+          const document = await this.documents.read("games", name);
+          card.revision = document.revision!;
+          const raw = objectDocument(document.text);
+          card.board = typeof raw.board === "string" ? raw.board.trim() : "six_player_mvp";
+          card.defaultAgent = stringValue(raw.agent) ?? defaultAgent;
+          for (const [field, target] of [
+            ["roles", card.roleAgents],
+            ["players", card.seatAgents],
+          ] as const) {
+            const entries = raw[field];
+            if (entries && typeof entries === "object" && !Array.isArray(entries))
+              for (const [key, row] of Object.entries(entries)) {
+                const agent =
+                  row && typeof row === "object" && !Array.isArray(row)
+                    ? stringValue(row.agent)
+                    : undefined;
+                if (agent) target[key] = agent;
+              }
+          }
+          const board = await this.documents.raw("boards", card.board);
+          const definition = parseBoardDefinition(board, card.board);
+          card.size = definition.definition.board.size;
+        } catch (error) {
+          card.diagnostic = diagnostic(error);
+        }
+        return card;
+      }),
     );
   }
-  async ensureGameBoard(gameName: string): Promise<void> {
-    // 使用与实际运行相同的 parser／默认选择；原始字段可能省略或带合法首尾空白。
-    const runtime = parseRuntimeConfig({
-      backends: await this.documents.raw("backends", "backends"),
-      agents: await this.documents.raw("agents", "agents"),
-      game: await this.documents.raw("games", gameName),
+  /** 启动只读已保存配置；模板只能在用户明确创建／复制时落盘。 */
+  async validateSavedGame(gameName: string, expectedRevision?: string): Promise<void> {
+    const document = await this.documents.read("games", gameName);
+    if (expectedRevision !== undefined && document.revision !== expectedRevision)
+      throw new WorkbenchError("config_conflict", 409);
+    const game = objectDocument(document.text);
+    await this.validate("games", gameName, game);
+    if (
+      expectedRevision !== undefined &&
+      (await this.documents.read("games", gameName)).revision !== expectedRevision
+    )
+      throw new WorkbenchError("config_conflict", 409);
+  }
+  async delete(kind: ConfigKind, name: string, revision: string): Promise<void> {
+    await this.documents.delete(kind, name, revision, async () => {
+      if (kind !== "boards") return;
+      const references: string[] = [];
+      for (const gameName of await this.documents.list("games")) {
+        let raw: JsonObject;
+        try {
+          raw = await this.documents.raw("games", gameName);
+        } catch {
+          // 无法读取引用关系时不能假设该板子未被使用。
+          throw new WorkbenchError("board_references_unreadable", 409, undefined, [gameName]);
+        }
+        const board = typeof raw.board === "string" ? raw.board.trim() : "six_player_mvp";
+        if (board === name) references.push(gameName);
+      }
+      if (references.length) throw new WorkbenchError("board_in_use", 409, undefined, references);
     });
-    await this.ensureBoard(resolveGameBoard(runtime));
   }
 }

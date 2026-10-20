@@ -69,6 +69,10 @@ export interface SessionEntry {
   canStop: boolean;
   canReplay: boolean;
   errorCode?: string;
+  /** 删除确认绑定当前文件版本；缺省表示该旧摘要尚未支持删除。 */
+  revision?: string;
+  canDelete?: boolean;
+  deleteBlock?: string;
 }
 export interface BoardCard {
   id: string;
@@ -77,5 +81,21 @@ export interface BoardCard {
   supported: boolean;
   diagnostic?: Diagnostic;
   source: "local" | "example";
+  /** 只包含已通过板子 parser 的公开规则，不转发损坏文档的未知字段。 */
+  rules?: JsonObject;
+  mechanisms?: JsonObject;
+  roleOptions?: JsonObject;
+}
+/** 已保存游戏的公开摘要；Agent 指令及任何连接认证都不进入目录卡片。 */
+export interface GameCard {
+  id: string;
+  source: "local";
+  revision?: string;
+  board?: string;
+  size?: number;
+  defaultAgent?: string;
+  roleAgents: Record<string, string>;
+  seatAgents: Record<string, string>;
+  diagnostic?: Diagnostic;
 }
 export const ACTIVE_RUN_STATES: readonly RunState[] = ["starting", "running", "finalizing"];

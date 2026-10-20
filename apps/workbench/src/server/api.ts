@@ -2,16 +2,17 @@
  * 负责本地工作台 HTTP 数据边界；输入受限 JSON 请求，输出配置、目录、运行及回放。
  * 变更请求校验同源，实际持久化与进程交各自所有者；不接受任意命令或绝对文件路径。
  */
-import { promises as fs } from "node:fs";
 import path from "node:path";
-import os from "node:os";
 import type { ConfigKind, ConfigDocument, JsonObject } from "@ai-werewolf-arena/workbench-contract";
 import { ConfigDocuments, containedFile, WorkbenchError, objectDocument } from "./config-documents";
 import { ConfigService, diagnostic } from "./config-service";
 import { SessionStore } from "./session-store";
 import { RunManager } from "./run-manager";
 import { describeModelCatalog } from "@ai-werewolf-arena/game-runtime/config/models";
+import { describeBoardRuleCatalog } from "@ai-werewolf-arena/game-runtime/config/rule-catalog";
 import { normalizeListenHost, workbenchRequestHosts } from "./listen-address";
+import { readCodexSubscription } from "./codex-auth";
+import { describePlatformDefaults } from "./platform-defaults";
 
 export interface WorkbenchOptions {
   repository: string;
@@ -71,6 +72,10 @@ export function createWorkbench(options: WorkbenchOptions) {
           if (parts[1] === "health" && request.method === "GET") result = { status: "ok" };
           else if (parts[1] === "models" && request.method === "GET")
             result = await (models ??= describeModelCatalog());
+          else if (parts[1] === "board-rules" && request.method === "GET")
+            result = describeBoardRuleCatalog();
+          else if (parts[1] === "platform-defaults" && request.method === "GET")
+            result = await describePlatformDefaults(options.repository, options.configs);
           else if (parts[1] === "catalog" && request.method === "GET")
             result = { ...(await configs.summary()), boards: await configs.boards() };
           else if (parts[1] === "initialize" && request.method === "POST") {
@@ -91,6 +96,10 @@ export function createWorkbench(options: WorkbenchOptions) {
                 { kind, name, text: body.text, revision: body.revision },
                 (raw) => configs.validate(kind, name, raw),
               );
+            } else if (request.method === "DELETE") {
+              if (typeof body.revision !== "string") throw new WorkbenchError("invalid_document");
+              await configs.delete(kind, name, body.revision);
+              result = { deleted: true };
             } else throw new WorkbenchError("method_not_allowed", 405);
           } else if (
             parts[1] === "board-template" &&
@@ -112,9 +121,14 @@ export function createWorkbench(options: WorkbenchOptions) {
             else if (request.method === "POST") {
               if (typeof body.gameName !== "string")
                 throw new WorkbenchError("invalid_config_name");
-              await configs.ensureGameBoard(body.gameName);
-              result = { sessionId: await runs.start(body.gameName) };
+              if (typeof body.revision !== "string") throw new WorkbenchError("invalid_document");
+              await configs.validateSavedGame(body.gameName, body.revision);
+              result = { sessionId: await runs.start(body.gameName, body.revision) };
             } else throw new WorkbenchError("method_not_allowed", 405);
+          } else if (parts[1] === "runs" && parts.length === 3 && request.method === "DELETE") {
+            if (typeof body.revision !== "string") throw new WorkbenchError("invalid_document");
+            await runs.delete(parts[2], body.revision);
+            result = { deleted: true };
           } else if (parts[1] === "runs" && parts.length === 4) {
             const id = parts[2];
             if (parts[3] === "stop" && request.method === "POST") {
@@ -135,23 +149,6 @@ export function createWorkbench(options: WorkbenchOptions) {
             } else throw new WorkbenchError("not_found", 404);
           } else if (parts[1] === "codex-import" && request.method === "POST") {
             // 只读取固定认证文件，响应不包含任何令牌；转换为现有 Pi OAuth 原生字段。
-            const auth = JSON.parse(
-              await fs.readFile(path.join(os.homedir(), ".codex/auth.json"), "utf8"),
-            );
-            const tokens = auth.tokens;
-            if (
-              !tokens ||
-              typeof tokens.access_token !== "string" ||
-              typeof tokens.refresh_token !== "string"
-            )
-              throw new WorkbenchError("codex_auth_unavailable", 409);
-            let expires = Date.now();
-            try {
-              const claims = JSON.parse(
-                Buffer.from(tokens.access_token.split(".")[1], "base64url").toString(),
-              );
-              if (typeof claims.exp === "number") expires = claims.exp * 1000;
-            } catch {}
             const current = await documents.read("backends", "backends", true),
               raw = objectDocument(current.text);
             if (typeof body.backend !== "string") throw new WorkbenchError("invalid_config_name");
@@ -161,13 +158,7 @@ export function createWorkbench(options: WorkbenchOptions) {
             const config = backend.config as JsonObject;
             config.auth = {
               ...((config.auth as JsonObject) ?? {}),
-              "openai-codex": {
-                type: "oauth",
-                access: tokens.access_token,
-                refresh: tokens.refresh_token,
-                expires,
-                ...(typeof tokens.account_id === "string" ? { accountId: tokens.account_id } : {}),
-              },
+              "openai-codex": await readCodexSubscription(),
             };
             await documents.save({ ...current, text: JSON.stringify(raw) }, (value) =>
               configs.validate("backends", "backends", value),
@@ -190,7 +181,13 @@ export function createWorkbench(options: WorkbenchOptions) {
       } catch (error) {
         const entry = diagnostic(error);
         return Response.json(
-          { error: entry.code, diagnostics: [entry] },
+          {
+            error: entry.code,
+            diagnostics: [entry],
+            ...(error instanceof WorkbenchError && error.references
+              ? { references: error.references }
+              : {}),
+          },
           {
             status: error instanceof WorkbenchError ? error.status : 400,
             headers: { "cache-control": "no-store" },

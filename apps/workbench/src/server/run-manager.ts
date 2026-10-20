@@ -9,18 +9,32 @@ import os from "node:os";
 import { readProcessIdentity, readBootId } from "@ai-werewolf-arena/game-runtime/run-session";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import { checkConfig } from "@ai-werewolf-arena/game-runtime/config/check";
-import { containedFile, WorkbenchError } from "./config-documents";
+import { ConfigDocuments, containedFile, WorkbenchError } from "./config-documents";
 import { SessionStore } from "./session-store";
+import { runDeletionSnapshot, assertPlainDirectory } from "./run-deletion";
 export class RunManager {
+  private deletes = new Map<string, Promise<void>>();
+  private finalizers = new Map<string, Promise<void>>();
   constructor(
     readonly repository: string,
     readonly configs: string,
     readonly sessions: SessionStore,
     readonly jobsRoot: string,
   ) {}
-  async start(gameName: string): Promise<string> {
+  async start(gameName: string, expectedRevision?: string): Promise<string> {
     if (!/^[a-z][a-z0-9_-]*$/.test(gameName)) throw new WorkbenchError("invalid_config_name");
+    const documents = new ConfigDocuments(this.configs);
+    if (
+      expectedRevision !== undefined &&
+      (await documents.read("games", gameName)).revision !== expectedRevision
+    )
+      throw new WorkbenchError("config_conflict", 409);
     const summary = await checkConfig(this.configs, gameName);
+    if (
+      expectedRevision !== undefined &&
+      (await documents.read("games", gameName)).revision !== expectedRevision
+    )
+      throw new WorkbenchError("config_conflict", 409);
     const sessionId = `session_${Date.now()}_${crypto.randomUUID().slice(0, 8)}`;
     const file = await containedFile(this.jobsRoot, `${sessionId}.json`);
     const job: SessionEntry & {
@@ -73,7 +87,7 @@ export class RunManager {
         bootId: await readBootId(),
       };
       await fs.writeFile(file, JSON.stringify(job), { mode: 0o600 });
-      void child.exited
+      const finalizer = child.exited
         .then(async (code) => {
           job.state = code === 0 ? "completed" : code === 130 ? "cancelled" : "failed";
           job.endedAt = new Date().toISOString();
@@ -82,7 +96,9 @@ export class RunManager {
           await fs.writeFile(tmp, JSON.stringify(job), { mode: 0o600 });
           await fs.rename(tmp, file);
         })
-        .catch(() => {});
+        .catch(() => {})
+        .finally(() => this.finalizers.delete(sessionId));
+      this.finalizers.set(sessionId, finalizer);
     } catch (error) {
       job.state = "failed";
       job.errorCode = "run_start_failed";
@@ -183,21 +199,59 @@ export class RunManager {
           : record,
       );
     }
-    return [...byId.values()].sort((a, b) => b.startedAt.localeCompare(a.startedAt));
+    const entries = [...byId.values()].sort((a, b) => b.startedAt.localeCompare(a.startedAt));
+    return Promise.all(
+      entries.map(async (entry) => {
+        try {
+          const snapshot = await runDeletionSnapshot(
+            this.sessions.root,
+            this.jobsRoot,
+            entry.sessionId,
+          );
+          return {
+            ...entry,
+            revision: snapshot.revision,
+            canDelete: snapshot.canDelete,
+            ...(snapshot.deleteBlock ? { deleteBlock: snapshot.deleteBlock } : {}),
+          };
+        } catch {
+          return { ...entry, canDelete: false, deleteBlock: "run_liveness_unknown" };
+        }
+      }),
+    );
+  }
+  async delete(id: string, expected: string): Promise<void> {
+    const operation = (this.deletes.get(id) ?? Promise.resolve())
+      .catch(() => {})
+      .then(async () => {
+        const original = await runDeletionSnapshot(this.sessions.root, this.jobsRoot, id);
+        if (original.revision !== expected) throw new WorkbenchError("run_conflict", 409);
+        if (!original.canDelete) throw new WorkbenchError(original.deleteBlock!, 409);
+        // 子进程已退出时，等待本服务尚未落盘的退出登记，避免删除后又生成同名 job。
+        await this.finalizers.get(id);
+        await assertPlainDirectory(original.directory);
+        const current = await runDeletionSnapshot(this.sessions.root, this.jobsRoot, id);
+        if (current.revision !== expected) throw new WorkbenchError("run_conflict", 409);
+        if (!current.canDelete) throw new WorkbenchError(current.deleteBlock!, 409);
+        // 只删除这一局的记录目录及同 ID 启动登记；不会触及共享配置或 output。
+        await fs.rm(current.directory, { recursive: true, force: true });
+        for (const file of current.files) await fs.rm(file, { force: true });
+      });
+    this.deletes.set(id, operation);
+    try {
+      await operation;
+    } finally {
+      if (this.deletes.get(id) === operation) this.deletes.delete(id);
+    }
   }
   async logs(id: string, after: number) {
     const page = await this.sessions.logs(id, after);
     if (page.chunks.length || after > 0) return page;
-    // manifest 可能早于运行登记落盘；没有会话日志时仍应显示最终启动失败原因。
-    // 非空但尚未写完的 JSONL 不能被启动日志占用 seq=1，后续仍由原游标续读。
-    try {
-      const stat = await fs.stat(await this.sessions.file(id, "console.jsonl"));
-      if (stat.size > 0) return page;
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    }
+    // 活动实例的半行不占用序号；已停止且不可能补完的半行不能永久遮住启动失败。
     const job = (await this.jobs()).find((job) => job.sessionId === id);
     if (!job || !["failed", "interrupted", "lost"].includes(job.state)) return page;
+    const snapshot = await runDeletionSnapshot(this.sessions.root, this.jobsRoot, id);
+    if (!snapshot.canDelete) return page;
     const file = await containedFile(this.jobsRoot, `${id}.startup.log`);
     try {
       // 启动诊断仅取末尾 64 KiB，不将整场 stdout 副本载入内存。

@@ -15,6 +15,7 @@ export class WorkbenchError extends Error {
     readonly code: string,
     readonly status = 400,
     readonly fieldPath?: string,
+    readonly references?: string[],
   ) {
     super(code);
   }
@@ -82,7 +83,7 @@ function restoreSecrets(value: unknown, old: unknown): unknown {
   return value;
 }
 export class ConfigDocuments {
-  private writes = new Map<string, Promise<unknown>>();
+  private mutations: Promise<unknown> = Promise.resolve();
   constructor(readonly root: string) {}
   private relative(kind: ConfigKind, name: string): string {
     if (!id.test(name) || !["backends", "agents", "games", "boards"].includes(kind))
@@ -129,58 +130,71 @@ export class ConfigDocuments {
   async raw(kind: ConfigKind, name: string): Promise<JsonObject> {
     return objectDocument((await this.read(kind, name, true)).text);
   }
+  /** 配置之间存在引用：保存与删除共用短队列，避免服务内新增引用穿过删除检查。 */
+  private async mutate<T>(action: () => Promise<T>): Promise<T> {
+    const operation = this.mutations.catch(() => {}).then(action);
+    this.mutations = operation;
+    return operation;
+  }
   async save(
     input: ConfigDocument,
     validate: (raw: JsonObject) => void | Promise<void> = () => {},
   ): Promise<ConfigDocument> {
-    const key = this.relative(input.kind, input.name),
-      previous = this.writes.get(key) ?? Promise.resolve();
-    const operation = previous
-      .catch(() => {})
-      .then(async () => {
-        const file = await containedFile(this.root, key);
-        let original: string | null = null;
+    return this.mutate(async () => {
+      const key = this.relative(input.kind, input.name);
+      const file = await containedFile(this.root, key);
+      let original: string | null = null;
+      try {
+        original = await fs.readFile(file, "utf8");
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+      }
+      if ((original === null ? null : revision(original)) !== input.revision)
+        throw new WorkbenchError("config_conflict", 409);
+      let old: JsonObject | undefined;
+      if (original !== null)
         try {
-          original = await fs.readFile(file, "utf8");
+          old = objectDocument(original);
+        } catch {
+          // 源码编辑允许修复坏 JSON；旧文档无法解析时不能沿用遮罩，需重新填写认证。
+        }
+      const raw = restoreSecrets(objectDocument(input.text), old) as JsonObject;
+      await validate(raw);
+      const content = JSON.stringify(raw, null, 2) + "\n";
+      await fs.mkdir(path.dirname(file), { recursive: true });
+      const temporary = `${file}.${crypto.randomUUID()}.tmp`;
+      try {
+        await fs.writeFile(temporary, content, { mode: 0o600, flag: "wx" });
+        // 校验期间仍可能有外部编辑；在替换前再次比对，服务内调用由上方队列串行化。
+        let current: string | null = null;
+        try {
+          current = await fs.readFile(file, "utf8");
         } catch (error) {
           if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
         }
-        if ((original === null ? null : revision(original)) !== input.revision)
-          throw new WorkbenchError("config_conflict", 409);
-        let old: JsonObject | undefined;
-        if (original !== null)
-          try {
-            old = objectDocument(original);
-          } catch {
-            // 源码编辑允许修复坏 JSON；旧文档无法解析时不能沿用遮罩，需重新填写认证。
-          }
-        const raw = restoreSecrets(objectDocument(input.text), old) as JsonObject;
-        await validate(raw);
-        const content = JSON.stringify(raw, null, 2) + "\n";
-        await fs.mkdir(path.dirname(file), { recursive: true });
-        const temporary = `${file}.${crypto.randomUUID()}.tmp`;
-        try {
-          await fs.writeFile(temporary, content, { mode: 0o600, flag: "wx" });
-          // 校验期间仍可能有外部编辑；在替换前再次比对，服务内调用由上方队列串行化。
-          let current: string | null = null;
-          try {
-            current = await fs.readFile(file, "utf8");
-          } catch (error) {
-            if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-          }
-          if (current !== original) throw new WorkbenchError("config_conflict", 409);
-          await fs.rename(temporary, file);
-        } finally {
-          await fs.rm(temporary, { force: true });
-        }
-        return this.read(input.kind, input.name);
-      });
-    this.writes.set(key, operation);
-    try {
-      return await operation;
-    } finally {
-      if (this.writes.get(key) === operation) this.writes.delete(key);
-    }
+        if (current !== original) throw new WorkbenchError("config_conflict", 409);
+        await fs.rename(temporary, file);
+      } finally {
+        await fs.rm(temporary, { force: true });
+      }
+      return this.read(input.kind, input.name);
+    });
+  }
+  async delete(
+    kind: ConfigKind,
+    name: string,
+    expected: string,
+    check: () => Promise<void> = async () => {},
+  ): Promise<void> {
+    if (kind !== "games" && kind !== "boards") throw new WorkbenchError("delete_not_supported");
+    await this.mutate(async () => {
+      const original = await this.read(kind, name, true);
+      if (original.revision !== expected) throw new WorkbenchError("config_conflict", 409);
+      await check();
+      const current = await this.read(kind, name, true);
+      if (current.revision !== expected) throw new WorkbenchError("config_conflict", 409);
+      await fs.unlink(await containedFile(this.root, this.relative(kind, name)));
+    });
   }
   async initialize(examples: string): Promise<void> {
     for (const section of ["boards", "games", "runtime"]) {

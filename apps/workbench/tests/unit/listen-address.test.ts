@@ -12,6 +12,9 @@ import {
 test("host values and IPv6 URLs normalize without accepting a URL or port as a hostname", () => {
   expect(normalizeListenHost(" AWA.Example ")).toBe("awa.example");
   expect(normalizeListenHost("[::1]")).toBe("::1");
+  expect(normalizeListenHost("0:0:0:0:0:0:0:1")).toBe("::1");
+  expect(normalizeListenHost("[2001:0DB8:0000:0000:0000:0000:0000:0001]")).toBe("2001:db8::1");
+  expect(workbenchRequestHosts("0:0:0:0:0:0:0:1").has("::1")).toBe(true);
   expect(listenUrl("::1", 4311)).toBe("http://[::1]:4311");
   expect(listenUrl("0.0.0.0", 4311)).toBe("http://0.0.0.0:4311");
   for (const invalid of ["", "http://localhost", "localhost:4311", "../socket", "--port"])

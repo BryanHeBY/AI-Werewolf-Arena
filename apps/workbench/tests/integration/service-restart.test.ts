@@ -85,7 +85,10 @@ test("closing and restarting the production HTTP service preserves and rediscove
     const start = await fetch(`${original.url}/api/runs`, {
       method: "POST",
       headers: { "content-type": "application/json", origin: original.url },
-      body: JSON.stringify({ gameName: "offline_game" }),
+      body: JSON.stringify({
+        gameName: "offline_game",
+        revision: (await workspace.application.documents.read("games", "offline_game")).revision,
+      }),
     });
     expect(start.status).toBe(200);
     id = ((await start.json()) as { sessionId: string }).sessionId;

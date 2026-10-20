@@ -41,9 +41,20 @@ for (const [label, game] of [
         documents,
         path.resolve(import.meta.dir, "../../../../configs.example"),
       );
-      await expect(service.validate("games", "game", game)).resolves.toBeUndefined();
+      await expect(service.validate("games", "game", game)).rejects.toMatchObject({
+        code: "config_not_found",
+      });
       expect(await documents.list("boards")).toEqual([]);
-      await service.ensureGameBoard("game");
+      await documents.save(
+        {
+          kind: "boards",
+          name: "six_player_mvp",
+          revision: null,
+          text: JSON.stringify(await service.boardRaw("six_player_mvp")),
+        },
+        (value) => service.validate("boards", "six_player_mvp", value),
+      );
+      await expect(service.validateSavedGame("game")).resolves.toBeUndefined();
       expect(await documents.list("boards")).toEqual(["six_player_mvp"]);
       expect((await checkConfig(root, "game")).board).toBe("six_player_mvp");
       expect(JSON.parse(await fs.readFile(path.join(root, "games/game.json"), "utf8"))).toEqual(

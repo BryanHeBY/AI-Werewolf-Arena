@@ -82,12 +82,20 @@ test("an existing manifest does not hide terminal startup failure diagnostics", 
   }
 });
 
-test("partial and complete session log rows retain priority over the startup fallback", async () => {
+test("active partial rows wait, but an irrecoverable failed first row cannot hide startup diagnostics", async () => {
   const context = await fixture();
   try {
     const consoleFile = path.join(context.directory, "console.jsonl");
+    await fs.writeFile(
+      context.jobFile,
+      JSON.stringify({ ...context.job, state: "starting", startedAt: new Date().toISOString() }),
+    );
     await fs.writeFile(consoleFile, '{"seq":1,"timestamp":"one",');
     expect(await context.manager.logs(context.id, 0)).toEqual({ chunks: [], cursor: 0 });
+    await fs.writeFile(context.jobFile, JSON.stringify(context.job));
+    expect((await context.manager.logs(context.id, 0)).chunks[0]!.text).toContain(
+      "diagnostic-sentinel",
+    );
     await fs.appendFile(consoleFile, '"text":"real session output"}\n');
     expect(await context.manager.logs(context.id, 0)).toEqual({
       chunks: [{ seq: 1, timestamp: "one", text: "real session output" }],

@@ -13,8 +13,10 @@ import {
   type ConsoleChunk,
 } from "@ai-werewolf-arena/workbench-contract";
 import { containedFile, WorkbenchError } from "./config-documents";
+import { ConsoleLogReader } from "./console-log-reader";
 
 export class SessionStore {
+  private readonly consoleLogs = new ConsoleLogReader();
   constructor(readonly root: string) {}
   async file(id: string, name: string): Promise<string> {
     if (!/^session_[a-zA-Z0-9_-]+$/.test(id)) throw new WorkbenchError("invalid_session");
@@ -190,39 +192,6 @@ export class SessionStore {
     if (!response.ok) throw new WorkbenchError("run_stop_failed", 409);
   }
   async logs(id: string, after: number): Promise<{ chunks: ConsoleChunk[]; cursor: number }> {
-    const file = await this.file(id, "console.jsonl");
-    const chunks: ConsoleChunk[] = [];
-    try {
-      // 按行流式扫描，内存只保留本页；写入尾部的半行不能作为已消费游标。
-      const stream = Bun.file(file).stream();
-      const decoder = new TextDecoder();
-      let pending = "";
-      const reader = stream.getReader();
-      try {
-        while (true) {
-          const { value: block, done } = await reader.read();
-          if (done) break;
-          pending += decoder.decode(block, { stream: true });
-          let split: number;
-          while ((split = pending.indexOf("\n")) >= 0) {
-            const line = pending.slice(0, split);
-            pending = pending.slice(split + 1);
-            try {
-              const row = JSON.parse(line);
-              if (Number.isSafeInteger(row.seq) && row.seq > after && typeof row.text === "string")
-                chunks.push(row);
-            } catch {}
-            if (chunks.length >= 400) break;
-          }
-          if (chunks.length >= 400) break;
-        }
-      } finally {
-        await reader.cancel();
-        reader.releaseLock();
-      }
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    }
-    return { chunks, cursor: chunks.at(-1)?.seq ?? after };
+    return this.consoleLogs.read(await this.file(id, "console.jsonl"), after);
   }
 }

@@ -5,6 +5,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { applicationResource } from "@ai-werewolf-arena/project-paths";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import { offlineWorkspace, eventually } from "../support/offline-workspace";
 test("API rejects cross-origin writes and exposes supported boards without credentials", async () => {
@@ -66,7 +67,7 @@ test("externally launched CLI games are discoverable and stop through the same p
   const child = Bun.spawn(
     [
       process.execPath,
-      path.join(workspace.repository, "backend/src/app/cli/run-game.ts"),
+      applicationResource("game", "src/cli/run-game.ts"),
       "--configs-dir",
       workspace.configs,
       "--game-config-name",

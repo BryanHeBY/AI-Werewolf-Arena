@@ -6,7 +6,11 @@
   "types": "./src/index.ts",
   "exports": {
     "./workbench": "./src/workbench.ts",
-    ".": "./src/index.ts"
+    "./workbench-service": "./src/workbench-service.ts",
+    ".": "./src/index.ts",
+    "./workbench-agent": "./src/workbench-agent.ts",
+    "./workbench-board": "./src/workbench-board.ts",
+    "./workbench-config-ui": "./src/workbench-config-ui.ts"
   },
   "dependencies": {
     "@ai-werewolf-arena/game-contract": "workspace:*"
