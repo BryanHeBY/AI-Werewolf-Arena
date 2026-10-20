@@ -3,7 +3,7 @@
  * 读取与板子合并仍归配置所有者，生命周期及异常收尾归 runner；本入口不实现角色规则或模型回退。
  */
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
-import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
+import { runCli, takeDisplayArguments, cliFailure, type CliDisplayContext } from "./display";
 import { loadRuntimeConfig } from "../config/load-config";
 import { loadBoardDefinition } from "../config/load-board-definition";
 import { resolveGameBoard, resolveGameSetup } from "../config/resolve-game-setup";
@@ -11,6 +11,7 @@ import { runGame } from "../game-runner";
 import type { RunGameOptions } from "../config/resolve-game-setup";
 import type { GameBoard } from "../config/contracts";
 import { resolveCliConfigDirectory } from "./config-directory";
+import { RunSession } from "../run-session";
 function parseBoolean(value: string): boolean {
   if (["1", "true", "yes", "on"].includes(value.toLowerCase())) return true;
   if (["0", "false", "no", "off"].includes(value.toLowerCase())) return false;
@@ -75,7 +76,52 @@ export async function main(
     boardOverride,
   );
   display.locale = setup.context.displayLocale;
-  await runGame(setup);
+  const controller = new AbortController();
+  const stop = () => controller.abort();
+  process.on("SIGINT", stop);
+  process.on("SIGTERM", stop);
+  let session: RunSession | undefined;
+  let failure: unknown;
+  let hasFailure = false;
+  try {
+    await runGame(setup, {
+      signal: controller.signal,
+      ...(process.env.AWA_SESSION_ID ? { sessionId: process.env.AWA_SESSION_ID } : {}),
+      output(line) {
+        session?.append(line);
+        console.log(line);
+      },
+      async onSession(info) {
+        session = await RunSession.open({
+          ...info,
+          gameName: args.gameName,
+          origin: process.env.AWA_RUN_ORIGIN === "workbench" ? "workbench" : "cli",
+          stop,
+        });
+      },
+      onState(state) {
+        session?.state(state);
+      },
+    });
+  } catch (error) {
+    failure = error;
+    hasFailure = true;
+  } finally {
+    process.off("SIGINT", stop);
+    process.off("SIGTERM", stop);
+    try {
+      if (hasFailure) session?.append(JSON.stringify(cliFailure(failure, display.locale)));
+      await session?.finish(
+        hasFailure ? "failed" : controller.signal.aborted ? "cancelled" : "completed",
+        hasFailure ? "game_run_failed" : undefined,
+      );
+    } catch (error) {
+      failure = hasFailure ? new AggregateError([failure, error], "game_run_failed") : error;
+      hasFailure = true;
+    }
+  }
+  if (hasFailure) throw failure;
+  if (controller.signal.aborted) process.exitCode = 130;
 }
 
 if (require.main === module) void runCli(main);

@@ -259,6 +259,14 @@ export class SessionRecordManager {
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "session_record_finalization_failed");
 
+    // 成功回执最后发布；它不替代判胜，也不声明可选摘要或独立复现校验已经成功。
+    await this.store.writeJsonStrict("completion.json", {
+      schemaVersion: 1,
+      sessionId: this.sessionId,
+      endedAt: meta.endedAtIso,
+      files: ["manifest.json", "replay.json", ...(this.reproduction ? ["reproduction.json"] : [])],
+    });
+
     return {
       manifest,
       ...this.aggregate.debugSummaryInput(),

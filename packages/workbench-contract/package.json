@@ -1,0 +1,16 @@
+{
+  "name": "@ai-werewolf-arena/workbench-contract",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "bun-types": "^1.4.2",
+    "typescript": "^5.9.3"
+  }
+}

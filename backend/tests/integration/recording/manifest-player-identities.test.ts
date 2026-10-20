@@ -115,6 +115,7 @@ test("actual manifest and player publications use truthful source declarations w
     expect(view.timeline[0]!.kind === "event" && view.timeline[0]!.event.payload.text).toBe(
       "原文 / User original",
     );
+    expect(await Bun.file(path.join(manager.sessionDir, "completion.json")).exists()).toBe(false);
     const summary = await manager.finalize(meta);
     expect(summary.manifest.identities).toBeUndefined();
     expect(summary.playerViews[0]!.schemaVersion).toBe(2);
@@ -123,7 +124,16 @@ test("actual manifest and player publications use truthful source declarations w
     );
     expect(final.identities!.build!.engine).toEqual(engine);
     expect(final.players).toEqual(meta.players);
+    const receipt = await readFile(path.join(manager.sessionDir, "completion.json"), "utf8");
+    expect(JSON.parse(receipt)).toEqual({
+      schemaVersion: 1,
+      sessionId: "identity",
+      endedAt: "2026-10-13T00:00:01.000Z",
+      files: ["manifest.json", "replay.json", "reproduction.json"],
+    });
+    expect(receipt).not.toContain("private_seed_stays_manifest_and_tape");
     expect((await readdir(manager.sessionDir)).sort()).toEqual([
+      "completion.json",
       "debug_reports.json",
       "logic_ops.json",
       "manifest.json",

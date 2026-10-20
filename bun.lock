@@ -20,6 +20,7 @@
         "@ai-werewolf-arena/game-presentation": "workspace:*",
         "@ai-werewolf-arena/game-text": "workspace:*",
         "@ai-werewolf-arena/replay-contract": "workspace:*",
+        "@ai-werewolf-arena/workbench-contract": "workspace:*",
         "@earendil-works/pi-agent-core": "1.3.0",
         "@earendil-works/pi-ai": "1.3.0",
         "@earendil-works/pi-coding-agent": "1.3.0",
@@ -121,6 +122,14 @@
         "typescript": "^5.9.3",
       },
     },
+    "packages/workbench-contract": {
+      "name": "@ai-werewolf-arena/workbench-contract",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.4.2",
+        "typescript": "^5.9.3",
+      },
+    },
   },
   "packages": {
     "@agentclientprotocol/sdk": ["@agentclientprotocol/sdk@1.5.1", "", { "peerDependencies": { "zod": "^3.25.0 || ^4.0.0" } }, "sha512-nSUIrC1fOR9+ppKfx9KdwjBBND2sAPzFHo4yVQrGbXZHnayUYpwL8CDVR5LSxbapY/oKMOzNP0wvwfyx3PS2KA=="],
@@ -144,6 +153,8 @@
     "@ai-werewolf-arena/game-text": ["@ai-werewolf-arena/game-text@workspace:packages/game-text"],
 
     "@ai-werewolf-arena/replay-contract": ["@ai-werewolf-arena/replay-contract@workspace:packages/replay-contract"],
+
+    "@ai-werewolf-arena/workbench-contract": ["@ai-werewolf-arena/workbench-contract@workspace:packages/workbench-contract"],
 
     "@anthropic-ai/sdk": ["@anthropic-ai/sdk@0.129.0", "", { "dependencies": { "json-schema-to-ts": "^3.1.1", "standardwebhooks": "^1.0.0" }, "peerDependencies": { "zod": "^3.25.0 || ^4.0.0" }, "optionalPeers": ["zod"], "bin": { "anthropic-ai-sdk": "bin/cli" } }, "sha512-MH7LB20kNpGLUpPTe2OG5XvL/KhX8HUO9XyBaFjgFk6TLS4Xjt0VPIuMKywe7POKKPslX+QxSlVok9e+8kG5Nw=="],
 

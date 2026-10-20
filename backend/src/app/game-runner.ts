@@ -16,6 +16,7 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error-diagnostic";
 /** 本局资源、期限、失败汇总与最终复盘由下方 runner 持有；导入不装配对局。 */
 import path from "node:path";
+import { promises as fs } from "node:fs";
 import { bootstrapGame } from "./bootstrap";
 import {
   COMPONENT,
@@ -63,6 +64,16 @@ export interface GameRunResult {
  * 期限选择回调返回绝对时间，只参与取最小值；关闭观察回调接收脱离副本，异常归清理失败。
  */
 export interface GameRunDependencies {
+  /** 可信运行入口提供取消与输出；终端展示仍在原 presenter 中生成。 */
+  signal?: AbortSignal;
+  output?: (line: string) => void;
+  sessionId?: string;
+  onSession?: (session: {
+    sessionId: string;
+    sessionDir: string;
+    board: string;
+  }) => void | Promise<void>;
+  onState?: (state: "running" | "finalizing") => void | Promise<void>;
   /** 可信 controller 的显式离线故障数据；进入原 metadata.faultPlan，同一 owner 在录制和重放消费，不是模型／JSON 配置。 */
   faultPlan?: unknown;
   selectRequestDeadline?: (
@@ -140,8 +151,12 @@ export async function runGame(
   });
   const profilesByActor = selectPlayerProfiles(context.world, setup);
   const players = publicPlayerRoster(context.world);
-  const sessionId = buildSessionId();
+  const sessionId = dependencies.sessionId ?? buildSessionId();
+  if (!/^session_[a-zA-Z0-9_-]+$/.test(sessionId)) throw new Error("game_session_id_invalid");
   const recordRoot = setup.options.recordRootDir ?? resolveDefaultRecordRoot();
+  // 会话目录由本次 runner 独占；可信入口传入旧 ID 也不能覆盖既有录制。
+  await fs.mkdir(recordRoot, { recursive: true });
+  await fs.mkdir(path.join(recordRoot, sessionId));
   const replayManager = await SessionRecordManager.create(
     {
       players,
@@ -157,7 +172,7 @@ export async function runGame(
 
   return runWithSessionRecorder(replayManager, async () => {
     const { options } = setup;
-    const log = createConsoleLog(options.color);
+    const log = createConsoleLog(options.color, dependencies.output);
     const startedAt = Date.now();
     const deadlineAtMs = startedAt + options.maxRuntimeMs;
     // 对局／记录失败统一汇总；并发动作和关闭失败暂存，收尾时按原顺序补入。
@@ -205,8 +220,19 @@ export async function runGame(
     const drainActions = async () => {
       while (inFlight.size) await Promise.allSettled([...inFlight]);
     };
+    const cancel = () => {
+      stopping = true;
+      if (agentRuntime) void closeRuntime();
+    };
+    dependencies.signal?.addEventListener("abort", cancel, { once: true });
+    if (dependencies.signal?.aborted) cancel();
 
     try {
+      await dependencies.onSession?.({
+        sessionId,
+        sessionDir: replayManager.sessionDir,
+        board: options.board,
+      });
       const reproduction = beginGameReproduction(replayManager, context, {
         engine: await currentEngineVersion(),
         boardId: options.board,
@@ -234,12 +260,26 @@ export async function runGame(
           printLlmIo: options.printLlmIo,
         }),
       });
+      if (stopping) await closeRuntime();
+      if (!stopping) await dependencies.onState?.("running");
       const selectedProvider: ActionProvider = {
         async getAction(request) {
           if (stopping) throw stopReason;
-          const action = await agentRuntime!.provider.getAction(request);
-          if (stopping) throw stopReason;
-          return action;
+          try {
+            const action = await agentRuntime!.provider.getAction(request);
+            if (stopping) throw stopReason;
+            return action;
+          } catch (error) {
+            // 显式取消导致各传输的在途请求以 AbortError 关闭，统一为本局停止标记；
+            // 非取消异常及 close() 自身的失败仍交原错误账本，不能被停止操作掩盖。
+            if (
+              dependencies.signal?.aborted &&
+              error instanceof Error &&
+              error.name === "AbortError"
+            )
+              throw stopReason;
+            throw error;
+          }
         },
       };
       const decisionProvider: ActionProvider = {
@@ -297,7 +337,7 @@ export async function runGame(
       }, 1000);
 
       let cycle = 0;
-      while (!context.phaseManager.getSnapshot().gameOver && failures.length === 0) {
+      while (!stopping && !context.phaseManager.getSnapshot().gameOver && failures.length === 0) {
         const elapsed = Date.now() - startedAt;
         if (elapsed >= options.maxRuntimeMs) {
           timedOut = true;
@@ -349,6 +389,12 @@ export async function runGame(
       failures.push(error);
       replayManager.noteReproductionFailure("initialization", error);
     } finally {
+      dependencies.signal?.removeEventListener("abort", cancel);
+      try {
+        await dependencies.onState?.("finalizing");
+      } catch (error) {
+        failures.push(error);
+      }
       // 先停定时任务并补事件，再关闭／等待动作；最终记录只在这些原收尾步骤之后发布。
       if (heartbeat) clearInterval(heartbeat);
       if (streamTimer) clearInterval(streamTimer);
@@ -385,7 +431,12 @@ export async function runGame(
           ...(snapshot.result ? { gameResult: snapshot.result } : {}),
           finishReason: failures.length
             ? "runtime_error"
-            : (snapshot.result?.reason ?? (timedOut ? "runtime_timeout" : "completed")),
+            : (snapshot.result?.reason ??
+              (dependencies.signal?.aborted
+                ? "cancelled"
+                : timedOut
+                  ? "runtime_timeout"
+                  : "completed")),
           players: replayPlayers(context.world).map((player) => ({
             ...player,
             ...replayPlayerDisplay(

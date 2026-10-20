@@ -34,9 +34,12 @@ export function toChatLines(
   });
 }
 
-export function createConsoleLog(color: boolean): ConsoleLog {
+export function createConsoleLog(
+  color: boolean,
+  output: (line: string) => void = console.log,
+): ConsoleLog {
   const enabled = isAnsiEnabled(color);
-  return (text, tone = "info") => console.log(colorize(text, tone, enabled));
+  return (text, tone = "info") => output(colorize(text, tone, enabled));
 }
 
 // 角色与机制可复用不带终端标签的展示文案；按已有输出分类统一补直播前缀。

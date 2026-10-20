@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Backend game engine for AI Werewolf Arena",
   "main": "./dist/index.js",
+  "exports": {
+    ".": "./src/index.ts",
+    "./run-session": "./src/app/run-session.ts"
+  },
   "scripts": {
     "build": "tsc",
     "check": "tsc -p tsconfig.json --noEmit && bun run check:tests",
@@ -30,6 +34,7 @@
     "test:scenarios": "bun --no-env-file test --preload ./tests/setup.ts tests/scenarios"
   },
   "dependencies": {
+    "@ai-werewolf-arena/workbench-contract": "workspace:*",
     "@agentclientprotocol/sdk": "^1.5.1",
     "@ai-sdk/anthropic": "^4.0.65",
     "@ai-sdk/openai-compatible": "^3.0.57",

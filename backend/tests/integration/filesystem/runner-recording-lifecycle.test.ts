@@ -13,6 +13,7 @@ import { getSessionRecorder } from "../../../src/recording/session/context";
 import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
 import type { ResolvedGameSetup } from "../../../src/app/config/resolve-game-setup";
 import { runGame } from "../../../src/app/game-runner";
+import * as playerAgentFactory from "../../../src/app/player-agent-factory";
 import {
   cleanupTestTempDirectories,
   createTestTempDirectory,
@@ -80,6 +81,77 @@ test("a failed game seals its partial replay and releases the active recorder", 
   expect(getSessionRecorder()).toBeNull();
 });
 
+test("an existing session directory is never overwritten by an explicit session ID", async () => {
+  const config = await options();
+  const root = config.setup.options.recordRootDir!;
+  const sessionId = "session_existing";
+  const directory = path.join(root, sessionId);
+  await fs.mkdir(directory);
+  const original = '{"owner":"previous run","events":[1,2,3]}\n';
+  await fs.writeFile(path.join(directory, "replay.json"), original);
+  await fs.writeFile(path.join(directory, "private-note.txt"), "preserve local content");
+
+  await expect(runGame(config.setup, { sessionId })).rejects.toMatchObject({ code: "EEXIST" });
+
+  expect(await fs.readFile(path.join(directory, "replay.json"), "utf8")).toBe(original);
+  expect(await fs.readFile(path.join(directory, "private-note.txt"), "utf8")).toBe(
+    "preserve local content",
+  );
+  expect((await fs.readdir(directory)).sort()).toEqual(["private-note.txt", "replay.json"]);
+  expect(getSessionRecorder()).toBeNull();
+});
+
+for (const abortFailure of [true, false])
+  test(`explicit cancellation ${abortFailure ? "normalizes the provider close AbortError" : "preserves a real provider failure"}`, async () => {
+    const config = await options();
+    const controller = new AbortController();
+    const failure = abortFailure
+      ? new DOMException("synthetic_pi_provider_closed", "AbortError")
+      : new Error("synthetic_real_provider_failure");
+    const pending = new Set<(error: unknown) => void>();
+    let closes = 0;
+    let requests = 0;
+    const create = spyOn(playerAgentFactory, "createPlayerAgentRuntime").mockImplementation(
+      async () => ({
+        kind: "pi",
+        get runtimeState() {
+          return { closed: closes > 0 };
+        },
+        async close() {
+          closes++;
+          for (const reject of pending) reject(failure);
+        },
+        provider: {
+          getAction() {
+            requests++;
+            const task = new Promise<null>((_resolve, reject) => pending.add(reject));
+            // 先挂起动作，再请求显式停止；模拟 Pi／ACP 关闭回收正在等待的严格回合。
+            queueMicrotask(() => controller.abort());
+            return task;
+          },
+        },
+      }),
+    );
+    restores.push(() => create.mockRestore());
+    let observedClosed = false;
+    const run = runGame(config.setup, {
+      signal: controller.signal,
+      onRuntimeClosed: (state) => {
+        observedClosed = state.closed;
+      },
+    });
+    if (abortFailure) await run;
+    else await expect(run).rejects.toBe(failure);
+    expect(requests).toBeGreaterThan(0);
+    expect(closes).toBe(1);
+    expect(observedClosed).toBe(true);
+    expect((await replay(config.setup.options.recordRootDir!)).result).toEqual({
+      winner: null,
+      reason: abortFailure ? "cancelled" : "runtime_error",
+    });
+    expect(getSessionRecorder()).toBeNull();
+  });
+
 test("failure to persist the final replay rejects the game result", async () => {
   const config = await options();
   const write = ReplayFileStore.prototype.writeJsonStrict;
@@ -96,6 +168,10 @@ test("failure to persist the final replay rejects the game result", async () => 
   await expect(
     runGame({ ...config.setup, options: { ...config.setup.options, maxRuntimeMs: 0 } }),
   ).rejects.toBe(failure);
+  const root = config.setup.options.recordRootDir!;
+  const [session] = await fs.readdir(root);
+  // 核心终档失败后可以保留诊断与部分录制，但不能发布成功回执。
+  expect(await Bun.file(path.join(root, session, "completion.json")).exists()).toBe(false);
   expect(getSessionRecorder()).toBeNull();
 });
 
@@ -125,5 +201,8 @@ test("a finalization failure does not hide the original game error", async () =>
   }
   expect(caught).toBeInstanceOf(AggregateError);
   expect((caught as AggregateError).errors).toEqual([primary, secondary]);
+  const root = config.setup.options.recordRootDir!;
+  const [session] = await fs.readdir(root);
+  expect(await Bun.file(path.join(root, session, "completion.json")).exists()).toBe(false);
   expect(getSessionRecorder()).toBeNull();
 });
