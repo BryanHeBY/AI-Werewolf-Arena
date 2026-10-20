@@ -58,7 +58,9 @@ test("shared visual tokens preserve the agreed output baseline and separate Web 
   });
   expect(gothic.definition.surface.stage).toBe("transparent");
   expect(gothic.definition.surface.readingMaxHeightRatio).toBe(0.8);
-  expect(gothic.definition.surface.speechReadingMaxHeightRatio).toBe(0.9);
+  // 舞台本身已扣除字幕安全区；发言面可使用剩余高度，避免再缩小一成。
+  expect(gothic.definition.surface.speechReadingMaxHeightRatio).toBe(1);
+  expect(gothic.definition.subtitle.contentGap).toBe(24);
   expect(gothic.definition.typography.readingMaxWidth).toBe(1280);
   expect(themeSurface(gothic, "day").readingText).toBe("#efeade");
   expect(themeSurface(gothic, "night").readingText).toBe("#efeade");
@@ -136,7 +138,8 @@ test("a handwritten old compiled theme keeps authored appearance while new token
   expect(resolved.definition.typography.speechBodyZh).toBe(26);
   expect(resolved.definition.typography.speechBodyEn).toBe(24);
   expect(resolved.definition.surface.readingMaxHeightRatio).toBe(0.8);
-  expect(resolved.definition.surface.speechReadingMaxHeightRatio).toBe(0.9);
+  expect(resolved.definition.surface.speechReadingMaxHeightRatio).toBe(1);
+  expect(resolved.definition.subtitle.contentGap).toBe(24);
   expect(resolved.definition.frame.width).toBe(1.5);
   expect(resolved.definition.connector.choiceDash).toEqual([6, 6]);
   expect(resolved.definition.effect.heroSize).toBe(410);
@@ -157,7 +160,10 @@ test("a handwritten old compiled theme keeps authored appearance while new token
     definition: {
       ...old.definition,
       typography: { bodyZh: 47, speechBodyZh: 31 },
-      surface: { palette: { night: { readingText: "#abcabc" } } },
+      surface: {
+        speechReadingMaxHeightRatio: 0.9,
+        palette: { night: { readingText: "#abcabc" } },
+      },
       motion: { durationMs: 321, standard: { travel: 12 } },
     },
   } as unknown as ResolvedTheme);
@@ -171,6 +177,8 @@ test("a handwritten old compiled theme keeps authored appearance while new token
     readingText: "#abcabc",
     readingColor: "#081219",
   });
+  // 已保存项目明确指定的旧比例仍保留，只有缺失字段才采用新默认值。
+  expect(partial.definition.surface.speechReadingMaxHeightRatio).toBe(0.9);
   expect(partial.definition.motion.standard).toEqual({
     establish: 0,
     travel: 12,
