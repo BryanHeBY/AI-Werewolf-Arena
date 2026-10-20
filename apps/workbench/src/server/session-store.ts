@@ -5,7 +5,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";
-import { readProcessIdentity, readBootId } from "ai-werewolf-arena-backend/run-session";
+import { readProcessIdentity, readBootId } from "@ai-werewolf-arena/game-runtime/run-session";
 import {
   ACTIVE_RUN_STATES,
   type RunMetadata,

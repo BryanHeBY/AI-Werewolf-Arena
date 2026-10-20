@@ -3,7 +3,7 @@
  * 页面只展示摘要及复用视频素材，不推断进程存活或读取配置文件；初始化与停止由应用处理。
  */
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { workbenchArt, type ThemeId } from "ai-werewolf-arena-frontend/appearance";
+import { workbenchArt, type ThemeId } from "@ai-werewolf-arena/game-media/appearance";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import type { Catalog, Page, Translator } from "../types";
 import { RunCard } from "../session-summary";

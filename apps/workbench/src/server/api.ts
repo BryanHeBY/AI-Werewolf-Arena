@@ -10,7 +10,7 @@ import { ConfigDocuments, containedFile, WorkbenchError, objectDocument } from "
 import { ConfigService, diagnostic } from "./config-service";
 import { SessionStore } from "./session-store";
 import { RunManager } from "./run-manager";
-import { describeModelCatalog } from "ai-werewolf-arena-backend/config/models";
+import { describeModelCatalog } from "@ai-werewolf-arena/game-runtime/config/models";
 import { normalizeListenHost, workbenchRequestHosts } from "./listen-address";
 
 export interface WorkbenchOptions {

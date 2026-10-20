@@ -4,7 +4,7 @@
 
 本规范记录哥特主题的实现与制作约束。现已接入64种角色小纹章、原创材质道具、类型化视觉意图、局部阅读衬底及有限动效。规则以项目规则卡和结构化归档为准；能力复用视觉家族，不等于每种角色都有独立人物插画。
 
-全量对应关系见 [视觉覆盖清单](../../frontend/design/visual-coverage.json)、[64 角色美术简报](../../frontend/design/role-art-briefs.json)；背景与中央阅读区的可交互构图研究见 [中央衬底研究](../../frontend/design/center-surface-study.html)。研究使用既有真实背景与道具，示意文字不属于真实对局，也不代表生产渲染器已改造。
+全量对应关系见 [视觉覆盖清单](../../packages/game-media/design/visual-coverage.json)、[64 角色美术简报](../../packages/game-media/design/role-art-briefs.json)；背景与中央阅读区的可交互构图研究见 [中央衬底研究](../../packages/game-media/design/center-surface-study.html)。研究使用既有真实背景与道具，示意文字不属于真实对局，也不代表生产渲染器已改造。
 
 ## 范围与现状
 
@@ -55,7 +55,7 @@ AI 元素放在 LLM 徽章、古镜刻度、星盘、细小齿轮和精密蚀刻
 
 座次、姓名、身份、模型分别排版，两列位置真正镜像，文字保持正向。姓名缺省时不制造空名称；身份、阵营、生命、警徽与临时能力分别展示。显式LLM/素材头像保留，缺省auto头像使用当前许可角色的主题徽记；未知身份使用中性材质章，不能读取未来底牌。显式neutral、隐藏头像和旧计划保持原意。出局后整卡灰化，金属章斜向覆盖头像；右列旋转方向镜像，不能遮座次。
 
-本地字体须固定来源、版本、字重与 SHA256，保留许可证。官方 Noto CJK 的 [Sans 许可](https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE)与 [Serif 许可](https://github.com/notofonts/noto-cjk/blob/main/Serif/LICENSE)均为 OFL 1.1；实际交付文件须核对内部 family 名称与 SC 命名，不只根据文件名登记。现有 `VideoFonts` 已支持本地字体快照和等待加载；项目已内置完整SC字库 Noto Sans SC 2.004 / Noto Serif SC 2.003，许可证、上游固定提交及压缩文件SHA256见 `frontend/src/themes/fonts`。网页与视频使用相同字节但各自注册别名；项目同family字体可显式覆盖内置字体。正式导出不得悄悄使用缺字 fallback，不得将系统字体直接复制进仓库。
+本地字体须固定来源、版本、字重与 SHA256，保留许可证。官方 Noto CJK 的 [Sans 许可](https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE)与 [Serif 许可](https://github.com/notofonts/noto-cjk/blob/main/Serif/LICENSE)均为 OFL 1.1；实际交付文件须核对内部 family 名称与 SC 命名，不只根据文件名登记。现有 `VideoFonts` 已支持本地字体快照和等待加载；项目已内置完整SC字库 Noto Sans SC 2.004 / Noto Serif SC 2.003，许可证、上游固定提交及压缩文件SHA256见 `packages/game-media/src/themes/fonts`。网页与视频使用相同字节但各自注册别名；项目同family字体可显式覆盖内置字体。正式导出不得悄悄使用缺字 fallback，不得将系统字体直接复制进仓库。
 
 新广播自动编排默认保留全文一页。自动发言溢出时使用“首屏停留→按真实行边界短过渡并停顿→末屏停留”；票型、技能结果和公告仍保原连续阅读。`VideoScript.speechReading`可全局选择`motion: "line" | "continuous" | "static"`，`ShotOptions.speechReading`逐段完整覆盖；逐行短过渡缺省0.15秒（按FPS取整数帧），可用非负整数`transitionFrames`覆盖，并由渲染器限制到每行周期约30%。静态模式只固定画面，不删正文或更改时长。阅读时钟在纯数据层统一计算，浏览器只在固定字体就绪后测量真实行边界与溢出像素，并对最终位移做输出像素对齐；暂停、倒看和直接seek不累积scrollTop。新发言窗根据实际字体行高与上下内边距向下取整完整行，停留时不在底部截断字形；短文仍按全文高度收缩。正文与播放中的卡片尺寸不逐句跳变。作者显式duration/captionPageFrames、hold和旧计划保留原分页约定；旧全文计划缺少`motion`仍为连续阅读，不能静默重写导演时钟。逐段策略写在非发言或旧分页窗口时明确报错，全局策略只跳过这些窗口。减少动效取消装饰运动，必要的原文阅读推进仍保留。未来TTS复用同一god/player来源及时间接口，本轮不接语音服务。
 
@@ -69,7 +69,7 @@ AI 元素放在 LLM 徽章、古镜刻度、星盘、细小齿轮和精密蚀刻
 
 结构化播报通过 `presentation/announcement-content` 从共享reader白名单取字段，再由 `SceneContentBlocks` 同时服务Web与视频。开局身份用座次网格；阵营、退水、查验结果、死亡对象与已记录死因采用主题语义色。哥特日间仍是暗衬，文字须使用暗面配色。长原句仍保留为字幕／旁白和可展开审计内容，不按原话关键词染色。只有完整语义块可替代Web原主文；通用行动字段缺技能或空行动含义时继续显示完整播报。作者正文、强调及旧显式分页保持原阅读面。
 
-`bun --no-env-file frontend/scripts/audit-video.ts --input record --fail-on readability` 可只读检查待确认生命页、超过80字符的无结构公告和无对象通用行动块，输出原seq与固定问题码，不输出原话。阈值用于筛出待审页面；溢出、字体对比、长英文角色、日夜和整幅页眉居中仍须在真实浏览器和正式PNG中人工核对。
+`bun --no-env-file apps/video/scripts/audit-video.ts --input record --fail-on readability` 可只读检查待确认生命页、超过80字符的无结构公告和无对象通用行动块，输出原seq与固定问题码，不输出原话。阈值用于筛出待审页面；溢出、字体对比、长英文角色、日夜和整幅页眉居中仍须在真实浏览器和正式PNG中人工核对。
 
 框体承担层级，不承担装饰数量。固定名册使用薄旧铁框、极小黄铜角件；当前发言者可有一次边光后停稳。中央阅读衬不再套多重全框，标题用短铭牌和两端线；结果仅一枚小印章。角件、内线、阴影最多两层，避免每个框内部再加一个框。
 

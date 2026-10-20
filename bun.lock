@@ -5,73 +5,65 @@
     "": {
       "name": "ai-werewolf-arena",
       "devDependencies": {
+        "@ai-werewolf-arena/game-media": "workspace:*",
+        "@ai-werewolf-arena/game-runtime": "workspace:*",
+        "@typescript-eslint/parser": "^8.70.1",
+        "eslint": "^9.39.5",
         "prettier": "3.9.9",
       },
     },
-    "apps/workbench": {
-      "name": "awa-workbench",
+    "apps/game": {
+      "name": "@ai-werewolf-arena/game-cli",
       "version": "0.1.0",
       "dependencies": {
-        "@ai-werewolf-arena/game-catalog": "workspace:*",
         "@ai-werewolf-arena/game-contract": "workspace:*",
+        "@ai-werewolf-arena/game-runtime": "workspace:*",
         "@ai-werewolf-arena/game-text": "workspace:*",
+        "@ai-werewolf-arena/project-paths": "workspace:*",
         "@ai-werewolf-arena/replay-contract": "workspace:*",
-        "@ai-werewolf-arena/workbench-contract": "workspace:*",
-        "@xterm/addon-fit": "^0.11.0",
-        "@xterm/xterm": "^6.0.0",
-        "ai-werewolf-arena-backend": "workspace:*",
-        "ai-werewolf-arena-frontend": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^20.19.43",
+        "bun-types": "^1.4.2",
+        "typescript": "^5.9.3",
+      },
+    },
+    "apps/replay": {
+      "name": "@ai-werewolf-arena/replay-app",
+      "version": "0.1.0",
+      "dependencies": {
+        "@ai-werewolf-arena/game-contract": "workspace:*",
+        "@ai-werewolf-arena/game-media": "workspace:*",
+        "@ai-werewolf-arena/game-text": "workspace:*",
+        "@ai-werewolf-arena/project-paths": "workspace:*",
         "react": "^19.3.0",
         "react-dom": "^19.3.0",
       },
       "devDependencies": {
+        "@ai-werewolf-arena/game-contract": "workspace:*",
         "@playwright/test": "^1.63.0",
+        "@remotion/bundler": "4.0.529",
+        "@remotion/renderer": "4.0.529",
+        "@types/node": "^20.19.43",
         "@types/react": "^19.3.0",
         "@types/react-dom": "^19.3.0",
-        "@typescript-eslint/parser": "^8.70.1",
+        "@typescript-eslint/parser": "8.70.1",
         "@vitejs/plugin-react": "^6.1.1",
         "bun-types": "^1.4.2",
-        "eslint": "^9.39.5",
+        "eslint": "9.39.5",
         "typescript": "^5.9.3",
         "vite": "^8.3.1",
       },
     },
-    "backend": {
-      "name": "ai-werewolf-arena-backend",
-      "version": "1.0.0",
-      "dependencies": {
-        "@agentclientprotocol/sdk": "^1.5.1",
-        "@ai-sdk/anthropic": "^4.0.65",
-        "@ai-sdk/openai-compatible": "^3.0.57",
-        "@ai-werewolf-arena/game-catalog": "workspace:*",
-        "@ai-werewolf-arena/game-contract": "workspace:*",
-        "@ai-werewolf-arena/game-presentation": "workspace:*",
-        "@ai-werewolf-arena/game-text": "workspace:*",
-        "@ai-werewolf-arena/replay-contract": "workspace:*",
-        "@ai-werewolf-arena/workbench-contract": "workspace:*",
-        "@earendil-works/pi-agent-core": "1.3.0",
-        "@earendil-works/pi-ai": "1.3.0",
-        "@earendil-works/pi-coding-agent": "1.3.0",
-        "@modelcontextprotocol/sdk": "^1.30.1",
-        "ai": "^7.0.118",
-        "typebox": "1.3.27",
-        "zod": "^4.6.5",
-      },
-      "devDependencies": {
-        "@types/node": "^20.19.43",
-        "@typescript-eslint/parser": "^8.70.1",
-        "bun-types": "^1.4.2",
-        "eslint": "^9.39.5",
-        "typescript": "^5.9.3",
-      },
-    },
-    "frontend": {
-      "name": "ai-werewolf-arena-frontend",
-      "version": "1.0.0",
+    "apps/video": {
+      "name": "@ai-werewolf-arena/video-app",
+      "version": "0.1.0",
       "dependencies": {
         "@ai-werewolf-arena/game-catalog": "workspace:*",
+        "@ai-werewolf-arena/game-media": "workspace:*",
         "@ai-werewolf-arena/game-presentation": "workspace:*",
         "@ai-werewolf-arena/game-text": "workspace:*",
+        "@ai-werewolf-arena/project-paths": "workspace:*",
         "@ai-werewolf-arena/replay-contract": "workspace:*",
         "@remotion/player": "^4.0.529",
         "react": "^19.3.0",
@@ -83,12 +75,42 @@
         "@playwright/test": "^1.63.0",
         "@remotion/bundler": "4.0.529",
         "@remotion/renderer": "4.0.529",
+        "@types/node": "^20.19.43",
         "@types/react": "^19.3.0",
         "@types/react-dom": "^19.3.0",
         "@typescript-eslint/parser": "8.70.1",
         "@vitejs/plugin-react": "^6.1.1",
         "bun-types": "^1.4.2",
         "eslint": "9.39.5",
+        "typescript": "^5.9.3",
+        "vite": "^8.3.1",
+      },
+    },
+    "apps/workbench": {
+      "name": "awa-workbench",
+      "version": "0.1.0",
+      "dependencies": {
+        "@ai-werewolf-arena/game-catalog": "workspace:*",
+        "@ai-werewolf-arena/game-contract": "workspace:*",
+        "@ai-werewolf-arena/game-media": "workspace:*",
+        "@ai-werewolf-arena/game-runtime": "workspace:*",
+        "@ai-werewolf-arena/game-text": "workspace:*",
+        "@ai-werewolf-arena/project-paths": "workspace:*",
+        "@ai-werewolf-arena/replay-contract": "workspace:*",
+        "@ai-werewolf-arena/workbench-contract": "workspace:*",
+        "@xterm/addon-fit": "^0.11.0",
+        "@xterm/xterm": "^6.0.0",
+        "react": "^19.3.0",
+        "react-dom": "^19.3.0",
+      },
+      "devDependencies": {
+        "@playwright/test": "^1.63.0",
+        "@types/react": "^19.3.0",
+        "@types/react-dom": "^19.3.0",
+        "@typescript-eslint/parser": "^8.70.1",
+        "@vitejs/plugin-react": "^6.1.1",
+        "bun-types": "^1.4.2",
+        "eslint": "^9.39.5",
         "typescript": "^5.9.3",
         "vite": "^8.3.1",
       },
@@ -115,6 +137,35 @@
         "typescript": "^5.9.3",
       },
     },
+    "packages/game-media": {
+      "name": "@ai-werewolf-arena/game-media",
+      "version": "1.0.0",
+      "dependencies": {
+        "@ai-werewolf-arena/game-catalog": "workspace:*",
+        "@ai-werewolf-arena/game-presentation": "workspace:*",
+        "@ai-werewolf-arena/game-text": "workspace:*",
+        "@ai-werewolf-arena/project-paths": "workspace:*",
+        "@ai-werewolf-arena/replay-contract": "workspace:*",
+        "@remotion/player": "^4.0.529",
+        "react": "^19.3.0",
+        "react-dom": "^19.3.0",
+        "remotion": "^4.0.529",
+      },
+      "devDependencies": {
+        "@ai-werewolf-arena/game-contract": "workspace:*",
+        "@playwright/test": "^1.63.0",
+        "@remotion/bundler": "4.0.529",
+        "@remotion/renderer": "4.0.529",
+        "@types/react": "^19.3.0",
+        "@types/react-dom": "^19.3.0",
+        "@typescript-eslint/parser": "8.70.1",
+        "@vitejs/plugin-react": "^6.1.1",
+        "bun-types": "^1.4.2",
+        "eslint": "9.39.5",
+        "typescript": "^5.9.3",
+        "vite": "^8.3.1",
+      },
+    },
     "packages/game-presentation": {
       "name": "@ai-werewolf-arena/game-presentation",
       "version": "0.1.0",
@@ -128,6 +179,36 @@
         "typescript": "^5.9.3",
       },
     },
+    "packages/game-runtime": {
+      "name": "@ai-werewolf-arena/game-runtime",
+      "version": "1.0.0",
+      "dependencies": {
+        "@agentclientprotocol/sdk": "^1.5.1",
+        "@ai-sdk/anthropic": "^4.0.65",
+        "@ai-sdk/openai-compatible": "^3.0.57",
+        "@ai-werewolf-arena/game-catalog": "workspace:*",
+        "@ai-werewolf-arena/game-contract": "workspace:*",
+        "@ai-werewolf-arena/game-presentation": "workspace:*",
+        "@ai-werewolf-arena/game-text": "workspace:*",
+        "@ai-werewolf-arena/project-paths": "workspace:*",
+        "@ai-werewolf-arena/replay-contract": "workspace:*",
+        "@ai-werewolf-arena/workbench-contract": "workspace:*",
+        "@earendil-works/pi-agent-core": "1.3.0",
+        "@earendil-works/pi-ai": "1.3.0",
+        "@earendil-works/pi-coding-agent": "1.3.0",
+        "@modelcontextprotocol/sdk": "^1.30.1",
+        "ai": "^7.0.118",
+        "typebox": "1.3.27",
+        "zod": "^4.6.5",
+      },
+      "devDependencies": {
+        "@types/node": "^20.19.43",
+        "@typescript-eslint/parser": "^8.70.1",
+        "bun-types": "^1.4.2",
+        "eslint": "^9.39.5",
+        "typescript": "^5.9.3",
+      },
+    },
     "packages/game-text": {
       "name": "@ai-werewolf-arena/game-text",
       "version": "0.1.0",
@@ -135,6 +216,15 @@
         "@ai-werewolf-arena/game-contract": "workspace:*",
       },
       "devDependencies": {
+        "bun-types": "^1.4.2",
+        "typescript": "^5.9.3",
+      },
+    },
+    "packages/project-paths": {
+      "name": "@ai-werewolf-arena/project-paths",
+      "version": "0.1.0",
+      "devDependencies": {
+        "@types/node": "^20.19.43",
         "bun-types": "^1.4.2",
         "typescript": "^5.9.3",
       },
@@ -174,13 +264,25 @@
 
     "@ai-werewolf-arena/game-catalog": ["@ai-werewolf-arena/game-catalog@workspace:packages/game-catalog"],
 
+    "@ai-werewolf-arena/game-cli": ["@ai-werewolf-arena/game-cli@workspace:apps/game"],
+
     "@ai-werewolf-arena/game-contract": ["@ai-werewolf-arena/game-contract@workspace:packages/game-contract"],
+
+    "@ai-werewolf-arena/game-media": ["@ai-werewolf-arena/game-media@workspace:packages/game-media"],
 
     "@ai-werewolf-arena/game-presentation": ["@ai-werewolf-arena/game-presentation@workspace:packages/game-presentation"],
 
+    "@ai-werewolf-arena/game-runtime": ["@ai-werewolf-arena/game-runtime@workspace:packages/game-runtime"],
+
     "@ai-werewolf-arena/game-text": ["@ai-werewolf-arena/game-text@workspace:packages/game-text"],
 
+    "@ai-werewolf-arena/project-paths": ["@ai-werewolf-arena/project-paths@workspace:packages/project-paths"],
+
+    "@ai-werewolf-arena/replay-app": ["@ai-werewolf-arena/replay-app@workspace:apps/replay"],
+
     "@ai-werewolf-arena/replay-contract": ["@ai-werewolf-arena/replay-contract@workspace:packages/replay-contract"],
+
+    "@ai-werewolf-arena/video-app": ["@ai-werewolf-arena/video-app@workspace:apps/video"],
 
     "@ai-werewolf-arena/workbench-contract": ["@ai-werewolf-arena/workbench-contract@workspace:packages/workbench-contract"],
 
@@ -614,10 +716,6 @@
 
     "ai": ["ai@7.0.118", "", { "dependencies": { "@ai-sdk/gateway": "4.0.96", "@ai-sdk/provider": "4.0.18", "@ai-sdk/provider-utils": "5.0.49" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-ZjkbbOffH09yQAjeZ5yGXd8ePTQlFIyKH5aW0s0LOMmvaR1TSoeg5wVURwLvFry/IzzaLndmw9glTKwWRoog3Q=="],
 
-    "ai-werewolf-arena-backend": ["ai-werewolf-arena-backend@workspace:backend"],
-
-    "ai-werewolf-arena-frontend": ["ai-werewolf-arena-frontend@workspace:frontend"],
-
     "ajv": ["ajv@6.14.0", "", { "dependencies": { "fast-deep-equal": "^3.1.1", "fast-json-stable-stringify": "^2.0.0", "json-schema-traverse": "^0.4.1", "uri-js": "^4.2.2" } }, "sha512-IWrosm/yrn43eiKqkfkHis7QioDleaXQHdDVPKg0FSwwd/DuvyX79TZnFOnYpB7dcsFAMmtFztZuXPDvSePkFw=="],
 
     "ajv-formats": ["ajv-formats@3.0.1", "", { "dependencies": { "ajv": "^8.0.0" }, "peerDependencies": { "ajv": "^8.0.0" } }, "sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ=="],
@@ -968,9 +1066,9 @@
 
     "merge-stream": ["merge-stream@2.0.0", "", {}, "sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w=="],
 
-    "mime-db": ["mime-db@1.54.0", "", {}, "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ=="],
+    "mime-db": ["mime-db@1.52.0", "", {}, "sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg=="],
 
-    "mime-types": ["mime-types@3.0.2", "", { "dependencies": { "mime-db": "^1.54.0" } }, "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A=="],
+    "mime-types": ["mime-types@2.1.35", "", { "dependencies": { "mime-db": "1.52.0" } }, "sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw=="],
 
     "mimic-fn": ["mimic-fn@2.1.0", "", {}, "sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg=="],
 
@@ -1244,6 +1342,8 @@
 
     "@typescript-eslint/visitor-keys/eslint-visitor-keys": ["eslint-visitor-keys@5.0.1", "", {}, "sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA=="],
 
+    "accepts/mime-types": ["mime-types@3.0.2", "", { "dependencies": { "mime-db": "^1.54.0" } }, "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A=="],
+
     "ajv-formats/ajv": ["ajv@8.18.0", "", { "dependencies": { "fast-deep-equal": "^3.1.3", "fast-uri": "^3.0.1", "json-schema-traverse": "^1.0.0", "require-from-string": "^2.0.2" } }, "sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A=="],
 
     "ajv-keywords/ajv": ["ajv@8.20.0", "", { "dependencies": { "fast-deep-equal": "^3.1.3", "fast-uri": "^3.0.1", "json-schema-traverse": "^1.0.0", "require-from-string": "^2.0.2" } }, "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="],
@@ -1251,6 +1351,8 @@
     "body-parser/content-type": ["content-type@2.0.0", "", {}, "sha512-j/O/d7GcZCyNl7/hwZAb606rzqkyvaDctLmckbxLzHvFBzTJHuGEdodATcP3yIRoDrLHkIATJuvzbFlp/ki2cQ=="],
 
     "css-loader/semver": ["semver@7.7.4", "", { "bin": "bin/semver.js" }, "sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA=="],
+
+    "express/mime-types": ["mime-types@3.0.2", "", { "dependencies": { "mime-db": "^1.54.0" } }, "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A=="],
 
     "gaxios/https-proxy-agent": ["https-proxy-agent@7.0.6", "", { "dependencies": { "agent-base": "^7.1.2", "debug": "4" } }, "sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw=="],
 
@@ -1264,15 +1366,17 @@
 
     "schema-utils/ajv": ["ajv@8.20.0", "", { "dependencies": { "fast-deep-equal": "^3.1.3", "fast-uri": "^3.0.1", "json-schema-traverse": "^1.0.0", "require-from-string": "^2.0.2" } }, "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="],
 
+    "send/mime-types": ["mime-types@3.0.2", "", { "dependencies": { "mime-db": "^1.54.0" } }, "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A=="],
+
     "source-map-support/source-map": ["source-map@0.6.1", "", {}, "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g=="],
 
     "tinyglobby/picomatch": ["picomatch@4.0.5", "", {}, "sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A=="],
 
     "type-is/content-type": ["content-type@2.0.0", "", {}, "sha512-j/O/d7GcZCyNl7/hwZAb606rzqkyvaDctLmckbxLzHvFBzTJHuGEdodATcP3yIRoDrLHkIATJuvzbFlp/ki2cQ=="],
 
-    "webpack/eslint-scope": ["eslint-scope@5.1.1", "", { "dependencies": { "esrecurse": "^4.3.0", "estraverse": "^4.1.1" } }, "sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw=="],
+    "type-is/mime-types": ["mime-types@3.0.2", "", { "dependencies": { "mime-db": "^1.54.0" } }, "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A=="],
 
-    "webpack/mime-types": ["mime-types@2.1.35", "", { "dependencies": { "mime-db": "1.52.0" } }, "sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw=="],
+    "webpack/eslint-scope": ["eslint-scope@5.1.1", "", { "dependencies": { "esrecurse": "^4.3.0", "estraverse": "^4.1.1" } }, "sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw=="],
 
     "@modelcontextprotocol/sdk/ajv/json-schema-traverse": ["json-schema-traverse@1.0.0", "", {}, "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug=="],
 
@@ -1280,9 +1384,13 @@
 
     "@typescript-eslint/typescript-estree/minimatch/brace-expansion": ["brace-expansion@5.0.5", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-VZznLgtwhn+Mact9tfiwx64fA9erHH/MCXEUfB/0bX/6Fz6ny5EGTXYltMocqg4xFAQZtnO3DHWWXi8RiuN7cQ=="],
 
+    "accepts/mime-types/mime-db": ["mime-db@1.54.0", "", {}, "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ=="],
+
     "ajv-formats/ajv/json-schema-traverse": ["json-schema-traverse@1.0.0", "", {}, "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug=="],
 
     "ajv-keywords/ajv/json-schema-traverse": ["json-schema-traverse@1.0.0", "", {}, "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug=="],
+
+    "express/mime-types/mime-db": ["mime-db@1.54.0", "", {}, "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ=="],
 
     "gaxios/https-proxy-agent/agent-base": ["agent-base@7.1.4", "", {}, "sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ=="],
 
@@ -1290,8 +1398,10 @@
 
     "schema-utils/ajv/json-schema-traverse": ["json-schema-traverse@1.0.0", "", {}, "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug=="],
 
-    "webpack/eslint-scope/estraverse": ["estraverse@4.3.0", "", {}, "sha512-39nnKffWz8xN1BU/2c79n9nB9HDzo0niYUqx6xyqUnyoAnQyyWpOTdZEeiCch8BBu515t4wp9ZmgVfVhn9EBpw=="],
+    "send/mime-types/mime-db": ["mime-db@1.54.0", "", {}, "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ=="],
 
-    "webpack/mime-types/mime-db": ["mime-db@1.52.0", "", {}, "sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg=="],
+    "type-is/mime-types/mime-db": ["mime-db@1.54.0", "", {}, "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ=="],
+
+    "webpack/eslint-scope/estraverse": ["estraverse@4.3.0", "", {}, "sha512-39nnKffWz8xN1BU/2c79n9nB9HDzo0niYUqx6xyqUnyoAnQyyWpOTdZEeiCch8BBu515t4wp9ZmgVfVhn9EBpw=="],
   }
 }

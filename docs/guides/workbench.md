@@ -33,7 +33,7 @@ bun run workbench -- --host 0.0.0.0 --port 0
 
 目录参数相对于根命令的当前工作目录；默认指向仓库的 `configs/` 和 `record/`。工作台启动登记放在忽略的 `.workbench/runs/`，可通过 `--state-dir` 改变这个私有状态根，不作为游戏录制或公开发布材料。开发时同时使用 API 与 Vite，浏览器打开 Vite 的 5174 端口。
 
-以上是当前工作台入口的规则，前端复盘与其它 CLI 尚未全面统一。后续重构按[统一路径解析要求](../architecture/workbench.md#wb-path-01统一路径解析待实现)收口：显式相对参数按调用目录，缺省数据目录按项目根，配置内相对文件引用按配置所在目录；内部切换工具运行目录不改变这些含义。
+公共入口遵循[统一路径解析要求](../architecture/workbench.md#wb-path-01统一路径解析)：显式相对参数按调用目录，缺省数据目录按项目根，配置内相对文件引用按配置所在目录；内部切换工具运行目录不改变这些含义。
 
 ## 配置一局
 
@@ -49,6 +49,12 @@ bun run workbench -- --host 0.0.0.0 --port 0
 
 新增连接与 Agent 是两份独立文件。如果后续保存失败，已经创建的连接保留，可通过 JSON 编辑继续修正或复用。外部编辑导致摘要冲突时，保存拒绝且当前草稿保留；重新读取后合并。该协议不锁住任意外部编辑器。
 
+### Pi 内置平台与认证
+
+Pi 的内置 OpenAI、Anthropic、智谱和 Kimi 平台自带 API 类型、默认地址与模型目录；界面的灰色地址是缺省提示，不会自动写成覆盖配置。仅在使用代理、自建网关或确实要改变连接地址时填写 `baseUrl`，此时才写入原生 `models.providers`。模型与思考等级保存在 Agent options；同类连接可复用，不能把不同平台或认证模式误认为同一个连接。
+
+API Key 与订阅 OAuth 分别选择：Codex 订阅显式从本机 Codex 认证导入，API Key 可直接填写或保留环境占位符。原生字段及多平台目录语义以 [Pi models.json 官方说明](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/models.md)为准；AWA 保持 Pi 原生配置对象，在内存中使用会话，不启用默认文件读写工具。
+
 ## 运行与回放
 
 每局使用独立 CLI 进程。终端页是只读 ANSI 输出，没有交互式 shell。刷新页面会补读本局日志。进程退出、对局是否打完、核心录制是否发布分别显示。“核心录制完整”表示 manifest、replay 及启用时的 reproduction 已发布；可选玩家档案／摘要与严格复现验证各有独立结果。
@@ -58,6 +64,20 @@ bun run workbench -- --host 0.0.0.0 --port 0
 停止授权当前使用 Linux `/proc` 的进程启动身份及启动系统 ID；无法确认实例身份时保持 lost／interrupted 状态，不仅凭 PID 提供停止操作。
 
 已有 replay 文件的对局可打开现有复盘界面，格式问题由播放器显示。God 回放仍为全知数据；切换席位不授予私有档案或改变事件可见性。私有玩家档案仍通过原播放器的显式导入操作读取。
+
+## 独立入口与平台
+
+```bash
+# 仓库根：独立后端对局
+bun run run -- --game-config-name twelve_player_standard
+# 仓库根：独立复盘页面
+bun run dev:frontend
+bun run replay:dev -- --input ./record/<session>/replay.json
+# 独立应用目录命令；路径以 apps/game 为调用目录
+bun run --cwd apps/game config:check --configs-dir ../../configs --game-config-name twelve_player_standard
+```
+
+本地工作台、Pi／LLM 对局和复盘使用跨平台 Bun API。浏览器测试另用 Node.js 启动官方 Playwright CLI，避免 Bun 执行器差异。Linux 的 `bwrap` ACP 隔离脚本不适用于 Windows；不因工作台能在 Windows 启动就宣称该脚本具有 Windows 隔离能力。
 
 ## 开发与验证
 

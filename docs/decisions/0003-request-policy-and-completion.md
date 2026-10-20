@@ -26,10 +26,10 @@ Wall 每作者、Cupid／Hybrid 每实际 request、LastWords 每真实 permit �
 
 当前版本约定：新严格writer写Tape3；reader保原Tape2shape且2拒新字段，3才允许该可选事实。envelope1只为strict允许内层2／3配对，public/player2及manifest1不变。旧reader不承诺读新3；结构／机制准入先于精确source检查，sourceHash变化按原门槛处理，不改历史fixture或来源身份。
 
-[失败窗口回归](../../backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts)保exact重放断言。此决定不承诺任意外部安装失败或缺候选历史档都能重现领域partial；实际CP、facts、ops与错误前缀仍是独立约束。
+[失败窗口回归](../../packages/game-runtime/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts)保exact重放断言。此决定不承诺任意外部安装失败或缺候选历史档都能重现领域partial；实际CP、facts、ops与错误前缀仍是独立约束。
 
 ## 普通遗言期满不触发全局取消
 
 普通遗言原窗口已有期满收口路径，但严格录制的交付断言和 runner 的全局取消先于该路径，曾把模型思考超时升级为整局异常。修复继续拒绝迟到行动，由真实遗言窗口按完成身份显式登记可恢复期满；runner 仅放行该具名拒绝回到原 owner 关闭，不把所有撤权统一吞掉。严格授词、原体／领域失效及清理失败仍传播。
 
-期限断言的结构化固定码进入 Tape3，精确重放同一操作性失败；它不是已返回候选或领域付款，不改变 Tape2 接受面。回退本身受原绝对期限约束，耗尽后不再凭同步微任务竞争生成候选。相关三传输、双语完整局与无重放时钟的核验见 [遗言超时场景](../../backend/tests/scenarios/runtime/last-words-timeout-replay.test.ts)。
+期限断言的结构化固定码进入 Tape3，精确重放同一操作性失败；它不是已返回候选或领域付款，不改变 Tape2 接受面。回退本身受原绝对期限约束，耗尽后不再凭同步微任务竞争生成候选。相关三传输、双语完整局与无重放时钟的核验见 [遗言超时场景](../../packages/game-runtime/tests/scenarios/runtime/last-words-timeout-replay.test.ts)。

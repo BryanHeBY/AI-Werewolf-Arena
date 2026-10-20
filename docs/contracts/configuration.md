@@ -190,11 +190,11 @@ Agent 选择优先级为 `players.<seat>.agent` → `roles.<role>.agent` → 对
 
 ```bash
 # 只预览旧 runtime/providers.json + agents.json 的 V2 转换
-bun run --cwd backend config:migrate --configs-dir ../configs --runtime
+bun run --cwd apps/game config:migrate --configs-dir ../../configs --runtime
 # 核对预览后，显式应用
-bun run --cwd backend config:migrate --configs-dir ../configs --runtime --apply
+bun run --cwd apps/game config:migrate --configs-dir ../../configs --runtime --apply
 # 旧板子迁移沿用原入口，不迁移 runtime
-bun run --cwd backend config:migrate --configs-dir ../configs
+bun run --cwd apps/game config:migrate --configs-dir ../../configs
 ```
 
 runtime 迁移先校验两个旧文件、全部 `games/*.json` 引用与可选审计配置；预检用合成环境值，不要求操作者交出真实 key。预览不写文件且报告不含名字、URL、命令、认证或人格。应用时独占创建 `providers.json.v1.bak`／`agents.json.v1.bak`，已有备份必须与本次源字节完全相同；随后独占发布 `backends.json`、替换 `agents.json`，最后移除已退役的 `providers.json`，原文保存在备份。已有 `backends.json` 一律拒绝覆盖，重复执行应先明确当前文件版本。

@@ -19,13 +19,15 @@ test("Pi execution rejects private feature imports, type imports and reexports",
   const failures = checkDependencies(
     ts,
     graph({
-      "backend/src/agents/pi/action-provider.ts":
+      "packages/game-runtime/src/agents/pi/action-provider.ts":
         "import { x } from '../../features/test-role/authority';",
-      "backend/src/agents/pi/session.ts": "export { x } from '../../features/test-role/authority';",
-      "backend/src/agents/pi/contracts.ts":
+      "packages/game-runtime/src/agents/pi/session.ts":
+        "export { x } from '../../features/test-role/authority';",
+      "packages/game-runtime/src/agents/pi/contracts.ts":
         "export type State = import('../../features/test-role/state').State;",
-      "backend/src/features/test-role/authority.ts": "export const x = 1;",
-      "backend/src/features/test-role/state.ts": "export interface State { count: number; }",
+      "packages/game-runtime/src/features/test-role/authority.ts": "export const x = 1;",
+      "packages/game-runtime/src/features/test-role/state.ts":
+        "export interface State { count: number; }",
     }),
   );
   expect(failures.map(({ rule }) => rule)).toEqual([
@@ -34,9 +36,9 @@ test("Pi execution rejects private feature imports, type imports and reexports",
     "dependency.adapter-feature",
   ]);
   expect(failures.map(({ path }) => path)).toEqual([
-    "backend/src/agents/pi/action-provider.ts",
-    "backend/src/agents/pi/session.ts",
-    "backend/src/agents/pi/contracts.ts",
+    "packages/game-runtime/src/agents/pi/action-provider.ts",
+    "packages/game-runtime/src/agents/pi/session.ts",
+    "packages/game-runtime/src/agents/pi/contracts.ts",
   ]);
 });
 
@@ -44,10 +46,11 @@ test("Pi execution consumes explicit feature contracts and ports without broaden
   const failures = checkDependencies(
     ts,
     graph({
-      "backend/src/agents/pi/action-provider.ts":
+      "packages/game-runtime/src/agents/pi/action-provider.ts":
         "import { x } from '../../features/test-role/ports'; import type { State } from '../../features/test-role/contracts';",
-      "backend/src/features/test-role/ports.ts": "export const x = 1;",
-      "backend/src/features/test-role/contracts.ts": "export interface State { count: number; }",
+      "packages/game-runtime/src/features/test-role/ports.ts": "export const x = 1;",
+      "packages/game-runtime/src/features/test-role/contracts.ts":
+        "export interface State { count: number; }",
     }),
   );
   expect(failures).toEqual([]);

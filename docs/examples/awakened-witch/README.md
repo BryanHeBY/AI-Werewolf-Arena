@@ -15,10 +15,10 @@ cp -n configs.example/games/twelve_player_awakened_witch*.json configs/games/
 LLM 引用 `deepseek_v4_flash`，ACP 引用 `acp_default`；可改成自己 `runtime/agents.json` 已有的 Agent 名，沿用个人模型、Provider、认证与隔离启动器。无需复制公开 runtime 或在命令行提供 API key。
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_witch --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_witch_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_witch_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_witch_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_witch --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_witch_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_witch_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_witch_acp --locale en --display-locale en
 ```
 
 `roles.awakened_witch` 只接受 `{}`，解析为固定政策 `awa_awakened_witch_v1`；不支持自行改变药数、参与次数或秘密范围的开关。

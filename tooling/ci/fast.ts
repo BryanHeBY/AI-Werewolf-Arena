@@ -47,7 +47,7 @@ for (const args of suites[suite as keyof typeof suites]) {
   console.info(`$ bun --no-env-file ${args.join(" ")}`);
   const child = Bun.spawn([process.execPath, "--no-env-file", ...args], {
     // 后端夹具保留既有相对 cwd 契约，与 backend/package.json 的测试入口一致。
-    cwd: suite === "backend" ? path.join(root, "backend") : root,
+    cwd: suite === "backend" ? path.join(root, "packages/game-runtime") : root,
     stdin: "ignore",
     stdout: "inherit",
     stderr: "inherit",

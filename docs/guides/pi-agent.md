@@ -22,11 +22,11 @@ Pi 与现有 LLM SDK、ACP 共用玩家提示、工具权限、回合期限和 A
 ```bash
 # 仅首次创建配置目录时复制整个模板；已有 configs 时手工合并 Pi runtime 条目及这两份 game。
 # 填好 backends.json 中的占位认证后，先检查：
-bun run --cwd backend config:check --configs-dir ../configs --game-config-name six_player_pi
-bun run --cwd backend config:check --configs-dir ../configs --game-config-name twelve_player_pi
+bun run --cwd apps/game config:check --configs-dir ../../configs --game-config-name six_player_pi
+bun run --cwd apps/game config:check --configs-dir ../../configs --game-config-name twelve_player_pi
 # 下列命令由操作者主动启动，会访问配置的模型服务：
-bun run --cwd backend run --configs-dir ../configs --game-config-name six_player_pi --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_pi --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name six_player_pi --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_pi --locale en --display-locale en
 ```
 
 只使用一个模型时，将 game 的 `agent` 设为相应 Pi Agent，并移除示例中的 `players` 绑定；否则席位选择优先于默认。也可按原有 `roles.<role>.agent`／`players.<seat>.agent` 与 LLM／ACP 混用。`pi_native.limits.maxConcurrentRequests` 在本局中由这个连接下的所有 Pi 玩家共享，各席位会话和可见事件仍隔离。

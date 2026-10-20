@@ -17,16 +17,18 @@ function rules(rows: Record<string, string>) {
 test("named root port facets are actual public endpoints for all server consumers", () => {
   expect(
     rules({
-      "backend/src/game/mechanisms/roles/a/profile.ts": "import {x} from '../b/ability-ports';",
-      "backend/src/game/engine/setup.ts": "import {x} from '../mechanisms/roles/b/setup-ports';",
-      "backend/src/ai/agents/player/capture.ts":
+      "packages/game-runtime/src/game/mechanisms/roles/a/profile.ts":
+        "import {x} from '../b/ability-ports';",
+      "packages/game-runtime/src/game/engine/setup.ts":
+        "import {x} from '../mechanisms/roles/b/setup-ports';",
+      "packages/game-runtime/src/ai/agents/player/capture.ts":
         "import {x} from '../../../game/mechanisms/roles/b/player-ports';",
-      "backend/src/game/gateway/preflight.ts":
+      "packages/game-runtime/src/game/gateway/preflight.ts":
         "type T=import('../mechanisms/roles/b/action-ports').T;",
-      "backend/src/game/mechanisms/roles/b/ability-ports.ts": "export const x=1;",
-      "backend/src/game/mechanisms/roles/b/setup-ports.ts": "export const x=1;",
-      "backend/src/game/mechanisms/roles/b/player-ports.ts": "export const x=1;",
-      "backend/src/game/mechanisms/roles/b/action-ports.ts": "export interface T {}",
+      "packages/game-runtime/src/game/mechanisms/roles/b/ability-ports.ts": "export const x=1;",
+      "packages/game-runtime/src/game/mechanisms/roles/b/setup-ports.ts": "export const x=1;",
+      "packages/game-runtime/src/game/mechanisms/roles/b/player-ports.ts": "export const x=1;",
+      "packages/game-runtime/src/game/mechanisms/roles/b/action-ports.ts": "export interface T {}",
     }),
   ).toEqual([]);
 });
@@ -41,9 +43,9 @@ test("private nested and similarly named files stay private for feature and engi
   ]) {
     expect(
       rules({
-        "backend/src/game/mechanisms/roles/a/profile.ts": `import {x} from '../b/${leaf}';`,
-        "backend/src/game/engine/setup.ts": `import {x} from '../mechanisms/roles/b/${leaf}';`,
-        [`backend/src/game/mechanisms/roles/b/${leaf}.ts`]: "export const x=1;",
+        "packages/game-runtime/src/game/mechanisms/roles/a/profile.ts": `import {x} from '../b/${leaf}';`,
+        "packages/game-runtime/src/game/engine/setup.ts": `import {x} from '../mechanisms/roles/b/${leaf}';`,
+        [`packages/game-runtime/src/game/mechanisms/roles/b/${leaf}.ts`]: "export const x=1;",
       }),
     ).toEqual(["dependency.feature-internal", "dependency.engine-feature"]);
   }
@@ -51,11 +53,11 @@ test("private nested and similarly named files stay private for feature and engi
 
 test("public port naming does not waive the domain and browser dependency boundaries", () => {
   const rows = rules({
-    "backend/src/core/domain/input.ts":
+    "packages/game-runtime/src/core/domain/input.ts":
       "import {x} from '../../game/mechanisms/roles/b/setup-ports';",
     "frontend/src/input.ts":
-      "import {x} from '../../backend/src/game/mechanisms/roles/b/setup-ports';",
-    "backend/src/game/mechanisms/roles/b/setup-ports.ts": "export const x=1;",
+      "import {x} from '../../packages/game-runtime/src/game/mechanisms/roles/b/setup-ports';",
+    "packages/game-runtime/src/game/mechanisms/roles/b/setup-ports.ts": "export const x=1;",
   });
   expect(rows).toContain("dependency.domain-implementation");
   expect(rows).toContain("dependency.frontend-backend");

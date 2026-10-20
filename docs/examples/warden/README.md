@@ -10,10 +10,10 @@
 mkdir -p configs/boards configs/games
 cp -n configs.example/boards/awa_warden_12_partner_native_v1.json configs/boards/
 cp -n configs.example/games/twelve_player_warden*.json configs/games/
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_warden --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_warden --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_warden_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_warden_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_warden --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_warden --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_warden_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_warden_acp --locale en --display-locale en
 ```
 
 LLM 示例使用 `deepseek_v4_flash`，ACP 使用 `acp_default`；可将 game 的 agent 改成现有 `runtime/agents.json` 中已配置的名称。`roles.warden` 只支持 `policy: awa_melbourne_warden_v1` 与 `forcePolicy: awa_warden_partner_native_v1`，省略参数时采用相同默认值。

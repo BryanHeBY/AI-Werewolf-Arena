@@ -14,7 +14,7 @@ import {
   workbenchArt,
   type ThemeId,
   type ThemeTone,
-} from "ai-werewolf-arena-frontend/appearance";
+} from "@ai-werewolf-arena/game-media/appearance";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import type { Catalog, Page } from "./types";
 import { api } from "./api";

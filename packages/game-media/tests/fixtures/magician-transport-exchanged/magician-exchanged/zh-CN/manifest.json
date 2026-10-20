@@ -1,0 +1,524 @@
+{
+  "schema": "awa-fixture-manifests-v2",
+  "generatedBy": "tooling/refactor/fixture-manifest.ts",
+  "baseline": {
+    "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "inventoryPath": "docs/refactor/generated/baseline-fixtures.json",
+    "inventorySha256": "b3506ca7aca8abda98e1936c02cc35be58c5b0b024da0b80ad97284cf67f6915"
+  },
+  "coverage": {
+    "expectedFiles": 2,
+    "exactBytesFiles": 2,
+    "mechanicalSourceFiles": 0,
+    "originalBytes": 42772,
+    "currentBytes": 42772
+  },
+  "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
+  "files": [
+    {
+      "originPath": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+      "currentPath": "packages/game-media/tests/fixtures/magician-transport-exchanged/magician-exchanged/zh-CN/checkpoint.json",
+      "sha256": "528dbf56a28ad7adf41809380c135cbb16350a163f3ac51af4983c92b6137827",
+      "bytes": 9317,
+      "owner": "frontend",
+      "kind": "checkpoint",
+      "suiteId": "fixture:frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_magician_wolf_king_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+              "pointer": "/players/8/privateState/magician/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "unknown",
+          "reason": "No literal locale is recorded in this artifact."
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 2,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 3,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "wolf_king",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "magician",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 12,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+            "sha256": "528dbf56a28ad7adf41809380c135cbb16350a163f3ac51af4983c92b6137827"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "unknown",
+          "reason": "No schemaVersion is serialized; legacy status does not identify a build."
+        }
+      },
+      "currentSha256": "528dbf56a28ad7adf41809380c135cbb16350a163f3ac51af4983c92b6137827",
+      "currentBytes": 9317
+    },
+    {
+      "originPath": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+      "currentPath": "packages/game-media/tests/fixtures/magician-transport-exchanged/magician-exchanged/zh-CN/god.replay.json",
+      "sha256": "c3c4f0ead81585baa11c906f604566c0840b0982531e1addf3a03e2566cc9a3c",
+      "bytes": 33455,
+      "owner": "frontend",
+      "kind": "god-replay",
+      "suiteId": "fixture:frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "magician_transport_exchanged",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "zh-CN",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 2,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 3,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "wolf_king",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "magician",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 12,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+            "sha256": "c3c4f0ead81585baa11c906f604566c0840b0982531e1addf3a03e2566cc9a3c"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "c3c4f0ead81585baa11c906f604566c0840b0982531e1addf3a03e2566cc9a3c",
+      "currentBytes": 33455
+    }
+  ],
+  "suites": [
+    {
+      "suiteId": "fixture:frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+      "anchorOriginPath": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+      "owner": "frontend",
+      "kind": "recorded-archive",
+      "files": [
+        "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+        "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json"
+      ],
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "magician_transport_exchanged",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_magician_wolf_king_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+              "pointer": "/players/8/privateState/magician/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "zh-CN",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 2,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 3,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "wolf_king",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "magician",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 12,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+            "sha256": "c3c4f0ead81585baa11c906f604566c0840b0982531e1addf3a03e2566cc9a3c"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "membership": [
+        {
+          "originPath": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.checkpoint.txt",
+              "pointer": "",
+              "detail": "Basename only locates candidates; recorded eventCount, complete actor roster and literal terminal result agree, or the explicit cycle_failed/runtime_error nonterminal snapshot and last event day/phase agree. This compares archives and never predicts a rule outcome."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+          "state": "standalone",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+              "pointer": "",
+              "detail": "Standalone identity anchor; no cross-file relationship was asserted."
+            }
+          ]
+        }
+      ],
+      "acceptance": {
+        "status": "pending-review",
+        "evidence": [
+          {
+            "kind": "baseline-byte-match",
+            "reference": "docs/refactor/generated/baseline-fixtures.json",
+            "detail": "Every JSON member matches immutable Git and current byte digest/size; no golden was regenerated."
+          },
+          {
+            "kind": "metadata-association",
+            "reference": "frontend/tests/fixtures/magician-exchanged-zh-CN.replay.json",
+            "detail": "Membership evidence identifies literal associations or explicit standalone status; this pure description does not verify caller-supplied byte hashes or infer passed test status."
+          }
+        ],
+        "unresolved": [
+          "seed: No seed is serialized; producer defaults are not evidence of the original invocation.",
+          "build: No literal build is recorded in this artifact.",
+          "Grouping and exact byte preservation are inventory evidence; independent scenario/consumer acceptance has not been assigned."
+        ]
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "originPath": "backend/tests/support/audit_summary_fixture.ts",
+      "currentPath": "packages/game-runtime/tests/support/builders/audit-summary.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
+      "originalBytes": 811,
+      "currentSha256": "783f468aee2839c9351c59218f3be8858f7ac3f9575c07ea89954178636a7e2c",
+      "currentBytes": 1037,
+      "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
+      "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
+      "kind": "test-support"
+    },
+    {
+      "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
+      "currentPath": "packages/game-runtime/tests/support/features/mist-raven/oracles/transport.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
+      "originalBytes": 7318,
+      "currentSha256": "7c6aaa81dfa5c47ad5067824f4a9bde05d8d08600e5b2fed125f29f4a3781daf",
+      "currentBytes": 7667,
+      "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
+      "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
+      "kind": "test-support"
+    }
+  ],
+  "derivedManifests": []
+}

@@ -2,4 +2,4 @@
 linker = "isolated"
 
 [test]
-preload = ["./backend/tests/setup.ts"]
+preload = ["./packages/game-runtime/tests/setup.ts"]

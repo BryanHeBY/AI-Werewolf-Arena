@@ -10,7 +10,7 @@
     "build": "vite build",
     "check": "tsc --noEmit",
     "test": "bun --no-env-file test tests/unit tests/integration",
-    "test:e2e": "bun ./node_modules/@playwright/test/cli.js test",
+    "test:e2e": "bun ../../tooling/browser-tests.ts .",
     "lint": "eslint . --max-warnings=0"
   },
   "dependencies": {
@@ -19,12 +19,13 @@
     "@ai-werewolf-arena/game-catalog": "workspace:*",
     "@ai-werewolf-arena/game-text": "workspace:*",
     "@ai-werewolf-arena/replay-contract": "workspace:*",
-    "ai-werewolf-arena-backend": "workspace:*",
-    "ai-werewolf-arena-frontend": "workspace:*",
+    "@ai-werewolf-arena/game-runtime": "workspace:*",
+    "@ai-werewolf-arena/game-media": "workspace:*",
     "@xterm/xterm": "^6.0.0",
     "@xterm/addon-fit": "^0.11.0",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "@ai-werewolf-arena/project-paths": "workspace:*"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

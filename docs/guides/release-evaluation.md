@@ -12,7 +12,7 @@
 
 ```bash
 # 只验证配置；不启动 Agent，也不验证账户额度或模型可用性。
-bun run --cwd backend config:check --configs-dir /ABS/PATH/isolated-evaluation --game-config-name selected_game
+bun run --cwd apps/game config:check --configs-dir /ABS/PATH/isolated-evaluation --game-config-name selected_game
 ```
 
 ## 运行与结果

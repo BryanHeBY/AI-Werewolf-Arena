@@ -17,10 +17,10 @@ cp -n configs.example/games/twelve_player_awakened_knight*.json configs/games/
 LLM 示例引用 `deepseek_v4_flash`，ACP 引用 `acp_default`；可将 game 的 Agent 名换为个人 `runtime/agents.json` 中已有的配置。无需覆盖个人 runtime 或在 board／game 中填写 API key。ACP 沿用原隔离启动器。
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_knight --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_knight_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_knight_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_knight_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_knight --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_knight_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_knight_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_knight_acp --locale en --display-locale en
 ```
 
 `roles.awakened_guard`、`roles.awakened_knight`、`roles.awakened_wolf_beauty` 严格只接受 `{}`，分别解析为固定政策 `awa_awakened_guard_cycle_v1`、`awa_awakened_duel_chain_v1`、`awa_awakened_replacement_v1`。不提供无来源的无限保护、改变一次替死或取消目标尝试记录等开关。

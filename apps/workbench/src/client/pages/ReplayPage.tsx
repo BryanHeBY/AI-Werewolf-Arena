@@ -4,12 +4,12 @@
  */
 import { lazy, Suspense, useEffect, useState } from "react";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import type { WebAppearanceController, ThemeTone } from "ai-werewolf-arena-frontend/appearance";
+import type { WebAppearanceController, ThemeTone } from "@ai-werewolf-arena/game-media/appearance";
 import { readReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { api } from "../api";
 import type { Translator } from "../types";
 const Replay = lazy(() =>
-  import("ai-werewolf-arena-frontend/replay").then((module) => ({
+  import("@ai-werewolf-arena/game-media/replay").then((module) => ({
     default: module.WorkbenchReplay,
   })),
 );

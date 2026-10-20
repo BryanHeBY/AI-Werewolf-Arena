@@ -20,8 +20,8 @@ dist
 # Logs and game records
 data/records/*
 !data/records/.gitkeep
-backend/data/records/*
-!backend/data/records/.gitkeep
+packages/game-runtime/data/records/*
+!packages/game-runtime/data/records/.gitkeep
 record/*
 !record/.gitkeep
 *.log
@@ -90,3 +90,9 @@ id_ed25519
 # Browser test artifacts
 frontend/test-results/
 frontend/playwright-report/
+
+# 独立应用与共用媒体包的本地测试／预览产物
+/apps/replay/test-results/
+/apps/replay/playwright-report/
+/apps/video/test-results/
+/apps/video/playwright-report/

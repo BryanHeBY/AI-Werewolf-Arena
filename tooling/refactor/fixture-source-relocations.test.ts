@@ -235,13 +235,15 @@ test("production fixture type relocation refuses Git symlink mode and a current 
     });
     const document = structuredClone(manifest) as FixtureManifest;
     const typeRoute = document.sourceAssets[0]!.moduleRelocations?.find(
-      (entry) => entry.currentPath === productionTypeRoute.currentPath,
+      (entry) =>
+        entry.currentPath.replace(/^packages\/game-runtime\//, "backend/") ===
+        productionTypeRoute.currentPath,
     );
     if (!typeRoute) throw Error("production_type_route_fixture_not_applied");
     const inputs = new Set([
       "tooling/refactor/fixtures/source-inventory.json",
       "tooling/refactor/fixtures/manifest.json",
-      "backend/package.json",
+      "packages/game-runtime/package.json",
       ...document.sourceAssets.map((asset) => asset.currentPath),
       ...document.sourceAssets.flatMap((asset) =>
         (asset.moduleRelocations ?? []).map((route) => route.currentPath),
@@ -252,10 +254,10 @@ test("production fixture type relocation refuses Git symlink mode and a current 
       await fs.copyFile(path.join(repository, relative), path.join(temporary, relative));
     }
     // compiler(root) 沿原工具入口定位已安装 TypeScript；此链接不是 safeFile 允许读取的公开输入。
-    await fs.mkdir(path.join(temporary, "backend/node_modules"), { recursive: true });
+    await fs.mkdir(path.join(temporary, "packages/game-runtime/node_modules"), { recursive: true });
     await fs.symlink(
-      await fs.realpath(path.join(repository, "backend/node_modules/typescript")),
-      path.join(temporary, "backend/node_modules/typescript"),
+      await fs.realpath(path.join(repository, "packages/game-runtime/node_modules/typescript")),
+      path.join(temporary, "packages/game-runtime/node_modules/typescript"),
       "dir",
     );
     const originCommit = typeRoute.originCommit;
@@ -526,8 +528,10 @@ test("historical fixture package retirement requires the original export chain a
     ),
   ).toThrow("historical_package_origin_identity");
   const wrongOrigin = structuredClone(manifest) as FixtureManifest;
-  wrongOrigin.sourceAssets.find((entry) => entry.currentPath === historicalAudit)!.originPath =
-    "backend/tests/support/other.ts";
+  wrongOrigin.sourceAssets.find(
+    (entry) =>
+      entry.currentPath.replace(/^packages\/game-runtime\//, "backend/") === historicalAudit,
+  )!.originPath = "backend/tests/support/other.ts";
   expect(() => parseFixtureManifest(JSON.stringify(wrongOrigin))).toThrow(
     "historical_package_origin_identity",
   );

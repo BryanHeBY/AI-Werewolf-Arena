@@ -1,0 +1,1142 @@
+{
+  "schema": "awa-fixture-manifests-v2",
+  "generatedBy": "tooling/refactor/fixture-manifest.ts",
+  "baseline": {
+    "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "inventoryPath": "docs/refactor/generated/baseline-fixtures.json",
+    "inventorySha256": "b3506ca7aca8abda98e1936c02cc35be58c5b0b024da0b80ad97284cf67f6915"
+  },
+  "coverage": {
+    "expectedFiles": 7,
+    "exactBytesFiles": 7,
+    "mechanicalSourceFiles": 0,
+    "originalBytes": 564411,
+    "currentBytes": 564411
+  },
+  "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
+  "files": [
+    {
+      "originPath": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+      "currentPath": "packages/game-media/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/checkpoint.json",
+      "sha256": "8683a854357c76178b66df2bb78d998ffeebc0419c454ae5e7f4a56cc093122f",
+      "bytes": 17098,
+      "owner": "frontend",
+      "kind": "checkpoint",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_netease_demon_hunter_v1", "awa_noble_secret_body_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+              "pointer": "/players/5/privateState/secretBody/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+              "pointer": "/players/3/privateState/demonHunter/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "unknown",
+          "reason": "No literal locale is recorded in this artifact."
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 10,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+            "sha256": "8683a854357c76178b66df2bb78d998ffeebc0419c454ae5e7f4a56cc093122f"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "unknown",
+          "reason": "No schemaVersion is serialized; legacy status does not identify a build."
+        }
+      },
+      "currentSha256": "8683a854357c76178b66df2bb78d998ffeebc0419c454ae5e7f4a56cc093122f",
+      "currentBytes": 17098
+    },
+    {
+      "originPath": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/god.replay.json",
+      "sha256": "f58054a8c4b5ac4499e373dffa0fb4255effad10be8923d4077dcabd1abf8c0d",
+      "bytes": 73483,
+      "owner": "frontend",
+      "kind": "god-replay",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_noble_secret_body_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_netease_demon_hunter_v1", "awa_noble_secret_body_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/events/202/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/events/176/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 10,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+            "sha256": "f58054a8c4b5ac4499e373dffa0fb4255effad10be8923d4077dcabd1abf8c0d"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "f58054a8c4b5ac4499e373dffa0fb4255effad10be8923d4077dcabd1abf8c0d",
+      "currentBytes": 73483
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/players/6-awakened-idiot.player.json",
+      "sha256": "d8ff9814f86dd2f9a894fe8f8d0c394100b1bcc58f2faad85b0918be042a42b5",
+      "bytes": 97371,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_noble_secret_body_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/timeline/82/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+            "sha256": "d8ff9814f86dd2f9a894fe8f8d0c394100b1bcc58f2faad85b0918be042a42b5"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "d8ff9814f86dd2f9a894fe8f8d0c394100b1bcc58f2faad85b0918be042a42b5",
+      "currentBytes": 97371
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/players/4-demon-hunter.player.json",
+      "sha256": "fec5f93ccce1f8135e64d8335ff846ddaee537c391829c7b027f0c552fbfc6da",
+      "bytes": 83180,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_netease_demon_hunter_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/timeline/76/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+            "sha256": "fec5f93ccce1f8135e64d8335ff846ddaee537c391829c7b027f0c552fbfc6da"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "fec5f93ccce1f8135e64d8335ff846ddaee537c391829c7b027f0c552fbfc6da",
+      "currentBytes": 83180
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/players/2-night-noble.player.json",
+      "sha256": "1095b017a7efa303f360e81b76b0ed0f8955e60df085575fa943ddf94eeae9b6",
+      "bytes": 146704,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_noble_secret_body_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/timeline/113/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+            "sha256": "1095b017a7efa303f360e81b76b0ed0f8955e60df085575fa943ddf94eeae9b6"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "1095b017a7efa303f360e81b76b0ed0f8955e60df085575fa943ddf94eeae9b6",
+      "currentBytes": 146704
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/players/3-wolf.player.json",
+      "sha256": "95abee90473e3d1d70584098ac5e96636dacf7c9b08601a22615e2182f872bdb",
+      "bytes": 74274,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+            "sha256": "95abee90473e3d1d70584098ac5e96636dacf7c9b08601a22615e2182f872bdb"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "95abee90473e3d1d70584098ac5e96636dacf7c9b08601a22615e2182f872bdb",
+      "currentBytes": 74274
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/players/12-villager.player.json",
+      "sha256": "f4a5639926ac639da8ab87d368c01437e64acf73dde45974d023d6283b813e51",
+      "bytes": 72301,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+            "sha256": "f4a5639926ac639da8ab87d368c01437e64acf73dde45974d023d6283b813e51"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "f4a5639926ac639da8ab87d368c01437e64acf73dde45974d023d6283b813e51",
+      "currentBytes": 72301
+    }
+  ],
+  "suites": [
+    {
+      "suiteId": "fixture:frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "anchorOriginPath": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+      "owner": "frontend",
+      "kind": "recorded-archive",
+      "files": [
+        "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+        "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+        "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+        "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+        "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+        "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+        "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json"
+      ],
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_noble_secret_body_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_netease_demon_hunter_v1", "awa_noble_secret_body_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/events/202/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/events/176/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+              "pointer": "/players/5/privateState/secretBody/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+              "pointer": "/players/3/privateState/demonHunter/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/timeline/82/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/timeline/76/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/timeline/113/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 10,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+            "sha256": "f58054a8c4b5ac4499e373dffa0fb4255effad10be8923d4077dcabd1abf8c0d"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "membership": [
+        {
+          "originPath": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.checkpoint.txt",
+              "pointer": "",
+              "detail": "Basename only locates candidates; recorded eventCount, complete actor roster and literal terminal result agree, or the explicit cycle_failed/runtime_error nonterminal snapshot and last event day/phase agree. This compares archives and never predicts a rule outcome."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+          "state": "standalone",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+              "pointer": "",
+              "detail": "Standalone identity anchor; no cross-file relationship was asserted."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-body.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-demon.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-noble.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-pack.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-new_and_old_clear-en-villager.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        }
+      ],
+      "acceptance": {
+        "status": "pending-review",
+        "evidence": [
+          {
+            "kind": "baseline-byte-match",
+            "reference": "docs/refactor/generated/baseline-fixtures.json",
+            "detail": "Every JSON member matches immutable Git and current byte digest/size; no golden was regenerated."
+          },
+          {
+            "kind": "metadata-association",
+            "reference": "frontend/tests/fixtures/noble-new_and_old_clear-en.replay.json",
+            "detail": "Membership evidence identifies literal associations or explicit standalone status; this pure description does not verify caller-supplied byte hashes or infer passed test status."
+          }
+        ],
+        "unresolved": [
+          "seed: No seed is serialized; producer defaults are not evidence of the original invocation.",
+          "build: No literal build is recorded in this artifact.",
+          "Grouping and exact byte preservation are inventory evidence; independent scenario/consumer acceptance has not been assigned."
+        ]
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "originPath": "backend/tests/support/audit_summary_fixture.ts",
+      "currentPath": "packages/game-runtime/tests/support/builders/audit-summary.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
+      "originalBytes": 811,
+      "currentSha256": "783f468aee2839c9351c59218f3be8858f7ac3f9575c07ea89954178636a7e2c",
+      "currentBytes": 1037,
+      "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
+      "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
+      "kind": "test-support"
+    },
+    {
+      "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
+      "currentPath": "packages/game-runtime/tests/support/features/mist-raven/oracles/transport.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
+      "originalBytes": 7318,
+      "currentSha256": "7c6aaa81dfa5c47ad5067824f4a9bde05d8d08600e5b2fed125f29f4a3781daf",
+      "currentBytes": 7667,
+      "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
+      "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
+      "kind": "test-support"
+    }
+  ],
+  "derivedManifests": []
+}

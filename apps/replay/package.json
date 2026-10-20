@@ -1,0 +1,38 @@
+{
+  "name": "@ai-werewolf-arena/replay-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config vite.config.ts",
+    "replay:dev": "bun scripts/replay-dev.ts",
+    "build": "vite build --config vite.config.ts",
+    "preview": "vite preview --config vite.config.ts",
+    "check": "tsc --noEmit",
+    "test:e2e": "bun ../../tooling/browser-tests.ts .",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "dependencies": {
+    "@ai-werewolf-arena/game-media": "workspace:*",
+    "@ai-werewolf-arena/game-text": "workspace:*",
+    "@ai-werewolf-arena/game-contract": "workspace:*",
+    "@ai-werewolf-arena/project-paths": "workspace:*",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@remotion/bundler": "4.0.529",
+    "@remotion/renderer": "4.0.529",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typescript-eslint/parser": "8.70.1",
+    "@vitejs/plugin-react": "^6.1.1",
+    "bun-types": "^1.4.2",
+    "eslint": "9.39.5",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.1",
+    "@ai-werewolf-arena/game-contract": "workspace:*",
+    "@types/node": "^20.19.43"
+  }
+}

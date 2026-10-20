@@ -6,8 +6,6 @@
   "packageManager": "bun@1.4.3",
   "workspaces": [
     "apps/*",
-    "backend",
-    "frontend",
     "packages/*"
   ],
   "scripts": {
@@ -18,34 +16,44 @@
     "check:workbench": "bun run --cwd apps/workbench check",
     "test:workbench": "bun run --cwd apps/workbench test",
     "lint:workbench": "bun run --cwd apps/workbench lint",
-    "dev:frontend": "bun --filter ai-werewolf-arena-frontend dev",
-    "replay:dev": "bun run --cwd frontend replay:dev",
-    "build:backend": "bun --filter ai-werewolf-arena-backend build",
-    "build:frontend": "bun --filter ai-werewolf-arena-frontend build",
-    "check:backend": "bun --filter ai-werewolf-arena-backend check",
-    "check:frontend": "bun --filter ai-werewolf-arena-frontend typecheck",
+    "dev:frontend": "bun apps/replay/scripts/replay-dev.ts",
+    "replay:dev": "bun apps/replay/scripts/replay-dev.ts",
+    "build:backend": "bun run --cwd packages/game-runtime build",
+    "build:frontend": "bun run --cwd apps/replay build",
+    "check:backend": "bun run --cwd packages/game-runtime check && bun run --cwd apps/game check",
+    "check:frontend": "bun run --cwd packages/game-media check && bun run --cwd apps/replay check && bun run --cwd apps/video check",
     "test": "bun run test:tooling && bun run test:packages && bun run test:backend && bun run test:frontend && bun run test:workbench",
-    "test:backend": "bun --filter ai-werewolf-arena-backend test",
-    "test:frontend": "bun --filter ai-werewolf-arena-frontend test",
+    "test:backend": "bun run --cwd packages/game-runtime test",
+    "test:frontend": "bun run --cwd packages/game-media test",
     "check": "bun run lint:architecture && bun run check:fixtures && bun run check:tooling && bun run check:packages && bun run check:backend && bun run check:frontend && bun run check:workbench",
-    "lint:backend": "bun run --cwd backend lint:deps && bun run --cwd backend lint:boundaries && bun run --cwd backend lint:i18n",
-    "lint:frontend": "bun run --cwd frontend lint",
+    "lint:backend": "bun run --cwd packages/game-runtime lint:deps && bun run --cwd packages/game-runtime lint:boundaries && bun run --cwd packages/game-runtime lint:i18n",
+    "lint:frontend": "bun run --cwd packages/game-media lint && bun run --cwd apps/replay lint && bun run --cwd apps/video lint",
     "lint": "bun run lint:architecture && bun run lint:backend && bun run lint:frontend && bun run lint:workbench",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check:tooling": "./backend/node_modules/.bin/tsc -p tooling/tsconfig.json --noEmit",
+    "check:tooling": "bun run --cwd packages/game-runtime check:tooling",
     "test:tooling": "bun --no-env-file test ./tooling/refactor/*.test.ts",
     "test:ci": "bun --no-env-file test ./tooling/ci/*.test.ts",
     "ci:fast": "bun --no-env-file tooling/ci/fast.ts",
-    "check:packages": "bun --filter '@ai-werewolf-arena/*' check",
-    "test:packages": "bun --filter '@ai-werewolf-arena/*' test",
+    "check:packages": "bun --filter '@ai-werewolf-arena/game-contract' --filter '@ai-werewolf-arena/game-catalog' --filter '@ai-werewolf-arena/game-text' --filter '@ai-werewolf-arena/game-presentation' --filter '@ai-werewolf-arena/replay-contract' --filter '@ai-werewolf-arena/workbench-contract' --filter '@ai-werewolf-arena/project-paths' check",
+    "test:packages": "bun --filter '@ai-werewolf-arena/game-contract' --filter '@ai-werewolf-arena/game-catalog' --filter '@ai-werewolf-arena/game-text' --filter '@ai-werewolf-arena/game-presentation' --filter '@ai-werewolf-arena/replay-contract' --filter '@ai-werewolf-arena/project-paths' test",
     "lint:architecture": "bun --no-env-file tooling/refactor/architecture/run.ts check --strict",
-    "check:fixtures": "bun --no-env-file tooling/refactor/fixture-manifest.ts --check"
+    "check:fixtures": "bun --no-env-file tooling/refactor/fixture-manifest.ts --check",
+    "run": "bun apps/game/src/cli/run-game.ts",
+    "run:six": "bun apps/game/src/cli/run-game.ts --game-config-name six_player_mvp",
+    "run:twelve": "bun apps/game/src/cli/run-game.ts --game-config-name twelve_player_standard",
+    "config:check": "bun apps/game/src/cli/check-config.ts",
+    "simulate": "bun apps/game/src/cli/simulate.ts",
+    "build:video": "bun run --cwd apps/video build"
   },
   "engines": {
     "bun": ">=1.4.3"
   },
   "devDependencies": {
-    "prettier": "3.9.9"
+    "prettier": "3.9.9",
+    "@typescript-eslint/parser": "^8.70.1",
+    "eslint": "^9.39.5",
+    "@ai-werewolf-arena/game-runtime": "workspace:*",
+    "@ai-werewolf-arena/game-media": "workspace:*"
   }
 }

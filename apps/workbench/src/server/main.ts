@@ -3,11 +3,17 @@
  * 默认绑定 loopback，网络绑定须显式指定；不删除本地内容，退出只关闭服务，不杀公共 CLI 管理的对局。
  */
 import path from "node:path";
+import {
+  PROJECT_ROOT,
+  applicationResource,
+  projectDataPath,
+  resolveInputPath,
+} from "@ai-werewolf-arena/project-paths";
 import { isLocale } from "@ai-werewolf-arena/game-contract";
 import { workbenchText } from "@ai-werewolf-arena/game-text/workbench";
 import { createWorkbench } from "./api";
 import { normalizeListenHost, listenUrl } from "./listen-address";
-const repository = path.resolve(import.meta.dir, "../../../..");
+const repository = PROJECT_ROOT;
 const flags: Record<string, string> = {};
 const args = process.argv.slice(2);
 if (args[0] === "--") args.shift();
@@ -34,10 +40,10 @@ if (!isLocale(locale)) throw Error("workbench_locale_invalid");
 const application = createWorkbench({
   host,
   repository,
-  configs: path.resolve(flags["--configs-dir"] ?? path.join(repository, "configs")),
-  records: path.resolve(flags["--record-root-dir"] ?? path.join(repository, "record")),
-  jobs: path.resolve(flags["--state-dir"] ?? path.join(repository, ".workbench"), "runs"),
-  dist: path.resolve(import.meta.dir, "../../dist"),
+  configs: resolveInputPath(flags["--configs-dir"] ?? projectDataPath("configs")),
+  records: resolveInputPath(flags["--record-root-dir"] ?? projectDataPath("record")),
+  jobs: path.resolve(flags["--state-dir"] ?? projectDataPath(".workbench"), "runs"),
+  dist: applicationResource("workbench", "dist"),
 });
 let server: ReturnType<typeof Bun.serve>;
 try {

@@ -3,7 +3,7 @@ import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { readBootId, readProcessIdentity } from "ai-werewolf-arena-backend/run-session";
+import { readBootId, readProcessIdentity } from "@ai-werewolf-arena/game-runtime/run-session";
 import { SessionStore } from "../../src/server/session-store";
 import { RunManager } from "../../src/server/run-manager";
 test("legacy end timestamps do not imply liveness or current publication", async () => {

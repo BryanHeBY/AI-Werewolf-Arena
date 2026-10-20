@@ -3,8 +3,8 @@
 ## 受限模拟与严格动作复现
 
 ```bash
-bun run --cwd backend simulate --configs-dir ../configs.example --board twelve_player_standard --count 25
-bun run --cwd backend replay:actions --record ../record/<session-id>/reproduction.json
+bun run --cwd apps/game simulate --configs-dir ../../configs.example --board twelve_player_standard --count 25
+bun run --cwd apps/game replay:actions --record ../record/<session-id>/reproduction.json
 ```
 
 模拟使用明确受限观察机器人和固定seed输入，不调用模型，也不证明原始God baseline符合玩家信息边界。seed仅固定随机流，模型原文和不同动作仍能改变结果。
@@ -14,7 +14,7 @@ bun run --cwd backend replay:actions --record ../record/<session-id>/reproductio
 ## 公开复盘
 
 ```bash
-bun run --cwd backend export:replay -- --session <session-id> --out ./<session-id>.replay.json
+bun run --cwd apps/game export:replay -- --session <session-id> --out ./<session-id>.replay.json
 bun run dev:frontend
 ```
 
@@ -32,7 +32,7 @@ fixture通过稳定origin／suite选择，loader根据manifest currentPath定位
 
 ## 通用视频与单局脚本
 
-`frontend/src/video` 是工作台和离线渲染共用的基础设施。`compileVideoPlan` 从规范复盘及可选 `VideoScript` 编译纯 JSON `VideoPlan`；预览、图片、音轨和片段导出消费同一时间线。可执行命令见 [frontend README](../../frontend/README.md#视频预览与导出)。
+`packages/game-media/src/video` 是工作台和离线渲染共用的基础设施。`compileVideoPlan` 从规范复盘及可选 `VideoScript` 编译纯 JSON `VideoPlan`；预览、图片、音轨和片段导出消费同一时间线。可执行命令见 [frontend README](../../apps/replay/README.md#视频预览与导出)。
 
 新项目的纯编排函数、类型及帧查询从 `src/video/plan` 导入；React／Remotion 组件从 `src/video/render` 导入。旧 `src/video` 入口继续兼容。编译内部复用同一份已校验记录解释，原始事件读取入口继续独立校验；脚本署名、正文及镜头标注不覆盖记录事实。字幕页、结果揭晓和已准备语音共用单镜头调度，状态 cue 绑定同一揭晓节点。主题实现只消费求值后的画面与节点，不重新解释事件或提交生命状态。
 
@@ -44,7 +44,7 @@ fixture通过稳定origin／suite选择，loader根据manifest currentPath定位
 
 ### 真实记录的场景审计
 
-从仓库根目录运行 `bun --no-env-file frontend/scripts/audit-video.ts --input record`，或在前端运行 `bun run video:audit`。可加 `--theme minimal-v1`、`--max-files 500`、`--output <新文件>`。报告包含每份公开复盘的字节SHA256、来源指纹、完成状态、名册来源、实际版式、模板、原事件/事实序号和镜头帧。它不包含正文、提示词或接入配置，也不改写record。进行中God档案顶层名册为空时，仅消费明确且校验合格的开局记录；没有可靠名册则单独报错。
+从仓库根目录运行 `bun --no-env-file apps/video/scripts/audit-video.ts --input record`，或在前端运行 `bun run video:audit`。可加 `--theme minimal-v1`、`--max-files 500`、`--output <新文件>`。报告包含每份公开复盘的字节SHA256、来源指纹、完成状态、名册来源、实际版式、模板、原事件/事实序号和镜头帧。它不包含正文、提示词或接入配置，也不改写record。进行中God档案顶层名册为空时，仅消费明确且校验合格的开局记录；没有可靠名册则单独报错。
 
 处理等级分为专门场景、显式紧凑简报、仍采用通用文字记录、未知/无效事件。存在路由不等于已有专门画面，去掉文件图标也不等于全部覆盖。默认遇坏档继续扫其余档案，并以失败退出；`--fail-on unhandled` 可将未知/无效事件设为门禁，`--fail-on generic` 再要求清除所有通用记录。空目录、截断扫描、并发写入导致快照变化均不会报告成功。扫描只认`replay.json`/`*.replay.json`，跳过私档、符号链接和嵌套源码；包含模拟数据的目录会如实列路径，不能把总数全称为真实运行对局。
 
@@ -108,11 +108,11 @@ export default defineVideoProject({
 });
 ```
 
-以上片段按 `frontend/videos/<name>/project.tsx` 的位置导入 API，来源与资源路径需替换成本局实际值；可直接运行的广播版见 `frontend/examples/video/gothic/project.tsx`，旧椭圆桌示例见 `frontend/examples/video/custom-layers/project.tsx`。
+以上片段按 `apps/video/videos/<name>/project.tsx` 的位置导入 API，来源与资源路径需替换成本局实际值；可直接运行的广播版见 `apps/video/examples/video/gothic/project.tsx`，旧椭圆桌示例见 `apps/video/examples/video/custom-layers/project.tsx`。
 
 ### 本地字体与素材固化
 
-`fonts` 是项目级 `{ family, src, weight? }[]`，接受本地路径或本地 file URL；HTTP(S)、data 字体、同 family／weight 重复项、额外字段与错误权重被拒绝。`weight` 缺省 normal，可用 bold、整百字重或前小后大的变量范围（例如 `400 700`）；normal／bold 规范化为400／700，family 去首尾空格并忽略大小写判重。字体族名应对应主题字体栈，如 `Noto Sans SC/Noto Serif SC`，或组件显式声明的 `fontFamily`。未提供时加载项目内置完整SC字库；项目同family定义显式替换对应内置定义，不能静默回退。固定版本、源提交和OFL许可见 `frontend/src/themes/fonts`。
+`fonts` 是项目级 `{ family, src, weight? }[]`，接受本地路径或本地 file URL；HTTP(S)、data 字体、同 family／weight 重复项、额外字段与错误权重被拒绝。`weight` 缺省 normal，可用 bold、整百字重或前小后大的变量范围（例如 `400 700`）；normal／bold 规范化为400／700，family 去首尾空格并忽略大小写判重。字体族名应对应主题字体栈，如 `Noto Sans SC/Noto Serif SC`，或组件显式声明的 `fontFamily`。未提供时加载项目内置完整SC字库；项目同family定义显式替换对应内置定义，不能静默回退。固定版本、源提交和OFL许可见 `packages/game-media/src/themes/fonts`。
 
 准备器捕获本地素材和字体字节，按SHA256内容摘要写入临时素材目录；plan 只引用 `assets/<digest>.<ext>`，绝对源路径只留在命令侧。准备后的源文件修改不会改变该次预览／导出的已捕获字节，源文件保持不写回；要采用新字节须重新准备。
 

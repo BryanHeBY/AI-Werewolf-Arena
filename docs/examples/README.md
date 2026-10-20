@@ -10,8 +10,8 @@
 mkdir -p configs/boards configs/games
 cp -n configs.example/boards/awa_classic_pk_choice_12_v1.json configs/boards/
 cp -n configs.example/games/awa_classic_pk_choice_12_v1.json configs/games/
-bun run --cwd backend config:check --configs-dir ../configs --game-config-name awa_classic_pk_choice_12_v1
-bun run --cwd backend run --configs-dir ../configs --game-config-name awa_classic_pk_choice_12_v1 --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game config:check --configs-dir ../../configs --game-config-name awa_classic_pk_choice_12_v1
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name awa_classic_pk_choice_12_v1 --locale zh-CN --display-locale zh-CN
 ```
 
 切换英文使用 `--locale en --display-locale en`。新增的旧板入口默认引用公开示例中已有的 `deepseek_v4_flash`；可把game的 `agent` 换为个人runtime中已有的 LLM、Pi 或 ACP Agent 名。ACP沿用个人隔离启动器，不把裸工作目录当沙箱。无需整目录覆盖runtime或把认证写入board/game。其它角色专门的ACP、中英文与真实教学示例见相应子目录。

@@ -17,10 +17,10 @@ LLM 示例引用 `deepseek_v4_flash`，ACP 示例引用 `acp_default`。将 game
 中文与英文入口：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_silence_elder --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_silence_elder --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_silence_elder_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_silence_elder_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_silence_elder --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_silence_elder --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_silence_elder_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_silence_elder_acp --locale en --display-locale en
 ```
 
 `roles.silence_elder` 只接受 `{ "policy": "awa_melbourne_gestures_v1" }`，省略时取同一默认政策。未知字段、任意死因开关或未交付的高级混板拒绝。

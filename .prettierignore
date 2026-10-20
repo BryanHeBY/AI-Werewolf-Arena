@@ -14,7 +14,7 @@ coverage/
 **/coverage/
 record/
 data/records/
-backend/data/records/
+packages/game-runtime/data/records/
 frontend/test-results/
 frontend/playwright-report/
 apps/workbench/test-results/
@@ -22,12 +22,18 @@ apps/workbench/playwright-report/
 .workbench/
 # 主 fixture manifest 登记的录制 payload 保原字节；仅限下列档案文件名与 players 叶。
 # 各级 manifest.json、源码和测试继续正常格式检查；不得把此处改为整个 fixture 目录或全部 JSON。
-/frontend/tests/fixtures/**/god.replay.json
-/frontend/tests/fixtures/**/checkpoint.json
-/frontend/tests/fixtures/**/players/*.player.json
-/frontend/tests/fixtures/**/all.player-views.json
+/packages/game-media/tests/fixtures/**/god.replay.json
+/packages/game-media/tests/fixtures/**/checkpoint.json
+/packages/game-media/tests/fixtures/**/players/*.player.json
+/packages/game-media/tests/fixtures/**/all.player-views.json
 /packages/replay-contract/fixtures/**/god.replay.json
 /packages/replay-contract/fixtures/**/players/*.player.json
 # 教学God归档同样保留真实导出字节；仅排除归档payload，指南和其它JSON继续检查。
 /docs/examples/**/*.replay.json
 *.log
+
+# 独立应用与共用媒体包的本地测试／预览产物
+/apps/replay/test-results/
+/apps/replay/playwright-report/
+/apps/video/test-results/
+/apps/video/playwright-report/

@@ -1,0 +1,1294 @@
+{
+  "schema": "awa-fixture-manifests-v2",
+  "generatedBy": "tooling/refactor/fixture-manifest.ts",
+  "baseline": {
+    "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "inventoryPath": "docs/refactor/generated/baseline-fixtures.json",
+    "inventorySha256": "b3506ca7aca8abda98e1936c02cc35be58c5b0b024da0b80ad97284cf67f6915"
+  },
+  "coverage": {
+    "expectedFiles": 9,
+    "exactBytesFiles": 9,
+    "mechanicalSourceFiles": 0,
+    "originalBytes": 135070,
+    "currentBytes": 135070
+  },
+  "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
+  "files": [
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/players/2-radiant-count.player.json",
+      "sha256": "dca10f29212e5033549bf6297b335a75d6a1e949f896c43afa6040ffd3dddade",
+      "bytes": 13486,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 2,
+              "role": "radiant_count",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+            "sha256": "dca10f29212e5033549bf6297b335a75d6a1e949f896c43afa6040ffd3dddade"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "dca10f29212e5033549bf6297b335a75d6a1e949f896c43afa6040ffd3dddade",
+      "currentBytes": 13486
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/players/5-dreamer.player.json",
+      "sha256": "296871a4345e140a7f74718ffb2b58d5725a4b0b53f5947c824878f401d65351",
+      "bytes": 13892,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 5,
+              "role": "dreamer",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+            "sha256": "296871a4345e140a7f74718ffb2b58d5725a4b0b53f5947c824878f401d65351"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "296871a4345e140a7f74718ffb2b58d5725a4b0b53f5947c824878f401d65351",
+      "currentBytes": 13892
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/players/1-eclipse-maid.player.json",
+      "sha256": "5e03ce20dfa5d48ce9a0d1f3b54ba8f99d6b5589dabb1401799ba88ba57142a2",
+      "bytes": 14692,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+            "sha256": "5e03ce20dfa5d48ce9a0d1f3b54ba8f99d6b5589dabb1401799ba88ba57142a2"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "5e03ce20dfa5d48ce9a0d1f3b54ba8f99d6b5589dabb1401799ba88ba57142a2",
+      "currentBytes": 14692
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/players/11-wolf.player.json",
+      "sha256": "a5c5715be448fe749de3a0d8086a15c6d80a2e89b455a1a652043246a2ae3bf2",
+      "bytes": 16048,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+            "sha256": "a5c5715be448fe749de3a0d8086a15c6d80a2e89b455a1a652043246a2ae3bf2"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "a5c5715be448fe749de3a0d8086a15c6d80a2e89b455a1a652043246a2ae3bf2",
+      "currentBytes": 16048
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/players/3-seer.player.json",
+      "sha256": "b350526e43deddb67043a1dd155011acbf09469e94f91f573ba14e6f06aec316",
+      "bytes": 13507,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 3,
+              "role": "seer",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+            "sha256": "b350526e43deddb67043a1dd155011acbf09469e94f91f573ba14e6f06aec316"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "b350526e43deddb67043a1dd155011acbf09469e94f91f573ba14e6f06aec316",
+      "currentBytes": 13507
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/players/6-villager.player.json",
+      "sha256": "a65fbdce7ac9a56416db704aa29d1dca29689a745d3eac722655c73384c72371",
+      "bytes": 13001,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+            "sha256": "a65fbdce7ac9a56416db704aa29d1dca29689a745d3eac722655c73384c72371"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "a65fbdce7ac9a56416db704aa29d1dca29689a745d3eac722655c73384c72371",
+      "currentBytes": 13001
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/players/4-witch.player.json",
+      "sha256": "ad4b97ba57bd0dccc975ad29bcb130050ef51166f13f405eb39a175c62998b05",
+      "bytes": 13849,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 4,
+              "role": "witch",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+            "sha256": "ad4b97ba57bd0dccc975ad29bcb130050ef51166f13f405eb39a175c62998b05"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "ad4b97ba57bd0dccc975ad29bcb130050ef51166f13f405eb39a175c62998b05",
+      "currentBytes": 13849
+    },
+    {
+      "originPath": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/checkpoint.json",
+      "sha256": "44500f56ce335389fd35cadab7e64ea05009bdb665981e15e8681ee209b725cc",
+      "bytes": 11182,
+      "owner": "frontend",
+      "kind": "checkpoint",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_radiant_eclipse_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+              "pointer": "/players/1/privateState/abilities/native:shelter/state/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "unknown",
+          "reason": "No literal locale is recorded in this artifact."
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 2,
+              "role": "radiant_count",
+              "camp": "good"
+            },
+            {
+              "playerId": 3,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "dreamer",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+            "sha256": "44500f56ce335389fd35cadab7e64ea05009bdb665981e15e8681ee209b725cc"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "unknown",
+          "reason": "No schemaVersion is serialized; legacy status does not identify a build."
+        }
+      },
+      "currentSha256": "44500f56ce335389fd35cadab7e64ea05009bdb665981e15e8681ee209b725cc",
+      "currentBytes": 11182
+    },
+    {
+      "originPath": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "currentPath": "packages/game-media/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/god.replay.json",
+      "sha256": "e3e264f428aa62bfe06016e92b7a40ca1a316c813cfbd45649db4a56580b1498",
+      "bytes": 25413,
+      "owner": "frontend",
+      "kind": "god-replay",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_radiant_eclipse_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 2,
+              "role": "radiant_count",
+              "camp": "good"
+            },
+            {
+              "playerId": 3,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "dreamer",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+            "sha256": "e3e264f428aa62bfe06016e92b7a40ca1a316c813cfbd45649db4a56580b1498"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "e3e264f428aa62bfe06016e92b7a40ca1a316c813cfbd45649db4a56580b1498",
+      "currentBytes": 25413
+    }
+  ],
+  "suites": [
+    {
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "anchorOriginPath": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+      "owner": "frontend",
+      "kind": "recorded-archive",
+      "files": [
+        "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+        "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+        "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+        "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+        "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+        "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+        "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+        "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+        "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json"
+      ],
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_radiant_eclipse_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": ["awa_radiant_eclipse_v1"],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+              "pointer": "/players/1/privateState/abilities/native:shelter/state/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 2,
+              "role": "radiant_count",
+              "camp": "good"
+            },
+            {
+              "playerId": 3,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "dreamer",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+            "sha256": "e3e264f428aa62bfe06016e92b7a40ca1a316c813cfbd45649db4a56580b1498"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "membership": [
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-count.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-dreamer.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-maid.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-pack.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-seer.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-villager.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-failed-paid-potion-en-witch.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.checkpoint.txt",
+              "pointer": "",
+              "detail": "Basename only locates candidates; recorded eventCount, complete actor roster and literal terminal result agree, or the explicit cycle_failed/runtime_error nonterminal snapshot and last event day/phase agree. This compares archives and never predicts a rule outcome."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+          "state": "standalone",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+              "pointer": "",
+              "detail": "Standalone identity anchor; no cross-file relationship was asserted."
+            }
+          ]
+        }
+      ],
+      "acceptance": {
+        "status": "pending-review",
+        "evidence": [
+          {
+            "kind": "baseline-byte-match",
+            "reference": "docs/refactor/generated/baseline-fixtures.json",
+            "detail": "Every JSON member matches immutable Git and current byte digest/size; no golden was regenerated."
+          },
+          {
+            "kind": "metadata-association",
+            "reference": "frontend/tests/fixtures/radiant-failed-paid-potion-en.replay.json",
+            "detail": "Membership evidence identifies literal associations or explicit standalone status; this pure description does not verify caller-supplied byte hashes or infer passed test status."
+          }
+        ],
+        "unresolved": [
+          "seed: No seed is serialized; producer defaults are not evidence of the original invocation.",
+          "build: No literal build is recorded in this artifact.",
+          "Grouping and exact byte preservation are inventory evidence; independent scenario/consumer acceptance has not been assigned."
+        ]
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "originPath": "backend/tests/support/audit_summary_fixture.ts",
+      "currentPath": "packages/game-runtime/tests/support/builders/audit-summary.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
+      "originalBytes": 811,
+      "currentSha256": "783f468aee2839c9351c59218f3be8858f7ac3f9575c07ea89954178636a7e2c",
+      "currentBytes": 1037,
+      "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
+      "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
+      "kind": "test-support"
+    },
+    {
+      "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
+      "currentPath": "packages/game-runtime/tests/support/features/mist-raven/oracles/transport.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
+      "originalBytes": 7318,
+      "currentSha256": "7c6aaa81dfa5c47ad5067824f4a9bde05d8d08600e5b2fed125f29f4a3781daf",
+      "currentBytes": 7667,
+      "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
+      "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
+      "kind": "test-support"
+    }
+  ],
+  "derivedManifests": []
+}

@@ -17,19 +17,19 @@ LLM 示例引用 `deepseek_v4_flash`，ACP 示例引用 `acp_default`。将 game
 十人入口，中文、英文与 ACP 使用相同的规则和授权链：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_awakened_wolf_king --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_awakened_wolf_king_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_awakened_wolf_king_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_awakened_wolf_king_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_awakened_wolf_king --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_awakened_wolf_king_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_awakened_wolf_king_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_awakened_wolf_king_acp --locale en --display-locale en
 ```
 
 十二人入口：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_wolf_king --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_wolf_king_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_wolf_king_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_wolf_king_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_wolf_king --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_wolf_king_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_wolf_king_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_wolf_king_acp --locale en --display-locale en
 ```
 
 `roles.awakened_wolf_king` 严格只接受 `{}`，解析为固定政策 `awa_awakened_wolf_king_v1`。任意死因开关、重复角色、复制、复活或额外叠枪混板未开放。

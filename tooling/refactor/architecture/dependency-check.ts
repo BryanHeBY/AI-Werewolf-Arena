@@ -46,7 +46,9 @@ const nodeBuiltins = new Set([
 const packageName = (specifier: string) =>
   specifier.startsWith("@") ? specifier.split("/").slice(0, 2).join("/") : specifier.split("/")[0]!;
 const featureRoot = (file: string) =>
-  /^(backend\/src\/(?:game\/mechanisms\/roles|features)\/[^/]+)\//.exec(file)?.[1] ?? null;
+  /^((?:backend|packages\/game-runtime)\/src\/(?:game\/mechanisms\/roles|features)\/[^/]+)\//.exec(
+    file,
+  )?.[1] ?? null;
 const publicFeatureTarget = (file: string, kinds = ["index", "contracts", "ports"]) => {
   const root = featureRoot(file);
   // 机制根的具名公开端口可按职责分开，避免一个 ports 同时装配查询和重型窗口导致循环。
@@ -68,21 +70,28 @@ const publicFeatureTarget = (file: string, kinds = ["index", "contracts", "ports
 };
 // 只列由旧 AI 层迁出的真实执行／传输入口；旧 game 的观察、展示和 repair 端口不属于此集合。
 const executionAgentSource = (file: string) =>
-  /^backend\/src\/(?:agents\/(?:acp|llm|pi|player|providers|runtime|reporting)|audit\/agents)\//.test(
+  /^(?:backend|packages\/game-runtime)\/src\/(?:agents\/(?:acp|llm|pi|player|providers|runtime|reporting)|audit\/agents)\//.test(
     file,
   ) ||
-  /^backend\/src\/agents\/(?:index|game-tool-protocol|visible-event-protocol)\.[cm]?ts$/.test(
+  /^(?:backend|packages\/game-runtime)\/src\/agents\/(?:index|game-tool-protocol|visible-event-protocol)\.[cm]?ts$/.test(
     file,
   ) ||
-  /^backend\/src\/app\/(?:agent-exports|audit-agent-exports|audit-agent-factory)\.[cm]?ts$/.test(
+  /^(?:backend|packages\/game-runtime)\/src\/app\/(?:agent-exports|audit-agent-exports|audit-agent-factory)\.[cm]?ts$/.test(
     file,
   );
 const browserSource = (file: string) =>
-  /^(?:frontend\/src\/|packages\/[^/]+\/src\/|apps\/[^/]+\/src\/client\/)/.test(file);
-const domainSource = (file: string) => /^backend\/src\/(?:core|domain)\//.test(file);
+  /^(?:frontend\/src\/|packages\/(?!game-runtime\/|project-paths\/)[^/]+\/src\/|apps\/(?:replay|video)\/src\/|apps\/[^/]+\/src\/client\/)/.test(
+    file,
+  );
+const domainSource = (file: string) =>
+  /^(?:backend|packages\/game-runtime)\/src\/(?:core|domain)\//.test(file);
 const verifierSource = (file: string) =>
-  /^backend\/src\/(?:verification\/|recording\/verification\/)/.test(file) ||
-  /^backend\/src\/recording\/.*_(?:record|stocks|action_evidence|requests)\.[cm]?ts$/.test(file);
+  /^(?:backend|packages\/game-runtime)\/src\/(?:verification\/|recording\/verification\/)/.test(
+    file,
+  ) ||
+  /^(?:backend|packages\/game-runtime)\/src\/recording\/.*_(?:record|stocks|action_evidence|requests)\.[cm]?ts$/.test(
+    file,
+  );
 const privatePath = (file: string) =>
   file
     .split("/")
@@ -484,7 +493,11 @@ export function checkDependencies(
             file.path.startsWith("tooling/") &&
             ref.typeOnly &&
             spec === "typescript" &&
-            requested.every((value) => value.endsWith("/backend/node_modules/typescript")) &&
+            requested.every(
+              (value) =>
+                value.endsWith("/backend/node_modules/typescript") ||
+                value.endsWith("/packages/game-runtime/node_modules/typescript"),
+            ) &&
             packages.some((pkg) => pkg.dependencies.has("typescript"));
           if (!target && compilerLocator) continue;
           if (!target) {
@@ -506,7 +519,12 @@ export function checkDependencies(
           const name = packageName(spec),
             workspace = packages.find((pkg) => pkg.name === name);
           if (workspace) {
-            if (file.path.startsWith("frontend/") && workspace.root === "backend")
+            if (
+              (file.path.startsWith("frontend/") ||
+                file.path.startsWith("packages/game-media/") ||
+                /^apps\/(?:replay|video)\//.test(file.path)) &&
+              ["backend", "packages/game-runtime"].includes(workspace.root)
+            )
               add(
                 "dependency.frontend-backend",
                 file.path,
@@ -514,7 +532,11 @@ export function checkDependencies(
                 "Frontend consumer imports backend workspace implementation.",
                 "backend",
               );
-            if (file.path.startsWith("backend/src/") && workspace.root === "frontend")
+            if (
+              (file.path.startsWith("backend/src/") ||
+                file.path.startsWith("packages/game-runtime/src/")) &&
+              (workspace.root === "frontend" || workspace.root.startsWith("apps/"))
+            )
               add(
                 "dependency.cross-application",
                 file.path,
@@ -611,7 +633,8 @@ export function checkDependencies(
           target,
         );
       if (
-        (/^backend\/src\/(?:ai|adapters)\//.test(file.path) || executionAgentSource(file.path)) &&
+        (/^(?:backend|packages\/game-runtime)\/src\/(?:ai|adapters)\//.test(file.path) ||
+          executionAgentSource(file.path)) &&
         targetOwner &&
         !publicFeatureTarget(target, ["contracts", "ports"])
       )
@@ -623,7 +646,9 @@ export function checkDependencies(
           target,
         );
       if (
-        /^backend\/src\/(?:game\/engine|engine(?!\/actions\/))\//.test(file.path) &&
+        /^(?:backend|packages\/game-runtime)\/src\/(?:game\/engine|engine(?!\/actions\/))\//.test(
+          file.path,
+        ) &&
         targetOwner &&
         !publicFeatureTarget(target, ["contracts", "ports"])
       )
@@ -636,7 +661,9 @@ export function checkDependencies(
         );
       // 游戏侧预检也只消费机制公开契约；从 AI 迁入 gateway 不能使原内部耦合逃过检查。
       if (
-        /^backend\/src\/(?:game\/gateway|engine\/actions)\//.test(file.path) &&
+        /^(?:backend|packages\/game-runtime)\/src\/(?:game\/gateway|engine\/actions)\//.test(
+          file.path,
+        ) &&
         targetOwner &&
         !publicFeatureTarget(target, ["contracts", "ports"])
       )
@@ -649,7 +676,7 @@ export function checkDependencies(
         );
       if (
         domainSource(file.path) &&
-        /^backend\/src\/(?:game|features|engine|ai|agents|adapters|app|runtime|recording|verification|audit|rulesets)\//.test(
+        /^(?:backend|packages\/game-runtime)\/src\/(?:game|features|engine|ai|agents|adapters|app|runtime|recording|verification|audit|rulesets)\//.test(
           target,
         )
       )
@@ -662,7 +689,7 @@ export function checkDependencies(
         );
       if (
         verifierSource(file.path) &&
-        /^backend\/src\/(?:game|features|engine|ai|agents|adapters|app|runtime|rulesets)\//.test(
+        /^(?:backend|packages\/game-runtime)\/src\/(?:game|features|engine|ai|agents|adapters|app|runtime|rulesets)\//.test(
           target,
         )
       )
@@ -681,7 +708,12 @@ export function checkDependencies(
           "Production implementation depends on a test or tooling oracle.",
           target,
         );
-      if (/^frontend\/(?:src|scripts)\//.test(file.path) && target.startsWith("backend/"))
+      if (
+        /^(?:frontend\/(?:src|scripts)\/|packages\/game-media\/src\/|apps\/(?:replay|video)\/(?:src|scripts)\/)/.test(
+          file.path,
+        ) &&
+        (target.startsWith("backend/") || target.startsWith("packages/game-runtime/"))
+      )
         add(
           "dependency.frontend-backend",
           file.path,
@@ -691,7 +723,10 @@ export function checkDependencies(
         );
       // 工作台同一包同时包含浏览器和服务器，公开包出口不能代替运行环境边界。
       // 相对路径、tsconfig 别名和已声明 backend 出口解析后都检查真实目标。
-      if (/^apps\/[^/]+\/src\/client\//.test(file.path) && target.startsWith("backend/"))
+      if (
+        /^apps\/[^/]+\/src\/client\//.test(file.path) &&
+        (target.startsWith("backend/") || target.startsWith("packages/game-runtime/"))
+      )
         add(
           "dependency.browser-backend",
           file.path,
@@ -725,7 +760,10 @@ export function checkDependencies(
           "Cross package access must use a declared public export.",
           target,
         );
-      if (/^packages\/[^/]+\/src\//.test(file.path) && target.startsWith("backend/"))
+      if (
+        /^packages\/(?!game-runtime\/)[^/]+\/src\//.test(file.path) &&
+        (target.startsWith("backend/") || target.startsWith("packages/game-runtime/"))
+      )
         add(
           "dependency.package-backend",
           file.path,

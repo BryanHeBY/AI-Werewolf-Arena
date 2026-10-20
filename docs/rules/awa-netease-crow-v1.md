@@ -41,6 +41,6 @@
 
 ## 实现与回归边界
 
-唯一运行所有者位于 `backend/src/features/crow/`；实际放逐流水线只调用具名加票端口，阶段管理器和死亡结算不增加逐角色分支。新提示通过本族 `custom` 值查询贡献实现，不扩大中央原生角色捕获。共享事实/自然语言分别由 game-contract、game-presentation 和 game-text 拥有；独立验算位于 `recording/verification/crow/`，不导入生产算法。
+唯一运行所有者位于 `packages/game-runtime/src/features/crow/`；实际放逐流水线只调用具名加票端口，阶段管理器和死亡结算不增加逐角色分支。新提示通过本族 `custom` 值查询贡献实现，不扩大中央原生角色捕获。共享事实/自然语言分别由 game-contract、game-presentation 和 game-text 拥有；独立验算位于 `recording/verification/crow/`，不导入生产算法。
 
 公开操作、中英文 LLM／ACP 入口和 God 教学归档见[乌鸦示例](../examples/crow/README.md)。回归覆盖各票政策与玩家受众、DTO 白名单、关闭墓碑、换席撤权及独立 verifier；整局、合成传输和逐帧结果分别验证，不外推任意组合或真实模型质量。

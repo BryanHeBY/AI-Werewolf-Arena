@@ -23,11 +23,11 @@ import publicSourceManifest from "./fixtures/manifest.json";
 import {
   acpAdapterFixture,
   backendAdapterFixture,
-} from "../../backend/tests/support/fixtures/manifest";
+} from "@ai-werewolf-arena/game-runtime/testing/fixtures";
 import {
   replayFixtureFiles,
   playerFixtureFiles,
-} from "../../frontend/tests/support/fixtures/manifest";
+} from "@ai-werewolf-arena/game-media/testing/fixtures";
 
 const originCommit = "27a97cb66e8f30fceb7cb20130154291559dd14a";
 const digest = "1".repeat(64);

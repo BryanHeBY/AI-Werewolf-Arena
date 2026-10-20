@@ -17,19 +17,19 @@ LLM 示例引用 `deepseek_v4_flash`，ACP 示例引用 `acp_default`。可把 g
 十人入口：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_dark_stars --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_dark_stars_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_dark_stars_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_dark_stars_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_dark_stars --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_dark_stars_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_dark_stars_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_dark_stars_acp --locale en --display-locale en
 ```
 
 十二人入口：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_dark_stars --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_dark_stars_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_dark_stars_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_dark_stars_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_dark_stars --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_dark_stars_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_dark_stars_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_dark_stars_acp --locale en --display-locale en
 ```
 
 `roles.awakened_wolf_beauty` 和 `roles.awakened_hunter` 都严格只接受 `{}`，分别解析为固定政策 `awa_awakened_replacement_v1` 与 `awa_directional_patrol_v1`；不开放随意改冷却、替死次数、毒死资格或狼位公开的开关。

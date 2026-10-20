@@ -2,7 +2,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import "ai-werewolf-arena-frontend/style.css";
+import "@ai-werewolf-arena/game-media/style.css";
 import "./style.css";
 createRoot(document.getElementById("app")!).render(
   <StrictMode>

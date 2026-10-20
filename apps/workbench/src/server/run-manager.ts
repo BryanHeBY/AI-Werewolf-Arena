@@ -4,10 +4,11 @@
  */
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { applicationResource } from "@ai-werewolf-arena/project-paths";
 import os from "node:os";
-import { readProcessIdentity, readBootId } from "ai-werewolf-arena-backend/run-session";
+import { readProcessIdentity, readBootId } from "@ai-werewolf-arena/game-runtime/run-session";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
-import { checkConfig } from "ai-werewolf-arena-backend/config/check";
+import { checkConfig } from "@ai-werewolf-arena/game-runtime/config/check";
 import { containedFile, WorkbenchError } from "./config-documents";
 import { SessionStore } from "./session-store";
 export class RunManager {
@@ -45,7 +46,7 @@ export class RunManager {
       const child = Bun.spawn(
         [
           process.execPath,
-          path.join(this.repository, "backend/src/app/cli/run-game.ts"),
+          applicationResource("game", "src/cli/run-game.ts"),
           "--configs-dir",
           this.configs,
           "--game-config-name",

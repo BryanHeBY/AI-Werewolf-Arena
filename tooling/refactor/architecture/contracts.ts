@@ -74,7 +74,7 @@ export function violation(
   };
 }
 export function compiler(repository: string): typeof TypeScript {
-  return createRequire(path.join(path.resolve(repository), "backend/package.json"))(
+  return createRequire(path.join(path.resolve(repository), "packages/game-runtime/package.json"))(
     "typescript",
   ) as typeof TypeScript;
 }

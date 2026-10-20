@@ -60,3 +60,29 @@ jobs:
           path: ${{ env.TMPDIR }}/
           retention-days: 7
           if-no-files-found: ignore
+
+  windows:
+    name: Windows / paths and local apps
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version-file: package.json
+      - name: Install locked workspaces
+        run: bun install --frozen-lockfile --ignore-scripts
+      - name: Check path semantics and portable workbench helpers
+        run: bun --no-env-file test packages/project-paths/tests apps/game/tests apps/workbench/tests/unit/config-edit.test.ts apps/workbench/tests/unit/listen-address.test.ts
+      - name: Smoke independent game CLI
+        run: bun run --cwd apps/game run:mock
+      - name: Build replay and workbench applications
+        run: |
+          bun run build:frontend
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          bun run build:workbench

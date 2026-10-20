@@ -9,7 +9,7 @@ bun install
 cp -R configs.example configs
 # 仅首次建立本地目录时复制；已有 configs 时不执行 cp。
 # 在 configs/runtime/backends.json 填认证，agents.json 配置 options。
-bun run --cwd backend config:check --configs-dir ../configs --game-config-name twelve_player_standard
+bun run --cwd apps/game config:check --configs-dir ../../configs --game-config-name twelve_player_standard
 ```
 
 检查输出是脱敏报告，不启动模型；错误不会回显原JSON。正常run不隐式fallback到examples或源码预设。没有授权时维护／验收工具不读取秘密配置，也不执行真实模型。
@@ -17,9 +17,9 @@ bun run --cwd backend config:check --configs-dir ../configs --game-config-name t
 ## 对局
 
 ```bash
-bun run --cwd backend run:six
-bun run --cwd backend run:twelve
-bun run --cwd backend run:twelve:acp
+bun run --cwd apps/game run:six
+bun run --cwd apps/game run:twelve
+bun run --cwd apps/game run:twelve:acp
 ```
 
 这三条会按本地配置启动真实Agent，可能有网络／模型费用或外部进程。运行前需确认本地配置及预算。先确认 backend、并发／初始化预算、Agent 命令和输出根，再由操作者主动运行。
@@ -30,11 +30,11 @@ bun run --cwd backend run:twelve:acp
 
 ```bash
 # 旧 runtime/providers + agents → schemaVersion 2；先预览
-bun run --cwd backend config:migrate --configs-dir ../configs --runtime
+bun run --cwd apps/game config:migrate --configs-dir ../../configs --runtime
 # 核对预览后应用，两个旧文件各保留 .v1.bak，不覆写已有 backends.json
-bun run --cwd backend config:migrate --configs-dir ../configs --runtime --apply
+bun run --cwd apps/game config:migrate --configs-dir ../../configs --runtime --apply
 # 旧板子迁移是独立入口（不带 --runtime）
-bun run --cwd backend config:migrate --configs-dir ../configs
+bun run --cwd apps/game config:migrate --configs-dir ../../configs
 ```
 
 先校验再备份，目标独占发布。备份存在且字节不同应拒绝，不通过删除别人的文件或重试丢弃错误。完整参数仍以CLI帮助／实际parser为准。
@@ -68,7 +68,7 @@ ACP 会话能回复文本，不代表注入的游戏 MCP 已启动成功。若�
 [完整配置与两语命令](../examples/awakened-witch/README.md)包含公开board、中文／英文LLM与ACP示例，以及四夜真实God教学档。只复制对应board／game，保留个人`configs/runtime/`及已配置Agent。SDK中文入口：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_witch --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_awakened_witch --locale zh-CN --display-locale zh-CN
 ```
 
 当前精确牌池为三普狼、觉醒狼王、四民、预言家、守卫、猎人与觉醒女巫；三次调毒分别消耗1／2／3名新协助者。女巫看不到讨论、隐票或结果；终端私有显示与God回放不代表玩家可以获知这些秘密。其它牌池、复制、复活或任意药数开关仍拒绝。
@@ -78,7 +78,7 @@ bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_pla
 [完整两语 LLM／ACP 入口](../examples/awakened-dark-stars/README.md)包含两份原 board、六份 game 和真实 God 教学帧。只复制所选 board／game，保留个人 runtime、模型认证与隔离启动器；`roles.awakened_wolf_beauty`／`roles.awakened_hunter`均严格 `{}`。十人中文 SDK 入口：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_dark_stars --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_dark_stars --locale zh-CN --display-locale zh-CN
 ```
 
 魅惑只给本人，原伤害替死付款只给God；巡猎给模型完整座位环和方向，不给隐藏狼候选。公开结果以实际死者为准，God回放不可作为玩家授权档发送。

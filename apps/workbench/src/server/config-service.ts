@@ -2,11 +2,11 @@
  * 负责工作台配置检查、可用板子目录与具名游戏摘要；输入原始文档，输出脱敏诊断及支持信息。
  * 实际解析和有限规则判断仍交 backend 唯一所有者；不启动 Agent，不把已解析认证写回原始文件。
  */
-import { parseRuntimeConfig } from "ai-werewolf-arena-backend/config/parse";
-import { parseBoardDefinition } from "ai-werewolf-arena-backend/config/board";
-import { resolveGameSetup, resolveGameBoard } from "ai-werewolf-arena-backend/config/resolve";
-import { configDiagnostic } from "ai-werewolf-arena-backend/config/diagnostics";
-import { validateRuntimeNativeConfig } from "ai-werewolf-arena-backend/config/validate";
+import { parseRuntimeConfig } from "@ai-werewolf-arena/game-runtime/config/parse";
+import { parseBoardDefinition } from "@ai-werewolf-arena/game-runtime/config/board";
+import { resolveGameSetup, resolveGameBoard } from "@ai-werewolf-arena/game-runtime/config/resolve";
+import { configDiagnostic } from "@ai-werewolf-arena/game-runtime/config/diagnostics";
+import { validateRuntimeNativeConfig } from "@ai-werewolf-arena/game-runtime/config/validate";
 import type {
   BoardCard,
   ConfigKind,

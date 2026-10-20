@@ -5,7 +5,7 @@
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fingerprintEngine } from "../../backend/src/recording/reproduction/engine-fingerprint";
+import { fingerprintEngine } from "../../packages/game-runtime/src/recording/reproduction/engine-fingerprint";
 
 const root = path.resolve(import.meta.dir, "../..");
 const manifest = await Bun.file(path.join(root, "package.json")).json();

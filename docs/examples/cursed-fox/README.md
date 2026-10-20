@@ -19,10 +19,10 @@
 mkdir -p configs/boards configs/games
 cp -n configs.example/boards/awa_netease_cursed_fox_{10,12}_v1.json configs/boards/
 cp -n configs.example/games/{ten,twelve}_player_cursed_fox*.json configs/games/
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_cursed_fox --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_cursed_fox_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_cursed_fox_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_cursed_fox_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_cursed_fox --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_cursed_fox_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name ten_player_cursed_fox_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_cursed_fox_acp --locale en --display-locale en
 ```
 
 LLM 引用 `deepseek_v4_flash`，ACP 引用 `acp_default`，可换为个人 Agent 名；每板有中英 LLM 和可覆盖 locale 的 ACP game。不在 board／game 中写API key。
@@ -31,4 +31,4 @@ LLM 引用 `deepseek_v4_flash`，ACP 引用 `acp_default`，可换为个人 Agen
 
 玩家只收到本人身份／独胜目标、依法授权的查验报告和公开死亡；狼刀免疫对象及查验致死因果不额外泄露给狼队或公开feed。God保留完整因果，不可把God回放作为玩家授权档案发送。中英显示改变系统语言，不改原话、事实、阵营或胜利成员。
 
-本次仅补入口。两牌池直接取 `backend/tests/scenarios/boards/cursed-fox/simulation.test.ts` 的 `official_10`／`official_12` 已测声明，经原 `foxBoard` 生成；测试内部名字不作为本页官方原板的来源证据。既有死亡、原体验证和严格归档测试保持原合同，公开JSON另经parse及中英bootstrap校验，阶段矩阵逐局strict另验收。
+本次仅补入口。两牌池直接取 `packages/game-runtime/tests/scenarios/boards/cursed-fox/simulation.test.ts` 的 `official_10`／`official_12` 已测声明，经原 `foxBoard` 生成；测试内部名字不作为本页官方原板的来源证据。既有死亡、原体验证和严格归档测试保持原合同，公开JSON另经parse及中英bootstrap校验，阶段矩阵逐局strict另验收。

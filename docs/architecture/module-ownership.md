@@ -8,7 +8,7 @@
 | ---------------------------------- | ------------------------------------------------------ | ----------------------------------------------------- |
 | `apps/workbench/src/client`        | 原始配置草稿、页面导航、ANSI 终端和复盘接入            | 认证解析、服务端配置读取、运行控制令牌                |
 | `apps/workbench/src/server`        | 本机 HTTP 用例、文件编辑协议、启动登记与运行发现       | 游戏规则、World、终档写入或第二套配置解析器           |
-| `backend/src/app`                  | 配置入口、装配、运行用例、会话生命周期                 | 角色规则或第二份状态                                  |
+| `packages/game-runtime/src/app`    | 配置入口、装配、运行用例、会话生命周期                 | 角色规则或第二份状态                                  |
 | `domain`                           | World／组件、原体引用、运行许可与明确提交数据          | UI、Agent、具体机制算法                               |
 | `engine`                           | 阶段推进、动作接收、死亡波次、必要检查点和唯一终局提交 | 根据角色 ID 重写族内规则                              |
 | `features/<feature>`               | 一个或多个角色的完整状态、请求、生命周期、效果与贡献   | 另建 World 或全角色分派器                             |
@@ -23,7 +23,7 @@
 | `frontend/src`                     | 视频与语音契约、纯时间线编译、共用画面与字幕           | 读取本局作者文件、凭据或调用TTS                       |
 | `frontend/scripts`                 | 本地文件读取、作者项目装配、素材准备与渲染命令         | 写死某局台词、选角或剧情，静态依赖具体对局            |
 | `frontend/examples`                | 基于教学夹具的可运行演示、通用音色试听                 | 正式对局剧本、生产运行算法                            |
-| `frontend/videos/<theme>`          | 本局完整剧本、固定选角、来源配置和制作记录             | 通用读取、合成、时间线或渲染实现                      |
+| `apps/video/videos/<theme>`        | 本局完整剧本、固定选角、来源配置和制作记录             | 通用读取、合成、时间线或渲染实现                      |
 
 这不是允许所有同层互导的名单。跨族只消费实际公开端口；私有 state／frame／authority 的形状相似不等于共同不变量。
 
@@ -47,13 +47,13 @@ Catalog／contracts／assembly／builtin 同在 `rulesets/roles`，保原 lazy r
 
 现场 World 和机制状态的捕获由 `app/checkpoint` 拥有，实际入口如下：
 
-| 完整 owner               | 当前落点                                                                                                       |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `contributions.ts`       | [`backend/src/app/checkpoint/contributions.ts`](../../backend/src/app/checkpoint/contributions.ts)             |
-| `authority-snapshots.ts` | [`backend/src/app/checkpoint/authority-snapshots.ts`](../../backend/src/app/checkpoint/authority-snapshots.ts) |
-| `identity-setups.ts`     | [`backend/src/app/checkpoint/identity-setups.ts`](../../backend/src/app/checkpoint/identity-setups.ts)         |
-| `player-snapshots.ts`    | [`backend/src/app/checkpoint/player-snapshots.ts`](../../backend/src/app/checkpoint/player-snapshots.ts)       |
-| `private-state-codec.ts` | [`backend/src/app/checkpoint/private-state-codec.ts`](../../backend/src/app/checkpoint/private-state-codec.ts) |
+| 完整 owner               | 当前落点                                                                                                                                   |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `contributions.ts`       | [`packages/game-runtime/src/app/checkpoint/contributions.ts`](../../packages/game-runtime/src/app/checkpoint/contributions.ts)             |
+| `authority-snapshots.ts` | [`packages/game-runtime/src/app/checkpoint/authority-snapshots.ts`](../../packages/game-runtime/src/app/checkpoint/authority-snapshots.ts) |
+| `identity-setups.ts`     | [`packages/game-runtime/src/app/checkpoint/identity-setups.ts`](../../packages/game-runtime/src/app/checkpoint/identity-setups.ts)         |
+| `player-snapshots.ts`    | [`packages/game-runtime/src/app/checkpoint/player-snapshots.ts`](../../packages/game-runtime/src/app/checkpoint/player-snapshots.ts)       |
+| `private-state-codec.ts` | [`packages/game-runtime/src/app/checkpoint/private-state-codec.ts`](../../packages/game-runtime/src/app/checkpoint/private-state-codec.ts) |
 
 纯 animal-format、player-format、animal-audit、noble-body-format、fragrant-pair-format 五叶仍在 `recording/reproduction/checkpoint`，独立 verifier 仍在录制校验层。现场读取与纯格式的职责已分开；纯格式模块不反向取得现场状态写权。
 
@@ -71,7 +71,7 @@ LLM、ACP、Pi 使用 `replay-contract/agent-output.ts` 的私有输出契约。
 
 ## 离线配音制作
 
-配音身份归 `frontend/src/speech-identity.ts`，停顿与增量时钟归 `speech-clock.ts`，JSONL与画面绑定归 `speech-script.ts`，字词对齐与字幕断句归 `speech-timing.ts`。它们只消费数据，不读取凭据、素材或访问服务商。作者JSONL拥有口播，完整TS稿拥有视觉编排；正文来源与展示版式分开。
+配音身份归 `packages/game-media/src/speech-identity.ts`，停顿与增量时钟归 `speech-clock.ts`，JSONL与画面绑定归 `speech-script.ts`，字词对齐与字幕断句归 `speech-timing.ts`。它们只消费数据，不读取凭据、素材或访问服务商。作者JSONL拥有口播，完整TS稿拥有视觉编排；正文来源与展示版式分开。
 
 `scripts/prepare-video.ts` 分开项目加载、计划编译和素材准备，`scripts/video/authoring.ts` 的项目工厂只声明编排。`tts/chunk-cache.ts` 拥有独立合成段缓存，`tts/prepare.ts` 拥有整行装配缓存与清单发布。详细对齐放JSON附属文件，TS保留类型化索引和来源摘要。`scripts/video/publication.ts` 拥有候选版本目录的校验后发布，`render-production-video.ts` 拥有可恢复分段与连续音轨封装。预览、检查和渲染不隐式生成语音。
 

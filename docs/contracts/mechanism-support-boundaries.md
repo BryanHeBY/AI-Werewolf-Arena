@@ -2,7 +2,7 @@
 
 ## 角色和板子
 
-当前运行Role以`packages/game-contract/src/identity.ts`的封闭枚举及`backend/src/rulesets/roles/builtin-contributions.ts`的实际贡献为准。完整规则及配置变体见[规则 spec](../rules/README.md)，实现入口见[机制索引](../architecture/feature-ownership.md)，角色与公开入口见[支持矩阵](gameplay-support-matrix.md)。资料目录中的规划角色不授予运行支持。
+当前运行Role以`packages/game-contract/src/identity.ts`的封闭枚举及`packages/game-runtime/src/rulesets/roles/builtin-contributions.ts`的实际贡献为准。完整规则及配置变体见[规则 spec](../rules/README.md)，实现入口见[机制索引](../architecture/feature-ownership.md)，角色与公开入口见[支持矩阵](gameplay-support-matrix.md)。资料目录中的规划角色不授予运行支持。
 
 角色可用性受完整板子 schema、profile 的 `supportedBoardRoles`／`supportedWinConditions`／`maxCount`、策略配置及 ruleset 组合共同约束。没有显式角色限制也不代表支持任意混搭。公共发言、投票、获赠能力与原生技能分别判断资格；被动角色没有额外请求不代表免除共同流程。
 
@@ -47,42 +47,42 @@
 
 ## 三层复现保证
 
-| 层           | 实际入口                                            | 保证与限制                                                                           |
-| ------------ | --------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 格式与身份   | `backend/src/recording/reproduction/format.ts`      | 检查结构、版本和来源关系，不证明游戏状态或资源已付款                                 |
-| 独立机制审计 | `backend/src/recording/verification/assembly.ts`    | 按档案字段核对账本、因果和部分失败前缀，不执行生产规则或重建运行许可                 |
-| 精确执行     | `backend/src/app/simulation/replay-reproduction.ts` | 在受支持的构建、随机、规则和输入身份下实际重放并比较，不承诺任意外部闭包或跨构建执行 |
+| 层           | 实际入口                                                          | 保证与限制                                                                           |
+| ------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 格式与身份   | `packages/game-runtime/src/recording/reproduction/format.ts`      | 检查结构、版本和来源关系，不证明游戏状态或资源已付款                                 |
+| 独立机制审计 | `packages/game-runtime/src/recording/verification/assembly.ts`    | 按档案字段核对账本、因果和部分失败前缀，不执行生产规则或重建运行许可                 |
+| 精确执行     | `packages/game-runtime/src/app/simulation/replay-reproduction.ts` | 在受支持的构建、随机、规则和输入身份下实际重放并比较，不承诺任意外部闭包或跨构建执行 |
 
 独立审计按以下顺序装配，RedMoon 由 Demon 校验器内部核对：
 
-| 序  | 实际函数                          | 物理owner                                                            |
-| --- | --------------------------------- | -------------------------------------------------------------------- |
-| 1   | `validateInitialIdentityRecord`   | `backend/src/recording/verification/initial-identity/validate.ts`    |
-| 2   | `validateWildChildRecord`         | `backend/src/recording/verification/wild-child/validate.ts`          |
-| 3   | `validateLonelyGirlRecord`        | `backend/src/recording/verification/lonely-girl/validate.ts`         |
-| 4   | `validateGhostBrideRecord`        | `backend/src/recording/verification/ghost-bride/validate.ts`         |
-| 5   | `validateAnimalDreamRecord`       | `backend/src/recording/verification/animal-dream/validate.ts`        |
-| 6   | `validateFragrantPairRecord`      | `backend/src/recording/verification/fragrant-pair-seer/validate.ts`  |
-| 7   | `validateNobleSecretBodyRecord`   | `backend/src/recording/verification/noble-secret-body/validate.ts`   |
-| 8   | `validateDemonHunterRecord`       | `backend/src/recording/verification/demon-hunter/validate.ts`        |
-| 9   | `validateScholarMentorRecord`     | `backend/src/recording/verification/scholar-mentor/validate.ts`      |
-| 10  | `validateMistRavenRecord`         | `backend/src/recording/verification/mist-raven/validate.ts`          |
-| 11  | `validateRadiantEclipseRecord`    | `backend/src/recording/verification/radiant-eclipse/validate.ts`     |
-| 12  | `validateTimeConsortRecord`       | `backend/src/recording/verification/time-wolf-consort/validate.ts`   |
-| 13  | `validateWolfSorcererRecord`      | `backend/src/recording/verification/wolf-sorcerer/validate.ts`       |
-| 14  | `validateTricksterRecord`         | `backend/src/recording/verification/trickster/validate.ts`           |
-| 15  | `validateMagicianRecord`          | `backend/src/recording/verification/magician/validate.ts`            |
-| 16  | `validateOrderPrinceRecord`       | `backend/src/recording/verification/order-prince/validate.ts`        |
-| 17  | `validateCupidRecord`             | `backend/src/recording/verification/cupid/validate.ts`               |
-| 18  | `validateHybridRecord`            | `backend/src/recording/verification/hybrid/validate.ts`              |
-| 19  | `validateDeathHistoryRecord`      | `backend/src/recording/verification/death-history/validate.ts`       |
-| 20  | `validateCrowRecord`              | `backend/src/recording/verification/crow/validate.ts`                |
-| 21  | `validateSilenceElderRecord`      | `backend/src/recording/verification/silence-elder/validate.ts`       |
-| 22  | `validateAwakenedClawRecord`      | `backend/src/recording/verification/awakened-wolf-king/validate.ts`  |
-| 23  | `validateAwakenedWitchRecord`     | `backend/src/recording/verification/awakened-witch/validate.ts`      |
-| 24  | `validateWardenRecord`            | `backend/src/recording/verification/warden/validate.ts`              |
-| 25  | `validateAwakenedDayRolesRecord`  | `backend/src/recording/verification/awakened-day-roles/validate.ts`  |
-| 26  | `validateAwakenedDarkStarsRecord` | `backend/src/recording/verification/awakened-dark-stars/validate.ts` |
+| 序  | 实际函数                          | 物理owner                                                                          |
+| --- | --------------------------------- | ---------------------------------------------------------------------------------- |
+| 1   | `validateInitialIdentityRecord`   | `packages/game-runtime/src/recording/verification/initial-identity/validate.ts`    |
+| 2   | `validateWildChildRecord`         | `packages/game-runtime/src/recording/verification/wild-child/validate.ts`          |
+| 3   | `validateLonelyGirlRecord`        | `packages/game-runtime/src/recording/verification/lonely-girl/validate.ts`         |
+| 4   | `validateGhostBrideRecord`        | `packages/game-runtime/src/recording/verification/ghost-bride/validate.ts`         |
+| 5   | `validateAnimalDreamRecord`       | `packages/game-runtime/src/recording/verification/animal-dream/validate.ts`        |
+| 6   | `validateFragrantPairRecord`      | `packages/game-runtime/src/recording/verification/fragrant-pair-seer/validate.ts`  |
+| 7   | `validateNobleSecretBodyRecord`   | `packages/game-runtime/src/recording/verification/noble-secret-body/validate.ts`   |
+| 8   | `validateDemonHunterRecord`       | `packages/game-runtime/src/recording/verification/demon-hunter/validate.ts`        |
+| 9   | `validateScholarMentorRecord`     | `packages/game-runtime/src/recording/verification/scholar-mentor/validate.ts`      |
+| 10  | `validateMistRavenRecord`         | `packages/game-runtime/src/recording/verification/mist-raven/validate.ts`          |
+| 11  | `validateRadiantEclipseRecord`    | `packages/game-runtime/src/recording/verification/radiant-eclipse/validate.ts`     |
+| 12  | `validateTimeConsortRecord`       | `packages/game-runtime/src/recording/verification/time-wolf-consort/validate.ts`   |
+| 13  | `validateWolfSorcererRecord`      | `packages/game-runtime/src/recording/verification/wolf-sorcerer/validate.ts`       |
+| 14  | `validateTricksterRecord`         | `packages/game-runtime/src/recording/verification/trickster/validate.ts`           |
+| 15  | `validateMagicianRecord`          | `packages/game-runtime/src/recording/verification/magician/validate.ts`            |
+| 16  | `validateOrderPrinceRecord`       | `packages/game-runtime/src/recording/verification/order-prince/validate.ts`        |
+| 17  | `validateCupidRecord`             | `packages/game-runtime/src/recording/verification/cupid/validate.ts`               |
+| 18  | `validateHybridRecord`            | `packages/game-runtime/src/recording/verification/hybrid/validate.ts`              |
+| 19  | `validateDeathHistoryRecord`      | `packages/game-runtime/src/recording/verification/death-history/validate.ts`       |
+| 20  | `validateCrowRecord`              | `packages/game-runtime/src/recording/verification/crow/validate.ts`                |
+| 21  | `validateSilenceElderRecord`      | `packages/game-runtime/src/recording/verification/silence-elder/validate.ts`       |
+| 22  | `validateAwakenedClawRecord`      | `packages/game-runtime/src/recording/verification/awakened-wolf-king/validate.ts`  |
+| 23  | `validateAwakenedWitchRecord`     | `packages/game-runtime/src/recording/verification/awakened-witch/validate.ts`      |
+| 24  | `validateWardenRecord`            | `packages/game-runtime/src/recording/verification/warden/validate.ts`              |
+| 25  | `validateAwakenedDayRolesRecord`  | `packages/game-runtime/src/recording/verification/awakened-day-roles/validate.ts`  |
+| 26  | `validateAwakenedDarkStarsRecord` | `packages/game-runtime/src/recording/verification/awakened-dark-stars/validate.ts` |
 
 没有专属校验器的机制仍受共同格式、身份及实际执行检查约束；专属校验器的数量不表示全部角色规则都已独立覆盖。普通死亡历史审计不能提供完整生命引用证明。
 

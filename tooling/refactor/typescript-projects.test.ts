@@ -13,8 +13,8 @@ const root = path.resolve(import.meta.dir, "../..");
 const ts = compiler(root);
 
 for (const directory of [
-  "backend/tests",
-  "backend/scripts",
+  "packages/game-runtime/tests",
+  "packages/game-runtime/scripts",
   "packages/game-catalog/tests",
   "packages/game-contract/tests",
   "packages/game-presentation/tests",

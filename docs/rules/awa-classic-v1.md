@@ -50,15 +50,15 @@
 
 ## 共同机制与判例
 
-| 规则边界                             | 契约与独立判例                                                                                                                                            |
-| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 狼队知识、夜聊、刀权与历史受众       | [狼队权限](../contracts/common-gameplay.md#狼队权限)、[人工判例](../../backend/tests/unit/mechanisms/wolf-team-permission-and-prompt-contracts.test.ts)   |
-| 查验标签、身份与真实阵营分离         | [类型化查验](../contracts/common-gameplay.md#查验结果)、[人工判例](../../backend/tests/unit/engine/visibility/inspection-result-contract.test.ts)         |
-| 用药刀口、资源、耗尽视角、16保护组合 | [女巫结算](../contracts/common-gameplay.md#女巫与伤害保护)、[人工判例](../../backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts) |
-| 末神、空枪、死因与最终消费授权       | [死因](../contracts/common-gameplay.md#死亡与动作授权)、[World窗口](../contracts/common-gameplay.md#死亡与动作授权)                                       |
-| 遗言、警徽、技能、追加死亡与最终判胜 | [死亡链](../contracts/common-gameplay.md#死亡与动作授权)、[四个自爆窗口](../contracts/common-gameplay.md#自爆窗口)                                        |
-| 白痴永久资格与警长空候选／零票／票权 | [公共参与](../contracts/common-gameplay.md#公共参与)                                                                                                      |
-| 获胜归属、完整封盘、记录及双语呈现   | [胜利核心](../contracts/common-gameplay.md#胜利与展示)、[主档与展示](../contracts/common-gameplay.md#胜利与展示)                                          |
+| 规则边界                             | 契约与独立判例                                                                                                                                                          |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 狼队知识、夜聊、刀权与历史受众       | [狼队权限](../contracts/common-gameplay.md#狼队权限)、[人工判例](../../packages/game-runtime/tests/unit/mechanisms/wolf-team-permission-and-prompt-contracts.test.ts)   |
+| 查验标签、身份与真实阵营分离         | [类型化查验](../contracts/common-gameplay.md#查验结果)、[人工判例](../../packages/game-runtime/tests/unit/engine/visibility/inspection-result-contract.test.ts)         |
+| 用药刀口、资源、耗尽视角、16保护组合 | [女巫结算](../contracts/common-gameplay.md#女巫与伤害保护)、[人工判例](../../packages/game-runtime/tests/unit/features/witch/reception-and-lethal-source-table.test.ts) |
+| 末神、空枪、死因与最终消费授权       | [死因](../contracts/common-gameplay.md#死亡与动作授权)、[World窗口](../contracts/common-gameplay.md#死亡与动作授权)                                                     |
+| 遗言、警徽、技能、追加死亡与最终判胜 | [死亡链](../contracts/common-gameplay.md#死亡与动作授权)、[四个自爆窗口](../contracts/common-gameplay.md#自爆窗口)                                                      |
+| 白痴永久资格与警长空候选／零票／票权 | [公共参与](../contracts/common-gameplay.md#公共参与)                                                                                                                    |
+| 获胜归属、完整封盘、记录及双语呈现   | [胜利核心](../contracts/common-gameplay.md#胜利与展示)、[主档与展示](../contracts/common-gameplay.md#胜利与展示)                                                        |
 
 依据：现有AWA代码与人工测试、[官方基础规则](https://langrensha.com/wanfa/guize/2017/10/18/26899_719311.html)、[网易角色资料](https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js)。未由来源完整规定的首日流程、自动警徽、离散公开窗口、末神枪和多判胜条件优先级已明确声明AWA改编。后续角色沿独立规则卡／版本扩充，不因本基础验证而提前开放。
 

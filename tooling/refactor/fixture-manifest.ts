@@ -121,9 +121,14 @@ const inventoryPath = "docs/refactor/generated/baseline-fixtures.json";
 // 清单内的来源路径保留原身份；生成器从夹具工具目录读取同一份原始登记字节。
 const inventoryFilePath = "tooling/refactor/fixtures/source-inventory.json";
 export const fixtureManifestPath = "tooling/refactor/fixtures/manifest.json";
-const fixtureRoots = [
+const originFixtureRoots = [
   "backend/tests/fixtures",
   "frontend/tests/fixtures",
+  "packages/replay-contract/fixtures",
+] as const;
+const fixtureRoots = [
+  "packages/game-runtime/tests/fixtures",
+  "packages/game-media/tests/fixtures",
   "packages/replay-contract/fixtures",
 ] as const;
 type JsonRecord = Record<string, unknown>;
@@ -150,7 +155,7 @@ const privateSegment = (part: string) =>
 function publicSupportSourcePath(value: unknown): value is string {
   return (
     typeof value === "string" &&
-    /^backend\/tests\/support\/.+\.ts$/.test(value) &&
+    /^(?:backend|packages\/game-runtime)\/tests\/support\/.+\.ts$/.test(value) &&
     !value.includes("\\") &&
     !value.split("/").some((part) => !part || part === "." || part === ".." || privateSegment(part))
   );
@@ -159,13 +164,16 @@ function publicSupportSourcePath(value: unknown): value is string {
 const productionTypeRelocations = [
   {
     originPath: "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
-    currentPath: "backend/src/adapters/acp/acp-mcp-bridge.ts",
+    currentPath: "packages/game-runtime/src/adapters/acp/acp-mcp-bridge.ts",
     bindings: ["AcpMcpServerConfig"],
   },
 ] as const;
 function productionTypeRelocation(originPath: unknown, currentPath: unknown) {
   return productionTypeRelocations.find(
-    (entry) => entry.originPath === originPath && entry.currentPath === currentPath,
+    (entry) =>
+      entry.originPath === originPath &&
+      (entry.currentPath === currentPath ||
+        entry.currentPath.replace(/^packages\/game-runtime\//, "backend/") === currentPath),
   );
 }
 function permittedSourceRelocation(originPath: unknown, currentPath: unknown): boolean {
@@ -179,7 +187,7 @@ function permittedSourceRelocation(originPath: unknown, currentPath: unknown): b
 const historicalSourcePackages = [
   {
     originPath: "backend/tests/support/audit_summary_fixture.ts",
-    currentPath: "backend/tests/support/builders/audit-summary.ts",
+    currentPath: "packages/game-runtime/tests/support/builders/audit-summary.ts",
     originalSpecifier: "@ai-werewolf-arena/game-catalog",
     currentSpecifier: "@ai-werewolf-arena/game-contract",
     names: ["Locale"],
@@ -199,7 +207,7 @@ const historicalSourcePackages = [
   },
   {
     originPath: "backend/tests/support/mist_raven_transport_oracle.ts",
-    currentPath: "backend/tests/support/features/mist-raven/oracles/transport.ts",
+    currentPath: "packages/game-runtime/tests/support/features/mist-raven/oracles/transport.ts",
     originalSpecifier: "@ai-werewolf-arena/game-text",
     currentSpecifier: "@ai-werewolf-arena/game-contract/facts/mist-raven",
     names: ["MIST_RAVEN_EVENT_TYPES", "readMistRavenFact"],
@@ -219,6 +227,23 @@ const historicalSourcePackages = [
     ],
   },
 ] as const;
+/** 历史输入仍可能描述迁移前的中间物理路径；仅为精确证明登记旧路由，不参与运行时路径查找。 */
+function historicalSourcePackage(currentPath: string) {
+  const direct = historicalSourcePackages.find((entry) => entry.currentPath === currentPath);
+  if (direct) return direct;
+  const canonical = currentPath.replace(/^backend\//, "packages/game-runtime/");
+  const route = historicalSourcePackages.find((entry) => entry.currentPath === canonical);
+  return route
+    ? {
+        ...route,
+        currentPath,
+        currentFiles: route.currentFiles.map((file) =>
+          file.replace(/^packages\/game-runtime\//, "backend/"),
+        ),
+      }
+    : undefined;
+}
+
 const historicalSourceCommit = "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc";
 
 /**
@@ -232,7 +257,7 @@ export function sourcePackageRelocationEvidence(
   originalFiles: readonly { path: string; text: string }[],
   currentFiles: readonly { path: string; text: string }[],
 ): Array<{ path: string; name: string; statement: string }> {
-  const route = historicalSourcePackages.find((entry) => entry.currentPath === asset.currentPath);
+  const route = historicalSourcePackage(asset.currentPath);
   if (!route) return [];
   if (asset.originPath !== route.originPath) fail("historical_package_origin_identity");
   if (asset.originCommit !== historicalSourceCommit) fail("historical_package_origin_commit");
@@ -425,7 +450,7 @@ function publicFixturePath(value: unknown): value is string {
     !value
       .split("/")
       .some((part) => !part || part === "." || part === ".." || privateSegment(part)) &&
-    fixtureRoots.some((root) => value.startsWith(root + "/"))
+    [...originFixtureRoots, ...fixtureRoots].some((root) => value.startsWith(root + "/"))
   );
 }
 function fail(reason: string): never {
@@ -699,9 +724,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
       }
     }
     // 当前这两已退休公共包的资产不能换另一个origin绕开固定Git证据。
-    const historicalRoute = historicalSourcePackages.find(
-      (route) => route.currentPath === entry.currentPath,
-    );
+    const historicalRoute = historicalSourcePackage(entry.currentPath);
     if (
       historicalRoute &&
       (entry.originPath !== historicalRoute.originPath ||
@@ -948,8 +971,8 @@ export function fixtureSuiteById(manifest: FixtureManifest, suiteId: string): Fi
   return suite;
 }
 function ownerFor(file: string): FixtureOwner {
-  if (file.startsWith("backend/")) return "backend";
-  if (file.startsWith("frontend/")) return "frontend";
+  if (file.startsWith("backend/") || file.startsWith("packages/game-runtime/")) return "backend";
+  if (file.startsWith("frontend/") || file.startsWith("packages/game-media/")) return "frontend";
   return "replay-contract";
 }
 function suiteIdFor(anchor: string): string {
@@ -1416,9 +1439,7 @@ export function sourceProgramContract(
   const relocated = new Map(relocations.map((entry) => [entry.currentPath, entry]));
   // 具名导入迁移须精确匹配登记绑定，并且每项只使用一次；不能借路径映射吞掉漏接或新增导入。
   const observedRelocations = new Set<string>();
-  const packageRoute = current
-    ? historicalSourcePackages.find((entry) => entry.currentPath === filename)
-    : undefined;
+  const packageRoute = current ? historicalSourcePackage(filename) : undefined;
   if (
     packageRoute &&
     !mappings.some(
@@ -1683,7 +1704,7 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
   });
   const git = childProcess.execFileSync(
     "git",
-    ["ls-tree", "-r", "-z", baselineCommit, "--", ...fixtureRoots],
+    ["ls-tree", "-r", "-z", baselineCommit, "--", ...originFixtureRoots],
     { cwd: root, encoding: "utf8", maxBuffer: 4 * 1024 * 1024 },
   );
   const origin = git

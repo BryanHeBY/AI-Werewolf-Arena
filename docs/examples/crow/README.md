@@ -21,20 +21,20 @@ LLM 示例引用公开 Agent 名 `deepseek_v4_flash`；ACP 示例引用 `acp_def
 
 ```bash
 # LLM，中文/英文玩家提示和终端。
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_initial_ballot_only --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_initial_ballot_only --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_initial_ballot_only --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_initial_ballot_only --locale en --display-locale en
 # ACP，同一板子与规则；game只切换Agent和超时预算。
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_initial_ballot_only_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_initial_ballot_only_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_initial_ballot_only_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_initial_ballot_only_acp --locale en --display-locale en
 ```
 
 `all_ballots` AWA 变体的两语入口：
 
 ```bash
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_all_ballots --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_all_ballots --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_all_ballots_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_crow_all_ballots_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_all_ballots --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_all_ballots --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_all_ballots_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_crow_all_ballots_acp --locale en --display-locale en
 ```
 
 ACP game：[首轮政策](../../../configs.example/games/twelve_player_crow_initial_ballot_only_acp.json)、[全轮政策](../../../configs.example/games/twelve_player_crow_all_ballots_acp.json)。

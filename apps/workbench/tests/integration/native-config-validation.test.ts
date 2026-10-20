@@ -7,7 +7,7 @@ import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { JsonObject } from "@ai-werewolf-arena/workbench-contract";
-import { checkConfig } from "ai-werewolf-arena-backend/config/check";
+import { checkConfig } from "@ai-werewolf-arena/game-runtime/config/check";
 import { ConfigDocuments } from "../../src/server/config-documents";
 import { ConfigService } from "../../src/server/config-service";
 

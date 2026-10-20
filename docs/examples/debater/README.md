@@ -23,10 +23,10 @@
 mkdir -p configs/boards configs/games
 cp -n configs.example/boards/awa_melbourne_debater_{6,12}_v1.json configs/boards/
 cp -n configs.example/games/{six,twelve}_player_debater*.json configs/games/
-bun run --cwd backend run --configs-dir ../configs --game-config-name six_player_debater --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_debater_en --locale en --display-locale en
-bun run --cwd backend run --configs-dir ../configs --game-config-name six_player_debater_acp --locale zh-CN --display-locale zh-CN
-bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_debater_acp --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name six_player_debater --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_debater_en --locale en --display-locale en
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name six_player_debater_acp --locale zh-CN --display-locale zh-CN
+bun run --cwd apps/game run --configs-dir ../../configs --game-config-name twelve_player_debater_acp --locale en --display-locale en
 ```
 
 中英LLM引用 `deepseek_v4_flash`，ACP引用 `acp_default`，可以换个人 `runtime/agents.json` 已有名字。无需公开API key，ACP继续沿个人隔离启动器。
@@ -35,4 +35,4 @@ bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_pla
 
 公开翻牌／辩论原话和汇总支持／反对／弃权数自然渲染，God才持匿名票与投票人配对；逐玩家feed不显示别人隐票或收集中间总数。God回放不是玩家授权档案，locale不翻译玩家原话。
 
-两板直接取 `backend/tests/support/features/debater/builders/scenario.ts` 的六／十二人声明，经既有成功／平票／弃权路线及受限观察整局覆盖。本次只补公开JSON和说明，经实际parse及中英bootstrap校验；不改匿名、库存、票权或既有严格Tape政策，阶段发布矩阵另做逐局strict。
+两板直接取 `packages/game-runtime/tests/support/features/debater/builders/scenario.ts` 的六／十二人声明，经既有成功／平票／弃权路线及受限观察整局覆盖。本次只补公开JSON和说明，经实际parse及中英bootstrap校验；不改匿名、库存、票权或既有严格Tape政策，阶段发布矩阵另做逐局strict。

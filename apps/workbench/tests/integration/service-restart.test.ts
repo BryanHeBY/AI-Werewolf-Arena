@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
-import { readProcessIdentity } from "ai-werewolf-arena-backend/run-session";
+import { readProcessIdentity } from "@ai-werewolf-arena/game-runtime/run-session";
 import { offlineWorkspace, eventually } from "../support/offline-workspace";
 
 type Workspace = Awaited<ReturnType<typeof offlineWorkspace>>;

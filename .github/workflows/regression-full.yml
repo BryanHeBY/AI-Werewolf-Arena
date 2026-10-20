@@ -60,15 +60,15 @@ jobs:
         # 各片必须使用同一份完整耗时输入。只在本 runner 的产物副本上写回，禁止使用每片不同的缓存分配测试。
         run: cp tooling/ci/backend-test-timings.json ci-artifacts/backend-timings.json
       - name: Run complete backend shard serially
-        working-directory: backend
+        working-directory: packages/game-runtime
         env:
           CI_SHARD: ${{ matrix.shard }}
         run: |
           bun --no-env-file test --preload ./tests/setup.ts ./tests \
             --shard="${CI_SHARD}/8" \
-            --timings ../ci-artifacts/backend-timings.json --update-timings \
-            --reporter=junit --reporter-outfile=../ci-artifacts/backend-junit.xml \
-            2>&1 | tee ../ci-artifacts/backend.log
+            --timings ../../ci-artifacts/backend-timings.json --update-timings \
+            --reporter=junit --reporter-outfile=../../ci-artifacts/backend-junit.xml \
+            2>&1 | tee ../../ci-artifacts/backend.log
       - name: Upload shard evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
@@ -100,16 +100,16 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup
       - name: Install matching Chromium and system libraries
-        working-directory: frontend
+        working-directory: apps/replay
         run: bun --no-env-file ./node_modules/@playwright/test/cli.js install --with-deps chromium
       - name: Run browser shard
-        working-directory: frontend
+        working-directory: apps/replay
         env:
           CI_SHARD: ${{ matrix.shard }}
           PLAYWRIGHT_HTML_OPEN: never
         run: |
           bun run test:e2e --shard="${CI_SHARD}/4" --fully-parallel --workers=1 \
-            2>&1 | tee ../ci-artifacts/browser.log
+            2>&1 | tee ../../ci-artifacts/browser.log
       - name: Upload browser evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
@@ -117,8 +117,8 @@ jobs:
           name: browser-${{ matrix.shard }}-${{ github.sha }}-${{ github.run_attempt }}
           path: |
             ci-artifacts/
-            frontend/playwright-report/
-            frontend/test-results/
+            apps/replay/playwright-report/
+            apps/replay/test-results/
           retention-days: 14
           if-no-files-found: warn
 

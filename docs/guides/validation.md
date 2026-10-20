@@ -15,11 +15,11 @@ bun run check:tooling
 bun run test:tooling
 bun run check:packages
 bun run test:packages
-bun run --cwd backend test:unit
-bun run --cwd backend test:integration
-bun run --cwd backend test:scenarios
-bun --no-env-file test --preload ./backend/tests/setup.ts ./backend/tests/architecture
-bun run --cwd frontend test
+bun run --cwd apps/game test:unit
+bun run --cwd apps/game test:integration
+bun run --cwd apps/game test:scenarios
+bun --no-env-file test --preload ./packages/game-runtime/tests/setup.ts ./packages/game-runtime/tests/architecture
+bun run --cwd apps/video test
 ```
 
 整体检查使用 `bun run check`、`bun run lint` 和 `bun run format:check`；完整测试入口为 `bun run test`。不要把根聚合任务及其子任务重复计作不同验收。
@@ -67,9 +67,9 @@ CI 不配置模型密钥、不调用真实付费模型；自动浏览器检查�
 
 ```bash
 # 默认每个公开board中英各一局；两worker独立装配World、RNG、locale和录制。
-bun --no-env-file test ./backend/tests/scenarios/release/expansion-matrix.test.ts
+bun --no-env-file test ./packages/game-runtime/tests/scenarios/release/expansion-matrix.test.ts
 # 大阶段或发布候选集中执行总计1000局，每局均严格重放；不调用模型。
-AWA_EXPANSION_BATCH_COUNT=1000 bun --no-env-file test ./backend/tests/scenarios/release/expansion-matrix.test.ts
+AWA_EXPANSION_BATCH_COUNT=1000 bun --no-env-file test ./packages/game-runtime/tests/scenarios/release/expansion-matrix.test.ts
 ```
 
 批次会打印`receipt.json`位置及源码身份、分支、自然终局、回退、逐局strict及实际日次／行动数统计。`longest`按行动数选出已解析归档见证，并保留其完整内容；全局最大日次取各行`maxDay`，不是`maxDays`配置上限。仅删除已经完整验证的独占子目录，失败原档与回执保留，不纳入通用afterEach清理器。需要较多空间时将`TMPDIR`显式指向操作者选定的独立测试目录；不能删别人的缓存来凑空间。精确角色交互仍以人工判例和真实协议路线为准。
@@ -88,7 +88,7 @@ AWA_EXPANSION_BATCH_COUNT=1000 bun --no-env-file test ./backend/tests/scenarios/
 ## 浏览器与媒体
 
 ```bash
-bun run --cwd frontend test:e2e
+bun run --cwd apps/video test:e2e
 bun run build:backend
 bun run build:frontend
 ```
