@@ -30,7 +30,10 @@ for (const [feature, prefixes] of features)
       const replay = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../../docs/examples/${feature}/${filename}.replay.json`, import.meta.url),
+              new URL(
+                `../../../../docs/examples/${feature}/${filename}.replay.json`,
+                import.meta.url,
+              ),
               "utf8",
             ),
           ),

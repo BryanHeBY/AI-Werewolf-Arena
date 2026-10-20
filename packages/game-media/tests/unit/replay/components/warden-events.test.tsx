@@ -18,7 +18,10 @@ for (const locale of ["zh-CN", "en"] as const)
     const replay = readReplayDocument(
         JSON.parse(
           readFileSync(
-            new URL(`../../../../../../docs/examples/warden/${locale}.replay.json`, import.meta.url),
+            new URL(
+              `../../../../../../docs/examples/warden/${locale}.replay.json`,
+              import.meta.url,
+            ),
             "utf8",
           ),
         ),

@@ -163,11 +163,7 @@ export function BoardRuleFields({
                 )
               }
             >
-              {optional && (
-                <option value="">
-                  {boardLabel(locale, "omitted")}
-                </option>
-              )}
+              {optional && <option value="">{boardLabel(locale, "omitted")}</option>}
               {choices.map((choice) => (
                 <option key={String(choice)} value={String(choice)}>
                   {typeof choice === "number"

@@ -102,7 +102,10 @@ test("existing agents open as editable profiles and retain native options", asyn
   });
 });
 
-test("Claude Code API setup keeps the isolated launcher and explicit environment", async ({ page, request }) => {
+test("Claude Code API setup keeps the isolated launcher and explicit environment", async ({
+  page,
+  request,
+}) => {
   await openWizard(page);
   await page.getByRole("button", { name: /Claude Code ACP/ }).click();
   await page.getByLabel("Agent ID", { exact: true }).fill("claude_api_synthetic");
@@ -116,7 +119,12 @@ test("Claude Code API setup keeps the isolated launcher and explicit environment
   const config = JSON.parse(doc.text).items.claude_api_synthetic_connection.config;
   expect(config.command).toMatch(/configs\.example[\\/]acp[\\/]run-bwrap-acp\.sh$/);
   expect(config.args[0]).toMatch(/claude-agent-acp$/);
-  expect(config.env).toMatchObject({ ACP_AUTH_KIND: "claude", ANTHROPIC_AUTH_TOKEN: "synthetic-claude-key", ANTHROPIC_BASE_URL: "https://synthetic.invalid/anthropic", ANTHROPIC_MODEL: "synthetic-claude-model" });
+  expect(config.env).toMatchObject({
+    ACP_AUTH_KIND: "claude",
+    ANTHROPIC_AUTH_TOKEN: "synthetic-claude-key",
+    ANTHROPIC_BASE_URL: "https://synthetic.invalid/anthropic",
+    ANTHROPIC_MODEL: "synthetic-claude-model",
+  });
   expect(config.env.ACP_AUTH_SOURCE).toBeUndefined();
   expect(config.env.ACP_ENV_ALLOWLIST).toContain("ANTHROPIC_AUTH_TOKEN");
 });

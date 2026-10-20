@@ -35,7 +35,8 @@ export function variantRuleSummary(board: BoardCard, group: BoardCard[], locale:
       const keys = path.split(".");
       const label = boardLabel(locale, keys.at(-1)!);
       const role = keys[0] === "roleOptions" ? `${roleName(keys[1], locale)} · ` : "";
-      const format = (v: Json) => boardLabel(locale, typeof v === "boolean" ? `boolean.${v}` : String(v));
+      const format = (v: Json) =>
+        boardLabel(locale, typeof v === "boolean" ? `boolean.${v}` : String(v));
       return `${role}${label}：${Array.isArray(value) ? value.map(format).join(" / ") : format(value)}`;
     })
     .join("；");
