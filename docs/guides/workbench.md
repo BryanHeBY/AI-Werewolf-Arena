@@ -18,6 +18,17 @@ bun run workbench
 bun run workbench -- --configs-dir ./my-configs --record-root-dir ./my-records --port 4311
 ```
 
+默认端口 `4310` 被占用时，入口会显示明确提示并退出。可以打开已经启动的工作台，或使用 `bun run workbench -- --port 0` 让系统选择空闲端口，按终端打印的地址访问。也可以通过 `--port 4311` 固定其他端口。CLI 提示语言可由 `--display-locale en` 切换；Vite 开发代理仍指向 API 的 `4310` 端口。
+
+监听主机通过 `--host` 配置，缺省为 `127.0.0.1`；支持 IPv4、IPv6 和可解析的主机名。例如：
+
+```bash
+bun run workbench -- --host 0.0.0.0 --port 0
+# 局域网客户端使用这台机器的实际 IP 和终端打印的端口访问。
+```
+
+`0.0.0.0`／`::` 是监听通配地址。工作台包含配置编辑、认证读取和对局启动能力，当前没有用户登录体系；网络绑定应限于受信任网络。请求 Host 白名单与同源写入检查继续生效。
+
 目录参数相对于根命令的当前工作目录；默认指向仓库的 `configs/` 和 `record/`。工作台启动登记放在忽略的 `.workbench/runs/`，可通过 `--state-dir` 改变这个私有状态根，不作为游戏录制或公开发布材料。开发时同时使用 API 与 Vite，浏览器打开 Vite 的 5174 端口。
 
 ## 配置一局

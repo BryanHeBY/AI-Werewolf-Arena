@@ -11,6 +11,7 @@ import { ConfigService, diagnostic } from "./config-service";
 import { SessionStore } from "./session-store";
 import { RunManager } from "./run-manager";
 import { describeModelCatalog } from "ai-werewolf-arena-backend/config/models";
+import { normalizeListenHost, workbenchRequestHosts } from "./listen-address";
 
 export interface WorkbenchOptions {
   repository: string;
@@ -18,8 +19,10 @@ export interface WorkbenchOptions {
   records: string;
   jobs: string;
   dist?: string;
+  host?: string;
 }
 export function createWorkbench(options: WorkbenchOptions) {
+  const acceptedHosts = workbenchRequestHosts(options.host ?? "127.0.0.1");
   let models: ReturnType<typeof describeModelCatalog> | undefined;
   const documents = new ConfigDocuments(options.configs),
     configs = new ConfigService(documents, path.join(options.repository, "configs.example"));
@@ -39,7 +42,7 @@ export function createWorkbench(options: WorkbenchOptions) {
         } catch {
           throw new WorkbenchError("invalid_path");
         }
-        if (!["localhost", "127.0.0.1"].includes(url.hostname))
+        if (!acceptedHosts.has(normalizeListenHost(url.hostname)))
           throw new WorkbenchError("host_rejected", 403);
         if (url.pathname.startsWith("/api/") && !["GET", "HEAD"].includes(request.method)) {
           const origin = request.headers.get("origin");

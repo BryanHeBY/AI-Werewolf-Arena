@@ -3,6 +3,8 @@
  * 本模块拥有这组词典，不判断模型能力、配置支持或运行权限；动态用户正文不经过翻译。
  */
 export const zhCN = {
+  listenPortInUse: "工作台监听端口已被占用",
+  listenPortHelp: "若已有工作台，请打开原地址；也可指定其他端口，0 表示自动选择空闲端口：",
   tone: "界面明暗",
   beforeSpeeches: "白天发言开始前",
   chinese: "简体中文",
@@ -146,6 +148,9 @@ export const zhCN = {
 } as const;
 export type WorkbenchTextKey = keyof typeof zhCN;
 export const en: Record<WorkbenchTextKey, string> = {
+  listenPortInUse: "The workbench port is already in use",
+  listenPortHelp:
+    "Open the existing workbench, or choose another port. Use 0 to select an available port automatically:",
   tone: "Interface tone",
   beforeSpeeches: "Before daytime speeches",
   chinese: "Simplified Chinese",
