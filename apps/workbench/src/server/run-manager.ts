@@ -11,6 +11,7 @@ import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import { checkConfig } from "@ai-werewolf-arena/game-runtime/config/check";
 import { ConfigDocuments, containedFile, WorkbenchError } from "./config-documents";
 import { SessionStore } from "./session-store";
+import { inspectRunOwner } from "./run-owner";
 import { runDeletionSnapshot, assertPlainDirectory } from "./run-deletion";
 export class RunManager {
   private deletes = new Map<string, Promise<void>>();
@@ -128,14 +129,9 @@ export class RunManager {
                 )
                   return null;
                 if (job.state === "starting" && Date.now() - Date.parse(job.startedAt) > 15000) {
-                  const owner = job.launcher;
-                  if (owner?.host === os.hostname() && owner.bootId && owner.processStart) {
-                    const live =
-                      owner.bootId === (await readBootId()) &&
-                      owner.processStart === (await readProcessIdentity(owner.pid));
-                    // 已越过启动租约却没有运行登记，即使进程尚存也不能继续宣称正在启动。
-                    job.state = live ? "lost" : "interrupted";
-                  } else job.state = "lost";
+                  const owner = await inspectRunOwner(job.launcher);
+                  // 启动租约过期仅表示登记未完成；查询未知不能被宣称为进程死亡。
+                  job.state = owner === "dead" ? "interrupted" : "lost";
                 }
                 // 磁盘 JSON 的类型不可信；公开摘要只接受契约中的标量，不能仅裁键后转发嵌套认证。
                 const entry: SessionEntry = {

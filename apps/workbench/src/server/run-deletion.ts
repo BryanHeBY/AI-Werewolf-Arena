@@ -5,8 +5,7 @@
  */
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import os from "node:os";
-import { readBootId, readProcessIdentity } from "@ai-werewolf-arena/game-runtime/run-session";
+import { inspectRunOwner } from "./run-owner";
 import { containedFile, revision, WorkbenchError } from "./config-documents";
 
 async function optional(file: string): Promise<string | null> {
@@ -22,35 +21,6 @@ function json(raw: string | null): any {
     return raw === null ? null : JSON.parse(raw);
   } catch {
     return null;
-  }
-}
-/** 与只读列表的 owns 不同，删除必须区分“已死亡”和“无法核验”。 */
-async function processState(owner: any): Promise<"live" | "dead" | "unknown"> {
-  if (
-    !owner ||
-    owner.host !== os.hostname() ||
-    !Number.isSafeInteger(owner.pid) ||
-    owner.pid <= 0 ||
-    typeof owner.bootId !== "string" ||
-    typeof owner.processStart !== "string"
-  )
-    return "unknown";
-  // 已消失的 PID 不必启动平台查询进程；EPERM 等权限错误仍保留未知。
-  try {
-    process.kill(owner.pid, 0);
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ESRCH") return "dead";
-  }
-  const boot = await readBootId();
-  if (!boot) return "unknown";
-  if (owner.bootId !== boot) return "dead";
-  const identity = await readProcessIdentity(owner.pid);
-  if (identity) return identity === owner.processStart ? "live" : "dead";
-  try {
-    process.kill(owner.pid, 0);
-    return "unknown";
-  } catch (error) {
-    return (error as NodeJS.ErrnoException).code === "ESRCH" ? "dead" : "unknown";
   }
 }
 export interface RunDeletionSnapshot {
@@ -89,11 +59,27 @@ export async function runDeletionSnapshot(
     }
   }
   let deleteBlock: string | undefined;
-  if ((raws[1] !== null && !runtime) || (raws[3] !== null && !job))
+  if (
+    (raws[1] !== null && !runtime) ||
+    (raws[3] !== null &&
+      (!job ||
+        job.sessionId !== id ||
+        ![
+          "starting",
+          "running",
+          "finalizing",
+          "completed",
+          "failed",
+          "cancelled",
+          "lost",
+          "interrupted",
+          "legacy",
+        ].includes(job.state)))
+  )
     deleteBlock = "run_liveness_unknown";
   for (const owner of [runtime, job?.launcher]) {
     if (!owner) continue;
-    const state = await processState(owner);
+    const state = await inspectRunOwner(owner);
     if (state === "live") {
       deleteBlock = "run_still_alive";
       break;

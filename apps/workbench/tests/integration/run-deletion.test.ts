@@ -126,3 +126,19 @@ test("nested links reject deletion and preserve target and recorded files", asyn
     await fs.rm(f.root, { recursive: true, force: true });
   }
 });
+test("a mismatched or malformed job cannot be deleted as an associated run", async () => {
+  const f = await fixture();
+  try {
+    for (const job of [{}, { sessionId: "session_other", state: "failed" }]) {
+      await fs.writeFile(path.join(f.jobs, `${f.id}.json`), JSON.stringify(job));
+      const entry = await f.entry();
+      expect(entry).toMatchObject({ canDelete: false, deleteBlock: "run_liveness_unknown" });
+      await expect(f.manager.delete(f.id, entry.revision!)).rejects.toMatchObject({
+        code: "run_liveness_unknown",
+      });
+      expect(JSON.parse(await fs.readFile(path.join(f.jobs, `${f.id}.json`), "utf8"))).toEqual(job);
+    }
+  } finally {
+    await fs.rm(f.root, { recursive: true, force: true });
+  }
+});

@@ -4,8 +4,7 @@
  */
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import os from "node:os";
-import { readProcessIdentity, readBootId } from "@ai-werewolf-arena/game-runtime/run-session";
+import { inspectRunOwner } from "./run-owner";
 import {
   ACTIVE_RUN_STATES,
   type RunMetadata,
@@ -33,18 +32,7 @@ export class SessionStore {
     }
   }
   async owns(runtime: RunMetadata): Promise<boolean> {
-    if (
-      runtime.host !== os.hostname() ||
-      !Number.isSafeInteger(runtime.pid) ||
-      runtime.pid <= 0 ||
-      !runtime.processStart ||
-      !runtime.bootId
-    )
-      return false;
-    return (
-      runtime.bootId === (await readBootId()) &&
-      runtime.processStart === (await readProcessIdentity(runtime.pid))
-    );
+    return (await inspectRunOwner(runtime)) === "live";
   }
   async get(id: string): Promise<SessionEntry | null> {
     const manifest = await this.json(id, "manifest.json");
@@ -70,13 +58,10 @@ export class SessionStore {
     let state: SessionEntry["state"] = runtime?.state ?? "legacy";
     let live = false;
     if (runtime && ACTIVE_RUN_STATES.includes(runtime.state)) {
-      live = await this.owns(runtime);
+      const ownership = await inspectRunOwner(runtime);
+      live = ownership === "live";
       const fresh = Date.now() - Date.parse(runtime.heartbeatAt) < 12000;
-      if (!live)
-        state =
-          runtime.host === os.hostname() && runtime.bootId && runtime.processStart
-            ? "interrupted"
-            : "lost";
+      if (!live) state = ownership === "dead" ? "interrupted" : "lost";
       else if (!fresh) state = "lost";
     }
     const completion = await this.json(id, "completion.json");
