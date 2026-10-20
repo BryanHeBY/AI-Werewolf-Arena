@@ -1,12 +1,10 @@
-/**
- * 负责汇总配置和对局状态；输入服务端核验的运行摘要、目录和主题，输出首页与导航动作。
- * 页面只展示摘要及复用视频素材，不推断进程存活或读取配置文件；初始化与停止由应用处理。
- */
-import type { Locale } from "@ai-werewolf-arena/game-text";
+/** 负责首页配置启动与对局分组；输入已保存游戏摘要和核验的 session，输出明确启动、查看和管理动作。活动与历史记录分别展示，不把配置文件与每次执行混为一体。 */
+import { roleName, type Locale } from "@ai-werewolf-arena/game-text";
 import { workbenchArt, type ThemeId } from "@ai-werewolf-arena/game-media/appearance";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import type { Catalog, Page, Translator } from "../types";
 import { RunCard } from "../session-summary";
+import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 export function DashboardPage({
   active,
   runs,
@@ -16,7 +14,9 @@ export function DashboardPage({
   themeId,
   navigate,
   stop,
-  initialize,
+  start,
+  busy,
+  remove,
 }: {
   active: SessionEntry[];
   runs: SessionEntry[];
@@ -24,10 +24,13 @@ export function DashboardPage({
   t: Translator;
   locale: Locale;
   themeId: ThemeId;
-  navigate: (page: Page, id?: string) => void;
+  navigate: (page: Page, id?: string, action?: string) => void;
   stop: (id: string) => Promise<void>;
-  initialize: () => Promise<void>;
+  start: (id: string, revision: string) => void;
+  busy: boolean;
+  remove: (run: SessionEntry) => void;
 }) {
+  const history = runs.filter((run) => !active.some((r) => r.sessionId === run.sessionId));
   return (
     <>
       <section className="hero">
@@ -35,7 +38,7 @@ export function DashboardPage({
           <span className="eyebrow">MULTI-AGENT WEREWOLF ARENA</span>
           <h1>{t("title")}</h1>
           <p>{t("intro")}</p>
-          <button className="primary" onClick={() => navigate("boards")}>
+          <button className="primary" onClick={() => navigate("games", "new")}>
             {t("newGame")} <span>↗</span>
           </button>
         </div>
@@ -46,36 +49,104 @@ export function DashboardPage({
           <span>AWA</span>
         </div>
       </section>
-      <div className="metric-grid">
-        <Metric value={active.length} label={t("running")} />
-        <Metric value={runs.length - active.length} label={t("history")} />
-        <Metric value={catalog.agents.length} label={t("agents")} />
-      </div>
-      <section>
+      <section className="quick-start">
         <div className="section-heading">
-          <h2>{t("home")}</h2>
-          <button onClick={() => navigate("games")}>{t("setup")} →</button>
+          <div>
+            <h2>{configUiText(locale, "quickStart")}</h2>
+            <p className="muted">{configUiText(locale, "quickHelp")}</p>
+          </div>
+          <button onClick={() => navigate("games")}>{configUiText(locale, "savedGames")} →</button>
         </div>
-        {runs.length === 0 ? (
-          <div className="panel empty">
-            <h3>{t("noRuns")}</h3>
-            <button onClick={() => void initialize()}>{t("initialize")}</button>
+        {catalog.games.length ? (
+          <div className="saved-config-list">
+            {catalog.games.map((id) => {
+              const card = catalog.gameCards?.find((c) => c.id === id);
+              return (
+                <article className="panel saved-config-card" key={id} data-config-id={id}>
+                  <span className="eyebrow">{configUiText(locale, "startTarget")}</span>
+                  <h3>{id}</h3>
+                  <code>games/{id}.json</code>
+                  {card && (
+                    <p>
+                      {card.board} · {card.size ?? "—"} · {t("defaultAgent")}:{" "}
+                      {card.defaultAgent ?? catalog.defaultAgent ?? "—"}
+                    </p>
+                  )}
+                  {card?.roleAgents && (
+                    <p className="muted">
+                      {configUiText(locale, "roleAgents")}:{" "}
+                      {Object.entries(card.roleAgents)
+                        .map(([role, agent]) => `${roleName(role, locale)} → ${agent}`)
+                        .join(" · ") || t("inherited")}
+                    </p>
+                  )}
+                  {card?.seatAgents && (
+                    <p className="muted">
+                      {configUiText(locale, "seatAgents")}:{" "}
+                      {Object.entries(card.seatAgents)
+                        .map(([seat, agent]) => `${seat} → ${agent}`)
+                        .join(" · ") || t("inherited")}
+                    </p>
+                  )}
+                  {card?.diagnostic && <p className="notice error">{card.diagnostic.code}</p>}
+                  <div className="actions">
+                    <button onClick={() => navigate("games", id)}>
+                      {configUiText(locale, "view")}
+                    </button>
+                    <button onClick={() => navigate("games", id, "edit")}>
+                      {configUiText(locale, "edit")}
+                    </button>
+                    <button
+                      className="primary"
+                      disabled={busy || !card?.revision}
+                      onClick={() => card?.revision && start(id, card.revision)}
+                    >
+                      {t("start")}
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         ) : (
-          <div className="run-list">
-            {runs.map((run) => (
-              <RunCard
-                key={run.sessionId}
-                run={run}
-                t={t}
-                locale={locale}
-                open={navigate}
-                stop={stop}
-              />
-            ))}
-          </div>
+          <section className="panel empty">
+            <p>{configUiText(locale, "noGames")}</p>
+            <button onClick={() => navigate("games", "new")}>{t("newGame")}</button>
+          </section>
         )}
       </section>
+      <div className="metric-grid">
+        <Metric value={active.length} label={t("running")} />
+        <Metric value={history.length} label={t("history")} />
+        <Metric value={catalog.agents.length} label={t("agents")} />
+      </div>
+      {[
+        { title: "activeRuns" as const, list: active, empty: "noActive" as const },
+        { title: "pastRuns" as const, list: history, empty: "noHistory" as const },
+      ].map((group) => (
+        <section className="session-group" key={group.title}>
+          <div className="section-heading">
+            <h2>{configUiText(locale, group.title)}</h2>
+          </div>
+          {group.list.length ? (
+            <div className="run-list">
+              {group.list.map((run) => (
+                <RunCard
+                  key={run.sessionId}
+                  run={run}
+                  t={t}
+                  locale={locale}
+                  open={navigate}
+                  stop={stop}
+                  remove={remove}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="muted">{configUiText(locale, group.empty)}</p>
+          )}
+        </section>
+      ))}
     </>
   );
 }

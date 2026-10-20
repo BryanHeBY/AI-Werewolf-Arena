@@ -12,6 +12,8 @@ import type {
 import { api, ApiError } from "./api";
 import type { Translator } from "./types";
 import { useDraft } from "./draft-context";
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 export function DocumentEditor({
   kind,
   name,
@@ -20,14 +22,18 @@ export function DocumentEditor({
   children,
   onSaved,
   onStart,
+  onCancel,
+  locale = "zh-CN",
 }: {
   kind: ConfigKind;
   name: string;
   initial?: JsonObject;
   t: Translator;
   children?: (raw: JsonObject, change: (raw: JsonObject) => void) => ReactNode;
-  onSaved?: (document: ConfigDocument) => void;
+  onSaved?: (document: ConfigDocument, newerChanges: boolean) => void;
   onStart?: (name: string) => void;
+  onCancel?: () => void;
+  locale?: Locale;
 }) {
   const [document, setDocument] = useState<ConfigDocument | null>(null),
     [target, setTarget] = useState(name),
@@ -36,8 +42,12 @@ export function DocumentEditor({
     [mode, setMode] = useState<"form" | "source">("form"),
     [error, setError] = useState(""),
     [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [reading, setReading] = useState(false);
   const generation = useRef(0);
+  // 保存请求期间仍允许写作；响应仅更新已保存基线，不覆盖后来输入的内容。
+  const latestText = useRef(text);
+  latestText.current = text;
   useEffect(() => {
     if (document?.kind === kind && document.name === name && document.revision !== null && !initial)
       return;
@@ -76,8 +86,9 @@ export function DocumentEditor({
     setText(JSON.stringify(next, null, 2));
     setMessage("");
   };
-  const run = async (operation: () => Promise<void>) => {
+  const run = async (operation: () => Promise<void>, freezeDraft = false) => {
     setBusy(true);
+    setReading(freezeDraft);
     setError("");
     setMessage("");
     try {
@@ -86,21 +97,24 @@ export function DocumentEditor({
       setError(e instanceof ApiError ? e.code + (e.path ? ` · ${e.path}` : "") : "request_failed");
     } finally {
       setBusy(false);
+      setReading(false);
     }
   };
   const save = () =>
     run(async () => {
       if (!document) return;
       if (!/^[a-z][a-z0-9_-]*$/.test(target)) throw new ApiError("invalid_config_name", 400);
+      const submitted = text;
       const saved = await api<ConfigDocument>(`documents/${kind}/${encodeURIComponent(target)}`, {
         method: "PUT",
         body: { revision: target === document.name ? document.revision : null, text },
       });
       setDocument(saved);
       setOriginal(saved.text);
-      setText(saved.text);
-      setMessage(t("saved"));
-      onSaved?.(saved);
+      const newerChanges = latestText.current !== submitted;
+      if (!newerChanges) setText(saved.text);
+      setMessage(newerChanges ? configUiText(locale, "savedSnapshot") : t("saved"));
+      onSaved?.(saved, newerChanges);
     });
   return (
     <section className="editor panel">
@@ -110,7 +124,9 @@ export function DocumentEditor({
           <input
             aria-label={t("gameName")}
             value={target}
-            disabled={kind === "agents" || kind === "backends"}
+            disabled={
+              busy || document?.revision !== null || kind === "agents" || kind === "backends"
+            }
             onChange={(e) => {
               setTarget(e.target.value);
               if (kind === "boards" && raw) change({ ...raw, id: e.target.value });
@@ -126,23 +142,25 @@ export function DocumentEditor({
           </button>
         </div>
       </div>
-      {document &&
-        (mode === "source" ? (
-          <textarea
-            className="source"
-            aria-label={t("source")}
-            value={text}
-            spellCheck={false}
-            onChange={(e) => {
-              setText(e.target.value);
-              setMessage("");
-            }}
-          />
-        ) : raw && children ? (
-          children(raw, change)
-        ) : (
-          <p role="alert">{t("invalid")}</p>
-        ))}
+      <fieldset disabled={reading} className="editor-draft-fields">
+        {document &&
+          (mode === "source" ? (
+            <textarea
+              className="source"
+              aria-label={t("source")}
+              value={text}
+              spellCheck={false}
+              onChange={(e) => {
+                setText(e.target.value);
+                setMessage("");
+              }}
+            />
+          ) : raw && children ? (
+            children(raw, change)
+          ) : (
+            <p role="alert">{t("invalid")}</p>
+          ))}
+      </fieldset>
       {kind === "backends" && (
         <div className="hint">
           <p>{t("credentialsHelp")}</p>
@@ -151,11 +169,14 @@ export function DocumentEditor({
             onClick={() =>
               void run(async () => {
                 const next = await api<ConfigDocument>(`documents/backends/backends?reveal=true`);
+                // 显示密钥只揭示已读版本，不能趁此吸入外部修改并替换整份文档。
+                if (next.revision !== document?.revision)
+                  throw new ApiError("config_conflict", 409);
                 setDocument(next);
                 setOriginal(next.text);
                 setText(next.text);
                 setMode("source");
-              })
+              }, true)
             }
           >
             {t("reveal")}
@@ -165,6 +186,20 @@ export function DocumentEditor({
       <div className="editor-footer">
         <span className="muted">{dirty ? t("unsaved") : t("saved")}</span>
         <div className="actions">
+          {onCancel && (
+            <button
+              disabled={busy}
+              onClick={() => {
+                if (
+                  (text === original && target === document?.name) ||
+                  window.confirm(configUiText(locale, "discardConfirm"))
+                )
+                  onCancel();
+              }}
+            >
+              {configUiText(locale, "cancel")}
+            </button>
+          )}
           <button
             disabled={busy || !document}
             onClick={() =>
@@ -185,7 +220,7 @@ export function DocumentEditor({
                 setTarget(next.name);
                 setText(next.text);
                 setOriginal(next.text);
-              })
+              }, true)
             }
           >
             {t("reload")}
@@ -198,6 +233,8 @@ export function DocumentEditor({
                   "validate",
                   { method: "POST", body: { kind, name: target, text } },
                 );
+                // 检查结论属于发出请求时的原文；用户后续输入不能收到旧版本“通过”的提示。
+                if (latestText.current !== text) return;
                 if (!result.valid) {
                   setError(
                     result.diagnostics
@@ -217,7 +254,7 @@ export function DocumentEditor({
             disabled={busy || !document || !raw}
             onClick={() => void save()}
           >
-            {target !== name ? t("saveAs") : t("save")}
+            {document?.revision === null ? t("saveAs") : t("save")}
           </button>
           {onStart && (
             <button

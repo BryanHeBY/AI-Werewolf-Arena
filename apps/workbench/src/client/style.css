@@ -766,6 +766,17 @@
   .wizard {
     padding: 26px;
   }
+  .wizard-fields {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-inline-size: 0;
+  }
+  .wizard-fields > .two-columns,
+  .wizard-fields > label,
+  .wizard-fields > .actions {
+    margin-top: 22px;
+  }
   .wizard > .two-columns,
   .wizard > label,
   .wizard > .actions {
@@ -1079,5 +1090,78 @@
   :scope[data-reduced-motion="true"] * {
     transition: none !important;
     animation: none !important;
+  }
+  /* 配置管理的列表、详情和确认框复用原主题 token，页面状态由组件拥有。 */
+  .saved-config-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .saved-config-card,
+  .config-detail {
+    padding: 24px;
+  }
+  .saved-config-card .actions {
+    margin-top: 18px;
+  }
+  .config-detail > .actions {
+    margin: 24px 0;
+  }
+  .config-summary {
+    display: grid;
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .config-summary > div {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) 3fr;
+    gap: 16px;
+  }
+  .config-summary dt {
+    color: var(--awa-muted);
+  }
+  .config-summary dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .quick-start,
+  .session-group {
+    margin-bottom: 34px;
+  }
+  .dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: color-mix(in srgb, var(--awa-canvas) 75%, transparent);
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+  .delete-dialog {
+    max-width: 580px;
+    width: 100%;
+    padding: 30px;
+    box-shadow: 0 20px 80px var(--wb-shadow);
+  }
+  .delete-dialog .actions {
+    justify-content: flex-end;
+  }
+  @media (max-width: 1000px) {
+    .saved-config-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 800px) {
+    .config-summary > div {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+  }
+  .editor-draft-fields {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
   }
 }

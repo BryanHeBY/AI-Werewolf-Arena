@@ -1,6 +1,8 @@
 /** 负责浏览器场景的合成服务生命周期；输入独立测试工作区，输出本机端口。退出先停止测试对局，再关闭服务并清理该临时根。 */
 import { offlineWorkspace } from "./offline-workspace";
+import { installNaturalGame } from "./natural-game";
 const workspace = await offlineWorkspace();
+const natural = await installNaturalGame(workspace);
 const server = Bun.serve({
   hostname: "127.0.0.1",
   port: 4319,
@@ -14,6 +16,7 @@ const shutdown = async () => {
       } catch {}
     }
   await server.stop(true);
+  await natural.close();
   await workspace.close();
   process.exit(0);
 };

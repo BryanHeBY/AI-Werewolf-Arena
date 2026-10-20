@@ -15,6 +15,7 @@ export function AgentsPage({
 }: {
   catalog: Catalog;
   t: Translator;
+  locale?: Locale;
   refresh: () => Promise<void>;
 }) {
   const canLeave = useCanLeaveDraft();

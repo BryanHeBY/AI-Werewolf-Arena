@@ -6,6 +6,7 @@ import type { Json, JsonObject } from "@ai-werewolf-arena/workbench-contract";
 import { roleName, type Locale } from "@ai-werewolf-arena/game-text";
 import type { Catalog, Translator } from "./types";
 import { asObject, readPath, writePath } from "./config-edit";
+import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 
 export function Instructions({
   value,
@@ -114,17 +115,20 @@ export function GameForm({
   locale: Locale;
 }) {
   const set = (field: string, value: Json | undefined) => change(writePath(raw, field, value)),
-    board = catalog.boards.find((b) => b.id === raw.board && b.supported),
+    board = catalog.boards.find((b) => b.id === raw.board && b.supported && b.source === "local"),
     count = board?.size ?? 12;
   return (
     <div className="form-body">
+      {!catalog.boards.some((board) => board.supported && board.source === "local") && (
+        <p className="notice">{configUiText(locale, "needsBoard")}</p>
+      )}
       <div className="two-columns">
         <label>
           {t("chooseBoard")}
           <select value={String(raw.board ?? "")} onChange={(e) => set("board", e.target.value)}>
             <option value="">{t("chooseBoard")}</option>
             {catalog.boards
-              .filter((b) => b.supported)
+              .filter((b) => b.supported && b.source === "local")
               .map((b) => (
                 <option key={b.id} value={b.id}>
                   {b.size} · {b.id}

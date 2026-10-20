@@ -5,18 +5,21 @@
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import type { SessionEntry } from "@ai-werewolf-arena/workbench-contract";
 import type { Page, Translator } from "./types";
+import { configUiText, winnerLabel } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 export function RunCard({
   run,
   t,
   locale,
   open,
   stop,
+  remove,
 }: {
   run: SessionEntry;
   t: Translator;
   locale: Locale;
   open: (page: Page, id: string) => void;
   stop: (id: string) => Promise<void>;
+  remove?: (run: SessionEntry) => void;
 }) {
   const active = ["starting", "running", "finalizing"].includes(run.state);
   return (
@@ -37,12 +40,22 @@ export function RunCard({
           {run.origin && <span>{t(run.origin === "cli" ? "originCli" : "originWorkbench")}</span>}
           {run.winner && (
             <span>
-              {t("winner")}: {run.winner}
+              {t("winner")}: {winnerLabel(locale, run.winner)}
             </span>
           )}
         </div>
       </div>
       <div className="actions">
+        {remove && (
+          <button
+            className="danger"
+            disabled={!run.canDelete}
+            title={run.canDelete ? "" : configUiText(locale, "deleteBlocked")}
+            onClick={() => remove(run)}
+          >
+            {configUiText(locale, "remove")}
+          </button>
+        )}
         <button onClick={() => open("logs", run.sessionId)}>{t("logs")}</button>
         {run.canReplay && (
           <button className="primary subtle" onClick={() => open("replay", run.sessionId)}>
@@ -70,6 +83,8 @@ export function SessionHeading({
   replay,
   logs,
   stop,
+  remove,
+  locale = "zh-CN",
 }: {
   run?: SessionEntry;
   id: string;
@@ -78,6 +93,8 @@ export function SessionHeading({
   replay?: () => void;
   logs?: () => void;
   stop?: () => void;
+  remove?: () => void;
+  locale?: Locale;
 }) {
   return (
     <div className="section-heading">
@@ -87,8 +104,23 @@ export function SessionHeading({
         </button>
         <h2>{run?.gameName ?? run?.board ?? id}</h2>
         <code>{id}</code>
+        {run?.board && (
+          <p>
+            {run.board} · {run.gameName ?? ""}
+          </p>
+        )}
       </div>
       <div className="actions">
+        {remove && (
+          <button
+            className="danger"
+            disabled={!run?.canDelete}
+            title={run?.canDelete ? "" : configUiText(locale, "deleteBlocked")}
+            onClick={remove}
+          >
+            {configUiText(locale, "remove")}
+          </button>
+        )}
         {run?.canStop && stop && (
           <button className="danger" title={t("confirmStop")} onClick={stop}>
             {t("stop")}

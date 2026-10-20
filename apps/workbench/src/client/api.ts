@@ -4,6 +4,7 @@ export class ApiError extends Error {
     readonly code: string,
     readonly status: number,
     readonly path?: string,
+    readonly references: string[] = [],
   ) {
     super(code);
   }
@@ -24,6 +25,7 @@ export async function api<T>(
       body.error ?? "request_failed",
       response.status,
       body.diagnostics?.[0]?.path,
+      Array.isArray(body.references) ? body.references : [],
     );
   return body as T;
 }

@@ -2,7 +2,7 @@
  * 负责本地工作台导航、配置目录及运行列表；输入同源 API 数据，输出配置到对局再到回放的交互。
  * 浏览器仅拥有页面状态；实际文件和进程归服务端，旧请求不能覆盖当前回放，不读取本机认证路径。
  */
-import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { workbenchText, type WorkbenchTextKey } from "@ai-werewolf-arena/game-text/workbench";
 import { type Locale, text as gameText } from "@ai-werewolf-arena/game-text";
 import {
@@ -26,9 +26,12 @@ import { GamesPage } from "./pages/GamesPage";
 import { BoardsPage } from "./pages/BoardsPage";
 import { AgentsPage } from "./pages/AgentsPage";
 import { ReplayPage } from "./pages/ReplayPage";
+import { DeleteDialog } from "./DeleteDialog";
+import { workbenchServiceMessage } from "@ai-werewolf-arena/game-text/workbench-service";
+import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
 const emptyCatalog: Catalog = { games: [], agents: [], backends: [], boards: [] };
 function route() {
-  const [page, id] = location.hash.replace(/^#\/?/, "").split("/");
+  const [page, id, action] = location.hash.replace(/^#\/?/, "").split("/");
   let decodedId = "";
   try {
     decodedId = id ? decodeURIComponent(id) : "";
@@ -40,6 +43,7 @@ function route() {
       ? page
       : "home") as Page,
     id: decodedId,
+    action: action === "edit" ? "edit" : "",
   };
 }
 export default function App() {
@@ -88,11 +92,20 @@ export default function App() {
       }
     }),
     [catalog, setCatalog] = useState<Catalog>(emptyCatalog),
+    [catalogReady, setCatalogReady] = useState(false),
     [runs, setRuns] = useState<SessionEntry[]>([]),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [dirty, setDirty] = useState(false);
+    [dirty, setDirty] = useState(false),
+    [deletingRun, setDeletingRun] = useState<SessionEntry>();
   const t = useCallback((key: WorkbenchTextKey) => workbenchText(locale, key), [locale]);
+  // 每个编辑器独立登记脏状态；某个子表单卸载不能清掉同页其他未保存输入。
+  const dirtyOwners = useRef(new Set<string>());
+  const reportDirty = useCallback((owner: string, value: boolean) => {
+    if (value) dirtyOwners.current.add(owner);
+    else dirtyOwners.current.delete(owner);
+    setDirty(dirtyOwners.current.size > 0);
+  }, []);
   const canLeave = useCallback(() => {
     if (dirty) {
       setError(t("discard"));
@@ -108,7 +121,11 @@ export default function App() {
     window.addEventListener("beforeunload", prevent);
     return () => window.removeEventListener("beforeunload", prevent);
   }, [dirty]);
-  const refresh = useCallback(async () => setCatalog(await api<Catalog>("catalog")), []);
+  const refresh = useCallback(async () => {
+    const next = await api<Catalog>("catalog");
+    setCatalog(next);
+    setCatalogReady(true);
+  }, []);
   useEffect(() => {
     const handler = () => {
       if (!canLeave()) {
@@ -116,7 +133,7 @@ export default function App() {
         history.replaceState(
           null,
           "",
-          `#/${locationState.page}${locationState.id ? `/${encodeURIComponent(locationState.id)}` : ""}`,
+          `#/${locationState.page}${locationState.id ? `/${encodeURIComponent(locationState.id)}` : ""}${locationState.action ? `/${locationState.action}` : ""}`,
         );
         return;
       }
@@ -152,18 +169,18 @@ export default function App() {
       clearTimeout(timer);
     };
   }, [t]);
-  const navigate = (page: Page, id = "") => {
+  const navigate = (page: Page, id = "", action = "") => {
     if (!canLeave()) return;
     setError("");
-    location.hash = `/${page}${id ? `/${encodeURIComponent(id)}` : ""}`;
+    location.hash = `/${page}${id ? `/${encodeURIComponent(id)}` : ""}${action ? `/${action}` : ""}`;
   };
-  const start = async (name: string) => {
+  const start = async (name: string, revision: string) => {
     setBusy(true);
     setError("");
     try {
       const result = await api<{ sessionId: string }>("runs", {
         method: "POST",
-        body: { gameName: name },
+        body: { gameName: name, revision },
       });
       navigate("logs", result.sessionId);
     } catch (e) {
@@ -189,7 +206,7 @@ export default function App() {
     { page: "agents", symbol: "◎" },
   ] as const;
   return (
-    <DraftContext.Provider value={{ setDirty, canLeave }}>
+    <DraftContext.Provider value={{ setDirty: reportDirty, canLeave }}>
       <div
         className="workbench"
         data-web-theme={appearance.theme.id}
@@ -292,10 +309,17 @@ export default function App() {
                   ×
                 </button>
                 {t("error")}
+                {workbenchServiceMessage(locale, error) && (
+                  <p>{workbenchServiceMessage(locale, error)}</p>
+                )}
                 <code>{error}</code>
               </div>
             )}
-            {locationState.page === "home" && (
+            {!catalogReady &&
+              ["home", "games", "boards", "agents"].includes(locationState.page) && (
+                <p role="status">{configUiText(locale, "loading")}</p>
+              )}
+            {catalogReady && locationState.page === "home" && (
               <DashboardPage
                 active={active}
                 runs={runs}
@@ -305,27 +329,25 @@ export default function App() {
                 themeId={appearance.theme.id}
                 navigate={navigate}
                 stop={stop}
-                initialize={async () => {
-                  try {
-                    await api("initialize", { method: "POST", body: {} });
-                    await refresh();
-                  } catch (e) {
-                    setError(e instanceof Error ? e.message : "request_failed");
-                  }
-                }}
+                start={(name, revision) => void start(name, revision)}
+                busy={busy}
+                remove={setDeletingRun}
               />
             )}
-            {locationState.page === "games" && (
+            {catalogReady && locationState.page === "games" && (
               <GamesPage
+                key={`${locationState.id}/${locationState.action}`}
                 catalog={catalog}
                 t={t}
                 locale={locale}
                 refresh={refresh}
-                start={(name) => void start(name)}
+                start={(name, revision) => void start(name, revision)}
                 busy={busy}
+                routeId={locationState.id}
+                action={locationState.action}
               />
             )}
-            {locationState.page === "boards" && (
+            {catalogReady && locationState.page === "boards" && (
               <BoardsPage
                 catalog={catalog}
                 t={t}
@@ -337,8 +359,8 @@ export default function App() {
                 }}
               />
             )}
-            {locationState.page === "agents" && (
-              <AgentsPage catalog={catalog} t={t} refresh={refresh} />
+            {catalogReady && locationState.page === "agents" && (
+              <AgentsPage catalog={catalog} t={t} refresh={refresh} locale={locale} />
             )}
             {locationState.page === "logs" && (
               <>
@@ -349,6 +371,8 @@ export default function App() {
                   back={() => navigate("home")}
                   replay={() => navigate("replay", locationState.id)}
                   stop={() => void stop(locationState.id)}
+                  locale={locale}
+                  remove={selected ? () => setDeletingRun(selected) : undefined}
                 />
                 <TerminalPanel
                   sessionId={locationState.id}
@@ -366,6 +390,8 @@ export default function App() {
                   t={t}
                   back={() => navigate("home")}
                   logs={() => navigate("logs", locationState.id)}
+                  locale={locale}
+                  remove={selected ? () => setDeletingRun(selected) : undefined}
                 />
                 <ReplayPage
                   sessionId={locationState.id}
@@ -377,6 +403,25 @@ export default function App() {
               </>
             )}
           </main>
+          {deletingRun && (
+            <DeleteDialog
+              name={deletingRun.sessionId}
+              kind="run"
+              locale={locale}
+              cancel={() => setDeletingRun(undefined)}
+              remove={async () => {
+                await api(`runs/${encodeURIComponent(deletingRun.sessionId)}`, {
+                  method: "DELETE",
+                  body: { revision: deletingRun.revision },
+                });
+                setRuns((previous) =>
+                  previous.filter((run) => run.sessionId !== deletingRun.sessionId),
+                );
+                setDeletingRun(undefined);
+                if (locationState.id === deletingRun.sessionId) navigate("home");
+              }}
+            />
+          )}
         </div>
       </div>
     </DraftContext.Provider>

@@ -11,9 +11,19 @@ export interface AgentSummary {
 }
 export interface Catalog {
   games: string[];
+  gameCards?: {
+    id: string;
+    revision: string;
+    board?: string;
+    size?: number;
+    defaultAgent?: string;
+    roleAgents?: Record<string, string>;
+    seatAgents?: Record<string, string>;
+    diagnostic?: { code: string };
+  }[];
   defaultAgent?: string;
   agents: AgentSummary[];
-  backends: { name: string; kind?: string }[];
+  backends: { name: string; kind?: string; providers?: string[]; authProviders?: string[] }[];
   boards: BoardCard[];
 }
 export type Page = "home" | "games" | "boards" | "agents" | "logs" | "replay";

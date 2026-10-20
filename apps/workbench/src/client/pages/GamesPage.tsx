@@ -1,14 +1,40 @@
-/**
- * 负责选择既有游戏与创建新局草稿；输入配置目录、界面语言和启动回调，输出配置编辑页面。
- * 草稿仅存在当前编辑器，文件校验和保存归统一编辑器，开始对局只使用已保存的配置 ID。
- */
+/** 负责游戏列表、只读详情与创建／编辑状态；输入目录及显式用户动作，输出文件保存或具名启动。草稿由当前编辑器拥有，新建模板在点击时捕获，目录刷新不重建草稿。 */
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import type { Catalog, Translator } from "../types";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { DocumentEditor } from "../DocumentEditor";
-import { useCanLeaveDraft } from "../draft-context";
-import type { JsonObject } from "@ai-werewolf-arena/workbench-contract";
+import type { ConfigDocument, JsonObject } from "@ai-werewolf-arena/workbench-contract";
 import { GameForm } from "../GameForm";
+import { ConfigDetail } from "../ConfigDetail";
+import { DeleteDialog } from "../DeleteDialog";
+import { GameSummary } from "../GameSummary";
+import { configUiText } from "@ai-werewolf-arena/game-text/workbench-config-ui";
+import { api } from "../api";
+
+type Screen =
+  | { mode: "list" }
+  | { mode: "view"; name: string }
+  | { mode: "edit"; name: string }
+  | { mode: "create"; key: number; initial: JsonObject };
+function newGame(catalog: Catalog): JsonObject {
+  let board = catalog.boards.find((b) => b.source === "local" && b.supported)?.id ?? "";
+  try {
+    const saved = JSON.parse(sessionStorage.getItem("awa.new-game-board") ?? "null");
+    if (saved?.id) board = saved.id;
+  } catch {}
+  sessionStorage.removeItem("awa.new-game-board");
+  return {
+    board,
+    agent: catalog.defaultAgent ?? catalog.agents[0]?.name ?? "",
+    locale: "zh-CN",
+    streamEvents: true,
+    printThinking: true,
+    printPrivateEvents: false,
+    maxDays: 8,
+    maxRuntimeMs: 1800000,
+    llmTimeoutMs: 45000,
+  };
+}
 export function GamesPage({
   catalog,
   t,
@@ -16,81 +42,165 @@ export function GamesPage({
   refresh,
   start,
   busy,
+  routeId = "",
+  action = "",
 }: {
   catalog: Catalog;
   t: Translator;
   locale: Locale;
   refresh: () => Promise<void>;
-  start: (name: string) => void;
+  start: (name: string, revision: string) => void;
   busy: boolean;
+  routeId?: string;
+  action?: string;
 }) {
-  const canLeave = useCanLeaveDraft();
-  const [selection, setSelection] = useState(() =>
-    location.hash.endsWith("/new") ? "new" : (catalog.games[0] ?? "new"),
-  );
-  const initial = useMemo(() => {
-    if (selection !== "new") return undefined;
-    let board = "twelve_player_standard";
-    try {
-      const saved = JSON.parse(sessionStorage.getItem("awa.new-game-board") ?? "null");
-      if (saved?.id) board = saved.id;
-    } catch {}
-    return {
-      board,
-      agent: catalog.defaultAgent ?? catalog.agents[0]?.name ?? "",
-      locale: "zh-CN",
-      streamEvents: true,
-      printThinking: true,
-      printPrivateEvents: false,
-      maxDays: 8,
-      maxRuntimeMs: 1800000,
-      llmTimeoutMs: 45000,
-    } satisfies JsonObject;
-  }, [selection, catalog.defaultAgent]);
+  const [screen, setScreen] = useState<Screen>(() =>
+      routeId === "new"
+        ? { mode: "create", key: Date.now(), initial: newGame(catalog) }
+        : routeId
+          ? { mode: action === "edit" ? "edit" : "view", name: routeId }
+          : { mode: "list" },
+    ),
+    [deleting, setDeleting] = useState<ConfigDocument>(),
+    [error, setError] = useState("");
+  const create = (initial = newGame(catalog)) =>
+    setScreen({ mode: "create", key: Date.now(), initial });
+  const title =
+    screen.mode === "list"
+      ? configUiText(locale, "savedGames")
+      : screen.mode === "create"
+        ? configUiText(locale, "createGame")
+        : screen.mode === "edit"
+          ? configUiText(locale, "editGame")
+          : configUiText(locale, "viewGame");
   return (
     <>
       <div className="section-heading">
         <div>
-          <span className="eyebrow">{t("setup")}</span>
-          <h1>{t("games")}</h1>
+          {screen.mode === "view" && (
+            <button className="text-link" onClick={() => setScreen({ mode: "list" })}>
+              ← {t("games")}
+            </button>
+          )}
+          <h1>{title}</h1>
+          {"name" in screen && <code>{screen.name}</code>}
         </div>
-        <div className="actions">
-          <select
-            aria-label={t("chooseGame")}
-            value={selection}
-            onChange={(e) => {
-              if (canLeave()) setSelection(e.target.value);
-            }}
-          >
-            <option value="new">+ {t("newGame")}</option>
-            {catalog.games.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={() => {
-              if (canLeave()) setSelection("new");
-            }}
-          >
-            + {t("newGame")}
+        {screen.mode === "list" && (
+          <button className="primary" onClick={() => create()}>
+            <span aria-hidden="true">+</span> {t("newGame")}
           </button>
-        </div>
-      </div>
-      <DocumentEditor
-        key={selection}
-        kind="games"
-        name={selection === "new" ? "my_game" : selection}
-        initial={initial}
-        t={t}
-        onSaved={() => void refresh()}
-        onStart={busy ? undefined : start}
-      >
-        {(raw, change) => (
-          <GameForm raw={raw} change={change} catalog={catalog} t={t} locale={locale} />
         )}
-      </DocumentEditor>
+      </div>
+      {screen.mode === "list" &&
+        (catalog.games.length ? (
+          <div className="saved-config-list">
+            {catalog.games.map((name) => {
+              const card = catalog.gameCards?.find((c) => c.id === name);
+              return (
+                <article className="panel saved-config-card" key={name} data-config-id={name}>
+                  <h3>{name}</h3>
+                  <code>games/{name}.json</code>
+                  {card && (
+                    <p>
+                      {card.board} · {card.size ?? "—"} ·{" "}
+                      {card.defaultAgent ?? catalog.defaultAgent ?? "—"}
+                    </p>
+                  )}
+                  {card?.diagnostic && <p className="notice error">{card.diagnostic.code}</p>}
+                  <div className="actions">
+                    <button onClick={() => setScreen({ mode: "view", name })}>
+                      {configUiText(locale, "view")}
+                    </button>
+                    <button onClick={() => setScreen({ mode: "edit", name })}>
+                      {configUiText(locale, "edit")}
+                    </button>
+                    <button
+                      className="primary"
+                      disabled={busy || !card?.revision}
+                      onClick={() => card?.revision && start(name, card.revision)}
+                    >
+                      {t("start")}
+                    </button>
+                    <button
+                      className="danger"
+                      onClick={() =>
+                        void api<ConfigDocument>(`documents/games/${encodeURIComponent(name)}`)
+                          .then(setDeleting)
+                          .catch((e) => setError(e.message))
+                      }
+                    >
+                      {configUiText(locale, "remove")}
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <section className="panel empty">
+            <p>{configUiText(locale, "noGames")}</p>
+          </section>
+        ))}
+      {screen.mode === "view" && (
+        <ConfigDetail
+          key={screen.name}
+          kind="games"
+          name={screen.name}
+          locale={locale}
+          t={t}
+          edit={() => setScreen({ mode: "edit", name: screen.name })}
+          copy={(doc) => create(JSON.parse(doc.text))}
+          remove={setDeleting}
+          start={busy ? undefined : (doc) => doc.revision && start(screen.name, doc.revision)}
+        >
+          {(raw) => <GameSummary raw={raw} catalog={catalog} locale={locale} t={t} />}
+        </ConfigDetail>
+      )}
+      {(screen.mode === "create" || screen.mode === "edit") && (
+        <DocumentEditor
+          key={screen.mode === "create" ? screen.key : screen.name}
+          kind="games"
+          name={screen.mode === "create" ? "my_game" : screen.name}
+          initial={screen.mode === "create" ? screen.initial : undefined}
+          locale={locale}
+          t={t}
+          onCancel={() =>
+            setScreen(
+              screen.mode === "edit" ? { mode: "view", name: screen.name } : { mode: "list" },
+            )
+          }
+          onSaved={(doc, newerChanges) => {
+            void refresh();
+            if (!newerChanges) setScreen({ mode: "view", name: doc.name });
+          }}
+        >
+          {(raw, change) => (
+            <GameForm raw={raw} change={change} catalog={catalog} t={t} locale={locale} />
+          )}
+        </DocumentEditor>
+      )}
+      {deleting && (
+        <DeleteDialog
+          name={deleting.name}
+          kind="game"
+          locale={locale}
+          cancel={() => setDeleting(undefined)}
+          remove={async () => {
+            await api(`documents/games/${encodeURIComponent(deleting.name)}`, {
+              method: "DELETE",
+              body: { revision: deleting.revision },
+            });
+            setDeleting(undefined);
+            setScreen({ mode: "list" });
+            await refresh();
+          }}
+        />
+      )}
+      {error && (
+        <p className="notice error" role="alert">
+          {error}
+        </p>
+      )}
     </>
   );
 }
