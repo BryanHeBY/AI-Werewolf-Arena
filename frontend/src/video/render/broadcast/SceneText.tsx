@@ -31,7 +31,7 @@ export const SceneText = memo(
           page.slice(cursor, start),
           <mark
             key={`${start}:${end}`}
-            style={{ background: "transparent", color: accent, fontWeight: 700 }}
+            style={{ background: "transparent", color: item.color ?? accent, fontWeight: 700 }}
           >
             {page.slice(start, end)}
           </mark>,

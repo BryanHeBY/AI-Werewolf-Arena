@@ -103,8 +103,10 @@ test("readability diagnostics use typed provisional life and layout, never keywo
   };
   expect(auditSceneReadability(scene, true)).toEqual(["long-unstructured-announcement"]);
   scene.bodySource = "script";
+  scene.bodyLayout = "text";
   expect(auditSceneReadability(scene, true)).toEqual([]);
   scene.bodySource = "event";
+  scene.bodyLayout = "structured";
   scene.body = "short";
   scene.visual = { ...scene.visual!, life: { playerIds: [1], committed: false } };
   expect(auditSceneReadability(scene, true)).toEqual(["provisional-life-report"]);

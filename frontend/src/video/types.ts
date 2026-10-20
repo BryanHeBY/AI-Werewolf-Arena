@@ -13,6 +13,7 @@ import type { GameOutcome, RoleId } from "@ai-werewolf-arena/game-contract";
 import type { VideoFrameView } from "./frame";
 import type { SceneContent } from "../presentation/scene-content";
 import type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
+import type { SpeechTextTiming } from "../speech-timing";
 export type { VideoVisualFamily, VideoVisualTemplate } from "./visual-vocabulary";
 
 export type JsonValue =
@@ -25,11 +26,14 @@ export interface TextEmphasis {
   text: string;
   /** 从0开始；范围使用JavaScript字符串下标，供渲染器按同一正文切片。 */
   occurrence?: number;
+  /** 显式文字色使用六位十六进制；缺省沿用当前场景强调色。 */
+  color?: string;
 }
 export interface CompiledTextEmphasis {
   text: string;
   start: number;
   end: number;
+  color?: string;
 }
 export interface VideoSceneCues {
   establish: number;
@@ -129,11 +133,25 @@ export interface VideoVisualIntent {
   };
   fallbackReason?: string;
 }
+export interface VideoOpeningCredits {
+  repository: string;
+  model?: string;
+  agent: string;
+  features?: string[];
+  description?: string;
+}
 export interface VideoScene {
+  /** 片头标题直接排在原生舞台，不创建上帝播报卡片。 */
+  textLayout?: "title";
+  /** 片头署名只作画面展示，不自动加入台词或参与游戏事实。 */
+  credits?: VideoOpeningCredits;
+  /** 阶段正文之后的次要说明独立排小字，不自动加入配音。 */
+  notes?: { title: string; body: string };
   kind: "speech" | "action" | "ballot" | "settlement" | "phase" | "fallback";
   title: string;
   body: string;
   bodySource: "event" | "script";
+  bodyLayout?: "structured" | "text";
   speaker?: SpeakerId;
   actorId?: number;
   targetIds: number[];
@@ -174,7 +192,20 @@ export interface VideoScene {
   editorial?: { targetIds?: number[]; actorId?: number };
 }
 export type VideoSceneOverride = Partial<
-  Pick<VideoScene, "kind" | "title" | "body" | "speaker" | "actorId" | "targetIds">
+  Pick<
+    VideoScene,
+    | "kind"
+    | "title"
+    | "body"
+    | "bodySource"
+    | "bodyLayout"
+    | "speaker"
+    | "actorId"
+    | "targetIds"
+    | "textLayout"
+    | "credits"
+    | "notes"
+  >
 > & { cues?: Partial<VideoSceneCues> };
 export interface VideoSourceIdentity {
   sessionId: string;
@@ -191,7 +222,13 @@ export interface FactAnchor {
   kind: ReplayFact["kind"];
 }
 export type CameraTarget = "table" | { playerIds: number[] };
+export interface VideoTimeConstraint {
+  anchor?: "start" | "impact" | "result" | "end" | `speech:${string}`;
+  position?: "fixed" | "stretch";
+  duration?: "fixed" | "stretch";
+}
 export interface CameraKeyframe {
+  clock?: VideoTimeConstraint;
   frame: number;
   target: CameraTarget;
   zoom?: number;
@@ -200,6 +237,8 @@ export interface CameraKeyframe {
 }
 export type LayerPoint = { playerId: number } | { x: number; y: number };
 interface LayerTiming {
+  /** 配音重排时起点锚定与持续时间分别处理；未设置时保留短动画的固定帧长。 */
+  clock?: VideoTimeConstraint;
   id: string;
   from?: number;
   durationFrames?: number;
@@ -230,7 +269,7 @@ export type VideoLayer = LayerTiming &
     | { kind: "shake"; intensity?: number; frequency?: number }
     | { kind: "custom"; component: string; props?: JsonObject }
   );
-export type SpeakerId = "god" | `player:${number}`;
+export type SpeakerId = "narrator" | "god" | `player:${number}`;
 /** 预留配音脚本：text 独立于屏幕字幕；assetId 仅引用已经准备好的媒体，不发起 TTS。 */
 export interface SpeechCue {
   speaker: SpeakerId;
@@ -238,6 +277,8 @@ export interface SpeechCue {
   from?: number;
   durationFrames?: number;
   assetId?: string;
+  /** 字幕时间相对于本段配音起点，单位毫秒；镜头平移不修改这些边界。 */
+  subtitles?: SpeechTextTiming[];
 }
 export interface MediaAsset {
   id: string;
@@ -267,10 +308,14 @@ export interface ShotOptions {
   speech?: SpeechCue[];
   /** 仅新广播自动发言全文窗可用；逐段完整覆盖全局，显式分页/时长与hold保旧约定。 */
   speechReading?: VideoSpeechReadingOptions;
+  /** 已备语音或导演显式时长仍使用全文阅读窗，不退回旧分页。 */
+  readingClock?: "flow";
   scene?: VideoSceneOverride;
   emphasis?: TextEmphasis[];
 }
 export interface VideoEventEdit extends ShotOptions {
+  /** 只允许在事件入口合并同前缀、同死亡波的权威生命提交。 */
+  lifeFacts?: Array<FactAnchor & { kind: "life_committed" }>;
   anchor: EventAnchor;
   skip?: boolean;
 }
@@ -285,8 +330,19 @@ export interface VideoHold extends ShotOptions {
   stateAt?: EventAnchor;
   durationFrames: number;
 }
+/** 开场使用事件发生前的初始视图；不借用第一事件或未来底牌。 */
+export interface VideoIntro extends ShotOptions {
+  id: string;
+  durationFrames: number;
+}
+export interface VideoSubtitleDisplayOptions {
+  /** 仅延长显示尾部，遇下一条字幕或片尾立即截止，不修改原始语音时间。 */
+  lingerMs?: number;
+}
 export interface VideoScript {
   source: VideoSourceIdentity;
+  program?: { title: string; subtitle?: string };
+  maxDurationFrames?: number;
   layout?: VideoLayoutId;
   theme?: VideoThemeSelection;
   presentation?: PlayerPresentationConfig;
@@ -302,8 +358,12 @@ export interface VideoScript {
   edits?: VideoEventEdit[];
   factEdits?: VideoFactEdit[];
   holds?: VideoHold[];
+  intro?: VideoIntro[];
+  /** 在原生语义合段之后微调稳定镜头ID，不因修改配音而拆散票型或结算。 */
+  shotEdits?: Array<ShotOptions & { id: string }>;
   media?: MediaAsset[];
   audio?: AudioCue[];
+  subtitles?: VideoSubtitleDisplayOptions;
 }
 export interface CompiledVideoLayer extends LayerTiming {
   from: number;
@@ -381,9 +441,17 @@ export interface PlannedAudioCue extends AudioCue {
   fadeInFrames: number;
   fadeOutFrames: number;
 }
+export interface PlannedSubtitleCue {
+  id: string;
+  speaker: SpeakerId;
+  text: string;
+  from: number;
+  durationFrames: number;
+}
 export interface VideoPlan {
   version: 1;
   source: VideoSourceIdentity;
+  program?: { title: string; subtitle?: string };
   display: ReplayDisplayOptions;
   fps: number;
   width: number;
@@ -393,6 +461,7 @@ export interface VideoPlan {
   shots: VideoShot[];
   media: MediaAsset[];
   audio: PlannedAudioCue[];
+  subtitles?: PlannedSubtitleCue[];
   layout: VideoLayoutId;
   theme: ResolvedTheme;
   playersPresentation: ResolvedPlayerPresentation[];

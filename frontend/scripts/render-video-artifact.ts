@@ -22,6 +22,9 @@ export interface VideoArtifactOptions {
   fromFrame?: number;
   toFrame?: number;
   browser?: string;
+  concurrency?: number;
+  timeoutMs?: number;
+  onProgress?: Parameters<typeof renderMedia>[0]["onProgress"];
 }
 
 /** 本入口只写本次独占的生成模块；自定义组件通过静态 import 进入 bundle，plan 保持可序列化。 */
@@ -31,7 +34,7 @@ export async function writeVideoEntry(prepared: PreparedVideo, directory: string
   const remotion = path.resolve(import.meta.dir, "../node_modules/remotion");
   const custom =
     prepared.projectPath && (prepared.layerNames.length || prepared.themeSlotNames?.length)
-      ? `import * as authored from ${JSON.stringify(prepared.projectPath)};\nregisterRoot(createVideoRoot(authored.layers, authored.themeSlots));\n`
+      ? `import * as authored from ${JSON.stringify(prepared.visualsPath ?? prepared.projectPath)};\nregisterRoot(createVideoRoot(authored.layers, authored.themeSlots));\n`
       : "registerRoot(createVideoRoot());\n";
   await writeFile(
     entry,
@@ -50,6 +53,7 @@ export async function renderVideoArtifact(
     [
       prepared.sourcePath,
       prepared.projectPath,
+      prepared.visualsPath,
       ...prepared.assets.map((asset) => asset.source),
     ].some((source) => source && path.resolve(source) === output)
   )
@@ -61,6 +65,16 @@ export async function renderVideoArtifact(
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
   }
   const still = options.frame !== undefined;
+  if (
+    options.concurrency !== undefined &&
+    (!Number.isSafeInteger(options.concurrency) || options.concurrency < 1)
+  )
+    throw new Error("video_concurrency_invalid");
+  if (
+    options.timeoutMs !== undefined &&
+    (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1)
+  )
+    throw new Error("video_render_timeout_invalid");
   if (path.extname(output) !== (still ? ".png" : ".mp4"))
     throw new Error("replay_render_output_extension_invalid");
   const end = prepared.plan.durationFrames - 1;
@@ -98,6 +112,7 @@ export async function renderVideoArtifact(
       inputProps: { plan: prepared.plan },
       puppeteerInstance: browser,
       logLevel: "error" as const,
+      ...(options.timeoutMs === undefined ? {} : { timeoutInMilliseconds: options.timeoutMs }),
     };
     const composition = await rendering.selectComposition({ ...common, id: "Replay" });
     // 最终范围依据 renderer 真正解析的 composition 复验，避免生成入口与计划不一致。
@@ -119,7 +134,8 @@ export async function renderVideoArtifact(
         codec: "h264",
         outputLocation: artifact,
         frameRange: [from, to],
-        concurrency: 2,
+        concurrency: options.concurrency ?? 2,
+        onProgress: options.onProgress,
         overwrite: false,
       });
     try {

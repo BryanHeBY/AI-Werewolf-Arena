@@ -207,6 +207,7 @@ test("scene fields never replace caption/TTS text or an authored body", () => {
   const authored = {
     ...current,
     bodySource: "script" as const,
+    bodyLayout: "text" as const,
     body: "Explicit director text, unchanged.",
   };
   expect(sceneContent(authored, initial()).blocks).toEqual([
@@ -339,9 +340,21 @@ test("announcement DOM reveals the entire grid only at impact and preserves lite
   expect(after.match(/data-lineup-player=/g)).toHaveLength(12);
   expect(after).not.toContain(current.body);
   const authored = renderToStaticMarkup(
-    <AnnouncementScene {...props} scene={{ ...current, bodySource: "script" }} localFrame={24} />,
+    <AnnouncementScene
+      {...props}
+      scene={{ ...current, bodySource: "script", bodyLayout: "text" }}
+      localFrame={24}
+    />,
   );
   expect(authored.replace(/<[^>]*>/g, "")).toContain(current.body);
+  const structured = renderToStaticMarkup(
+    <AnnouncementScene
+      {...props}
+      scene={{ ...current, bodySource: "script", bodyLayout: "structured" }}
+      localFrame={24}
+    />,
+  );
+  expect(structured.match(/data-lineup-player=/g)).toHaveLength(12);
   expect(authored).not.toContain("data-lineup-player");
   const emphasized = renderToStaticMarkup(
     <AnnouncementScene

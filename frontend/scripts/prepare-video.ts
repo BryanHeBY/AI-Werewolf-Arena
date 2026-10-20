@@ -7,9 +7,10 @@ import { readFile, stat, mkdir, copyFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL, fileURLToPath } from "node:url";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { compileVideoPlan, type VideoPlan, type VideoScript } from "../src/video/plan";
+import { compileVideoPlan, type VideoPlan } from "../src/video/plan";
 import type { VideoProjectDefinition } from "../src/video-project";
-import { parseOfflineReplayJson } from "../src/replay/offline-replay";
+import { applySpeechScript } from "../src/speech-script";
+import { readVideoSource } from "./video/authoring";
 import { resolveReplayInput } from "./replay-dev";
 import { THEME_IDS, resolveTheme } from "../src/themes";
 
@@ -18,12 +19,14 @@ export interface PrepareVideoOptions {
   project?: string;
   locale?: Locale;
   timeZone?: string;
+  assets?: boolean;
 }
 /** 准备结果拥有脱离的计划与素材来源；绝对路径只留在 Node 侧，不发送给预览页面。 */
 export interface PreparedVideo {
   plan: VideoPlan;
   sourcePath: string;
   projectPath?: string;
+  visualsPath?: string;
   layerNames: string[];
   themeSlotNames?: string[];
   assets: Array<{ source: string; relativePath: string; bytes?: Uint8Array }>;
@@ -41,13 +44,14 @@ function isLayerComponent(value: unknown): boolean {
   );
 }
 
-export async function prepareVideo(options: PrepareVideoOptions): Promise<PreparedVideo> {
+export async function loadVideoProject(options: PrepareVideoOptions) {
   const projectPath = options.project ? path.resolve(options.project) : undefined;
   let definition: VideoProjectDefinition | undefined;
+  let visualsPath: string | undefined;
   let layerNames: string[] = [];
   let themeSlotNames: string[] = [];
   if (projectPath) {
-    const module: Record<string, unknown> = projectPath.endsWith(".json")
+    let module: Record<string, unknown> = projectPath.endsWith(".json")
       ? { default: JSON.parse(await readFile(projectPath, "utf8")) }
       : await import(pathToFileURL(projectPath).href);
     const value = module.default;
@@ -56,6 +60,15 @@ export async function prepareVideo(options: PrepareVideoOptions): Promise<Prepar
     definition = value as VideoProjectDefinition;
     if (typeof definition.input !== "string" || !definition.input.trim())
       throw new Error("video_project_invalid");
+    if (definition.visuals !== undefined) {
+      if (typeof definition.visuals !== "string" || !definition.visuals.trim())
+        throw new Error("video_visuals_invalid");
+      visualsPath = path.resolve(path.dirname(projectPath), definition.visuals);
+      const visuals = await import(pathToFileURL(visualsPath).href);
+      if (module.layers !== undefined || module.themeSlots !== undefined)
+        throw new Error("video_visuals_ambiguous");
+      module = { ...module, layers: visuals.layers, themeSlots: visuals.themeSlots };
+    }
     if (module.layers !== undefined) {
       if (!module.layers || typeof module.layers !== "object" || Array.isArray(module.layers))
         throw new Error("video_layers_invalid");
@@ -85,11 +98,37 @@ export async function prepareVideo(options: PrepareVideoOptions): Promise<Prepar
   const input = options.input ? path.resolve(options.input) : definition?.input;
   if (!input) throw new Error("video_input_required");
   const sourcePath = resolveReplayInput(input, base);
-  const replay = parseOfflineReplayJson(await readFile(sourcePath, "utf8"));
-  const plan = compileVideoPlan(replay, definition?.script as VideoScript | undefined, {
-    locale: options.locale ?? replay.meta.locale ?? "zh-CN",
-    timeZone: options.timeZone ?? "UTC",
-  });
+  const replay = readVideoSource(sourcePath);
+  return {
+    definition,
+    replay,
+    base,
+    sourcePath,
+    projectPath,
+    visualsPath,
+    layerNames,
+    themeSlotNames,
+    display: {
+      locale: options.locale ?? replay.meta.locale ?? "zh-CN",
+      timeZone: options.timeZone ?? "UTC",
+    },
+  };
+}
+export type LoadedVideoProject = Awaited<ReturnType<typeof loadVideoProject>>;
+
+/** 编译只消费已加载的项目和记录；事实揭晓仍由最终计划编译校验，不读取素材字节。 */
+export function compileLoadedVideo(
+  loaded: LoadedVideoProject,
+  definition = loaded.definition,
+): PreparedVideo {
+  const { replay, sourcePath, projectPath, visualsPath, layerNames, themeSlotNames } = loaded;
+  let plan = compileVideoPlan(replay, definition?.script, loaded.display);
+  if (definition?.speech) {
+    const { document, audio } = definition.speech;
+    if (!definition.script) throw new Error("video_script_required");
+    const bound = applySpeechScript(definition.script, plan, document, audio);
+    plan = compileVideoPlan(replay, bound.script, loaded.display);
+  }
   for (const shot of plan.shots)
     for (const layer of shot.layers)
       if (layer.kind === "custom" && !layerNames.includes(layer.component))
@@ -128,8 +167,24 @@ export async function prepareVideo(options: PrepareVideoOptions): Promise<Prepar
       };
     });
   }
+  return {
+    plan,
+    sourcePath,
+    ...(projectPath ? { projectPath } : {}),
+    ...(visualsPath ? { visualsPath } : {}),
+    layerNames,
+    themeSlotNames,
+    assets,
+  };
+}
+
+/** 素材读取是独立阶段；估时、字幕和结构检查可以停在compileLoadedVideo。 */
+export async function prepareVideoAssets(
+  prepared: PreparedVideo,
+  base = prepared.projectPath ? path.dirname(prepared.projectPath) : process.cwd(),
+): Promise<PreparedVideo> {
   // 先完整读取并摘要本地资产，输出只引用内容命名路径；原项目和源素材保持只读。
-  for (const media of [...plan.media, ...(plan.fonts ?? [])]) {
+  for (const media of [...prepared.plan.media, ...(prepared.plan.fonts ?? [])]) {
     if (/^https?:\/\//i.test(media.src)) continue;
     const source = media.src.startsWith("file:")
       ? fileURLToPath(media.src)
@@ -144,17 +199,15 @@ export async function prepareVideo(options: PrepareVideoOptions): Promise<Prepar
         .replace(/[^.a-z0-9]/g, "") || ".bin";
     const relativePath = `assets/${digest}${extension}`;
     media.src = relativePath;
-    if (!assets.some((asset) => asset.relativePath === relativePath))
-      assets.push({ source, relativePath, bytes: new Uint8Array(bytes) });
+    if (!prepared.assets.some((asset) => asset.relativePath === relativePath))
+      prepared.assets.push({ source, relativePath, bytes: new Uint8Array(bytes) });
   }
-  return {
-    plan,
-    sourcePath,
-    ...(projectPath ? { projectPath } : {}),
-    layerNames,
-    themeSlotNames,
-    assets,
-  };
+  return prepared;
+}
+export async function prepareVideo(options: PrepareVideoOptions): Promise<PreparedVideo> {
+  const loaded = await loadVideoProject(options);
+  const compiled = compileLoadedVideo(loaded);
+  return options.assets === false ? compiled : prepareVideoAssets(compiled, loaded.base);
 }
 
 /** 复制显式素材和 JSON 计划到调用方拥有的目录；失败传播，由上层负责整个临时目录的关闭。 */

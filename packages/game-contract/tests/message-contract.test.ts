@@ -148,6 +148,9 @@ test("existing message IDs retain their sequence and prompt additions append aft
     "prompt.system.custom_instructions",
     "replay.original_event",
     "video.range_adjacent_alive",
+    "video.credit_model",
+    "video.credit_agent",
+    "video.author_narrator",
   ]);
   for (const key of [
     ...appendedPromptKeys,
@@ -156,6 +159,9 @@ test("existing message IDs retain their sequence and prompt additions append aft
     "prompt.system.custom_instructions",
     "replay.original_event",
     "video.range_adjacent_alive",
+    "video.credit_model",
+    "video.credit_agent",
+    "video.author_narrator",
   ])
     expect(isMessageKey(key)).toBe(true);
 });

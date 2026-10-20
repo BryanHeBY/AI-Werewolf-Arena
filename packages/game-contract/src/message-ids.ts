@@ -1914,6 +1914,9 @@ export const MESSAGE_IDS = Object.freeze([
   "prompt.system.custom_instructions",
   "replay.original_event",
   "video.range_adjacent_alive",
+  "video.credit_model",
+  "video.credit_agent",
+  "video.author_narrator",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

@@ -28,5 +28,167 @@
     "text": "中文",
     "count": 1,
     "reason": "Native language selector name 中文 intentionally remains readable independently of the selected display language."
+  },
+  {
+    "file": "frontend/scripts/tts/prepare.ts",
+    "text": "/** 自动生成；口播归JSONL，声线归casting，对齐明细归内容寻址JSON。 */\nimport type { SpeechManifest } from ",
+    "count": 1,
+    "reason": "Generated TypeScript responsibility comment for the local prepared manifest; not runtime or player-facing text."
+  },
+  {
+    "file": "frontend/scripts/repair-gallery-cases.ts",
+    "text": "验收原话：先分清角色、座次和已记录的查验。预言家不是凭玩家自称确认；不得把发言里的怀疑当成真实身份。角色名白痴、女巫、狼人，座次12号，模型OpenAI-GPT，标点（和括号）都要自然换行。",
+    "count": 1,
+    "reason": "Existing Chinese authoring annotations for the explicitly non-gameplay art repair gallery, not shared game UI or player prose."
+  },
+  {
+    "file": "frontend/scripts/repair-gallery-cases.ts",
+    "text": "第",
+    "count": 1,
+    "reason": "Existing Chinese authoring annotations for the explicitly non-gameplay art repair gallery, not shared game UI or player prose."
+  },
+  {
+    "file": "frontend/scripts/repair-gallery-cases.ts",
+    "text": "段 ",
+    "count": 1,
+    "reason": "Existing Chinese authoring annotations for the explicitly non-gameplay art repair gallery, not shared game UI or player prose."
+  },
+  {
+    "file": "frontend/scripts/repair-gallery-cases.ts",
+    "text": "\n末行：保留完整原话，匀速滚动到这里。",
+    "count": 1,
+    "reason": "Existing Chinese authoring annotations for the explicitly non-gameplay art repair gallery, not shared game UI or player prose."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": "<!doctype html><html lang=\"zh-CN\"><meta charset=\"utf-8\"><title>完整旁白与发言稿</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;background:#10171f;color:#e7e4db;font:18px/1.9 system-ui}header{position:sticky;top:0;background:#10171ff5;padding:12px 0}h1{font-size:28px}h2{font-size:23px;margin:0 0 10px}article{padding:28px 0;border-bottom:1px solid #394550}small{color:#9eacb8}p{white-space:pre-wrap;margin:12px 0 20px}b{color:#92d0df}input{box-sizing:border-box;width:100%;padding:12px;background:#202d39;border:1px solid #52616b;color:white;font:inherit}.hidden{display:none}</style><header><h1>完整旁白与发言稿</h1><small>",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": " 个场景 · ",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": " 段台词 · ",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": " 字 · 时间由准备后的音频累加</small><input id=\"search\" placeholder=\"搜索场景、说话者或正文\"></header>",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": "作者旁白",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": "上帝",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": "号玩家",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/generate-speech-script.ts",
+    "text": "<small>读音修正：",
+    "count": 1,
+    "reason": "Chinese-only local speech proof-reading report labels; actual dialogue is authored source data, not a second game translation owner."
+  },
+  {
+    "file": "frontend/scripts/compile-speech-video.ts",
+    "text": "/** 负责保存已备语音生成的项目。输入为锁定台词和音频，输出连续时间线；重新编译生成新版本，不手改此文件。 */\nimport { defineVideoProject } from ",
+    "count": 1,
+    "reason": "Generated TypeScript responsibility comment for a local frozen production; not runtime or player-facing text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "/** 负责保存自动生成的前端完整流程稿。",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "/** 负责保存可编辑的完整制作稿。 输入为锁定录像，输出逐镜头编排；直接修改对应镜头，自动导出不覆盖此文件。 */",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": " 输入为锁定录像，输出原生编排与全文镜头索引；保留原稿作为对照。 */",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "项目完整流程稿",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "原生完整流程稿",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": " 镜头 · 估时 ",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "当前项目编排，包含显式微调。",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "前端原生编排，含完整发言与原生结算。",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "当前时长由已编译计划给出；未绑定TTS时为阅读估时。</small><p><input id=\"search\" placeholder=\"搜索玩家、台词、事件序号\"></p></header>",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": " · 事件 ",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": " · 事实 ",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": " 帧</small><h2>",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
+  },
+  {
+    "file": "frontend/scripts/generate-video-script.ts",
+    "text": "<details><summary>配音 · ",
+    "count": 1,
+    "reason": "Chinese-only local director report, generated author-file comments and report labels; player speech remains source data and shared game UI uses game-text."
   }
 ]

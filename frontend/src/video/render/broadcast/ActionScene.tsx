@@ -46,7 +46,7 @@ export function ActionScene({
   // 哥特白天仍是暗色阅读衬，使用与暗色名册同套语义色，避免深血红文字落在暗面上。
   const fieldColors = paletteSemanticColors(cards, mutedInk);
   const reportFields =
-    scene.bodySource === "event" &&
+    (scene.bodyLayout ?? "structured") === "structured" &&
     scene.emphasis.length === 0 &&
     caption.reading &&
     scene.content?.blocks.some((block) => block.kind === "report") ? (
@@ -284,47 +284,49 @@ export function ActionScene({
             )
           ) : null}
         </div>
-        {revealed && !reportFields && (
-          <div
-            style={{
-              fontSize: t.aux * scale,
-              color: mutedInk,
-              marginTop: 16 * scale,
-              textAlign: "center",
-            }}
-          >
-            {text(
-              locale,
-              visual
-                ? (
-                    {
-                      notice: "video.recorded",
-                      choice: "video.choice",
-                      used: "video.process_used",
-                      paid: "video.process_paid",
-                      reported: "video.report",
-                      blocked: "video.process_blocked",
-                      revoked: "video.revoked",
-                      expired: "video.process_expired",
-                      resolved: "video.committed",
-                      skipped: "video.process_skipped",
-                      suppressed: "video.process_suppressed",
-                      unknown: "video.process_unknown",
-                    } as const
-                  )[visual.process]
-                : scene.action?.status === "choice"
-                  ? "video.choice"
-                  : "video.recorded",
-            )}
-            {revealed && visual?.recipientIds.length ? (
-              <span data-feedback-recipients>
-                {" "}
-                · {text(locale, "video.recipient")} ·{" "}
-                {visual.recipientIds.map(seatLabel).join(" / ")}
-              </span>
-            ) : null}
-          </div>
-        )}
+        {revealed &&
+          !reportFields &&
+          !(scene.action?.kind === "wolf-knife" && scene.action.status === "committed") && (
+            <div
+              style={{
+                fontSize: t.aux * scale,
+                color: mutedInk,
+                marginTop: 16 * scale,
+                textAlign: "center",
+              }}
+            >
+              {text(
+                locale,
+                visual
+                  ? (
+                      {
+                        notice: "video.recorded",
+                        choice: "video.choice",
+                        used: "video.process_used",
+                        paid: "video.process_paid",
+                        reported: "video.report",
+                        blocked: "video.process_blocked",
+                        revoked: "video.revoked",
+                        expired: "video.process_expired",
+                        resolved: "video.committed",
+                        skipped: "video.process_skipped",
+                        suppressed: "video.process_suppressed",
+                        unknown: "video.process_unknown",
+                      } as const
+                    )[visual.process]
+                  : scene.action?.status === "choice"
+                    ? "video.choice"
+                    : "video.recorded",
+              )}
+              {revealed && visual?.recipientIds.length ? (
+                <span data-feedback-recipients>
+                  {" "}
+                  · {text(locale, "video.recipient")} ·{" "}
+                  {visual.recipientIds.map(seatLabel).join(" / ")}
+                </span>
+              ) : null}
+            </div>
+          )}
         {revealed && visual?.effectSourceId !== undefined && (
           <div
             data-original-effect-source={visual.effectSourceId}
@@ -341,7 +343,7 @@ export function ActionScene({
         {revealed &&
           scene.inventory &&
           scene.content &&
-          (!scene.stock || scene.bodySource === "script") && (
+          (!scene.stock || scene.bodyLayout === "text") && (
             <div
               data-action-inventory
               style={{ fontSize: t.aux * scale, color: mutedInk, marginTop: 14 * scale }}
@@ -355,7 +357,7 @@ export function ActionScene({
               />
             </div>
           )}
-        {revealed && !scene.inventory && scene.stock && scene.bodySource === "script" && (
+        {revealed && !scene.inventory && scene.stock && scene.bodyLayout === "text" && (
           <div
             data-scene-stock
             data-stock-ability={scene.stock.abilityId}

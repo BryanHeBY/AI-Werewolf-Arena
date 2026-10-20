@@ -73,7 +73,10 @@ export function BroadcastVideoFrame({
   const layout = broadcastSceneLayout(scene);
   // 编导可单独标注actor，但记录原话仍署真实说话者；不改既有SpeechCue/声音来源。
   const speechActor =
-    scene.bodySource === "event" && scene.visual?.dialogue ? scene.visual.actorId : scene.actorId;
+    scene.bodySource === "event" && scene.visual?.dialogue
+      ? scene.visual.actorId
+      : (scene.actorId ??
+        (scene.speaker?.startsWith("player:") ? Number(scene.speaker.slice(7)) : undefined));
   const roster = plan.playersPresentation;
   const protectedTerms = useMemo(
     () =>
@@ -216,14 +219,14 @@ export function BroadcastVideoFrame({
           <strong
             style={{
               fontFamily: theme.definition.fonts.heading,
-              fontSize: t.title * scale,
+              fontSize: (plan.program ? 34 : t.title) * scale,
               fontWeight: 700,
             }}
           >
-            {text(locale, "video.game_title")}
+            {plan.program?.title ?? text(locale, "video.game_title")}
           </strong>
           <span style={{ fontSize: t.aux * scale, color: palette.canvasMuted }}>
-            {text(locale, "video.god_view")}
+            {plan.program?.subtitle ?? text(locale, "video.god_view")}
           </span>
         </div>
         <span
@@ -279,6 +282,7 @@ export function BroadcastVideoFrame({
         }}
       >
         {layout !== "speech" &&
+          scene.textLayout !== "title" &&
           slot(
             "sceneHeading",
             <div
@@ -398,7 +402,7 @@ export function BroadcastVideoFrame({
           position: "absolute",
           left: stage.x,
           width: stage.width,
-          bottom: 16 * scale,
+          bottom: plan.height - view.layout.footer.y - view.layout.footer.height,
           display: "grid",
           gridTemplateColumns: "minmax(0,1fr) max-content",
           alignItems: "center",
@@ -412,7 +416,14 @@ export function BroadcastVideoFrame({
           data-event-seq={view.sourceSeq}
           style={{ ...quiet, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
         >
-          {text(locale, layout === "speech" ? "video.speaking" : "video.narrator")}
+          {text(
+            locale,
+            scene.speaker === "narrator"
+              ? "video.author_narrator"
+              : layout === "speech"
+                ? "video.speaking"
+                : "video.narrator",
+          )}
           {layout === "speech" && speechActor !== undefined ? ` · ${label(speechActor)}` : ""}
           {current.victory && (
             <span data-testid="composition-victory" title={current.victory}>

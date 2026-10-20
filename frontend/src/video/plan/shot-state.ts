@@ -25,7 +25,7 @@ export function compileVideoShotState(
     kind !== "hold" &&
     (index >= 0 || committedFact) &&
     baseKind !== "speech" &&
-    timing.reveal.impact > 0;
+    (timing.reveal.impact > 0 || (endIndex > index && timing.reveal.result > timing.reveal.impact));
   if (!delayed) return [after];
   const before = {
     frame: 0,
@@ -34,7 +34,7 @@ export function compileVideoShotState(
     view: source.viewAt(selected.before),
   };
   return [
-    before,
+    ...(timing.reveal.impact > 0 ? [before] : []),
     ...(endIndex > index
       ? [
           {

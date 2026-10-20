@@ -58,7 +58,7 @@ export interface SceneContent {
 export function sceneContent(scene: VideoScene, record?: ReadReplayEvent | null): SceneContent {
   const blocks: SceneContentBlock[] = [];
   const visual = scene.visual;
-  const announcement = scene.bodySource === "event" ? announcementContent(record) : null;
+  const announcement = scene.bodyLayout !== "text" ? announcementContent(record) : null;
   if (announcement) blocks.push({ kind: "announcement", announcement });
   // 只有权威生命提交携带出局对象；一般技能报告、请求目标和未确认夜报不能制造此块。
   if (visual?.life?.committed)

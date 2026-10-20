@@ -2,7 +2,7 @@
  * 负责明确标注编导稿的长中文排版演示。复用教学归档与真实事件时间线，只显式替换49号事件的画面正文，不冒充玩家原话。
  * 本地归档没有足够长的真实中文发言；该示例只验证字级重点、分页和自适应名册，不改变身份、票型或生命事实，不接入 TTS。
  */
-import { defineVideoProject } from "../../src/video-project";
+import { defineVideoProject } from "../../../src/video-project";
 import base from "./project";
 
 export default defineVideoProject({

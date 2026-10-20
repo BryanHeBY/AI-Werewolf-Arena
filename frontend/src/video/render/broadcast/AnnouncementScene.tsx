@@ -6,8 +6,9 @@ import { SceneHero } from "../../SceneVisual";
 import { PhaseSigil } from "../../GothicArt";
 import { text } from "@ai-werewolf-arena/game-text";
 import { SceneText } from "./SceneText";
+import { TitleScene } from "./TitleScene";
 import { ReadingViewport } from "./ReadingViewport";
-import { quiet, localSurface } from "./style";
+import { quiet, localSurface, alpha } from "./style";
 import type { SceneRenderProps } from "./contracts";
 import { SceneContentBlocks } from "../../../presentation/SceneContentBlocks";
 import { paletteSemanticColors } from "../../../presentation/semantic-colors";
@@ -31,10 +32,17 @@ export function AnnouncementScene({
   const { theme, surface, gothic, palette, cards, night } = appearance;
   const tokens = theme.definition;
   const revealed = localFrame >= scene.cues.impact;
+  // 全阵容和附配置的规则页要在字幕安全区内同屏展示，保留正文与小字的字号层级。
+  const compact =
+    Boolean(scene.notes) ||
+    scene.content?.blocks.some(
+      (block) => block.kind === "announcement" && block.announcement.kind === "lineup",
+    );
+  const readingSize = bodySize * (compact ? 0.875 : 1);
   const structured =
     // 旧逐页时钟和作者精确强调仍以原文为准，不能每一页重复整个名单或吞掉UTF16强调范围。
     Boolean(caption.reading) &&
-    scene.bodySource === "event" &&
+    (scene.bodyLayout ?? "structured") === "structured" &&
     scene.emphasis.length === 0 &&
     scene.content?.blocks.some((block) => block.kind === "announcement" || block.kind === "life");
   const fields = structured ? (
@@ -48,7 +56,7 @@ export function AnnouncementScene({
         name: player.displayName,
       }))}
       colors={paletteSemanticColors(cards, surface.readingMuted)}
-      iconSize={bodySize * 0.8}
+      iconSize={readingSize * 0.8}
     />
   ) : undefined;
 
@@ -62,6 +70,40 @@ export function AnnouncementScene({
     0,
     Math.min(stage.height * surface.readingMaxHeightRatio, available) -
       (artSize ? artSize + 20 * scale : 0),
+  );
+  if (scene.textLayout === "title")
+    return (
+      <TitleScene
+        scene={scene}
+        caption={caption}
+        localFrame={localFrame}
+        metrics={metrics}
+        appearance={appearance}
+        locale={locale}
+      />
+    );
+  const readingContent = scene.notes ? (
+    <div style={{ whiteSpace: "pre-wrap" }}>
+      <SceneText caption={caption} emphasis={scene.emphasis} accent={palette.wolf} />
+      <section
+        data-announcement-notes
+        style={{
+          marginTop: 20 * scale,
+          paddingTop: 16 * scale,
+          borderTop: `${scale}px solid ${alpha(tokens.frame.color, 0.45)}`,
+          color: surface.readingMuted,
+          fontSize: readingSize * 0.75,
+          lineHeight: 1.5,
+        }}
+      >
+        <div style={{ marginBottom: 8 * scale, letterSpacing: scale, fontWeight: 600 }}>
+          {scene.notes.title}
+        </div>
+        {scene.notes.body}
+      </section>
+    </div>
+  ) : (
+    fields
   );
   return (
     <div
@@ -105,44 +147,49 @@ export function AnnouncementScene({
           overflow: "hidden",
         }}
       >
-        <div
-          data-announcement-identity
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12 * scale,
-            color: surface.readingMuted,
-            fontSize: tokens.typography.aux * scale,
-            flexShrink: 0,
-          }}
-        >
-          {phase && <PhaseSigil night={night} size={28 * scale} />}
-          {text(locale, "video.narrator")}
-        </div>
+        {!scene.notes && (
+          <div
+            data-announcement-identity
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12 * scale,
+              color: surface.readingMuted,
+              fontSize: tokens.typography.aux * scale,
+              flexShrink: 0,
+            }}
+          >
+            {phase && <PhaseSigil night={night} size={28 * scale} />}
+            {text(
+              locale,
+              scene.speaker === "narrator" ? "video.author_narrator" : "video.narrator",
+            )}
+          </div>
+        )}
         {revealed && caption.reading ? (
           <ReadingViewport
             caption={caption}
             emphasis={scene.emphasis}
             accent={gothic ? "#efb4a8" : palette.wolf}
             kind="announcement"
-            fontSize={bodySize}
+            fontSize={readingSize}
             lineHeight={lineHeight}
           >
-            {fields}
+            {readingContent}
           </ReadingViewport>
         ) : (
           <div
             data-scene-announcement
             style={{
               ...quiet,
-              fontSize: bodySize,
+              fontSize: readingSize,
               lineHeight,
               whiteSpace: "pre-wrap",
               textAlign: "left",
             }}
           >
             {revealed
-              ? (fields ?? (
+              ? (readingContent ?? (
                   <SceneText
                     caption={caption}
                     emphasis={scene.emphasis}

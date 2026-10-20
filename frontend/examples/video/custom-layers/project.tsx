@@ -2,13 +2,13 @@
  * 负责演示一份可直接运行的单局视频脚本。输入为已有两事件 fixture，输出镜头、图层、停留与自定义组件配置。
  * 这里只描述节目编排，不改变原对局事实；声线文本只保留准备信息，不调用 TTS。
  */
-import { defineVideoProject } from "../../src/video-project";
+import { defineVideoProject } from "../../../src/video-project";
 import { Img } from "remotion";
 import {
   resolveVideoMediaSource,
   type CustomVideoLayerProps,
   type VideoLayerRegistry,
-} from "../../src/video/plan";
+} from "../../../src/video/plan";
 
 function DecisionBadge({ frame, props, plan, mediaBaseUrl }: CustomVideoLayerProps) {
   const marker = plan.media.find((asset) => asset.id === "marker")!;
@@ -39,7 +39,7 @@ function DecisionBadge({ frame, props, plan, mediaBaseUrl }: CustomVideoLayerPro
 export const layers: VideoLayerRegistry = { DecisionBadge };
 
 export default defineVideoProject({
-  input: "../../tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
+  input: "../../../tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
   script: {
     source: { sessionId: "session_frontend_fixture", fingerprint: "fnv1a64:324fac06cf547954" },
     media: [{ id: "marker", kind: "image", src: "./marker.svg", width: 96, height: 96 }],

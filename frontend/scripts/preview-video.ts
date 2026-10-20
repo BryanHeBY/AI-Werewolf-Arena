@@ -64,7 +64,7 @@ export async function previewVideo(
           AWA_VIDEO_PLAN_DIR: directory,
           AWA_VIDEO_PROJECT_ENTRY:
             prepared.layerNames.length || prepared.themeSlotNames?.length
-              ? prepared.projectPath
+              ? (prepared.visualsPath ?? prepared.projectPath)
               : undefined,
         },
       },

@@ -62,7 +62,11 @@ export function prepareVideoShotContent(
       : undefined;
   base.body = pendingLifeBody(locale) ?? base.body;
   if (edit.caption !== undefined && typeof edit.caption !== "string") fail("caption_invalid");
-  if (edit.caption !== undefined && edit.scene?.body === undefined) base.body = edit.caption;
+  if (edit.caption !== undefined && edit.scene?.body === undefined) {
+    base.bodySource = "script";
+    base.bodyLayout = edit.scene?.bodyLayout ?? "text";
+    base.body = edit.caption;
+  }
   const body =
     edit.scene?.body ??
     edit.caption ??

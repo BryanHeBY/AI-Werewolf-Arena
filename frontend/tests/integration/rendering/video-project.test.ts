@@ -6,7 +6,12 @@ import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
-import { prepareVideo, materializeVideo } from "../../../scripts/prepare-video";
+import {
+  prepareVideo,
+  materializeVideo,
+  loadVideoProject,
+  compileLoadedVideo,
+} from "../../../scripts/prepare-video";
 import { renderVideoArtifact, type VideoRendering } from "../../../scripts/render-video-artifact";
 import { getVideoSourceIdentity } from "../../../src/video/plan";
 import { replayCommandFailure } from "../../../scripts/cli-error";
@@ -15,7 +20,35 @@ const fixture = path.resolve(
   import.meta.dir,
   "../../fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
 );
-const example = path.resolve(import.meta.dir, "../../../videos/example/project.tsx");
+const example = path.resolve(import.meta.dir, "../../../examples/video/custom-layers/project.tsx");
+
+test("loading and compiling remain usable without materializing an unrelated missing media file", async () => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), "awa-plan-only-"));
+  try {
+    const replay = JSON.parse(await readFile(fixture, "utf8"));
+    const project = path.join(directory, "project.json");
+    await writeFile(
+      project,
+      JSON.stringify({
+        input: fixture,
+        script: {
+          source: getVideoSourceIdentity(replay),
+          media: [{ id: "unused", kind: "image", src: "missing.png" }],
+        },
+      }),
+    );
+    const loaded = await loadVideoProject({ project });
+    const compiled = compileLoadedVideo(loaded);
+    expect(compiled.plan.media[0]!.src).toBe("missing.png");
+    expect(compiled.assets).toEqual([]);
+    expect((await prepareVideo({ project, assets: false })).plan.source).toEqual(
+      compiled.plan.source,
+    );
+    await expect(prepareVideo({ project })).rejects.toThrow("ENOENT");
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
 
 test("script diagnostics expose finite codes and numeric anchors without opaque error prose", () => {
   expect(replayCommandFailure(new Error("video_source_mismatch"), "en").code).toBe(
@@ -110,7 +143,9 @@ test("partial export forwards an inclusive source-frame range and closes its own
   try {
     const prepared = await prepareVideo({ project: example });
     let closed = 0,
-      range: unknown;
+      range: unknown,
+      concurrency: unknown,
+      timeout: unknown;
     const browser = {
       close: async () => {
         closed++;
@@ -139,13 +174,21 @@ test("partial export forwards an inclusive source-frame range and closes its own
       },
       renderMedia: async (options) => {
         range = options.frameRange;
+        concurrency = options.concurrency;
+        timeout = options.timeoutInMilliseconds;
         await writeFile(options.outputLocation!, "complete partial");
         return { buffer: null, slowestFrames: [], contentType: "video/mp4" };
       },
     };
     const output = path.join(directory, "partial.mp4");
-    await renderVideoArtifact(prepared, { output, fromFrame: 18, toFrame: 47 }, rendering);
+    await renderVideoArtifact(
+      prepared,
+      { output, fromFrame: 18, toFrame: 47, concurrency: 3, timeoutMs: 120000 },
+      rendering,
+    );
     expect(range).toEqual([18, 47]);
+    expect(concurrency).toBe(3);
+    expect(timeout).toBe(120000);
     expect(closed).toBe(1);
     expect(await readFile(output, "utf8")).toBe("complete partial");
     await expect(renderVideoArtifact(prepared, { output }, rendering)).rejects.toThrow(
@@ -158,6 +201,13 @@ test("partial export forwards an inclusive source-frame range and closes its own
         rendering,
       ),
     ).rejects.toThrow("replay_frame_out_of_range");
+    await expect(
+      renderVideoArtifact(
+        prepared,
+        { output: path.join(directory, "bad-timeout.mp4"), timeoutMs: 0.5 },
+        rendering,
+      ),
+    ).rejects.toThrow("video_render_timeout_invalid");
   } finally {
     await rm(directory, { recursive: true, force: true });
   }

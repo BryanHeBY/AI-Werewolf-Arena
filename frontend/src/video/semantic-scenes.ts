@@ -6,6 +6,7 @@ import type { ReplayEvent, ReplayFact } from "@ai-werewolf-arena/replay-contract
 import { playerLabel } from "@ai-werewolf-arena/game-presentation";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { factVisualIntent } from "./visual-intent";
+import { isVideoSpeaker } from "./speakers";
 import {
   createVideoRecordReader,
   interpretVideoEvent,
@@ -199,6 +200,7 @@ export function eventScene(
     title: stage,
     body: label,
     bodySource: "event",
+    bodyLayout: "structured",
     targetIds: [],
     speaker: "god",
     emphasis: [],
@@ -317,6 +319,7 @@ export function factScene(fact: ReplayFact, locale: Locale, names: Names): Video
     title: "",
     body: "",
     bodySource: "event",
+    bodyLayout: "structured",
     targetIds: [],
     speaker: "god",
     emphasis: [],
@@ -396,7 +399,9 @@ export function compileEmphasis(
         typeof item.text !== "string" ||
         !item.text.length ||
         !Number.isSafeInteger(item.occurrence ?? 0) ||
-        (item.occurrence ?? 0) < 0
+        (item.occurrence ?? 0) < 0 ||
+        (item.color !== undefined &&
+          (typeof item.color !== "string" || !/^#[0-9a-f]{6}$/i.test(item.color)))
       )
         throw new Error("video_emphasis_invalid");
       let start = -1;
@@ -404,7 +409,12 @@ export function compileEmphasis(
         start = body.indexOf(item.text, start + 1);
         if (start < 0) throw new Error("video_emphasis_text_missing");
       }
-      return { text: item.text, start, end: start + item.text.length };
+      return {
+        text: item.text,
+        start,
+        end: start + item.text.length,
+        ...(item.color === undefined ? {} : { color: item.color }),
+      };
     })
     .sort((first, last) => first.start - last.start);
   for (let index = 1; index < ranges.length; index++)
@@ -422,7 +432,21 @@ export function compileScene(
   if (
     override &&
     Object.keys(override).some(
-      (key) => !["kind", "title", "body", "speaker", "actorId", "targetIds", "cues"].includes(key),
+      (key) =>
+        ![
+          "kind",
+          "title",
+          "body",
+          "bodySource",
+          "bodyLayout",
+          "speaker",
+          "actorId",
+          "targetIds",
+          "cues",
+          "textLayout",
+          "credits",
+          "notes",
+        ].includes(key),
     )
   )
     throw new Error("video_scene_field_invalid");
@@ -440,7 +464,56 @@ export function compileScene(
     typeof scene.body !== "string"
   )
     throw new Error("video_scene_invalid");
-  if (override?.body !== undefined) scene.bodySource = "script";
+  if (scene.textLayout !== undefined && (scene.textLayout !== "title" || scene.kind !== "phase"))
+    throw new Error("video_scene_text_layout_invalid");
+  if (scene.notes !== undefined) {
+    const notes = scene.notes;
+    if (
+      scene.kind !== "phase" ||
+      scene.textLayout === "title" ||
+      !notes ||
+      typeof notes !== "object" ||
+      Array.isArray(notes) ||
+      Object.keys(notes).some((key) => !["title", "body"].includes(key)) ||
+      [notes.title, notes.body].some((value) => typeof value !== "string" || !value.trim())
+    )
+      throw new Error("video_scene_notes_invalid");
+  }
+  if (scene.credits !== undefined) {
+    const credits = scene.credits;
+    if (
+      scene.textLayout !== "title" ||
+      !credits ||
+      typeof credits !== "object" ||
+      Array.isArray(credits) ||
+      Object.keys(credits).some(
+        (key) => !["repository", "model", "agent", "description", "features"].includes(key),
+      ) ||
+      typeof credits.repository !== "string" ||
+      !/^[a-z\d](?:[a-z\d-]{0,38})\/[a-z\d_.-]{1,100}$/i.test(credits.repository) ||
+      [
+        credits.agent,
+        ...(credits.model === undefined ? [] : [credits.model]),
+        ...(credits.description === undefined ? [] : [credits.description]),
+      ].some((value) => typeof value !== "string" || !value.trim() || value.length > 80) ||
+      (credits.features !== undefined &&
+        (!Array.isArray(credits.features) ||
+          credits.features.length > 3 ||
+          credits.features.some(
+            (value) => typeof value !== "string" || !value.trim() || value.length > 24,
+          )))
+    )
+      throw new Error("video_scene_credits_invalid");
+  }
+  if (override?.body !== undefined) {
+    scene.bodySource = override.bodySource ?? "script";
+    scene.bodyLayout = override.bodyLayout ?? "text";
+  }
+  if (
+    !["event", "script"].includes(scene.bodySource) ||
+    (scene.bodyLayout !== undefined && !["structured", "text"].includes(scene.bodyLayout))
+  )
+    throw new Error("video_scene_body_invalid");
   if (
     !Array.isArray(scene.targetIds) ||
     new Set(scene.targetIds).size !== scene.targetIds.length ||
@@ -448,11 +521,7 @@ export function compileScene(
     (scene.actorId !== undefined && !playerIds.includes(scene.actorId))
   )
     throw new Error("video_scene_player_invalid");
-  if (
-    scene.speaker !== undefined &&
-    scene.speaker !== "god" &&
-    !playerIds.some((id) => scene.speaker === `player:${id}`)
-  )
+  if (scene.speaker !== undefined && !isVideoSpeaker(scene.speaker, playerIds))
     throw new Error("video_speaker_invalid");
   const defaults: VideoSceneCues = {
     establish: 0,

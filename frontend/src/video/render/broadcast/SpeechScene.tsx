@@ -38,7 +38,10 @@ export function SpeechScene({
         : t.speechBodyZh) * scale;
   const { profile, label, seatLabel } = playerLabels(players, locale);
   const speechActor =
-    scene.bodySource === "event" && scene.visual?.dialogue ? scene.visual.actorId : scene.actorId;
+    (scene.bodyLayout ?? "structured") === "structured" && scene.visual?.dialogue
+      ? scene.visual.actorId
+      : (scene.actorId ??
+        (scene.speaker?.startsWith("player:") ? Number(scene.speaker.slice(7)) : undefined));
 
   const flow = Boolean(caption.reading);
   // 新阅读面由真实内容与flex收缩决定高度；旧明确分页仍保整段最大页的固定槽。

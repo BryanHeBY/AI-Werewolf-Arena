@@ -4,8 +4,10 @@
  */
 export * from "../types";
 export * from "../source";
+export { isVideoSpeaker } from "../speakers";
 export { compileVideoPlan, defineVideoScript, type VideoCustomProps } from "../compiler";
 export * from "../captions";
+export * from "../subtitles";
 export * from "../layout";
 export * from "../frame";
 export { auditVideoReplay } from "./audit";

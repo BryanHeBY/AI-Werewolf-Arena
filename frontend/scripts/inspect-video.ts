@@ -15,7 +15,7 @@ if (import.meta.main) {
       allowPositionals: false,
       options: { input: { type: "string" }, project: { type: "string" } },
     });
-    const { plan } = await prepareVideo(values);
+    const { plan } = await prepareVideo({ ...values, assets: false });
     console.log(
       JSON.stringify(
         {

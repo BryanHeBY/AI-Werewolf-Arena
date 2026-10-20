@@ -150,7 +150,7 @@ export function EndScene({
                 colors={paletteSemanticColors(appearance.cards, surface.readingMuted)}
               />
             </div>
-            {(scene.bodySource === "script" || scene.emphasis.length > 0) && (
+            {(scene.bodyLayout === "text" || scene.emphasis.length > 0) && (
               <div data-end-editorial style={{ marginTop: 20 * scale, whiteSpace: "pre-wrap" }}>
                 <SceneText caption={caption} emphasis={scene.emphasis} accent={palette.accent} />
               </div>

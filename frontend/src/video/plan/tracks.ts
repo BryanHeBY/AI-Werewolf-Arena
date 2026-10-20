@@ -3,6 +3,7 @@
  * 不调用 TTS、不解析角色意图；显式音轨的媒体边界与原错误顺序保持一致。
  */
 import { fail, integer, finite, nonempty, json } from "./validation";
+import { isVideoSpeaker } from "../speakers";
 import type {
   CompiledSpeechCue,
   SpeechCue,
@@ -15,8 +16,24 @@ import type {
   PlannedVideoLayer,
   SpeakerId,
   VideoLayer,
+  VideoTimeConstraint,
 } from "../types";
 
+function validateClock(clock?: VideoTimeConstraint): void {
+  if (clock === undefined) return;
+  if (
+    !clock ||
+    typeof clock !== "object" ||
+    Array.isArray(clock) ||
+    Object.keys(clock).some((key) => !["anchor", "position", "duration"].includes(key)) ||
+    (clock.anchor !== undefined &&
+      !["start", "impact", "result", "end"].includes(clock.anchor) &&
+      !/^speech:[a-zA-Z0-9][a-zA-Z0-9_-]*$/.test(clock.anchor)) ||
+    (clock.position !== undefined && !["fixed", "stretch"].includes(clock.position)) ||
+    (clock.duration !== undefined && !["fixed", "stretch"].includes(clock.duration))
+  )
+    fail("visual_clock_invalid");
+}
 function target(target: CameraTarget, playerIds: number[]): void {
   if (target === "table") return;
   if (
@@ -37,10 +54,7 @@ function point(value: LayerPoint, playerIds: number[]): void {
   }
 }
 export function validateSpeaker(value: SpeakerId, playerIds: number[]): void {
-  if (value === "god") return;
-  const id =
-    typeof value === "string" && /^player:[1-9]\d*$/.test(value) ? Number(value.slice(7)) : NaN;
-  if (!playerIds.includes(id)) fail("speaker_invalid");
+  if (!isVideoSpeaker(value, playerIds)) fail("speaker_invalid");
 }
 export function compileCamera(
   camera: CameraKeyframe[] | undefined,
@@ -51,6 +65,7 @@ export function compileCamera(
   if (!keys.length) fail("camera_empty");
   let previous = -1;
   for (const key of keys) {
+    validateClock(key.clock);
     integer(key.frame, "camera_frame");
     if (key.frame >= duration || key.frame <= previous) fail("camera_frame_order_invalid");
     target(key.target, playerIds);
@@ -70,6 +85,7 @@ export function compileLayers(
   const ids = new Set<string>();
   return (layers ?? [])
     .map((layer) => {
+      validateClock(layer.clock);
       nonempty(layer.id, "layer_id");
       if (ids.has(layer.id)) fail("layer_id_duplicate");
       ids.add(layer.id);

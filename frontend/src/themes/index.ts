@@ -286,6 +286,8 @@ export function normalizeResolvedTheme(theme: ResolvedTheme): ResolvedTheme {
       options: { ...base.options, ...previous.options },
       slots: { ...base.slots, ...previous.slots },
       typography: { ...base.typography, ...previous.typography },
+      subtitle: { ...base.subtitle, ...previous.subtitle },
+      opening: { ...base.opening, ...previous.opening },
       surface: {
         ...base.surface,
         ...previous.surface,

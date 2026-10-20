@@ -2,10 +2,14 @@
  * 负责计算镜头、席位与连线共用的布局坐标。输入为席位名单、画幅与目标，输出席位锚点、字幕安全区和镜头姿态。
  * 本层仅计算几何，不决定事件语义或存活状态；字幕位于独立屏幕空间，不跟随取景变换。
  */
+import { createThemeVisualTokens, type ThemeSubtitle } from "../themes/tokens";
 import type { CameraTarget, LayerPoint, VideoLayoutId } from "./types";
 import type { ResolvedPlayerPresentation } from "../presentation";
 
 export interface VideoLayoutOptions {
+  /** 按整份计划固定预留两行底部配音字幕，间隙和镜头切换不触发舞台跳动。 */
+  subtitleSafeArea?: boolean;
+  subtitle?: ThemeSubtitle;
   /** 只消费整局已完成匿名／显隐裁剪的资料；省略时保持旧广播几何，不从原始姓名或当前事件反推。 */
   playersPresentation?: readonly Pick<
     ResolvedPlayerPresentation,
@@ -27,6 +31,8 @@ export interface VideoLayout {
   seats: SeatAnchor[];
   table: { x: number; y: number; width: number; height: number };
   caption: { x: number; y: number; width: number; height: number };
+  subtitle: { x: number; y: number; width: number; height: number };
+  footer: { x: number; y: number; width: number; height: number };
   stage: { x: number; y: number; width: number; height: number };
   rosterLeft: SeatAnchor[];
   rosterRight: SeatAnchor[];
@@ -43,6 +49,17 @@ export function createVideoLayout(
   options: VideoLayoutOptions = {},
 ): VideoLayout {
   const scale = Math.min(width / 1280, height / 720);
+  const unit = Math.min(width / 1920, height / 1080);
+  const subtitle = options.subtitle ?? createThemeVisualTokens(false).subtitle;
+  const regions = (x: number, regionWidth: number) => ({
+    subtitle: {
+      x,
+      y: height - ((id === "broadcast-v1" ? subtitle.bottom : 12) + subtitle.safeHeight) * unit,
+      width: regionWidth,
+      height: subtitle.safeHeight * unit,
+    },
+    footer: { x, y: height - 48 * unit, width: regionWidth, height: 32 * unit },
+  });
   if (id === "broadcast-v1") {
     const rows = Math.ceil(playerIds.length / 2);
     const metadata =
@@ -82,8 +99,13 @@ export function createVideoLayout(
       x: width * 0.205 - leftReclaimed,
       y: height * 0.145,
       width: width * 0.59 + leftReclaimed + rightReclaimed,
-      height: height * 0.775,
+      height: height * (options.subtitleSafeArea ? 0.685 : 0.775),
     };
+    if (options.subtitleSafeArea)
+      stage.height = Math.min(
+        stage.height,
+        regions(stage.x, stage.width).subtitle.y - stage.y - 20 * unit,
+      );
     return {
       id,
       width,
@@ -93,6 +115,7 @@ export function createVideoLayout(
       rosterRight: seats.slice(rows),
       rosterColumns,
       stage,
+      ...regions(stage.x, stage.width),
       table: {
         x: stage.x + stage.width / 2,
         y: height * 0.48,
@@ -128,6 +151,7 @@ export function createVideoLayout(
       left: { width: 0, hasMetadata: false },
       right: { width: 0, hasMetadata: false },
     },
+    ...regions(width * 0.07, width * 0.86),
     stage: { x: width * 0.07, y: height * 0.12, width: width * 0.86, height: height * 0.54 },
     table: { x: width * 0.5, y: height * 0.385, width: width * 0.34, height: height * 0.25 },
     caption: { x: width * 0.07, y: height * 0.7, width: width * 0.86, height: height * 0.23 },

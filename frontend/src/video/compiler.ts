@@ -10,6 +10,7 @@ import {
 } from "@ai-werewolf-arena/replay-contract";
 import { supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
 import { readVideoSpeechReadingOptions } from "./captions";
+import { compileVideoSubtitles } from "./subtitles";
 import { sceneContent } from "../presentation/scene-content";
 import { replayDisplayRoster } from "../replay/replay-display-roster";
 import { buildPresentationReplay } from "../replay/replay-presentation";
@@ -70,6 +71,16 @@ export function compileVideoPlan(
   const fps = integer(script?.fps ?? 30, "fps", 1);
   if (script?.pacing !== undefined && !["narration", "reading"].includes(script.pacing))
     fail("pacing_invalid");
+  const maximumDuration =
+    script?.maxDurationFrames === undefined
+      ? undefined
+      : integer(script.maxDurationFrames, "maximum_duration", 1);
+  const program = script?.program;
+  if (program !== undefined) {
+    if (!program || typeof program !== "object") fail("program_invalid");
+    nonempty(program.title, "program_title");
+    if (program.subtitle !== undefined) nonempty(program.subtitle, "program_subtitle");
+  }
   const speechReading = readVideoSpeechReadingOptions(script?.speechReading);
   // 旧单局脚本的坐标和world图层保持原布局；新项目默认采用广播名册与中央舞台。
   const layout = script?.layout ?? (script ? "legacy-ellipse-v1" : "broadcast-v1");
@@ -113,6 +124,18 @@ export function compileVideoPlan(
   const { facts, factsAfter, anchorIndex } = sourceIndex;
   const edits = new Map<number, NonNullable<VideoScript["edits"]>[number]>();
   for (const edit of script?.edits ?? []) {
+    if (
+      edit.lifeFacts !== undefined &&
+      (!Array.isArray(edit.lifeFacts) ||
+        edit.lifeFacts.some(
+          (anchor) =>
+            !anchor ||
+            !Number.isSafeInteger(anchor.seq) ||
+            anchor.seq < 1 ||
+            anchor.kind !== "life_committed",
+        ))
+    )
+      fail("life_fact_anchor_invalid");
     readVideoSpeechReadingOptions(edit.speechReading);
     const index = anchorIndex(edit.anchor);
     if (edits.has(index)) fail("edit_anchor_duplicate");
@@ -120,6 +143,7 @@ export function compileVideoPlan(
   }
   const factEdits = new Map<number, NonNullable<VideoScript["factEdits"]>[number]>();
   for (const edit of script?.factEdits ?? []) {
+    if ("lifeFacts" in edit) fail("fact_edit_life_facts_unavailable");
     readVideoSpeechReadingOptions(edit.speechReading);
     if (!Number.isSafeInteger(edit.anchor?.seq)) fail(`fact_anchor_mismatch:${edit.anchor?.seq}`);
     const fact = facts[edit.anchor?.seq - 1];
@@ -130,6 +154,7 @@ export function compileVideoPlan(
   const holds = new Map<number, NonNullable<VideoScript["holds"]>>();
   const holdIds = new Set<string>();
   for (const hold of script?.holds ?? []) {
+    if ("lifeFacts" in hold) fail("hold_life_facts_unavailable");
     readVideoSpeechReadingOptions(hold.speechReading);
     nonempty(hold.id, "hold_id");
     if (holdIds.has(hold.id)) fail("hold_id_duplicate");
@@ -139,6 +164,14 @@ export function compileVideoPlan(
     holds.set(index, [...(holds.get(index) ?? []), hold]);
   }
   const shots: VideoShot[] = [];
+  const shotEdits = new Map<string, ShotOptions>();
+  const usedShotEdits = new Set<string>();
+  for (const edit of script?.shotEdits ?? []) {
+    nonempty(edit.id, "shot_edit_id");
+    if (shotEdits.has(edit.id)) fail("shot_edit_duplicate");
+    if ("lifeFacts" in edit) fail("shot_edit_life_facts_unavailable");
+    shotEdits.set(edit.id, edit);
+  }
   const shotAudio: AudioCue[] = [];
   let cursor = 0;
   const absorbedFactSeqs = new Set<number>();
@@ -159,6 +192,11 @@ export function compileVideoPlan(
     committedFacts: ReplayFact[] = [],
     reportFacts: Extract<ReplayFact, { kind: "life_committed" }>[] = [],
   ) {
+    const shotEdit = shotEdits.get(id);
+    if (shotEdit) {
+      usedShotEdits.add(id);
+      edit = { ...edit, ...shotEdit, scene: { ...edit.scene, ...shotEdit.scene } };
+    }
     const selected = selectVideoShotSource(sourceIndex, index, kind, sourceIndexes, committedFacts);
     if (reportFacts.length) {
       const after = sourceIndex.cursorAt(selected.endIndex, reportFacts.at(-1)!.seq);
@@ -366,6 +404,14 @@ export function compileVideoPlan(
       if (!edit?.skip) append(afterSeq - 1, `fact:${fact.seq}`, "event", edit, [], batch);
     }
   }
+  const introIds = new Set<string>();
+  for (const intro of script?.intro ?? []) {
+    if ("lifeFacts" in intro) fail("intro_life_facts_unavailable");
+    nonempty(intro.id, "intro_id");
+    if (introIds.has(intro.id)) fail("intro_id_duplicate");
+    introIds.add(intro.id);
+    append(-1, `intro:${intro.id}`, "hold", intro, []);
+  }
   appendFacts(0);
   for (let index = 0; index < replay.events.length; index++) {
     const event = replay.events[index];
@@ -381,18 +427,41 @@ export function compileVideoPlan(
       (visible.has(primary.seq) || edit || incompleteVote)
     ) {
       const pending = factsAfter.get(primary.seq) ?? [];
-      const reportFacts = committedLifeReport(
-        primary,
-        pending,
-        layout === "broadcast-v1" &&
-          replay.factCoverage?.committedDeaths === 1 &&
-          !edit &&
-          !holds.has(primaryIndex) &&
-          pending
-            .slice(0, Array.isArray(primary.payload.deaths) ? primary.payload.deaths.length : 0)
-            .every((fact) => !factEdits.has(fact.seq)) &&
-          Boolean(readRecord(primary).record),
-      );
+      const reportFacts = edit?.lifeFacts
+        ? edit.lifeFacts.map((anchor) => {
+            const fact = facts[anchor.seq - 1];
+            if (
+              !fact ||
+              anchor.kind !== "life_committed" ||
+              fact.kind !== "life_committed" ||
+              fact.afterSeq !== primary.seq ||
+              factEdits.has(fact.seq)
+            )
+              fail("life_fact_anchor_invalid");
+            return fact as Extract<ReplayFact, { kind: "life_committed" }>;
+          })
+        : committedLifeReport(
+            primary,
+            pending,
+            layout === "broadcast-v1" &&
+              replay.factCoverage?.committedDeaths === 1 &&
+              !edit &&
+              !holds.has(primaryIndex) &&
+              pending
+                .slice(0, Array.isArray(primary.payload.deaths) ? primary.payload.deaths.length : 0)
+                .every((fact) => !factEdits.has(fact.seq)) &&
+              Boolean(readRecord(primary).record),
+          );
+      if (
+        edit?.lifeFacts &&
+        (!reportFacts.length ||
+          new Set(reportFacts.map((fact) => fact.seq)).size !== reportFacts.length ||
+          reportFacts.some((fact, index) => fact.seq !== pending[index]?.seq) ||
+          (reportFacts.length > 1 &&
+            (reportFacts[0]!.waveId === undefined ||
+              reportFacts.some((fact) => fact.waveId !== reportFacts[0]!.waveId))))
+      )
+        fail("life_fact_group_invalid");
       // 有权威生命覆盖时，未能配对的名单只是中间报告；默认不另播“等待确认”，
       // 死亡仍由后面的原fact镜头逐条/逐波提交。显式导演编辑或停留保留原锚点。
       if (
@@ -453,7 +522,10 @@ export function compileVideoPlan(
       view: sourceIndex.viewAt(tail),
     });
   }
+  if (maximumDuration !== undefined && cursor > maximumDuration) fail("duration_budget_exceeded");
+  for (const id of shotEdits.keys()) if (!usedShotEdits.has(id)) fail(`shot_edit_missing:${id}`);
   const audio = compileAudio([...(script?.audio ?? []), ...shotAudio], media, cursor, playerIds);
+  const subtitles = compileVideoSubtitles(shots, fps, script?.subtitles);
   const eventFrames: VideoPlan["eventFrames"] = {};
   for (const shot of shots)
     for (const seq of shot.sourceSeqs) {
@@ -482,6 +554,7 @@ export function compileVideoPlan(
   return {
     version: 1,
     source,
+    ...(program ? { program: structuredClone(program) } : {}),
     display: { ...options },
     fps,
     width,
@@ -491,6 +564,7 @@ export function compileVideoPlan(
     shots,
     media,
     audio,
+    ...(subtitles.length ? { subtitles } : {}),
     layout,
     theme,
     playersPresentation,

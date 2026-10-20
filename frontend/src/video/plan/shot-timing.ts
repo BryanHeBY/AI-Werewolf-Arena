@@ -56,12 +56,13 @@ export function scheduleVideoShot(
     playerIds,
   } = options;
   const { base, body, otherBody, resolution } = content;
-  // 全文流只属于新广播自动时钟；显式作者时长/分页和hold继续原连续切片契约。
+  if (edit.readingClock !== undefined && edit.readingClock !== "flow")
+    fail("reading_clock_invalid");
+  // 新广播自动时钟及显式flow使用全文窗；其余作者时长、分页和hold保留原连续切片契约。
   const automaticReading =
     layout === "broadcast-v1" &&
     !explicitPageClock &&
-    edit.durationFrames === undefined &&
-    kind !== "hold";
+    (edit.readingClock === "flow" || (edit.durationFrames === undefined && kind !== "hold"));
   // 显式时长/分页及hold保原作者切片；新广播自动模板才采用新的真实字号预算。
   const budget = videoCaptionBudget(
     edit.durationFrames !== undefined || explicitPageClock ? "legacy-ellipse-v1" : layout,
@@ -173,7 +174,7 @@ export function scheduleVideoShot(
           settled: Math.min(last, Math.floor(fps * 0.3)),
         };
   }
-  if (edit.caption !== undefined || edit.scene?.body !== undefined) scene.bodySource = "script";
+  if (edit.scene?.body !== undefined) scene.bodySource = edit.scene.bodySource ?? "script";
   if (
     compactNotice ||
     (layout === "broadcast-v1" && (kind === "hold" || !hasRecord) && edit.scene?.cues === undefined)

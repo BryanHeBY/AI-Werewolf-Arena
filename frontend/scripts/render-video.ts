@@ -27,6 +27,7 @@ export async function renderVideo(
       frame: { type: "string" },
       "from-frame": { type: "string" },
       "to-frame": { type: "string" },
+      concurrency: { type: "string" },
     },
   });
   if (values.locale !== undefined) {
@@ -42,7 +43,8 @@ export async function renderVideo(
   };
   const frame = number(values.frame),
     fromFrame = number(values["from-frame"]),
-    toFrame = number(values["to-frame"]);
+    toFrame = number(values["to-frame"]),
+    concurrency = number(values.concurrency);
   const prepared = await prepareVideo({
     input: values.input,
     project: values.project,
@@ -50,12 +52,22 @@ export async function renderVideo(
     timeZone: values["time-zone"],
   });
   display.locale = prepared.plan.display.locale;
+  let lastProgressAt = 0;
   await renderVideoArtifact(prepared, {
     output: values.output,
     frame,
     fromFrame,
     toFrame,
     browser: values.browser,
+    concurrency,
+    onProgress: ({ renderedFrames, encodedFrames, progress }) => {
+      const now = Date.now();
+      if (now - lastProgressAt < 10000 && progress < 1) return;
+      lastProgressAt = now;
+      console.log(
+        JSON.stringify({ type: "video_render_progress", renderedFrames, encodedFrames, progress }),
+      );
+    },
   });
 }
 

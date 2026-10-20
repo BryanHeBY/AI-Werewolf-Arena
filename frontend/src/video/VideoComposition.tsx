@@ -16,6 +16,7 @@ import { VideoLayers } from "./VideoLayers";
 import { BroadcastVideoFrame } from "./BroadcastVideoFrame";
 import type { VideoThemeSlotRegistry } from "./theme-renderers";
 import { VideoFonts } from "./VideoFonts";
+import { VideoSubtitles } from "./VideoSubtitles";
 
 export interface VideoCompositionProps {
   plan: VideoPlan;
@@ -56,10 +57,15 @@ export function VideoFrame(props: VideoCompositionProps & { frame: number }) {
     [props.plan],
   );
   const view = buildVideoFrame(plan, props.frame);
-  return plan.layout === "broadcast-v1" ? (
-    <BroadcastVideoFrame {...props} plan={plan} view={view} />
-  ) : (
-    <LegacyVideoFrame {...props} plan={plan} view={view} />
+  return (
+    <AbsoluteFill>
+      {plan.layout === "broadcast-v1" ? (
+        <BroadcastVideoFrame {...props} plan={plan} view={view} />
+      ) : (
+        <LegacyVideoFrame {...props} plan={plan} view={view} />
+      )}
+      <VideoSubtitles plan={plan} frame={props.frame} view={view} />
+    </AbsoluteFill>
   );
 }
 function LegacyVideoFrame({

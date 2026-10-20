@@ -15,7 +15,7 @@ export function auditSceneReadability(
   scene: VideoScene,
   committedDeaths: boolean,
 ): ReadabilityIssue[] {
-  if (scene.kind === "speech" || scene.bodySource !== "event" || scene.emphasis.length) return [];
+  if (scene.kind === "speech" || scene.bodyLayout === "text" || scene.emphasis.length) return [];
   const issues: ReadabilityIssue[] = [];
   if (committedDeaths && scene.visual?.life?.playerIds.length && !scene.visual.life.committed)
     issues.push("provisional-life-report");

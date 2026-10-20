@@ -89,7 +89,31 @@ export interface ThemeMotion {
   impactOpacity: number;
   focusPush: number;
 }
+export interface ThemeSubtitle {
+  fontSize: number;
+  fontWeight: number;
+  lineHeight: number;
+  color: string;
+  background: string;
+  textShadow: string;
+  paddingX: number;
+  paddingY: number;
+  radius: number;
+  safeHeight: number;
+  bottom: number;
+}
+export interface ThemeOpening {
+  inset: number;
+  titleSize: number;
+  subtitleSize: number;
+  repositorySize: number;
+  detailsSize: number;
+  textShadow: string;
+  backdrop: string;
+}
 export interface ThemeVisualTokens {
+  subtitle: ThemeSubtitle;
+  opening: ThemeOpening;
   typography: ThemeTypography;
   surface: ThemeSurface;
   frame: ThemeFrame;
@@ -112,6 +136,30 @@ export function createThemeVisualTokens(gothic: boolean): ThemeVisualTokens {
     ? { ...dark }
     : { readingColor: "#1b2533", readingText: "#edf1f6", readingMuted: "#b2bfcd" };
   return {
+    subtitle: {
+      fontSize: 36,
+      fontWeight: 650,
+      lineHeight: 1.4,
+      color: "#fff",
+      background: "rgba(0,0,0,.68)",
+      textShadow: "0 2px 4px #000, 0 0 6px #000",
+      paddingX: 12,
+      paddingY: 4,
+      radius: 5,
+      safeHeight: 108,
+      bottom: 56,
+    },
+    opening: {
+      inset: 32,
+      titleSize: 64,
+      subtitleSize: 34,
+      repositorySize: 28,
+      detailsSize: 22,
+      textShadow: gothic ? "0 2px 8px #000, 0 0 24px #000" : "none",
+      backdrop: gothic
+        ? "radial-gradient(ellipse, #06101770, #06101718 55%, transparent 75%)"
+        : "none",
+    },
     typography: {
       referenceWidth: 1920,
       referenceHeight: 1080,

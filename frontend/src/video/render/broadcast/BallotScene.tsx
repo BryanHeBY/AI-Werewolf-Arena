@@ -65,7 +65,7 @@ export function BallotScene({
   const dense = targets.length > 4;
   const total = Math.max(1, ...Object.values(data.tally ?? {}));
   const abstentions = data.votes.filter((vote) => vote.abstain);
-  const editorial = scene.bodySource === "script" || scene.emphasis.length > 0;
+  const editorial = scene.bodyLayout === "text" || scene.emphasis.length > 0;
   const detailsMissing = data.votes.length === 0 && Object.keys(data.tally ?? {}).length === 0;
   const flow = Boolean(caption.reading);
   const available = stage.height - 150 * scale - 24 * scale;
