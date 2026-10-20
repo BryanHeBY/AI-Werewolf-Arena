@@ -5,6 +5,7 @@
 import { text } from "@ai-werewolf-arena/game-text";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
 import { loadRuntimeConfig } from "../config/load-config";
+import { validateRuntimeNativeConfig } from "../config/validate-runtime-config";
 import { loadBoardDefinition } from "../config/load-board-definition";
 import { resolveGameSetup, resolveGameBoard } from "../config/resolve-game-setup";
 import { describeResolvedSetup } from "../config/describe-setup";
@@ -16,16 +17,8 @@ export async function checkConfig(
   display?: CliDisplayContext,
 ) {
   const runtime = await loadRuntimeConfig({ configDir, gameName });
-  // Pi 静态验证放在 app 边界：纯 V2 parser 不依赖传输 SDK，检查命令也不创建 runtime／会话。
-  if (Object.values(runtime.providers.items).some((provider) => provider.type === "pi")) {
-    const { validatePiHostConfig, validatePiSettings } =
-      await import("../../adapters/pi/native-config");
-    for (const provider of Object.values(runtime.providers.items))
-      if (provider.type === "pi")
-        validatePiHostConfig({ models: provider.models, auth: provider.auth });
-    for (const agent of Object.values(runtime.agents.items))
-      if (agent.kind === "pi") validatePiSettings({ ...agent.piSettings });
-  }
+  // 检查命令与工作台候选文档复用同一能力校验；纯 parser 不依赖传输 SDK。
+  await validateRuntimeNativeConfig(runtime);
   const board = await loadBoardDefinition(configDir, resolveGameBoard(runtime));
   const setup = resolveGameSetup(runtime, {}, board);
   // 未显式指定语言才跟随已解析 setup；摘要函数只消费结果，不重复加载配置。

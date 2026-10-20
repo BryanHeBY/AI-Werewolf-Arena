@@ -5,6 +5,13 @@
   "main": "./dist/index.js",
   "exports": {
     ".": "./src/index.ts",
+    "./config/parse": "./src/app/config/parse-config.ts",
+    "./config/board": "./src/app/config/board-definition.ts",
+    "./config/resolve": "./src/app/config/resolve-game-setup.ts",
+    "./config/check": "./src/app/cli/check-config.ts",
+    "./config/diagnostics": "./src/app/config/error-codes.ts",
+    "./config/models": "./src/app/config/model-catalog.ts",
+    "./config/validate": "./src/app/config/validate-runtime-config.ts",
     "./run-session": "./src/app/run-session.ts"
   },
   "scripts": {

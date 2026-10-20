@@ -3,6 +3,7 @@
  * 仅检查 Error／板子错误的自有数据描述符，不输出冒号后的原异常内容；外来对象查询失败退通用诊断。
  */
 import { BoardConfigurationError } from "./board-definition";
+import { RuntimeConfigFieldError } from "./field-error";
 /** 诊断只公开已知机器码，不因一个字符串看起来像命名空间就接受它。 */
 export const CONFIG_ERROR_CODES = [
   "board_config_animal_dream_preset_invalid",
@@ -164,7 +165,7 @@ export function configDiagnostic(error: unknown): { code: string; path?: string 
     message =
       error instanceof Error ? Object.getOwnPropertyDescriptor(error, "message")?.value : undefined;
     fieldPath =
-      error instanceof BoardConfigurationError
+      error instanceof BoardConfigurationError || error instanceof RuntimeConfigFieldError
         ? Object.getOwnPropertyDescriptor(error, "fieldPath")?.value
         : undefined;
   } catch {
@@ -178,7 +179,7 @@ export function configDiagnostic(error: unknown): { code: string; path?: string 
   const safePath =
     typeof fieldPath === "string" &&
     fieldPath.length <= 160 &&
-    /^(version|id|ruleset|board|rules|mechanisms|roles)(\.[a-z][a-zA-Z0-9_-]{0,31}|\.\d+)*$/.test(
+    /^(version|id|ruleset|board|rules|mechanisms|roles|backends|agents|game|debugSummary)(\.[a-z][a-zA-Z0-9_-]{0,63}|\.\d+)*$/.test(
       fieldPath,
     );
   return { code, ...(safePath && typeof fieldPath === "string" ? { path: fieldPath } : {}) };

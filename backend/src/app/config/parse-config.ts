@@ -19,6 +19,7 @@ import type {
   PlayerConfig,
 } from "./contracts";
 import { parseCustomInstructions } from "./custom-instructions";
+import { RuntimeConfigFieldError } from "./field-error";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -37,7 +38,7 @@ function assertKnownKeys(value: Record<string, unknown>, keys: string[], field: 
 
 function readRequiredString(value: unknown, field: string): string {
   if (typeof value !== "string" || !value.trim()) {
-    throw new Error(`runtime_config_required_string_invalid: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_required_string_invalid", field);
   }
   return value.trim();
 }
@@ -50,7 +51,7 @@ function readOptionalString(value: unknown, field: string): string | undefined {
 function readOptionalBoolean(value: unknown, field: string): boolean | undefined {
   if (value === undefined) return undefined;
   if (typeof value !== "boolean") {
-    throw new Error(`runtime_config_optional_boolean_invalid: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_optional_boolean_invalid", field);
   }
   return value;
 }
@@ -58,7 +59,7 @@ function readOptionalBoolean(value: unknown, field: string): boolean | undefined
 function readOptionalNumber(value: unknown, field: string): number | undefined {
   if (value === undefined) return undefined;
   if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
-    throw new Error(`runtime_config_optional_number_invalid: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_optional_number_invalid", field);
   }
   return value;
 }
@@ -66,7 +67,7 @@ function readOptionalNumber(value: unknown, field: string): number | undefined {
 function readOptionalPositiveInteger(value: unknown, field: string): number | undefined {
   if (value === undefined) return undefined;
   if (typeof value !== "number" || !Number.isSafeInteger(value) || value <= 0) {
-    throw new Error(`runtime_config_positive_integer_invalid: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_positive_integer_invalid", field);
   }
   return value;
 }
@@ -86,7 +87,7 @@ function readOptionalMinimumInteger(
 function readStringArray(value: unknown, field: string): string[] {
   if (value === undefined) return [];
   if (!Array.isArray(value) || value.some((item) => typeof item !== "string" || !item.trim())) {
-    throw new Error(`runtime_config_string_array_invalid: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_string_array_invalid", field);
   }
   return value.map((item) => item.trim());
 }
@@ -101,7 +102,7 @@ function resolveEnvironmentValue(
   if (!match) return value;
   const resolved = environment[match[1]]?.trim();
   if (!resolved) {
-    throw new Error(`runtime_config_missing_environment_value: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_missing_environment_value", field);
   }
   return resolved;
 }
@@ -113,7 +114,7 @@ function readEnvironment(
 ): Record<string, string> {
   if (value === undefined) return {};
   if (!isRecord(value)) {
-    throw new Error(`runtime_config_environment_invalid: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_environment_invalid", field);
   }
   return Object.fromEntries(
     Object.entries(value).map(([key, raw]) => [
@@ -130,7 +131,7 @@ function readEnvironment(
 function readSessionConfigOptions(value: unknown, field: string): Record<string, string | boolean> {
   if (value === undefined) return {};
   if (!isRecord(value)) {
-    throw new Error(`runtime_config_acp_session_config_options_invalid: ${field}`);
+    throw new RuntimeConfigFieldError("runtime_config_acp_session_config_options_invalid", field);
   }
   return Object.fromEntries(
     Object.entries(value).map(([key, optionValue]) => {
@@ -148,7 +149,8 @@ function readNativeObject(
   field: string,
   environment: NodeJS.ProcessEnv,
 ): Record<string, unknown> {
-  if (!isRecord(value)) throw new Error(`runtime_config_native_object_invalid: ${field}`);
+  if (!isRecord(value))
+    throw new RuntimeConfigFieldError("runtime_config_native_object_invalid", field);
   function copy(raw: unknown, location: string): unknown {
     if (typeof raw === "string") return resolveEnvironmentValue(raw, location, environment);
     if (
@@ -173,7 +175,7 @@ function normalizeBackend(
   environment: NodeJS.ProcessEnv,
 ): ProviderConfig {
   const field = `backends.items.${name}`;
-  if (!isRecord(raw)) throw new Error(`runtime_config_backend_invalid: ${field}`);
+  if (!isRecord(raw)) throw new RuntimeConfigFieldError("runtime_config_backend_invalid", field);
   assertKnownKeys(raw, ["kind", "config", "limits"], field);
   const kind = readRequiredString(raw.kind, `${field}.kind`);
   if (!isRecord(raw.config))
@@ -342,7 +344,8 @@ function normalizeAgents(
     Object.entries(raw.items).map(([name, value]) => {
       const field = `agents.items.${name}`;
       readRequiredString(name, "agents.items.key");
-      if (!isRecord(value)) throw new Error(`runtime_config_agent_invalid: ${field}`);
+      if (!isRecord(value))
+        throw new RuntimeConfigFieldError("runtime_config_agent_invalid", field);
       assertKnownKeys(value, ["backend", "options", "customInstructions"], field);
       const backend = readRequiredString(value.backend, `${field}.backend`);
       if (!Object.hasOwn(providers.items, backend))
@@ -442,7 +445,7 @@ function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
 
 function readLocale(value: unknown, field: string): Locale | undefined {
   if (value === undefined) return undefined;
-  if (!isLocale(value)) throw new Error(`runtime_config_locale_invalid: ${field}`);
+  if (!isLocale(value)) throw new RuntimeConfigFieldError("runtime_config_locale_invalid", field);
   return value;
 }
 
@@ -469,7 +472,8 @@ function normalizeBindings(
       const field = `game.${scope}.${key}`;
       if (!key.trim() || key !== key.trim())
         throw new Error(`runtime_config_selection_key_invalid: game.${scope}`);
-      if (!isRecord(entry)) throw new Error(`runtime_config_binding_invalid: ${field}`);
+      if (!isRecord(entry))
+        throw new RuntimeConfigFieldError("runtime_config_binding_invalid", field);
       assertKnownKeys(
         entry,
         scope === "players"
@@ -496,7 +500,10 @@ function normalizeBindings(
           ? undefined
           : readStringArray(entry.spawnArgs, `${field}.spawnArgs`);
       if (spawnArgs && (!agent || agents.items[agent].kind !== "acp"))
-        throw new Error(`runtime_config_spawn_args_require_explicit_acp_agent: ${field}`);
+        throw new RuntimeConfigFieldError(
+          "runtime_config_spawn_args_require_explicit_acp_agent",
+          field,
+        );
       const customInstructions = parseCustomInstructions(
         entry.customInstructions,
         `${field}.customInstructions`,
