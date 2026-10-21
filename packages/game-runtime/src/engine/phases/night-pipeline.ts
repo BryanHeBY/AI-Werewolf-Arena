@@ -314,9 +314,15 @@ export class NightPipeline {
         assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
         // 真实 callee 保原晚读取；只原完整内建程序可取得私有 runtime，替换 callback 没有 World 回门。
         const execute = stage.execute;
-        await withActionExecutionScope(stageCtx.actionProvider, this.events, (provider) =>
-          executePreparedNightStage(stage, execute, { ...stageCtx, actionProvider: provider }),
-        );
+        await withActionExecutionScope(nativeProvider, this.events, async (provider) => {
+          // 上下文身份与惰性 getter 归整个夜间流程持有，不能为反馈浅复制或提前求值。
+          stageCtx.actionProvider = provider;
+          try {
+            await executePreparedNightStage(stage, execute, stageCtx);
+          } finally {
+            stageCtx.actionProvider = nativeProvider;
+          }
+        });
         assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();

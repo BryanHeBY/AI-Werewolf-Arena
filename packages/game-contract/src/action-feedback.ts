@@ -8,7 +8,7 @@ import type { PlayerVisibleEvent } from "./events";
 export type ActionExecutionReceipt = {
   ok: true;
   accepted: true;
-  /** null 表示执行被打断，不能据此推断已消耗的资源被退还。 */
+  /** null 表示执行被打断或无法确认，不能据此推断已消耗的资源被退还。 */
   applied: boolean | null;
   action: ToolName;
   status: "resolved" | "committed" | "not_applied" | "unavailable" | "interrupted";
