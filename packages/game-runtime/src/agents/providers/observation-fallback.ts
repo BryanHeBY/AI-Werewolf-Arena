@@ -1,7 +1,7 @@
 /**
  * 负责生产回退的受限观察决策。输入是共同 PlayerObservation 和显式语言；
  * 输出为既有工具 handler 的竞争型行动，选择首个可见候选，不读取 World 或真实阵营。
- * 固定 next() 不推进游戏 RNG；原发言模板、狼聊形式和方向奇偶政策保持。
+ * 固定 next() 不推进游戏 RNG；普通发言和方向保留既有策略，狼聊失败以简短消息退出后续轮次。
  * 自身当前资格与已知队友分开；请求旧工具名单不能恢复已被撤销的狼聊或刀资格。
  * 投影适配器仅传脱离且冻结的 DTO，资格、库存、目标和已付款动作仍由引擎重检。
  * 这是 F01 独立策略变化；无适合的观察行动时返回 null，不伪造严格必选动作。
@@ -45,7 +45,8 @@ export class ObservationFallbackStrategy implements ObservedPlayerStrategy {
       if (handler.tool === "speak_to_wolves") {
         return {
           name: "speak_to_wolves",
-          args: { text: text(this.locale, "fallback.wolf_chat"), end_chat: false },
+          // 回退没有新增分析可供讨论；发表简短收尾后退出，避免同一故障占满三轮。
+          args: { text: text(this.locale, "fallback.wolf_chat_end"), end_chat: true },
         };
       }
       if (handler.tool === "choose_direction") {

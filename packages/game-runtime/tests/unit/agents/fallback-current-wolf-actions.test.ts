@@ -69,9 +69,9 @@ for (const locale of ["zh-CN", "en"] as const)
       args: {
         text:
           locale === "en"
-            ? "Prioritize an information role for tonight’s kill."
-            : "今晚优先刀信息位。",
-        end_chat: false,
+            ? "No further suggestions from me; please continue."
+            : "暂时没有补充，你们继续讨论。",
+        end_chat: true,
       },
     });
     expect(await strategy.decide(dto(["kill_vote"], false, true))).toEqual({

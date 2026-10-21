@@ -17,7 +17,7 @@ import { renderSilenceStageHint } from "../../features/silence-elder/presentatio
 import { renderCrowStageHint } from "../../features/crow/presentation";
 import { renderAnimalDreamStageHint } from "../../features/animal-dream/presentation";
 import { renderFragrantPairStageHint } from "../../features/fragrant-pair-seer/presentation";
-import { renderWolfKnifeStageHint } from "../../features/wolf/presentation";
+import { renderWolfStageHint } from "../../features/wolf/presentation";
 import { renderMistRavenStageHint } from "../../features/mist-raven/presentation";
 import { renderSheriffStageHint } from "../../features/sheriff/presentation";
 import { buildWitchKnifeContextHint } from "../../features/witch/presentation";
@@ -364,8 +364,8 @@ export function buildPlayerStageContextHint(
   if (animalDream !== undefined) return animalDream;
   const fragrantPair = renderFragrantPairStageHint(request, queries);
   if (fragrantPair !== undefined) return fragrantPair;
-  const wolfKnife = renderWolfKnifeStageHint(request, queries);
-  if (wolfKnife !== undefined) return wolfKnife;
+  const wolf = renderWolfStageHint(request, queries);
+  if (wolf !== undefined) return wolf;
   const mistRaven = renderMistRavenStageHint(request, queries);
   if (mistRaven !== undefined) return mistRaven;
   const stage = getActionRequestStage(request);

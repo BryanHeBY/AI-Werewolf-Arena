@@ -22,6 +22,18 @@ import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { getSeerState } from "../../../src/features/seer/ports";
 import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
+import {
+  ObservationFallbackActionProvider,
+  ObservationFallbackStrategy,
+} from "../../../src/agents/providers/observation-fallback";
+import {
+  getDefaultConfigRenderRegistry,
+  getDefaultPhaseStageLocalizationRegistry,
+  getDefaultRoleCatalog,
+  getDefaultTargetHintRegistry,
+  getDefaultToolSpecRegistry,
+} from "../../../src/rulesets/mechanism-api";
 
 class TacticalOrderProvider implements ActionProvider {
   public discussionOrder: number[] = [];
@@ -233,6 +245,91 @@ class RetryThenKillVoteProvider implements ActionProvider {
 }
 
 describe("night wolf tactical loop", () => {
+  // 用实际夜流程验证收尾既减少请求，也不吞掉私有消息或后续刀票；不依赖模型是否遵循文案。
+  for (const locale of ["zh-CN", "en"] as const)
+    test(`${locale}: fallback ends each wolf's chat once, delivers the message privately and preserves knife voting`, async () => {
+      const context = bootstrapGame(twelvePlayerStandardConfig, {
+        locale,
+        fixedRoles: [
+          Role.Wolf,
+          Role.Wolf,
+          Role.Wolf,
+          Role.Wolf,
+          Role.Villager,
+          Role.Villager,
+          Role.Villager,
+          Role.Villager,
+          Role.Seer,
+          Role.Witch,
+          Role.Hunter,
+          Role.Idiot,
+        ],
+      });
+      const policy = new PlayerPromptPolicy(context.world, {
+        boardConfig: twelvePlayerStandardConfig,
+        roleCatalog: getDefaultRoleCatalog(),
+        toolSpecRegistry: getDefaultToolSpecRegistry(),
+        targetHintRegistry: getDefaultTargetHintRegistry(),
+        phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(),
+        configRenderRegistry: getDefaultConfigRenderRegistry(),
+      });
+      const fallback = new ObservationFallbackActionProvider(
+        (req) => policy.buildObservation(req),
+        new ObservationFallbackStrategy(locale),
+      );
+      const otherActions = new AbstainKillVoteProvider();
+      const chats: ActionRequest[] = [];
+      const events: import("../../../src/domain/model").GameEvent[] = [];
+      const pipeline = new NightPipeline({
+        world: context.world,
+        toolGateway: new ToolGateway(),
+        damageResolutionSystem: new DamageResolutionSystem(),
+        events,
+      });
+      const result = await pipeline.execute(
+        twelvePlayerStandardConfig,
+        {
+          async getAction(req) {
+            if (req.allowedTools.includes("speak_to_wolves")) {
+              chats.push(req);
+              return fallback.getAction(req);
+            }
+            return otherActions.getAction(req);
+          },
+        },
+        1,
+      );
+      expect(chats.map((req) => req.actorId).sort((a, b) => a - b)).toEqual([1, 2, 3, 4]);
+      expect(chats.map((req) => [req.context.round, req.context.max_rounds])).toEqual([
+        [1, 3],
+        [1, 3],
+        [1, 3],
+        [1, 3],
+      ]);
+      const expectedMessage =
+        locale === "zh-CN"
+          ? "暂时没有补充，你们继续讨论。"
+          : "No further suggestions from me; please continue.";
+      const wolfFeed = buildAgentVisibleEventFeed(context.world, events, 1);
+      expect(
+        wolfFeed
+          .filter((event) => event.type === "wolf_discussion_ended")
+          .map((event) => event.payload.reason),
+      ).toEqual(Array(4).fill(expectedMessage));
+      expect(
+        buildAgentVisibleEventFeed(context.world, events, 5).some(
+          (event) => event.type === "wolf_discussion_ended",
+        ),
+      ).toBe(false);
+      expect(
+        events
+          .filter((event) => event.type === "wolf_kill_vote_cast")
+          .map((event) => event.payload.actorId)
+          .sort((a, b) => a - b),
+      ).toEqual([1, 2, 3, 4]);
+      expect(completedNight(result).summary.wolfTarget).toBeNull();
+    });
+
   test("wolf discussion order repeats for three rounds and majority decides kill target", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];

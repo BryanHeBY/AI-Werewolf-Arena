@@ -192,6 +192,8 @@ export const definition = {
     "action.self_destruct.directive": [],
     "action.witch.directive": [],
     "action.speak_to_wolves.hint": [],
+    "action.speak_to_wolves.text_description": [],
+    "action.speak_to_wolves.end_chat_description": [],
     "action.report_bug.hint": [],
     "error.unknown_tool": [],
     "error.actor_role_missing": [],
@@ -454,7 +456,7 @@ export const zhCN = {
   "error.blast_disabled": "非法操作，当前窗口不允许自爆",
   "error.blast_confirm": "非法操作，自爆需要 confirm=true 明确确认",
   "action.wolf_discussion.directive":
-    "当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。",
+    "当前是【狼人交流阶段】：只能调用 speak_to_wolves。像队友之间自然接话，优先说新增判断、刀口建议或战术分工；已有意见相同时可简短赞同，无需复述完整分析。一般一两句话即可，有分歧或重要布局时再展开，保持自己的人设和口吻。本阶段不会完成刀人。",
   "action.wolf_vote.directive":
     "当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。",
   "action.self_destruct.directive":
@@ -462,7 +464,11 @@ export const zhCN = {
   "action.witch.directive":
     '当前是【女巫行动阶段】：必须调用 use_potion；若本夜不用药，调用 use_potion 并设置 potion_type="none"。',
   "action.speak_to_wolves.hint":
-    "若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。",
+    "text 是发给队友的发言，可直接写简短赞同或补充，无需专门解释结束原因。同一条消息可同时表达意见并设置 end_chat=true：这条发言照常送达，你本人不再参加本夜后续夜聊，但不会结束其他狼人的发言，也不必等队友逐个确认后再单独说一次结束。若仍需继续交流可设为 false；全员退出或达到轮次上限后结束夜聊。退出夜聊不等于提交或锁定刀票，有刀权时仍须另行提交 kill_vote。",
+  "action.speak_to_wolves.text_description":
+    "发给狼聊成员的发言；可以是简短赞同或新建议，无需解释结束原因。end_chat=true 时这条消息仍会送达。",
+  "action.speak_to_wolves.end_chat_description":
+    "true 表示发送本条消息后，退出本人本夜的后续夜聊；不结束其他人的交流，不提交或锁定刀票，也不取消后续刀票资格。false 表示继续参与。",
   "action.report_bug.hint":
     "若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。",
   "error.unknown_tool": "非法操作，未知工具",
@@ -751,7 +757,7 @@ export const en = {
   "error.blast_disabled": "Invalid action: this window disallows self-destruction",
   "error.blast_confirm": "Invalid action: self-destruction requires confirm=true",
   "action.wolf_discussion.directive":
-    "This is wolf discussion: use only speak_to_wolves. Set end_chat=true if you will not join further discussion rounds tonight; this does not end other wolves' turns. This stage does not carry out the kill.",
+    "This is wolf discussion: use only speak_to_wolves. Talk naturally with your teammates, focusing on new observations, kill suggestions or tactical roles. A brief agreement is enough when you share an existing view; avoid repeating the full analysis. Usually one or two sentences suffice, but expand on disagreements or important plans and keep your own persona and voice. This stage does not carry out the kill.",
   "action.wolf_vote.directive":
     "This is the wolf kill vote: submit kill_vote. To abstain, set abstain=true and target_id=null.",
   "action.self_destruct.directive":
@@ -759,7 +765,11 @@ export const en = {
   "action.witch.directive":
     'This is the Witch stage: submit use_potion. To use no potion tonight, submit use_potion with potion_type="none".',
   "action.speak_to_wolves.hint":
-    "In speak_to_wolves, end_chat=true ends only your own further discussion rounds tonight. It does not stop other wolves. Discussion ends early only when every participant has ended.",
+    "text is your message to teammates; a brief agreement or addition is enough, without a separate explanation for ending. You may express your view and set end_chat=true in the same message: the message is still delivered and you leave further discussion rounds tonight. This does not end other wolves' turns; you need not wait for each teammate to confirm or spend another turn announcing your exit. Use false if you still want to discuss. Discussion ends when everyone leaves or the round limit is reached. Leaving discussion neither submits nor locks a knife vote; if eligible, you must still submit kill_vote separately.",
+  "action.speak_to_wolves.text_description":
+    "Your message to wolf-chat participants; a brief agreement or new suggestion is enough, without an explanation for ending. This message is still delivered when end_chat=true.",
+  "action.speak_to_wolves.end_chat_description":
+    "true sends this message and ends only your own further discussion rounds tonight. It does not stop others, submit or lock a knife vote, or remove your later knife-voting eligibility. false keeps you in discussion.",
   "action.report_bug.hint":
     "If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs.",
   "error.unknown_tool": "Invalid action: unknown tool",

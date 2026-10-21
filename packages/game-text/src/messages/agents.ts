@@ -17,6 +17,7 @@ export const definition = {
     "prompt.config.body_repeat": [],
     "prompt.status.raven": ["state"],
     "prompt.stage.wolf_kill_candidates": ["candidates"],
+    "prompt.stage.wolf_discussion_round": ["maxRounds", "round"],
     "prompt.stage.mist": ["candidates"],
     "prompt.status.lover": ["partner"],
     "error.turn_invalid_action_limit": [],
@@ -138,6 +139,7 @@ export const definition = {
     "fallback.speech": ["actor"],
     "fallback.last_words": ["actor"],
     "fallback.wolf_chat": [],
+    "fallback.wolf_chat_end": [],
     "request.summary.badge_choice": [],
     "prompt.config.badge_next": [],
     "prompt.config.badge_choice": [],
@@ -156,6 +158,8 @@ export const zhCN = {
   "prompt.status.raven": "你的封印、额外刀资源与已知队友快照：{state}",
   "prompt.stage.wolf_kill_candidates":
     "本夜普通狼刀合法候选：{candidates}。这些是候选，并不表示已被刀或死亡。只能在候选中投刀，或明确弃刀；有雾时全员明确弃刀将由引擎抽签。",
+  "prompt.stage.wolf_discussion_round":
+    "当前是第{round}轮夜聊，最多{maxRounds}轮，无需说满。后续轮次只需补充新信息或回应分歧，不必重讲已有意见。",
   "prompt.stage.mist":
     "未明之雾可选存活号码：{candidates}。选三个不同号码（可含自己和狼人），或明确 null 保留。",
   "prompt.status.lover":
@@ -324,6 +328,7 @@ export const zhCN = {
   "fallback.speech": "我是{actor}号，先听后位发言再判断。",
   "fallback.last_words": "遗言：我是{actor}号，以上是我最后的信息，供大家参考。",
   "fallback.wolf_chat": "今晚优先刀信息位。",
+  "fallback.wolf_chat_end": "暂时没有补充，你们继续讨论。",
   "request.summary.badge_choice": "选择名单内继任者，或用null撕毁警徽。",
   "prompt.config.badge_next":
     "警徽：出局后按存活座位顺序自动移交；白痴翻牌直接撕毁。不提供原警长自行选择移交目标的行动。",
@@ -344,6 +349,8 @@ export const en = {
   "prompt.status.raven": "Your seal, extra knife charge and known teammate snapshot: {state}",
   "prompt.stage.wolf_kill_candidates":
     "Legal ordinary pack knife candidates tonight: {candidates}. These are candidates, not confirmed attacks or deaths. Vote within this list or explicitly pass; with Mist, all explicit passes cause an engine draw.",
+  "prompt.stage.wolf_discussion_round":
+    "This is wolf discussion round {round} of at most {maxRounds}; you need not use every round. In later rounds, add new information or address disagreements rather than repeating earlier views.",
   "prompt.stage.mist":
     "Living Mist candidates: {candidates}. Choose three distinct IDs, which may include yourself or wolves, or explicit null to keep the charge.",
   "prompt.status.lover":
@@ -530,6 +537,7 @@ export const en = {
   "fallback.last_words":
     "Last words: I am player {actor}; use my final information as a reference.",
   "fallback.wolf_chat": "Prioritize an information role for tonight’s kill.",
+  "fallback.wolf_chat_end": "No further suggestions from me; please continue.",
   "request.summary.badge_choice": "Choose a listed successor, or use null to destroy the badge.",
   "prompt.config.badge_next":
     "Badge: transfer automatically by living seat order after death; revealed Village Idiots destroy it directly. The former sheriff has no action to choose a recipient.",

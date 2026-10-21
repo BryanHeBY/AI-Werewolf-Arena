@@ -15,8 +15,15 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
     parameters: {
       type: "object",
       properties: {
-        text: { type: "string" },
-        end_chat: { type: "boolean" },
+        // 静态 schema 在各传输间共享；字段语义使用固定英文，回合提示按本局语言另行说明。
+        text: {
+          type: "string",
+          description: text("en", "action.speak_to_wolves.text_description"),
+        },
+        end_chat: {
+          type: "boolean",
+          description: text("en", "action.speak_to_wolves.end_chat_description"),
+        },
       },
       required: ["text", "end_chat"],
       additionalProperties: false,

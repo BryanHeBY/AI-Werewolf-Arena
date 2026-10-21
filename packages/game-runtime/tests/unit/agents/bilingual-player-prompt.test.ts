@@ -179,6 +179,87 @@ test("all base role identities, rules, private state and stages are bilingual an
   ).toContain("player 1's alignment is Werewolves");
 });
 
+for (const locale of ["zh-CN", "en"] as const) {
+  test(`${locale}: wolf chat shows the supplied round and permits concise speech with immediate personal exit`, () => {
+    const { policy } = setup(locale, "CAT_PERSONA");
+    for (const round of [1, 2, 3]) {
+      const req = request(1, "wolf_discussion", ["speak_to_wolves"]);
+      req.context.round = round;
+      req.context.max_rounds = 3;
+      const before = structuredClone(req);
+      const prompt = policy.buildUser(req, {
+        turnId: "wolf-chat",
+        allowedTools: req.allowedTools,
+        actionSubmissionHint: "submit_action",
+      });
+      expect(prompt).toContain(
+        locale === "zh-CN" ? `第${round}轮夜聊，最多3轮` : `round ${round} of at most 3`,
+      );
+      for (const phrase of locale === "zh-CN"
+        ? [
+            "一般一两句话",
+            "有分歧或重要布局时再展开",
+            "保持自己的人设",
+            "同一条消息",
+            "照常送达",
+            "另行提交 kill_vote",
+          ]
+        : [
+            "one or two sentences",
+            "expand on disagreements",
+            "keep your own persona",
+            "same message",
+            "still delivered",
+            "submit kill_vote separately",
+          ])
+        expect(prompt).toContain(phrase);
+      expect(req).toEqual(before);
+      if (locale === "en") expect(prompt).not.toMatch(/[\u4e00-\u9fff]/);
+      expect(policy.buildSystem(req, { supportsDebugReporting: false }).systemPrompt).toContain(
+        "CAT_PERSONA",
+      );
+    }
+    const publicPrompt = policy.buildUser(request(2, "day_speech", ["speak"]), {
+      turnId: "public-speech",
+      allowedTools: ["speak"],
+      actionSubmissionHint: "submit_action",
+    });
+    expect(publicPrompt).not.toContain(
+      locale === "zh-CN" ? "一般一两句话" : "one or two sentences",
+    );
+  });
+
+  test(`${locale}: absent or invalid wolf-chat round metadata does not invent a round`, () => {
+    const { policy } = setup(locale);
+    for (const [round, max_rounds] of [
+      [undefined, undefined],
+      [0, 3],
+      [4, 3],
+      [1.5, 3],
+      [1, Infinity],
+    ]) {
+      const req = request(1, "wolf_discussion", ["speak_to_wolves"]);
+      Object.assign(req.context, { round, max_rounds });
+      expect(
+        policy.buildUser(req, {
+          turnId: "wolf-chat",
+          allowedTools: req.allowedTools,
+          actionSubmissionHint: "submit_action",
+        }),
+      ).not.toContain(locale === "zh-CN" ? "轮夜聊，最多" : "of at most");
+    }
+  });
+}
+
+test("wolf chat parameter schemas explain delivery, personal exit and the separate knife vote", () => {
+  const schema = getDefaultToolSpecRegistry().parameterSchemas(["speak_to_wolves"]).speak_to_wolves;
+  const properties = schema.properties as Record<string, { description: string }>;
+  expect(properties.text.description).toContain("still delivered when end_chat=true");
+  expect(properties.end_chat.description).toContain("only your own");
+  expect(properties.end_chat.description).toContain("submit or lock a knife vote");
+  expect(properties.end_chat.description).toContain("false keeps you in discussion");
+});
+
 test("missing nicknames remain absent while explicit default-looking names remain raw", () => {
   for (const locale of ["zh-CN", "en"] as const) {
     const game = bootstrapGame(board, { locale, fixedRoles: roles, playerNames: { "1": "玩家1" } });
