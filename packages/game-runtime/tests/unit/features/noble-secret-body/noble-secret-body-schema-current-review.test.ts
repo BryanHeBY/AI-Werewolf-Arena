@@ -47,7 +47,7 @@ const schema = {
   tools: {
     get_game_schema: "{}; query the fixed tool protocol without returning game state.",
     submit_action:
-      "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+      "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. resolved includes your authorized result; committed only confirms registration. applied does not guarantee final damage or protection. Without feedback, applied=false still awaits rule resolution.",
     report_bug:
       "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
   },

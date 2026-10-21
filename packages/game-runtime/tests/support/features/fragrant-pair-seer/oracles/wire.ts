@@ -69,19 +69,19 @@ const actionParameters = {
     additionalProperties: false,
   },
 };
-// 当前真实端点包含自爆二次确认字段；保留完整字面协议预期，不从生产词典生成 expected。
+// 当前端点包含二次确认及执行反馈语义；保留独立字面预期，不从生产词典生成 expected。
 const schema = {
   en: {
     get_game_schema: "{}; query the fixed tool protocol without returning game state.",
     submit_action:
-      "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+      "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. resolved includes your authorized result; committed only confirms registration. applied does not guarantee final damage or protection. Without feedback, applied=false still awaits rule resolution.",
     report_bug:
       "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
   },
   "zh-CN": {
     get_game_schema: "{}；查询固定工具协议，不返回局内状态。",
     submit_action:
-      "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
+      "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。resolved 携带本人可见结果，committed 只确认登记；applied 不代表最终伤害或保护生效。未附 feedback 的 applied=false 回执仍待规则结算。",
     report_bug: "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
   },
 };
