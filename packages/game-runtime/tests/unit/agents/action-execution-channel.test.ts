@@ -1,5 +1,5 @@
 /**
- * 单元测试负责核对执行反馈通道的身份、别名、取消和串行边界。输入为字面请求与受控任务，
+ * 单元测试负责核对执行反馈通道的身份、别名、取消和交付顺序。输入为字面请求与受控任务，
  * 输出以拒绝、一次交付及明确中断为预期；不操作真实游戏资源，不授予复制对象领域许可。
  */
 import { expect, test } from "bun:test";
@@ -65,4 +65,43 @@ test("误把需要反馈的串行机制改为并发时明确失败并收口，�
       await Promise.all([scoped.getAction(request()), scoped.getAction(request())]);
     }),
   ).rejects.toThrow("action_execution_requires_serial_requests");
+});
+
+test("无反馈的并行请求保留原 Promise 和同批逆序交付，不改写协作付款顺序", async () => {
+  const reqs = [1, 2].map((actorId): ActionRequest => ({
+    ...request(),
+    actorId,
+    allowedTools: ["brew_approve"],
+    context: { day: 1, stage: "brew_approval", visible_events: [], turn_constraints: {} },
+  }));
+  const calls = reqs.map(({ actorId }): ToolCall => ({
+    name: "brew_approve",
+    args: { approve: actorId === 1 },
+  }));
+  const resolvers: Array<(call: ToolCall) => void> = [];
+  const pending = reqs.map(() => new Promise<ToolCall>((resolve) => resolvers.push(resolve)));
+  const order: number[] = [];
+  await withActionExecutionScope(
+    {
+      getAction(req) {
+        if (req.actorId === 1)
+          queueMicrotask(() => {
+            resolvers[1]!(calls[1]!);
+            resolvers[0]!(calls[0]!);
+          });
+        return pending[req.actorId - 1]!;
+      },
+    },
+    [],
+    async (scoped) => {
+      await Promise.all(
+        reqs.map((req, index) => {
+          const result = scoped.getAction(req);
+          expect(result).toBe(pending[index]!);
+          return result.then(() => order.push(req.actorId));
+        }),
+      );
+    },
+  );
+  expect(order).toEqual([2, 1]);
 });

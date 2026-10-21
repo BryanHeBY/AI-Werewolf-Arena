@@ -53,10 +53,9 @@ export async function withActionExecutionScope<T>(
     get getAction() {
       // 在领域原来的方法准备点读取真实 callee；getter 撤权须仍先于领域最后守卫被观察。
       const getAction = provider.getAction;
-      return async (request: ActionRequest) => {
+      const select = (request: ActionRequest): ReturnType<ActionProvider["getAction"]> => {
         if (!accepting) throw new Error("action_execution_scope_closed");
-        if (pending.size) await flush(false);
-        if (!accepting) throw new Error("action_execution_scope_closed");
+        // 没有反馈的并行请求直接交还原 Promise；async 的 Promise 接管会在同批结算时重排返回顺序。
         if (!request.allowedTools.some((name) => specs.get(name)?.executionFeedback))
           return invoke(getAction, provider, [request]);
         // 这些机制按玩家逐次提交；并发等待会与模型限流槽构成环，明确拒绝而非等到超时。
@@ -72,12 +71,18 @@ export async function withActionExecutionScope<T>(
           ready: false,
         };
         pending.add(entry);
-        try {
-          return await invoke(getAction, provider, [request]);
-        } finally {
-          entry.ready = true;
-          selecting = false;
-        }
+        return (async () => {
+          try {
+            return await invoke(getAction, provider, [request]);
+          } finally {
+            entry.ready = true;
+            selecting = false;
+          }
+        })();
+      };
+      return (request: ActionRequest) => {
+        if (!accepting) throw new Error("action_execution_scope_closed");
+        return pending.size ? flush(false).then(() => select(request)) : select(request);
       };
     },
   };
