@@ -151,6 +151,10 @@ test("existing message IDs retain their sequence and prompt additions append aft
     "video.credit_model",
     "video.credit_agent",
     "video.author_narrator",
+    "prompt.stage.wolf_discussion_round",
+    "action.speak_to_wolves.text_description",
+    "action.speak_to_wolves.end_chat_description",
+    "fallback.wolf_chat_end",
   ]);
   for (const key of [
     ...appendedPromptKeys,
@@ -162,6 +166,10 @@ test("existing message IDs retain their sequence and prompt additions append aft
     "video.credit_model",
     "video.credit_agent",
     "video.author_narrator",
+    "prompt.stage.wolf_discussion_round",
+    "action.speak_to_wolves.text_description",
+    "action.speak_to_wolves.end_chat_description",
+    "fallback.wolf_chat_end",
   ])
     expect(isMessageKey(key)).toBe(true);
 });
