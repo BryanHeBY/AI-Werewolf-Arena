@@ -19,6 +19,7 @@ import {
   type AgentOutputDisplayOptions,
 } from "@ai-werewolf-arena/game-presentation";
 import type { AgentOutputSink } from "@ai-werewolf-arena/replay-contract";
+import { agentActionExecution } from "@ai-werewolf-arena/replay-contract";
 import { colorize, isAnsiEnabled } from "../../utils/ansi";
 import type { ConsoleLog } from "./console-presenter";
 
@@ -36,16 +37,21 @@ export function createAgentConsoleSink(
     options.log ?? ((line, tone = "info") => console.log(colorize(line, tone, enabled)));
   // ACP 的结果正文可能晚于 completed 到达；按本局的确认编号去重，避免原生通知与引擎留底重复警示。
   const confirmations = new Set<string>();
+  const executions = new Set<string>();
   const names = new Map(options.players?.map((player) => [player.id, player]));
   return ({ context, output }) => {
     if (!isAgentOutputVisible(output, options)) return;
     // 参数／内容补充留给档案和 Web，不把一次调用重新打印成另一条终端结果。
     const confirmation = agentActionConfirmation(output);
-    if (output.type === "tool" && output.status === "updated" && !confirmation) return;
+    const execution = agentActionExecution(output);
+    if (output.type === "tool" && output.status === "updated" && !confirmation && !execution)
+      return;
     // 日常终端只打印工具结果；显式 trace 才展开开始／中间状态，结构化消费者仍收到完整事实。
     if (
       output.type === "tool" &&
       !options.trace &&
+      !confirmation &&
+      !execution &&
       ["started", "pending", "in_progress", "updated"].includes(output.status)
     )
       return;
@@ -101,6 +107,19 @@ export function createAgentConsoleSink(
         view.tone,
       );
     } else if (output.type === "tool") {
+      if (execution) {
+        const signature = JSON.stringify([
+          transport,
+          playerId,
+          context.day,
+          context.stage,
+          execution,
+        ]);
+        if (executions.has(signature)) return;
+        executions.add(signature);
+        log(`${prefix}[tool] ${view.label}: ${view.body}`, view.tone);
+        return;
+      }
       if (confirmation) {
         const owner = `${transport}:${playerId ?? "-"}`;
         const signature = JSON.stringify([

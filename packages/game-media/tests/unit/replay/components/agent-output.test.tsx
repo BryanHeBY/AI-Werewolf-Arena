@@ -4,6 +4,58 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { PlayerAgentOutput, PlayerAgentOutputView } from "../../../../src/replay/PlayerAgentOutput";
 import { parsePlayerAgentArchive } from "../../../../src/replay/agent-output-loader";
 
+test("新执行回执在显式私有档案中显示双语结果；详细输出关闭后隐藏", () => {
+  const archive = JSON.parse(raw);
+  archive.timeline[0].delta_messages = [
+    {
+      role: "tool",
+      kind: "tool_result",
+      name: "submit_action",
+      result: {
+        ok: true,
+        accepted: true,
+        applied: true,
+        action: "check_identity",
+        status: "resolved",
+        feedback: {
+          version: 1,
+          events: [
+            {
+              type: "seer_checked",
+              payload: {
+                actorId: 7,
+                targetId: 9,
+                isWerewolf: false,
+                result: { kind: "camp", camp: "good" },
+              },
+            },
+          ],
+        },
+      },
+    },
+  ];
+  const view = parsePlayerAgentArchive(JSON.stringify(archive));
+  for (const locale of ["zh-CN", "en"] as const) {
+    const html = renderToStaticMarkup(
+      <PlayerAgentOutputView
+        view={view}
+        locale={locale}
+        display={{ printThinking: true, printLlmIo: false, trace: false }}
+      />,
+    );
+    expect(html).toContain(locale === "zh-CN" ? "结果已揭晓" : "Result available");
+    expect(html).toContain(locale === "zh-CN" ? "好人" : "Good");
+    const hidden = renderToStaticMarkup(
+      <PlayerAgentOutputView
+        view={view}
+        locale={locale}
+        display={{ printThinking: false, printLlmIo: false, trace: false }}
+      />,
+    );
+    expect(hidden).not.toContain("seer_checked");
+  }
+});
+
 const raw = JSON.stringify({
   schemaVersion: 2,
   player_id: 7,

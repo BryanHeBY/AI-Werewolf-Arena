@@ -2,7 +2,12 @@
  * 负责 Agent 输出的纯展示政策。输入为共同输出、开关和语言，输出双语分类、原文与语义色调。
  * 终端与 Web 各自实现 ANSI 或 CSS；本模块不读取文件、操作 DOM 或承担录制、会话及行动授权。
  */
-import { agentActionConfirmation, type AgentOutput } from "@ai-werewolf-arena/replay-contract";
+import {
+  agentActionConfirmation,
+  agentActionExecution,
+  type AgentOutput,
+} from "@ai-werewolf-arena/replay-contract";
+import { actionExecutionBody } from "./action-feedback";
 export { agentActionConfirmation } from "@ai-werewolf-arena/replay-contract";
 import { text, errorMessage, type Locale } from "@ai-werewolf-arena/game-text";
 
@@ -55,6 +60,13 @@ export function agentOutputPresentation(
         tone: "muted",
       };
     case "tool": {
+      const execution = agentActionExecution(output);
+      if (execution)
+        return {
+          label: text(locale, `runtime.action.${execution.status}`),
+          body: actionExecutionBody(execution, locale),
+          tone: execution.applied === true ? "ok" : "warn",
+        };
       const confirmation = agentActionConfirmation(output);
       if (confirmation)
         return {

@@ -15,6 +15,73 @@ import { PlayerOutputObserver } from "../../../src/agents/player/player-observer
 import { LlmOutputRecorder } from "../../../src/agents/llm/llm-output-recorder";
 import { Phase, type ActionRequest } from "../../../src/domain";
 
+test("三种终端展示同一私有执行报告，晚到更新去重，详细输出关闭后隐藏", () => {
+  for (const transport of ["llm", "pi", "acp"] as const) {
+    const lines: string[] = [];
+    const sink = createAgentConsoleSink({
+      printThinking: true,
+      printLlmIo: false,
+      trace: false,
+      color: false,
+      log: (line) => lines.push(line),
+    });
+    const event: AgentOutputEvent = {
+      visibility: "private",
+      context: { transport, playerId: 3, day: 1, phase: "night", stage: "seer" },
+      output: {
+        type: "tool",
+        name: "submit_action",
+        id: "native",
+        status: "completed",
+        result: {
+          ok: true,
+          accepted: true,
+          applied: true,
+          action: "check_identity",
+          status: "resolved",
+          feedback: {
+            version: 1,
+            events: [
+              {
+                type: "seer_checked",
+                payload: {
+                  actorId: 3,
+                  targetId: 9,
+                  isWerewolf: false,
+                  result: { kind: "camp", camp: "good" },
+                },
+              },
+            ],
+          },
+        },
+      },
+    };
+    sink(event);
+    sink({
+      ...event,
+      output: {
+        ...event.output,
+        type: "tool",
+        name: "submit_action",
+        id: "host",
+        status: "updated",
+      },
+    });
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("结果已揭晓");
+    expect(lines[0]).toContain("好人");
+    expect(lines[0]).not.toContain('"payload"');
+    const hidden: string[] = [];
+    createAgentConsoleSink({
+      printThinking: false,
+      printLlmIo: false,
+      trace: false,
+      log: (line) => hidden.push(line),
+    })(event);
+    expect(hidden).toEqual([]);
+  }
+});
+
 test("相同消费者接收 LLM、ACP、Pi 输出，关闭显示仍保留所有私有事实", () => {
   const events: AgentOutputEvent[] = [],
     lines: string[] = [];
