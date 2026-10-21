@@ -16,6 +16,7 @@ import { ActionReception } from "../../engine/actions/action-reception";
 import { ActionTurn } from "../player/action-turn";
 import type { ActionReceipt } from "../player/action-turn";
 import type { ToolInvocation } from "../../adapters/llm/transport";
+import type { ActionExecutionReceipt } from "@ai-werewolf-arena/game-contract";
 import {
   ToolCallRepairRegistry,
   type ToolSpecRegistry,
@@ -83,26 +84,23 @@ export class SdkGameToolLoop {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     const turn = new ActionTurn(this.reception, request, turnId);
-    const reply = async (receipt: ActionReceipt, invocation: ToolInvocation) => {
-      if (!receipt.ok || !receipt.accepted) return receipt;
-      const result = await actionFeedback(
-        this.world,
-        request,
-        turn.action!,
-        receipt,
-        controller.signal,
-      );
-      if ("feedback" in result)
-        this.outputRecorder.executionResult(request, {
-          type: "tool",
-          id: invocation.id,
-          name: invocation.name,
-          args: invocation.args,
-          status: "completed",
-          accepted: true,
-          result,
-        });
-      return result;
+    const reply = (receipt: Extract<ActionReceipt, { ok: true }>, invocation: ToolInvocation) => {
+      const finish = (result: ActionReceipt | ActionExecutionReceipt) => {
+        if ("feedback" in result)
+          this.outputRecorder.executionResult(request, {
+            type: "tool",
+            id: invocation.id,
+            name: invocation.name,
+            args: invocation.args,
+            status: "completed",
+            accepted: true,
+            result,
+          });
+        return { toolResult: result, ...(receipt.accepted ? { finalAction: turn.action! } : {}) };
+      };
+      if (!receipt.accepted) return finish(receipt);
+      const result = actionFeedback(this.world, request, turn.action!, receipt, controller.signal);
+      return result instanceof Promise ? result.then(finish) : finish(result);
     };
     let protocolRejected = false;
     const abort = () => {
@@ -176,10 +174,7 @@ export class SdkGameToolLoop {
                     receipt,
                   ),
                 };
-              return {
-                toolResult: await reply(receipt, invocation),
-                ...(receipt.accepted ? { finalAction: turn.action! } : {}),
-              };
+              return reply(receipt, invocation);
             }
             const receipt = turn.submit(turnId, actionName, actionArgs);
             if (!receipt.ok) {
@@ -187,10 +182,7 @@ export class SdkGameToolLoop {
                 toolResult: this.recordRefusal(request, invocation.name, invocation.args, receipt),
               };
             }
-            return {
-              toolResult: await reply(receipt, invocation),
-              ...(receipt.accepted ? { finalAction: turn.action! } : {}),
-            };
+            return reply(receipt, invocation);
           },
         },
         {

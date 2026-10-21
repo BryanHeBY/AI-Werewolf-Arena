@@ -48,32 +48,37 @@ export async function withActionExecutionScope<T>(
     if (errors.length === 1) throw errors[0];
     if (errors.length) throw new AggregateError(errors, "action_execution_feedback_failed");
   };
+  const invoke = Reflect.apply.bind(Reflect);
   const wrapped: ActionProvider = {
-    async getAction(request) {
-      if (!accepting) throw new Error("action_execution_scope_closed");
-      await flush(false);
-      if (!accepting) throw new Error("action_execution_scope_closed");
-      if (!request.allowedTools.some((name) => specs.get(name)?.executionFeedback))
-        return provider.getAction(request);
-      // 这些机制按玩家逐次提交；并发等待会与模型限流槽构成环，明确拒绝而非等到超时。
-      if (selecting) throw new Error("action_execution_requires_serial_requests");
-      selecting = true;
-      const entry = {
-        request,
-        start: events.length,
-        channel: openActionExecution(
+    get getAction() {
+      // 在领域原来的方法准备点读取真实 callee；getter 撤权须仍先于领域最后守卫被观察。
+      const getAction = provider.getAction;
+      return async (request: ActionRequest) => {
+        if (!accepting) throw new Error("action_execution_scope_closed");
+        if (pending.size) await flush(false);
+        if (!accepting) throw new Error("action_execution_scope_closed");
+        if (!request.allowedTools.some((name) => specs.get(name)?.executionFeedback))
+          return invoke(getAction, provider, [request]);
+        // 这些机制按玩家逐次提交；并发等待会与模型限流槽构成环，明确拒绝而非等到超时。
+        if (selecting) throw new Error("action_execution_requires_serial_requests");
+        selecting = true;
+        const entry = {
           request,
-          request.allowedTools.filter((name) => specs.get(name)?.executionFeedback),
-        ),
-        ready: false,
+          start: events.length,
+          channel: openActionExecution(
+            request,
+            request.allowedTools.filter((name) => specs.get(name)?.executionFeedback),
+          ),
+          ready: false,
+        };
+        pending.add(entry);
+        try {
+          return await invoke(getAction, provider, [request]);
+        } finally {
+          entry.ready = true;
+          selecting = false;
+        }
       };
-      pending.add(entry);
-      try {
-        return await provider.getAction(request);
-      } finally {
-        entry.ready = true;
-        selecting = false;
-      }
     },
   };
   let result: T;

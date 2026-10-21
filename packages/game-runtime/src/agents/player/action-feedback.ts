@@ -9,35 +9,37 @@ import { awaitActionExecution } from "../../domain/action-execution";
 import { buildAgentVisibleEventFeed } from "../observation/event-feed";
 import type { ActionReceipt } from "./action-turn";
 
-export async function actionFeedback(
+export function actionFeedback(
   world: World,
   request: ActionRequest,
   action: ToolCall,
   receipt: ActionReceipt,
   signal?: AbortSignal,
-): Promise<ActionReceipt | ActionExecutionReceipt> {
+): ActionReceipt | Promise<ActionExecutionReceipt> {
   const pending = awaitActionExecution(request, action, signal);
   if (!pending) return receipt;
-  const facts = await pending;
-  const events = buildAgentVisibleEventFeed(world, [...facts.events], request.actorId).map(
-    ({ type, payload }) => ({ type, payload }),
-  );
-  const rejected = events.some(
-    ({ payload }) => payload.reason === "invalid_action" || payload.reason === "no_action",
-  );
-  const applied = events.length > 0 && !rejected;
-  return {
-    ok: true,
-    accepted: true,
-    action: action.name,
-    applied: facts.interrupted || !events.length ? null : applied,
-    status: facts.interrupted
-      ? "interrupted"
-      : applied
-        ? facts.kind
-        : rejected
-          ? "not_applied"
-          : "unavailable",
-    feedback: { version: 1, events },
-  };
+  // 未接执行作用域时同步保留原回执，避免同批接受／拒绝回包发生额外的顺序变化。
+  return pending.then((facts): ActionExecutionReceipt => {
+    const events = buildAgentVisibleEventFeed(world, [...facts.events], request.actorId).map(
+      ({ type, payload }) => ({ type, payload }),
+    );
+    const rejected = events.some(
+      ({ payload }) => payload.reason === "invalid_action" || payload.reason === "no_action",
+    );
+    const applied = events.length > 0 && !rejected;
+    return {
+      ok: true,
+      accepted: true,
+      action: action.name,
+      applied: facts.interrupted || !events.length ? null : applied,
+      status: facts.interrupted
+        ? "interrupted"
+        : applied
+          ? facts.kind
+          : rejected
+            ? "not_applied"
+            : "unavailable",
+      feedback: { version: 1, events },
+    };
+  });
 }
