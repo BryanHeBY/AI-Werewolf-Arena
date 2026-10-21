@@ -37,9 +37,11 @@ test("workbench launch creates a terminal recording and publishes a completion r
     id = await workspace.application.runs.start("offline_game");
     const record = await eventually(
       () => workspace.application.sessions.get(id!),
-      (entry) => !!entry && !["starting", "running", "finalizing"].includes(entry.state),
+      // CLI 会先创建 manifest，再登记 runtime；这段短暂的 legacy 状态不表示对局已经结束。
+      (entry) => !!entry && ["completed", "failed", "cancelled"].includes(entry.state),
       20000,
     );
+    expect(record!.state).toBe("completed");
     expect(record!.origin).toBe("workbench");
     expect(record!.canStop).toBe(false);
     expect(record!.canReplay).toBe(true);
