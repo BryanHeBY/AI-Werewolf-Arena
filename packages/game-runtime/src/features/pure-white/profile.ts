@@ -49,6 +49,10 @@ const inspectionBaseline: import("../../rulesets/roles/owned-bindings").OwnedRol
       : null;
     return {
       name: "inspect_night_identity",
+      executionFeedback: {
+        kind: "resolved",
+        events: ["role_inspected", "role_inspection_skipped"],
+      },
       args: { target_id: target, abstain: target === null },
     };
   };

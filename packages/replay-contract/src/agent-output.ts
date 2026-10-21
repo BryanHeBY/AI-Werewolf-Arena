@@ -193,6 +193,8 @@ export function agentOutputFromDeltaMessages(
           name: message.name ?? "tool",
           id: message.call_id,
           status: message.status ?? (message.diagnostic ? "failed" : "completed"),
+          args: message.args,
+          accepted: message.accepted,
           result: message.result,
           diagnostic: message.diagnostic,
         },

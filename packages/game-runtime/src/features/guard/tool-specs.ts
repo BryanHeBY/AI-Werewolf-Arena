@@ -9,6 +9,7 @@ import { ToolSpec } from "../../engine/actions/tool-contracts";
 export const GUARD_TOOL_SPECS: ToolSpec[] = [
   {
     name: "guard",
+    executionFeedback: { kind: "committed", events: ["guard_applied"] },
     ...withTargetOrAbstain({
       type: "object",
       properties: {

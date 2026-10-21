@@ -1,9 +1,10 @@
 /**
  * 负责把 SDK 工具调用适配到共同 ActionTurn 选择窗口；输入为模型消息、原引擎请求与 SDK 调用。
  * 输出保留预检回执、已选候选及拒绝／模型证据，规则与 schema 接收由游戏 Gateway 拥有。
- * 计时器、abort 与 finally-close 仍属于本 loop；accepted 仅表示 selected 且 applied:false，
- * 不消耗库存、提交领域动作或订阅 settlement，失败保留原读取与记录顺序。
+ * 计时器、abort 与 finally-close 仍属于本 loop；接受候选后可等待机制的私有执行反馈。
+ * 本层不消耗库存或提交领域动作；回执投影不订阅 Tape settlement，执行后失败不能再次选择。
  */
+import { actionFeedback } from "../player/action-feedback";
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../domain";
 import { getActionRequestDay, getActionRequestStage } from "../../domain/action-request-context";
@@ -13,6 +14,8 @@ import { AgentBugReportService } from "../reporting/bug-report-service";
 import { gameToolProtocol } from "../game-tool-protocol";
 import { ActionReception } from "../../engine/actions/action-reception";
 import { ActionTurn } from "../player/action-turn";
+import type { ActionReceipt } from "../player/action-turn";
+import type { ToolInvocation } from "../../adapters/llm/transport";
 import {
   ToolCallRepairRegistry,
   type ToolSpecRegistry,
@@ -80,6 +83,27 @@ export class SdkGameToolLoop {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     const turn = new ActionTurn(this.reception, request, turnId);
+    const reply = async (receipt: ActionReceipt, invocation: ToolInvocation) => {
+      if (!receipt.ok || !receipt.accepted) return receipt;
+      const result = await actionFeedback(
+        this.world,
+        request,
+        turn.action!,
+        receipt,
+        controller.signal,
+      );
+      if ("feedback" in result)
+        this.outputRecorder.executionResult(request, {
+          type: "tool",
+          id: invocation.id,
+          name: invocation.name,
+          args: invocation.args,
+          status: "completed",
+          accepted: true,
+          result,
+        });
+      return result;
+    };
     let protocolRejected = false;
     const abort = () => {
       turn.close();
@@ -153,7 +177,7 @@ export class SdkGameToolLoop {
                   ),
                 };
               return {
-                toolResult: receipt,
+                toolResult: await reply(receipt, invocation),
                 ...(receipt.accepted ? { finalAction: turn.action! } : {}),
               };
             }
@@ -164,7 +188,7 @@ export class SdkGameToolLoop {
               };
             }
             return {
-              toolResult: receipt,
+              toolResult: await reply(receipt, invocation),
               ...(receipt.accepted ? { finalAction: turn.action! } : {}),
             };
           },

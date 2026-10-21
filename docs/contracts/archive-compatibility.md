@@ -24,3 +24,9 @@ Tape3新增可选`returnedCandidate`，只允许在error结算中保存已返回
 封装自身仍为envelope1；只有`strict_reproduction`允许`payloadSchemaVersion`为2或3，并必须与payload.schemaVersion一致。公开／玩家只允许2，manifest仍1；request／presentation语义身份没有变更。writer用显式末参数声明内层版本，不提前读取unknown payload的版本getter，保完整数据检查的先后。
 
 真实顺序是先unwrap、结构准入及独立机制审计，再检查finalized与精确source／lock等；旧reader可能在版本或结构阶段就拒新档，不能宣称所有不兼容都先报source错误。源码与schema变化正常改变sourceHash，严格执行门槛未降低；合法读取旧shape不授权跨构建重放。
+
+## 工具执行反馈的读取兼容
+
+执行回执使用既有玩家 schema 2 的 `tool_result.result`，内部以 `feedback.version = 1` 识别，不改变公开事件或归档外壳。旧档只有 `accepted/applied:false` 时继续表示候选接受，不伪造查验结果；旧自爆确认回执、缺少工具结果的档案及长文本分片保持原有读取。未知反馈版本退回普通工具展示。
+
+终端和 Web 的语义解码只接受工具结果及已知 MCP 包装，不能从玩家正文中的 JSON 推导执行事实。反馈属于对应玩家的私有档案，不合并进公开回放或视频事实。当前读取兼容不代表跨构建严格复现：Tape／checkpoint／sourceHash 仍按真实构建身份校验，不改写历史文件或哈希来使旧局通过严格执行。

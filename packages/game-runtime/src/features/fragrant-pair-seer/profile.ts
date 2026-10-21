@@ -147,6 +147,10 @@ export const AWAKENED_SEER_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "check_pair",
+        executionFeedback: {
+          kind: "resolved",
+          events: ["fragrant_pair_chosen", "fragrant_pair_inspected"],
+        },
         parameters: {
           type: "object",
           properties: { target_ids: pairSchema },

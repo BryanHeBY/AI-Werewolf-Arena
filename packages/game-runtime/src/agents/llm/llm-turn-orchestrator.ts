@@ -4,6 +4,7 @@
  * 并发租约只在本回合收尾时释放；每轮取消不可逆，关闭单向封住本 owner，任务兑现不等于领域提交。
  * 取消／关闭仅收走本 provider 资源，不代替规则预检或领域 commit，不扩大 fallback 的原预算。
  */
+import { deliverActionSelection, selectedExecutionAction } from "../../domain/action-execution";
 import { inheritRequestAlias } from "../../domain/request-delivery";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../utils/error-diagnostic";
@@ -80,6 +81,10 @@ export class LlmTurnOrchestrator {
   }
 
   run(request: ActionRequest): Promise<ToolCall | null> {
+    return deliverActionSelection(request, this.runOwned(request));
+  }
+
+  private runOwned(request: ActionRequest): Promise<ToolCall | null> {
     if (this.closed) return Promise.reject(new DOMException("llm_provider_closed", "AbortError"));
     const startedAt = Date.now();
     // 只取引擎原期限与本次启动预算的较早者；排队和重试共用它，不为每次模型调用重新计时。
@@ -167,6 +172,7 @@ export class LlmTurnOrchestrator {
       this.options.observer.prompt(prompt.messages, request);
       const action = await this.runNative(client, request, record, startedAt, signal);
       if (
+        !selectedExecutionAction(request) &&
         !this.closed &&
         request.context.action_failure_policy === "error" &&
         (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0)
@@ -238,6 +244,7 @@ export class LlmTurnOrchestrator {
             }),
         );
         if (
+          !selectedExecutionAction(request) &&
           request.context.action_failure_policy === "error" &&
           (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0)
         ) {
@@ -255,6 +262,27 @@ export class LlmTurnOrchestrator {
           assistantText: result.thinkingText,
         };
       } catch (error) {
+        const delivered = selectedExecutionAction(request);
+        if (delivered) {
+          try {
+            this.options.recorder.record(request, record.prompt, {
+              inputs: record.inputs,
+              actionMode: "tool_call",
+              finalAction: delivered,
+              toolCalls: this.toToolCalls(delivered),
+              retryTrace: [
+                { attempt: 0, status: "request_error", diagnostic: describeError(error) },
+              ],
+            });
+          } catch (recordingError) {
+            throw new AggregateError(
+              [error, recordingError],
+              "llm_execution_and_recording_failed",
+              { cause: error },
+            );
+          }
+          throw error;
+        }
         const diagnostic = describeError(error);
         this.options.observer.trace(
           `request_sdk_attempt_fail player=${request.actorId} phase=${request.phase} err=${formatErrorDiagnostic(error, this.options.observer.locale)}`,

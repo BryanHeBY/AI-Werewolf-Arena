@@ -55,6 +55,7 @@ export type { LoversComponent } from "./cupid-relation";
 export { boardConfigSchema } from "./board-schema";
 
 export * from "./actions";
+export type { ActionExecutionReceipt } from "./action-feedback";
 
 export * from "./facts/nightmare";
 export * from "./facts/crow";

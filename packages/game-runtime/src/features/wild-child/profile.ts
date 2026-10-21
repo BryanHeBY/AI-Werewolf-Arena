@@ -68,6 +68,7 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
       ...WOLF_TOOL_SPECS.filter((spec) => spec.name !== "self_destruct"),
       {
         name: "choose_wild_model",
+        executionFeedback: { kind: "committed", events: ["wild_child_model_chosen"] },
         parameters: {
           type: "object",
           properties: { target_id: { type: "integer" } },

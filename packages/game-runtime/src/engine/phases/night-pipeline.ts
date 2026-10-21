@@ -12,6 +12,7 @@
  * 明辉／梦及增益伤害与猎魔来源交付各归具名规则组合；本流水线保封存、伤害结算及死亡生命捕获的原检查点。
  * 运行梦句柄、猎魔 token 与晚保护闭包不进入玩家摘要或归档。
  */
+import { withActionExecutionScope } from "../actions/action-execution-scope";
 import { damageProtectionFacts } from "../../domain/damage-evidence";
 import { recordReplayFact } from "../../domain/replay-fact-log";
 import { attachNightUnit } from "../../domain/night-unit";
@@ -313,7 +314,9 @@ export class NightPipeline {
         assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
         // 真实 callee 保原晚读取；只原完整内建程序可取得私有 runtime，替换 callback 没有 World 回门。
         const execute = stage.execute;
-        await executePreparedNightStage(stage, execute, stageCtx);
+        await withActionExecutionScope(stageCtx.actionProvider, this.events, (provider) =>
+          executePreparedNightStage(stage, execute, { ...stageCtx, actionProvider: provider }),
+        );
         assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();

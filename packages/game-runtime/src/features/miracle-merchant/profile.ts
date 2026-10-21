@@ -67,6 +67,7 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "bestow_ability",
+        executionFeedback: { kind: "committed", events: ["merchant_trade_committed"] },
         parameters: {
           type: "object",
           properties: {

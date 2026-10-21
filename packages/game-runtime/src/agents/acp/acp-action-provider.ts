@@ -1,6 +1,7 @@
 /**
  * 负责将引擎请求适配为 ACP 会话和会话绑定的 MCP 行动。输入为 World、解析后的选项与请求；输出为已接受工具及回合记录。默认生产回退只把脱离玩家观察交给策略，显式特权驱动单列测试接口。原回合 owner 持有期限、取消和关闭；ACP 文本与 update 不提交游戏行动。
  */
+import { deliverActionSelection, selectedExecutionAction } from "../../domain/action-execution";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../domain/request-delivery";
 import {
@@ -9,6 +10,7 @@ import {
 } from "../../engine/actions/turn-constraints";
 import {
   agentActionConfirmation,
+  agentActionExecution,
   type AgentOutput,
   type AgentOutputSink,
   type ErrorDiagnostic,
@@ -173,6 +175,10 @@ export class AcpActionProvider implements ActionProvider {
   }
 
   getAction(request: ActionRequest): Promise<ToolCall | null> {
+    return deliverActionSelection(request, this.startTurn(request));
+  }
+
+  private startTurn(request: ActionRequest): Promise<ToolCall | null> {
     if (this.closed) return Promise.reject(new Error("acp_provider_closed"));
     if (this.sessions.hasUnreclaimedResources)
       return Promise.reject(new Error("acp_resource_reclamation_failed"));
@@ -260,6 +266,7 @@ export class AcpActionProvider implements ActionProvider {
     let turn: ReturnType<AcpTurnRegistry["openTurn"]> | undefined;
     let built: AcpTurnPromptBuild | undefined;
     let auditTrace: AcpSessionAuditTrace | undefined;
+    let recordingAttempted = false;
     let fallbackReason = "model_declined_required_action";
     let requestError: ErrorDiagnostic | undefined;
     let actionFailureReason: string | undefined;
@@ -284,17 +291,29 @@ export class AcpActionProvider implements ActionProvider {
       );
       if (this.sessions.isClosed || deadlineAtMs <= Date.now())
         throw new Error("acp_deadline_elapsed");
-      turn = this.registry.openTurn(request, session.sessionId);
+      turn = this.registry.openTurn(request, session.sessionId, signal);
       built = this.buildTurnPrompt(request, turn.turnId, true);
       this.observer.prompt([{ role: "user", content: built.prompt }], request);
       if (this.closed) return this.closedResult(request);
       built.dispatched = true;
-      const promptTask = session.prompt(built.prompt);
+      let promptFailure: { error: unknown } | undefined;
+      const promptTask = session.prompt(built.prompt).catch((error) => {
+        promptFailure = { error };
+        throw error;
+      });
       const outcome = await awaitWithAbort(
         this.waitForAction(turn.action, promptTask, request),
         signal,
       );
       if (this.closed) return this.closedResult(request);
+      if (selectedExecutionAction(request)) {
+        await awaitWithAbort(turn.feedbackDelivered, signal);
+      }
+      if (outcome.action) {
+        // 普通接受回执也须有机会送达 MCP，不能在 registry resolve 后抢先取消响应。
+        await settleWithin(promptTask, Math.min(300, Math.max(0, deadlineAtMs - Date.now())));
+        if (selectedExecutionAction(request) && promptFailure) throw promptFailure.error;
+      }
       this.registry.closeTurn(turn.sessionId);
       if (outcome.reason === "request_timeout" || outcome.reason === "deadline_skip") {
         await this.sessions.discard(request.actorId);
@@ -328,6 +347,7 @@ export class AcpActionProvider implements ActionProvider {
         this.observer.trace(
           `request_ok player=${request.actorId} phase=${request.phase} action=${outcome.action.name} args=${JSON.stringify(outcome.action.args)} elapsed_ms=${Date.now() - startedAt}`,
         );
+        recordingAttempted = true;
         this.recordPlayerRound(request, built, {
           action: outcome.action,
           auditTrace,
@@ -344,6 +364,7 @@ export class AcpActionProvider implements ActionProvider {
         this.observer.trace(
           `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
         );
+        recordingAttempted = true;
         this.recordPlayerRound(request, built, {
           action: null,
           auditTrace,
@@ -359,6 +380,25 @@ export class AcpActionProvider implements ActionProvider {
       requestError = outcome.requestError ?? requestError;
     } catch (error) {
       await this.sessions.discard(request.actorId);
+      if (selectedExecutionAction(request)) {
+        if (built && !recordingAttempted) {
+          try {
+            this.recordPlayerRound(request, built, {
+              action: selectedExecutionAction(request)!,
+              auditTrace: auditTrace ?? this.captureAuditTrace(request, session, turn),
+              elapsedMs: Date.now() - startedAt,
+              requestError: describeError(error),
+            });
+          } catch (recordingError) {
+            throw new AggregateError(
+              [error, recordingError],
+              "acp_execution_and_recording_failed",
+              { cause: error },
+            );
+          }
+        }
+        throw error;
+      }
       if (error === this.closeController.signal.reason) return this.closedResult(request);
       fallbackReason = "runtime_error";
       requestError = describeError(error);
@@ -570,16 +610,26 @@ export class AcpActionProvider implements ActionProvider {
     const remaining = [...confirmations];
     const outputs = native.map((output) => {
       const fact = agentActionConfirmation(output);
-      if (!fact) return output;
+      const execution = agentActionExecution(output);
+      if (!fact && !execution) return output;
       const index = remaining.findIndex((candidate) => {
+        if (execution) {
+          const known = agentActionExecution(candidate);
+          return (
+            known?.action === execution.action &&
+            known.status === execution.status &&
+            JSON.stringify(known.feedback) === JSON.stringify(execution.feedback)
+          );
+        }
         const known = agentActionConfirmation(candidate);
-        return known?.status === fact.status && known?.confirmation_id === fact.confirmation_id;
+        return known?.status === fact!.status && known?.confirmation_id === fact!.confirmation_id;
       });
       if (index < 0) return output;
       const [canonical] = remaining.splice(index, 1);
       return { ...canonical!, ...(output.type === "tool" ? { id: output.id } : {}) } as AgentOutput;
     });
-    for (const output of confirmations) this.observer.emit(output, this.observer.context(request));
+    for (const output of confirmations)
+      if (!agentActionExecution(output)) this.observer.emit(output, this.observer.context(request));
     return {
       messages: trace?.messages ?? [],
       thoughts: trace?.thoughts ?? [],
@@ -687,6 +737,11 @@ export class AcpActionProvider implements ActionProvider {
         : {}),
     };
     if (!this.closed) this.roundRecorder.record(request, prompt, outcome);
+    // 执行回执先落私有档案，再交显示；显示抛错不能把已发表结果从录制中抹掉。
+    if (!this.closed)
+      for (const output of outcome.agentOutputs ?? [])
+        if (agentActionExecution(output))
+          this.observer.emit(output, this.observer.context(request));
   }
 
   private formatAuditTrace(trace?: AcpSessionAuditTrace): string | undefined {

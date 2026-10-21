@@ -68,6 +68,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
       ),
       {
         name: "charm",
+        executionFeedback: { kind: "committed", events: ["charm_applied"] },
         parameters: {
           type: "object",
           properties: { target_id: { type: ["number", "null"] } },

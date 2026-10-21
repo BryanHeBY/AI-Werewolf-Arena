@@ -7,6 +7,15 @@ import type { ToolSpec } from "../../engine/actions/tool-contracts";
 import { MECHANICAL_TOOL_NAMES } from "./tool-names";
 
 /** 传输描述保持中立；完整本地化规则由当前回合提示提供，规格不授予执行许可。 */
+const feedback = {
+  mechanical_mode: { kind: "committed", events: ["mechanical_mode_selected"] },
+  mimic_role: { kind: "resolved", events: ["mechanical_mimicked"] },
+  mechanical_inspect: { kind: "resolved", events: ["role_inspected"] },
+  mechanical_poison: { kind: "committed", events: ["mechanical_poison_used"] },
+  mechanical_guard: { kind: "committed", events: ["mechanical_guard_chosen"] },
+  mechanical_attack: { kind: "committed", events: ["mechanical_attack_chosen"] },
+} satisfies Partial<Record<string, NonNullable<ToolSpec["executionFeedback"]>>>;
+
 export const MECHANICAL_TOOL_SPECS: ToolSpec[] = MECHANICAL_TOOL_NAMES.map((name) => {
   const parameters =
     name === "mechanical_mode"
@@ -31,6 +40,7 @@ export const MECHANICAL_TOOL_SPECS: ToolSpec[] = MECHANICAL_TOOL_NAMES.map((name
         };
   return {
     name,
+    executionFeedback: feedback[name],
     parameters: parameters,
     argHint:
       name === "mechanical_mode"

@@ -1921,6 +1921,12 @@ export const MESSAGE_IDS = Object.freeze([
   "action.speak_to_wolves.text_description",
   "action.speak_to_wolves.end_chat_description",
   "fallback.wolf_chat_end",
+  "runtime.action.resolved",
+  "runtime.action.unavailable",
+  "runtime.action.committed",
+  "runtime.action.not_applied",
+  "runtime.action.interrupted",
+  "runtime.action.pending_effects",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

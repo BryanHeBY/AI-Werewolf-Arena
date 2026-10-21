@@ -64,6 +64,7 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "black_market_trade",
+        executionFeedback: { kind: "committed", events: ["black_market_trade_committed"] },
         parameters: {
           type: "object",
           properties: {

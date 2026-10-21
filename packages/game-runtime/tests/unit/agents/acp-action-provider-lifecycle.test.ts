@@ -19,6 +19,43 @@ function request(deadlineAtMs: number): ActionRequest {
 }
 
 describe("AcpActionProvider session lifecycle", () => {
+  test("选择 Promise 先兑现时仍给普通 MCP 接受回执送达机会，再取消会话", async () => {
+    let delivered = false,
+      cancelledBeforeDelivery = false;
+    const provider = new AcpActionProvider(bootstrapGame(sixPlayerMvpConfig).world, {
+      turnTimeoutMs: 1000,
+      sessionFactory: {
+        async createSession(input) {
+          return {
+            sessionId: "receipt-before-cancel",
+            async prompt(prompt) {
+              await input.registry.submitActionWithFeedback("receipt-before-cancel", {
+                turn_id: /当前回合 ID：(\S+)/.exec(prompt)![1]!,
+                action: "speak",
+                arguments: { text: "收到。" },
+              });
+              await new Promise((resolve) => setTimeout(resolve, 10));
+              delivered = true;
+            },
+            async cancel() {
+              cancelledBeforeDelivery ||= !delivered;
+            },
+            async close() {},
+          };
+        },
+      },
+    });
+    try {
+      expect(await provider.getAction(request(Date.now() + 1000))).toEqual({
+        name: "speak",
+        args: { text: "收到。" },
+      });
+      expect(delivered).toBe(true);
+      expect(cancelledBeforeDelivery).toBe(false);
+    } finally {
+      await provider.close();
+    }
+  });
   test("an initialization deadline closes the turn without starting a late fallback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const factory: AcpSessionFactory = {

@@ -8,6 +8,7 @@ import { ToolSpec } from "../../engine/actions/tool-contracts";
 export const SEER_TOOL_SPECS: ToolSpec[] = [
   {
     name: "check_identity",
+    executionFeedback: { kind: "resolved", events: ["seer_checked"] },
     parameters: {
       type: "object",
       properties: {

@@ -11,6 +11,11 @@ export class LlmOutputRecorder {
   private readonly roundOutputs = new WeakMap<ActionRequest, AgentOutput[]>();
   constructor(private readonly observer: PlayerOutputObserver) {}
 
+  /** 宿主回执先于 SDK 收尾留底；传输随后失败也不会丢失已经提交的事实。 */
+  executionResult(request: ActionRequest, output: Extract<AgentOutput, { type: "tool" }>): void {
+    this.emit(output, this.observer.context(request), request);
+  }
+
   private emit(
     output: AgentOutput,
     context: Omit<AgentOutputContext, "transport">,
@@ -45,6 +50,12 @@ export class LlmOutputRecorder {
           request,
         );
       for (const call of step.toolCalls) {
+        const captured = this.roundOutputs
+          .get(request)
+          ?.some(
+            (output) =>
+              output.type === "tool" && output.status === "completed" && output.id === call.id,
+          );
         let args: Record<string, unknown> = { raw: call.rawArgs };
         try {
           const parsed: unknown = JSON.parse(call.rawArgs);
@@ -58,19 +69,20 @@ export class LlmOutputRecorder {
           context,
           request,
         );
-        this.emit(
-          {
-            type: "tool",
-            id: call.id,
-            name: call.name,
-            args,
-            result: call.toolResult,
-            status: "completed",
-            step: index + 1,
-          },
-          context,
-          request,
-        );
+        if (!captured)
+          this.emit(
+            {
+              type: "tool",
+              id: call.id,
+              name: call.name,
+              args,
+              result: call.toolResult,
+              status: "completed",
+              step: index + 1,
+            },
+            context,
+            request,
+          );
       }
     }
   }

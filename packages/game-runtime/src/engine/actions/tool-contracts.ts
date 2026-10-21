@@ -5,12 +5,15 @@
 import type { MessageKey } from "@ai-werewolf-arena/game-text";
 /** 文件说明：机制层公共规格类型定义。 */
 import { ToolName } from "../../domain/model";
+import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 
 /** 工具规格定义。 */
 export interface ToolSpec {
   name: ToolName;
   /** 高风险行动由共同选择窗口要求显式往返确认；不是领域提交的授权凭证。 */
   confirmation?: "self_destruct";
+  /** 反馈只认可机制发表的这些事实；资源登记与即时获知结果具有不同语义。 */
+  executionFeedback?: { kind: "resolved" | "committed"; events: readonly GameEvent["type"][] };
   /** 模型可见且用于新输入校验的 JSON Schema；动态资格仍由领域规则决定。 */
   parameters: Record<string, unknown>;
   /** 明确保留的旧输入结构；只用于接收兼容，不向新模型推广，也不替代领域校验。 */

@@ -55,6 +55,12 @@ export const definition = {
     "schema.confirmation_id": [],
     "runtime.action.confirmation_required": [],
     "runtime.action.confirmed": [],
+    "runtime.action.pending_effects": [],
+    "runtime.action.interrupted": [],
+    "runtime.action.not_applied": [],
+    "runtime.action.committed": [],
+    "runtime.action.resolved": [],
+    "runtime.action.unavailable": [],
     "action.self_destruct.confirmation_warning": ["actor"],
     "error.action_confirmation_invalid": [],
     "schema.category": [],
@@ -269,13 +275,19 @@ export const zhCN = {
   "console.pk.exile": "放逐PK开始：{players}。",
   "schema.game.query": "查询固定的狼人杀工具协议；不返回局内状态。",
   "schema.game.submit":
-    "选择当前回合唯一通过校验的游戏行动。accepted=true、applied=false 表示已选定但尚未生效；引擎会再次校验，是否生效以结果事件为准。普通文本不会产生游戏效果。自爆首次返回 confirmation_required、accepted=false 和警示，不会选定行动；阅读后必须原样提交同一行动并附上 confirmation_id 才能确认。不行动请直接结束回合，禁止占位提交。",
+    "选择当前回合唯一通过校验的游戏行动。accepted=true 仅表示候选被接受。status=resolved 返回本人可见的即时结果；committed 表示行动已登记，最终效果仍待后续结算；not_applied 表示明确拒绝执行；unavailable 表示暂无获准确认的结果；interrupted 表示执行中断，不能推断资源退还。未附 feedback 的 applied=false 回执仍只表示选定，生效以结果事件为准。普通文本不会产生游戏效果。自爆首次返回 confirmation_required、accepted=false 和警示，不会选定行动；阅读后必须原样提交同一行动并附上 confirmation_id 才能确认。不行动请直接结束回合，禁止占位提交。",
   "schema.game.report": "上报明确的规则、流程、状态、日志或可见性矛盾；不替代必须行动。",
   "schema.turn_id": "当前有效回合的turn_id，必须与行动提示一致。",
   "schema.action": "当前回合允许的行动名称，保持机器ID。",
   "schema.arguments": "所选行动的结构化参数，参数key保持不变。",
   "runtime.action.confirmation_required": "需要二次确认（尚未选定）",
   "runtime.action.confirmed": "已二次确认（尚未生效）",
+  "runtime.action.pending_effects": "最终效果在后续阶段结算",
+  "runtime.action.interrupted": "执行中断（资源状态以已发表事实为准）",
+  "runtime.action.not_applied": "行动未执行",
+  "runtime.action.committed": "行动已登记",
+  "runtime.action.resolved": "结果已揭晓",
+  "runtime.action.unavailable": "暂无可确认的执行结果（不代表资源退还）",
   "schema.confirmation_id":
     "仅二次确认时填写引擎上一回执的 confirmation_id；保持同一 turn_id、action、arguments。首次提案不填。",
   "action.self_destruct.confirmation_warning":
@@ -287,7 +299,7 @@ export const zhCN = {
   "schema.report_message": "已确认矛盾的简洁说明，不包含认证或私有传输信息。",
   "schema.game.static_query": "{}；查询固定工具协议，不返回局内状态。",
   "schema.game.static_submit":
-    "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。accepted=true、applied=false 表示尚待引擎最终校验，生效以结果事件为准。",
+    "{ turn_id, action, arguments, confirmation_id? }；选择一个通过校验的行动。自爆首次只提案，必须阅读警示，再带确认编号原样提交；不确认即跳过。resolved 携带本人可见结果，committed 只确认登记；applied 不代表最终伤害或保护生效。未附 feedback 的 applied=false 回执仍待规则结算。",
   "schema.game.static_report": "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
   "schema.audit.query": "查询固定审计工具协议，不返回任何复盘内容。",
   "schema.audit.context":
@@ -517,7 +529,7 @@ export const en = {
   "console.pk.exile": "Exile PK begins: {players}.",
   "schema.game.query": "Query the fixed Werewolf tool protocol; it does not return game state.",
   "schema.game.submit":
-    "Select the single validated game action for the current turn. accepted=true, applied=false means selected but not yet applied. The engine validates again; result events determine whether it takes effect. Ordinary text has no game effect. A first self-destruct proposal returns confirmation_required, accepted=false and a warning without selecting an action. Read it, then resubmit the identical action with confirmation_id to confirm. To skip, end the turn; never submit a placeholder.",
+    "Select the single validated game action for the current turn. accepted=true only means candidate acceptance. status=resolved returns your authorized immediate result; committed confirms the action while final effects await resolution; not_applied means execution was explicitly rejected; unavailable means no authorized result is available; interrupted does not imply resource refunds. A receipt without feedback and applied=false still means selection only; result events determine its effect. Ordinary text has no game effect. A first self-destruct proposal returns confirmation_required, accepted=false and a warning without selecting an action. Read it, then resubmit the identical action with confirmation_id to confirm. To skip, end the turn; never submit a placeholder.",
   "schema.game.report":
     "Report a confirmed contradiction in rules, flow, state, logging or visibility; this does not replace a required action.",
   "schema.turn_id": "The active turn_id, matching the action prompt exactly.",
@@ -526,6 +538,12 @@ export const en = {
     "Structured arguments for the selected action, with unchanged parameter keys.",
   "runtime.action.confirmation_required": "Second confirmation required (not selected)",
   "runtime.action.confirmed": "Confirmed (not yet applied)",
+  "runtime.action.pending_effects": "Final effects resolve in later stages",
+  "runtime.action.interrupted": "Execution interrupted (committed facts determine resource state)",
+  "runtime.action.not_applied": "Action not applied",
+  "runtime.action.committed": "Action committed",
+  "runtime.action.resolved": "Result available",
+  "runtime.action.unavailable": "Execution result unavailable (does not imply a refund)",
   "schema.confirmation_id":
     "Only for a second confirmation: copy confirmation_id from the engine receipt and keep the same turn_id, action and arguments. Omit for an initial proposal.",
   "action.self_destruct.confirmation_warning":
@@ -538,7 +556,7 @@ export const en = {
     "A concise confirmed contradiction without authentication or private transport data.",
   "schema.game.static_query": "{}; query the fixed tool protocol without returning game state.",
   "schema.game.static_submit":
-    "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. accepted=true, applied=false means it awaits final engine validation; result events determine its effect.",
+    "{ turn_id, action, arguments, confirmation_id? }; select one validated action. Self-destruction first proposes only; read the warning and resubmit unchanged with its confirmation ID. No confirmation means skip. resolved includes your authorized result; committed only confirms registration. applied does not guarantee final damage or protection. Without feedback, applied=false still awaits rule resolution.",
   "schema.game.static_report":
     "{ turn_id, category, severity, message }; report a confirmed engine contradiction.",
   "schema.audit.query": "Query the fixed audit tool protocol without returning replay content.",

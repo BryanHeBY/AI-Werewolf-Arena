@@ -6,10 +6,18 @@ import type { MessageKey } from "@ai-werewolf-arena/game-text";
 import type { ToolSpec } from "../../engine/actions/tool-contracts";
 import { AWAKENED_TOOL_NAMES } from "./tool-names";
 
+const feedback = {
+  awakened_mimic: { kind: "resolved", events: ["awakened_mimicked"] },
+  awakened_poison: { kind: "committed", events: ["awakened_poison_used"] },
+  awakened_guard: { kind: "committed", events: ["awakened_guard_chosen"] },
+  awakened_attack: { kind: "committed", events: ["awakened_attack_chosen"] },
+} satisfies Partial<Record<string, NonNullable<ToolSpec["executionFeedback"]>>>;
+
 export const AWAKENED_TOOL_SPECS: ToolSpec[] = AWAKENED_TOOL_NAMES.map((name) => {
   const nullable = name === "awakened_guard" || name === "awakened_attack";
   return {
     name,
+    executionFeedback: feedback[name],
     parameters: {
       type: "object",
       properties: { target_id: { type: nullable ? ["integer", "null"] : "integer" } },

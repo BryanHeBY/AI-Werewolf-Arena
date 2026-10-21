@@ -13,6 +13,7 @@ import { StageDirectiveRule, ToolSpec } from "../../engine/actions/tool-contract
 export const WITCH_TOOL_SPECS: ToolSpec[] = [
   {
     name: "use_potion",
+    executionFeedback: { kind: "committed", events: ["witch_potion_used", "witch_potion_skipped"] },
     ...withArgumentVariants(
       {
         type: "object",

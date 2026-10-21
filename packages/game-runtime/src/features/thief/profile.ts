@@ -52,6 +52,7 @@ export const THIEF_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "choose_thief_card",
+        executionFeedback: { kind: "resolved", events: ["thief_identity_chosen"] },
         parameters: {
           type: "object",
           properties: { slot: { type: "integer", enum: [0, 1] } },

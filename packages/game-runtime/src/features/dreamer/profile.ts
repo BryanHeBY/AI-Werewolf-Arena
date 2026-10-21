@@ -56,6 +56,7 @@ export const DREAMER_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "dream",
+        executionFeedback: { kind: "committed", events: ["dream_applied"] },
         parameters: {
           type: "object",
           properties: { target_id: { type: "number" } },

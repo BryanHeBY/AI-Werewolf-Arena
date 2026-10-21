@@ -16,6 +16,7 @@
  * 骑士日结算在原提交与死亡之后恢复具名同步序列，本经理保原死亡等待、判胜回调和阶段写权。
  * 普通黎明原因／原生命提案及动物／双生夜报名单归规则 owner；本经理先写完成标志，保原死亡 await、清理及封盘。
  */
+import { withActionExecutionScope } from "./actions/action-execution-scope";
 import { enableReplayFacts, copyReplayFacts } from "../domain/replay-fact-log";
 import { bindVictoryQueries } from "../rulesets/victory/default-specs";
 import { finishSilenceDay } from "../rulesets/silence-expression-plan";
@@ -440,21 +441,28 @@ export class PhaseManager {
       this.state.phase === Phase.Night &&
       !this.state.gameOver &&
       this.phaseRevision.current === nightRevision;
-    const setupSequence = prepareGameSetup(
-      {
-        world: () => this.world,
-        toolGateway: () => this.toolGateway,
-        events: () => this.events,
-        config: () => this.config,
-      },
+    const setupReady = await withActionExecutionScope(
       actionProvider,
-      nightDay,
-      nightIsCurrent,
+      this.events,
+      async (setupProvider) => {
+        const setupSequence = prepareGameSetup(
+          {
+            world: () => this.world,
+            toolGateway: () => this.toolGateway,
+            events: () => this.events,
+            config: () => this.config,
+          },
+          setupProvider,
+          nightDay,
+          nightIsCurrent,
+        );
+        let setupStep = setupSequence.next();
+        // 生成器只执行原设置窗口；外层反馈作用域另等待模型收尾，不额外查询阶段当前性。
+        while (!setupStep.done) setupStep = setupSequence.next(await setupStep.value);
+        return setupStep.value;
+      },
     );
-    let setupStep = setupSequence.next();
-    // 只等待原窗口的 execute；四项都已就绪时不让出微任务，阶段当前性也不额外查询。
-    while (!setupStep.done) setupStep = setupSequence.next(await setupStep.value);
-    if (!setupStep.value) return this.getSnapshot();
+    if (!setupReady) return this.getSnapshot();
     // 复用这个原有World读点，新增具名板的WeakMap准入不再额外读经理World getter。
     let cycleWorld: World;
     assertDemonOriginalRoster((cycleWorld = this.world));

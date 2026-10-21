@@ -244,7 +244,9 @@ describe("LlmActionProvider protocol", () => {
 
     expect(client.lastToolNames).toEqual(["get_game_schema", "submit_action", "report_bug"]);
     const submitTool = client.lastTools.find((tool) => tool.name === "submit_action");
-    expect(submitTool?.description).toContain("accepted=true、applied=false");
+    expect(submitTool?.description).toContain("status=resolved");
+    expect(submitTool?.description).toContain("committed 表示行动已登记");
+    expect(submitTool?.description).toContain("未附 feedback 的 applied=false");
     expect(submitTool?.parameters?.required).toEqual(["turn_id", "action", "arguments"]);
     expect(submitTool?.parameters?.properties?.turn_id?.type).toBe("string");
     expect(submitTool?.parameters?.properties?.action?.type).toBe("string");

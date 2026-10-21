@@ -4,6 +4,8 @@
  * Pi 持内存 transcript；本 owner 只持会话引用、游标及当轮证据。工具候选经原 ActionTurn／
  * ActionReception 接收，实际提交仍归引擎；取消先撤权，再等待底层结束，槽位不提前释放。
  */
+import { actionFeedback } from "../player/action-feedback";
+import { deliverActionSelection, selectedExecutionAction } from "../../domain/action-execution";
 import { toolFailure, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { type AgentOutputSink } from "@ai-werewolf-arena/replay-contract";
@@ -145,6 +147,10 @@ export class PiActionProvider implements ActionProvider {
   }
 
   getAction(request: ActionRequest): Promise<ToolCall | null> {
+    return deliverActionSelection(request, this.startTurn(request));
+  }
+
+  private startTurn(request: ActionRequest): Promise<ToolCall | null> {
     if (this.closed) return Promise.reject(this.closeController.signal.reason);
     if (this.cleanupFailures.length)
       return Promise.reject(new Error("pi_resource_reclamation_failed"));
@@ -273,7 +279,7 @@ export class PiActionProvider implements ActionProvider {
             maxSteps: 8,
             onEvent: (event) => transcript.update(event),
             onToolCall: async (invocation) => {
-              const handled = this.handleTool(request, turn!, invocation, signal);
+              const handled = await this.handleTool(request, turn!, invocation, signal);
               const receipt =
                 typeof handled.toolResult === "object" ? handled.toolResult : undefined;
               if (invocation.name === "submit_action" && receipt && "ok" in receipt && !receipt.ok)
@@ -351,7 +357,9 @@ export class PiActionProvider implements ActionProvider {
           cleanupErrors.push(error);
         }
       }
-      const candidate = !failed && !expired && !this.closed ? (turn?.action ?? null) : null;
+      const delivered = selectedExecutionAction(request);
+      const candidate =
+        delivered ?? (!failed && !expired && !this.closed ? (turn?.action ?? null) : null);
       let action = candidate;
       const needsFallback =
         failed ||
@@ -361,7 +369,7 @@ export class PiActionProvider implements ActionProvider {
             protocolRejected ||
             (turn?.outcome.rejectedActions ?? 0) > 0));
       let fallbackReason: string | undefined;
-      if (needsFallback && !this.closed) {
+      if (needsFallback && !delivered && !this.closed) {
         fallbackReason = expired
           ? "deadline_skip"
           : failed
@@ -451,6 +459,7 @@ export class PiActionProvider implements ActionProvider {
           [...(failed ? [primary] : []), ...cleanupErrors, ...finishingErrors],
           "pi_turn_and_cleanup_failed",
         );
+      if (delivered && failed) throw primary;
       if (this.closed) return this.closedResult(request);
       if (
         request.context.action_failure_policy === "error" &&
@@ -463,7 +472,7 @@ export class PiActionProvider implements ActionProvider {
     }
   }
 
-  private handleTool(
+  private async handleTool(
     request: ActionRequest,
     turn: ActionTurn,
     invocation: ToolInvocation,
@@ -502,7 +511,10 @@ export class PiActionProvider implements ActionProvider {
       invocation.args.confirmation_id,
     );
     return {
-      toolResult: receipt,
+      toolResult:
+        receipt.ok && receipt.accepted
+          ? await actionFeedback(this.world, request, turn.action!, receipt, signal)
+          : receipt,
       ...(receipt.ok && receipt.accepted
         ? { finalAction: turn.action!, stop: true }
         : { stop: !!turn.outcome.failureCode }),

@@ -29,6 +29,7 @@ export function pureWhiteInspectionTargets(
 }
 export const PURE_WHITE_INSPECTION_TOOL: NonNullable<RoleProfile["toolSpecs"]>[number] = {
   name: "inspect_night_identity",
+  executionFeedback: { kind: "resolved", events: ["role_inspected", "role_inspection_skipped"] },
   ...withTargetOrAbstain({
     type: "object",
     properties: {

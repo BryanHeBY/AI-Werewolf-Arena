@@ -15,6 +15,8 @@ import {
 } from "../../rulesets/mechanism-api";
 import { ActionReception } from "../../engine/actions/action-reception";
 import { ActionTurn, type ActionReceipt } from "../../agents/player/action-turn";
+import { actionFeedback } from "../../agents/player/action-feedback";
+import { selectedExecutionAction } from "../../domain/action-execution";
 import {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,
@@ -52,14 +54,18 @@ export interface AcpPendingTurn {
   turnId: string;
   action: Promise<ToolCall | null>;
   readonly outcome: ActionTurn["outcome"];
-  /** 引擎确实返回的确认回执，独立于适配器是否发布 rawOutput。 */
+  /** 宿主实际返回的确认及执行回执，独立于适配器是否发布 rawOutput。 */
   readonly confirmationOutputs: AgentOutput[];
+  readonly feedbackDelivered: Promise<void>;
 }
 
 interface PendingTurn extends AcpPendingTurn {
   request: ActionRequest;
   owner: ActionTurn;
   resolve: (action: ToolCall | null) => void;
+  finishFeedback: () => void;
+  captureExecution: (output: AgentOutput) => void;
+  signal?: AbortSignal;
   captureConfirmation: (
     receipt: Extract<ActionReceipt, { ok: true }>,
     confirmationId?: string,
@@ -83,7 +89,7 @@ export class AcpTurnRegistry {
   readonly locale: Locale;
 
   constructor(
-    world: World,
+    private readonly world: World,
     private readonly onBugReport?: (report: AcpBugReport) => McpBridgeResult | void,
     roleCatalog: RoleCatalog = getDefaultRoleCatalog(),
   ) {
@@ -97,7 +103,7 @@ export class AcpTurnRegistry {
     );
   }
 
-  openTurn(request: ActionRequest, sessionId: string): AcpPendingTurn {
+  openTurn(request: ActionRequest, sessionId: string, signal?: AbortSignal): AcpPendingTurn {
     if (this.closed) throw new Error("acp_registry_closed");
     if (this.pendingBySession.has(sessionId)) {
       throw new Error("acp_turn_already_open_for_session");
@@ -111,12 +117,20 @@ export class AcpTurnRegistry {
       resolve = done;
     });
     const owner = new ActionTurn(this.reception, request, turnId);
+    let finishFeedback!: () => void;
+    const feedbackDelivered = new Promise<void>((resolve) => {
+      finishFeedback = resolve;
+    });
     const confirmationOutputs: AgentOutput[] = [];
     const readConfirmations = () => structuredClone(confirmationOutputs);
     this.pendingBySession.set(sessionId, {
       sessionId,
       turnId,
       request,
+      signal,
+      feedbackDelivered,
+      finishFeedback,
+      captureExecution: (output) => confirmationOutputs.push(structuredClone(output)),
       owner,
       get confirmationOutputs() {
         return readConfirmations();
@@ -151,6 +165,7 @@ export class AcpTurnRegistry {
       get confirmationOutputs() {
         return readConfirmations();
       },
+      feedbackDelivered,
       get outcome() {
         return owner.outcome;
       },
@@ -198,6 +213,36 @@ export class AcpTurnRegistry {
     this.pendingBySession.delete(sessionId);
     pending.resolve(pending.owner.action);
     return result;
+  }
+  /** MCP 等待真实执行回执；旧同步注册表端口继续只表示选择接受，供原脚本／测试使用。 */
+  async submitActionWithFeedback(sessionId: string, input: McpSubmitActionParams) {
+    const pending = this.pendingBySession.get(sessionId);
+    const receipt = this.submitAction(sessionId, input);
+    if (!pending || !("accepted" in receipt) || !receipt.ok || !receipt.accepted) return receipt;
+    try {
+      const result = await actionFeedback(
+        this.world,
+        pending.request,
+        pending.owner.action!,
+        receipt as ActionReceipt,
+        pending.signal,
+      );
+      if (selectedExecutionAction(pending.request)) {
+        // 即使 ACP 不提供原生工具输出，也保存宿主实际发送的结果。
+        pending.captureExecution({
+          type: "tool",
+          name: "submit_action",
+          status: "completed",
+          id: `engine:${pending.turnId}:execution`,
+          accepted: true,
+          args: { ...input },
+          result: { ...result },
+        });
+      }
+      return result;
+    } finally {
+      pending.finishFeedback();
+    }
   }
   rejectSubmissionInput(sessionId: string, turnId: unknown): McpBridgeResult {
     const pending = this.pendingBySession.get(sessionId);

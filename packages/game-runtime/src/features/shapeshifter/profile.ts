@@ -61,6 +61,7 @@ export const SHAPESHIFTER_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "choose_shapeshifter_card",
+        executionFeedback: { kind: "resolved", events: ["shapeshifter_identity_chosen"] },
         parameters: {
           type: "object",
           properties: { slot: { type: "integer", enum: [0, 1] } },

@@ -55,7 +55,7 @@ export class WerewolfMcpControlServer {
     if (tool === "submit_action") {
       if (!args || typeof args !== "object")
         return toolFailure(this.registry.locale, "invalid_submit_action_arguments");
-      return this.registry.submitAction(sessionId, args as McpSubmitActionParams);
+      return this.registry.submitActionWithFeedback(sessionId, args as McpSubmitActionParams);
     }
     if (tool === "report_bug") {
       if (!args || typeof args !== "object")

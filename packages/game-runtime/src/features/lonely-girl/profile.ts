@@ -54,6 +54,7 @@ export const LONELY_GIRL_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "choose_admired_player",
+        executionFeedback: { kind: "committed", events: ["lonely_girl_admired_chosen"] },
         parameters: {
           type: "object",
           properties: { target_id: { type: "integer" } },

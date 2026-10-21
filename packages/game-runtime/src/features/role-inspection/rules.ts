@@ -28,6 +28,7 @@ export function roleInspectionTargets(
 }
 export const ROLE_INSPECTION_TOOL: NonNullable<RoleProfile["toolSpecs"]>[number] = {
   name: "inspect_role",
+  executionFeedback: { kind: "resolved", events: ["role_inspected", "role_inspection_skipped"] },
   parameters: {
     type: "object",
     properties: { target_id: { type: "number" } },

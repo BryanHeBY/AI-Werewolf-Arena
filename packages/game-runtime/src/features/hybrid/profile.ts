@@ -61,6 +61,10 @@ export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: [
       {
         name: "choose_exemplar",
+        executionFeedback: {
+          kind: "resolved",
+          events: ["hybrid_exemplar_chosen", "hybrid_affiliation_resolved"],
+        },
         parameters: {
           type: "object",
           properties: { target_id: { type: "integer" } },
