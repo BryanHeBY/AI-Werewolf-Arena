@@ -13,7 +13,7 @@ import {
   type ActionProvider,
   type ActionRequest,
   type GameEvent,
-  type ToolCall,
+  type ToolName,
   type BoardConfig,
 } from "../../../src/domain";
 import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
@@ -49,7 +49,11 @@ function harness(
   const game = bootstrapGame(config, { fixedRoles });
   const events: GameEvent[] = [];
   const results: Array<Record<string, unknown> | string> = [];
-  let action: ToolCall = { name: "use_potion", args: { potion_type: PotionType.None } };
+  // 这是模型尚未规范化的工具输入；none 可以省略目标，领域 ToolCall 则保留规范目标字段。
+  let action: { name: ToolName; args: Record<string, unknown> } = {
+    name: "use_potion",
+    args: { potion_type: PotionType.None },
+  };
   let duplicates = 0,
     fallbackCalls = 0;
   const args = (input: string) => ({
@@ -192,7 +196,7 @@ function harness(
     get fallbackCalls() {
       return fallbackCalls;
     },
-    choose(value: ToolCall) {
+    choose(value: { name: ToolName; args: Record<string, unknown> }) {
       action = value;
     },
     record<T>(run: () => Promise<T>) {
@@ -202,6 +206,54 @@ function harness(
 }
 
 for (const transport of ["llm", "pi", "acp"] as const) {
+  test(`${transport}: 模型不用药可省略目标，回执确认跳过且两瓶药都保留`, async () => {
+    const f = harness(transport),
+      actorId = f.actor(Role.Witch),
+      targetId = f.actor(Role.Wolf);
+    f.choose({ name: "use_potion", args: { potion_type: PotionType.None } });
+    try {
+      await f.record(() =>
+        new NightPipeline({
+          world: f.game.world,
+          events: f.events,
+          toolGateway: new ToolGateway(),
+          damageResolutionSystem: new DamageResolutionSystem(),
+        }).execute(
+          twelvePlayerStandardConfig,
+          {
+            async getAction(request) {
+              if (request.allowedTools.includes("use_potion")) return f.provider.getAction(request);
+              if (request.allowedTools.includes("check_identity"))
+                return { name: "check_identity", args: { target_id: targetId } };
+              if (request.allowedTools.includes("speak_to_wolves"))
+                return { name: "speak_to_wolves", args: { text: "空刀", end_chat: true } };
+              if (request.allowedTools.includes("kill_vote"))
+                return { name: "kill_vote", args: { abstain: true, target_id: null } };
+              return null;
+            },
+          },
+          1,
+        ),
+      );
+      expect(f.results).toMatchObject([
+        {
+          action: "use_potion",
+          status: "committed",
+          applied: true,
+          feedback: {
+            events: [{ type: "witch_potion_skipped", payload: { actorId, potionType: "none" } }],
+          },
+        },
+      ]);
+      expect(getWitchState(f.game.world.getComponent(actorId, COMPONENT.Role)!)).toMatchObject({
+        heal: 1,
+        poison: 1,
+      });
+      expect(f.fallbackCalls).toBe(0);
+    } finally {
+      await f.provider.close();
+    }
+  });
   test(`${transport}: 缺少本人结果时返回未知，不把其他玩家的报告当成本人行动成功`, async () => {
     const f = harness(transport),
       actorId = f.actor(Role.Seer),
@@ -279,7 +331,10 @@ for (const transport of ["llm", "pi", "acp"] as const) {
             if (request.allowedTools.includes("check_identity"))
               return { name: "check_identity", args: { target_id: 2 } };
             if (request.allowedTools.includes("use_potion"))
-              return { name: "use_potion", args: { potion_type: PotionType.None } };
+              return {
+                name: "use_potion",
+                args: { potion_type: PotionType.None, target_id: request.actorId },
+              };
             if (request.allowedTools.includes("speak"))
               return { name: "speak", args: { text: "先听大家。" } };
             if (request.allowedTools.includes("vote"))
@@ -336,7 +391,10 @@ for (const transport of ["llm", "pi", "acp"] as const) {
               if (request.allowedTools.includes("kill_vote"))
                 return { name: "kill_vote", args: { abstain: true, target_id: null } };
               if (request.allowedTools.includes("use_potion"))
-                return { name: "use_potion", args: { potion_type: PotionType.None } };
+                return {
+                  name: "use_potion",
+                  args: { potion_type: PotionType.None, target_id: request.actorId },
+                };
               return null;
             },
           },
@@ -405,7 +463,10 @@ for (const transport of ["llm", "pi", "acp"] as const) {
               else if (request.allowedTools.includes("kill_vote"))
                 return { name: "kill_vote", args: { abstain: true, target_id: null } };
               else if (request.allowedTools.includes("use_potion"))
-                return { name: "use_potion", args: { potion_type: PotionType.None } };
+                return {
+                  name: "use_potion",
+                  args: { potion_type: PotionType.None, target_id: request.actorId },
+                };
               else if (request.allowedTools.includes("guard"))
                 return { name: "guard", args: { target_id: null, abstain: true } };
               else return null;
