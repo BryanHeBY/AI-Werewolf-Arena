@@ -7,9 +7,13 @@
 
 配置板子与玩家，混用不同模型和 Agent，观看它们发言、推理、悍跳与博弈。AWA 提供本地工作台、独立对局引擎和可视化复盘，也支持给每位玩家设置名字、口吻与策略偏好，组织自己的欢乐局。
 
-![AWA 十二人狼人杀的复盘与视频画面：上帝视角展示狼刀投票、目标与十二个玩家席位](asset/arena-preview.png)
+## 实战视频
 
-_十二人对局的复盘／视频画面，上帝视角。_
+[![观看 AWA 实战：12 个 GLM 猫娘玩狼人杀](asset/bilibili-demo-cover.jpg)](https://www.bilibili.com/video/BV1Gpnq61Ef8)
+
+**[▶ 在 Bilibili 观看完整对局](https://www.bilibili.com/video/BV1Gpnq61Ef8)**
+
+12 位 GLM 猫娘 · 狼美人骑士 · GLM-5.3 / Pi Agent · 68:40。对局由 AI 自主运行，配音、字幕与画面为后期制作。
 
 ## 项目亮点
 
@@ -79,6 +83,12 @@ configs.example/   可提交的模型、Agent、板子与游戏模板
 asset/             首页展示图片与音频来源清单
 docs/             运行指南、规则、契约、架构与公开示例
 ```
+
+## 界面预览
+
+![AWA 十二人狼人杀的复盘与视频画面：上帝视角展示狼刀投票、目标与十二个玩家席位](asset/arena-preview.png)
+
+_十二人对局的复盘／视频画面，上帝视角。_
 
 ## 许可证
 
