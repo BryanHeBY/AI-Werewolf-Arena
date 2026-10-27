@@ -42,7 +42,7 @@ bun install
 bun run workbench
 ```
 
-打开 **http://127.0.0.1:4310**。首次使用按页面引导添加 Agent：选择平台、填写自己的认证并保存；随后从规则模板新建板子，再创建游戏并从下拉框选择 Agent。首次访问配置页会补齐缺失的空运行文件，不导入占位连接或游戏，也不覆盖已有内容。
+打开 **[http://127.0.0.1:4310](http://127.0.0.1:4310)**。首次使用按页面引导添加 Agent：选择平台、填写自己的认证并保存；随后从规则模板新建板子，再创建游戏并从下拉框选择 Agent。首次访问配置页会补齐缺失的空运行文件，不导入占位连接或游戏，也不覆盖已有内容。
 
 端口被占用时，可用 `bun run workbench -- --port 0` 自动选择空闲端口；监听地址通过 `--host` 指定。
 
@@ -60,7 +60,7 @@ bun run run -- --game-config-name twelve_player_standard
 bun run dev:frontend
 ```
 
-默认打开 **http://localhost:5173**，导入 `record/<session>/replay.json` 即可回看。也可以导入仓库中的[公开示例归档](docs/examples/README.md)，查看已有对局，无需启动模型。
+默认打开 **[http://localhost:5173](http://localhost:5173)**，导入 `record/<session>/replay.json` 即可回看。也可以导入仓库中的[公开示例归档](docs/examples/README.md)，查看已有对局，无需启动模型。
 
 三个入口共用项目数据：缺省 `configs/record/output/.workbench` 位于仓库根；显式 CLI 相对路径按调用目录解析，配置文件内的相对文件引用按该文件目录解析。本地配置、认证、录制和成片均独立保留，不纳入版本控制。
 
